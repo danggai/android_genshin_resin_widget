@@ -1,0 +1,2 @@
+rootProject.name = "genshin_resin_widget"
+include ':app'
