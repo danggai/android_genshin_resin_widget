@@ -4,7 +4,7 @@ object Constant {
 
     /* URL */
 
-    const val BASE_URL = ""
+    const val BASE_URL = "https://api-os-takumi.mihoyo.com"
 
 
 
@@ -30,10 +30,14 @@ object Constant {
     /* PREFERENCE */
 
     const val PREF_COOKIE = "PREF_COOKIE"
+    const val PREF_UID = "PREF_UID"
 
 
 
     /* ACTION */
 
     const val ACTION_BUTTON_REFRESH = "danggai.app.resinwidget.btn_refresh"
+
+    const val BACK_BUTTON_INTERVAL: Long = 2000
+
 }

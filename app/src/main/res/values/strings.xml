@@ -2,4 +2,5 @@
     <string name="app_name">Genshin Resin Checker</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="toast_back_button">한 번 더 눌러서 앱을 종료해요.</string>
 </resources>
