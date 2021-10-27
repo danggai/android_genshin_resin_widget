@@ -4,7 +4,11 @@ object Constant {
 
     /* URL */
 
-    const val BASE_URL = "https://api-os-takumi.mihoyo.com"
+    const val OS_TAKUMI_URL = "https://api-os-takumi.mihoyo.com"
+    const val CN_TAKUMI_URL = "https://api-takumi.mihoyo.com"
+
+    const val OS_SALT = "6cqshh5dhw73bzxn20oexa9k516chk7s"
+    const val CN_SALT = "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs"
 
 
 

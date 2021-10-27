@@ -29,7 +29,6 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
             }, {
                 it.message?.let { msg ->
                     log.e(msg)
-                    initUI()
                 }
             }).addCompositeDisposable()
     }

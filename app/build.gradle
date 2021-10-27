@@ -60,6 +60,7 @@ dependencies {
     implementation "org.koin:koin-androidx-workmanager:$koin_version"
 
     // Retrofit
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
