@@ -20,6 +20,12 @@ object Constant {
     const val META_CODE_SERVER_ERROR = 500
 
 
+    /* RETCODE */
+
+    const val RETCODE_SUCCESS = "0"
+    const val RETCODE_ERROR_CHARACTOR_INFO = "1009"       // 角色信息错误
+    const val RETCODE_ERROR_INVALID_REQUEST = "-1"
+
 
     /* FORMAT, REGEX */
 

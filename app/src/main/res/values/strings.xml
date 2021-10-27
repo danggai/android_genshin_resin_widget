@@ -1,6 +1,19 @@
 <resources>
     <string name="app_name">Genshin Resin Checker</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
-    <string name="toast_back_button">한 번 더 눌러서 앱을 종료해요.</string>
+
+    <string name="uid">uid</string>
+    <string name="cookie">cookie</string>
+
+    <string name="msg_toast_back_button">한 번 더 눌러서 앱을 종료해요.</string>
+    <string name="msg_toast_save_done">저장 완료!</string>
+
+    <string name="msg_toast_dailynote_success">정상적으로 전적 정보를 불러왔어!</string>
+    <string name="msg_toast_dailynote_error_charactor_info">캐릭터 정보를 읽을 수 없어! uid나 쿠키를 다시 확인해 줘!</string>
+    <string name="msg_toast_dailynote_error_invalid_request">호요랩과 통신하는데 실패했어! 인터넷 환경을 확인하거나 나중에 다시 시도해 줘!</string>
+    <string name="msg_toast_dailynote_error">전적 정보를 불러오는데 실패했어! 인터넷 환경을 확인하거나 나중에 다시 시도해 줘!</string>
+
+
+
+    <string name="hint_uid">uid를 입력해줘!</string>
+    <string name="hint_cookie">Hoyolab의 쿠키를 입력해줘!</string>
 </resources>

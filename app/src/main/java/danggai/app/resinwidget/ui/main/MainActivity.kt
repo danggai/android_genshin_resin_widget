@@ -39,7 +39,7 @@ class MainActivity : BindingActivity<MainActivityBinding>() {
             .map { it[1] - it[0] < Constant.BACK_BUTTON_INTERVAL }
             .subscribe {
                 if (it) { super.onBackPressed() } else { Toast.makeText(applicationContext, getString(
-                    R.string.toast_back_button), Toast.LENGTH_SHORT).show() }
+                    R.string.msg_toast_back_button), Toast.LENGTH_SHORT).show() }
             }.addDisposableExt()
     }
 

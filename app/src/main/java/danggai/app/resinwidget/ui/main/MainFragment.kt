@@ -1,15 +1,14 @@
 package danggai.app.resinwidget.ui.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.annotation.LayoutRes
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.MainFragmentBinding
 import danggai.app.resinwidget.ui.BindingFragment
+import danggai.app.resinwidget.util.EventObserver
+import danggai.app.resinwidget.util.PreferenceManager
+import danggai.app.resinwidget.util.log
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MainFragment : BindingFragment<MainFragmentBinding>() {
@@ -35,10 +34,27 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
         }
 
         initUi()
+        initLv()
     }
 
     private fun initUi() {
-        mVM.initUI()
+        context?.let { it ->
+            mVM.initUI(PreferenceManager.getStringUid(it), PreferenceManager.getStringCookie(it))
+        }
+    }
+
+    private fun initLv() {
+        mVM.lvSaveUserInfo.observe(viewLifecycleOwner, EventObserver {
+            if (it) {
+                context?.let { it ->
+                    log.e()
+                    PreferenceManager.setStringUid(it, mVM.lvUid.value)
+                    PreferenceManager.setStringCookie(it, mVM.lvCookie.value)
+
+                    makeToast(it, getString(R.string.msg_toast_save_done))
+                }
+            }
+        })
     }
 
 }
