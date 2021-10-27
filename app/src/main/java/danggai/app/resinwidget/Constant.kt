@@ -42,6 +42,9 @@ object Constant {
     const val PREF_COOKIE = "PREF_COOKIE"
     const val PREF_UID = "PREF_UID"
 
+    const val PREF_CURRENT_RESIN = "PREF_CURRENT_RESIN"
+    const val PREF_MAX_RESIN = "PREF_MAX_RESIN"
+    const val PREF_RESIN_RECOVERY_TIME = "PREF_RESIN_RECOVERY_TIME"
 
 
     /* ACTION */

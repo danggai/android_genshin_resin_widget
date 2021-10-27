@@ -6,6 +6,7 @@ import androidx.annotation.LayoutRes
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.MainFragmentBinding
 import danggai.app.resinwidget.ui.BindingFragment
+import danggai.app.resinwidget.util.CommonFunction
 import danggai.app.resinwidget.util.EventObserver
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
@@ -51,6 +52,7 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
                     PreferenceManager.setStringUid(it, mVM.lvUid.value)
                     PreferenceManager.setStringCookie(it, mVM.lvCookie.value)
 
+                    CommonFunction.startOneTimeRefreshWorker(it)
                     makeToast(it, getString(R.string.msg_toast_save_done))
                 }
             }

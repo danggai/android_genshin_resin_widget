@@ -87,9 +87,9 @@ object PreferenceManager {
      * @param key
      * @return
      */
-    fun getString(context: Context, key: String?): String? {
+    fun getString(context: Context, key: String?): String {
         val prefs = getPreferences(context)
-        return prefs.getString(key, DEFAULT_VALUE_STRING)
+        return prefs.getString(key, DEFAULT_VALUE_STRING)?:DEFAULT_VALUE_STRING
     }
 
     /**
@@ -169,17 +169,40 @@ object PreferenceManager {
      * 커스텀 함수
      */
     fun getStringUid(context: Context): String {
-        return getString(context, Constant.PREF_UID)?:""
+        return getString(context, Constant.PREF_UID)
     }
     fun setStringUid(context: Context, value: String) {
         setString(context, Constant.PREF_UID, value)
     }
 
     fun getStringCookie(context: Context): String {
-        return getString(context, Constant.PREF_COOKIE)?:""
+        return getString(context, Constant.PREF_COOKIE)
     }
     fun setStringCookie(context: Context, value: String) {
         setString(context, Constant.PREF_COOKIE, value)
     }
+
+
+    fun getIntCurrentResin(context: Context): Int {
+        return getInt(context, Constant.PREF_CURRENT_RESIN)
+    }
+    fun setIntCurrentResin(context: Context, value: Int) {
+        setInt(context, Constant.PREF_CURRENT_RESIN, value)
+    }
+
+    fun getIntMaxResin(context: Context): Int {
+        return getInt(context, Constant.PREF_MAX_RESIN)
+    }
+    fun setIntMaxResin(context: Context, value: Int) {
+        setInt(context, Constant.PREF_MAX_RESIN, value)
+    }
+
+    fun getStringResinRecoveryTime(context: Context): String {
+        return getString(context, Constant.PREF_RESIN_RECOVERY_TIME)
+    }
+    fun setStringResinRecoveryTime(context: Context, value: String) {
+        setString(context, Constant.PREF_RESIN_RECOVERY_TIME, value)
+    }
+
 
 }

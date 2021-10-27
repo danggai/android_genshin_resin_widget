@@ -3,6 +3,7 @@ package danggai.app.resinwidget
 import android.app.Application
 import danggai.app.resinwidget.di.NetworkModule
 import danggai.app.resinwidget.di.ViewModelModule
+import danggai.app.resinwidget.di.WorkerModule
 import danggai.app.resinwidget.di.repositoryModule
 import danggai.app.resinwidget.util.log
 import io.reactivex.exceptions.UndeliverableException
@@ -26,8 +27,8 @@ class App: Application() {
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@App)
-
-            koin.loadModules(listOf(ViewModelModule, NetworkModule, repositoryModule ))
+            workManagerFactory()
+            koin.loadModules(listOf(ViewModelModule, NetworkModule, repositoryModule, WorkerModule))
 //            koin.createRootScope()
         }
 

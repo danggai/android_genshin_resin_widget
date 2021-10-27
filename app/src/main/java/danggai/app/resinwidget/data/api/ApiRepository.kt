@@ -26,4 +26,18 @@ class ApiRepository(private val api: ApiInterface) {
             }
     }
 
+    suspend fun suspendDailyNote(uid: String, cookie: String): ResDailyNote {
+        val emptyData = ResDailyNote.Data("","", DailyNote( -1,-1,"",-1, -1, listOf()))
+
+        val res = api.suspendDailyNote(uid, cookie, CommonFunction.getGenshinDS())
+
+        return when {
+            res.isSuccessful -> {
+                ResDailyNote(Meta(res.code(), res.message()), res.body()?:emptyData)
+            } else -> {
+                ResDailyNote(Meta(res.code(), res.message()), emptyData)
+            }
+        }
+    }
+
 }

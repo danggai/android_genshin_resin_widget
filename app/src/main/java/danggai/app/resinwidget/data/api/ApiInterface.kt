@@ -15,4 +15,11 @@ interface ApiInterface {
     @GET("/game_record/genshin/api/dailyNote?server=os_asia")
     fun dailyNote(@Query("role_id") uid: String, @Header("Cookie") cookie: String, @Header("DS") ds: String): Observable<Response<ResDailyNote.Data>>
 
+    @Headers(
+        "x-rpc-client_type: 4",
+        "x-rpc-app_version: 1.5.0",
+    )
+    @GET("/game_record/genshin/api/dailyNote?server=os_asia")
+    suspend fun suspendDailyNote(@Query("role_id") uid: String, @Header("Cookie") cookie: String, @Header("DS") ds: String): Response<ResDailyNote.Data>
+
 }
