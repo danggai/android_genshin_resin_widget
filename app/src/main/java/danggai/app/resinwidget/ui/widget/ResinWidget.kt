@@ -39,20 +39,19 @@ class ResinWidget : AppWidgetProvider() {
         log.e()
         when (action) {
             Constant.ACTION_BUTTON_REFRESH -> {
-                log.e()
+                log.e("ACTION_BUTTON_REFRESH")
 
                 context?.let { CommonFunction.startOneTimeRefreshWorker(context) }
             }
             Constant.ACTION_APPWIDGET_UPDATE -> {
-                log.e()
+                log.e("ACTION_APPWIDGET_UPDATE")
                 if (intent.getBooleanExtra(Constant.REFRESH_DATA, false)) {
-                    log.e()
+                    log.e("REFRESH_DATA")
                     context?.let { CommonFunction.startOneTimeRefreshWorker(context) }
                 } else if (intent.getBooleanExtra(Constant.REFRESH_UI, false)) {
-                    log.e()
+                    log.e("REFRESH_UI")
 
                     context?.let { it ->
-                        log.e()
 
                         val _intent = Intent(it, ResinWidget::class.java)
                         _intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE

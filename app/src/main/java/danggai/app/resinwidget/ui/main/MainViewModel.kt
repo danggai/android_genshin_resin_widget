@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.data.api.ApiRepository
+import danggai.app.resinwidget.data.local.DailyNote
 import danggai.app.resinwidget.ui.base.BaseViewModel
 import danggai.app.resinwidget.util.*
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,7 +18,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     private val rxApiDailyNote: PublishSubject<Boolean> = PublishSubject.create()
 
     var lvSaveUserInfo = MutableLiveData<Event<Boolean>>()
-    var lvSendWidgetSyncBroadcast = MutableLiveData<Event<Boolean>>()
+    var lvSendWidgetSyncBroadcast = MutableLiveData<Event<DailyNote>>()
     var lvSetAutoRefreshPeriod = MutableLiveData<Event<Long>>()
 
     var lvAutoRefreshPeriod: NonNullMutableLiveData<Long> = NonNullMutableLiveData(15L)
@@ -41,8 +42,9 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_success))
 
                                 /*res 저장 후 fragment 에서 값 연동*/
-
-                                lvSendWidgetSyncBroadcast.value = Event(true)
+                                res.data.data?.let {
+                                    lvSendWidgetSyncBroadcast.value = Event(it)
+                                }
                             }
                             Constant.RETCODE_ERROR_CHARACTOR_INFO -> {
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_charactor_info))

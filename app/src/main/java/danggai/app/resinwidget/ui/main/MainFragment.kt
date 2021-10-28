@@ -69,13 +69,17 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
             }
         })
 
-        mVM.lvSendWidgetSyncBroadcast.observe(viewLifecycleOwner, EventObserver {
-            if (it) {
-                context?.let { it ->
-                    log.e()
-                    requireActivity().sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
-                    CommonFunction.startUniquePeriodicRefreshWorker(it)
-                }
+        mVM.lvSendWidgetSyncBroadcast.observe(viewLifecycleOwner, EventObserver { dailyNote ->
+            context?.let { it ->
+                log.e()
+
+                PreferenceManager.setIntCurrentResin(it, dailyNote.current_resin)
+                PreferenceManager.setIntMaxResin(it, dailyNote.max_resin)
+                PreferenceManager.setStringResinRecoveryTime(it, dailyNote.resin_recovery_time?:"-1")
+                PreferenceManager.setStringRecentSyncTime(it, CommonFunction.getTimeSyncTimeFormat())
+
+                requireActivity().sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+                CommonFunction.startUniquePeriodicRefreshWorker(it)
             }
         })
 
