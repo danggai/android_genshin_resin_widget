@@ -26,11 +26,22 @@
             android:src="@drawable/resin"
             />
 
+        <ProgressBar
+            android:id="@+id/progress1"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:indeterminateTint="@color/gray" 
+            />
+
         <LinearLayout
+            android:id="@+id/ll_resin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:visibility="gone"
             >
 
             <LinearLayout
@@ -70,7 +81,6 @@
                 >
 
                 <LinearLayout
-                    android:id="@+id/ll_resin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"

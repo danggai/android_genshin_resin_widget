@@ -18,6 +18,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     private val rxApiDailyNote: PublishSubject<Boolean> = PublishSubject.create()
 
     var lvSaveUserInfo = MutableLiveData<Event<Boolean>>()
+    var lvSendWidgetSyncBroadcast = MutableLiveData<Event<Boolean>>()
 
     val lvUid: NonNullMutableLiveData<String> = NonNullMutableLiveData("")
     val lvCookie: NonNullMutableLiveData<String> = NonNullMutableLiveData("")
@@ -37,6 +38,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                         when (res.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_success))
+                                lvSendWidgetSyncBroadcast.value = Event(true)
                             }
                             Constant.RETCODE_ERROR_CHARACTOR_INFO -> {
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_charactor_info))

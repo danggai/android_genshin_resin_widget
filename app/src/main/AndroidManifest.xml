@@ -16,6 +16,7 @@
 
         <receiver android:name=".ui.widget.ResinWidget">
             <intent-filter>
+                <action android:name="danggai.app.resinwidget.btn_refresh" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 

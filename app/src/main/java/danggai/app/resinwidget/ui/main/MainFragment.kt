@@ -52,11 +52,21 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
                     PreferenceManager.setStringUid(it, mVM.lvUid.value)
                     PreferenceManager.setStringCookie(it, mVM.lvCookie.value)
 
-                    CommonFunction.startOneTimeRefreshWorker(it)
                     makeToast(it, getString(R.string.msg_toast_save_done))
                 }
             }
         })
+
+        mVM.lvSendWidgetSyncBroadcast.observe(viewLifecycleOwner, EventObserver {
+            if (it) {
+                context?.let { it ->
+                    log.e()
+                    requireActivity().sendBroadcast(CommonFunction.getIntentAppWidgetAllUpdate())
+                }
+            }
+        })
+
+
     }
 
 }

@@ -6,5 +6,5 @@
     android:minHeight="40dp"
     android:previewImage="@drawable/preview_resin_widget"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="86400000"
+    android:updatePeriodMillis="60000"
     android:widgetCategory="home_screen" />

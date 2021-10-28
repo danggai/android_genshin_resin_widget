@@ -204,5 +204,14 @@ object PreferenceManager {
         setString(context, Constant.PREF_RESIN_RECOVERY_TIME, value)
     }
 
+    fun getStringRecentSyncTime(context: Context): String {
+        return getString(context, Constant.PREF_RECENT_SYNC_TIME)
+    }
+    fun setStringRecentSyncTime(context: Context, value: String) {
+        setString(context, Constant.PREF_RECENT_SYNC_TIME, value)
+    }
+
+
+
 
 }

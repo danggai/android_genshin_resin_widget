@@ -1,5 +1,6 @@
 package danggai.app.resinwidget.worker
 
+import android.appwidget.AppWidgetManager
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -42,9 +43,22 @@ class RefreshWorker (context: Context, workerParams: WorkerParameters, private v
     }
 
     private fun updateData(dailyNote: DailyNote) {
-        PreferenceManager.setIntCurrentResin(applicationContext, dailyNote.current_resin)
-        PreferenceManager.setIntMaxResin(applicationContext, dailyNote.max_resin)
-        PreferenceManager.setStringResinRecoveryTime(applicationContext, dailyNote.resin_recovery_time?:"-1")
+        val context = applicationContext
+
+        PreferenceManager.setIntCurrentResin(context, dailyNote.current_resin)
+        PreferenceManager.setIntMaxResin(context, dailyNote.max_resin)
+        PreferenceManager.setStringResinRecoveryTime(context, dailyNote.resin_recovery_time?:"-1")
+        PreferenceManager.setStringRecentSyncTime(context, CommonFunction.getTimeSyncTimeFormat())
+
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+
+        context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+
+//        val intent = Intent(context, ResinWidget::class.java)
+//        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+//        val ids: IntArray = AppWidgetManager.getInstance(getApplication())
+//            .getAppWidgetIds(ComponentName(getApplication(), ResinWidget::class.java))
+//        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
     }
 
     override suspend fun doWork(): Result {

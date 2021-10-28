@@ -32,8 +32,7 @@ object Constant {
     const val PATTERN_ENG_NUM_ONLY = "^[a-zA-Z0-9]+$"
     const val PATTERN_NUM_ONLY = "[^\\d]"
 
-    const val DATE_FORMAT_BEFORE = "yyyy-MM-dd'T'HH:mm:ssX"
-    const val DATE_FORMAT_AFTER = "yyyy-MM-dd HH:mm"
+    const val DATE_FORMAT_SYNC_TIME = "MM/dd HH:mm"
 
 
 
@@ -45,11 +44,16 @@ object Constant {
     const val PREF_CURRENT_RESIN = "PREF_CURRENT_RESIN"
     const val PREF_MAX_RESIN = "PREF_MAX_RESIN"
     const val PREF_RESIN_RECOVERY_TIME = "PREF_RESIN_RECOVERY_TIME"
+    const val PREF_RECENT_SYNC_TIME = "PREF_RECENT_SYNC_TIME"
 
 
     /* ACTION */
 
     const val ACTION_BUTTON_REFRESH = "danggai.app.resinwidget.btn_refresh"
+    const val ACTION_APPWIDGET_UPDATE = "android.appwidget.action.APPWIDGET_UPDATE"
+
+    const val REFRESH_UI = "REFRESH_UI_ONLY"
+    const val REFRESH_DATA = "REFRESH_DATA"
 
     const val BACK_BUTTON_INTERVAL: Long = 2000
 

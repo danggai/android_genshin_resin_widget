@@ -1,15 +1,15 @@
 package danggai.app.resinwidget.util
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import androidx.work.workDataOf
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.worker.RefreshWorker
-import java.lang.Math.floor
 import java.math.BigInteger
 import java.security.MessageDigest
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.streams.asSequence
 
@@ -48,6 +48,36 @@ object CommonFunction {
         val md = MessageDigest.getInstance("MD5")
         return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
             .lowercase(Locale.getDefault())
+    }
+
+    fun getIntentAppWidgetAllUpdate(): Intent {
+        val broadcast= Intent()
+        broadcast.action = Constant.ACTION_APPWIDGET_UPDATE
+        broadcast.putExtra(Constant.REFRESH_DATA, true)
+        broadcast.putExtra(Constant.REFRESH_UI, true)
+
+        return broadcast
+    }
+
+    fun getIntentAppWidgetUiUpdate(): Intent {
+        val broadcast= Intent()
+        broadcast.action = Constant.ACTION_APPWIDGET_UPDATE
+        broadcast.putExtra(Constant.REFRESH_DATA, false)
+        broadcast.putExtra(Constant.REFRESH_UI, true)
+
+        return broadcast
+    }
+
+    fun getTimeSyncTimeFormat(): String {
+        return SimpleDateFormat(Constant.DATE_FORMAT_SYNC_TIME).format(Date())
+    }
+
+    fun secondToTime(second: String): String {
+        val time = second.toInt() / 3600
+        val minute = (second.toInt() - time * 3600) / 60
+        val second = second.toInt() % 600
+
+        return "${time}시간 ${minute}분 남음"
     }
 
 }
