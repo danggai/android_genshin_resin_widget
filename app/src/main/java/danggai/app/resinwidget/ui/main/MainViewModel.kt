@@ -75,9 +75,12 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     }
 
     fun onClickSave() {
-        lvSaveUserInfo.value = Event(true)
-
-        rxApiDailyNote.onNext(true)
+        if (lvUid.value.isEmpty() || lvCookie.value.isEmpty())  {
+            lvSaveUserInfo.value = Event(false)
+        } else {
+            lvSaveUserInfo.value = Event(true)
+            rxApiDailyNote.onNext(true)
+        }
     }
 
     fun onClickSetAutoRefreshPeriod(view: View) {

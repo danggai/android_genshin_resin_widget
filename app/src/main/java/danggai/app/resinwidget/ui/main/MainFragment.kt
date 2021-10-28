@@ -57,14 +57,21 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
     }
 
     private fun initLv() {
-        mVM.lvSaveUserInfo.observe(viewLifecycleOwner, EventObserver {
-            if (it) {
-                context?.let { it ->
+        mVM.lvSaveUserInfo.observe(viewLifecycleOwner, EventObserver { boolean ->
+            context?.let { _context ->
+                if (boolean) {
                     log.e()
-                    PreferenceManager.setStringUid(it, mVM.lvUid.value)
-                    PreferenceManager.setStringCookie(it, mVM.lvCookie.value)
+                    PreferenceManager.setStringUid(_context, mVM.lvUid.value)
+                    PreferenceManager.setStringCookie(_context, mVM.lvCookie.value)
 
-                    makeToast(it, getString(R.string.msg_toast_save_done))
+                    makeToast(_context, getString(R.string.msg_toast_save_done))
+
+                } else if (!boolean and mVM.lvUid.value.isEmpty()) {
+
+                    makeToast(_context, getString(R.string.msg_toast_uid_empty_error))
+                } else if (!boolean and mVM.lvCookie.value.isEmpty()) {
+
+                    makeToast(_context, getString(R.string.msg_toast_cookie_empty_error))
                 }
             }
         })

@@ -13,8 +13,11 @@
     <string name="msg_toast_dailynote_error_invalid_request">호요랩과 통신하는데 실패했어! 인터넷 환경을 확인하거나 나중에 다시 시도해 줘!</string>
     <string name="msg_toast_dailynote_error">전적 정보를 불러오는데 실패했어! 인터넷 환경을 확인하거나 나중에 다시 시도해 줘!</string>
 
+    <string name="msg_toast_uid_empty_error">uid 없이는 연동 할 수 없어! uid를 입력해 줘!</string>
+    <string name="msg_toast_cookie_empty_error">cookie 값 없이는 연동 할 수 없어! cookie를 입력해 줘!</string>
 
 
-    <string name="hint_uid">uid를 입력해줘!</string>
-    <string name="hint_cookie">Hoyolab의 쿠키를 입력해줘!</string>
+
+    <string name="hint_uid">uid를 입력해 줘!</string>
+    <string name="hint_cookie">Hoyolab의 쿠키를 입력해 줘!</string>
 </resources>
