@@ -3,6 +3,7 @@ package danggai.app.resinwidget.ui.widget
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.view.View
@@ -24,6 +25,7 @@ class ResinWidget : AppWidgetProvider() {
         log.e()
 
         appWidgetIds.forEach { appWidgetId ->
+            log.e()
             val views: RemoteViews = addViews(context)
             syncData(views, context)
 
@@ -39,7 +41,7 @@ class ResinWidget : AppWidgetProvider() {
             Constant.ACTION_BUTTON_REFRESH -> {
                 log.e()
 
-                //            this.onUpdate(context)
+                context?.let { CommonFunction.startOneTimeRefreshWorker(context) }
             }
             Constant.ACTION_APPWIDGET_UPDATE -> {
                 log.e()
@@ -47,6 +49,21 @@ class ResinWidget : AppWidgetProvider() {
                     log.e()
                     context?.let { CommonFunction.startOneTimeRefreshWorker(context) }
                 } else if (intent.getBooleanExtra(Constant.REFRESH_UI, false)) {
+                    log.e()
+
+                    context?.let { it ->
+                        log.e()
+
+                        val _intent = Intent(it, ResinWidget::class.java)
+                        _intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+
+                        val ids = AppWidgetManager.getInstance(it.applicationContext).getAppWidgetIds(ComponentName(it.applicationContext, ResinWidget::class.java))
+
+                        _intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+                        it.sendBroadcast(_intent)
+                    }
+
+                } else {
                     log.e()
                 }
             }
@@ -61,23 +78,24 @@ class ResinWidget : AppWidgetProvider() {
         }
     }
 
-    private fun setMyAction(context: Context?): PendingIntent {
-        log.e()
-
-        val intent = Intent(ACTION_BUTTON_REFRESH)
-        val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
-//        context?.let {
-//            this.onUpdate(context, manager, manager.getAppWidgetIds(ResinWidget))
-//        }
-
-        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-    }
-
     private fun addViews(context: Context?): RemoteViews {
         log.e()
-        val views = RemoteViews(context?.packageName, R.layout.resin_widget)
-        views.setOnClickPendingIntent(R.id.ll_sync, setMyAction(context))
-        views.setOnClickPendingIntent(R.id.iv_refersh, setMyAction(context))
+        val views = RemoteViews(context!!.packageName, R.layout.resin_widget)
+
+        val intentSync = Intent(context, ResinWidget::class.java)
+        intentSync.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+        intentSync.putExtra(Constant.REFRESH_DATA, true)
+        intentSync.putExtra(Constant.REFRESH_UI, true)
+
+        val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
+        val awId = manager.getAppWidgetIds(ComponentName(context.applicationContext, ResinWidget::class.java))
+
+        val pendingSync = PendingIntent.getBroadcast(context, 0, intentSync, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        views.setOnClickPendingIntent(R.id.ll_sync, pendingSync)
+
+        manager.updateAppWidget(awId, views)
+
         return views
     }
 

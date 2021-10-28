@@ -211,7 +211,12 @@ object PreferenceManager {
         setString(context, Constant.PREF_RECENT_SYNC_TIME, value)
     }
 
-
+    fun getLongAutoRefreshPeriod(context: Context): Long {
+        return getLong(context, Constant.PREF_AUTO_REFRESH_PERIOD, Constant.PREF_DEFAULT_REFRESH_PERIOD)
+    }
+    fun setLongAutoRefreshPeriod(context: Context, value: Long) {
+        setLong(context, Constant.PREF_AUTO_REFRESH_PERIOD, value)
+    }
 
 
 }

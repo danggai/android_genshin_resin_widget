@@ -86,6 +86,70 @@
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/refresh_cycle"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic"
+                    android:textColor="@color/black"
+                    />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    >
+
+                    <RadioButton
+                        android:id="@+id/rb_disable"
+                        style="@style/radioButton"
+                        android:text="Disable"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/rb_15m"
+                        style="@style/radioButton"
+                        android:text="15m"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/rb_30m"
+                        style="@style/radioButton"
+                        android:text="30m"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/rb_1h"
+                        style="@style/radioButton"
+                        android:text="1h"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/rb_2h"
+                        style="@style/radioButton"
+                        android:text="2h"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
+                        />
+
+                </RadioGroup>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

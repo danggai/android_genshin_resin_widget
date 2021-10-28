@@ -35,7 +35,6 @@ open class BaseFragment: Fragment() {
 
     fun BaseViewModel.setCommonFun(view: View) {
         lvMakeToast.observe(viewLifecycleOwner, EventObserver { msg ->
-            log.e()
             activity?.let {
                 if (msg.isNotBlank()) makeToast(it, msg)
             }

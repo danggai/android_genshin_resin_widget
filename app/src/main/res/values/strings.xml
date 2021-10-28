@@ -3,6 +3,7 @@
 
     <string name="uid">uid</string>
     <string name="cookie">cookie</string>
+    <string name="refresh_cycle">refresh cycle</string>
 
     <string name="msg_toast_back_button">한 번 더 눌러서 앱을 종료해요.</string>
     <string name="msg_toast_save_done">저장 완료!</string>

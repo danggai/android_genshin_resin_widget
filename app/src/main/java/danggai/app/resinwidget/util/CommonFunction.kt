@@ -3,14 +3,14 @@ package danggai.app.resinwidget.util
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.worker.RefreshWorker
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.streams.asSequence
 
 object CommonFunction {
@@ -37,11 +37,27 @@ object CommonFunction {
 
         val workManager = WorkManager.getInstance(context)
         val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
-//            .setInputData(workDataOf(Constant.PREF_CURRENT_RESIN to PreferenceManager.getIntCurrentResin(context)))
-//            .setInputData(workDataOf(Constant.PREF_MAX_RESIN to PreferenceManager.getIntMaxResin(context)))
-//            .setInputData(workDataOf(Constant.PREF_RESIN_RECOVERY_TIME to PreferenceManager.getStringResinRecoveryTime(context)))
+            .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to true))
             .build()
         workManager.enqueue(workRequest)
+    }
+
+    fun startUniquePeriodicRefreshWorker(context: Context) {
+        val period = PreferenceManager.getLongAutoRefreshPeriod(context)
+
+        startUniquePeriodicRefreshWorker(context, period)
+    }
+
+    fun startUniquePeriodicRefreshWorker(context: Context, period: Long) {
+        if (PreferenceManager.getLongAutoRefreshPeriod(context) == -1L) return
+        log.e("period -> $period")
+
+        val workManager = WorkManager.getInstance(context)
+        val workRequest = PeriodicWorkRequestBuilder<RefreshWorker>(period, TimeUnit.MINUTES)
+            .setInitialDelay(period, TimeUnit.MINUTES)
+            .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to false))
+            .build()
+        workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
     }
 
     private fun encodeToMD5(input:String): String {

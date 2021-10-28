@@ -43,6 +43,7 @@ class RefreshWorker (context: Context, workerParams: WorkerParameters, private v
     }
 
     private fun updateData(dailyNote: DailyNote) {
+        log.e()
         val context = applicationContext
 
         PreferenceManager.setIntCurrentResin(context, dailyNote.current_resin)
@@ -50,15 +51,7 @@ class RefreshWorker (context: Context, workerParams: WorkerParameters, private v
         PreferenceManager.setStringResinRecoveryTime(context, dailyNote.resin_recovery_time?:"-1")
         PreferenceManager.setStringRecentSyncTime(context, CommonFunction.getTimeSyncTimeFormat())
 
-        val appWidgetManager = AppWidgetManager.getInstance(context)
-
         context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
-
-//        val intent = Intent(context, ResinWidget::class.java)
-//        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-//        val ids: IntArray = AppWidgetManager.getInstance(getApplication())
-//            .getAppWidgetIds(ComponentName(getApplication(), ResinWidget::class.java))
-//        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
     }
 
     override suspend fun doWork(): Result {

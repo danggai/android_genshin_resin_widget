@@ -39,6 +39,18 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
     }
 
     private fun initUi() {
+        context?.let {
+            mVM.lvAutoRefreshPeriod.value = PreferenceManager.getLongAutoRefreshPeriod(it)
+        }
+
+        when(mVM.lvAutoRefreshPeriod.value) {
+            -1L -> binding.rbDisable.isChecked = true
+            15L -> binding.rb15m.isChecked = true
+            30L -> binding.rb30m.isChecked = true
+            60L -> binding.rb1h.isChecked = true
+            120L -> binding.rb2h.isChecked = true
+        }
+
         context?.let { it ->
             mVM.initUI(PreferenceManager.getStringUid(it), PreferenceManager.getStringCookie(it))
         }
@@ -61,12 +73,18 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
             if (it) {
                 context?.let { it ->
                     log.e()
-                    requireActivity().sendBroadcast(CommonFunction.getIntentAppWidgetAllUpdate())
+                    requireActivity().sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+                    CommonFunction.startUniquePeriodicRefreshWorker(it)
                 }
             }
         })
 
-
+        mVM.lvSetAutoRefreshPeriod.observe(viewLifecycleOwner, EventObserver { period ->
+            activity?.let { act ->
+                log.e(period)
+                PreferenceManager.setLongAutoRefreshPeriod(act, period)
+            }
+        })
     }
 
 }

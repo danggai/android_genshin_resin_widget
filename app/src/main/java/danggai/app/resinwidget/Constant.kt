@@ -27,6 +27,13 @@ object Constant {
     const val RETCODE_ERROR_INVALID_REQUEST = "-1"
 
 
+
+    /* WORKER */
+
+    const val WORKER_UNIQUE_NAME_AUTO_REFRESH = "AutoRefreshWork"
+
+
+
     /* FORMAT, REGEX */
 
     const val PATTERN_ENG_NUM_ONLY = "^[a-zA-Z0-9]+$"
@@ -36,15 +43,26 @@ object Constant {
 
 
 
+    /* ARGUMENT */
+
+    const val ARG_IS_ONE_TIME = "ARG_IS_ONE_TIME"
+
+
+
     /* PREFERENCE */
 
     const val PREF_COOKIE = "PREF_COOKIE"
     const val PREF_UID = "PREF_UID"
 
+    const val PREF_AUTO_REFRESH = "PREF_AUTO_REFRESH"
+    const val PREF_AUTO_REFRESH_PERIOD = "PREF_AUTO_REFRESH_PERIOD"
+
     const val PREF_CURRENT_RESIN = "PREF_CURRENT_RESIN"
     const val PREF_MAX_RESIN = "PREF_MAX_RESIN"
     const val PREF_RESIN_RECOVERY_TIME = "PREF_RESIN_RECOVERY_TIME"
     const val PREF_RECENT_SYNC_TIME = "PREF_RECENT_SYNC_TIME"
+
+    const val PREF_DEFAULT_REFRESH_PERIOD = 15L
 
 
     /* ACTION */
