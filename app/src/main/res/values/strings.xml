@@ -22,4 +22,13 @@
     <string name="hint_cookie">Hoyolab의 쿠키를 입력해 줘!</string>
 
     <string name="invalid_user_info">유저 정보 없이는\n사용할 수 없어!</string>
+
+
+    <!-- Google Ads -->
+    <string name="google_ads_app_id">ca-app-pub-8407462596213276~4738084181</string>
+    <string name="google_ads_banner_id">ca-app-pub-8407462596213276/9798839174</string>
+
+    <string name="google_ads_test_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="google_ads_test_banner_id">ca-app-pub-3940256099942544/6300978111</string>
+
 </resources>

@@ -3,6 +3,10 @@ package danggai.app.resinwidget.ui.main
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
+import danggai.app.resinwidget.BuildConfig
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.MainFragmentBinding
 import danggai.app.resinwidget.ui.BindingFragment
@@ -20,6 +24,7 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
     }
 
     private lateinit var mVM: MainViewModel
+    private lateinit var mAdView : AdView
 
     @LayoutRes
     override fun getLayoutResId() = R.layout.main_fragment
@@ -35,6 +40,7 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
         }
 
         initUi()
+        initAd()
         initLv()
     }
 
@@ -97,6 +103,16 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
                 PreferenceManager.setLongAutoRefreshPeriod(act, period)
             }
         })
+    }
+
+    private fun initAd() {
+        log.e()
+        MobileAds.initialize(requireContext())
+
+        mAdView = binding.adView
+
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
     }
 
 }

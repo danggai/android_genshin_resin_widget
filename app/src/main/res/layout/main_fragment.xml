@@ -23,6 +23,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/adView"
             >
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -170,7 +171,19 @@
 
         </androidx.core.widget.NestedScrollView>
 
-
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            ads:layout_constraintBottom_toBottomOf="parent"
+            ads:layout_constraintLeft_toLeftOf="parent"
+            ads:layout_constraintRight_toRightOf="parent"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/google_ads_banner_id"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

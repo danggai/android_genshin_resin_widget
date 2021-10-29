@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "419741670184",
+    "project_id": "genshin-resin-s",
+    "storage_bucket": "genshin-resin-s.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419741670184:android:fde373ba4ee6b487a9ce1d",
+        "android_client_info": {
+          "package_name": "danggai.app.resinwidget"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "419741670184-rrjumkq9me4rt35eq5t5fm5tvic2op0o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCva1C8nYpvFvnN_LRaC9AZGm5Jru-Oa4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "419741670184-rrjumkq9me4rt35eq5t5fm5tvic2op0o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

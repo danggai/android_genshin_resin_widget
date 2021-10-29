@@ -49,10 +49,6 @@ class ResinWidget : AppWidgetProvider() {
                 val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
                 val n = appWidgetIds.size
-                for (i in 0 until n) {
-                    val appWidgetId = appWidgetIds[i]
-                    val view = RemoteViews(context.packageName, R.layout.resin_widget)
-                }
 
                 if (intent.getBooleanExtra(Constant.REFRESH_DATA, false)) {
                     log.e("REFRESH_DATA")

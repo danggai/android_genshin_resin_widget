@@ -3,6 +3,7 @@ package danggai.app.resinwidget.ui.main
 import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.LayoutRes
+import com.google.android.gms.ads.MobileAds
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.MainActivityBinding

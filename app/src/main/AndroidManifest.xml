@@ -41,18 +41,10 @@
             android:authorities="danggai.app.resinwidget.App.workmanager-init"
             tools:node="remove"/>
 
-<!--        <receiver-->
-<!--            android:name=".ui.widget.ResinWidget"-->
-<!--            android:label="@string/app_name">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />-->
-<!--                <action android:name="danggai.app.resinwidget.btn_refresh" />-->
-<!--            </intent-filter>-->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/google_ads_app_id"/>
 
-<!--            <meta-data-->
-<!--                android:name="android.appwidget.provider"-->
-<!--                android:resource="@xml/resin_widget_info" />-->
-<!--        </receiver>-->
     </application>
 
 </manifest>
