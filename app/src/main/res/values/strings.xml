@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Genshin Resin Checker</string>
+    <string name="app_name">Genshin Resin Widget</string>
 
     <string name="uid">uid</string>
     <string name="cookie">cookie</string>
