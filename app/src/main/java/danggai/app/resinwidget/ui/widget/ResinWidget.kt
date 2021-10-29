@@ -1,5 +1,6 @@
 package danggai.app.resinwidget.ui.widget
 
+import android.R.style.Widget
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -29,12 +30,12 @@ class ResinWidget : AppWidgetProvider() {
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
     }
-
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
         val action = intent?.action
         log.e()
         when (action) {
+
             Constant.ACTION_BUTTON_REFRESH -> {
                 log.e("ACTION_BUTTON_REFRESH")
 
@@ -42,11 +43,24 @@ class ResinWidget : AppWidgetProvider() {
             }
             Constant.ACTION_APPWIDGET_UPDATE -> {
                 log.e("ACTION_APPWIDGET_UPDATE")
+
+                val thisWidget = ComponentName(context!!, ResinWidget::class.java)
+                val appWidgetManager = AppWidgetManager.getInstance(context)
+                val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
+
+                val n = appWidgetIds.size
+                for (i in 0 until n) {
+                    val appWidgetId = appWidgetIds[i]
+                    val view = RemoteViews(context.packageName, R.layout.resin_widget)
+                }
+
                 if (intent.getBooleanExtra(Constant.REFRESH_DATA, false)) {
                     log.e("REFRESH_DATA")
+                    updateAppWidget(context, appWidgetManager, appWidgetIds)
                     context?.let { CommonFunction.startOneTimeRefreshWorker(context) }
                 } else if (intent.getBooleanExtra(Constant.REFRESH_UI, false)) {
                     log.e("REFRESH_UI")
+                    updateAppWidget(context, appWidgetManager, appWidgetIds)
 
                     context?.let { it ->
 
@@ -115,6 +129,28 @@ class ResinWidget : AppWidgetProvider() {
                 view.setViewVisibility(R.id.ll_disable, View.GONE)
             }
 
+        }
+    }
+
+    internal fun updateAppWidget(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
+//    val widgetText = context.getString(R.string.appwidget_text)
+        // Construct the RemoteViews object
+//        val views = RemoteViews(context.packageName, R.layout.resin_widget)
+
+        appWidgetIds.forEach { appWidgetId ->
+            log.e()
+            val view = RemoteViews(context.packageName, R.layout.resin_widget)
+
+            view.setViewVisibility(R.id.progress1, View.VISIBLE)
+            view.setViewVisibility(R.id.iv_resin, View.GONE)
+            view.setViewVisibility(R.id.ll_resin, View.GONE)
+            view.setViewVisibility(R.id.ll_disable, View.GONE)
+
+            appWidgetManager.updateAppWidget(appWidgetId, view)
         }
     }
 }

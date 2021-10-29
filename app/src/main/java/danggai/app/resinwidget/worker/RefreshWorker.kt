@@ -77,6 +77,7 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
                 else -> log.e("Unknown exception!")
             }
             log.e(e.message.toString())
+            context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
             Result.failure()
         }
     }
