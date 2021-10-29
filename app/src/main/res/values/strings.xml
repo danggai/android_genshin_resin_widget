@@ -20,4 +20,6 @@
 
     <string name="hint_uid">uid를 입력해 줘!</string>
     <string name="hint_cookie">Hoyolab의 쿠키를 입력해 줘!</string>
+
+    <string name="invalid_user_info">유저 정보 없이는\n사용할 수 없어!</string>
 </resources>

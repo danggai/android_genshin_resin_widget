@@ -16,9 +16,6 @@ import danggai.app.resinwidget.util.log
 
 
 class ResinWidget : AppWidgetProvider() {
-    companion object {
-        private const val ACTION_BUTTON_REFRESH = Constant.ACTION_BUTTON_REFRESH
-    }
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
@@ -100,13 +97,24 @@ class ResinWidget : AppWidgetProvider() {
 
     private fun syncData(view: RemoteViews, context: Context?) {
         context?.let { _context ->
-            log.e()
-            view.setTextViewText(R.id.tv_resin, PreferenceManager.getIntCurrentResin(_context).toString())
-            view.setTextViewText(R.id.tv_resin_max, "/"+PreferenceManager.getIntMaxResin(_context).toString())
-            view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToTime(PreferenceManager.getStringResinRecoveryTime(_context)))
-            view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getStringRecentSyncTime(_context))
-            view.setViewVisibility(R.id.progress1, View.GONE)
-            view.setViewVisibility(R.id.ll_resin, View.VISIBLE)
+            if (!PreferenceManager.getBooleanIsValidUserData(context)) {
+                log.e()
+                view.setViewVisibility(R.id.progress1, View.GONE)
+                view.setViewVisibility(R.id.iv_resin, View.GONE)
+                view.setViewVisibility(R.id.ll_resin, View.GONE)
+                view.setViewVisibility(R.id.ll_disable, View.VISIBLE)
+            } else {
+                log.e()
+                view.setTextViewText(R.id.tv_resin, PreferenceManager.getIntCurrentResin(_context).toString())
+                view.setTextViewText(R.id.tv_resin_max, "/"+PreferenceManager.getIntMaxResin(_context).toString())
+                view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToTime(PreferenceManager.getStringResinRecoveryTime(_context)))
+                view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getStringRecentSyncTime(_context))
+                view.setViewVisibility(R.id.progress1, View.GONE)
+                view.setViewVisibility(R.id.iv_resin, View.VISIBLE)
+                view.setViewVisibility(R.id.ll_resin, View.VISIBLE)
+                view.setViewVisibility(R.id.ll_disable, View.GONE)
+            }
+
         }
     }
 }

@@ -1,6 +1,5 @@
 package danggai.app.resinwidget.worker
 
-import android.appwidget.AppWidgetManager
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -11,6 +10,8 @@ import danggai.app.resinwidget.util.CommonFunction
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
 import kotlinx.coroutines.coroutineScope
+import java.net.ConnectException
+import java.net.UnknownHostException
 
 class RefreshWorker (val context: Context, workerParams: WorkerParameters, private val api: ApiRepository) :
     CoroutineWorker(context, workerParams) {
@@ -70,6 +71,11 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
 
             Result.success()
         } catch (e: java.lang.Exception) {
+            when (e) {
+                is UnknownHostException -> log.e("Unknown host!")
+                is ConnectException -> log.e("No internet!")
+                else -> log.e("Unknown exception!")
+            }
             log.e(e.message.toString())
             Result.failure()
         }
