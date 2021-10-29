@@ -79,6 +79,7 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
         mVM.lvSendWidgetSyncBroadcast.observe(viewLifecycleOwner, EventObserver { dailyNote ->
             context?.let { it ->
                 log.e()
+                PreferenceManager.setBooleanIsValidUserData(it, true)
 
                 PreferenceManager.setIntCurrentResin(it, dailyNote.current_resin)
                 PreferenceManager.setIntMaxResin(it, dailyNote.max_resin)

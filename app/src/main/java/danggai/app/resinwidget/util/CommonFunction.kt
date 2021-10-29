@@ -35,6 +35,11 @@ object CommonFunction {
 //        if (!PreferenceManager.getBooleanAutoRefresh(context)) return
         log.e()
 
+        if (!PreferenceManager.getBooleanIsValidUserData(context)) {
+            log.e()
+            return
+        }
+
         val workManager = WorkManager.getInstance(context)
         val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
             .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to true))
@@ -49,7 +54,12 @@ object CommonFunction {
     }
 
     fun startUniquePeriodicRefreshWorker(context: Context, period: Long) {
-        if (PreferenceManager.getLongAutoRefreshPeriod(context) == -1L) return
+        if (PreferenceManager.getLongAutoRefreshPeriod(context) == -1L ||
+            !PreferenceManager.getBooleanIsValidUserData(context)) {
+                log.e()
+                return
+        }
+
         log.e("period -> $period")
 
         val workManager = WorkManager.getInstance(context)

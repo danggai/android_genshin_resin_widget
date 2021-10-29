@@ -218,5 +218,12 @@ object PreferenceManager {
         setLong(context, Constant.PREF_AUTO_REFRESH_PERIOD, value)
     }
 
+    fun getBooleanIsValidUserData(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)
+    }
+    fun setBooleanIsValidUserData(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_IS_VALID_USERDATA, value)
+    }
+
 
 }

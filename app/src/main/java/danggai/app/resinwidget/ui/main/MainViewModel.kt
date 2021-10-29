@@ -39,6 +39,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                         log.e(res)
                         when (res.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
+                                lvSaveUserInfo.value = Event(true)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_success))
 
                                 /*res 저장 후 fragment 에서 값 연동*/
@@ -61,6 +62,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
             }, {
                 it.message?.let { msg ->
                     lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error))
+                    initRx()
                     log.e(msg)
                 }
             }).addCompositeDisposable()
@@ -78,7 +80,6 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
         if (lvUid.value.isEmpty() || lvCookie.value.isEmpty())  {
             lvSaveUserInfo.value = Event(false)
         } else {
-            lvSaveUserInfo.value = Event(true)
             rxApiDailyNote.onNext(true)
         }
     }

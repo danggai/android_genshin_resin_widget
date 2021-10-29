@@ -12,7 +12,7 @@ import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
 import kotlinx.coroutines.coroutineScope
 
-class RefreshWorker (context: Context, workerParams: WorkerParameters, private val api: ApiRepository) :
+class RefreshWorker (val context: Context, workerParams: WorkerParameters, private val api: ApiRepository) :
     CoroutineWorker(context, workerParams) {
 
     private suspend fun apiDailyNote(uid: String, cookie: String): DailyNote {
@@ -56,6 +56,8 @@ class RefreshWorker (context: Context, workerParams: WorkerParameters, private v
 
     override suspend fun doWork(): Result {
         log.e()
+        CommonFunction.startUniquePeriodicRefreshWorker(context)
+
         return try {
             coroutineScope {
                 val uid = PreferenceManager.getStringUid(applicationContext)
