@@ -39,7 +39,7 @@ class ResinWidget : AppWidgetProvider() {
             Constant.ACTION_BUTTON_REFRESH -> {
                 log.e("ACTION_BUTTON_REFRESH")
 
-                context?.let { CommonFunction.startOneTimeRefreshWorker(context) }
+                context?.let { CommonFunction.startUniquePeriodicRefreshWorker(context) }
             }
             Constant.ACTION_APPWIDGET_UPDATE -> {
                 log.e("ACTION_APPWIDGET_UPDATE")
@@ -52,6 +52,9 @@ class ResinWidget : AppWidgetProvider() {
                     log.e("REFRESH_DATA")
                     updateAppWidget(context, appWidgetManager, appWidgetIds)
                     context?.let { CommonFunction.startOneTimeRefreshWorker(context) }
+                    context?.let {
+                        CommonFunction.startUniquePeriodicRefreshWorker(context)
+                    }
                 } else if (intent.getBooleanExtra(Constant.REFRESH_UI, false)) {
                     log.e("REFRESH_UI")
                     updateAppWidget(context, appWidgetManager, appWidgetIds)
@@ -78,7 +81,7 @@ class ResinWidget : AppWidgetProvider() {
         super.onEnabled(context)
         log.e()
         context?.let {
-            CommonFunction.startOneTimeRefreshWorker(context)
+            CommonFunction.startUniquePeriodicRefreshWorker(context)
         }
     }
 
