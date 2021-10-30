@@ -36,7 +36,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
             .subscribe ({ res ->
                 when (res.meta.code) {
                     Constant.META_CODE_SUCCESS -> {
-                        log.e(res)
+                        log.e()
                         when (res.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
                                 lvSaveUserInfo.value = Event(true)

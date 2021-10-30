@@ -48,8 +48,6 @@ class ResinWidget : AppWidgetProvider() {
                 val appWidgetManager = AppWidgetManager.getInstance(context)
                 val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
-                val n = appWidgetIds.size
-
                 if (intent.getBooleanExtra(Constant.REFRESH_DATA, false)) {
                     log.e("REFRESH_DATA")
                     updateAppWidget(context, appWidgetManager, appWidgetIds)

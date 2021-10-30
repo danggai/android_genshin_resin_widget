@@ -43,12 +43,6 @@ object Constant {
 
 
 
-    /* ARGUMENT */
-
-    const val ARG_IS_ONE_TIME = "ARG_IS_ONE_TIME"
-
-
-
     /* PREFERENCE */
 
     const val PREF_COOKIE = "PREF_COOKIE"
