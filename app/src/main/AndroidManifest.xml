@@ -7,15 +7,24 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="danggai.app.resinwidget.App"
+        android:name=".App"
         android:allowBackup="true"
+        android:allowClearUserData="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:allowClearUserData="true"
-        android:theme="@style/Theme.Genshin_resin_widget">
+        android:theme="@style/Theme.Genshin_resin_widget"
+        android:usesCleartextTraffic="true">
+
+        <service
+            android:name=".service.TemporaryNotificationListenerService"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService"/>
+            </intent-filter>
+        </service>
 
         <receiver android:name=".ui.widget.ResinWidget">
             <intent-filter>
@@ -39,12 +48,11 @@
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="danggai.app.resinwidget.App.workmanager-init"
-            tools:node="remove"/>
+            tools:node="remove" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/google_ads_app_id"/>
-
+            android:value="@string/google_ads_app_id" />
     </application>
 
 </manifest>

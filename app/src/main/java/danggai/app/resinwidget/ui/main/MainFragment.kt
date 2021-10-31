@@ -1,12 +1,15 @@
 package danggai.app.resinwidget.ui.main
 
+import android.app.Activity
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import danggai.app.resinwidget.BuildConfig
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.MainFragmentBinding
 import danggai.app.resinwidget.ui.BindingFragment
@@ -101,6 +104,24 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
             activity?.let { act ->
                 log.e(period)
                 PreferenceManager.setLongAutoRefreshPeriod(act, period)
+            }
+        })
+
+        mVM.lvWidgetRefreshNotWork.observe(viewLifecycleOwner, EventObserver {
+            activity?.let {
+                AlertDialog.Builder(requireActivity())
+                    .setTitle(R.string.widget_refresh_not_work)
+                    .setMessage(R.string.widget_refresh_not_work_msg)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.ok) { dialog, whichButton ->
+                        log.e()
+                        startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
+                    }
+                    .setNegativeButton(R.string.cancel) { dialog, whichButton ->
+                        log.e()
+                    }
+                    .create()
+                    .show()
             }
         })
     }

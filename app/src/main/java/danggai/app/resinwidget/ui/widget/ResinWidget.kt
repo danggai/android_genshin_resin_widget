@@ -1,6 +1,5 @@
 package danggai.app.resinwidget.ui.widget
 
-import android.R.style.Widget
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -11,6 +10,7 @@ import android.view.View
 import android.widget.RemoteViews
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
+import danggai.app.resinwidget.ui.main.MainActivity
 import danggai.app.resinwidget.util.CommonFunction
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
@@ -30,16 +30,16 @@ class ResinWidget : AppWidgetProvider() {
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
     }
+
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
         val action = intent?.action
-        log.e()
+        log.e(action.toString())
         when (action) {
 
             Constant.ACTION_BUTTON_REFRESH -> {
                 log.e("ACTION_BUTTON_REFRESH")
 
-                context?.let { CommonFunction.startUniquePeriodicRefreshWorker(context) }
             }
             Constant.ACTION_APPWIDGET_UPDATE -> {
                 log.e("ACTION_APPWIDGET_UPDATE")
@@ -97,9 +97,8 @@ class ResinWidget : AppWidgetProvider() {
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
         val awId = manager.getAppWidgetIds(ComponentName(context.applicationContext, ResinWidget::class.java))
 
-        val pendingSync = PendingIntent.getBroadcast(context, 0, intentSync, PendingIntent.FLAG_UPDATE_CURRENT)
+        views.setOnClickPendingIntent(R.id.ll_sync, PendingIntent.getBroadcast(context, 0, intentSync, PendingIntent.FLAG_UPDATE_CURRENT))
 
-        views.setOnClickPendingIntent(R.id.ll_sync, pendingSync)
 
         manager.updateAppWidget(awId, views)
 

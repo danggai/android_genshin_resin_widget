@@ -1,26 +1,18 @@
 package danggai.app.resinwidget.worker
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
-import androidx.work.CoroutineWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.data.api.ApiRepository
 import danggai.app.resinwidget.data.local.DailyNote
 import danggai.app.resinwidget.util.CommonFunction
-import danggai.app.resinwidget.util.Event
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Delay
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.net.ConnectException
 import java.net.UnknownHostException
 
@@ -39,7 +31,7 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
 
     private fun initRx() {
         rxApiDailyNote
-            .observeOn(Schedulers.newThread())
+            .observeOn(Schedulers.io())
             .filter { it }
             .switchMap {
                 val uid = PreferenceManager.getStringUid(applicationContext)
@@ -47,7 +39,6 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
 
                 api.dailyNote(uid, cookie)
             }
-            .observeOn(Schedulers.io())
             .subscribe ({ res ->
                 when (res.meta.code) {
                     Constant.META_CODE_SUCCESS -> {
@@ -73,6 +64,7 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
             })
             .addCompositeDisposable()
     }
+
     private fun updateData(dailyNote: DailyNote) {
         log.e()
         val context = applicationContext

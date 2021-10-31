@@ -20,6 +20,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     var lvSaveUserInfo = MutableLiveData<Event<Boolean>>()
     var lvSendWidgetSyncBroadcast = MutableLiveData<Event<DailyNote>>()
     var lvSetAutoRefreshPeriod = MutableLiveData<Event<Long>>()
+    var lvWidgetRefreshNotWork = MutableLiveData<Event<Boolean>>()
 
     var lvAutoRefreshPeriod: NonNullMutableLiveData<Long> = NonNullMutableLiveData(15L)
     val lvUid: NonNullMutableLiveData<String> = NonNullMutableLiveData("")
@@ -77,11 +78,17 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     }
 
     fun onClickSave() {
+        log.e()
         if (lvUid.value.isEmpty() || lvCookie.value.isEmpty())  {
             lvSaveUserInfo.value = Event(false)
         } else {
             rxApiDailyNote.onNext(true)
         }
+    }
+
+    fun onClickWidgetRefreshNotWork() {
+        log.e()
+        lvWidgetRefreshNotWork.value = Event(true)
     }
 
     fun onClickSetAutoRefreshPeriod(view: View) {

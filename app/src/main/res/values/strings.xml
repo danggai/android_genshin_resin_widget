@@ -4,6 +4,12 @@
     <string name="uid">uid</string>
     <string name="cookie">cookie</string>
     <string name="refresh_cycle">refresh cycle</string>
+    <string name="apply">Apply</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+
+    <string name="widget_refresh_not_work">위젯에서 새로고침이 안될 때</string>
+    <string name="widget_refresh_not_work_msg">현재 일부 기종에서 위젯 내 레진 새로고침이 정상적으로 작동하지 않는 경우, 다음 화면에서 <b>Genshin Resin Widget</b>을 접근 허용 하는 것으로 해결할 수 있습니다.\n\n해당 권한은 앱이 기기가 수신하는 알림에 접근할 수 있도록 하는 권한이나, <b>Genshin Resin Widget</b>은 알림 수신 서비스를 HoYoLab 데이터 수신 목적 외에는 이용하지 않으며, 사용자의 개인 정보에 <b>절대</b> 접근하지 않습니다.\n\n해당 문제 수정 후 해당 권한 요청은 제거 예정입니다.\n불편을 끼쳐 죄송합니다.</string>
 
     <string name="msg_toast_back_button">한 번 더 눌러서 앱을 종료해요.</string>
     <string name="msg_toast_save_done">저장 완료!</string>
