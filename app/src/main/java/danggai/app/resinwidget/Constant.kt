@@ -62,7 +62,6 @@ object Constant {
 
     /* ACTION */
 
-    const val ACTION_BUTTON_REFRESH = "danggai.app.resinwidget.btn_refresh"
     const val ACTION_APPWIDGET_UPDATE = "android.appwidget.action.APPWIDGET_UPDATE"
 
     const val REFRESH_UI = "REFRESH_UI_ONLY"
