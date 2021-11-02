@@ -83,6 +83,8 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
         if (lvUid.value.isEmpty() || lvCookie.value.isEmpty())  {
             lvSaveUserInfo.value = Event(false)
         } else {
+            lvUid.value = lvUid.value.trim()
+            lvCookie.value = lvCookie.value.trim()
             rxApiDailyNote.onNext(true)
         }
     }
