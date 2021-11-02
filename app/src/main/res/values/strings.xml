@@ -3,6 +3,7 @@
 
     <string name="uid">uid</string>
     <string name="cookie">cookie</string>
+    <string name="how_to_get_cookie">How can I get cookie?</string>
     <string name="refresh_cycle">refresh cycle</string>
     <string name="apply">Apply</string>
 
@@ -30,6 +31,7 @@
 
     <string name="invalid_user_info">유저 정보 없이는\n사용할 수 없어!</string>
 
+    <string name="url_how_can_i_get_cookie">https://github.com/danggai/android_genshin_resin_widget/blob/master/how_to_get_hoyolab_cookie.md</string>
 
     <!-- Google Ads -->
     <string name="google_ads_app_id">ca-app-pub-8407462596213276~4738084181</string>

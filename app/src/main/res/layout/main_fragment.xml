@@ -86,9 +86,22 @@
                     android:textColorHint="@color/gray"
                     />
 
-                <Space
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="15dp" />
+                    android:layout_height="wrap_content"
+                    android:text="@string/how_to_get_cookie"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:textColor="@color/light_blue_600"
+                    android:background="?attr/selectableItemBackground"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:onClick="@{(v)->vm.onClickHowCanIGetCookie()}"
+                    />
+
+<!--                <Space-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="15dp" />-->
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"

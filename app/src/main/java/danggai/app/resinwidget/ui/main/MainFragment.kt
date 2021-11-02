@@ -1,6 +1,7 @@
 package danggai.app.resinwidget.ui.main
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
@@ -16,6 +17,7 @@ import danggai.app.resinwidget.util.EventObserver
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
 import org.koin.androidx.viewmodel.ext.android.getViewModel
+
 
 class MainFragment : BindingFragment<MainFragmentBinding>() {
 
@@ -121,6 +123,13 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
                     }
                     .create()
                     .show()
+            }
+        })
+
+        mVM.lvHowCanIGetCookie.observe(viewLifecycleOwner, EventObserver {
+            activity?.let {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_how_can_i_get_cookie)))
+                startActivity(intent)
             }
         })
     }
