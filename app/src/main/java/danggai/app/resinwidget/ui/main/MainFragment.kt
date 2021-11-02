@@ -1,5 +1,7 @@
 package danggai.app.resinwidget.ui.main
 
+import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -54,10 +56,10 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
 
         when(mVM.lvAutoRefreshPeriod.value) {
             -1L -> binding.rbDisable.isChecked = true
-            8L -> binding.rb8m.isChecked = true
             15L -> binding.rb15m.isChecked = true
             30L -> binding.rb30m.isChecked = true
             60L -> binding.rb1h.isChecked = true
+            120L -> binding.rb2h.isChecked = true
         }
 
         context?.let { it ->

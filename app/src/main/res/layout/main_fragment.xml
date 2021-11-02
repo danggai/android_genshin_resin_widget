@@ -138,14 +138,6 @@
                         />
 
                     <RadioButton
-                        android:id="@+id/rb_8m"
-                        style="@style/radioButton"
-                        android:text="8m"
-                        android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
-                        />
-
-                    <RadioButton
                         android:id="@+id/rb_15m"
                         style="@style/radioButton"
                         android:text="15m"
@@ -165,6 +157,14 @@
                         android:id="@+id/rb_1h"
                         style="@style/radioButton"
                         android:text="1h"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/rb_2h"
+                        style="@style/radioButton"
+                        android:text="2h"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
                         />

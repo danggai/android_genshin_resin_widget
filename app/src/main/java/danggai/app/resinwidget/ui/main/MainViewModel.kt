@@ -95,10 +95,10 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     fun onClickSetAutoRefreshPeriod(view: View) {
         log.e()
         val period = when (view.id) {
-            R.id.rb_8m -> 8L
             R.id.rb_15m -> 15L
             R.id.rb_30m -> 30L
             R.id.rb_1h -> 60L
+            R.id.rb_2h -> 120L
             else -> -1L
         }
 
