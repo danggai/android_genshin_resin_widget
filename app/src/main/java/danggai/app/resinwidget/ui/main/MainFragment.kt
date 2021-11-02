@@ -111,12 +111,13 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
                     .setTitle(R.string.widget_refresh_not_work)
                     .setMessage(R.string.widget_refresh_not_work_msg)
                     .setCancelable(false)
-                    .setPositiveButton(R.string.ok) { dialog, whichButton ->
+                    .setPositiveButton(R.string.data_save_mode_disable) { dialog, whichButton ->
+                        log.e()
+                        startActivity(Intent("android.settings.DATA_USAGE_SETTINGS"))
+                    }
+                    .setNegativeButton(R.string.permission_accept) { dialog, whichButton ->
                         log.e()
                         startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
-                    }
-                    .setNegativeButton(R.string.cancel) { dialog, whichButton ->
-                        log.e()
                     }
                     .create()
                     .show()
