@@ -1,6 +1,7 @@
 package danggai.app.resinwidget.ui.main
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -150,8 +151,8 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
         mVM.lvWidgetRefreshNotWork.observe(viewLifecycleOwner, EventObserver {
             activity?.let {
                 AlertDialog.Builder(requireActivity())
-                    .setTitle(R.string.widget_refresh_not_work)
-                    .setMessage(R.string.widget_refresh_not_work_msg)
+                    .setTitle(R.string.dialog_widget_refresh_not_work)
+                    .setMessage(R.string.dialog_msg_widget_refresh_not_work)
                     .setCancelable(false)
                     .setPositiveButton(R.string.data_save_mode_disable) { dialog, whichButton ->
                         log.e()
@@ -185,9 +186,21 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
         mVM.lvHowCanIGetCookie.observe(viewLifecycleOwner, EventObserver {
             activity?.let {
                 log.e()
-//                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_how_can_i_get_cookie)))
-//                startActivity(intent)
-                CookieWebViewActivity.startActivity(requireActivity())
+                AlertDialog.Builder(requireActivity())
+                    .setTitle(R.string.dialog_native_hoyolab_account)
+                    .setMessage(R.string.dialog_msg_native_hoyolab_account)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.native_hoyolab_account) { dialog, whichButton ->
+                        log.e()
+                        CookieWebViewActivity.startActivity(requireActivity())
+                    }
+                    .setNegativeButton(R.string.sns_account) { dialog, whichButton ->
+                        log.e()
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_how_can_i_get_cookie)))
+                        startActivity(intent)
+                    }
+                    .create()
+                    .show()
             }
         })
     }

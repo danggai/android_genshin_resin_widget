@@ -262,7 +262,7 @@
                     android:onClick="@{(v)->vm.onClickWidgetRefreshNotWork()}"
                     android:paddingHorizontal="20dp"
                     android:paddingVertical="10dp"
-                    android:text="@string/widget_refresh_not_work"
+                    android:text="@string/dialog_widget_refresh_not_work"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"

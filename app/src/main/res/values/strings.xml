@@ -15,10 +15,16 @@
     <string name="permission_accept">권한 허용</string>
     <string name="data_save_mode_disable">데이터 절약 모드 해제</string>
 
+    <string name="native_hoyolab_account">호요랩 계정</string>
+    <string name="sns_account">SNS 계정</string>
+
     <string name="data_save_mode_not_supported">Android7 미만에서는 데이터 절약 모드를 지원하지 않습니다.</string>
 
-    <string name="widget_refresh_not_work">위젯에서 새로고침이 안될 때</string>
-    <string name="widget_refresh_not_work_msg">Android7 이상에서 <b>데이터 절약 모드</b>를 사용 중인 경우, 위젯에서 새로고침이 정상적으로 작동하지 않습니다.\n\n이 문제는 설정에서 데이터 절약 모드를 비활성화하거나, 다음 화면에서 Genshin Resin Widget을 접근 허용 하는 것으로 우회할 수 있습니다.\n\n해당 권한은 앱이 기기가 수신하는 알림에 접근할 수 있도록 하는 권한이나, <b>Genshin Resin Widget</b>은 알림 수신 서비스를 HoYoLab 데이터 수신 목적 외에는 이용하지 않으며, 사용자의 개인 정보에 <b>절대</b> 접근하지 않습니다.\n\nGenshin Resin Widget은 데이터 절약 모드 비활성화를 권장합니다.</string>
+    <string name="dialog_widget_refresh_not_work">위젯에서 새로고침이 안될 때</string>
+    <string name="dialog_msg_widget_refresh_not_work">Android7 이상에서 <b>데이터 절약 모드</b>를 사용 중인 경우, 위젯에서 새로고침이 정상적으로 작동하지 않습니다.\n\n이 문제는 설정에서 데이터 절약 모드를 비활성화하거나, 다음 화면에서 Genshin Resin Widget을 접근 허용 하는 것으로 우회할 수 있습니다.\n\n해당 권한은 앱이 기기가 수신하는 알림에 접근할 수 있도록 하는 권한이나, <b>Genshin Resin Widget</b>은 알림 수신 서비스를 HoYoLab 데이터 수신 목적 외에는 이용하지 않으며, 사용자의 개인 정보에 <b>절대</b> 접근하지 않습니다.\n\nGenshin Resin Widget은 데이터 절약 모드 비활성화를 권장합니다.</string>
+
+    <string name="dialog_native_hoyolab_account">계정 확인</string>
+    <string name="dialog_msg_native_hoyolab_account">HoYoLab 계정 사용 시 <b>호요랩 계정</b> 버튼을 눌러주세요.\n구글, 애플, 페이스북, 트위터 계정 사용 시 <b>SNS 계정</b> 버튼을 눌러주세요.</string>
 
     <string name="msg_toast_back_button">한 번 더 누르면 앱을 종료할 수 있어!</string>
     <string name="msg_toast_save_done">저장 완료!</string>
