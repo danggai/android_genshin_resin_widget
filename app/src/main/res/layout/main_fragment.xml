@@ -89,7 +89,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/how_to_get_cookie"
+                    android:text="@string/get_cookie"
                     android:textSize="14sp"
                     android:textStyle="italic"
                     android:textColor="@color/light_blue_600"

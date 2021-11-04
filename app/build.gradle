@@ -44,6 +44,7 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def koin_version = "2.2.2"
     def retrofit_version = "2.6.0"
     def worker_version = "2.5.0"

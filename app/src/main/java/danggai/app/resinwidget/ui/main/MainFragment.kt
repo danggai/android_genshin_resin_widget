@@ -15,6 +15,7 @@ import com.google.android.gms.ads.MobileAds
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.MainFragmentBinding
 import danggai.app.resinwidget.ui.BindingFragment
+import danggai.app.resinwidget.ui.cookie_web_view.CookieWebViewActivity
 import danggai.app.resinwidget.util.CommonFunction
 import danggai.app.resinwidget.util.EventObserver
 import danggai.app.resinwidget.util.PreferenceManager
@@ -48,6 +49,18 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
         initUi()
         initAd()
         initLv()
+    }
+
+    fun onNewIntent(intent: Intent?) {
+        intent?.let {
+            try {
+                log.e()
+                val cookie = it.getStringExtra(MainActivity.ARG_PARAM_COOKIE)!!
+                mVM.lvCookie.value = cookie
+            } catch (e: Exception) {
+                log.e(e.toString())
+            }
+        }
     }
 
     private fun initUi() {
@@ -147,8 +160,10 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
 
         mVM.lvHowCanIGetCookie.observe(viewLifecycleOwner, EventObserver {
             activity?.let {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_how_can_i_get_cookie)))
-                startActivity(intent)
+                log.e()
+//                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_how_can_i_get_cookie)))
+//                startActivity(intent)
+                CookieWebViewActivity.startActivity(requireActivity())
             }
         })
     }

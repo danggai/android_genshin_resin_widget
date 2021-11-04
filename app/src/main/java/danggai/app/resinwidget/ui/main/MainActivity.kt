@@ -1,5 +1,8 @@
 package danggai.app.resinwidget.ui.main
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.LayoutRes
@@ -8,11 +11,23 @@ import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.MainActivityBinding
 import danggai.app.resinwidget.ui.BindingActivity
+import danggai.app.resinwidget.util.log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 
 class MainActivity : BindingActivity<MainActivityBinding>() {
+
+    companion object {
+        val ARG_PARAM_COOKIE = "ARG_PARAM_COOKIE"
+
+        fun startActivity(act: Activity, cookie: String) {
+            log.e()
+            val itn = Intent(act, MainActivity::class.java)
+            itn.putExtra(ARG_PARAM_COOKIE, cookie)
+            act.startActivity(itn)
+        }
+    }
 
     private val rxBackButtonAction: Subject<Long> = BehaviorSubject.createDefault(0L).toSerialized()
 
@@ -25,6 +40,16 @@ class MainActivity : BindingActivity<MainActivityBinding>() {
 
         initFragment()
         initRx()
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        log.e()
+        if (intent.hasExtra(ARG_PARAM_COOKIE)) {
+            log.e()
+            val mFragment = supportFragmentManager.fragments[0] as MainFragment
+            mFragment.onNewIntent(intent)
+        }
+        super.onNewIntent(intent)
     }
 
     private fun initFragment() {
