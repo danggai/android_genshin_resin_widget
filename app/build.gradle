@@ -13,8 +13,8 @@ android {
         applicationId "danggai.app.resinwidget"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 5
-        versionName "1.0.1"
+        versionCode 6
+        versionName "1.0.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
