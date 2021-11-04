@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.LayoutRes
 import com.google.android.gms.ads.MobileAds
 import danggai.app.resinwidget.Constant
@@ -50,6 +51,10 @@ class MainActivity : BindingActivity<MainActivityBinding>() {
             mFragment.onNewIntent(intent)
         }
         super.onNewIntent(intent)
+    }
+
+    override fun onBackPressed() {
+        rxBackButtonAction.onNext(System.currentTimeMillis())
     }
 
     private fun initFragment() {

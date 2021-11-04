@@ -67,6 +67,6 @@ object Constant {
     const val REFRESH_UI = "REFRESH_UI_ONLY"
     const val REFRESH_DATA = "REFRESH_DATA"
 
-    const val BACK_BUTTON_INTERVAL: Long = 2000
+    const val BACK_BUTTON_INTERVAL: Long = 1000
 
 }
