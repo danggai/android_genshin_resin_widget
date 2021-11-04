@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
@@ -117,7 +118,23 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
                     .setCancelable(false)
                     .setPositiveButton(R.string.data_save_mode_disable) { dialog, whichButton ->
                         log.e()
-                        startActivity(Intent("android.settings.DATA_USAGE_SETTINGS"))
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                            makeToast(requireContext(), getString(R.string.data_save_mode_not_supported))
+                        } else {
+                            try {
+                                startActivity(Intent("android.settings.DATA_USAGE_SETTINGS"))
+                            } catch (e: Exception) {
+                                log.e(e.message.toString())
+
+                                AlertDialog.Builder(requireActivity())
+                                    .setMessage(R.string.msg_toast_data_save_mode)
+                                    .setCancelable(false)
+                                    .setPositiveButton("OK") { dialog, whichButton ->
+                                        startActivity(Intent("android.settings.WIRELESS_SETTINGS"))
+                                    }
+                                    .show()
+                            }
+                        }
                     }
                     .setNegativeButton(R.string.permission_accept) { dialog, whichButton ->
                         log.e()

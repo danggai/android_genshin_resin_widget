@@ -21,6 +21,11 @@ open class BaseFragment: Fragment() {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
     }
 
+    fun makeToastLong(context: Context, msg: String) {
+        log.e()
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
+    }
+
     fun getAppVersion(): String {
         context?.let {
             try {
