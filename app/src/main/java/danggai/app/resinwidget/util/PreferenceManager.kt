@@ -225,5 +225,33 @@ object PreferenceManager {
         setBoolean(context, Constant.PREF_IS_VALID_USERDATA, value)
     }
 
+    fun getBooleanNotiEach40Resin(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_NOTI_EACH_40_RESIN, false)
+    }
+    fun setBooleanNotiEach40Resin(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_NOTI_EACH_40_RESIN, value)
+    }
+
+    fun getBooleanNoti140Resin(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_NOTI_140_RESIN, false)
+    }
+    fun setBooleanNoti140Resin(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_NOTI_140_RESIN, value)
+    }
+
+    fun getBooleanNotiCustomResin(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_NOTI_CUSTOM_RESIN_BOOLEAN, false)
+    }
+    fun setBooleanNotiCustomResin(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_NOTI_CUSTOM_RESIN_BOOLEAN, value)
+    }
+
+    fun getIntCustomTargetResin(context: Context): Int {
+        return getInt(context, Constant.PREF_NOTI_CUSTOM_TARGET_RESIN )
+    }
+    fun setIntCustomTargetResin(context: Context, value: Int) {
+        setInt(context, Constant.PREF_NOTI_CUSTOM_TARGET_RESIN, value)
+    }
+
 
 }

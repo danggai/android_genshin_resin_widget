@@ -8,6 +8,10 @@
     <string name="notification">Notification</string>
     <string name="apply">Apply</string>
 
+    <string name="btn_each_40_resin">40레진 마다</string>
+    <string name="btn_140_resin">140레진</string>
+    <string name="resin">레진</string>
+
     <string name="permission_accept">권한 허용</string>
     <string name="data_save_mode_disable">데이터 절약 모드 해제</string>
 
@@ -32,6 +36,9 @@
     <string name="msg_toast_how_to_get_cookie">좌측 상단 슬라임을 누르고 미로그인을 눌러 로그인 후, 상단 Get Cookie를 눌러 줘!</string>
     <string name="msg_toast_get_cookie_success">쿠키 획득 성공! 자동으로 입력했어!</string>
     <string name="msg_toast_get_cookie_fail">쿠키 획득에 실패했어.. 로그인 후 다시 시도해줘!</string>
+
+
+    <string name="msg_push_resin_title">퓨어 레진 알림</string>
 
 
 

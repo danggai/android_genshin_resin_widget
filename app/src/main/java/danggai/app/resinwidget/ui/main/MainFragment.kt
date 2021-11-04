@@ -1,9 +1,6 @@
 package danggai.app.resinwidget.ui.main
 
-import android.app.Activity
-import android.content.DialogInterface
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -66,6 +63,13 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
     private fun initUi() {
         context?.let {
             mVM.lvAutoRefreshPeriod.value = PreferenceManager.getLongAutoRefreshPeriod(it)
+
+            mVM.lvEnableNotiEach40Resin.value = PreferenceManager.getBooleanNotiEach40Resin(it)
+            mVM.lvEnableNoti140Resin.value = PreferenceManager.getBooleanNoti140Resin(it)
+            mVM.lvEnableNotiCustomResin.value = PreferenceManager.getBooleanNotiCustomResin(it)
+            mVM.lvCustomNotiResin.value = PreferenceManager.getIntCustomTargetResin(it).let { int ->
+                if (int == -1) "0" else int.toString()
+            }
         }
 
         when(mVM.lvAutoRefreshPeriod.value) {
@@ -110,6 +114,26 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
                 PreferenceManager.setIntMaxResin(it, dailyNote.max_resin)
                 PreferenceManager.setStringResinRecoveryTime(it, dailyNote.resin_recovery_time?:"-1")
                 PreferenceManager.setStringRecentSyncTime(it, CommonFunction.getTimeSyncTimeFormat())
+
+                PreferenceManager.setBooleanNotiEach40Resin(it, mVM.lvEnableNotiEach40Resin.value)
+                PreferenceManager.setBooleanNoti140Resin(it, mVM.lvEnableNoti140Resin.value)
+                PreferenceManager.setBooleanNotiCustomResin(it, mVM.lvEnableNotiCustomResin.value)
+                val customNotiResin: Int = try {
+                    if (mVM.lvCustomNotiResin.value.isEmpty()
+                        || mVM.lvCustomNotiResin.value.toInt() < 0) 0
+                    else if (mVM.lvCustomNotiResin.value.toInt() > dailyNote.max_resin) {
+                        mVM.lvCustomNotiResin.value = dailyNote.max_resin.toString()
+                        dailyNote.max_resin.toInt()
+                    } else mVM.lvCustomNotiResin.value.toInt()
+                } catch (e:java.lang.Exception) {
+                    0
+                }
+                PreferenceManager.setIntCustomTargetResin(it, customNotiResin)
+
+                log.e(mVM.lvEnableNotiEach40Resin.value)
+                log.e(mVM.lvEnableNoti140Resin.value)
+                log.e(mVM.lvEnableNotiCustomResin.value)
+                log.e(mVM.lvCustomNotiResin.value.toInt())
 
                 requireActivity().sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
                 CommonFunction.startUniquePeriodicRefreshWorker(it)

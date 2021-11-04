@@ -26,6 +26,10 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     var lvAutoRefreshPeriod: NonNullMutableLiveData<Long> = NonNullMutableLiveData(15L)
     val lvUid: NonNullMutableLiveData<String> = NonNullMutableLiveData("")
     val lvCookie: NonNullMutableLiveData<String> = NonNullMutableLiveData("")
+    val lvEnableNotiEach40Resin: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
+    val lvEnableNoti140Resin: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
+    val lvEnableNotiCustomResin: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
+    val lvCustomNotiResin: NonNullMutableLiveData<String> = NonNullMutableLiveData("0")
 
     private fun initRx() {
         rxApiDailyNote

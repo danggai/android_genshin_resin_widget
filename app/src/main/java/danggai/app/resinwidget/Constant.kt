@@ -57,7 +57,27 @@ object Constant {
     const val PREF_RESIN_RECOVERY_TIME = "PREF_RESIN_RECOVERY_TIME"
     const val PREF_RECENT_SYNC_TIME = "PREF_RECENT_SYNC_TIME"
 
+    const val PREF_NOTI_EACH_40_RESIN = "PREF_NOTI_EACH_40_RESIN"
+    const val PREF_NOTI_140_RESIN = "PREF_NOTI_140_RESIN"
+    const val PREF_NOTI_CUSTOM_RESIN_BOOLEAN = "PREF_NOTI_CUSTOM_RESIN_BOOLEAN"
+    const val PREF_NOTI_CUSTOM_TARGET_RESIN = "PREF_NOTI_CUSTOM_RESIN_INT"
+
     const val PREF_DEFAULT_REFRESH_PERIOD = 15L
+
+
+
+    /* ID */
+
+    const val PUSH_CHANNEL_ID = "RESIN_NOTIFICATION"
+    const val PUSH_CHANNEL_NAME= "레진 충전 알림"
+    const val PUSH_CHANNEL_DESC = "일정 레진마다 여행자에게 알려주기 위해 발송하는 알림이야!"
+
+
+
+    /* ARGUMENT */
+
+    const val ARG_IS_ONE_TIME = "ARG_IS_ONE_TIME"
+
 
 
     /* ACTION */
