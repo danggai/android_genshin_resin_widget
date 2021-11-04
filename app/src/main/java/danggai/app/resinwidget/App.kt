@@ -1,6 +1,8 @@
 package danggai.app.resinwidget
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import danggai.app.resinwidget.di.NetworkModule
 import danggai.app.resinwidget.di.ViewModelModule
 import danggai.app.resinwidget.di.WorkerModule
@@ -31,6 +33,13 @@ class App: Application() {
             koin.loadModules(listOf(ViewModelModule, NetworkModule, repositoryModule, WorkerModule))
 //            koin.createRootScope()
         }
+
+        // Crashlytics
+        FirebaseApp.initializeApp(this)
+
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
+
+        
 
         RxJavaPlugins.setErrorHandler { e ->
             if (e is UndeliverableException) {
