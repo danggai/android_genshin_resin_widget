@@ -23,8 +23,15 @@ object Constant {
     /* RETCODE */
 
     const val RETCODE_SUCCESS = "0"
-    const val RETCODE_ERROR_CHARACTOR_INFO = "1009"       // 角色信息错误
-    const val RETCODE_ERROR_INVALID_REQUEST = "-1"
+    const val RETCODE_ERROR_CHARACTOR_INFO = "1009"
+    const val RETCODE_ERROR_INTERNAL_DATABASE_ERROR = "-1"
+    const val RETCODE_ERROR_TOO_MANY_REQUESTS = "10101"
+    const val RETCODE_ERROR_NOT_LOGGED_IN = "-100"
+    const val RETCODE_ERROR_NOT_LOGGED_IN_2 = "10001"
+    const val RETCODE_ERROR_NOT_LOGGED_IN_3 = "10103"
+    const val RETCODE_ERROR_DATA_NOT_PUBLIC = "10102"
+    const val RETCODE_ERROR_ACCOUNT_NOT_FOUND = "-10002"
+    const val RETCODE_ERROR_INVALID_LANGUAGE = "-108"
 
 
 

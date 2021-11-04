@@ -56,12 +56,43 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                             Constant.RETCODE_ERROR_CHARACTOR_INFO -> {
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_charactor_info))
                             }
-                            Constant.RETCODE_ERROR_INVALID_REQUEST -> {
-                                lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_invalid_request))
+                            Constant.RETCODE_ERROR_INTERNAL_DATABASE_ERROR -> {
+                                lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_internal_database_error))
+                            }
+                            Constant.RETCODE_ERROR_TOO_MANY_REQUESTS -> {
+                                lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_too_many_requests))
+                            }
+                            Constant.RETCODE_ERROR_NOT_LOGGED_IN,
+                            Constant.RETCODE_ERROR_NOT_LOGGED_IN_2-> {
+                                lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_not_logged_in))
+                            }
+                            Constant.RETCODE_ERROR_NOT_LOGGED_IN_3 -> {
+                                lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_not_logged_in_3))
+                            }
+                            Constant.RETCODE_ERROR_DATA_NOT_PUBLIC -> {
+                                lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_data_not_public))
+                            }
+                            Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
+                                lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_account_not_found))
+                            }
+                            Constant.RETCODE_ERROR_INVALID_LANGUAGE -> {
+                                lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_invalid_language))
                             }
                             else -> {
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error))
                             }
+
+//    10101: TooManyRequests("Cannnot get data for more than 30 accounts per cookie per day."),
+//    -100: NotLoggedIn("Login cookies have not been provided or are incorrect."),
+//    10001: NotLoggedIn("Login cookies have not been provided or are incorrect."),
+//    10102: DataNotPublic("User's data is not public"),
+//    1009: AccountNotFound("Could not find user; uid may not be valid."),
+//    -1: GenshinStatsException("Internal database error, see original message"),
+//    -10002: AccountNotFound(
+//    "Cannot get rewards info. Account has no game account binded to it."
+//    ),
+//    -108: GenshinStatsException("Language is not valid."),
+//    10103: NotLoggedIn("Cookies are correct but do not have a hoyolab account bound to them."),
                         }
                     }
                 }
