@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Genshin Resin Widget</string>
 
-    <string name="uid">uid</string>
-    <string name="cookie">cookie</string>
+    <string name="uid">Uid</string>
+    <string name="cookie">Cookie</string>
     <string name="get_cookie">Get cookie</string>
-    <string name="refresh_cycle">refresh cycle</string>
+    <string name="refresh_cycle">Refresh Cycle</string>
+    <string name="notification">Notification</string>
     <string name="apply">Apply</string>
 
     <string name="permission_accept">권한 허용</string>
@@ -47,5 +48,4 @@
 
     <string name="google_ads_test_app_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="google_ads_test_banner_id">ca-app-pub-3940256099942544/6300978111</string>
-
 </resources>

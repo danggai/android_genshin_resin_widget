@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="radioButton">
+    <style name="RadioButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/black </item>
-        <item name="android:buttonTint">@color/black </item>
+        <item name="android:buttonTint">@color/checkbox_filter_tint </item>
         <item name="android:paddingTop">-8dp</item>
         <item name="android:paddingBottom">-8dp</item>
+    </style>
+
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:backgroundTint">@color/edittext_bottom_line_filter_tint</item>
     </style>
 
 </resources>

@@ -17,21 +17,20 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintVertical_weight="1"
-            tools:context=".ui.main.MainFragment"
             android:background="@color/white"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/adView"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/adView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".ui.main.MainFragment"
             >
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingHorizontal="20dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp">
 
                 <Space
                     android:layout_width="wrap_content"
@@ -40,25 +39,23 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/uid"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic"
-                    android:textColor="@color/black"
                     android:singleLine="true"
-                    />
+                    android:text="@string/uid"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_uid"
+                    style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/gray"
-                    android:text="@={vm.lvUid}"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
                     android:hint="@string/hint_uid"
-                    android:textColorHint="@color/gray"
                     android:singleLine="true"
-                    />
+                    android:text="@={vm.lvUid}"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:textSize="16sp" />
 
                 <Space
                     android:layout_width="wrap_content"
@@ -68,106 +65,84 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/cookie"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic"
                     android:textColor="@color/black"
-                    />
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_cookie"
+                    style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/gray"
-                    android:text="@={vm.lvCookie}"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:singleLine="true"
                     android:hint="@string/hint_cookie"
+                    android:singleLine="true"
+                    android:text="@={vm.lvCookie}"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/gray"
-                    />
+                    android:textSize="16sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/get_cookie"
-                    android:textSize="14sp"
-                    android:textStyle="italic"
-                    android:textColor="@color/light_blue_600"
-                    android:background="?attr/selectableItemBackground"
                     android:layout_gravity="end"
+                    android:background="?attr/selectableItemBackground"
                     android:gravity="end"
                     android:onClick="@{(v)->vm.onClickHowCanIGetCookie()}"
-                    />
-
-<!--                <Space-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="15dp" />-->
+                    android:text="@string/get_cookie"
+                    android:textColor="@color/light_blue_600"
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/refresh_cycle"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic"
                     android:textColor="@color/black"
-                    />
-
-<!--                <androidx.appcompat.widget.AppCompatTextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="자동 새로고침은 현재 개발 중으로, 정상적으로 동작하지 않을 수 있습니다."-->
-<!--                    android:textSize="10sp"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    />-->
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic" />
 
                 <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    >
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <RadioButton
                         android:id="@+id/rb_disable"
-                        style="@style/radioButton"
-                        android:text="Disable"
+                        style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
-                        />
+                        android:text="Disable" />
 
                     <RadioButton
                         android:id="@+id/rb_15m"
-                        style="@style/radioButton"
-                        android:text="15m"
+                        style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
-                        />
+                        android:text="15m" />
 
                     <RadioButton
                         android:id="@+id/rb_30m"
-                        style="@style/radioButton"
-                        android:text="30m"
+                        style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
-                        />
+                        android:text="30m" />
 
                     <RadioButton
                         android:id="@+id/rb_1h"
-                        style="@style/radioButton"
-                        android:text="1h"
+                        style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
-                        />
+                        android:text="1h" />
 
                     <RadioButton
                         android:id="@+id/rb_2h"
-                        style="@style/radioButton"
-                        android:text="2h"
+                        style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
-                        />
+                        android:text="2h" />
 
                 </RadioGroup>
 
@@ -178,15 +153,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/rounded_square_skyblue_5dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:onClick="@{(v)->vm.onClickSave()}"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="10dp"
                     android:text="@string/apply"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:onClick="@{(v)->vm.onClickSave()}"
-                    android:background="@drawable/rounded_square_skyblue_5dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:paddingVertical="10dp"
-                    android:paddingHorizontal="20dp"
-                    android:layout_gravity="center_horizontal" />
+                    android:textColor="@color/black"
+                    />
+
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
@@ -194,15 +172,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/rounded_square_skyblue_5dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:onClick="@{(v)->vm.onClickWidgetRefreshNotWork()}"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="10dp"
                     android:text="@string/widget_refresh_not_work"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:onClick="@{(v)->vm.onClickWidgetRefreshNotWork()}"
-                    android:background="@drawable/rounded_square_skyblue_5dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:paddingVertical="10dp"
-                    android:paddingHorizontal="20dp"
-                    android:layout_gravity="center_horizontal" />
+                    android:textColor="@color/black"
+                    />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
