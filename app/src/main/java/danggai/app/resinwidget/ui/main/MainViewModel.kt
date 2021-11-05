@@ -17,12 +17,14 @@ import java.util.concurrent.TimeUnit
 class MainViewModel(override val app: Application, private val api: ApiRepository) : BaseViewModel(app) {
 
     private val rxApiDailyNote: PublishSubject<Boolean> = PublishSubject.create()
+    private val rxApiChangeDataSwitch: PublishSubject<Boolean> = PublishSubject.create()
 
     var lvSaveUserInfo = MutableLiveData<Event<Boolean>>()
     var lvSendWidgetSyncBroadcast = MutableLiveData<Event<DailyNote>>()
     var lvSetAutoRefreshPeriod = MutableLiveData<Event<Long>>()
     var lvWidgetRefreshNotWork = MutableLiveData<Event<Boolean>>()
     var lvHowCanIGetCookie = MutableLiveData<Event<Boolean>>()
+    var lvWhenDailyNotePrivate = MutableLiveData<Event<Boolean>>()
 
     var lvAutoRefreshPeriod: NonNullMutableLiveData<Long> = NonNullMutableLiveData(15L)
     val lvUid: NonNullMutableLiveData<String> = NonNullMutableLiveData("")
@@ -33,6 +35,11 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     val lvCustomNotiResin: NonNullMutableLiveData<String> = NonNullMutableLiveData("0")
 
     private fun initRx() {
+        initRxDailyNote()
+        initRxChangeDataSwitch()
+    }
+
+    private fun initRxDailyNote() {
         rxApiDailyNote
             .throttleFirst(1, TimeUnit.SECONDS)
             .observeOn(Schedulers.newThread())
@@ -50,7 +57,6 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                                 lvSaveUserInfo.value = Event(true)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_success))
 
-                                /*res 저장 후 fragment 에서 값 연동*/
                                 res.data.data?.let {
                                     lvSendWidgetSyncBroadcast.value = Event(it)
                                 }
@@ -72,7 +78,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_not_logged_in_3))
                             }
                             Constant.RETCODE_ERROR_DATA_NOT_PUBLIC -> {
-                                lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_data_not_public))
+                                lvWhenDailyNotePrivate.value = Event(true)
                             }
                             Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_account_not_found))
@@ -81,28 +87,47 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_invalid_language))
                             }
                             else -> {
-                                lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error))
+                                lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_dailynote_error_include_error_code), res.data.retcode))
                             }
-
-//    10101: TooManyRequests("Cannnot get data for more than 30 accounts per cookie per day."),
-//    -100: NotLoggedIn("Login cookies have not been provided or are incorrect."),
-//    10001: NotLoggedIn("Login cookies have not been provided or are incorrect."),
-//    10102: DataNotPublic("User's data is not public"),
-//    1009: AccountNotFound("Could not find user; uid may not be valid."),
-//    -1: GenshinStatsException("Internal database error, see original message"),
-//    -10002: AccountNotFound(
-//    "Cannot get rewards info. Account has no game account binded to it."
-//    ),
-//    -108: GenshinStatsException("Language is not valid."),
-//    10103: NotLoggedIn("Cookies are correct but do not have a hoyolab account bound to them."),
                         }
                     }
                 }
             }, {
                 it.message?.let { msg ->
-                    lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error))
-                    initRx()
                     log.e(msg)
+                    lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error))
+                    initRxDailyNote()
+                }
+            }).addCompositeDisposable()
+    }
+
+    private fun initRxChangeDataSwitch() {
+        rxApiChangeDataSwitch
+            .observeOn(Schedulers.newThread())
+            .switchMap {
+                api.changeDataSwitch(2,3, it, lvCookie.value)
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe ({ res ->
+                log.e(res)
+                when (res.meta.code) {
+                    Constant.META_CODE_SUCCESS -> {
+                        log.e()
+                        when (res.data.retcode) {
+                            Constant.RETCODE_SUCCESS -> {
+                                lvMakeToast.value = Event(getString(R.string.msg_toast_change_data_switch_success))
+                            }
+                            else -> {
+                                lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_change_data_switch_error_include_error_code), res.data.retcode))
+                            }
+                        }
+                    }
+                }
+            }, {
+                it.message?.let { msg ->
+                    log.e(msg)
+                    lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error))
+                    initRxChangeDataSwitch()
                 }
             }).addCompositeDisposable()
     }
@@ -147,6 +172,16 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     fun onClickHowCanIGetCookie() {
         log.e()
         lvHowCanIGetCookie.value = Event(true)
+    }
+
+    fun makeDailyNotePublic() {
+        log.e()
+        rxApiChangeDataSwitch.onNext(true)
+    }
+
+    fun onClickMakeDailyNotePrivate() {
+        log.e()
+        rxApiChangeDataSwitch.onNext(false)
     }
 
 }

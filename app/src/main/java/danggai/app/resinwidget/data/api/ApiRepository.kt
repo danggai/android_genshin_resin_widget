@@ -2,9 +2,11 @@ package danggai.app.resinwidget.data.api
 
 import danggai.app.resinwidget.data.local.DailyNote
 import danggai.app.resinwidget.data.res.Meta
+import danggai.app.resinwidget.data.res.ResChangeDataSwitch
 import danggai.app.resinwidget.data.res.ResDailyNote
 import danggai.app.resinwidget.util.CommonFunction
 import io.reactivex.Observable
+import retrofit2.http.Query
 
 class ApiRepository(private val api: ApiInterface) {
 
@@ -26,18 +28,22 @@ class ApiRepository(private val api: ApiInterface) {
             }
     }
 
-    suspend fun suspendDailyNote(uid: String, cookie: String): ResDailyNote {
-        val emptyData = ResDailyNote.Data("","", DailyNote( -1,-1,"",-1, -1, listOf()))
+    fun changeDataSwitch(gameId: Int, switchId: Int, isPublic: Boolean, cookie: String): Observable<ResChangeDataSwitch> {
+        val emptyData = ResChangeDataSwitch.Data("","")
 
-        val res = api.suspendDailyNote(uid, cookie, CommonFunction.getGenshinDS())
-
-        return when {
-            res.isSuccessful -> {
-                ResDailyNote(Meta(res.code(), res.message()), res.body()?:emptyData)
-            } else -> {
-                ResDailyNote(Meta(res.code(), res.message()), emptyData)
+        return Observable.just(true)
+            .switchMap {
+                api.changeDataSwitch(gameId, switchId, isPublic, cookie, CommonFunction.getGenshinDS())
             }
-        }
+            .map { res ->
+                when {
+                    res.isSuccessful -> {
+                        ResChangeDataSwitch(Meta(res.code(), res.message()), res.body()?:emptyData)
+                    } else -> {
+                        ResChangeDataSwitch(Meta(res.code(), res.message()), emptyData)
+                    }
+                }
+            }
     }
 
 }

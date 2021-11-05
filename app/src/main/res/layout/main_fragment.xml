@@ -241,7 +241,6 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
@@ -279,6 +278,25 @@
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     />
+
+<!--                <Space-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="15dp" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center_horizontal"-->
+<!--                    android:background="@drawable/rounded_square_skyblue_5dp"-->
+<!--                    android:foreground="?attr/selectableItemBackground"-->
+<!--                    android:onClick="@{(v)->vm.onClickMakeDailyNotePrivate()}"-->
+<!--                    android:paddingHorizontal="20dp"-->
+<!--                    android:paddingVertical="10dp"-->
+<!--                    android:text="실시간 메모 비공개"-->
+<!--                    android:textSize="14sp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    />-->
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

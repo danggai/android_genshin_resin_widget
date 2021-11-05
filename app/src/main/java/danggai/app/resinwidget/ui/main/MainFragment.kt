@@ -198,6 +198,26 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
                     .show()
             }
         })
+
+        mVM.lvWhenDailyNotePrivate.observe(viewLifecycleOwner, EventObserver {
+            activity?.let {
+                log.e()
+                AlertDialog.Builder(requireActivity())
+                    .setTitle(R.string.dialog_realtime_note_private)
+                    .setMessage(R.string.dialog_msg_realtime_note_private)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.apply) { dialog, whichButton ->
+                        log.e()
+                        mVM.makeDailyNotePublic()
+                    }
+                    .setNegativeButton(R.string.cancel) { dialog, whichButton ->
+                        log.e()
+                        makeToast(requireContext(), getString(R.string.msg_toast_dailynote_error_data_not_public))
+                    }
+                    .create()
+                    .show()
+            }
+        })
     }
 
     private fun initAd() {
