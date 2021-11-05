@@ -23,7 +23,6 @@ class ResinWidget : AppWidgetProvider() {
         log.e()
 
         appWidgetIds.forEach { appWidgetId ->
-            log.e()
             val views: RemoteViews = addViews(context)
             syncData(views, context)
 
@@ -34,7 +33,6 @@ class ResinWidget : AppWidgetProvider() {
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
         val action = intent?.action
-        log.e(action.toString())
         when (action) {
             Constant.ACTION_APPWIDGET_UPDATE -> {
                 log.e("ACTION_APPWIDGET_UPDATE")
@@ -64,7 +62,7 @@ class ResinWidget : AppWidgetProvider() {
                     }
 
                 } else {
-                    log.e()
+                    log.e(action.toString())
                 }
             }
         }

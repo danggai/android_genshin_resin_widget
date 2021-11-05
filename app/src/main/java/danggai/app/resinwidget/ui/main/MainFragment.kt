@@ -131,11 +131,6 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
                 }
                 PreferenceManager.setIntCustomTargetResin(it, customNotiResin)
 
-                log.e(mVM.lvEnableNotiEach40Resin.value)
-                log.e(mVM.lvEnableNoti140Resin.value)
-                log.e(mVM.lvEnableNotiCustomResin.value)
-                log.e(mVM.lvCustomNotiResin.value.toInt())
-
                 requireActivity().sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
                 CommonFunction.startUniquePeriodicRefreshWorker(it)
             }
