@@ -12,6 +12,7 @@ import danggai.app.resinwidget.util.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import java.util.concurrent.TimeUnit
 
 class MainViewModel(override val app: Application, private val api: ApiRepository) : BaseViewModel(app) {
 
@@ -33,6 +34,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
 
     private fun initRx() {
         rxApiDailyNote
+            .throttleFirst(1, TimeUnit.SECONDS)
             .observeOn(Schedulers.newThread())
             .filter { it }
             .switchMap {
