@@ -9,6 +9,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/light_blue_200</item>
         <!-- Customize your theme here. -->
         <item name="android:letterSpacing">-0.04</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="ThemeOverlay.Genshin_resin_widget.AppWidgetContainer" parent="">

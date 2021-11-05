@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Genshin Resin Widget</string>
+    <string name="genshin_resin_widget">Genshin Resin Widget</string>
 
     <string name="uid">Uid</string>
     <string name="cookie">Cookie</string>
@@ -20,7 +21,7 @@
 
     <string name="data_save_mode_not_supported">Data saving mode is not supported under Android 7.</string>
 
-    <string name="dialog_widget_refresh_not_work">refresh doesn\'t work on the widget,</string>
+    <string name="dialog_widget_refresh_not_work">Refresh doesn\'t work on the Widget</string>
     <string name="dialog_msg_widget_refresh_not_work">Android7 이상에서 <b>데이터 절약 모드</b>를 사용 중인 경우, 위젯에서 새로고침이 정상적으로 작동하지 않습니다.\n\n이 문제는 설정에서 데이터 절약 모드를 비활성화하거나, 다음 화면에서 Genshin Resin Widget을 접근 허용 하는 것으로 우회할 수 있습니다.\n\n해당 권한은 앱이 기기가 수신하는 알림에 접근할 수 있도록 하는 권한이나, <b>Genshin Resin Widget</b>은 알림 수신 서비스를 HoYoLab 데이터 수신 목적 외에는 이용하지 않으며, 사용자의 개인 정보에 <b>절대</b> 접근하지 않습니다.\n\nGenshin Resin Widget은 데이터 절약 모드 비활성화를 권장합니다.</string>
 
     <string name="dialog_native_hoyolab_account">Check Your Account.</string>
