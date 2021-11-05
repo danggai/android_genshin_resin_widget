@@ -112,15 +112,23 @@ class CookieWebViewFragment : BindingFragment<CookieWebViewFragmentBinding>() {
 
     private fun initLv() {
         mVM.lvGetCookie.observe(viewLifecycleOwner, EventObserver { boolean ->
-            val cookieManager = CookieManager.getInstance()
-            val cookie = cookieManager.getCookie("https://www.hoyolab.com/")
-            log.e(cookie)
+            try {
+                val cookieManager = CookieManager.getInstance()
+                val cookie = cookieManager.getCookie("https://www.hoyolab.com/")
+                log.e(cookie)
 
-            if (cookie.contains("ltuid") && cookie.contains("ltoken")) {
-                MainActivity.startActivity(requireActivity(), cookie)
-                makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_success))
-            } else {
-                makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_fail))
+                if (cookie.contains("ltuid") && cookie.contains("ltoken")) {
+                    MainActivity.startActivity(requireActivity(), cookie)
+                    makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_success))
+                } else {
+                    makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_fail))
+                }
+            } catch (e: NullPointerException) {
+                log.e(e.message.toString())
+                makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_null_fail))
+            } catch (e: Exception) {
+                log.e(e.message.toString())
+                makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_unknown_fail))
             }
         })
 
