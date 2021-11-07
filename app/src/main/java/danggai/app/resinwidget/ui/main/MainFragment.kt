@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import danggai.app.resinwidget.BuildConfig
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.MainFragmentBinding
 import danggai.app.resinwidget.ui.BindingFragment
@@ -45,8 +46,9 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
         }
 
         initUi()
-        initAd()
         initLv()
+        
+        if (!BuildConfig.DEBUG) initAd()
     }
 
     fun onNewIntent(intent: Intent?) {
