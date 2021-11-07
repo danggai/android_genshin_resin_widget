@@ -3,6 +3,7 @@ package danggai.app.resinwidget.ui.main
 import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
+import danggai.app.resinwidget.BuildConfig
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.data.api.ApiRepository
@@ -17,7 +18,8 @@ import java.util.concurrent.TimeUnit
 class MainViewModel(override val app: Application, private val api: ApiRepository) : BaseViewModel(app) {
 
     private val rxApiDailyNote: PublishSubject<Boolean> = PublishSubject.create()
-    private val rxApiChangeDataSwitch: PublishSubject<Boolean> = PublishSubject.create()
+    private val rxApiChangeDataSwitchPublic: PublishSubject<Boolean> = PublishSubject.create()
+    private val rxApiChangeDataSwitchPrivate: PublishSubject<Boolean> = PublishSubject.create()
 
     var lvSaveUserInfo = MutableLiveData<Event<Boolean>>()
     var lvSendWidgetSyncBroadcast = MutableLiveData<Event<DailyNote>>()
@@ -25,6 +27,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     var lvWidgetRefreshNotWork = MutableLiveData<Event<Boolean>>()
     var lvHowCanIGetCookie = MutableLiveData<Event<Boolean>>()
     var lvWhenDailyNotePrivate = MutableLiveData<Event<Boolean>>()
+    var lvSetProgress = MutableLiveData<Event<Boolean>>()
 
     var lvAutoRefreshPeriod: NonNullMutableLiveData<Long> = NonNullMutableLiveData(15L)
     val lvUid: NonNullMutableLiveData<String> = NonNullMutableLiveData("")
@@ -36,11 +39,19 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
 
     private fun initRx() {
         initRxDailyNote()
-        initRxChangeDataSwitch()
+        initRxChangeDataSwitchPublic()
+
+        if (BuildConfig.DEBUG){
+            initRxChangeDataSwitchPrivate()
+        }
     }
 
     private fun initRxDailyNote() {
         rxApiDailyNote
+            .map {
+                setProgress(true)
+                it
+            }
             .throttleFirst(1, TimeUnit.SECONDS)
             .observeOn(Schedulers.newThread())
             .filter { it }
@@ -49,6 +60,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
             }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe ({ res ->
+                setProgress(false)
                 when (res.meta.code) {
                     Constant.META_CODE_SUCCESS -> {
                         log.e()
@@ -93,6 +105,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                     }
                 }
             }, {
+                setProgress(false)
                 it.message?.let { msg ->
                     log.e(msg)
                     lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error))
@@ -101,14 +114,28 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
             }).addCompositeDisposable()
     }
 
-    private fun initRxChangeDataSwitch() {
-        rxApiChangeDataSwitch
+    private fun initRxChangeDataSwitchPublic() {
+        rxApiChangeDataSwitchPublic
+            .map {
+                setProgress(true)
+                it
+            }
             .observeOn(Schedulers.newThread())
             .switchMap {
-                api.changeDataSwitch(2,3, it, lvCookie.value)
+                api.changeDataSwitch(2,1, true, lvCookie.value)
+            }
+            .switchMap {
+                api.changeDataSwitch(2,2, true, lvCookie.value)
+            }
+            .switchMap {
+                api.changeDataSwitch(2,3, true, lvCookie.value)
+            }
+            .switchMap {
+                api.changeDataSwitch(2,4, true, lvCookie.value)
             }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe ({ res ->
+                setProgress(false)
                 log.e(res)
                 when (res.meta.code) {
                     Constant.META_CODE_SUCCESS -> {
@@ -124,10 +151,57 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                     }
                 }
             }, {
+                setProgress(false)
                 it.message?.let { msg ->
                     log.e(msg)
                     lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error))
-                    initRxChangeDataSwitch()
+                    initRxChangeDataSwitchPublic()
+                }
+            }).addCompositeDisposable()
+    }
+
+    private fun initRxChangeDataSwitchPrivate() {
+        rxApiChangeDataSwitchPrivate
+            .map {
+                setProgress(true)
+                it
+            }
+            .observeOn(Schedulers.newThread())
+            .switchMap {
+                api.changeDataSwitch(2,1, false, lvCookie.value)
+            }
+            .switchMap {
+                api.changeDataSwitch(2,2, false, lvCookie.value)
+            }
+            .switchMap {
+                api.changeDataSwitch(2,3, false, lvCookie.value)
+            }
+            .switchMap {
+                api.changeDataSwitch(2,4, false, lvCookie.value)
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe ({ res ->
+                setProgress(false)
+                log.e(res)
+                when (res.meta.code) {
+                    Constant.META_CODE_SUCCESS -> {
+                        log.e()
+                        when (res.data.retcode) {
+                            Constant.RETCODE_SUCCESS -> {
+                                lvMakeToast.value = Event(getString(R.string.msg_toast_change_data_switch_success))
+                            }
+                            else -> {
+                                lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_change_data_switch_error_include_error_code), res.data.retcode))
+                            }
+                        }
+                    }
+                }
+            }, {
+                setProgress(false)
+                it.message?.let { msg ->
+                    log.e(msg)
+                    lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error))
+                    initRxChangeDataSwitchPrivate()
                 }
             }).addCompositeDisposable()
     }
@@ -176,12 +250,17 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
 
     fun makeDailyNotePublic() {
         log.e()
-        rxApiChangeDataSwitch.onNext(true)
+        rxApiChangeDataSwitchPublic.onNext(true)
     }
 
-    fun onClickMakeDailyNotePrivate() {
+    fun makeDailyNotePrivate() {
         log.e()
-        rxApiChangeDataSwitch.onNext(false)
+        rxApiChangeDataSwitchPrivate.onNext(false)
+    }
+
+    private fun setProgress(boolean: Boolean) {
+        log.e()
+        lvSetProgress.value = Event(boolean)
     }
 
 }

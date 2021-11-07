@@ -220,6 +220,11 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
                     .show()
             }
         })
+
+        mVM.lvSetProgress.observe(viewLifecycleOwner, EventObserver {
+            log.e()
+            binding.llProgress.visibility = if (it) View.VISIBLE else View.GONE
+        })
     }
 
     private fun initAd() {

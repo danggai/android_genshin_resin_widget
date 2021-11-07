@@ -289,7 +289,7 @@
 <!--                    android:layout_gravity="center_horizontal"-->
 <!--                    android:background="@drawable/rounded_square_skyblue_5dp"-->
 <!--                    android:foreground="?attr/selectableItemBackground"-->
-<!--                    android:onClick="@{(v)->vm.onClickMakeDailyNotePrivate()}"-->
+<!--                    android:onClick="@{(v)->vm.makeDailyNotePrivate()}"-->
 <!--                    android:paddingHorizontal="20dp"-->
 <!--                    android:paddingVertical="10dp"-->
 <!--                    android:text="실시간 메모 비공개"-->
@@ -315,6 +315,27 @@
             ads:adSize="BANNER"
             ads:adUnitId="@string/google_ads_banner_id"
             />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:indeterminateTint="@color/light_blue_600"
+                />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
