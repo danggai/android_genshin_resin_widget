@@ -34,6 +34,8 @@
     <string name="msg_toast_back_button">If you press it one more time, you can shut down the app!</string>
     <string name="msg_toast_save_done">Saved It Successfully!</string>
 
+    <string name="msg_toast_api_error_include_code">HoYoLab과 통신하는데 실패했어.. 오류 코드는 %s야! 개발자에게 공유하면 해결에 많은 도움이 돼!</string>
+
     <string name="msg_toast_dailynote_success">정상적으로 실시간 메모를 불러왔어!</string>
     <string name="msg_toast_dailynote_error_charactor_info">캐릭터 정보를 읽을 수 없어.. uid나 쿠키를 다시 확인해 줘!</string>
     <string name="msg_toast_dailynote_error_internal_database_error">HoYoLab의 데이터베이스에서 에러가 발생해서 실시간 메모를 받아올 수 없어!</string>

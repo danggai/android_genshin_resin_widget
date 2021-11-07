@@ -34,6 +34,12 @@ object Constant {
     const val RETCODE_ERROR_INVALID_LANGUAGE = "-108"
 
 
+    /* API NAME */
+
+    const val API_NAME_DAILY_NOTE = "Daily Note"
+    const val API_NAME_CHANGE_DATA_SWITCH = "Change Data Switch"
+
+
 
     /* WORKER */
 

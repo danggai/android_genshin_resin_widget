@@ -74,34 +74,46 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                                 }
                             }
                             Constant.RETCODE_ERROR_CHARACTOR_INFO -> {
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_charactor_info))
                             }
                             Constant.RETCODE_ERROR_INTERNAL_DATABASE_ERROR -> {
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_internal_database_error))
                             }
                             Constant.RETCODE_ERROR_TOO_MANY_REQUESTS -> {
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_too_many_requests))
                             }
                             Constant.RETCODE_ERROR_NOT_LOGGED_IN,
                             Constant.RETCODE_ERROR_NOT_LOGGED_IN_2-> {
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_not_logged_in))
                             }
                             Constant.RETCODE_ERROR_NOT_LOGGED_IN_3 -> {
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_not_logged_in_3))
                             }
                             Constant.RETCODE_ERROR_DATA_NOT_PUBLIC -> {
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvWhenDailyNotePrivate.value = Event(true)
                             }
                             Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_account_not_found))
                             }
                             Constant.RETCODE_ERROR_INVALID_LANGUAGE -> {
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_invalid_language))
                             }
                             else -> {
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_dailynote_error_include_error_code), res.data.retcode))
                             }
                         }
+                    } else -> {
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, null)
+                        lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_api_error_include_code), res.meta.code))
                     }
                 }
             }, {
@@ -128,10 +140,10 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                 api.changeDataSwitch(2,2, true, lvCookie.value)
             }
             .switchMap {
-                api.changeDataSwitch(2,3, true, lvCookie.value)
+                api.changeDataSwitch(2,4, true, lvCookie.value)
             }
             .switchMap {
-                api.changeDataSwitch(2,4, true, lvCookie.value)
+                api.changeDataSwitch(2,3, true, lvCookie.value)
             }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe ({ res ->
@@ -145,9 +157,15 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_change_data_switch_success))
                             }
                             else -> {
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHANGE_DATA_SWITCH, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_change_data_switch_error_include_error_code), res.data.retcode))
                             }
                         }
+                    }
+                    else -> {
+                        log.e()
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHANGE_DATA_SWITCH, res.meta.code, null)
+                        lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_api_error_include_code), res.meta.code))
                     }
                 }
             }, {
@@ -191,9 +209,14 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_change_data_switch_success))
                             }
                             else -> {
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHANGE_DATA_SWITCH, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_change_data_switch_error_include_error_code), res.data.retcode))
                             }
                         }
+                    } else -> {
+                        log.e()
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHANGE_DATA_SWITCH, res.meta.code, null)
+                        lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_api_error_include_code), res.meta.code))
                     }
                 }
             }, {

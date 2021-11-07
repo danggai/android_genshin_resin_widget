@@ -108,6 +108,19 @@ object CommonFunction {
         val time = second.toInt() / 3600
         val minute = (second.toInt() - time * 3600) / 60
         val second = second.toInt() % 600
+    fun sendCrashlyticsApiLog(apiName: String, metaCode: Int, retCode: String?) {
+        if (BuildConfig.DEBUG) return
+
+        log.e()
+        val keysAndValues = CustomKeysAndValues.Builder()
+            .putString("api name", apiName)
+            .putInt("meta code", metaCode)
+            .putString("ret code", retCode?:"")
+            .build()
+
+        FirebaseCrashlytics.getInstance().setCustomKeys(keysAndValues)
+    }
+
 
         return "${time}시간 ${minute}분 남음"
     }

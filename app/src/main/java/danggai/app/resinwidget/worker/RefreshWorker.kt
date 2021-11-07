@@ -57,9 +57,15 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
                             }
                             else -> {
                                 log.e()
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
                             }
                         }
+                    }
+                    else -> {
+                        log.e()
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, null)
+                        context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
                     }
                 }
             }, {
