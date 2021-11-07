@@ -2,22 +2,27 @@ package danggai.app.resinwidget.util
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Debug
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.work.*
+import com.google.firebase.crashlytics.CustomKeysAndValues
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import danggai.app.resinwidget.BuildConfig
 import danggai.app.resinwidget.Constant
-import danggai.app.resinwidget.worker.RefreshWorker
 import danggai.app.resinwidget.R
+import danggai.app.resinwidget.worker.RefreshWorker
+import java.lang.Exception
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.streams.asSequence
+
 
 object CommonFunction {
 
@@ -104,10 +109,6 @@ object CommonFunction {
         return SimpleDateFormat(Constant.DATE_FORMAT_SYNC_TIME).format(Date())
     }
 
-    fun secondToTime(second: String): String {
-        val time = second.toInt() / 3600
-        val minute = (second.toInt() - time * 3600) / 60
-        val second = second.toInt() % 600
     fun sendCrashlyticsApiLog(apiName: String, metaCode: Int, retCode: String?) {
         if (BuildConfig.DEBUG) return
 
@@ -121,6 +122,20 @@ object CommonFunction {
         FirebaseCrashlytics.getInstance().setCustomKeys(keysAndValues)
     }
 
+    fun secondToTime(_second: String): String {
+        var time: Int = 0
+        var minute: Int = 0
+        var second: Int = 0
+
+        try {
+            time = _second.toInt() / 3600
+            minute = (_second.toInt() - time * 3600) / 60
+            second = _second.toInt() % 600
+        } catch (e: Exception) {
+            time = 0
+            minute = -1
+            second = -1
+        }
 
         return "${time}시간 ${minute}분 남음"
     }
