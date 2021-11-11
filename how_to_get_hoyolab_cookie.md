@@ -2,14 +2,14 @@
 
 
 
-## HoYoLab 쿠키 얻는 방법
+## HoYoLAB 쿠키 얻는 방법
 
 
 1. javascript:document.write(document.cookie)
    - 위 주소를 복사하기
 
 
-2. HoYoLab 원신 출석체크 페이지 진입 및 로그인
+2. HoYoLAB 원신 출석체크 페이지 진입 및 로그인
    - https://webstatic-sea.mihoyo.com/ys/event/signin-sea/index.html?act_id=e202102251931481
    - 모바일의 경우, 삼성 인터넷 외의 브라우저를 사용해야 함
 
