@@ -218,6 +218,13 @@ object PreferenceManager {
         setLong(context, Constant.PREF_AUTO_REFRESH_PERIOD, value)
     }
 
+    fun getIntTimeNotation(context: Context): Int {
+        return getInt(context, Constant.PREF_TIME_NOTATION)
+    }
+    fun setIntTimeNotation(context: Context, value: Int) {
+        setInt(context, Constant.PREF_TIME_NOTATION, value)
+    }
+
     fun getBooleanIsValidUserData(context: Context): Boolean {
         return getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)
     }

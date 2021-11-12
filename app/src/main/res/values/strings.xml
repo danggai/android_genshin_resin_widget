@@ -7,12 +7,17 @@
     <string name="get_cookie">Get cookie</string>
     <string name="refresh_cycle">Refresh Cycle</string>
     <string name="notification">Notification</string>
+    <string name="time_notation">Time Notation</string>
     <string name="apply">Apply</string>
+    <string name="save">Save</string>
     <string name="cancel">Cancel</string>
 
     <string name="btn_each_40_resin">Each 40 Resins</string>
     <string name="btn_140_resin">140 Resins</string>
     <string name="resin">Resin</string>
+
+    <string name="btn_remain_time">Remaining time</string>
+    <string name="btn_full_charge_time">Time when fully charge</string>
 
     <string name="permission_accept">Permission Accept</string>
     <string name="data_save_mode_disable">Data Save Mode Disable</string>
@@ -48,7 +53,7 @@
     <string name="msg_toast_dailynote_error_include_error_code">실시간 메모를 불러오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없지만, 오류코드는 %s야! 개발자와 공유해 줘!</string>
     <string name="msg_toast_dailynote_error">실시간 메모를 불러오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없어.. 미안해!</string>
 
-    <string name="msg_toast_change_data_switch_success">성공적으로 실시간 메모를 공개 상태로 변경했어! APPLY 버튼을 눌러 줘!</string>
+    <string name="msg_toast_change_data_switch_success">성공적으로 실시간 메모를 공개 상태로 변경했어! 저장 버튼을 눌러 줘!</string>
     <string name="msg_toast_change_data_switch_error_include_error_code">실시간 메모를 공개 상태로 변경하는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없지만, 오류코드는 %s야! 개발자와 공유해 줘!</string>
 
     <string name="msg_toast_uid_empty_error">uid 없이는 연동 할 수 없어! uid를 입력해 줘!</string>
@@ -73,6 +78,14 @@
     <string name="invalid_user_info">You can\'t use it\nwithout user information!</string>
 
     <string name="url_how_can_i_get_cookie">https://github.com/danggai/android_genshin_resin_widget/blob/master/how_to_get_hoyolab_cookie.md</string>
+
+
+
+    <!-- Widget UI -->
+    <string name="widget_ui_remain_time">%s:%s left</string>
+    <string name="widget_ui_max_time">Full at %s:%s</string>
+
+
 
     <!-- Google Ads -->
     <string name="google_ads_app_id">ca-app-pub-8407462596213276~4738084181</string>

@@ -66,6 +66,7 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
     private fun initUi() {
         context?.let {
             mVM.lvAutoRefreshPeriod.value = PreferenceManager.getLongAutoRefreshPeriod(it)
+            mVM.lvTimeNotation.value = PreferenceManager.getIntTimeNotation(it)
 
             mVM.lvEnableNotiEach40Resin.value = PreferenceManager.getBooleanNotiEach40Resin(it)
             mVM.lvEnableNoti140Resin.value = PreferenceManager.getBooleanNoti140Resin(it)
@@ -81,6 +82,12 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
             30L -> binding.rb30m.isChecked = true
             60L -> binding.rb1h.isChecked = true
             120L -> binding.rb2h.isChecked = true
+        }
+
+        when(mVM.lvTimeNotation.value) {
+            -1 -> binding.rbRemainTime.isChecked = true
+            0 -> binding.rbRemainTime.isChecked = true
+            1 -> binding.rbFullChargeTime.isChecked = true
         }
 
         context?.let { it ->
@@ -142,6 +149,13 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
             activity?.let { act ->
                 log.e(period)
                 PreferenceManager.setLongAutoRefreshPeriod(act, period)
+            }
+        })
+
+        mVM.lvSetTimeNotation.observe(viewLifecycleOwner, EventObserver { period ->
+            activity?.let { act ->
+                log.e(period)
+                PreferenceManager.setIntTimeNotation(act, period)
             }
         })
 

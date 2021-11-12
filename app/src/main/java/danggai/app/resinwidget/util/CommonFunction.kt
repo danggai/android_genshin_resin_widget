@@ -5,7 +5,6 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.os.Debug
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.work.*
@@ -122,22 +121,34 @@ object CommonFunction {
         FirebaseCrashlytics.getInstance().setCustomKeys(keysAndValues)
     }
 
-    fun secondToTime(_second: String): String {
-        var time: Int = 0
+    fun secondToRemainTime(context: Context, _second: String): String {
+        var hour: Int = 0
         var minute: Int = 0
         var second: Int = 0
 
         try {
-            time = _second.toInt() / 3600
-            minute = (_second.toInt() - time * 3600) / 60
+            hour = _second.toInt() / 3600
+            minute = (_second.toInt() - hour * 3600) / 60
             second = _second.toInt() % 600
         } catch (e: Exception) {
-            time = 0
-            minute = -1
-            second = -1
+            hour = 0
+            minute = 0
+            second = 0
         }
 
-        return "${time}시간 ${minute}분 남음"
+        return String.format(context.getString(R.string.widget_ui_remain_time), hour, minute)
+    }
+
+    fun secondToFullChargeTime(context: Context, second: String): String {
+        val cal = Calendar.getInstance()
+        val date= Date()
+        cal.time = date
+
+        cal.add(Calendar.SECOND, second.toInt())
+
+        val minute = String.format("%02d", cal.get(Calendar.MINUTE))
+
+        return String.format(context.getString(R.string.widget_ui_max_time), cal.get(Calendar.HOUR_OF_DAY), minute)
     }
 
     fun sendNotification(id: Int, context: Context, title: String, msg: String) {

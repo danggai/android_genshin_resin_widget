@@ -24,12 +24,14 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     var lvSaveUserInfo = MutableLiveData<Event<Boolean>>()
     var lvSendWidgetSyncBroadcast = MutableLiveData<Event<DailyNote>>()
     var lvSetAutoRefreshPeriod = MutableLiveData<Event<Long>>()
+    var lvSetTimeNotation = MutableLiveData<Event<Int>>()
     var lvWidgetRefreshNotWork = MutableLiveData<Event<Boolean>>()
     var lvHowCanIGetCookie = MutableLiveData<Event<Boolean>>()
     var lvWhenDailyNotePrivate = MutableLiveData<Event<Boolean>>()
     var lvSetProgress = MutableLiveData<Event<Boolean>>()
 
     var lvAutoRefreshPeriod: NonNullMutableLiveData<Long> = NonNullMutableLiveData(15L)
+    var lvTimeNotation: NonNullMutableLiveData<Int> = NonNullMutableLiveData(0)
     val lvUid: NonNullMutableLiveData<String> = NonNullMutableLiveData("")
     val lvCookie: NonNullMutableLiveData<String> = NonNullMutableLiveData("")
     val lvEnableNotiEach40Resin: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
@@ -264,6 +266,17 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
         }
 
         lvSetAutoRefreshPeriod.value = Event(period)
+    }
+
+    fun onClickSetTimeNotation(view: View) {
+        log.e()
+        val period = when (view.id) {
+            R.id.rb_remain_time -> 0
+            R.id.rb_full_charge_time -> 1
+            else -> 0
+        }
+
+        lvSetTimeNotation.value = Event(period)
     }
 
     fun onClickHowCanIGetCookie() {

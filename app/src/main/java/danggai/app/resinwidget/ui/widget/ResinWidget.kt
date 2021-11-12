@@ -111,7 +111,13 @@ class ResinWidget : AppWidgetProvider() {
                 log.e()
                 view.setTextViewText(R.id.tv_resin, PreferenceManager.getIntCurrentResin(_context).toString())
                 view.setTextViewText(R.id.tv_resin_max, "/"+PreferenceManager.getIntMaxResin(_context).toString())
-                view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToTime(PreferenceManager.getStringResinRecoveryTime(_context)))
+
+                when (PreferenceManager.getIntTimeNotation(_context)) {
+                    0 -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringResinRecoveryTime(_context)))
+                    1 -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToFullChargeTime(_context, PreferenceManager.getStringResinRecoveryTime(_context)))
+                    else -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringResinRecoveryTime(_context)))
+                }
+
                 view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getStringRecentSyncTime(_context))
                 view.setViewVisibility(R.id.progress1, View.GONE)
                 view.setViewVisibility(R.id.iv_resin, View.VISIBLE)
