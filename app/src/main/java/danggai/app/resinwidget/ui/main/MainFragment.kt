@@ -150,7 +150,6 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
                 AlertDialog.Builder(requireActivity())
                     .setTitle(R.string.dialog_widget_refresh_not_work)
                     .setMessage(R.string.dialog_msg_widget_refresh_not_work)
-                    .setCancelable(false)
                     .setPositiveButton(R.string.data_save_mode_disable) { dialog, whichButton ->
                         log.e()
                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
@@ -186,7 +185,6 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
                 AlertDialog.Builder(requireActivity())
                     .setTitle(R.string.dialog_native_hoyolab_account)
                     .setMessage(R.string.dialog_msg_native_hoyolab_account)
-                    .setCancelable(false)
                     .setPositiveButton(R.string.native_hoyolab_account) { dialog, whichButton ->
                         log.e()
                         CookieWebViewActivity.startActivity(requireActivity())
