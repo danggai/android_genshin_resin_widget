@@ -67,10 +67,15 @@
     <string name="msg_toast_get_cookie_null_fail">쿠키가 존재하지 않아서 가져올 수 없어!</string>
     <string name="msg_toast_get_cookie_unknown_fail">알 수 없는 이유로 쿠키를 가져오는데 실패했어..</string>
 
+    <string name="push_default_noti_title">알림</string>
+    <string name="push_default_noti_description">설명</string>
+    <string name="push_resin_noti_title">퓨어 레진 알림</string>
+    <string name="push_resin_noti_description">일정 레진마다 여행자에게 알려주기 위해 발송하는 알림이야!</string>
+    <string name="push_checkin_title">자동 출석 알림</string>
+    <string name="push_checkin_description">호요랩 일일 출석 여부를 여행자에게 알려주기 위해 발송하는 알림이야!</string>
 
-    <string name="msg_push_resin_title">퓨어 레진 알림</string>
-
-
+    <string name="push_msg_checkin_success">HoYoLAB 출석 체크 성공!</string>
+    <string name="push_msg_checkin_already">이미 오늘자 출석 체크가 완료됐어!</string>
 
     <string name="hint_uid">uid를 입력해 줘!</string>
     <string name="hint_cookie">HoYoLAB의 쿠키를 입력해 줘!</string>

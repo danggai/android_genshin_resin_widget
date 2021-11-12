@@ -1,12 +1,14 @@
 package danggai.app.resinwidget.data.api
 
+import danggai.app.resinwidget.Constant
+import danggai.app.resinwidget.data.local.CheckIn
 import danggai.app.resinwidget.data.local.DailyNote
 import danggai.app.resinwidget.data.res.Meta
-import danggai.app.resinwidget.data.res.ResChangeDataSwitch
+import danggai.app.resinwidget.data.res.ResCheckIn
+import danggai.app.resinwidget.data.res.ResDefault
 import danggai.app.resinwidget.data.res.ResDailyNote
 import danggai.app.resinwidget.util.CommonFunction
 import io.reactivex.Observable
-import retrofit2.http.Query
 
 class ApiRepository(private val api: ApiInterface) {
 
@@ -28,8 +30,8 @@ class ApiRepository(private val api: ApiInterface) {
             }
     }
 
-    fun changeDataSwitch(gameId: Int, switchId: Int, isPublic: Boolean, cookie: String): Observable<ResChangeDataSwitch> {
-        val emptyData = ResChangeDataSwitch.Data("","")
+    fun changeDataSwitch(gameId: Int, switchId: Int, isPublic: Boolean, cookie: String): Observable<ResDefault> {
+        val emptyData = ResDefault.Data("","")
 
         return Observable.just(true)
             .switchMap {
@@ -38,12 +40,33 @@ class ApiRepository(private val api: ApiInterface) {
             .map { res ->
                 when {
                     res.isSuccessful -> {
-                        ResChangeDataSwitch(Meta(res.code(), res.message()), res.body()?:emptyData)
+                        ResDefault(Meta(res.code(), res.message()), res.body()?:emptyData)
                     } else -> {
-                        ResChangeDataSwitch(Meta(res.code(), res.message()), emptyData)
+                        ResDefault(Meta(res.code(), res.message()), emptyData)
                     }
                 }
             }
     }
+
+    fun checkIn(region: String, cookie: String): Observable<ResCheckIn> {
+        val emptyData = ResCheckIn.Data("","", CheckIn(""))
+
+        val actId = Constant.OS_ACT_ID
+
+        return Observable.just(true)
+            .switchMap {
+                api.checkIn(region, actId, cookie, CommonFunction.getGenshinDS())
+            }
+            .map { res ->
+                when {
+                    res.isSuccessful -> {
+                        ResCheckIn(Meta(res.code(), res.message()), res.body()?:emptyData)
+                    } else -> {
+                        ResCheckIn(Meta(res.code(), res.message()), emptyData)
+                    }
+                }
+            }
+    }
+
 
 }

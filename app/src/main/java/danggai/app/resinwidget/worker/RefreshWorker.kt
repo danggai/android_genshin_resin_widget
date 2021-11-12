@@ -134,7 +134,7 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
             return
         }
 
-        val title = applicationContext.getString(R.string.msg_push_resin_title)
+        val title = applicationContext.getString(R.string.push_resin_noti_title)
         val msg = when (id) {
             NOTI_TYPE_EACH_40_RESIN -> when (target) {
                 200 -> "여행자! 현재 레진이 ${target}을 넘어섰어! 이렇게 많은 레진은 처음 봐!"

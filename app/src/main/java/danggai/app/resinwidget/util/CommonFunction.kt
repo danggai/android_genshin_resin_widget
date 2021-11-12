@@ -13,6 +13,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import danggai.app.resinwidget.BuildConfig
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
+import danggai.app.resinwidget.worker.CheckInWorker
 import danggai.app.resinwidget.worker.RefreshWorker
 import java.lang.Exception
 import java.math.BigInteger
@@ -39,6 +40,22 @@ object CommonFunction {
         }
         val hash = encodeToMD5("salt=${Constant.OS_SALT}&t=$t&r=$r")
         return "${t},${r},${hash}"
+    }
+
+    fun startOneTimeCheckInWorker(context: Context) {
+//        if (!PreferenceManager.getBooleanAutoRefresh(context)) return
+        log.e()
+
+        if (!PreferenceManager.getBooleanIsValidUserData(context)) {
+            log.e()
+            return
+        }
+
+        val workManager = WorkManager.getInstance(context)
+        val workRequest = OneTimeWorkRequestBuilder<CheckInWorker>()
+            .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to true))
+            .build()
+        workManager.enqueue(workRequest)
     }
 
     fun startOneTimeRefreshWorker(context: Context) {
@@ -144,6 +161,9 @@ object CommonFunction {
         val date= Date()
         cal.time = date
 
+        if (second.toInt() > 144000 || second.toInt() < -144000)
+            return String.format(context.getString(R.string.widget_ui_max_time), cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE))
+
         cal.add(Calendar.SECOND, second.toInt())
 
         val minute = String.format("%02d", cal.get(Calendar.MINUTE))
@@ -152,12 +172,30 @@ object CommonFunction {
     }
 
     fun sendNotification(id: Int, context: Context, title: String, msg: String) {
+        var notificationId = ""
+        var notificationDesc = ""
+
+        when (id) {
+            in 1..9 -> {
+                notificationId = Constant.PUSH_CHANNEL_RESIN_NOTI_ID
+                notificationDesc = context.getString(R.string.push_resin_noti_description)
+            }
+            in 10..19 -> {
+                notificationId = Constant.PUSH_CHANNEL_CHECK_IN_ID
+                notificationDesc = context.getString(R.string.push_checkin_description)
+            }
+            else -> {
+                notificationId = Constant.PUSH_CHANNEL_DEFAULT_ID
+                notificationDesc = context.getString(R.string.push_default_noti_description)
+            }
+        }
+
         val notificationManager: NotificationManager = ContextCompat.getSystemService(
             context,
             NotificationManager::class.java
         ) ?: return
 
-        var builder = NotificationCompat.Builder(context, Constant.PUSH_CHANNEL_ID)
+        val builder = NotificationCompat.Builder(context, notificationId)
             .setSmallIcon(R.drawable.resin)
             .setContentTitle(title)
             .setContentText(msg)
@@ -167,8 +205,8 @@ object CommonFunction {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(
-                NotificationChannel(Constant.PUSH_CHANNEL_ID, Constant.PUSH_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH).apply {
-                    description = Constant.PUSH_CHANNEL_DESC
+                NotificationChannel(notificationId, title, NotificationManager.IMPORTANCE_HIGH).apply {
+                    description = notificationDesc
                 }
             )
         }

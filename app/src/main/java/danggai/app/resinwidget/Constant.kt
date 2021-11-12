@@ -10,7 +10,17 @@ object Constant {
     const val OS_SALT = "6cqshh5dhw73bzxn20oexa9k516chk7s"
     const val CN_SALT = "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs"
 
+    const val OS_CHECK_IN_URL = "https://hk4e-api-os.mihoyo.com/event/sol/sign"
+    const val OS_ACT_ID = "e202102251931481"
+    const val CN_CHECK_IN_URL = "https://api-takumi.mihoyo.com/event/bbs_sign_reward/"
+    const val CN_ACT_ID = "e202009291139501"
 
+    const val SERVER_CN_GF_01 = "cn_gf01"
+    const val SERVER_CN_QD_01 = "cn_qd01"
+    const val SERVER_OS_USA = "os_usa"
+    const val SERVER_OS_EURO = "os_euro"
+    const val SERVER_OS_ASIA = "os_asia"
+    const val SERVER_OS_CHT = "os_cht"
 
     /* HTTP STATUS CODE */
 
@@ -33,11 +43,15 @@ object Constant {
     const val RETCODE_ERROR_ACCOUNT_NOT_FOUND = "-10002"
     const val RETCODE_ERROR_INVALID_LANGUAGE = "-108"
 
+    const val RETCODE_ERROR_CLAIMED_DAILY_REWARD = "-5003"
+    const val RETCODE_ERROR_CHECKED_INTO_HOYOLAB = "2001"
+
 
     /* API NAME */
 
     const val API_NAME_DAILY_NOTE = "Daily Note"
     const val API_NAME_CHANGE_DATA_SWITCH = "Change Data Switch"
+    const val API_NAME_CHECK_IN = "Check In"
 
 
 
@@ -82,9 +96,9 @@ object Constant {
 
     /* ID */
 
-    const val PUSH_CHANNEL_ID = "RESIN_NOTIFICATION"
-    const val PUSH_CHANNEL_NAME= "레진 충전 알림"
-    const val PUSH_CHANNEL_DESC = "일정 레진마다 여행자에게 알려주기 위해 발송하는 알림이야!"
+    const val PUSH_CHANNEL_DEFAULT_ID = "DEFAULT"
+    const val PUSH_CHANNEL_RESIN_NOTI_ID = "RESIN_NOTIFICATION"
+    const val PUSH_CHANNEL_CHECK_IN_ID = "CHECK_IN"
 
 
 
