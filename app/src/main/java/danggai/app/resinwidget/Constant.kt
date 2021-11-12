@@ -4,7 +4,7 @@ object Constant {
 
     /* URL */
 
-    const val OS_TAKUMI_URL = "https://api-os-takumi.mihoyo.com"
+    const val OS_TAKUMI_URL = "https://bbs-api-os.mihoyo.com"
     const val CN_TAKUMI_URL = "https://api-takumi.mihoyo.com"
 
     const val OS_SALT = "6cqshh5dhw73bzxn20oexa9k516chk7s"
@@ -64,6 +64,7 @@ object Constant {
     const val PREF_IS_VALID_USERDATA = "PREF_IS_VALID_USERDATA"
 
     const val PREF_AUTO_REFRESH_PERIOD = "PREF_AUTO_REFRESH_PERIOD"
+    const val PREF_TIME_NOTATION = "PREF_AUTO_REFRESH_PERIOD"
 
     const val PREF_CURRENT_RESIN = "PREF_CURRENT_RESIN"
     const val PREF_MAX_RESIN = "PREF_MAX_RESIN"
