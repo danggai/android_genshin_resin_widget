@@ -58,6 +58,30 @@ object CommonFunction {
         workManager.enqueue(workRequest)
     }
 
+    fun startUniquePeriodicCheckInWorker(context: Context, isRetry: Boolean) {
+        if (!PreferenceManager.getBooleanIsValidUserData(context)) {
+            log.e()
+            return
+        }
+
+        log.e("isRetry -> $isRetry")
+
+        val delay: Long = if (isRetry) {
+            log.e()
+            15L
+        } else {
+            log.e()
+            calculateDelayUntil1AM(Calendar.getInstance())
+        }
+
+        val workManager = WorkManager.getInstance(context)
+        val workRequest = PeriodicWorkRequestBuilder<RefreshWorker>(delay, TimeUnit.MINUTES)
+            .setInitialDelay(delay, TimeUnit.MINUTES)
+            .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to false))
+            .build()
+        workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
+    }
+
     fun startOneTimeRefreshWorker(context: Context) {
 //        if (!PreferenceManager.getBooleanAutoRefresh(context)) return
         log.e()
@@ -212,6 +236,23 @@ object CommonFunction {
         }
 
         notificationManager.notify(id, builder.build())
+    }
+
+    private fun calculateDelayUntil1AM(startCalendar: Calendar): Long {
+        val todayCalendar = Calendar.getInstance()
+        todayCalendar.set(Calendar.MINUTE, 1)
+        todayCalendar.set(Calendar.HOUR, 1)
+        todayCalendar.set(Calendar.AM_PM, Calendar.AM)
+        todayCalendar.add(Calendar.DAY_OF_YEAR, 1)
+
+        val delay = (todayCalendar.time.time - startCalendar.time.time) / 60000
+        log.e(delay)
+        return if (delay < 0) {
+            todayCalendar.add(Calendar.DAY_OF_YEAR, 1)
+            (todayCalendar.time.time - startCalendar.time.time) / 60000
+        } else {
+            delay
+        }
     }
 
 }

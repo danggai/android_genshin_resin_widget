@@ -53,18 +53,18 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
                             Constant.RETCODE_SUCCESS -> {
                                 log.e()
                                 sendNoti(NOTI_TYPE_SUCCESS)
-                                /*다음날 1시에 재시도*/
+                                CommonFunction.startUniquePeriodicCheckInWorker(context, false)
                             }
                             Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
                             Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> {
                                 log.e()
                                 sendNoti(NOTI_TYPE_ALREADY)
-                                /*다음날 1시에 재시도*/
+                                CommonFunction.startUniquePeriodicCheckInWorker(context, false)
                             }
                             else -> {
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, res.data.retcode)
-                                /*15분 후 재시도*/
+                                CommonFunction.startUniquePeriodicCheckInWorker(context, true)
                             }
                         }
                     }
@@ -72,8 +72,7 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
                         log.e()
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, null)
                         context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
-                        sendNoti(NOTI_TYPE_FAILED)
-                        /*15분 후 재시도*/
+                        CommonFunction.startUniquePeriodicCheckInWorker(context, true)
                     }
                 }
             }, {
