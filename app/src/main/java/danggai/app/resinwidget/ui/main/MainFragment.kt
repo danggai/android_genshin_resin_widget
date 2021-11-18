@@ -153,6 +153,9 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
                 PreferenceManager.setBooleanNoti140Resin(_context, mVM.lvEnableNoti140Resin.value)
                 PreferenceManager.setBooleanNotiCustomResin(_context, mVM.lvEnableNotiCustomResin.value)
 
+                PreferenceManager.setLongAutoRefreshPeriod(_context, mVM.lvAutoRefreshPeriod.value)
+                PreferenceManager.setIntTimeNotation(_context, mVM.lvTimeNotation.value)
+
                 val customNotiResin: Int = try {
                     if (mVM.lvCustomNotiResin.value.isEmpty()
                         || mVM.lvCustomNotiResin.value.toInt() < 0) 0
@@ -169,20 +172,6 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
                 requireActivity().sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
 
                 CommonFunction.startUniquePeriodicRefreshWorker(_context)
-            }
-        })
-
-        mVM.lvSetAutoRefreshPeriod.observe(viewLifecycleOwner, EventObserver { period ->
-            activity?.let { act ->
-                log.e(period)
-                PreferenceManager.setLongAutoRefreshPeriod(act, period)
-            }
-        })
-
-        mVM.lvSetTimeNotation.observe(viewLifecycleOwner, EventObserver { notation ->
-            activity?.let { act ->
-                log.e(notation)
-                PreferenceManager.setIntTimeNotation(act, notation)
             }
         })
 
