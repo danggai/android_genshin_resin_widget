@@ -18,10 +18,12 @@ import java.util.concurrent.TimeUnit
 class MainViewModel(override val app: Application, private val api: ApiRepository) : BaseViewModel(app) {
 
     private val rxApiDailyNote: PublishSubject<Boolean> = PublishSubject.create()
+    private val rxApiCheckIn: PublishSubject<Boolean> = PublishSubject.create()
     private val rxApiChangeDataSwitchPublic: PublishSubject<Boolean> = PublishSubject.create()
     private val rxApiChangeDataSwitchPrivate: PublishSubject<Boolean> = PublishSubject.create()
 
     var lvSaveUserInfo = MutableLiveData<Event<Boolean>>()
+    var lvSaveCookie = MutableLiveData<Event<Boolean>>()
     var lvSendWidgetSyncBroadcast = MutableLiveData<Event<DailyNote>>()
     var lvSetAutoRefreshPeriod = MutableLiveData<Event<Long>>()
     var lvSetTimeNotation = MutableLiveData<Event<Int>>()
@@ -29,18 +31,25 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     var lvHowCanIGetCookie = MutableLiveData<Event<Boolean>>()
     var lvWhenDailyNotePrivate = MutableLiveData<Event<Boolean>>()
     var lvSetProgress = MutableLiveData<Event<Boolean>>()
+    var lvStartCheckInWorker = MutableLiveData<Event<Boolean>>()
 
     var lvAutoRefreshPeriod: NonNullMutableLiveData<Long> = NonNullMutableLiveData(15L)
     var lvTimeNotation: NonNullMutableLiveData<Int> = NonNullMutableLiveData(0)
     val lvUid: NonNullMutableLiveData<String> = NonNullMutableLiveData("")
     val lvCookie: NonNullMutableLiveData<String> = NonNullMutableLiveData("")
+
     val lvEnableNotiEach40Resin: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
     val lvEnableNoti140Resin: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
     val lvEnableNotiCustomResin: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
     val lvCustomNotiResin: NonNullMutableLiveData<String> = NonNullMutableLiveData("0")
 
+    val lvEnableAutoCheckIn: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
+    val lvEnableNotiCheckinSuccess: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
+    val lvEnableNotiCheckinFailed: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
+
     private fun initRx() {
         initRxDailyNote()
+        initRxCheckIn()
         initRxChangeDataSwitchPublic()
 
         if (BuildConfig.DEBUG){
@@ -65,9 +74,9 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                 setProgress(false)
                 when (res.meta.code) {
                     Constant.META_CODE_SUCCESS -> {
-                        log.e()
                         when (res.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
+                                log.e()
                                 lvSaveUserInfo.value = Event(true)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_success))
 
@@ -76,39 +85,48 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                                 }
                             }
                             Constant.RETCODE_ERROR_CHARACTOR_INFO -> {
+                                log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_charactor_info))
                             }
                             Constant.RETCODE_ERROR_INTERNAL_DATABASE_ERROR -> {
+                                log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_internal_database_error))
                             }
                             Constant.RETCODE_ERROR_TOO_MANY_REQUESTS -> {
+                                log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_too_many_requests))
                             }
                             Constant.RETCODE_ERROR_NOT_LOGGED_IN,
                             Constant.RETCODE_ERROR_NOT_LOGGED_IN_2-> {
+                                log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_not_logged_in))
                             }
                             Constant.RETCODE_ERROR_NOT_LOGGED_IN_3 -> {
+                                log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_not_logged_in_3))
                             }
                             Constant.RETCODE_ERROR_DATA_NOT_PUBLIC -> {
+                                log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvWhenDailyNotePrivate.value = Event(true)
                             }
                             Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
+                                log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_account_not_found))
                             }
                             Constant.RETCODE_ERROR_INVALID_LANGUAGE -> {
+                                log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_invalid_language))
                             }
                             else -> {
+                                log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_dailynote_error_include_error_code), res.data.retcode))
                             }
@@ -124,6 +142,71 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                     log.e(msg)
                     lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error))
                     initRxDailyNote()
+                }
+            }).addCompositeDisposable()
+    }
+
+    private fun initRxCheckIn() {
+        rxApiCheckIn
+            .map {
+                setProgress(true)
+                it
+            }
+            .throttleFirst(1, TimeUnit.SECONDS)
+            .observeOn(Schedulers.newThread())
+            .filter { it }
+            .switchMap {
+                api.checkIn(Constant.SERVER_OS_ASIA, lvCookie.value)
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe ({ res ->
+                setProgress(false)
+                when (res.meta.code) {
+                    Constant.META_CODE_SUCCESS -> {
+                        when (res.data.retcode) {
+                            Constant.RETCODE_SUCCESS -> {
+                                log.e()
+                                lvSaveCookie.value = Event(true)
+                                lvMakeToast.value = Event(getString(R.string.msg_toast_check_in_success))
+
+                                lvStartCheckInWorker.value = Event(true)
+                            }
+                            Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
+                            Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD -> {
+                                log.e()
+                                lvSaveCookie.value = Event(true)
+                                lvMakeToast.value = Event(getString(R.string.msg_toast_check_in_already))
+
+                                lvStartCheckInWorker.value = Event(true)
+                            }
+                            Constant.RETCODE_ERROR_NOT_LOGGED_IN,
+                            Constant.RETCODE_ERROR_NOT_LOGGED_IN_2-> {
+                                log.e()
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
+                                lvMakeToast.value = Event(getString(R.string.msg_toast_check_in_error_not_logged_in))
+                            }
+                            Constant.RETCODE_ERROR_TOO_FAST -> {
+                                log.e()
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
+                                lvMakeToast.value = Event(getString(R.string.msg_toast_check_in_error_too_fast))
+                            }
+                            else -> {
+                                log.e()
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, res.data.retcode)
+                                lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_dailynote_error_include_error_code), res.data.retcode))
+                            }
+                        }
+                    } else -> {
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, null)
+                        lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_api_error_include_code), res.meta.code))
+                    }
+                }
+            }, {
+                setProgress(false)
+                it.message?.let { msg ->
+                    log.e(msg)
+                    lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error))
+                    initRxCheckIn()
                 }
             }).addCompositeDisposable()
     }
@@ -153,12 +236,13 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                 log.e(res)
                 when (res.meta.code) {
                     Constant.META_CODE_SUCCESS -> {
-                        log.e()
                         when (res.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
+                                log.e()
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_change_data_switch_success))
                             }
                             else -> {
+                                log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHANGE_DATA_SWITCH, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_change_data_switch_error_include_error_code), res.data.retcode))
                             }
@@ -250,6 +334,16 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
         }
     }
 
+    fun onClickCheckInSave() {
+        log.e()
+        if (lvCookie.value.isEmpty())  {
+            lvSaveCookie.value = Event(false)
+        } else {
+            lvCookie.value = lvCookie.value.trim()
+            rxApiCheckIn.onNext(true)
+        }
+    }
+
     fun onClickWidgetRefreshNotWork() {
         log.e()
         lvWidgetRefreshNotWork.value = Event(true)
@@ -270,13 +364,13 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
 
     fun onClickSetTimeNotation(view: View) {
         log.e()
-        val period = when (view.id) {
+        val notation = when (view.id) {
             R.id.rb_remain_time -> 0
             R.id.rb_full_charge_time -> 1
             else -> 0
         }
 
-        lvSetTimeNotation.value = Event(period)
+        lvSetTimeNotation.value = Event(notation)
     }
 
     fun onClickHowCanIGetCookie() {

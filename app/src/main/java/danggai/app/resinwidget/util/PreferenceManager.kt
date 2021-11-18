@@ -260,5 +260,26 @@ object PreferenceManager {
         setInt(context, Constant.PREF_NOTI_CUSTOM_TARGET_RESIN, value)
     }
 
+    fun getBooleanEnableAutoCheckIn(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_ENABLE_AUTO_CHECK_IN, false)
+    }
+    fun setBooleanEnableAutoCheckIn(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_ENABLE_AUTO_CHECK_IN, value)
+    }
+
+    fun getBooleanNotiCheckInSuccess(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_NOTI_CHECK_IN_SUCCESS, true)
+    }
+    fun setBooleanNotiCheckInSuccess(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_NOTI_CHECK_IN_SUCCESS, value)
+    }
+
+    fun getBooleanNotiCheckInFailed(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_NOTI_CHECK_IN_FAILED, false)
+    }
+    fun setBooleanNotiCheckInFailed(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_NOTI_CHECK_IN_FAILED, value)
+    }
+
 
 }

@@ -45,6 +45,7 @@ object Constant {
 
     const val RETCODE_ERROR_CLAIMED_DAILY_REWARD = "-5003"
     const val RETCODE_ERROR_CHECKED_INTO_HOYOLAB = "2001"
+    const val RETCODE_ERROR_TOO_FAST = "-1004"
 
 
     /* API NAME */
@@ -58,6 +59,7 @@ object Constant {
     /* WORKER */
 
     const val WORKER_UNIQUE_NAME_AUTO_REFRESH = "AutoRefreshWork"
+    const val WORKER_UNIQUE_NAME_AUTO_CHECK_IN = "AutoCheckInWork"
 
 
 
@@ -89,6 +91,10 @@ object Constant {
     const val PREF_NOTI_140_RESIN = "PREF_NOTI_140_RESIN"
     const val PREF_NOTI_CUSTOM_RESIN_BOOLEAN = "PREF_NOTI_CUSTOM_RESIN_BOOLEAN"
     const val PREF_NOTI_CUSTOM_TARGET_RESIN = "PREF_NOTI_CUSTOM_RESIN_INT"
+
+    const val PREF_ENABLE_AUTO_CHECK_IN = "PREF_ENABLE_AUTO_CHECK_IN"
+    const val PREF_NOTI_CHECK_IN_SUCCESS = "PREF_NOTI_CHECK_IN_SUCCESS"
+    const val PREF_NOTI_CHECK_IN_FAILED = "PREF_NOTI_CHECK_IN_FAILED"
 
     const val PREF_DEFAULT_REFRESH_PERIOD = 15L
 
