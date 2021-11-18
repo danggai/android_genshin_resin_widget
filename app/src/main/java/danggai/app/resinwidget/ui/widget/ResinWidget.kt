@@ -78,7 +78,7 @@ class ResinWidget : AppWidgetProvider() {
 
     private fun addViews(context: Context?): RemoteViews {
         log.e()
-        val views = RemoteViews(context!!.packageName, R.layout.resin_widget)
+        val views = RemoteViews(context!!.packageName, R.layout.widget_resin_hold)
 
         val intentUpdate = Intent(context, ResinWidget::class.java)
         intentUpdate.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
@@ -139,7 +139,7 @@ class ResinWidget : AppWidgetProvider() {
 
         appWidgetIds.forEach { appWidgetId ->
             log.e()
-            val view = RemoteViews(context.packageName, R.layout.resin_widget)
+            val view = RemoteViews(context.packageName, R.layout.widget_resin_hold)
 
             view.setViewVisibility(R.id.progress1, View.VISIBLE)
             view.setViewVisibility(R.id.iv_resin, View.GONE)

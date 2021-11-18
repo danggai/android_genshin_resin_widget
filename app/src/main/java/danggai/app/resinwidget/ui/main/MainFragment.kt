@@ -13,7 +13,7 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.material.tabs.TabLayoutMediator
 import danggai.app.resinwidget.BuildConfig
 import danggai.app.resinwidget.R
-import danggai.app.resinwidget.databinding.MainFragmentBinding
+import danggai.app.resinwidget.databinding.FragmentMainBinding
 import danggai.app.resinwidget.ui.BindingFragment
 import danggai.app.resinwidget.ui.cookie_web_view.CookieWebViewActivity
 import danggai.app.resinwidget.ui.main.checkin.MainCheckInFragment
@@ -25,7 +25,7 @@ import danggai.app.resinwidget.util.log
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
-class MainFragment : BindingFragment<MainFragmentBinding>() {
+class MainFragment : BindingFragment<FragmentMainBinding>() {
 
     companion object {
         val TAG: String = MainFragment::class.java.simpleName
@@ -36,7 +36,7 @@ class MainFragment : BindingFragment<MainFragmentBinding>() {
     private lateinit var mAdView : AdView
 
     @LayoutRes
-    override fun getLayoutResId() = R.layout.main_fragment
+    override fun getLayoutResId() = R.layout.fragment_main
 
     fun onNewIntent(intent: Intent?) {
         intent?.let {

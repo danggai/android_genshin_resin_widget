@@ -5,10 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import danggai.app.resinwidget.R
-import danggai.app.resinwidget.databinding.CookieWebViewActivityBinding
+import danggai.app.resinwidget.databinding.ActivityCookieWebviewBinding
 import danggai.app.resinwidget.ui.BindingActivity
 
-class CookieWebViewActivity : BindingActivity<CookieWebViewActivityBinding>() {
+class CookieWebViewActivity : BindingActivity<ActivityCookieWebviewBinding>() {
 
     companion object {
         fun startActivity(act: Activity) {
@@ -18,7 +18,7 @@ class CookieWebViewActivity : BindingActivity<CookieWebViewActivityBinding>() {
     }
 
     @LayoutRes
-    override fun getLayoutResId() = R.layout.cookie_web_view_activity
+    override fun getLayoutResId() = R.layout.activity_cookie_webview
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -7,15 +7,14 @@ import android.webkit.*
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.LayoutRes
 import danggai.app.resinwidget.R
-import danggai.app.resinwidget.databinding.CookieWebViewFragmentBinding
+import danggai.app.resinwidget.databinding.FragmentCookieWebviewBinding
 import danggai.app.resinwidget.ui.BindingFragment
 import danggai.app.resinwidget.ui.main.MainActivity
 import danggai.app.resinwidget.util.EventObserver
-import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class CookieWebViewFragment : BindingFragment<CookieWebViewFragmentBinding>() {
+class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding>() {
 
     companion object {
         val TAG: String = CookieWebViewFragment::class.java.simpleName
@@ -25,7 +24,7 @@ class CookieWebViewFragment : BindingFragment<CookieWebViewFragmentBinding>() {
     private lateinit var mVM: CookieWebViewViewModel
 
     @LayoutRes
-    override fun getLayoutResId() = R.layout.cookie_web_view_fragment
+    override fun getLayoutResId() = R.layout.fragment_cookie_webview
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

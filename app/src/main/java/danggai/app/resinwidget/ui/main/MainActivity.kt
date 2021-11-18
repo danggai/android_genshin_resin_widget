@@ -1,23 +1,20 @@
 package danggai.app.resinwidget.ui.main
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.annotation.LayoutRes
-import com.google.android.gms.ads.MobileAds
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
-import danggai.app.resinwidget.databinding.MainActivityBinding
+import danggai.app.resinwidget.databinding.ActivityMainBinding
 import danggai.app.resinwidget.ui.BindingActivity
 import danggai.app.resinwidget.util.log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 
-class MainActivity : BindingActivity<MainActivityBinding>() {
+class MainActivity : BindingActivity<ActivityMainBinding>() {
 
     companion object {
         val ARG_PARAM_COOKIE = "ARG_PARAM_COOKIE"
@@ -33,7 +30,7 @@ class MainActivity : BindingActivity<MainActivityBinding>() {
     private val rxBackButtonAction: Subject<Long> = BehaviorSubject.createDefault(0L).toSerialized()
 
     @LayoutRes
-    override fun getLayoutResId() = R.layout.main_activity
+    override fun getLayoutResId() = R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
