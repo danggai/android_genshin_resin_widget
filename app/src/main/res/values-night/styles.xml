@@ -13,4 +13,11 @@
         <item name="android:backgroundTint">@color/edittext_bottom_line_filter_tint</item>
     </style>
 
+    <style name="TabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">-0.04</item>
+        <item name="android:textStyle">bold|italic</item>
+
+    </style>
+
 </resources>
