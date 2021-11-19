@@ -42,9 +42,9 @@
 
 
 
-| ![screenshot_01.jpg](./assets/screenshot_01.jpg?raw=true)<br /><center>메인 화면</center> | ![screenshot_02.jpg](./assets/screenshot_02.jpg?raw=true)<br /><center>위젯 예시</center> |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-|                                                              |                                                              |
+| ![screenshot_00.png](./assets/screenshot_00.png?raw=true)<br /><center>메인 화면</center> | ![screenshot_01.png](./assets/screenshot_01.png?raw=true)<br /><center>메인 화면</center> | ![screenshot_02.jpg](./assets/screenshot_02.jpg?raw=true)<br /><center>위젯 예시</center> |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+|                                                              |                                                              |                                                              |
 
 
 
