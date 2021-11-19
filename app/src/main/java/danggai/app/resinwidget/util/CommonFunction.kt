@@ -223,7 +223,7 @@ object CommonFunction {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(
-                NotificationChannel(notificationId, title, NotificationManager.IMPORTANCE_HIGH).apply {
+                NotificationChannel(notificationId, title, NotificationManager.IMPORTANCE_DEFAULT).apply {
                     description = notificationDesc
                 }
             )
@@ -233,17 +233,17 @@ object CommonFunction {
     }
 
     private fun calculateDelayUntil1AM(startCalendar: Calendar): Long {
-        val todayCalendar = Calendar.getInstance()
-        todayCalendar.set(Calendar.MINUTE, 1)
-        todayCalendar.set(Calendar.HOUR, 1)
-        todayCalendar.set(Calendar.AM_PM, Calendar.AM)
-        todayCalendar.add(Calendar.DAY_OF_YEAR, 1)
+        val targetCalendar = Calendar.getInstance()
+        targetCalendar.set(Calendar.MINUTE, 1)
+        targetCalendar.set(Calendar.HOUR, 1)
+        targetCalendar.set(Calendar.AM_PM, Calendar.AM)
+        if (startCalendar.get(Calendar.HOUR_OF_DAY) >= 1) targetCalendar.add(Calendar.DAY_OF_YEAR, 1)
 
-        val delay = (todayCalendar.time.time - startCalendar.time.time) / 60000
+        val delay = (targetCalendar.time.time - startCalendar.time.time) / 60000
 
         return if (delay < 0) {
-            todayCalendar.add(Calendar.DAY_OF_YEAR, 1)
-            (todayCalendar.time.time - startCalendar.time.time) / 60000
+            targetCalendar.add(Calendar.DAY_OF_YEAR, 1)
+            (targetCalendar.time.time - startCalendar.time.time) / 60000
         } else {
             delay
         }
