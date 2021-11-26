@@ -68,7 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="10/25 15:30"
+                        android:text="MM/dd hh:mm"
                         android:singleLine="true"
                         />
 
@@ -126,7 +126,7 @@
                     android:id="@+id/tv_remain_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="0시간 0분 남음"
+                    android:text="hh시간 mm분 남음"
                     android:textSize="12sp"
                     android:textColor="@color/black"
                     android:paddingTop="2dp"
