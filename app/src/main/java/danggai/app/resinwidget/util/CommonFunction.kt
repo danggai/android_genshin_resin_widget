@@ -179,6 +179,9 @@ object CommonFunction {
         val date= Date()
         cal.time = date
 
+        if (second.toInt() == 0)
+            return context.getString(R.string.widget_ui_max_time_max)
+
         if (second.toInt() > 144000 || second.toInt() < -144000)
             return String.format(context.getString(R.string.widget_ui_max_time), cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE))
 
