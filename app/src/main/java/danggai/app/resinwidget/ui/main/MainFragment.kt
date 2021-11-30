@@ -87,6 +87,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
         context?.let {
             mVM.lvAutoRefreshPeriod.value = PreferenceManager.getLongAutoRefreshPeriod(it)
             mVM.lvTimeNotation.value = PreferenceManager.getIntTimeNotation(it)
+            mVM.lvWidgetTheme.value = PreferenceManager.getIntWidgetTheme(it)
 
             mVM.lvEnableNotiEach40Resin.value = PreferenceManager.getBooleanNotiEach40Resin(it)
             mVM.lvEnableNoti140Resin.value = PreferenceManager.getBooleanNoti140Resin(it)
@@ -155,6 +156,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
 
                 PreferenceManager.setLongAutoRefreshPeriod(_context, mVM.lvAutoRefreshPeriod.value)
                 PreferenceManager.setIntTimeNotation(_context, mVM.lvTimeNotation.value)
+                PreferenceManager.setIntWidgetTheme(_context, mVM.lvWidgetTheme.value)
 
                 val customNotiResin: Int = try {
                     if (mVM.lvCustomNotiResin.value.isEmpty()

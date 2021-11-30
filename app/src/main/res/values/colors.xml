@@ -16,6 +16,7 @@
 
     <color name="transparent">#00000000</color>
 
-    <color name="background_widget">#DD000000</color>
-    <color name="background_widget_night">#DDFFFFFF</color>
+    <color name="widget_background">#aaFFFFFF</color>
+    <color name="widget_font_main">#FF000000</color>
+    <color name="widget_font_sub">#88000000</color>
 </resources>

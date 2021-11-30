@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
 import com.google.android.gms.ads.AdView
+import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.FragmentResinBinding
 import danggai.app.resinwidget.ui.BindingFragment
@@ -40,17 +41,24 @@ class MainResinFragment : BindingFragment<FragmentResinBinding>() {
     private fun initUi() {
 
         when(mVM.lvAutoRefreshPeriod.value) {
-            -1L -> binding.rbDisable.isChecked = true
             15L -> binding.rb15m.isChecked = true
             30L -> binding.rb30m.isChecked = true
             60L -> binding.rb1h.isChecked = true
             120L -> binding.rb2h.isChecked = true
+            else -> binding.rbDisable.isChecked = true
         }
 
         when(mVM.lvTimeNotation.value) {
-            -1 -> binding.rbRemainTime.isChecked = true
-            0 -> binding.rbRemainTime.isChecked = true
-            1 -> binding.rbFullChargeTime.isChecked = true
+            Constant.PREF_TIME_NOTATION_REMAIN_TIME -> binding.rbRemainTime.isChecked = true
+            Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked = true
+            else -> binding.rbRemainTime.isChecked = true
+        }
+
+        when(mVM.lvWidgetTheme.value) {
+            Constant.PREF_WIDGET_THEME_AUTOMATIC -> binding.rbThemeAutomatic.isChecked = true
+            Constant.PREF_WIDGET_THEME_LIGHT -> binding.rbThemeLight.isChecked = true
+            Constant.PREF_WIDGET_THEME_DARK -> binding.rbThemeBlack.isChecked = true
+            else -> binding.rbThemeAutomatic.isChecked = true
         }
 
     }

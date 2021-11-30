@@ -225,6 +225,13 @@ object PreferenceManager {
         setInt(context, Constant.PREF_TIME_NOTATION, value)
     }
 
+    fun getIntWidgetTheme(context: Context): Int {
+        return getInt(context, Constant.PREF_WIDGET_THEME)
+    }
+    fun setIntWidgetTheme(context: Context, value: Int) {
+        setInt(context, Constant.PREF_WIDGET_THEME, value)
+    }
+
     fun getBooleanIsValidUserData(context: Context): Boolean {
         return getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)
     }

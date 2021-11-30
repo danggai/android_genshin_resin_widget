@@ -9,6 +9,7 @@
     <string name="notification">Notification</string>
     <string name="auto_check_in">Auto Check In</string>
     <string name="time_notation">Time Notation</string>
+    <string name="widget_theme">Widget Theme</string>
     <string name="apply">Apply</string>
     <string name="save">저장</string>
     <string name="cancel">Cancel</string>
@@ -20,7 +21,11 @@
     <string name="btn_remain_time">남은 시간</string>
     <string name="btn_full_charge_time">완충 시각</string>
 
-    <string name="btn_auto_check_in_enable">새벽 1시에 자동으로 HoYoLAB에 출석</string>
+    <string name="btn_dark">다크</string>
+    <string name="btn_light">라이트</string>
+    <string name="btn_automatic">자동</string>
+
+    <string name="btn_auto_check_in_enable">자동으로 HoYoLAB에 출석</string>
     <string name="btn_check_in_success">출석 성공 시</string>
     <string name="btn_check_in_failed">출석 실패 시</string>
 
@@ -107,6 +112,7 @@
 
     <string name="widget_ui_remain_time">%s시간 %s분 남음</string>
     <string name="widget_ui_max_time">%s시 %s분에 가득 참</string>
+    <string name="widget_ui_max_time_max">이미 가득 참</string>
 
 
 

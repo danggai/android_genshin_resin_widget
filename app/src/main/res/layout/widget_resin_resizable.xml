@@ -16,7 +16,7 @@
         android:padding="10dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/rounded_square_white_5dp"
+        android:background="@drawable/rounded_square_5dp"
         >
 
         <ProgressBar
@@ -25,9 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="15dp"
-            android:indeterminateTint="@color/gray"
+            android:indeterminateTint="@color/widget_font_sub"
             android:layout_gravity="center"
-            android:visibility="gone"
             />
 
         <LinearLayout
@@ -37,6 +36,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:weightSum="3"
+            android:visibility="gone"
             >
 
             <ImageView
@@ -69,6 +69,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:text="MM/dd hh:mm"
+                        android:textColor="@color/widget_font_sub"
                         android:singleLine="true"
                         />
 
@@ -102,7 +103,7 @@
                         android:gravity="center"
                         android:singleLine="true"
                         android:text="0"
-                        android:textColor="@color/black"
+                        android:textColor="@color/widget_font_main"
                         android:textSize="30sp"
                         android:textStyle="bold"
                         />
@@ -113,7 +114,7 @@
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:text="/160"
-                        android:textColor="@color/black"
+                        android:textColor="@color/widget_font_main"
                         android:textSize="16sp"
                         android:paddingTop="12dp"
                         android:layout_toRightOf="@id/tv_resin"
@@ -128,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:text="hh시간 mm분 남음"
                     android:textSize="12sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/widget_font_main"
                     android:paddingTop="2dp"
                     android:singleLine="true"
                     android:gravity="bottom|center"
@@ -152,7 +153,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:textColor="@color/black"
+                android:textColor="@color/widget_font_main"
                 android:gravity="center"
                 android:text="@string/invalid_user_info"
                 />

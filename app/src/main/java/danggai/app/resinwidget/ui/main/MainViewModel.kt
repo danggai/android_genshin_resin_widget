@@ -32,7 +32,8 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     var lvStartCheckInWorker = MutableLiveData<Event<Boolean>>()
 
     var lvAutoRefreshPeriod: NonNullMutableLiveData<Long> = NonNullMutableLiveData(15L)
-    var lvTimeNotation: NonNullMutableLiveData<Int> = NonNullMutableLiveData(0)
+    var lvTimeNotation: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
+    var lvWidgetTheme: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_WIDGET_THEME_AUTOMATIC)
     val lvUid: NonNullMutableLiveData<String> = NonNullMutableLiveData("")
     val lvCookie: NonNullMutableLiveData<String> = NonNullMutableLiveData("")
 
@@ -361,9 +362,19 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     fun onClickSetTimeNotation(view: View) {
         log.e()
         lvTimeNotation.value = when (view.id) {
-            R.id.rb_remain_time -> 0
-            R.id.rb_full_charge_time -> 1
-            else -> 0
+            R.id.rb_remain_time -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
+            R.id.rb_full_charge_time -> Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME
+            else -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
+        }
+    }
+
+    fun onClickWidgetTheme(view: View) {
+        log.e()
+        lvWidgetTheme.value = when (view.id) {
+            R.id.rb_theme_automatic -> Constant.PREF_WIDGET_THEME_AUTOMATIC
+            R.id.rb_theme_light -> Constant.PREF_WIDGET_THEME_LIGHT
+            R.id.rb_theme_black -> Constant.PREF_WIDGET_THEME_DARK
+            else -> Constant.PREF_WIDGET_THEME_AUTOMATIC
         }
     }
 

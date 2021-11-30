@@ -16,7 +16,7 @@
         android:padding="10dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/rounded_square_white_5dp"
+        android:background="@drawable/rounded_square_5dp"
         >
 
         <ProgressBar
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="15dp"
-            android:indeterminateTint="@color/gray"
+            android:indeterminateTint="@color/widget_font_sub"
             />
 
         <LinearLayout
@@ -64,8 +64,9 @@
                         android:id="@+id/tv_sync_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="MM/dd hh:mm"
                         android:textSize="10sp"
-                        android:text="10/25 15:30"
+                        android:textColor="@color/widget_font_sub"
                         android:layout_gravity="center"
                         android:singleLine="true"
                         />
@@ -102,7 +103,7 @@
                         android:textSize="30sp"
                         android:textStyle="bold"
                         android:text="160"
-                        android:textColor="@color/black"
+                        android:textColor="@color/widget_font_main"
                         android:layout_gravity="left"
                         android:singleLine="true"
                         />
@@ -113,7 +114,7 @@
                         android:layout_height="wrap_content"
                         android:text="/160"
                         android:textSize="16sp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/widget_font_main"
                         android:layout_gravity="left|bottom"
                         android:singleLine="true"
                         />
@@ -124,9 +125,9 @@
                         android:id="@+id/tv_remain_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0시간 0분 남음"
+                        android:text="hh시간 mm분 남음"
                         android:textSize="10sp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/widget_font_main"
                         android:layout_gravity="center"
                         android:paddingTop="2dp"
                         android:singleLine="true"
@@ -150,7 +151,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:textColor="@color/black"
+                android:textColor="@color/widget_font_main"
+                android:gravity="center"
                 android:text="@string/invalid_user_info"
                 />
 

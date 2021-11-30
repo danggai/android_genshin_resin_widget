@@ -81,6 +81,7 @@ object Constant {
 
     const val PREF_AUTO_REFRESH_PERIOD = "PREF_AUTO_REFRESH_PERIOD"
     const val PREF_TIME_NOTATION = "PREF_TIME_NOTATION"
+    const val PREF_WIDGET_THEME = "PREF_WIDGET_THEME"
 
     const val PREF_CURRENT_RESIN = "PREF_CURRENT_RESIN"
     const val PREF_MAX_RESIN = "PREF_MAX_RESIN"
@@ -97,6 +98,16 @@ object Constant {
     const val PREF_NOTI_CHECK_IN_FAILED = "PREF_NOTI_CHECK_IN_FAILED"
 
     const val PREF_DEFAULT_REFRESH_PERIOD = 15L
+
+    const val PREF_TIME_NOTATION_REMAIN_TIME = 0
+    const val PREF_TIME_NOTATION_FULL_CHARGE_TIME = 1
+
+    const val PREF_WIDGET_THEME_AUTOMATIC = 0
+    const val PREF_WIDGET_THEME_LIGHT = 1
+    const val PREF_WIDGET_THEME_DARK = 2
+
+
+
 
 
 
