@@ -84,23 +84,6 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
     }
 
     private fun initUi() {
-        context?.let {
-            mVM.lvAutoRefreshPeriod.value = PreferenceManager.getLongAutoRefreshPeriod(it)
-            mVM.lvTimeNotation.value = PreferenceManager.getIntTimeNotation(it)
-            mVM.lvWidgetTheme.value = PreferenceManager.getIntWidgetTheme(it)
-
-            mVM.lvEnableNotiEach40Resin.value = PreferenceManager.getBooleanNotiEach40Resin(it)
-            mVM.lvEnableNoti140Resin.value = PreferenceManager.getBooleanNoti140Resin(it)
-            mVM.lvEnableNotiCustomResin.value = PreferenceManager.getBooleanNotiCustomResin(it)
-            mVM.lvCustomNotiResin.value = PreferenceManager.getIntCustomTargetResin(it).let { int ->
-                if (int == -1) "0" else int.toString()
-            }
-
-            mVM.lvEnableAutoCheckIn.value = PreferenceManager.getBooleanEnableAutoCheckIn(it)
-            mVM.lvEnableNotiCheckinSuccess.value = PreferenceManager.getBooleanNotiCheckInSuccess(it)
-            mVM.lvEnableNotiCheckinFailed.value = PreferenceManager.getBooleanNotiCheckInFailed(it)
-        }
-
         context?.let { it ->
             mVM.initUI(PreferenceManager.getStringUid(it), PreferenceManager.getStringCookie(it))
         }

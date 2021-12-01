@@ -20,9 +20,9 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
     Worker(context, workerParams) {
 
     companion object {
-        val NOTI_TYPE_SUCCESS = 10
-        val NOTI_TYPE_ALREADY = 11
-        val NOTI_TYPE_FAILED = 12
+        const val NOTI_TYPE_SUCCESS = 10
+        const val NOTI_TYPE_ALREADY = 11
+        const val NOTI_TYPE_FAILED = 12
     }
 
     private val rxApiCheckIn: PublishSubject<Boolean> = PublishSubject.create()
