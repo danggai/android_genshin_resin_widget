@@ -103,6 +103,7 @@
                         android:gravity="center"
                         android:singleLine="true"
                         android:text="0"
+                        android:hint="000"
                         android:textColor="@color/widget_font_main"
                         android:textSize="30sp"
                         android:textStyle="bold"
