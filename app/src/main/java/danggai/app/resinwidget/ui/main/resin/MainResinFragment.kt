@@ -9,6 +9,7 @@ import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.FragmentResinBinding
 import danggai.app.resinwidget.ui.BindingFragment
 import danggai.app.resinwidget.ui.main.MainViewModel
+import danggai.app.resinwidget.util.PreferenceManager
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
@@ -39,6 +40,19 @@ class MainResinFragment : BindingFragment<FragmentResinBinding>() {
     }
 
     private fun initUi() {
+        context?.let {
+            mVM.lvAutoRefreshPeriod.value = PreferenceManager.getLongAutoRefreshPeriod(it)
+            
+            mVM.lvEnableNotiEach40Resin.value = PreferenceManager.getBooleanNotiEach40Resin(it)
+            mVM.lvEnableNoti140Resin.value = PreferenceManager.getBooleanNoti140Resin(it)
+            mVM.lvEnableNotiCustomResin.value = PreferenceManager.getBooleanNotiCustomResin(it)
+            mVM.lvCustomNotiResin.value = PreferenceManager.getIntCustomTargetResin(it).let { int ->
+                if (int == -1) "0" else int.toString()
+            }
+
+            mVM.lvTimeNotation.value = PreferenceManager.getIntTimeNotation(it)
+            mVM.lvWidgetTheme.value = PreferenceManager.getIntWidgetTheme(it)
+        }
 
         when(mVM.lvAutoRefreshPeriod.value) {
             15L -> binding.rb15m.isChecked = true
