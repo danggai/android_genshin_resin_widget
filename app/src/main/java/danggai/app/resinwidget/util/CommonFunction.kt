@@ -65,7 +65,7 @@ object CommonFunction {
 
         log.e("isRetry -> $isRetry")
 
-        val delay: Long = if (isRetry) { 15L } else { calculateDelayUntil1AM(Calendar.getInstance()) }
+        val delay: Long = if (isRetry) { 15L } else { calculateDelayUntilChinaMidnight(Calendar.getInstance()) }
         log.e(delay)
 
         val workManager = WorkManager.getInstance(context)
@@ -235,14 +235,20 @@ object CommonFunction {
         notificationManager.notify(id, builder.build())
     }
 
-    private fun calculateDelayUntil1AM(startCalendar: Calendar): Long {
+    private fun calculateDelayUntilChinaMidnight(startCalendar: Calendar): Long {
         val targetCalendar = Calendar.getInstance()
+        targetCalendar.timeZone = TimeZone.getTimeZone(Constant.CHINA_TIMEZONE)
         targetCalendar.set(Calendar.MINUTE, 1)
-        targetCalendar.set(Calendar.HOUR, 1)
+        targetCalendar.set(Calendar.HOUR, 0)
         targetCalendar.set(Calendar.AM_PM, Calendar.AM)
+
         if (startCalendar.get(Calendar.HOUR_OF_DAY) >= 1) targetCalendar.add(Calendar.DAY_OF_YEAR, 1)
 
         val delay = (targetCalendar.time.time - startCalendar.time.time) / 60000
+
+        log.e("now time -> ${startCalendar.time}")
+        log.e("target time -> ${targetCalendar.time}")
+        log.e("delayed -> ${delay / 60}h ${delay % 60}m")
 
         return if (delay < 0) {
             targetCalendar.add(Calendar.DAY_OF_YEAR, 1)

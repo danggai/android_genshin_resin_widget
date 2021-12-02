@@ -125,6 +125,13 @@ object Constant {
 
 
 
+    /* TIMEZONE */
+
+    const val CHINA_TIMEZONE = "Asia/Shanghai"
+    const val KOREA_TIMEZONE = "Asia/Seoul"
+
+
+
     /* ACTION */
 
     const val ACTION_APPWIDGET_UPDATE = "android.appwidget.action.APPWIDGET_UPDATE"
