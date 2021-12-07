@@ -76,6 +76,15 @@ object CommonFunction {
         workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
     }
 
+    fun shutdownRefreshWorker(context: Context) {
+//        if (!PreferenceManager.getBooleanAutoRefresh(context)) return
+        log.e()
+
+        val workManager = WorkManager.getInstance(context)
+
+        workManager.cancelUniqueWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
+    }
+
     fun startOneTimeRefreshWorker(context: Context) {
 //        if (!PreferenceManager.getBooleanAutoRefresh(context)) return
         log.e()

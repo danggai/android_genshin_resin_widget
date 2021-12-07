@@ -81,6 +81,14 @@ class ResinWidgetResizable : AppWidgetProvider() {
         }
     }
 
+    override fun onDisabled(context: Context?) {
+        super.onDisabled(context)
+        log.e()
+        context?.let {
+            CommonFunction.shutdownRefreshWorker(context)
+        }
+    }
+
     private fun addViews(context: Context?): RemoteViews {
         log.e()
         val views = RemoteViews(context!!.packageName, R.layout.widget_resin_resizable)

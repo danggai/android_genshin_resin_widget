@@ -31,6 +31,9 @@
             <intent-filter>
                 <action android:name="danggai.app.resinwidget.btn_refresh" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
             </intent-filter>
 
             <meta-data
@@ -43,6 +46,9 @@
             <intent-filter>
                 <action android:name="danggai.app.resinwidget.btn_refresh" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
             </intent-filter>
 
             <meta-data
