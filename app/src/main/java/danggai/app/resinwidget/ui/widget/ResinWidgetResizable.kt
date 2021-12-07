@@ -75,7 +75,8 @@ class ResinWidgetResizable : AppWidgetProvider() {
         super.onEnabled(context)
         log.e()
         context?.let {
-            Toast.makeText(context, "현재 레진 갯수가 보이지 않는다면, 우상단 새로고침 버튼을 눌러주세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.msg_toast_resizable_widget_enable), Toast.LENGTH_SHORT).show()
+            CommonFunction.startOneTimeRefreshWorker(context)
             CommonFunction.startUniquePeriodicRefreshWorker(context)
         }
     }
