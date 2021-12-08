@@ -217,6 +217,18 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
         mVM.lvWhenDailyNotePrivate.observe(viewLifecycleOwner, EventObserver {
             activity?.let {
                 log.e()
+                if (mVM.lvDailyNotePrivateErrorCount.value >= 2) {
+                    AlertDialog.Builder(requireActivity())
+                        .setTitle(R.string.dialog_realtime_note_private)
+                        .setMessage(R.string.dialog_msg_dailynote_not_public_error_repeat)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.apply) { dialog, whichButton ->
+                            log.e()
+                        }
+                        .create()
+                        .show()
+                }
+
                 AlertDialog.Builder(requireActivity())
                     .setTitle(R.string.dialog_realtime_note_private)
                     .setMessage(R.string.dialog_msg_realtime_note_private)

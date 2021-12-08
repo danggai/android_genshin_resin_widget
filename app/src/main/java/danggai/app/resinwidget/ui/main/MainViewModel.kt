@@ -46,6 +46,8 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     val lvEnableNotiCheckinSuccess: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
     val lvEnableNotiCheckinFailed: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
 
+    val lvDailyNotePrivateErrorCount: NonNullMutableLiveData<Int> = NonNullMutableLiveData(0)
+
     private fun initRx() {
         initRxDailyNote()
         initRxCheckIn()
@@ -111,6 +113,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                             }
                             Constant.RETCODE_ERROR_DATA_NOT_PUBLIC -> {
                                 log.e()
+                                lvDailyNotePrivateErrorCount.value += 1
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvWhenDailyNotePrivate.value = Event(true)
                             }

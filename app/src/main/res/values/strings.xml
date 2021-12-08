@@ -45,6 +45,8 @@
     <string name="dialog_native_hoyolab_account">Check Your Account</string>
     <string name="dialog_msg_native_hoyolab_account">HoYoLAB 계정 사용 시 <b>호요랩 계정</b> 버튼을 눌러주세요.\n구글, 애플, 페이스북, 트위터 계정 사용 시 <b>SNS 계정</b> 버튼을 눌러주세요.</string>
 
+    <string name="dialog_msg_dailynote_not_public_error_repeat">전적 정보 비공개 에러가 반복적으로 발생한다면, 정확한 uid를 입력했는지 확인 해주세요.</string>
+
     <string name="dialog_realtime_note_private">Realtime Notes is Private</string>
     <string name="dialog_msg_realtime_note_private">Your realtime note is private and information cannot be imported. Do you want to change it to public?</string>
 
