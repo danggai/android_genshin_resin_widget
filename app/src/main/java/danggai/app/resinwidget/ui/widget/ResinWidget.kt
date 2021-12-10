@@ -159,11 +159,6 @@ class ResinWidget : AppWidgetProvider() {
         }
     }
 
-    fun Context.isDarkThemeOn(): Boolean {
-        return resources.configuration.uiMode and
-                Configuration.UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
-    }
-
     internal fun updateAppWidget(
         context: Context,
         appWidgetManager: AppWidgetManager,
