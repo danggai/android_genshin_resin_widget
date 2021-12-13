@@ -1,10 +1,13 @@
 package danggai.app.resinwidget.ui.main
 
+import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.ads.AdRequest
@@ -81,11 +84,40 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
 
         initUi()
         initLv()
+
+        permissionCheck()
     }
 
     private fun initUi() {
         context?.let { it ->
             mVM.initUI(PreferenceManager.getStringUid(it), PreferenceManager.getStringCookie(it))
+        }
+    }
+
+    private fun permissionCheck() {
+        context?.let { it ->
+            if (PreferenceManager.getBooleanFirstLaunch(it)) {
+                log.e()
+
+                val permissionLauncher: ActivityResultLauncher<String> = registerForActivityResult(RequestPermission()) { isGranted: Boolean ->
+                    PreferenceManager.setBooleanFirstLaunch(it, false)
+                    if (isGranted) {
+                        log.e()
+                    } else {
+                        log.e()
+                    }
+                }
+
+                AlertDialog.Builder(requireActivity())
+                    .setTitle(R.string.dialog_get_storage_permission)
+                    .setMessage(R.string.dialog_msg_get_storage_permission)
+                    .setPositiveButton(R.string.apply) { dialog, whichButton ->
+                        log.e()
+                        permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    }
+                    .create()
+                    .show()
+            }
         }
     }
 

@@ -77,6 +77,8 @@ object Constant {
     const val PREF_COOKIE = "PREF_COOKIE"
     const val PREF_UID = "PREF_UID"
 
+    const val PREF_FIRST_LAUNCH = "PREF_FIRST_LAUNCH"
+
     const val PREF_IS_VALID_USERDATA = "PREF_IS_VALID_USERDATA"
 
     const val PREF_AUTO_REFRESH_PERIOD = "PREF_AUTO_REFRESH_PERIOD"
