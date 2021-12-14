@@ -4,6 +4,9 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration.UI_MODE_NIGHT_MASK
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.graphics.*
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -15,7 +18,6 @@ import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.worker.CheckInWorker
 import danggai.app.resinwidget.worker.RefreshWorker
-import java.lang.Exception
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
@@ -265,6 +267,10 @@ object CommonFunction {
         } else {
             delay
         }
+    }
+
+    fun Context.isDarkMode(): Boolean {
+        return resources.configuration.uiMode and UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
     }
 
 }

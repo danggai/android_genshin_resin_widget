@@ -19,6 +19,7 @@ import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.FragmentMainBinding
 import danggai.app.resinwidget.ui.BindingFragment
 import danggai.app.resinwidget.ui.cookie_web_view.CookieWebViewActivity
+import danggai.app.resinwidget.ui.design.WidgetDesignActivity
 import danggai.app.resinwidget.ui.main.checkin.MainCheckInFragment
 import danggai.app.resinwidget.ui.main.resin.MainResinFragment
 import danggai.app.resinwidget.util.CommonFunction
@@ -171,7 +172,6 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
 
                 PreferenceManager.setLongAutoRefreshPeriod(_context, mVM.lvAutoRefreshPeriod.value)
                 PreferenceManager.setIntTimeNotation(_context, mVM.lvTimeNotation.value)
-                PreferenceManager.setIntWidgetTheme(_context, mVM.lvWidgetTheme.value)
 
                 val customNotiResin: Int = try {
                     if (mVM.lvCustomNotiResin.value.isEmpty()
@@ -290,6 +290,13 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
                     log.e()
                     CommonFunction.startUniquePeriodicCheckInWorker(it, false)
                 }
+            }
+        })
+
+        mVM.lvStartWidgetDesignActivity.observe(viewLifecycleOwner, EventObserver {
+            log.e()
+            activity?.let {
+                WidgetDesignActivity.startActivity(it)
             }
         })
     }

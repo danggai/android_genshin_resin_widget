@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="widget_background">#aa000000</color>
-    <color name="widget_font_main">#FFeeeeee</color>
-    <color name="widget_font_sub">#99ffffff</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="widget_background">#000000</color>
+    <color name="widget_font_main">#eeeeee</color>
+    <color name="widget_font_sub">#999999</color>
+
+    <color name="widget_font_main_light">#000000</color>
+    <color name="widget_font_sub_light">#444444</color>
+
+    <color name="widget_font_main_dark">#eeeeee</color>
+    <color name="widget_font_sub_dark">#999999</color>
 </resources>

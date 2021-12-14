@@ -9,7 +9,9 @@
     <string name="notification">Notification</string>
     <string name="auto_check_in">Auto Check In</string>
     <string name="time_notation">Time Notation</string>
+    <string name="widget_design">Widget Design</string>
     <string name="widget_theme">Widget Theme</string>
+    <string name="background_transparency">Background Transparency</string>
     <string name="apply">Apply</string>
     <string name="save">저장</string>
     <string name="cancel">Cancel</string>
@@ -90,6 +92,8 @@
     <string name="msg_toast_get_cookie_unknown_fail">알 수 없는 이유로 쿠키를 가져오는데 실패했어..</string>
 
     <string name="msg_toast_resizable_widget_enable">현재 레진 갯수가 보이지 않는다면, 위젯 우상단 새로고침 버튼을 눌러주세요.</string>
+
+    <string name="msg_toast_storage_permission_denied">저장소 접근 권한이 허용되지 않아 배경화면 이미지를 불러올 수 없습니다.</string>
 
     <string name="push_default_noti_title">알림</string>
     <string name="push_default_noti_description">설명</string>

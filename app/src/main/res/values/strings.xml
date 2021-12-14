@@ -9,7 +9,9 @@
     <string name="notification">Notification</string>
     <string name="auto_check_in">Auto Check In</string>
     <string name="time_notation">Time Notation</string>
+    <string name="widget_design">Widget Design</string>
     <string name="widget_theme">Widget Theme</string>
+    <string name="background_transparency">Background Transparency</string>
     <string name="apply">Apply</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
@@ -90,6 +92,8 @@
     <string name="msg_toast_get_cookie_unknown_fail">알 수 없는 이유로 쿠키를 가져오는데 실패했어..</string>
 
     <string name="msg_toast_resizable_widget_enable">If you can\'t see the current resins, press the refresh button at the top right of widget.</string>
+
+    <string name="msg_toast_storage_permission_denied">App is not allowed to get wallpaper image because storage access permission are not allowed.</string>
 
     <string name="push_default_noti_title">Notification</string>
     <string name="push_default_noti_description">Description</string>

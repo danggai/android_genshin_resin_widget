@@ -66,9 +66,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.cookie_web_view.CookieWebViewActivity">
+        <activity android:name=".ui.cookie_web_view.CookieWebViewActivity"/>
 
-        </activity>
+        <activity android:name=".ui.design.WidgetDesignActivity"/>
 
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"

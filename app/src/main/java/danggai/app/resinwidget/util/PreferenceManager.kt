@@ -113,6 +113,10 @@ object PreferenceManager {
         val prefs = getPreferences(context)
         return prefs.getInt(key, DEFAULT_VALUE_INT)
     }
+    fun getIntDefault(context: Context, default: Int, key: String?): Int {
+        val prefs = getPreferences(context)
+        return prefs.getInt(key, default)
+    }
 
     /**
      * long 값 로드
@@ -168,6 +172,13 @@ object PreferenceManager {
     /**
      * 커스텀 함수
      */
+    fun getBooleanFirstLaunch(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_FIRST_LAUNCH, true)
+    }
+    fun setBooleanFirstLaunch(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_FIRST_LAUNCH, value)
+    }
+
     fun getStringUid(context: Context): String {
         return getString(context, Constant.PREF_UID)
     }
@@ -230,6 +241,13 @@ object PreferenceManager {
     }
     fun setIntWidgetTheme(context: Context, value: Int) {
         setInt(context, Constant.PREF_WIDGET_THEME, value)
+    }
+
+    fun getIntBackgroundTransparency(context: Context): Int {
+        return getIntDefault(context, 170, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
+    }
+    fun setIntBackgroundTransparency(context: Context, value: Int) {
+        setInt(context, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY, value)
     }
 
     fun getBooleanIsValidUserData(context: Context): Boolean {

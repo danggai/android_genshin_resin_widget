@@ -51,7 +51,6 @@ class MainResinFragment : BindingFragment<FragmentResinBinding>() {
             }
 
             mVM.lvTimeNotation.value = PreferenceManager.getIntTimeNotation(it)
-            mVM.lvWidgetTheme.value = PreferenceManager.getIntWidgetTheme(it)
         }
 
         when(mVM.lvAutoRefreshPeriod.value) {
@@ -67,13 +66,5 @@ class MainResinFragment : BindingFragment<FragmentResinBinding>() {
             Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked = true
             else -> binding.rbRemainTime.isChecked = true
         }
-
-        when(mVM.lvWidgetTheme.value) {
-            Constant.PREF_WIDGET_THEME_AUTOMATIC -> binding.rbThemeAutomatic.isChecked = true
-            Constant.PREF_WIDGET_THEME_LIGHT -> binding.rbThemeLight.isChecked = true
-            Constant.PREF_WIDGET_THEME_DARK -> binding.rbThemeBlack.isChecked = true
-            else -> binding.rbThemeAutomatic.isChecked = true
-        }
-
     }
 }
