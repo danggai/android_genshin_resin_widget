@@ -11,10 +11,15 @@ import android.view.View
 import android.widget.RemoteViews
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat.getColor
+import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.drawable.DrawableCompat
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.ui.main.MainActivity
 import danggai.app.resinwidget.util.CommonFunction
+import danggai.app.resinwidget.util.CommonFunction.isDarkMode
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
 
@@ -114,35 +119,54 @@ class ResinWidgetResizable : AppWidgetProvider() {
 
     private fun syncData(view: RemoteViews, context: Context?) {
         context?.let { _context ->
-            when (PreferenceManager.getIntWidgetTheme(_context)) {
-                Constant.PREF_WIDGET_THEME_DARK -> {
-                    log.e()
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                }
-                Constant.PREF_WIDGET_THEME_LIGHT -> {
-                    log.e()
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                }
-                Constant.PREF_WIDGET_THEME_AUTOMATIC -> {
-                    log.e()
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                    } else {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
-                    }
-                }
-            }
-
             if (!PreferenceManager.getBooleanIsValidUserData(context)) {
                 log.e()
                 view.setViewVisibility(R.id.progress1, View.GONE)
                 view.setViewVisibility(R.id.iv_resin, View.GONE)
                 view.setViewVisibility(R.id.ll_resin, View.GONE)
                 view.setViewVisibility(R.id.ll_disable, View.VISIBLE)
+
+                if (PreferenceManager.getIntWidgetTheme(_context) == Constant.PREF_WIDGET_THEME_LIGHT) {
+                    view.setTextColor(R.id.tv_disable, getColor(_context, R.color.widget_font_main_light))
+                } else if ((PreferenceManager.getIntWidgetTheme(_context) == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
+                    view.setTextColor(R.id.tv_disable, getColor(_context, R.color.widget_font_main_dark))
+                } else {
+                    view.setTextColor(R.id.tv_disable, getColor(_context, R.color.widget_font_main_light))
+                }
+
             } else {
                 log.e()
                 view.setTextViewText(R.id.tv_resin, PreferenceManager.getIntCurrentResin(_context).toString())
                 view.setTextViewText(R.id.tv_resin_max, "/"+PreferenceManager.getIntMaxResin(_context).toString())
+
+                val unwrappedDrawable = AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
+                val wrappedDraable = DrawableCompat.wrap(unwrappedDrawable!!)
+
+                if (PreferenceManager.getIntWidgetTheme(_context) == Constant.PREF_WIDGET_THEME_LIGHT) {
+                    log.e()
+//                    view.setInt(R.id.ll_body, "setBackgroundColor", ColorUtils.setAlphaComponent(getColor(_context, R.color.white), PreferenceManager.getIntBackgroundTransparency(_context)))
+                    view.setTextColor(R.id.tv_resin, getColor(_context, R.color.widget_font_main_light))
+                    view.setTextColor(R.id.tv_resin_max, getColor(_context, R.color.widget_font_main_light))
+                    view.setTextColor(R.id.tv_remain_time, getColor(_context, R.color.widget_font_main_light))
+                    view.setInt(R.id.iv_refersh, "setColorFilter", getColor(_context, R.color.widget_font_sub_light))
+                    view.setTextColor(R.id.tv_sync_time, getColor(_context, R.color.widget_font_sub_light))
+                } else if ((PreferenceManager.getIntWidgetTheme(_context) == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
+                    log.e()
+//                    view.setInt(R.id.ll_body, "setBackgroundColor", ColorUtils.setAlphaComponent(getColor(_context, R.color.white), PreferenceManager.getIntBackgroundTransparency(_context)))
+                    view.setTextColor(R.id.tv_resin, getColor(_context, R.color.widget_font_main_dark))
+                    view.setTextColor(R.id.tv_resin_max, getColor(_context, R.color.widget_font_main_dark))
+                    view.setTextColor(R.id.tv_remain_time, getColor(_context, R.color.widget_font_main_dark))
+                    view.setInt(R.id.iv_refersh, "setColorFilter", getColor(_context, R.color.widget_font_sub_dark))
+                    view.setTextColor(R.id.tv_sync_time, getColor(_context, R.color.widget_font_sub_dark))
+                } else {
+                    log.e()
+//                    view.setInt(R.id.ll_body, "setBackgroundColor", ColorUtils.setAlphaComponent(getColor(_context, R.color.white), PreferenceManager.getIntBackgroundTransparency(_context)))
+                    view.setTextColor(R.id.tv_resin, getColor(_context, R.color.widget_font_main_light))
+                    view.setTextColor(R.id.tv_resin_max, getColor(_context, R.color.widget_font_main_light))
+                    view.setTextColor(R.id.tv_remain_time, getColor(_context, R.color.widget_font_main_light))
+                    view.setInt(R.id.iv_refersh, "setColorFilter", getColor(_context, R.color.widget_font_sub_light))
+                    view.setTextColor(R.id.tv_sync_time, getColor(_context, R.color.widget_font_sub_light))
+                }
 
                 when (PreferenceManager.getIntTimeNotation(_context)) {
                     Constant.PREF_TIME_NOTATION_REMAIN_TIME -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringResinRecoveryTime(_context)))
