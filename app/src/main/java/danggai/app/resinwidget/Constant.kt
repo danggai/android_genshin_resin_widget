@@ -102,6 +102,11 @@ object Constant {
 
     const val PREF_DEFAULT_REFRESH_PERIOD = 15L
 
+    const val PREF_SERVER_ASIA = 0
+    const val PREF_SERVER_USA = 1
+    const val PREF_SERVER_EUROPE = 2
+    const val PREF_SERVER_CHT = 3
+
     const val PREF_TIME_NOTATION_REMAIN_TIME = 0
     const val PREF_TIME_NOTATION_FULL_CHARGE_TIME = 1
 

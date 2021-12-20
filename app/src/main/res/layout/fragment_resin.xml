@@ -26,12 +26,63 @@
             app:layout_constraintVertical_bias="0.0"
             tools:context=".ui.main.MainFragment">
 
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/server"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/rb_asia"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetServer(v)}"
+                        android:text="Asia" />
+
+                    <RadioButton
+                        android:id="@+id/rb_usa"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetServer(v)}"
+                        android:text="USA" />
+
+                    <RadioButton
+                        android:id="@+id/rb_euro"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetServer(v)}"
+                        android:text="Europe" />
+
+                    <RadioButton
+                        android:id="@+id/rb_cht"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetServer(v)}"
+                        android:text="Cht" />
+
+                </RadioGroup>
 
                 <Space
                     android:layout_width="wrap_content"
@@ -259,8 +310,7 @@
 
                 <Space
                     android:layout_width="wrap_content"
-                    android:layout_height="15dp"
-                    />
+                    android:layout_height="15dp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
@@ -270,12 +320,11 @@
                     android:text="@string/widget_design"
                     android:textColor="@color/light_blue_600"
                     android:textSize="28sp"
-                    android:textStyle="bold|italic"/>
+                    android:textStyle="bold|italic" />
 
                 <Space
                     android:layout_width="wrap_content"
-                    android:layout_height="15dp"
-                    />
+                    android:layout_height="15dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -310,22 +359,22 @@
                     android:textStyle="bold" />
 
                 <!--                <Space-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="15dp" />-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="15dp" />-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center_horizontal"-->
-<!--                    android:background="@drawable/rounded_square_skyblue_5dp"-->
-<!--                    android:foreground="?attr/selectableItemBackground"-->
-<!--                    android:onClick="@{(v)->vm.makeDailyNotePrivate()}"-->
-<!--                    android:paddingHorizontal="20dp"-->
-<!--                    android:paddingVertical="10dp"-->
-<!--                    android:text="실시간 메모 비공개"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="14sp"-->
-<!--                    android:textStyle="bold" />-->
+                <!--                <TextView-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_gravity="center_horizontal"-->
+                <!--                    android:background="@drawable/rounded_square_skyblue_5dp"-->
+                <!--                    android:foreground="?attr/selectableItemBackground"-->
+                <!--                    android:onClick="@{(v)->vm.makeDailyNotePrivate()}"-->
+                <!--                    android:paddingHorizontal="20dp"-->
+                <!--                    android:paddingVertical="10dp"-->
+                <!--                    android:text="실시간 메모 비공개"-->
+                <!--                    android:textColor="@color/black"-->
+                <!--                    android:textSize="14sp"-->
+                <!--                    android:textStyle="bold" />-->
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -5,6 +5,7 @@
     <string name="uid">Uid</string>
     <string name="cookie">Cookie</string>
     <string name="get_cookie">Get cookie</string>
+    <string name="server">Server</string>
     <string name="refresh_cycle">Refresh Cycle</string>
     <string name="notification">Notification</string>
     <string name="auto_check_in">Auto Check In</string>

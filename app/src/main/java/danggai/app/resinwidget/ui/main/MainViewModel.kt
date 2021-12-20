@@ -32,6 +32,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     var lvStartCheckInWorker = MutableLiveData<Event<Boolean>>()
     var lvStartWidgetDesignActivity = MutableLiveData<Event<Boolean>>()
 
+    var lvServer: NonNullMutableLiveData<Int> = NonNullMutableLiveData(0)
     var lvAutoRefreshPeriod: NonNullMutableLiveData<Long> = NonNullMutableLiveData(15L)
     var lvTimeNotation: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
     val lvUid: NonNullMutableLiveData<String> = NonNullMutableLiveData("")
@@ -349,6 +350,17 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     fun onClickWidgetRefreshNotWork() {
         log.e()
         lvWidgetRefreshNotWork.value = Event(true)
+    }
+
+    fun onClickSetServer(view: View) {
+        log.e()
+        lvServer.value = when (view.id) {
+            R.id.rb_asia -> Constant.PREF_SERVER_ASIA
+            R.id.rb_usa -> Constant.PREF_SERVER_USA
+            R.id.rb_euro -> Constant.PREF_SERVER_EUROPE
+            R.id.rb_cht -> Constant.PREF_SERVER_CHT
+            else -> 0
+        }
     }
 
     fun onClickSetAutoRefreshPeriod(view: View) {
