@@ -43,8 +43,15 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
             .switchMap {
                 val uid = PreferenceManager.getStringUid(applicationContext)
                 val cookie = PreferenceManager.getStringCookie(applicationContext)
+                val server = when (PreferenceManager.getIntServer(applicationContext)) {
+                    Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
+                    Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
+                    Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
+                    Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
+                    else -> Constant.SERVER_OS_ASIA
+                }
 
-                api.dailyNote(uid, cookie)
+                api.dailyNote(uid, server, cookie)
             }
             .subscribe ({ res ->
                 when (res.meta.code) {

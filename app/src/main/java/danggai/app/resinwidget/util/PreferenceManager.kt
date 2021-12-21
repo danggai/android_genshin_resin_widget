@@ -179,6 +179,14 @@ object PreferenceManager {
         setBoolean(context, Constant.PREF_FIRST_LAUNCH, value)
     }
 
+
+    fun getIntServer(context: Context): Int {
+        return getInt(context, Constant.PREF_SERVER)
+    }
+    fun setIntServer(context: Context, value: Int) {
+        setInt(context, Constant.PREF_SERVER, value)
+    }
+
     fun getStringUid(context: Context): String {
         return getString(context, Constant.PREF_UID)
     }

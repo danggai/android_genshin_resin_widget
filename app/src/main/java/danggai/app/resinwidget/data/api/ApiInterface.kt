@@ -15,8 +15,8 @@ interface ApiInterface {
         "x-rpc-app_version: 1.5.0",
         "x-rpc-language: ko-kr",
     )
-    @GET("/game_record/genshin/api/dailyNote?server=os_asia")
-    fun dailyNote(@Query("role_id") uid: String, @Header("Cookie") cookie: String, @Header("DS") ds: String): Observable<Response<ResDailyNote.Data>>
+    @GET("/game_record/genshin/api/dailyNote")
+    fun dailyNote(@Query("role_id") uid: String, @Query("server") server: String, @Header("Cookie") cookie: String, @Header("DS") ds: String): Observable<Response<ResDailyNote.Data>>
 
     @Headers(
         "x-rpc-client_type: 4",

@@ -41,8 +41,9 @@ class MainResinFragment : BindingFragment<FragmentResinBinding>() {
 
     private fun initUi() {
         context?.let {
+            mVM.lvServer.value = PreferenceManager.getIntServer(it)
             mVM.lvAutoRefreshPeriod.value = PreferenceManager.getLongAutoRefreshPeriod(it)
-            
+
             mVM.lvEnableNotiEach40Resin.value = PreferenceManager.getBooleanNotiEach40Resin(it)
             mVM.lvEnableNoti140Resin.value = PreferenceManager.getBooleanNoti140Resin(it)
             mVM.lvEnableNotiCustomResin.value = PreferenceManager.getBooleanNotiCustomResin(it)
@@ -51,6 +52,14 @@ class MainResinFragment : BindingFragment<FragmentResinBinding>() {
             }
 
             mVM.lvTimeNotation.value = PreferenceManager.getIntTimeNotation(it)
+        }
+
+        when(mVM.lvServer.value) {
+            Constant.PREF_SERVER_ASIA -> binding.rbAsia.isChecked = true
+            Constant.PREF_SERVER_USA -> binding.rbUsa.isChecked = true
+            Constant.PREF_SERVER_EUROPE -> binding.rbEuro.isChecked = true
+            Constant.PREF_SERVER_CHT -> binding.rbCht.isChecked = true
+            else -> binding.rbAsia.isChecked = true
         }
 
         when(mVM.lvAutoRefreshPeriod.value) {

@@ -59,28 +59,28 @@
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{(v) -> vm.onClickSetServer(v)}"
-                        android:text="Asia" />
+                        android:text="@string/asia" />
 
                     <RadioButton
                         android:id="@+id/rb_usa"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{(v) -> vm.onClickSetServer(v)}"
-                        android:text="USA" />
+                        android:text="@string/america" />
 
                     <RadioButton
                         android:id="@+id/rb_euro"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{(v) -> vm.onClickSetServer(v)}"
-                        android:text="Europe" />
+                        android:text="@string/europe" />
 
                     <RadioButton
                         android:id="@+id/rb_cht"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{(v) -> vm.onClickSetServer(v)}"
-                        android:text="Cht" />
+                        android:text="@string/cht" />
 
                 </RadioGroup>
 

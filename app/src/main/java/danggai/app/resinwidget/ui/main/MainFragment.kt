@@ -128,6 +128,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
                 if (boolean) {
                     log.e()
                     PreferenceManager.setBooleanIsValidUserData(_context, true)
+                    PreferenceManager.setIntServer(_context, mVM.lvServer.value)
                     PreferenceManager.setStringUid(_context, mVM.lvUid.value)
                     PreferenceManager.setStringCookie(_context, mVM.lvCookie.value)
 

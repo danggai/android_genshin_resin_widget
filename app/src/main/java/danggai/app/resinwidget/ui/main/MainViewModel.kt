@@ -69,7 +69,14 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
             .observeOn(Schedulers.newThread())
             .filter { it }
             .switchMap {
-                api.dailyNote(lvUid.value, lvCookie.value)
+                val server = when (lvServer.value) {
+                    Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
+                    Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
+                    Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
+                    Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
+                    else -> Constant.SERVER_OS_ASIA
+                }
+                api.dailyNote(lvUid.value, server, lvCookie.value)
             }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe ({ res ->
@@ -359,7 +366,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
             R.id.rb_usa -> Constant.PREF_SERVER_USA
             R.id.rb_euro -> Constant.PREF_SERVER_EUROPE
             R.id.rb_cht -> Constant.PREF_SERVER_CHT
-            else -> 0
+            else -> Constant.PREF_SERVER_ASIA
         }
     }
 
