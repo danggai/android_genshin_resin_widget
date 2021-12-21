@@ -18,6 +18,7 @@ import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.worker.CheckInWorker
 import danggai.app.resinwidget.worker.RefreshWorker
+import java.lang.NumberFormatException
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
@@ -190,17 +191,21 @@ object CommonFunction {
         val date= Date()
         cal.time = date
 
-        if (second.toInt() == 0)
+        try {
+            if (second.toInt() == 0)
+                return context.getString(R.string.widget_ui_max_time_max)
+
+            if (second.toInt() > 144000 || second.toInt() < -144000)
+                return String.format(context.getString(R.string.widget_ui_max_time), cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE))
+
+            cal.add(Calendar.SECOND, second.toInt())
+
+            val minute = String.format("%02d", cal.get(Calendar.MINUTE))
+
+            return String.format(context.getString(R.string.widget_ui_max_time), cal.get(Calendar.HOUR_OF_DAY), minute)
+        } catch (e: NumberFormatException) {
             return context.getString(R.string.widget_ui_max_time_max)
-
-        if (second.toInt() > 144000 || second.toInt() < -144000)
-            return String.format(context.getString(R.string.widget_ui_max_time), cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE))
-
-        cal.add(Calendar.SECOND, second.toInt())
-
-        val minute = String.format("%02d", cal.get(Calendar.MINUTE))
-
-        return String.format(context.getString(R.string.widget_ui_max_time), cal.get(Calendar.HOUR_OF_DAY), minute)
+        }
     }
 
     fun sendNotification(id: Int, context: Context, title: String, msg: String) {
