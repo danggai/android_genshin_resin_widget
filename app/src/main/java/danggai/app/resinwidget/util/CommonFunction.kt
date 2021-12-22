@@ -8,8 +8,10 @@ import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.graphics.*
 import android.os.Build
+import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.work.*
 import com.google.firebase.crashlytics.CustomKeysAndValues
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -277,5 +279,42 @@ object CommonFunction {
     fun Context.isDarkMode(): Boolean {
         return resources.configuration.uiMode and UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
     }
+
+    fun setWidgetTheme(view: RemoteViews, context: Context) {
+        val bgColor: Int =  if (PreferenceManager.getIntWidgetTheme(context) == Constant.PREF_WIDGET_THEME_LIGHT) {
+            ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.white), PreferenceManager.getIntBackgroundTransparency(context))
+        } else if  ((PreferenceManager.getIntWidgetTheme(context) == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
+            ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.black), PreferenceManager.getIntBackgroundTransparency(context))
+        } else {
+            ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.white), PreferenceManager.getIntBackgroundTransparency(context))
+        }
+
+        val mainFontColor: Int =  if (PreferenceManager.getIntWidgetTheme(context) == Constant.PREF_WIDGET_THEME_LIGHT) {
+            ContextCompat.getColor(context, R.color.widget_font_main_light)
+        } else if  ((PreferenceManager.getIntWidgetTheme(context) == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
+            ContextCompat.getColor(context, R.color.widget_font_main_dark)
+        } else {
+            ContextCompat.getColor(context, R.color.widget_font_main_light)
+        }
+
+        val subFontColor: Int =  if (PreferenceManager.getIntWidgetTheme(context) == Constant.PREF_WIDGET_THEME_LIGHT) {
+            ContextCompat.getColor(context, R.color.widget_font_sub_light)
+        } else if  ((PreferenceManager.getIntWidgetTheme(context) == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
+            ContextCompat.getColor(context, R.color.widget_font_sub_dark)
+        } else {
+            ContextCompat.getColor(context, R.color.widget_font_sub_light)
+        }
+
+//        view.set(R.id.ll_body, R.drawable.rounded_square_5dp)
+//        view.setInt(R.id.ll_body, "setColorFilter", getColor(context, R.color.white))
+        view.setInt(R.id.ll_body, "setBackgroundColor", bgColor)
+
+        view.setTextColor(R.id.tv_resin, mainFontColor)
+        view.setTextColor(R.id.tv_resin_max, mainFontColor)
+        view.setTextColor(R.id.tv_remain_time, mainFontColor)
+        view.setInt(R.id.iv_refersh, "setColorFilter", subFontColor)
+        view.setTextColor(R.id.tv_sync_time, subFontColor)
+    }
+
 
 }
