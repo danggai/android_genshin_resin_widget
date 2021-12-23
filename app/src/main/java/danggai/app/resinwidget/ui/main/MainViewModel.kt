@@ -67,6 +67,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
             }
             .throttleFirst(1, TimeUnit.SECONDS)
             .observeOn(Schedulers.newThread())
+            .debounce(100, TimeUnit.MILLISECONDS)
             .filter { it }
             .switchMap {
                 val server = when (lvServer.value) {
@@ -164,6 +165,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
             }
             .throttleFirst(1, TimeUnit.SECONDS)
             .observeOn(Schedulers.newThread())
+            .debounce(100, TimeUnit.MILLISECONDS)
             .filter { it }
             .switchMap {
                 api.checkIn(Constant.SERVER_OS_ASIA, lvCookie.value)
@@ -228,6 +230,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                 it
             }
             .observeOn(Schedulers.newThread())
+            .debounce(100, TimeUnit.MILLISECONDS)
             .switchMap {
                 api.changeDataSwitch(2,1, true, lvCookie.value)
             }
@@ -281,6 +284,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                 it
             }
             .observeOn(Schedulers.newThread())
+            .debounce(100, TimeUnit.MILLISECONDS)
             .switchMap {
                 api.changeDataSwitch(2,1, false, lvCookie.value)
             }
