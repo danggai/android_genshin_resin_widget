@@ -129,6 +129,11 @@
     <string name="widget_ui_max_time">Full at %s:%s</string>
     <string name="widget_ui_max_time_max">Already full</string>
 
+    <string name="until_fully_replenished">Until Fully Replenished</string>
+    <string name="daily_commissions">Daily Commissions</string>
+    <string name="enemies_of_note">Enemies Of Note</string>
+    <string name="number_of_expedition">Number Of Expedition</string>
+    <string name="until_all_completed">Until All Completed</string>
 
 
     <!-- Google Ads -->
@@ -137,4 +142,5 @@
 
     <string name="google_ads_test_app_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="google_ads_test_banner_id">ca-app-pub-3940256099942544/6300978111</string>
+
 </resources>

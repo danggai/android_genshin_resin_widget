@@ -1,0 +1,325 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/appWidgetBackgroundColor"
+    android:padding="@dimen/widget_margin"
+    android:theme="@style/ThemeOverlay.Genshin_resin_widget.AppWidgetContainer">
+
+    <LinearLayout
+        android:id="@+id/ll_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="8dp"
+        android:padding="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/rounded_square_5dp"
+        >
+
+        <ProgressBar
+            android:id="@+id/progress1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:indeterminateTint="@color/widget_font_sub"
+            android:visibility="gone"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll_expedition"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:id="@+id/ll_sync"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:paddingLeft="20dp"
+                android:layout_marginBottom="5dp"
+                >
+
+                <TextView
+                    android:id="@+id/tv_sync_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MM/dd hh:mm"
+                    android:textSize="10sp"
+                    android:textColor="@color/widget_font_sub"
+                    android:layout_gravity="center"
+                    android:singleLine="true"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_refersh"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/baseline_sync_24"
+                    android:layout_gravity="center_vertical"
+                    />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_resin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_resin"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/icon_resin"
+                    android:scaleType="fitXY"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="2dp"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/resin"
+                    android:textSize="12sp"
+                    android:textColor="@color/widget_font_main"
+                    android:layout_toRightOf="@id/iv_resin"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_resin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="160/160"
+                    android:textSize="12sp"
+                    android:textColor="@color/widget_font_main"
+                    android:layout_alignParentRight="true"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_resin_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/until_fully_replenished"
+                    android:textSize="12sp"
+                    android:textColor="@color/widget_font_main"
+                    android:layout_alignParentLeft="true"
+                    android:singleLine="true"
+                    android:layout_marginLeft="18dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_resin_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="hh시간 mm분"
+                    android:textSize="12sp"
+                    android:textColor="@color/widget_font_main"
+                    android:layout_alignParentRight="true"
+                    android:singleLine="true"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_daily_commission"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_daily_commission"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/icon_daily_commission"
+                    android:scaleType="fitXY"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="2dp"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/daily_commissions"
+                    android:textSize="12sp"
+                    android:textColor="@color/widget_font_main"
+                    android:layout_toRightOf="@id/iv_daily_commission"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_daily_commission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4/4"
+                    android:textSize="12sp"
+                    android:textColor="@color/widget_font_main"
+                    android:layout_alignParentRight="true"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_weekly_boss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_domain"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/icon_domain"
+                    android:scaleType="fitXY"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="2dp"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enemies_of_note"
+                    android:textSize="12sp"
+                    android:textColor="@color/widget_font_main"
+                    android:layout_toRightOf="@id/iv_domain"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_weekly_boss"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3/3"
+                    android:textSize="12sp"
+                    android:textColor="@color/widget_font_main"
+                    android:layout_alignParentRight="true"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_expedition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_warp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/icon_warp_point"
+                    android:scaleType="fitXY"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="2dp"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/number_of_expedition"
+                    android:textSize="12sp"
+                    android:textColor="@color/widget_font_main"
+                    android:layout_toRightOf="@id/iv_warp"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_expedition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5/5"
+                    android:textSize="12sp"
+                    android:textColor="@color/widget_font_main"
+                    android:layout_alignParentRight="true"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_expedition_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/until_all_completed"
+                    android:textSize="12sp"
+                    android:textColor="@color/widget_font_main"
+                    android:layout_alignParentLeft="true"
+                    android:singleLine="true"
+                    android:layout_marginLeft="18dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_expedition_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="hh시간 mm분"
+                    android:textSize="12sp"
+                    android:textColor="@color/widget_font_main"
+                    android:layout_alignParentRight="true"
+                    android:singleLine="true"
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_disable"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="gone"
+            >
+
+            <TextView
+                android:id="@+id/tv_disable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/widget_font_main"
+                android:gravity="center"
+                android:text="@string/invalid_user_info"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
