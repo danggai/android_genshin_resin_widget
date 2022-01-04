@@ -51,7 +51,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
 
     private fun initUi() {
         binding.widget.let {
-            it.progress1.visibility = View.GONE
+            it.pbLoading.visibility = View.GONE
             it.ivResin.visibility = View.VISIBLE
             it.llResin.visibility = View.VISIBLE
             it.llDisable.visibility = View.GONE
@@ -104,7 +104,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
 
                 DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(color, mVM.lvTransparency.value))
 
-                binding.widget.llBody.background = wrappedDrawable
+                binding.widget.llRoot.background = wrappedDrawable
             }
         })
 
@@ -137,7 +137,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
                     binding.widget.tvSyncTime.setTextColor(getColor(_context, R.color.widget_font_sub_light))
                 }
 
-                binding.widget.llBody.background = wrappedDrawable
+                binding.widget.llRoot.background = wrappedDrawable
 
 
             }

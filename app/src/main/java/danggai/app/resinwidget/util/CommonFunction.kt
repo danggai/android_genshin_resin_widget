@@ -307,7 +307,7 @@ object CommonFunction {
 
 //        view.set(R.id.ll_body, R.drawable.rounded_square_5dp)
 //        view.setInt(R.id.ll_body, "setColorFilter", getColor(context, R.color.white))
-        view.setInt(R.id.ll_body, "setBackgroundColor", bgColor)
+        view.setInt(R.id.ll_root, "setBackgroundColor", bgColor)
 
         view.setTextColor(R.id.tv_resin, mainFontColor)
         view.setTextColor(R.id.tv_resin_max, mainFontColor)

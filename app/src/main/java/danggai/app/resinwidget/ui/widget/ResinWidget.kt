@@ -113,7 +113,7 @@ class ResinWidget : AppWidgetProvider() {
         context?.let { _context ->
             if (!PreferenceManager.getBooleanIsValidUserData(context)) {
                 log.e()
-                view.setViewVisibility(R.id.progress1, View.GONE)
+                view.setViewVisibility(R.id.pb_loading, View.GONE)
                 view.setViewVisibility(R.id.iv_resin, View.GONE)
                 view.setViewVisibility(R.id.ll_resin, View.GONE)
                 view.setViewVisibility(R.id.ll_disable, View.VISIBLE)
@@ -138,7 +138,7 @@ class ResinWidget : AppWidgetProvider() {
                 }
 
                 view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getStringRecentSyncTime(_context))
-                view.setViewVisibility(R.id.progress1, View.GONE)
+                view.setViewVisibility(R.id.pb_loading, View.GONE)
                 view.setViewVisibility(R.id.iv_resin, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_resin, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_disable, View.GONE)
@@ -160,7 +160,7 @@ class ResinWidget : AppWidgetProvider() {
             log.e()
             val view = RemoteViews(context.packageName, R.layout.widget_resin_fixed)
 
-            view.setViewVisibility(R.id.progress1, View.VISIBLE)
+            view.setViewVisibility(R.id.pb_loading, View.VISIBLE)
             view.setViewVisibility(R.id.iv_resin, View.GONE)
             view.setViewVisibility(R.id.ll_resin, View.GONE)
             view.setViewVisibility(R.id.ll_disable, View.GONE)
