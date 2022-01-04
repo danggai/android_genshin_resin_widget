@@ -223,6 +223,67 @@ object PreferenceManager {
         setString(context, Constant.PREF_RESIN_RECOVERY_TIME, value)
     }
 
+
+    fun getIntCurrentDailyCommission(context: Context): Int {
+        return getInt(context, Constant.PREF_CURRENT_DAILY_COMMISSION)
+    }
+    fun setIntCurrentDailyCommission(context: Context, value: Int) {
+        setInt(context, Constant.PREF_CURRENT_DAILY_COMMISSION, value)
+    }
+
+    fun getIntMaxDailyCommission(context: Context): Int {
+        return getInt(context, Constant.PREF_MAX_DAILY_COMMISSION)
+    }
+    fun setIntMaxDailyCommission(context: Context, value: Int) {
+        setInt(context, Constant.PREF_MAX_DAILY_COMMISSION, value)
+    }
+
+    fun getBooleanGetDailyCommissionReward(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_GET_DAILY_COMMISSION_REWARD, false)
+    }
+    fun setBooleanGetDailyCommissionReward(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_GET_DAILY_COMMISSION_REWARD, value)
+    }
+
+
+
+    fun getIntCurrentWeeklyBoss(context: Context): Int {
+        return getInt(context, Constant.PREF_CURRENT_WEEKLY_BOSS)
+    }
+    fun setIntCurrentWeeklyBoss(context: Context, value: Int) {
+        setInt(context, Constant.PREF_CURRENT_WEEKLY_BOSS, value)
+    }
+
+    fun getIntMaxWeeklyBoss(context: Context): Int {
+        return getInt(context, Constant.PREF_MAX_WEEKLY_BOSS)
+    }
+    fun setIntMaxWeeklyBoss(context: Context, value: Int) {
+        setInt(context, Constant.PREF_MAX_WEEKLY_BOSS, value)
+    }
+
+
+    fun getIntCurrentExpedition(context: Context): Int {
+        return getInt(context, Constant.PREF_CURRENT_EXPEDITION)
+    }
+    fun setIntCurrentExpedition(context: Context, value: Int) {
+        setInt(context, Constant.PREF_CURRENT_EXPEDITION, value)
+    }
+
+    fun getIntMaxExpedition(context: Context): Int {
+        return getInt(context, Constant.PREF_MAX_EXPEDITION)
+    }
+    fun setIntMaxExpedition(context: Context, value: Int) {
+        setInt(context, Constant.PREF_MAX_EXPEDITION, value)
+    }
+
+    fun getStringExpeditionTime(context: Context): String {
+        return getString(context, Constant.PREF_EXPEDITION_TIME)
+    }
+    fun setStringExpeditionTime(context: Context, value: String) {
+        setString(context, Constant.PREF_EXPEDITION_TIME, value)
+    }
+
+
     fun getStringRecentSyncTime(context: Context): String {
         return getString(context, Constant.PREF_RECENT_SYNC_TIME)
     }

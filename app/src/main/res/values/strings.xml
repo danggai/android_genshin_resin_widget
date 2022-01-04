@@ -122,12 +122,14 @@
 
 
     <!-- Widget UI -->
+    <string name="widget_label_detail_fixed">Fixed Sized Detail Widget</string>
     <string name="widget_label_resin_resizable">Resizable Resin Widget</string>
     <string name="widget_label_resin_fixed">Fixed Sized Resin Widget</string>
 
+    <string name="widget_ui_simple_time">%s:%s</string>
     <string name="widget_ui_remain_time">%s:%s left</string>
     <string name="widget_ui_max_time">Full at %s:%s</string>
-    <string name="widget_ui_max_time_max">Already full</string>
+    <string name="widget_ui_max_time_resin_max">Already full</string>
 
     <string name="until_fully_replenished">Until Fully Replenished</string>
     <string name="daily_commissions">Daily Commissions</string>

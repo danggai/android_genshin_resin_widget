@@ -17,7 +17,7 @@ import io.reactivex.subjects.PublishSubject
 import java.net.ConnectException
 import java.net.UnknownHostException
 
-class RefreshWorker (val context: Context, workerParams: WorkerParameters, private val api: ApiRepository) :
+class DailyNoteWorker (val context: Context, workerParams: WorkerParameters, private val api: ApiRepository) :
     Worker(context, workerParams) {
 
     companion object {
@@ -124,10 +124,7 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
         }
         /* 이전 레진 과 새 레진 비교해서 알림 발송 */
 
-        PreferenceManager.setIntCurrentResin(context, dailyNote.current_resin)
-        PreferenceManager.setIntMaxResin(context, dailyNote.max_resin)
-        PreferenceManager.setStringResinRecoveryTime(context, dailyNote.resin_recovery_time?:"-1")
-        PreferenceManager.setStringRecentSyncTime(context, CommonFunction.getTimeSyncTimeFormat())
+        CommonFunction.setDailyNoteData(context, dailyNote)
 
         context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
 

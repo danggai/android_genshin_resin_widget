@@ -139,7 +139,6 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
 
                 binding.widget.llRoot.background = wrappedDrawable
 
-
             }
         })
     }

@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.graphics.*
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -19,7 +18,7 @@ import danggai.app.resinwidget.BuildConfig
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.worker.CheckInWorker
-import danggai.app.resinwidget.worker.RefreshWorker
+import danggai.app.resinwidget.worker.DailyNoteWorker
 import java.lang.NumberFormatException
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -100,7 +99,7 @@ object CommonFunction {
         }
 
         val workManager = WorkManager.getInstance(context)
-        val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
+        val workRequest = OneTimeWorkRequestBuilder<DailyNoteWorker>()
             .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to true))
             .build()
         workManager.enqueue(workRequest)
@@ -122,7 +121,7 @@ object CommonFunction {
         log.e("period -> $period")
 
         val workManager = WorkManager.getInstance(context)
-        val workRequest = PeriodicWorkRequestBuilder<RefreshWorker>(period, TimeUnit.MINUTES)
+        val workRequest = PeriodicWorkRequestBuilder<DailyNoteWorker>(period, TimeUnit.MINUTES)
             .setInitialDelay(period, TimeUnit.MINUTES)
             .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to false))
             .build()
@@ -133,15 +132,6 @@ object CommonFunction {
         val md = MessageDigest.getInstance("MD5")
         return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
             .lowercase(Locale.getDefault())
-    }
-
-    fun getIntentAppWidgetAllUpdate(): Intent {
-        val broadcast= Intent()
-        broadcast.action = Constant.ACTION_APPWIDGET_UPDATE
-        broadcast.putExtra(Constant.REFRESH_DATA, true)
-        broadcast.putExtra(Constant.REFRESH_UI, true)
-
-        return broadcast
     }
 
     fun getIntentAppWidgetUiUpdate(): Intent {
@@ -195,7 +185,7 @@ object CommonFunction {
 
         try {
             if (second.toInt() == 0)
-                return context.getString(R.string.widget_ui_max_time_max)
+                return context.getString(R.string.widget_ui_max_time_resin_max)
 
             if (second.toInt() > 144000 || second.toInt() < -144000)
                 return String.format(context.getString(R.string.widget_ui_max_time), cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE))
@@ -206,7 +196,7 @@ object CommonFunction {
 
             return String.format(context.getString(R.string.widget_ui_max_time), cal.get(Calendar.HOUR_OF_DAY), minute)
         } catch (e: NumberFormatException) {
-            return context.getString(R.string.widget_ui_max_time_max)
+            return context.getString(R.string.widget_ui_max_time_resin_max)
         }
     }
 
@@ -316,5 +306,32 @@ object CommonFunction {
         view.setTextColor(R.id.tv_sync_time, subFontColor)
     }
 
+    fun setDailyNoteData(context: Context, dailyNote: DailyNote) {
+        log.e()
+
+        PreferenceManager.setIntCurrentResin(context, dailyNote.current_resin)
+        PreferenceManager.setIntMaxResin(context, dailyNote.max_resin)
+        PreferenceManager.setStringResinRecoveryTime(context, dailyNote.resin_recovery_time?:"-1")
+        PreferenceManager.setStringRecentSyncTime(context, getTimeSyncTimeFormat())
+
+        PreferenceManager.setIntCurrentDailyCommission(context, dailyNote.finished_task_num)
+        PreferenceManager.setIntMaxDailyCommission(context, dailyNote.total_task_num)
+        PreferenceManager.setBooleanGetDailyCommissionReward(context, dailyNote.is_extra_task_reward_received)
+
+        PreferenceManager.setIntCurrentWeeklyBoss(context, dailyNote.remain_resin_discount_num)
+        PreferenceManager.setIntMaxWeeklyBoss(context, dailyNote.resin_discount_num_limit)
+
+        PreferenceManager.setIntCurrentExpedition(context, dailyNote.current_expedition_num)
+        PreferenceManager.setIntMaxExpedition(context, dailyNote.max_expedition_num)
+
+        val expeditionTime: String = try {
+            if (dailyNote.expeditions == null || dailyNote.expeditions.isEmpty()) "0"
+            else dailyNote.expeditions.maxOf { it.remained_time }
+        } catch (e: Exception) {
+            "0"
+        }
+
+        PreferenceManager.setStringExpeditionTime(context, expeditionTime)
+    }
 
 }

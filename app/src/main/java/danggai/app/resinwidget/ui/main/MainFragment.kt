@@ -23,6 +23,7 @@ import danggai.app.resinwidget.ui.design.WidgetDesignActivity
 import danggai.app.resinwidget.ui.main.checkin.MainCheckInFragment
 import danggai.app.resinwidget.ui.main.resin.MainResinFragment
 import danggai.app.resinwidget.util.CommonFunction
+import danggai.app.resinwidget.util.CommonFunction.saveDailyNoteData
 import danggai.app.resinwidget.util.EventObserver
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
@@ -162,10 +163,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
         mVM.lvSendWidgetSyncBroadcast.observe(viewLifecycleOwner, EventObserver { dailyNote ->
             context?.let { _context ->
                 log.e()
-                PreferenceManager.setIntCurrentResin(_context, dailyNote.current_resin)
-                PreferenceManager.setIntMaxResin(_context, dailyNote.max_resin)
-                PreferenceManager.setStringResinRecoveryTime(_context, dailyNote.resin_recovery_time?:"-1")
-                PreferenceManager.setStringRecentSyncTime(_context, CommonFunction.getTimeSyncTimeFormat())
+                setDailyNoteData(_context, dailyNote)
 
                 PreferenceManager.setBooleanNotiEach40Resin(_context, mVM.lvEnableNotiEach40Resin.value)
                 PreferenceManager.setBooleanNoti140Resin(_context, mVM.lvEnableNoti140Resin.value)

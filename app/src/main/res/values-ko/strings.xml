@@ -122,18 +122,20 @@
 
 
     <!-- Widget UI -->
+    <string name="widget_label_detail_fixed">상세 위젯 (크기 고정)</string>
     <string name="widget_label_resin_resizable">레진 위젯 (크기 조절 가능)</string>
     <string name="widget_label_resin_fixed">레진 위젯 (크기 고정)</string>
 
+    <string name="widget_ui_simple_time">%s시간 %s분</string>
     <string name="widget_ui_remain_time">%s시간 %s분 남음</string>
     <string name="widget_ui_max_time">%s시 %s분에 가득 참</string>
-    <string name="widget_ui_max_time_max">이미 가득 참</string>
+    <string name="widget_ui_max_time_resin_max">이미 가득 참</string>
 
     <string name="until_fully_replenished">전부 충전까지</string>
     <string name="daily_commissions">일일 의뢰</string>
     <string name="enemies_of_note">새겨둬야 할 강적</string>
     <string name="number_of_expedition">탐사 진행 수</string>
-    <string name="until_all_completed">모두 완료 까지</string>
+    <string name="until_all_completed">모두 완료까지</string>
 
 
     <!-- Google Ads -->
