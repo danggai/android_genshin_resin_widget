@@ -164,8 +164,8 @@ class ResinWidgetResizable : AppWidgetProvider() {
             val view = RemoteViews(context.packageName, R.layout.widget_resin_resizable)
 
             view.setViewVisibility(R.id.pb_loading, View.VISIBLE)
-            view.setViewVisibility(R.id.iv_resin, View.GONE)
-            view.setViewVisibility(R.id.ll_resin, View.GONE)
+            view.setViewVisibility(R.id.iv_resin, View.INVISIBLE)
+            view.setViewVisibility(R.id.ll_resin, View.INVISIBLE)
             view.setViewVisibility(R.id.ll_disable, View.GONE)
 
             appWidgetManager.updateAppWidget(appWidgetId, view)

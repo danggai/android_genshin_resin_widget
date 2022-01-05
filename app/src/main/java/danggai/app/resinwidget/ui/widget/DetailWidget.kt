@@ -18,7 +18,7 @@ import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
 
 
-class ResinWidget : AppWidgetProvider() {
+class DetailWidget : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
@@ -39,7 +39,7 @@ class ResinWidget : AppWidgetProvider() {
             Constant.ACTION_APPWIDGET_UPDATE -> {
                 log.e("ACTION_APPWIDGET_UPDATE")
 
-                val thisWidget = ComponentName(context!!, ResinWidget::class.java)
+                val thisWidget = ComponentName(context!!, DetailWidget::class.java)
                 val appWidgetManager = AppWidgetManager.getInstance(context)
                 val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
@@ -54,10 +54,10 @@ class ResinWidget : AppWidgetProvider() {
 
                     context?.let { it ->
 
-                        val _intent = Intent(it, ResinWidget::class.java)
+                        val _intent = Intent(it, DetailWidget::class.java)
                         _intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 
-                        val ids = AppWidgetManager.getInstance(it.applicationContext).getAppWidgetIds(ComponentName(it.applicationContext, ResinWidget::class.java))
+                        val ids = AppWidgetManager.getInstance(it.applicationContext).getAppWidgetIds(ComponentName(it.applicationContext, DetailWidget::class.java))
 
                         _intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
                         it.sendBroadcast(_intent)
@@ -88,20 +88,23 @@ class ResinWidget : AppWidgetProvider() {
 
     private fun addViews(context: Context?): RemoteViews {
         log.e()
-        val views = RemoteViews(context!!.packageName, R.layout.widget_resin_fixed)
+        val views = RemoteViews(context!!.packageName, R.layout.widget_detail_fixed)
 
-        val intentUpdate = Intent(context, ResinWidget::class.java)
+        val intentUpdate = Intent(context, DetailWidget::class.java)
         intentUpdate.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
         intentUpdate.putExtra(Constant.REFRESH_DATA, true)
         intentUpdate.putExtra(Constant.REFRESH_UI, true)
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
-        val awId = manager.getAppWidgetIds(ComponentName(context.applicationContext, ResinWidget::class.java))
+        val awId = manager.getAppWidgetIds(ComponentName(context.applicationContext, DetailWidget::class.java))
 
         views.setOnClickPendingIntent(R.id.ll_sync, PendingIntent.getBroadcast(context, 0, intentUpdate, PendingIntent.FLAG_UPDATE_CURRENT))
 
         val intentMainActivity = Intent(context, MainActivity::class.java)
         views.setOnClickPendingIntent(R.id.iv_resin, PendingIntent.getActivity(context, 0, intentMainActivity, 0))
+        views.setOnClickPendingIntent(R.id.iv_daily_commission, PendingIntent.getActivity(context, 0, intentMainActivity, 0))
+        views.setOnClickPendingIntent(R.id.iv_domain, PendingIntent.getActivity(context, 0, intentMainActivity, 0))
+        views.setOnClickPendingIntent(R.id.iv_warp, PendingIntent.getActivity(context, 0, intentMainActivity, 0))
         views.setOnClickPendingIntent(R.id.ll_disable, PendingIntent.getActivity(context, 0, intentMainActivity, 0))
 
         manager.updateAppWidget(awId, views)
@@ -114,8 +117,7 @@ class ResinWidget : AppWidgetProvider() {
             if (!PreferenceManager.getBooleanIsValidUserData(context)) {
                 log.e()
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.iv_resin, View.GONE)
-                view.setViewVisibility(R.id.ll_resin, View.GONE)
+                view.setViewVisibility(R.id.ll_body, View.GONE)
                 view.setViewVisibility(R.id.ll_disable, View.VISIBLE)
 
                 if ((PreferenceManager.getIntWidgetTheme(_context) == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
@@ -126,22 +128,29 @@ class ResinWidget : AppWidgetProvider() {
 
             } else {
                 log.e()
-                view.setTextViewText(R.id.tv_resin, PreferenceManager.getIntCurrentResin(_context).toString())
-                view.setTextViewText(R.id.tv_resin_max, "/"+PreferenceManager.getIntMaxResin(_context).toString())
+                view.setViewVisibility(R.id.pb_loading, View.GONE)
+                view.setViewVisibility(R.id.ll_body, View.VISIBLE)
+                view.setViewVisibility(R.id.ll_disable, View.GONE)
 
                 CommonFunction.setWidgetTheme(view, _context)
 
-                when (PreferenceManager.getIntTimeNotation(_context)) {
-                    Constant.PREF_TIME_NOTATION_REMAIN_TIME -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringResinRecoveryTime(_context)))
-                    Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToFullChargeTime(_context, PreferenceManager.getStringResinRecoveryTime(_context)))
-                    else -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringResinRecoveryTime(_context)))
-                }
+                val dailyNote = CommonFunction.getDailyNoteData(_context)
+
+                view.setTextViewText(R.id.tv_resin, dailyNote.current_resin.toString()+"/"+dailyNote.max_resin.toString())
+                view.setTextViewText(R.id.tv_resin_time, CommonFunction.secondToTime(_context, dailyNote.resin_recovery_time.toString()))
+
+                if (dailyNote.is_extra_task_reward_received) { view.setTextViewText(R.id.tv_daily_commission, context.getString(R.string.done)) }
+                else { view.setTextViewText(R.id.tv_daily_commission, (dailyNote.total_task_num - dailyNote.finished_task_num).toString()+"/"+dailyNote.total_task_num.toString()) }
+
+                if (dailyNote.remain_resin_discount_num == 0) { view.setTextViewText(R.id.tv_weekly_boss, context.getString(R.string.done)) }
+                else { view.setTextViewText(R.id.tv_weekly_boss, dailyNote.remain_resin_discount_num.toString()+"/"+dailyNote.resin_discount_num_limit.toString()) }
+
+                view.setTextViewText(R.id.tv_expedition, dailyNote.current_expedition_num.toString()+"/"+dailyNote.max_expedition_num.toString())
+                view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToTime(_context, PreferenceManager.getStringExpeditionTime(_context)))
+
+
 
                 view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getStringRecentSyncTime(_context))
-                view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.iv_resin, View.VISIBLE)
-                view.setViewVisibility(R.id.ll_resin, View.VISIBLE)
-                view.setViewVisibility(R.id.ll_disable, View.GONE)
             }
 
         }
@@ -152,17 +161,12 @@ class ResinWidget : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
-//    val widgetText = context.getString(R.string.appwidget_text)
-        // Construct the RemoteViews object
-//        val views = RemoteViews(context.packageName, R.layout.resin_widget)
-
         appWidgetIds.forEach { appWidgetId ->
             log.e()
-            val view = RemoteViews(context.packageName, R.layout.widget_resin_fixed)
+            val view = RemoteViews(context.packageName, R.layout.widget_detail_fixed)
 
             view.setViewVisibility(R.id.pb_loading, View.VISIBLE)
-            view.setViewVisibility(R.id.iv_resin, View.INVISIBLE)
-            view.setViewVisibility(R.id.ll_resin, View.INVISIBLE)
+            view.setViewVisibility(R.id.ll_body, View.INVISIBLE)
             view.setViewVisibility(R.id.ll_disable, View.GONE)
 
             appWidgetManager.updateAppWidget(appWidgetId, view)

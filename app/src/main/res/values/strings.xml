@@ -37,6 +37,7 @@
     <string name="btn_check_in_success">Succeed</string>
     <string name="btn_check_in_failed">Failed</string>
 
+    <string name="done">Done</string>
 
 
     <string name="permission_accept">Permission Accept</string>

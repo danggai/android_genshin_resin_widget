@@ -19,16 +19,6 @@
         android:background="@drawable/rounded_square_5dp"
         >
 
-        <ProgressBar
-            android:id="@+id/pb_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="15dp"
-            android:indeterminateTint="@color/widget_font_sub"
-            android:visibility="gone"
-            />
-
         <LinearLayout
             android:id="@+id/ll_body"
             android:layout_width="0dp"
@@ -47,6 +37,7 @@
                 >
 
                 <TextView
+                    style="@style/TextView"
                     android:id="@+id/tv_sync_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -85,6 +76,8 @@
                     />
 
                 <TextView
+                    style="@style/TextView"
+                    android:id="@+id/tv_resin_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/resin"
@@ -96,6 +89,7 @@
                     />
 
                 <TextView
+                    style="@style/TextView"
                     android:id="@+id/tv_resin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -116,6 +110,8 @@
                 >
 
                 <TextView
+                    style="@style/TextView"
+                    android:id="@+id/tv_resin_time_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/until_fully_replenished"
@@ -127,6 +123,7 @@
                     />
 
                 <TextView
+                    style="@style/TextView"
                     android:id="@+id/tv_resin_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -159,6 +156,8 @@
                     />
 
                 <TextView
+                    style="@style/TextView"
+                    android:id="@+id/tv_daily_commission_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/daily_commissions"
@@ -170,6 +169,7 @@
                     />
 
                 <TextView
+                    style="@style/TextView"
                     android:id="@+id/tv_daily_commission"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -202,6 +202,8 @@
                     />
 
                 <TextView
+                    style="@style/TextView"
+                    android:id="@+id/tv_weekly_boss_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/enemies_of_note"
@@ -213,6 +215,7 @@
                     />
 
                 <TextView
+                    style="@style/TextView"
                     android:id="@+id/tv_weekly_boss"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -244,6 +247,8 @@
                     />
 
                 <TextView
+                    style="@style/TextView"
+                    android:id="@+id/tv_expedition_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/number_of_expedition"
@@ -255,6 +260,7 @@
                     />
 
                 <TextView
+                    style="@style/TextView"
                     android:id="@+id/tv_expedition"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -275,6 +281,8 @@
                 >
 
                 <TextView
+                    style="@style/TextView"
+                    android:id="@+id/tv_expedition_time_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/until_all_completed"
@@ -286,6 +294,7 @@
                     />
 
                 <TextView
+                    style="@style/TextView"
                     android:id="@+id/tv_expedition_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -309,6 +318,7 @@
             >
 
             <TextView
+                style="@style/TextView"
                 android:id="@+id/tv_disable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -321,5 +331,16 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:indeterminateTint="@color/widget_font_sub"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
 
 </RelativeLayout>

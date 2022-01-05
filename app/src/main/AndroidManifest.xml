@@ -57,6 +57,21 @@
                 android:resource="@xml/resin_widget_info" />
         </receiver>
 
+        <receiver android:name=".ui.widget.DetailWidget"
+            android:label="@string/widget_label_detail_fixed">
+            <intent-filter>
+                <action android:name="danggai.app.resinwidget.btn_refresh" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/detail_widget_info" />
+        </receiver>
+
         <activity android:name=".ui.main.MainActivity"
             android:launchMode="singleTask">
             <intent-filter>

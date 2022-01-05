@@ -17,6 +17,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import danggai.app.resinwidget.BuildConfig
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
+import danggai.app.resinwidget.data.local.DailyNote
 import danggai.app.resinwidget.worker.CheckInWorker
 import danggai.app.resinwidget.worker.DailyNoteWorker
 import java.lang.NumberFormatException
@@ -160,6 +161,26 @@ object CommonFunction {
         FirebaseCrashlytics.getInstance().setCustomKeys(keysAndValues)
     }
 
+    fun secondToTime(context: Context, _second: String): String {
+        var hour: Int = 0
+        var minute: Int = 0
+        var second: Int = 0
+
+        if (_second == "0") return context.getString(R.string.done)
+
+        try {
+            hour = _second.toInt() / 3600
+            minute = (_second.toInt() - hour * 3600) / 60
+            second = _second.toInt() % 600
+        } catch (e: Exception) {
+            hour = 0
+            minute = 0
+            second = 0
+        }
+
+        return String.format(context.getString(R.string.widget_ui_simple_time), hour, minute)
+    }
+
     fun secondToRemainTime(context: Context, _second: String): String {
         var hour: Int = 0
         var minute: Int = 0
@@ -295,15 +316,38 @@ object CommonFunction {
             ContextCompat.getColor(context, R.color.widget_font_sub_light)
         }
 
-//        view.set(R.id.ll_body, R.drawable.rounded_square_5dp)
-//        view.setInt(R.id.ll_body, "setColorFilter", getColor(context, R.color.white))
         view.setInt(R.id.ll_root, "setBackgroundColor", bgColor)
-
-        view.setTextColor(R.id.tv_resin, mainFontColor)
-        view.setTextColor(R.id.tv_resin_max, mainFontColor)
-        view.setTextColor(R.id.tv_remain_time, mainFontColor)
         view.setInt(R.id.iv_refersh, "setColorFilter", subFontColor)
         view.setTextColor(R.id.tv_sync_time, subFontColor)
+        view.setTextColor(R.id.tv_disable, mainFontColor)
+
+        when (view.layoutId) {
+            R.layout.widget_resin_fixed,
+            R.layout.widget_resin_resizable -> {
+                log.e()
+                view.setTextColor(R.id.tv_resin, mainFontColor)
+                view.setTextColor(R.id.tv_resin_max, mainFontColor)
+                view.setTextColor(R.id.tv_remain_time, mainFontColor)
+            }
+            R.layout.widget_detail_fixed -> {
+                log.e()
+                view.setTextColor(R.id.tv_resin, mainFontColor)
+                view.setTextColor(R.id.tv_resin_title, mainFontColor)
+                view.setTextColor(R.id.tv_resin_time, mainFontColor)
+                view.setTextColor(R.id.tv_resin_time_title, mainFontColor)
+                view.setTextColor(R.id.tv_daily_commission, mainFontColor)
+                view.setTextColor(R.id.tv_daily_commission_title, mainFontColor)
+                view.setTextColor(R.id.tv_weekly_boss, mainFontColor)
+                view.setTextColor(R.id.tv_weekly_boss_title, mainFontColor)
+                view.setTextColor(R.id.tv_expedition, mainFontColor)
+                view.setTextColor(R.id.tv_expedition_title, mainFontColor)
+                view.setTextColor(R.id.tv_expedition_time, mainFontColor)
+                view.setTextColor(R.id.tv_expedition_time_title, mainFontColor)
+            }
+            else -> {
+                log.e()
+            }
+        }
     }
 
     fun setDailyNoteData(context: Context, dailyNote: DailyNote) {
@@ -332,6 +376,25 @@ object CommonFunction {
         }
 
         PreferenceManager.setStringExpeditionTime(context, expeditionTime)
+    }
+
+    fun getDailyNoteData(context: Context): DailyNote {
+        return DailyNote(
+            PreferenceManager.getIntCurrentResin(context),
+            PreferenceManager.getIntMaxResin(context),
+            PreferenceManager.getStringResinRecoveryTime(context),
+
+            PreferenceManager.getIntCurrentDailyCommission(context),
+            PreferenceManager.getIntMaxDailyCommission(context),
+            PreferenceManager.getBooleanGetDailyCommissionReward(context),
+
+            PreferenceManager.getIntCurrentWeeklyBoss(context),
+            PreferenceManager.getIntMaxWeeklyBoss(context),
+
+            PreferenceManager.getIntCurrentExpedition(context),
+            PreferenceManager.getIntMaxExpedition(context),
+            listOf()
+        )
     }
 
 }

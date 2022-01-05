@@ -19,21 +19,11 @@
         android:background="@drawable/rounded_square_5dp"
         >
 
-        <ProgressBar
-            android:id="@+id/pb_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="15dp"
-            android:indeterminateTint="@color/widget_font_sub"
-            />
-
         <LinearLayout
             android:id="@+id/ll_resin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:visibility="gone"
             >
 
             <ImageView
@@ -61,6 +51,7 @@
                     >
 
                     <TextView
+                        style="@style/TextView"
                         android:id="@+id/tv_sync_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -97,6 +88,7 @@
                         >
 
                     <TextView
+                        style="@style/TextView"
                         android:id="@+id/tv_resin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -109,6 +101,7 @@
                         />
 
                     <TextView
+                        style="@style/TextView"
                         android:id="@+id/tv_resin_max"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -122,6 +115,7 @@
                     </LinearLayout>
 
                     <TextView
+                        style="@style/TextView"
                         android:id="@+id/tv_remain_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -148,6 +142,7 @@
             >
 
             <TextView
+                style="@style/TextView"
                 android:id="@+id/tv_disable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -160,5 +155,16 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:indeterminateTint="@color/widget_font_sub"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
 
 </RelativeLayout>

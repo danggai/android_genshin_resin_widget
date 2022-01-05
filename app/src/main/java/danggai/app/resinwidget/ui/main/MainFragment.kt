@@ -23,7 +23,7 @@ import danggai.app.resinwidget.ui.design.WidgetDesignActivity
 import danggai.app.resinwidget.ui.main.checkin.MainCheckInFragment
 import danggai.app.resinwidget.ui.main.resin.MainResinFragment
 import danggai.app.resinwidget.util.CommonFunction
-import danggai.app.resinwidget.util.CommonFunction.saveDailyNoteData
+import danggai.app.resinwidget.util.CommonFunction.setDailyNoteData
 import danggai.app.resinwidget.util.EventObserver
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log

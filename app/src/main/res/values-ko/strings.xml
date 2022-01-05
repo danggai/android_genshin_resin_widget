@@ -37,6 +37,8 @@
     <string name="btn_check_in_success">출석 성공 시</string>
     <string name="btn_check_in_failed">출석 실패 시</string>
 
+    <string name="done">완료</string>
+
 
 
     <string name="permission_accept">권한 허용</string>
@@ -132,8 +134,8 @@
     <string name="widget_ui_max_time_resin_max">이미 가득 참</string>
 
     <string name="until_fully_replenished">전부 충전까지</string>
-    <string name="daily_commissions">일일 의뢰</string>
-    <string name="enemies_of_note">새겨둬야 할 강적</string>
+    <string name="daily_commissions">남은 일일 의뢰</string>
+    <string name="enemies_of_note">남은 주간 보스</string>
     <string name="number_of_expedition">탐사 진행 수</string>
     <string name="until_all_completed">모두 완료까지</string>
 
