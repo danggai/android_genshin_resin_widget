@@ -139,16 +139,18 @@ class DetailWidget : AppWidgetProvider() {
                 view.setTextViewText(R.id.tv_resin, dailyNote.current_resin.toString()+"/"+dailyNote.max_resin.toString())
                 view.setTextViewText(R.id.tv_resin_time, CommonFunction.secondToTime(_context, dailyNote.resin_recovery_time.toString()))
 
-                if (dailyNote.is_extra_task_reward_received) { view.setTextViewText(R.id.tv_daily_commission, context.getString(R.string.done)) }
-                else { view.setTextViewText(R.id.tv_daily_commission, (dailyNote.total_task_num - dailyNote.finished_task_num).toString()+"/"+dailyNote.total_task_num.toString()) }
+                view.setTextViewText(R.id.tv_daily_commission,
+                    if (dailyNote.is_extra_task_reward_received) { context.getString(R.string.done) }
+                    else { (dailyNote.total_task_num - dailyNote.finished_task_num).toString()+"/"+dailyNote.total_task_num.toString() }
+                )
 
-                if (dailyNote.remain_resin_discount_num == 0) { view.setTextViewText(R.id.tv_weekly_boss, context.getString(R.string.done)) }
-                else { view.setTextViewText(R.id.tv_weekly_boss, dailyNote.remain_resin_discount_num.toString()+"/"+dailyNote.resin_discount_num_limit.toString()) }
+                view.setTextViewText(R.id.tv_weekly_boss,
+                    if (dailyNote.remain_resin_discount_num == 0) { context.getString(R.string.done) }
+                    else { dailyNote.remain_resin_discount_num.toString()+"/"+dailyNote.resin_discount_num_limit.toString() }
+                )
 
                 view.setTextViewText(R.id.tv_expedition, dailyNote.current_expedition_num.toString()+"/"+dailyNote.max_expedition_num.toString())
                 view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToTime(_context, PreferenceManager.getStringExpeditionTime(_context)))
-
-
 
                 view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getStringRecentSyncTime(_context))
             }

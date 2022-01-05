@@ -120,6 +120,11 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_not_logged_in_3))
                             }
+                            Constant.RETCODE_ERROR_WRONG_ACCOUNT -> {
+                                log.e()
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
+                                lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_wrong_account))
+                            }
                             Constant.RETCODE_ERROR_DATA_NOT_PUBLIC -> {
                                 log.e()
                                 lvDailyNotePrivateErrorCount.value += 1
@@ -135,6 +140,11 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_invalid_language))
+                            }
+                            Constant.RETCODE_ERROR_INVALID_INPUT_FORMAT -> {
+                                log.e()
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
+                                lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error_invalid_input))
                             }
                             else -> {
                                 log.e()
