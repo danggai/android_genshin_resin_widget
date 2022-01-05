@@ -4,6 +4,6 @@
     android:initialLayout="@layout/widget_detail_fixed"
     android:minWidth="110dp"
     android:minHeight="40dp"
-    android:previewImage="@drawable/preview_resin_widget"
+    android:previewImage="@drawable/preview_detail_widget"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen" />

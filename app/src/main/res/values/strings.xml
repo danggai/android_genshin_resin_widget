@@ -129,8 +129,8 @@
     <string name="widget_label_resin_resizable">Resizable Resin Widget</string>
     <string name="widget_label_resin_fixed">Fixed Sized Resin Widget</string>
 
-    <string name="widget_ui_simple_time">%s:%s</string>
-    <string name="widget_ui_remain_time">%s:%s left</string>
+    <string name="widget_ui_simple_time">%sh %sm</string>
+    <string name="widget_ui_remain_time">%sh %sm left</string>
     <string name="widget_ui_max_time">Full at %s:%s</string>
     <string name="widget_ui_max_time_resin_max">Already full</string>
 

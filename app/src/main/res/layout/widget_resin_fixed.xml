@@ -119,7 +119,7 @@
                         android:id="@+id/tv_remain_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="hh시간 mm분 남음"
+                        android:text="0h 0m left"
                         android:textSize="10sp"
                         android:textColor="@color/widget_font_main"
                         android:layout_gravity="center"
