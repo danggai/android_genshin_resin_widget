@@ -19,7 +19,7 @@ import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.data.local.DailyNote
 import danggai.app.resinwidget.worker.CheckInWorker
-import danggai.app.resinwidget.worker.DailyNoteWorker
+import danggai.app.resinwidget.worker.RefreshWorker
 import java.lang.NumberFormatException
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -100,7 +100,7 @@ object CommonFunction {
         }
 
         val workManager = WorkManager.getInstance(context)
-        val workRequest = OneTimeWorkRequestBuilder<DailyNoteWorker>()
+        val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
             .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to true))
             .build()
         workManager.enqueue(workRequest)
@@ -122,7 +122,7 @@ object CommonFunction {
         log.e("period -> $period")
 
         val workManager = WorkManager.getInstance(context)
-        val workRequest = PeriodicWorkRequestBuilder<DailyNoteWorker>(period, TimeUnit.MINUTES)
+        val workRequest = PeriodicWorkRequestBuilder<RefreshWorker>(period, TimeUnit.MINUTES)
             .setInitialDelay(period, TimeUnit.MINUTES)
             .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to false))
             .build()
