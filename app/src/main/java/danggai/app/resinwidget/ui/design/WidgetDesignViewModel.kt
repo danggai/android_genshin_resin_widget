@@ -14,6 +14,7 @@ class WidgetDesignViewModel(override val app: Application, private val api: ApiR
     var lvSaveData = MutableLiveData<Event<Boolean>>()
 
     var lvWidgetTheme: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_WIDGET_THEME_AUTOMATIC)
+    var lvResinImageVisibility: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE)
 
     val lvTransparency: NonNullMutableLiveData<Int> = NonNullMutableLiveData(0)
 
@@ -32,6 +33,15 @@ class WidgetDesignViewModel(override val app: Application, private val api: ApiR
             R.id.rb_theme_light -> Constant.PREF_WIDGET_THEME_LIGHT
             R.id.rb_theme_dark -> Constant.PREF_WIDGET_THEME_DARK
             else -> Constant.PREF_WIDGET_THEME_AUTOMATIC
+        }
+    }
+
+    fun onClickResinImageVisible(view: View) {
+        log.e()
+        lvResinImageVisibility.value = when (view.id) {
+            R.id.rb_resin_image_visible -> Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE
+            R.id.rb_resin_image_invisible -> Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE
+            else -> Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE
         }
     }
 

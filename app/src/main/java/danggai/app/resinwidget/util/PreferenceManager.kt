@@ -312,6 +312,13 @@ object PreferenceManager {
         setInt(context, Constant.PREF_WIDGET_THEME, value)
     }
 
+    fun getIntWidgetResinImageVisibility(context: Context): Int {
+        return getInt(context, Constant.PREF_WIDGET_RESIN_IMAGE_VISIBILITY)
+    }
+    fun setIntWidgetResinImageVisibility(context: Context, value: Int) {
+        setInt(context, Constant.PREF_WIDGET_RESIN_IMAGE_VISIBILITY, value)
+    }
+
     fun getIntBackgroundTransparency(context: Context): Int {
         return getIntDefault(context, 170, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
     }

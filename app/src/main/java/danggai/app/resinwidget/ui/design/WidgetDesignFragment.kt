@@ -59,6 +59,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
 
         context?.let { it ->
             mVM.lvWidgetTheme.value = PreferenceManager.getIntWidgetTheme(it)
+            mVM.lvResinImageVisibility.value = PreferenceManager.getIntWidgetResinImageVisibility(it)
             mVM.lvTransparency.value = PreferenceManager.getIntBackgroundTransparency(it)
 
             try {
@@ -77,6 +78,12 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
                 Constant.PREF_WIDGET_THEME_DARK -> binding.rbThemeDark.isChecked = true
                 else -> binding.rbThemeAutomatic.isChecked = true
             }
+
+            when(mVM.lvResinImageVisibility.value) {
+                Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE -> binding.rbResinImageVisible.isChecked = true
+                Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE -> binding.rbResinImageInvisible.isChecked = true
+                else -> binding.rbResinImageVisible.isChecked = true
+            }
         }
     }
 
@@ -85,6 +92,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
             context?.let { _context ->
                 log.e()
                 PreferenceManager.setIntWidgetTheme(_context, mVM.lvWidgetTheme.value)
+                PreferenceManager.setIntWidgetResinImageVisibility(_context, mVM.lvResinImageVisibility.value)
                 PreferenceManager.setIntBackgroundTransparency(_context, mVM.lvTransparency.value)
 
                 makeToast(_context, getString(R.string.msg_toast_save_done))
@@ -141,6 +149,20 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
 
             }
         })
+
+        mVM.lvResinImageVisibility.observe(viewLifecycleOwner, {
+            context?.let { _context ->
+                log.e()
+
+                if (mVM.lvResinImageVisibility.value == Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE) {
+                    binding.widget.ivResin.visibility = View.GONE
+                } else {
+                    binding.widget.ivResin.visibility = View.VISIBLE
+                }
+            }
+        })
+
+
     }
 
 }
