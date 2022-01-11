@@ -9,12 +9,10 @@ import android.content.Intent
 import android.view.View
 import android.widget.RemoteViews
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getColor
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.ui.main.MainActivity
 import danggai.app.resinwidget.util.CommonFunction
-import danggai.app.resinwidget.util.CommonFunction.isDarkMode
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
 
@@ -114,6 +112,8 @@ class ResinWidgetResizable : AppWidgetProvider() {
 
     private fun syncData(view: RemoteViews, context: Context?) {
         context?.let { _context ->
+            CommonFunction.applyWidgetTheme(view, _context)
+
             if (!PreferenceManager.getBooleanIsValidUserData(context)) {
                 log.e()
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
@@ -121,18 +121,10 @@ class ResinWidgetResizable : AppWidgetProvider() {
                 view.setViewVisibility(R.id.ll_resin, View.GONE)
                 view.setViewVisibility(R.id.ll_disable, View.VISIBLE)
 
-                if ((PreferenceManager.getIntWidgetTheme(_context) == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
-                    view.setTextColor(R.id.tv_disable, getColor(_context, R.color.widget_font_main_dark))
-                } else {
-                    view.setTextColor(R.id.tv_disable, getColor(_context, R.color.widget_font_main_light))
-                }
-
             } else {
                 log.e()
                 view.setTextViewText(R.id.tv_resin, PreferenceManager.getIntCurrentResin(_context).toString())
                 view.setTextViewText(R.id.tv_resin_max, "/"+PreferenceManager.getIntMaxResin(_context).toString())
-
-                CommonFunction.setWidgetTheme(view, _context)
 
                 when (PreferenceManager.getIntTimeNotation(_context)) {
                     Constant.PREF_TIME_NOTATION_REMAIN_TIME -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringResinRecoveryTime(_context)))
@@ -142,7 +134,7 @@ class ResinWidgetResizable : AppWidgetProvider() {
 
                 view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getStringRecentSyncTime(_context))
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.iv_resin, View.VISIBLE)
+                view.setViewVisibility(R.id.iv_resin, if (PreferenceManager.getIntWidgetResinImageVisibility(context) == 1) View.GONE else View.VISIBLE)
                 view.setViewVisibility(R.id.ll_resin, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_disable, View.GONE)
             }

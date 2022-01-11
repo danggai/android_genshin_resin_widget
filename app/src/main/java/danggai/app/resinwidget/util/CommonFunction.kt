@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
+import android.view.View
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -291,7 +292,7 @@ object CommonFunction {
         return resources.configuration.uiMode and UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
     }
 
-    fun setWidgetTheme(view: RemoteViews, context: Context) {
+    fun applyWidgetTheme(view: RemoteViews, context: Context) {
         val bgColor: Int =  if (PreferenceManager.getIntWidgetTheme(context) == Constant.PREF_WIDGET_THEME_LIGHT) {
             ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.white), PreferenceManager.getIntBackgroundTransparency(context))
         } else if  ((PreferenceManager.getIntWidgetTheme(context) == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {

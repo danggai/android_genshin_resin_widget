@@ -114,6 +114,8 @@ class DetailWidget : AppWidgetProvider() {
 
     private fun syncData(view: RemoteViews, context: Context?) {
         context?.let { _context ->
+            CommonFunction.applyWidgetTheme(view, _context)
+
             if (!PreferenceManager.getBooleanIsValidUserData(context)) {
                 log.e()
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
@@ -131,8 +133,6 @@ class DetailWidget : AppWidgetProvider() {
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
                 view.setViewVisibility(R.id.ll_body, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_disable, View.GONE)
-
-                CommonFunction.setWidgetTheme(view, _context)
 
                 val dailyNote = CommonFunction.getDailyNoteData(_context)
 

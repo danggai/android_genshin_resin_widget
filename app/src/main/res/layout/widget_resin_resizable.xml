@@ -25,7 +25,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_gravity="center"
-            android:weightSum="3"
+            android:gravity="center"
             >
 
             <ImageView
@@ -34,7 +34,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/resin"
-                android:layout_marginRight="7dp"
                 />
 
             <LinearLayout

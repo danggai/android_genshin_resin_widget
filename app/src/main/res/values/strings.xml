@@ -34,7 +34,7 @@
     <string name="btn_light">Light</string>
     <string name="btn_automatic">Automatic</string>
 
-    <string name="btn_visible">Enable</string>
+    <string name="btn_visible">Visible</string>
     <string name="btn_invisible">Invisible</string>
 
     <string name="btn_auto_check_in_enable">Automatically check-in to HoYoLAB</string>
