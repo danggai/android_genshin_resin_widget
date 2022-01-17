@@ -13,7 +13,7 @@ import io.reactivex.Observable
 class ApiRepository(private val api: ApiInterface) {
 
     fun dailyNote(uid: String, server: String, cookie: String): Observable<ResDailyNote> {
-        val emptyData = ResDailyNote.Data("","", DailyNote( -1,-1,"", -1, -1, false, -1, -1, -1, -1, listOf()))
+        val emptyData = ResDailyNote.Data("","", DailyNote( -1,-1,"-1", -1, -1, false, -1, -1, -1, -1, "-1", -1, -1, listOf()))
 
         return Observable.just(true)
             .switchMap {

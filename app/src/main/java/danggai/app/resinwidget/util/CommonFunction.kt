@@ -363,6 +363,10 @@ object CommonFunction {
         PreferenceManager.setIntMaxDailyCommission(context, dailyNote.total_task_num)
         PreferenceManager.setBooleanGetDailyCommissionReward(context, dailyNote.is_extra_task_reward_received)
 
+        PreferenceManager.setIntCurrentHomeCoin(context, dailyNote.current_home_coin)
+        PreferenceManager.setIntMaxHomeCoin(context, dailyNote.max_home_coin)
+        PreferenceManager.setStringHomeCoinRecoveryTime(context, dailyNote.home_coin_recovery_time?:"-1")
+
         PreferenceManager.setIntCurrentWeeklyBoss(context, dailyNote.remain_resin_discount_num)
         PreferenceManager.setIntMaxWeeklyBoss(context, dailyNote.resin_discount_num_limit)
 
@@ -391,6 +395,10 @@ object CommonFunction {
 
             PreferenceManager.getIntCurrentWeeklyBoss(context),
             PreferenceManager.getIntMaxWeeklyBoss(context),
+
+            PreferenceManager.getIntCurrentHomeCoin(context),
+            PreferenceManager.getIntMaxHomeCoin(context),
+            PreferenceManager.getStringHomeCoinRecoveryTime(context),
 
             PreferenceManager.getIntCurrentExpedition(context),
             PreferenceManager.getIntMaxExpedition(context),

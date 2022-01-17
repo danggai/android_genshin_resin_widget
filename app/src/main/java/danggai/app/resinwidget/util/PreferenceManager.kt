@@ -262,6 +262,28 @@ object PreferenceManager {
     }
 
 
+    fun getIntCurrentHomeCoin(context: Context): Int {
+        return getInt(context, Constant.PREF_CURRENT_HOME_COIN)
+    }
+    fun setIntCurrentHomeCoin(context: Context, value: Int) {
+        setInt(context, Constant.PREF_CURRENT_HOME_COIN, value)
+    }
+
+    fun getIntMaxHomeCoin(context: Context): Int {
+        return getInt(context, Constant.PREF_MAX_HOME_COIN)
+    }
+    fun setIntMaxHomeCoin(context: Context, value: Int) {
+        setInt(context, Constant.PREF_MAX_HOME_COIN, value)
+    }
+
+    fun getStringHomeCoinRecoveryTime(context: Context): String {
+        return getString(context, Constant.PREF_HOME_COIN_RECOVERY_TIME)
+    }
+    fun setStringHomeCoinRecoveryTime(context: Context, value: String) {
+        setString(context, Constant.PREF_HOME_COIN_RECOVERY_TIME, value)
+    }
+
+
     fun getIntCurrentExpedition(context: Context): Int {
         return getInt(context, Constant.PREF_CURRENT_EXPEDITION)
     }
