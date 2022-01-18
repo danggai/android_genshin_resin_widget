@@ -34,7 +34,6 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
 
     var lvServer: NonNullMutableLiveData<Int> = NonNullMutableLiveData(0)
     var lvAutoRefreshPeriod: NonNullMutableLiveData<Long> = NonNullMutableLiveData(15L)
-    var lvTimeNotation: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
     val lvUid: NonNullMutableLiveData<String> = NonNullMutableLiveData("")
     val lvCookie: NonNullMutableLiveData<String> = NonNullMutableLiveData("")
 
@@ -392,15 +391,6 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
             R.id.rb_1h -> 60L
             R.id.rb_2h -> 120L
             else -> -1L
-        }
-    }
-
-    fun onClickSetTimeNotation(view: View) {
-        log.e()
-        lvTimeNotation.value = when (view.id) {
-            R.id.rb_remain_time -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
-            R.id.rb_full_charge_time -> Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME
-            else -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
         }
     }
 

@@ -170,7 +170,6 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
                 PreferenceManager.setBooleanNotiCustomResin(_context, mVM.lvEnableNotiCustomResin.value)
 
                 PreferenceManager.setLongAutoRefreshPeriod(_context, mVM.lvAutoRefreshPeriod.value)
-                PreferenceManager.setIntTimeNotation(_context, mVM.lvTimeNotation.value)
 
                 val customNotiResin: Int = try {
                     if (mVM.lvCustomNotiResin.value.isEmpty()

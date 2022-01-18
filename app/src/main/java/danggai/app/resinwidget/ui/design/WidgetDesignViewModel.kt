@@ -15,6 +15,7 @@ class WidgetDesignViewModel(override val app: Application, private val api: ApiR
 
     var lvWidgetTheme: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_WIDGET_THEME_AUTOMATIC)
     var lvResinImageVisibility: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE)
+    var lvTimeNotation: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
 
     val lvTransparency: NonNullMutableLiveData<Int> = NonNullMutableLiveData(0)
 
@@ -42,6 +43,16 @@ class WidgetDesignViewModel(override val app: Application, private val api: ApiR
             R.id.rb_resin_image_visible -> Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE
             R.id.rb_resin_image_invisible -> Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE
             else -> Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE
+        }
+    }
+
+
+    fun onClickSetTimeNotation(view: View) {
+        log.e()
+        lvTimeNotation.value = when (view.id) {
+            R.id.rb_remain_time -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
+            R.id.rb_full_charge_time -> Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME
+            else -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
         }
     }
 

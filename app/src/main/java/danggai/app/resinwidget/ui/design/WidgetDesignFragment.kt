@@ -61,6 +61,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
             mVM.lvWidgetTheme.value = PreferenceManager.getIntWidgetTheme(it)
             mVM.lvResinImageVisibility.value = PreferenceManager.getIntWidgetResinImageVisibility(it)
             mVM.lvTransparency.value = PreferenceManager.getIntBackgroundTransparency(it)
+            mVM.lvTimeNotation.value = PreferenceManager.getIntTimeNotation(it)
 
             try {
                 val wallpaperManager = WallpaperManager.getInstance(it)
@@ -84,6 +85,13 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
                 Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE -> binding.rbResinImageInvisible.isChecked = true
                 else -> binding.rbResinImageVisible.isChecked = true
             }
+
+            when(mVM.lvTimeNotation.value) {
+                Constant.PREF_TIME_NOTATION_REMAIN_TIME -> binding.rbRemainTime.isChecked = true
+                Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked = true
+                else -> binding.rbRemainTime.isChecked = true
+            }
+
         }
     }
 
@@ -94,6 +102,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
                 PreferenceManager.setIntWidgetTheme(_context, mVM.lvWidgetTheme.value)
                 PreferenceManager.setIntWidgetResinImageVisibility(_context, mVM.lvResinImageVisibility.value)
                 PreferenceManager.setIntBackgroundTransparency(_context, mVM.lvTransparency.value)
+                PreferenceManager.setIntTimeNotation(_context, mVM.lvTimeNotation.value)
 
                 makeToast(_context, getString(R.string.msg_toast_save_done))
                 activity?.finish()
@@ -158,6 +167,18 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
                     binding.widget.ivResin.visibility = View.GONE
                 } else {
                     binding.widget.ivResin.visibility = View.VISIBLE
+                }
+            }
+        })
+
+        mVM.lvTimeNotation.observe(viewLifecycleOwner, {
+            context?.let { _context ->
+                log.e()
+
+                if (mVM.lvTimeNotation.value == Constant.PREF_TIME_NOTATION_REMAIN_TIME) {
+                    binding.widget.tvRemainTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
+                } else {
+                    binding.widget.tvRemainTime.text = String.format(getString(R.string.widget_ui_max_time), 0, 0)
                 }
             }
         })

@@ -51,29 +51,21 @@ class MainResinFragment : BindingFragment<FragmentResinBinding>() {
                 if (int == -1) "0" else int.toString()
             }
 
-            mVM.lvTimeNotation.value = PreferenceManager.getIntTimeNotation(it)
-        }
+            when (mVM.lvServer.value) {
+                Constant.PREF_SERVER_ASIA -> binding.rbAsia.isChecked = true
+                Constant.PREF_SERVER_USA -> binding.rbUsa.isChecked = true
+                Constant.PREF_SERVER_EUROPE -> binding.rbEuro.isChecked = true
+                Constant.PREF_SERVER_CHT -> binding.rbCht.isChecked = true
+                else -> binding.rbAsia.isChecked = true
+            }
 
-        when(mVM.lvServer.value) {
-            Constant.PREF_SERVER_ASIA -> binding.rbAsia.isChecked = true
-            Constant.PREF_SERVER_USA -> binding.rbUsa.isChecked = true
-            Constant.PREF_SERVER_EUROPE -> binding.rbEuro.isChecked = true
-            Constant.PREF_SERVER_CHT -> binding.rbCht.isChecked = true
-            else -> binding.rbAsia.isChecked = true
-        }
-
-        when(mVM.lvAutoRefreshPeriod.value) {
-            15L -> binding.rb15m.isChecked = true
-            30L -> binding.rb30m.isChecked = true
-            60L -> binding.rb1h.isChecked = true
-            120L -> binding.rb2h.isChecked = true
-            else -> binding.rbDisable.isChecked = true
-        }
-
-        when(mVM.lvTimeNotation.value) {
-            Constant.PREF_TIME_NOTATION_REMAIN_TIME -> binding.rbRemainTime.isChecked = true
-            Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked = true
-            else -> binding.rbRemainTime.isChecked = true
+            when (mVM.lvAutoRefreshPeriod.value) {
+                15L -> binding.rb15m.isChecked = true
+                30L -> binding.rb30m.isChecked = true
+                60L -> binding.rb1h.isChecked = true
+                120L -> binding.rb2h.isChecked = true
+                else -> binding.rbDisable.isChecked = true
+            }
         }
     }
 }
