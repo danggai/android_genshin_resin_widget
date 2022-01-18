@@ -344,6 +344,10 @@ object CommonFunction {
                 view.setTextColor(R.id.tv_expedition_title, mainFontColor)
                 view.setTextColor(R.id.tv_expedition_time, mainFontColor)
                 view.setTextColor(R.id.tv_expedition_time_title, mainFontColor)
+                view.setTextColor(R.id.tv_realm_currency, mainFontColor)
+                view.setTextColor(R.id.tv_realm_currency_title, mainFontColor)
+                view.setTextColor(R.id.tv_realm_currency_time, mainFontColor)
+                view.setTextColor(R.id.tv_realm_currency_time_title, mainFontColor)
             }
             else -> {
                 log.e()
@@ -353,18 +357,18 @@ object CommonFunction {
 
     fun setDailyNoteData(context: Context, dailyNote: DailyNote) {
         log.e()
+        PreferenceManager.setStringRecentSyncTime(context, getTimeSyncTimeFormat())
 
         PreferenceManager.setIntCurrentResin(context, dailyNote.current_resin)
         PreferenceManager.setIntMaxResin(context, dailyNote.max_resin)
         PreferenceManager.setStringResinRecoveryTime(context, dailyNote.resin_recovery_time?:"-1")
-        PreferenceManager.setStringRecentSyncTime(context, getTimeSyncTimeFormat())
 
         PreferenceManager.setIntCurrentDailyCommission(context, dailyNote.finished_task_num)
         PreferenceManager.setIntMaxDailyCommission(context, dailyNote.total_task_num)
         PreferenceManager.setBooleanGetDailyCommissionReward(context, dailyNote.is_extra_task_reward_received)
 
-        PreferenceManager.setIntCurrentHomeCoin(context, dailyNote.current_home_coin)
-        PreferenceManager.setIntMaxHomeCoin(context, dailyNote.max_home_coin)
+        PreferenceManager.setIntCurrentHomeCoin(context, dailyNote.current_home_coin?:0)
+        PreferenceManager.setIntMaxHomeCoin(context, dailyNote.max_home_coin?:0)
         PreferenceManager.setStringHomeCoinRecoveryTime(context, dailyNote.home_coin_recovery_time?:"-1")
 
         PreferenceManager.setIntCurrentWeeklyBoss(context, dailyNote.remain_resin_discount_num)

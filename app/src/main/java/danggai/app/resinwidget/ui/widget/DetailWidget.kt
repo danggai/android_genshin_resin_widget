@@ -149,6 +149,9 @@ class DetailWidget : AppWidgetProvider() {
                     else { dailyNote.remain_resin_discount_num.toString()+"/"+dailyNote.resin_discount_num_limit.toString() }
                 )
 
+                view.setTextViewText(R.id.tv_realm_currency, (dailyNote.current_home_coin?:0).toString()+"/"+(dailyNote.max_home_coin?:0).toString())
+                view.setTextViewText(R.id.tv_realm_currency_time, CommonFunction.secondToTime(_context, PreferenceManager.getStringHomeCoinRecoveryTime(_context)))
+
                 view.setTextViewText(R.id.tv_expedition, dailyNote.current_expedition_num.toString()+"/"+dailyNote.max_expedition_num.toString())
                 view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToTime(_context, PreferenceManager.getStringExpeditionTime(_context)))
 

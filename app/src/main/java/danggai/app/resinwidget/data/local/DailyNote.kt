@@ -12,8 +12,8 @@ data class DailyNote(
     val remain_resin_discount_num: Int,
     val resin_discount_num_limit: Int,          // 주간 보스 할인
 
-    val current_home_coin: Int,
-    val max_home_coin: Int,
+    val current_home_coin: Int?,
+    val max_home_coin: Int?,
     val home_coin_recovery_time: String?,
 
     val current_expedition_num: Int,
