@@ -20,9 +20,6 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
     Worker(context, workerParams) {
 
     companion object {
-        const val NOTI_TYPE_SUCCESS = 10
-        const val NOTI_TYPE_ALREADY = 11
-        const val NOTI_TYPE_FAILED = 12
     }
 
     private val rxApiCheckIn: PublishSubject<Boolean> = PublishSubject.create()
@@ -54,7 +51,7 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
                                 log.e()
                                 if (PreferenceManager.getBooleanNotiCheckInSuccess(context)) {
                                     log.e()
-                                    sendNoti(NOTI_TYPE_SUCCESS)
+                                    sendNoti(Constant.NOTI_TYPE_CHECK_IN_SUCCESS)
                                 }
                                 CommonFunction.startUniquePeriodicCheckInWorker(context, false)
                             }
@@ -63,7 +60,7 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
                                 log.e()
                                 if (PreferenceManager.getBooleanNotiCheckInSuccess(context)) {
                                     log.e()
-                                    sendNoti(NOTI_TYPE_ALREADY)
+                                    sendNoti(Constant.NOTI_TYPE_CHECK_IN_ALREADY)
                                 }
                                 CommonFunction.startUniquePeriodicCheckInWorker(context, false)
                             }
@@ -71,7 +68,7 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
                                 log.e()
                                 if (PreferenceManager.getBooleanNotiCheckInFailed(context)) {
                                     log.e()
-                                    sendNoti(NOTI_TYPE_FAILED)
+                                    sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                                 }
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, res.data.retcode)
                                 CommonFunction.startUniquePeriodicCheckInWorker(context, true)
@@ -82,7 +79,7 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
                         log.e()
                         if (PreferenceManager.getBooleanNotiCheckInFailed(context)) {
                             log.e()
-                            sendNoti(NOTI_TYPE_FAILED)
+                            sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                         }
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, null)
                         context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
@@ -109,12 +106,12 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
 
         val title = applicationContext.getString(R.string.push_checkin_title)
         val msg = when (id) {
-            NOTI_TYPE_SUCCESS -> applicationContext.getString(R.string.push_msg_checkin_success)
-            NOTI_TYPE_ALREADY -> applicationContext.getString(R.string.push_msg_checkin_already)
-            NOTI_TYPE_FAILED -> applicationContext.getString(R.string.push_msg_checkin_failed)
+            Constant.NOTI_TYPE_CHECK_IN_SUCCESS -> applicationContext.getString(R.string.push_msg_checkin_success)
+            Constant.NOTI_TYPE_CHECK_IN_ALREADY -> applicationContext.getString(R.string.push_msg_checkin_already)
+            Constant.NOTI_TYPE_CHECK_IN_FAILED -> applicationContext.getString(R.string.push_msg_checkin_failed)
             else -> ""
         }
-        CommonFunction.sendNotification(NOTI_TYPE_SUCCESS, applicationContext, title, msg)
+        CommonFunction.sendNotification(Constant.NOTI_TYPE_CHECK_IN_SUCCESS, applicationContext, title, msg)
     }
 
     override fun doWork(): Result {

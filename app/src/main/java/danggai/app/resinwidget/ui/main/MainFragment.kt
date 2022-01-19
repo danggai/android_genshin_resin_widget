@@ -168,6 +168,8 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
                 PreferenceManager.setBooleanNotiEach40Resin(_context, mVM.lvEnableNotiEach40Resin.value)
                 PreferenceManager.setBooleanNoti140Resin(_context, mVM.lvEnableNoti140Resin.value)
                 PreferenceManager.setBooleanNotiCustomResin(_context, mVM.lvEnableNotiCustomResin.value)
+                PreferenceManager.setBooleanNotiExpeditionDone(_context, mVM.lvEnableNotiExpeditionDone.value)
+                PreferenceManager.setBooleanNotiHomeCoinFull(_context, mVM.lvEnableNotiHomeCoinFull.value)
 
                 PreferenceManager.setLongAutoRefreshPeriod(_context, mVM.lvAutoRefreshPeriod.value)
 

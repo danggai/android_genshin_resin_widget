@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
-import android.view.View
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -225,19 +224,33 @@ object CommonFunction {
     fun sendNotification(id: Int, context: Context, title: String, msg: String) {
         var notificationId = ""
         var notificationDesc = ""
+        var periority: Int = 0
 
         when (id) {
             in 1..9 -> {
                 notificationId = Constant.PUSH_CHANNEL_RESIN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_resin_noti_description)
+                periority = NotificationCompat.PRIORITY_DEFAULT
             }
             in 10..19 -> {
-                notificationId = Constant.PUSH_CHANNEL_CHECK_IN_ID
+                notificationId = Constant.PUSH_CHANNEL_CHECK_IN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_checkin_description)
+                periority = NotificationCompat.PRIORITY_LOW
+            }
+            in 20..29 -> {
+                notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
+                notificationDesc = context.getString(R.string.push_expedition_description)
+                periority = NotificationCompat.PRIORITY_DEFAULT
+            }
+            in 30..39 -> {
+                notificationId = Constant.PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID
+                notificationDesc = context.getString(R.string.push_realm_currency_description)
+                periority = NotificationCompat.PRIORITY_DEFAULT
             }
             else -> {
                 notificationId = Constant.PUSH_CHANNEL_DEFAULT_ID
                 notificationDesc = context.getString(R.string.push_default_noti_description)
+                periority = NotificationCompat.PRIORITY_DEFAULT
             }
         }
 
@@ -252,7 +265,7 @@ object CommonFunction {
             .setContentText(msg)
             .setAutoCancel(true)
             .setStyle(NotificationCompat.BigTextStyle().bigText(msg))
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(periority)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(
@@ -290,6 +303,15 @@ object CommonFunction {
 
     fun Context.isDarkMode(): Boolean {
         return resources.configuration.uiMode and UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
+    }
+
+    fun getExpeditionTime(dailyNote: DailyNote): String {
+        return try {
+            if (dailyNote.expeditions == null || dailyNote.expeditions.isEmpty()) "0"
+            else dailyNote.expeditions.maxOf { it.remained_time }
+        } catch (e: java.lang.Exception) {
+            "0"
+        }
     }
 
     fun applyWidgetTheme(view: RemoteViews, context: Context) {
@@ -377,12 +399,7 @@ object CommonFunction {
         PreferenceManager.setIntCurrentExpedition(context, dailyNote.current_expedition_num)
         PreferenceManager.setIntMaxExpedition(context, dailyNote.max_expedition_num)
 
-        val expeditionTime: String = try {
-            if (dailyNote.expeditions == null || dailyNote.expeditions.isEmpty()) "0"
-            else dailyNote.expeditions.maxOf { it.remained_time }
-        } catch (e: Exception) {
-            "0"
-        }
+        val expeditionTime: String = getExpeditionTime(dailyNote)
 
         PreferenceManager.setStringExpeditionTime(context, expeditionTime)
     }

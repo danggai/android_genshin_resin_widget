@@ -383,6 +383,20 @@ object PreferenceManager {
         setInt(context, Constant.PREF_NOTI_CUSTOM_TARGET_RESIN, value)
     }
 
+    fun getBooleanNotiExpeditionDone(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_NOTI_EXPEDITION_DONE, false)
+    }
+    fun setBooleanNotiExpeditionDone(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_NOTI_EXPEDITION_DONE, value)
+    }
+
+    fun getBooleanNotiHomeCoinFull(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_NOTI_HOME_COIN_FULL, false)
+    }
+    fun setBooleanNotiHomeCoinFull(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_NOTI_HOME_COIN_FULL, value)
+    }
+
     fun getBooleanEnableAutoCheckIn(context: Context): Boolean {
         return getBoolean(context, Constant.PREF_ENABLE_AUTO_CHECK_IN, false)
     }
