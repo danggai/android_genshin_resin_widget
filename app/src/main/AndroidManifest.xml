@@ -5,7 +5,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".App"
@@ -17,17 +18,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Genshin_resin_widget"
         android:usesCleartextTraffic="true">
-
+        <service
+            android:name=".service.CheckInForegroundService"
+            android:enabled="true"
+            android:exported="true"></service>
         <service
             android:name=".service.TemporaryNotificationListenerService"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService"/>
+                <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
 
-        <receiver android:name=".ui.widget.ResinWidget"
+        <receiver
+            android:name=".ui.widget.ResinWidget"
             android:label="@string/widget_label_resin_fixed">
             <intent-filter>
                 <action android:name="danggai.app.resinwidget.btn_refresh" />
@@ -41,8 +46,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/resin_widget_info" />
         </receiver>
-
-        <receiver android:name=".ui.widget.ResinWidgetResizable"
+        <receiver
+            android:name=".ui.widget.ResinWidgetResizable"
             android:label="@string/widget_label_resin_resizable">
             <intent-filter>
                 <action android:name="danggai.app.resinwidget.btn_refresh" />
@@ -56,8 +61,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/resin_widget_info" />
         </receiver>
-
-        <receiver android:name=".ui.widget.DetailWidget"
+        <receiver
+            android:name=".ui.widget.DetailWidget"
             android:label="@string/widget_label_detail_fixed">
             <intent-filter>
                 <action android:name="danggai.app.resinwidget.btn_refresh" />
@@ -72,7 +77,8 @@
                 android:resource="@xml/detail_widget_info" />
         </receiver>
 
-        <activity android:name=".ui.main.MainActivity"
+        <activity
+            android:name=".ui.main.MainActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -80,10 +86,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.cookie_web_view.CookieWebViewActivity"/>
-
-        <activity android:name=".ui.design.WidgetDesignActivity"/>
+        <activity android:name=".ui.cookie_web_view.CookieWebViewActivity" />
+        <activity android:name=".ui.design.WidgetDesignActivity" />
 
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"

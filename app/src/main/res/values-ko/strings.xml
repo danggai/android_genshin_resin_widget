@@ -163,6 +163,7 @@
     <string name="realm_currency">선계 주화</string>
     <string name="until_all_completed">모두 완료까지</string>
 
+    <string name="foreground_genshin_check_in_progress">호요랩 원신 출석체크 진행 중</string>
 
     <!-- Google Ads -->
     <string name="google_ads_app_id">ca-app-pub-8407462596213276~4738084181</string>

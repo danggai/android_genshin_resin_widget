@@ -162,6 +162,7 @@
     <string name="realm_currency">Realm Currency</string>
     <string name="until_all_completed">Until All Completed</string>
 
+    <string name="foreground_genshin_check_in_progress">HoYoLAB Genshin Check-in progressing</string>
 
     <!-- Google Ads -->
     <string name="google_ads_app_id">ca-app-pub-8407462596213276~4738084181</string>
