@@ -18,7 +18,6 @@ import danggai.app.resinwidget.BuildConfig
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.data.local.DailyNote
-import danggai.app.resinwidget.worker.CheckInWorker
 import danggai.app.resinwidget.worker.RefreshWorker
 import java.lang.NumberFormatException
 import java.math.BigInteger
@@ -45,40 +44,6 @@ object CommonFunction {
         }
         val hash = encodeToMD5("salt=${Constant.OS_SALT}&t=$t&r=$r")
         return "${t},${r},${hash}"
-    }
-
-    fun startOneTimeCheckInWorker(context: Context) {
-        log.e()
-
-        if (!PreferenceManager.getBooleanIsValidUserData(context)) {
-            log.e()
-            return
-        }
-
-        val workManager = WorkManager.getInstance(context)
-        val workRequest = OneTimeWorkRequestBuilder<CheckInWorker>()
-            .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to true))
-            .build()
-        workManager.enqueue(workRequest)
-    }
-
-    fun startUniquePeriodicCheckInWorker(context: Context, isRetry: Boolean) {
-        if (!PreferenceManager.getBooleanIsValidUserData(context)) {
-            log.e()
-            return
-        }
-
-        log.e("isRetry -> $isRetry")
-
-        val delay: Long = if (isRetry) { 15L } else { calculateDelayUntilChinaMidnight(Calendar.getInstance()) }
-        log.e(delay)
-
-        val workManager = WorkManager.getInstance(context)
-        val workRequest = PeriodicWorkRequestBuilder<CheckInWorker>(delay, TimeUnit.MINUTES)
-            .setInitialDelay(delay, TimeUnit.MINUTES)
-            .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to false))
-            .build()
-        workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
     }
 
     fun shutdownRefreshWorker(context: Context) {
@@ -278,7 +243,7 @@ object CommonFunction {
         notificationManager.notify(id, builder.build())
     }
 
-    private fun calculateDelayUntilChinaMidnight(startCalendar: Calendar): Long {
+    fun calculateDelayUntilChinaMidnight(startCalendar: Calendar): Long {
         val targetCalendar = Calendar.getInstance()
         targetCalendar.timeZone = TimeZone.getTimeZone(Constant.CHINA_TIMEZONE)
         targetCalendar.set(Calendar.MINUTE, 1)

@@ -186,6 +186,23 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/rounded_square_skyblue_5dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:onClick="@{(v)->vm.onClickStartForeground()}"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="10dp"
+                    android:text="포그라운드 실행"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.core.widget.NestedScrollView>

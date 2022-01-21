@@ -1,7 +1,11 @@
 package danggai.app.resinwidget.worker
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import danggai.app.resinwidget.Constant
@@ -21,11 +25,16 @@ import java.net.UnknownHostException
 class CheckInWorker (val context: Context, workerParams: WorkerParameters, private val api: ApiRepository) :
     Worker(context, workerParams) {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun doWork(): Result {
         log.e()
 
         try {
-            context.startService(Intent(context, CheckInForegroundService::class.java))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(Intent(context, CheckInForegroundService::class.java))
+            } else {
+                context.startService(Intent(context, CheckInForegroundService::class.java))
+            }
 
             log.e()
             return Result.success()

@@ -61,7 +61,6 @@ object Constant {
     /* WORKER */
 
     const val WORKER_UNIQUE_NAME_AUTO_REFRESH = "AutoRefreshWork"
-    const val WORKER_UNIQUE_NAME_AUTO_CHECK_IN = "AutoCheckInWork"
 
 
 

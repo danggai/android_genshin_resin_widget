@@ -29,8 +29,9 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     var lvHowCanIGetCookie = MutableLiveData<Event<Boolean>>()
     var lvWhenDailyNotePrivate = MutableLiveData<Event<Boolean>>()
     var lvSetProgress = MutableLiveData<Event<Boolean>>()
-    var lvStartCheckInWorker = MutableLiveData<Event<Boolean>>()
+    var lvStartCheckInAlarm = MutableLiveData<Event<Boolean>>()
     var lvStartWidgetDesignActivity = MutableLiveData<Event<Boolean>>()
+    var lvStartForegroundService = MutableLiveData<Event<Boolean>>()
 
     var lvServer: NonNullMutableLiveData<Int> = NonNullMutableLiveData(0)
     var lvAutoRefreshPeriod: NonNullMutableLiveData<Long> = NonNullMutableLiveData(15L)
@@ -192,7 +193,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                                 lvSaveCookie.value = Event(true)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_check_in_success))
 
-                                lvStartCheckInWorker.value = Event(true)
+                                lvStartCheckInAlarm.value = Event(true)
                             }
                             Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
                             Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD -> {
@@ -200,7 +201,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                                 lvSaveCookie.value = Event(true)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_check_in_already))
 
-                                lvStartCheckInWorker.value = Event(true)
+                                lvStartCheckInAlarm.value = Event(true)
                             }
                             Constant.RETCODE_ERROR_NOT_LOGGED_IN,
                             Constant.RETCODE_ERROR_NOT_LOGGED_IN_2-> {
@@ -421,4 +422,10 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
         lvSetProgress.value = Event(boolean)
     }
 
+
+
+    fun onClickStartForeground() {
+        log.e()
+        lvStartForegroundService.value = Event(true)
+    }
 }

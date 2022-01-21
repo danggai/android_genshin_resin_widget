@@ -17,6 +17,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import danggai.app.resinwidget.BuildConfig
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.FragmentMainBinding
+import danggai.app.resinwidget.service.CheckInForegroundService
+import danggai.app.resinwidget.service.CheckInReceiver
 import danggai.app.resinwidget.ui.BindingFragment
 import danggai.app.resinwidget.ui.cookie_web_view.CookieWebViewActivity
 import danggai.app.resinwidget.ui.design.WidgetDesignActivity
@@ -132,7 +134,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
                     PreferenceManager.setIntServer(_context, mVM.lvServer.value)
                     PreferenceManager.setStringUid(_context, mVM.lvUid.value)
                     PreferenceManager.setStringCookie(_context, mVM.lvCookie.value)
-
+                    
                     makeToast(_context, getString(R.string.msg_toast_save_done))
                 } else if (!boolean and mVM.lvUid.value.isEmpty()) {
                     makeToast(_context, getString(R.string.msg_toast_uid_empty_error))
@@ -152,6 +154,9 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
                     PreferenceManager.setBooleanEnableAutoCheckIn(_context, mVM.lvEnableAutoCheckIn.value)
                     PreferenceManager.setBooleanNotiCheckInSuccess(_context, mVM.lvEnableNotiCheckinSuccess.value)
                     PreferenceManager.setBooleanNotiCheckInFailed(_context, mVM.lvEnableNotiCheckinFailed.value)
+
+                    if (!mVM.lvEnableAutoCheckIn.value)
+                        CheckInReceiver.cancelAlarm(_context)
 
                     makeToast(_context, getString(R.string.msg_toast_save_done))
                 } else if (!boolean and mVM.lvCookie.value.isEmpty()) {
@@ -283,12 +288,12 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
             binding.llProgress.visibility = if (it) View.VISIBLE else View.GONE
         })
 
-        mVM.lvStartCheckInWorker.observe(viewLifecycleOwner, EventObserver {
+        mVM.lvStartCheckInAlarm.observe(viewLifecycleOwner, EventObserver {
             log.e()
             context?.let {
                 if (PreferenceManager.getBooleanEnableAutoCheckIn(it)) {
                     log.e()
-                    CommonFunction.startUniquePeriodicCheckInWorker(it, false)
+                    CheckInReceiver.setAlarm(it, false)
                 }
             }
         })
@@ -297,6 +302,17 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
             log.e()
             activity?.let {
                 WidgetDesignActivity.startActivity(it)
+            }
+        })
+
+        mVM.lvStartForegroundService.observe(viewLifecycleOwner, EventObserver {
+            log.e()
+            context?.let { _context ->
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    _context.startForegroundService(Intent(context, CheckInForegroundService::class.java))
+                } else {
+                    _context.startService(Intent(context, CheckInForegroundService::class.java))
+                }
             }
         })
     }

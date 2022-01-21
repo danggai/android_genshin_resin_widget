@@ -21,12 +21,6 @@ import java.net.UnknownHostException
 class DailyNoteWorker (val context: Context, workerParams: WorkerParameters, private val api: ApiRepository) :
     Worker(context, workerParams) {
 
-    companion object {
-        const val NOTI_TYPE_EACH_40_RESIN = 0
-        const val NOTI_TYPE_140_RESIN = 1
-        const val NOTI_TYPE_CUSTOM_RESIN = 2
-    }
-
     private val rxApiDailyNote: PublishSubject<Boolean> = PublishSubject.create()
     private val compositeDisposable = CompositeDisposable()
     private fun Disposable.addCompositeDisposable() {

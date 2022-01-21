@@ -18,10 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Genshin_resin_widget"
         android:usesCleartextTraffic="true">
+        <receiver
+            android:name=".service.CheckInReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
         <service
             android:name=".service.CheckInForegroundService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
         <service
             android:name=".service.TemporaryNotificationListenerService"
             android:launchMode="singleTask"

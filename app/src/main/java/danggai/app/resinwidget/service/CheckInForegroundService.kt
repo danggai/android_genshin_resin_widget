@@ -63,7 +63,7 @@ class CheckInForegroundService() : Service() {
                                 if (PreferenceManager.getBooleanNotiCheckInSuccess(applicationContext)) {
                                     log.e()
                                     sendNoti(Constant.NOTI_TYPE_CHECK_IN_SUCCESS)
-                                    CommonFunction.startUniquePeriodicCheckInWorker(applicationContext, false)
+                                    CheckInReceiver.setAlarm(applicationContext, false)
                                 }
                             }
                             Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
@@ -72,7 +72,7 @@ class CheckInForegroundService() : Service() {
                                 if (PreferenceManager.getBooleanNotiCheckInSuccess(applicationContext)) {
                                     log.e()
                                     sendNoti(Constant.NOTI_TYPE_CHECK_IN_ALREADY)
-                                    CommonFunction.startUniquePeriodicCheckInWorker(applicationContext, false)
+                                    CheckInReceiver.setAlarm(applicationContext, false)
                                 }
                             }
                             else -> {
@@ -82,7 +82,7 @@ class CheckInForegroundService() : Service() {
                                     sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                                 }
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, res.data.retcode)
-                                CommonFunction.startUniquePeriodicCheckInWorker(applicationContext, true)
+                                CheckInReceiver.setAlarm(applicationContext, true)
                             }
                         }
                     }
@@ -94,7 +94,7 @@ class CheckInForegroundService() : Service() {
                         }
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, null)
                         applicationContext.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
-                        CommonFunction.startUniquePeriodicCheckInWorker(applicationContext, true)
+                        CheckInReceiver.setAlarm(applicationContext, true)
                     }
                 }
 
