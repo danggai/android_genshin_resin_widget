@@ -127,7 +127,7 @@
     <string name="push_checkin_description">호요랩 일일 출석 여부를 여행자에게 알려주기 위해 발송하는 알림이야!</string>
     <string name="push_msg_checkin_success">HoYoLAB 출석 체크 성공!</string>
     <string name="push_msg_checkin_already">이미 오늘자 출석 체크가 완료됐어! 내일 1시에 다시 알려줄게!</string>
-    <string name="push_msg_checkin_failed">HoYoLAB 출석 체크에 실패했어.. 15분 후에 다시 시도해볼게!</string>
+    <string name="push_msg_checkin_failed">HoYoLAB 출석 체크에 실패했어.. 30분 후에 다시 시도해볼게!</string>
 
     <string name="push_expedition_title">탐험 완료 알림</string>
     <string name="push_expedition_description">탐험이 완료되었을 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>

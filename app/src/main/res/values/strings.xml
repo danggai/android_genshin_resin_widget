@@ -126,7 +126,7 @@
     <string name="push_checkin_description">This is a notification sent to inform travelers of their daily check-in at HoYoLAB!</string>
     <string name="push_msg_checkin_success">HoYoLAB check-in successful!</string>
     <string name="push_msg_checkin_already">Already finished today\'s daily check in!</string>
-    <string name="push_msg_checkin_failed">Failed HoYoLAB check-in. I\'ll try again in 15 minutes!</string>
+    <string name="push_msg_checkin_failed">Failed HoYoLAB check-in. I\'ll try again in 30 minutes!</string>
 
     <string name="push_expedition_title">Expedition Done Notification</string>
     <string name="push_expedition_description">This is a notification sent to travelers when the expedition is complete!</string>

@@ -15,8 +15,26 @@ import java.util.*
 class CheckInReceiver : BroadcastReceiver() {
 
     companion object {
-        fun setAlarm(context: Context, isRetry: Boolean) {
+        fun cancelAlarm(context: Context) {
             val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
+
+            val receiverIntent = Intent(context, CheckInReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(context, 0, receiverIntent, PendingIntent.FLAG_CANCEL_CURRENT)
+
+            alarmManager.cancel(pendingIntent)
+
+            if (PendingIntent.getBroadcast(context, 0, Intent(context, CheckInReceiver::class.java), PendingIntent.FLAG_NO_CREATE) != null) { log.d("Alarm is already active") } else { log.d("Alarm is inactive") }
+
+        }
+
+        fun setAlarm(context: Context, isRetry: Boolean) {
+            if (PendingIntent.getBroadcast(context, 0, Intent(context, CheckInReceiver::class.java), PendingIntent.FLAG_NO_CREATE) != null) { log.d("Alarm is already active") } else { log.d("Alarm is inactive") }
+
+            cancelAlarm(context)
+
+            val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
+
+            if (PendingIntent.getBroadcast(context, 0, Intent(context, CheckInReceiver::class.java), PendingIntent.FLAG_NO_CREATE) != null) { log.d("Alarm is already active") } else { log.d("Alarm is inactive") }
 
             val receiverIntent = Intent(context, CheckInReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(context, 0, receiverIntent, 0)
@@ -25,7 +43,7 @@ class CheckInReceiver : BroadcastReceiver() {
             val targetCalendar = Calendar.getInstance()
 
             if (isRetry) {
-                if (startCalendar.get(Calendar.HOUR_OF_DAY) >= 1) targetCalendar.add(Calendar.MINUTE, 15)
+                if (startCalendar.get(Calendar.HOUR_OF_DAY) >= 1) targetCalendar.add(Calendar.MINUTE, 30)
 
                 log.e(targetCalendar.time.toString())
             } else {
@@ -39,17 +57,10 @@ class CheckInReceiver : BroadcastReceiver() {
                 log.e(targetCalendar.time.toString())
             }
 
-//            targetCalendar.add(Calendar.MINUTE, 2)
-
             alarmManager.set(AlarmManager.RTC, targetCalendar.timeInMillis, pendingIntent);
-        }
+//            alarmManager.setRepeating(AlarmManager.RTC, targetCalendar.timeInMillis, 86400000, pendingIntent);
 
-        fun cancelAlarm(context: Context) {
-            val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-            val receiverIntent = Intent(context, CheckInReceiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context, 0, receiverIntent, 0)
-
-            alarmManager.cancel(pendingIntent)
+            if (PendingIntent.getBroadcast(context, 0, Intent(context, CheckInReceiver::class.java), PendingIntent.FLAG_NO_CREATE) != null) { log.d("Alarm is already active") } else { log.d("Alarm is inactive") }
         }
     }
 
