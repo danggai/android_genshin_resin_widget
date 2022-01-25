@@ -30,12 +30,6 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
         log.e()
 
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(Intent(context, CheckInForegroundService::class.java))
-            } else {
-                context.startService(Intent(context, CheckInForegroundService::class.java))
-            }
-
             log.e()
             return Result.success()
         } catch (e: java.lang.Exception) {

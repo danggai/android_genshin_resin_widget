@@ -10,6 +10,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
+import androidx.work.WorkManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -95,6 +96,10 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
     private fun initUi() {
         context?.let { it ->
             mVM.initUI(PreferenceManager.getStringUid(it), PreferenceManager.getStringCookie(it))
+
+            val workManager = WorkManager.getInstance(it)
+            workManager.cancelUniqueWork("AutoCheckInWork")
+            // TODO("CHECK IN WORKER 관련 잔여 함수 제거")
         }
     }
 
