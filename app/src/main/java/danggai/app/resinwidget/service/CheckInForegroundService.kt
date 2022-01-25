@@ -63,7 +63,7 @@ class CheckInForegroundService() : Service() {
                                 if (PreferenceManager.getBooleanNotiCheckInSuccess(applicationContext)) {
                                     log.e()
                                     sendNoti(Constant.NOTI_TYPE_CHECK_IN_SUCCESS)
-                                    CheckInReceiver.setAlarm(applicationContext, false)
+                                    CheckInReceiver.setAlarmRepeatly(applicationContext)
                                 }
                             }
                             Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
@@ -72,7 +72,7 @@ class CheckInForegroundService() : Service() {
                                 if (PreferenceManager.getBooleanNotiCheckInSuccess(applicationContext)) {
                                     log.e()
                                     sendNoti(Constant.NOTI_TYPE_CHECK_IN_ALREADY)
-                                    CheckInReceiver.setAlarm(applicationContext, false)
+                                    CheckInReceiver.setAlarmRepeatly(applicationContext)
                                 }
                             }
                             else -> {
@@ -82,7 +82,7 @@ class CheckInForegroundService() : Service() {
                                     sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                                 }
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, res.data.retcode)
-                                CheckInReceiver.setAlarm(applicationContext, true)
+                                CheckInReceiver.setAlarmOneShot(applicationContext)
                             }
                         }
                     }
@@ -94,7 +94,7 @@ class CheckInForegroundService() : Service() {
                         }
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, null)
                         applicationContext.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
-                        CheckInReceiver.setAlarm(applicationContext, true)
+                        CheckInReceiver.setAlarmOneShot(applicationContext)
                     }
                 }
 

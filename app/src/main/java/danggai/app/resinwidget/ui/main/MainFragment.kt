@@ -293,7 +293,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
             context?.let {
                 if (PreferenceManager.getBooleanEnableAutoCheckIn(it)) {
                     log.e()
-                    CheckInReceiver.setAlarm(it, false)
+                    CheckInReceiver.setAlarmRepeatly(it)
                 }
             }
         })
