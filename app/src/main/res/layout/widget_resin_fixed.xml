@@ -47,28 +47,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:paddingLeft="20dp"
-                    >
+                    android:paddingLeft="20dp">
 
                     <TextView
-                        style="@style/TextView"
                         android:id="@+id/tv_sync_time"
+                        style="@style/TextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="MM/dd hh:mm"
-                        android:textSize="10sp"
-                        android:textColor="@color/widget_font_sub"
                         android:layout_gravity="center"
                         android:singleLine="true"
-                        />
+                        android:text="MM/dd hh:mm"
+                        android:textColor="@color/widget_font_sub"
+                        android:textSize="10sp" />
 
                     <ImageView
                         android:id="@+id/iv_refersh"
                         android:layout_width="12dp"
                         android:layout_height="12dp"
-                        android:src="@drawable/baseline_sync_24"
                         android:layout_gravity="center_vertical"
-                        />
+                        android:src="@drawable/baseline_sync_24" />
 
                 </LinearLayout>
 

@@ -9,5 +9,5 @@ import org.koin.dsl.module
 val ViewModelModule = module {
     single { MainViewModel(get(), get()) }
     viewModel { CookieWebViewViewModel(get(), get()) }
-    viewModel { WidgetDesignViewModel(get(), get()) }
+    single { WidgetDesignViewModel(get(), get()) }
 }

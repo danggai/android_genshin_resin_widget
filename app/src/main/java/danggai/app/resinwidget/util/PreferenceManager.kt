@@ -348,6 +348,43 @@ object PreferenceManager {
         setInt(context, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY, value)
     }
 
+    fun getBooleanWidgetResinDataVisibility(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_WIDGET_RESIN_DATA_VISIBILITY, true)
+    }
+    fun setBooleanWidgetResinDataVisibility(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_WIDGET_RESIN_DATA_VISIBILITY, value)
+    }
+
+    fun getBooleanWidgetDailyCommissionDataVisibility(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_WIDGET_DAILY_COMMISSION_DATA_VISIBILITY, true)
+    }
+    fun setBooleanWidgetDailyCommissionDataVisibility(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_WIDGET_DAILY_COMMISSION_DATA_VISIBILITY, value)
+    }
+
+    fun getBooleanWidgetWeeklyBossDataVisibility(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_WIDGET_WEEKLY_BOSS_DATA_VISIBILITY, true)
+    }
+    fun setBooleanWidgetWeeklyBossDataVisibility(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_WIDGET_WEEKLY_BOSS_DATA_VISIBILITY, value)
+    }
+
+    fun getBooleanWidgetRealmCurrencyDataVisibility(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_WIDGET_REALM_CURRENCY_DATA_VISIBILITY, true)
+    }
+    fun setBooleanWidgetRealmCurrencyDataVisibility(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_WIDGET_REALM_CURRENCY_DATA_VISIBILITY, value)
+    }
+
+    fun getBooleanWidgetExpeditionDataVisibility(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_WIDGET_EXPEDITION_DATA_VISIBILITY, true)
+    }
+    fun setBooleanWidgetExpeditionDataVisibility(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_WIDGET_EXPEDITION_DATA_VISIBILITY, value)
+    }
+
+
+
     fun getBooleanIsValidUserData(context: Context): Boolean {
         return getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)
     }

@@ -306,7 +306,8 @@
                     />
 
             </RelativeLayout>
-<RelativeLayout
+
+            <RelativeLayout
                 android:id="@+id/rl_expedition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

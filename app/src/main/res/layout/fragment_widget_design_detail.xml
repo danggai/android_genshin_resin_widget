@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="danggai.app.resinwidget.ui.design.WidgetDesignViewModel"
+            />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <include
+            android:id="@+id/widget"
+            layout="@layout/widget_detail_fixed"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+
+            android:layout_margin="50dp"
+            />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:paddingHorizontal="20dp"
+            >
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="15dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/visible_data"
+                android:textColor="@color/black"
+                android:textSize="28sp"
+                android:textStyle="bold|italic"
+                />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cb_resin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:checked="@={vm.lvResinDataVisibility}"
+                    android:text="@string/resin"
+                    android:textSize="14sp"
+                    app:buttonTint="@color/checkbox_filter_tint" />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cb_daily_commission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:checked="@={vm.lvDailyCommissionDataVisibility}"
+                    android:text="@string/daily_commissions"
+                    android:textSize="14sp"
+                    app:buttonTint="@color/checkbox_filter_tint" />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cb_enemies_of_note"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:checked="@={vm.lvWeeklyBossDataVisibility}"
+                    android:text="@string/enemies_of_note"
+                    android:textSize="14sp"
+                    app:buttonTint="@color/checkbox_filter_tint" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cb_realm_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:checked="@={vm.lvRealmCurrencyDataVisibility}"
+                    android:text="@string/realm_currency"
+                    android:textSize="14sp"
+                    app:buttonTint="@color/checkbox_filter_tint" />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cb_number_of_expedition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:checked="@={vm.lvExpeditionDataVisibility}"
+                    android:text="@string/number_of_expedition"
+                    android:textSize="14sp"
+                    app:buttonTint="@color/checkbox_filter_tint" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

@@ -50,8 +50,7 @@ class MainResinFragment : BindingFragment<FragmentResinBinding>() {
             mVM.lvCustomNotiResin.value = PreferenceManager.getIntCustomTargetResin(it).let { int ->
                 if (int == -1) "0" else int.toString()
             }
-            mVM.lvEnableNotiExpeditionDone.value =
-                PreferenceManager.getBooleanNotiExpeditionDone(it)
+            mVM.lvEnableNotiExpeditionDone.value = PreferenceManager.getBooleanNotiExpeditionDone(it)
             mVM.lvEnableNotiHomeCoinFull.value = PreferenceManager.getBooleanNotiHomeCoinFull(it)
 
             when (mVM.lvServer.value) {
