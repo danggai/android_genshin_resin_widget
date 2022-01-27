@@ -145,9 +145,6 @@ object Constant {
     const val PREF_WIDGET_RESIN_IMAGE_VISIBLE = 0
     const val PREF_WIDGET_RESIN_IMAGE_INVISIBLE = 1
 
-    const val PREF_WIDGET_DATA_VISIBLE = 0
-    const val PREF_WIDGET_DATA_INVISIBLE = 1
-
 
 
 

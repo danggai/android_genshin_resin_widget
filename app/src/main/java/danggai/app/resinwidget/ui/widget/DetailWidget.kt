@@ -104,6 +104,7 @@ class DetailWidget : AppWidgetProvider() {
         views.setOnClickPendingIntent(R.id.iv_resin, PendingIntent.getActivity(context, 0, intentMainActivity, 0))
         views.setOnClickPendingIntent(R.id.iv_daily_commission, PendingIntent.getActivity(context, 0, intentMainActivity, 0))
         views.setOnClickPendingIntent(R.id.iv_domain, PendingIntent.getActivity(context, 0, intentMainActivity, 0))
+        views.setOnClickPendingIntent(R.id.iv_serenitea_pot, PendingIntent.getActivity(context, 0, intentMainActivity, 0))
         views.setOnClickPendingIntent(R.id.iv_warp, PendingIntent.getActivity(context, 0, intentMainActivity, 0))
         views.setOnClickPendingIntent(R.id.ll_disable, PendingIntent.getActivity(context, 0, intentMainActivity, 0))
 
@@ -156,8 +157,16 @@ class DetailWidget : AppWidgetProvider() {
                 view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToTime(_context, PreferenceManager.getStringExpeditionTime(_context)))
 
                 view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getStringRecentSyncTime(_context))
-            }
 
+                view.setViewVisibility(R.id.rl_resin, if (PreferenceManager.getBooleanWidgetResinDataVisibility(context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_resin_time, if (PreferenceManager.getBooleanWidgetResinDataVisibility(context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_daily_commission, if (PreferenceManager.getBooleanWidgetDailyCommissionDataVisibility(context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_weekly_boss, if (PreferenceManager.getBooleanWidgetWeeklyBossDataVisibility(context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_realm_currency, if (PreferenceManager.getBooleanWidgetRealmCurrencyDataVisibility(context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_realm_currency_time, if (PreferenceManager.getBooleanWidgetRealmCurrencyDataVisibility(context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_expedition, if (PreferenceManager.getBooleanWidgetExpeditionDataVisibility(context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_expedition_time, if (PreferenceManager.getBooleanWidgetExpeditionDataVisibility(context)) View.VISIBLE else View.GONE)
+            }
         }
     }
 

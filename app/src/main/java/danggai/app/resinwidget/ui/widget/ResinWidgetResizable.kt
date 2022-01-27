@@ -134,7 +134,7 @@ class ResinWidgetResizable : AppWidgetProvider() {
 
                 view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getStringRecentSyncTime(_context))
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.iv_resin, if (PreferenceManager.getIntWidgetResinImageVisibility(context) == 1) View.GONE else View.VISIBLE)
+                view.setViewVisibility(R.id.iv_resin, if (PreferenceManager.getIntWidgetResinImageVisibility(context) == Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE) View.GONE else View.VISIBLE)
                 view.setViewVisibility(R.id.ll_resin, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_disable, View.GONE)
             }
