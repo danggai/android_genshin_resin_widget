@@ -19,6 +19,14 @@
     <option name="pathToUserRulesConfiguration" value="" />
     <option name="pathToJarWithRules" value="" />
   </component>
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/donggi9313/Downloads/git/android_genshin_resin_widget/app/src/main/res/layout/fragment_resin.xml" value="0.2708333333333333" />
+        <entry key="..\:/donggi9313/Downloads/git/android_genshin_resin_widget/app/src/main/res/layout/fragment_widget_design.xml" value="0.2708333333333333" />
+      </map>
+    </option>
+  </component>
   <component name="FindBugsConfigurable">
     <option name="make" value="true" />
     <option name="effort" value="default" />
