@@ -52,9 +52,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             >
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="15dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_blue_200"
+                android:layout_marginVertical="10dp"
+                />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"

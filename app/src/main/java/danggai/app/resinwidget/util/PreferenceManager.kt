@@ -320,11 +320,18 @@ object PreferenceManager {
         setLong(context, Constant.PREF_AUTO_REFRESH_PERIOD, value)
     }
 
-    fun getIntTimeNotation(context: Context): Int {
-        return getInt(context, Constant.PREF_TIME_NOTATION)
+    fun getIntResinTimeNotation(context: Context): Int {
+        return getInt(context, Constant.PREF_RESIN_TIME_NOTATION)
     }
-    fun setIntTimeNotation(context: Context, value: Int) {
-        setInt(context, Constant.PREF_TIME_NOTATION, value)
+    fun setIntResinTimeNotation(context: Context, value: Int) {
+        setInt(context, Constant.PREF_RESIN_TIME_NOTATION, value)
+    }
+
+    fun getIntDetailTimeNotation(context: Context): Int {
+        return getInt(context, Constant.PREF_DETAIL_TIME_NOTATION)
+    }
+    fun setIntDetailTimeNotation(context: Context, value: Int) {
+        setInt(context, Constant.PREF_DETAIL_TIME_NOTATION, value)
     }
 
     fun getIntWidgetTheme(context: Context): Int {

@@ -12,6 +12,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.work.*
+import com.google.android.gms.common.internal.Preconditions.checkArgument
 import com.google.firebase.crashlytics.CustomKeysAndValues
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import danggai.app.resinwidget.BuildConfig
@@ -19,7 +20,6 @@ import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.data.local.DailyNote
 import danggai.app.resinwidget.worker.RefreshWorker
-import java.lang.NumberFormatException
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
@@ -183,6 +183,41 @@ object CommonFunction {
             return String.format(context.getString(R.string.widget_ui_max_time), cal.get(Calendar.HOUR_OF_DAY), minute)
         } catch (e: NumberFormatException) {
             return context.getString(R.string.widget_ui_max_time_resin_max)
+        }
+    }
+
+    fun secondToTime(context: Context, second: String, includeDate: Boolean): String {
+        val cal = Calendar.getInstance()
+        val date= Date()
+        cal.time = date
+
+        try {
+            if (second.toInt() == 0)
+                return context.getString(R.string.widget_ui_max_time_resin_max)
+
+            if (second.toInt() > 144000 || second.toInt() < -144000)
+                return String.format(context.getString(R.string.widget_ui_time), cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE))
+
+            cal.add(Calendar.SECOND, second.toInt())
+
+            val minute = String.format("%02d", cal.get(Calendar.MINUTE))
+
+            return if (includeDate) String.format(context.getString(R.string.widget_ui_date), getDayWithMonthSuffix(context, cal.get(Calendar.DATE)), cal.get(Calendar.HOUR_OF_DAY), minute)
+            else String.format(context.getString(R.string.widget_ui_time), cal.get(Calendar.HOUR_OF_DAY), minute)
+        } catch (e: NumberFormatException) {
+            return context.getString(R.string.widget_ui_max_time_resin_max)
+        }
+    }
+
+    fun getDayWithMonthSuffix(context: Context, n: Int): String {
+        checkArgument(n in 1..31, "illegal day of month: $n")
+        return if (n in 11..13) {
+            n.toString() + context.getString(R.string.date_th)
+        } else when (n % 10) {
+            1 -> n.toString() + context.getString(R.string.date_st)
+            2 -> n.toString() + context.getString(R.string.date_nd)
+            3 -> n.toString() + context.getString(R.string.date_rd)
+            else -> n.toString() + context.getString(R.string.date_th)
         }
     }
 

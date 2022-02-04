@@ -24,6 +24,10 @@
       <map>
         <entry key="..\:/donggi9313/Downloads/git/android_genshin_resin_widget/app/src/main/res/layout/fragment_resin.xml" value="0.2708333333333333" />
         <entry key="..\:/donggi9313/Downloads/git/android_genshin_resin_widget/app/src/main/res/layout/fragment_widget_design.xml" value="0.2708333333333333" />
+        <entry key="..\:/donggi9313/Downloads/git/android_genshin_resin_widget/app/src/main/res/layout/fragment_widget_design_detail.xml" value="0.3630769230769231" />
+        <entry key="..\:/donggi9313/Downloads/git/android_genshin_resin_widget/app/src/main/res/layout/fragment_widget_design_resin.xml" value="0.3630769230769231" />
+        <entry key="..\:/donggi9313/Downloads/git/android_genshin_resin_widget/app/src/main/res/layout/widget_detail_fixed.xml" value="0.35833333333333334" />
+        <entry key="..\:/donggi9313/Downloads/git/android_genshin_resin_widget/app/src/main/res/layout/widget_resin_fixed.xml" value="0.3630769230769231" />
       </map>
     </option>
   </component>

@@ -4,21 +4,14 @@ import android.app.WallpaperManager
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat.getColor
-import androidx.core.graphics.ColorUtils
-import androidx.core.graphics.drawable.DrawableCompat
 import com.google.android.material.tabs.TabLayoutMediator
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.FragmentWidgetDesignBinding
 import danggai.app.resinwidget.ui.BindingFragment
-import danggai.app.resinwidget.ui.design.checkin.WidgetDesignFragmentDetail
+import danggai.app.resinwidget.ui.design.detail.WidgetDesignFragmentDetail
 import danggai.app.resinwidget.ui.design.resin.WidgetDesignFragmentResin
 import danggai.app.resinwidget.ui.main.MainAdapter
-import danggai.app.resinwidget.ui.main.checkin.MainCheckInFragment
-import danggai.app.resinwidget.ui.main.resin.MainResinFragment
-import danggai.app.resinwidget.util.CommonFunction.isDarkMode
 import danggai.app.resinwidget.util.EventObserver
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
@@ -100,7 +93,8 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
                 PreferenceManager.setIntWidgetTheme(_context, mVM.lvWidgetTheme.value)
                 PreferenceManager.setIntWidgetResinImageVisibility(_context, mVM.lvResinImageVisibility.value)
                 PreferenceManager.setIntBackgroundTransparency(_context, mVM.lvTransparency.value)
-                PreferenceManager.setIntTimeNotation(_context, mVM.lvTimeNotation.value)
+                PreferenceManager.setIntResinTimeNotation(_context, mVM.lvResinTimeNotation.value)
+                PreferenceManager.setIntDetailTimeNotation(_context, mVM.lvDetailTimeNotation.value)
 
                 PreferenceManager.setBooleanWidgetResinDataVisibility(_context, mVM.lvResinDataVisibility.value)
                 PreferenceManager.setBooleanWidgetDailyCommissionDataVisibility(_context, mVM.lvDailyCommissionDataVisibility.value)

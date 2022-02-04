@@ -126,7 +126,7 @@ class ResinWidgetResizable : AppWidgetProvider() {
                 view.setTextViewText(R.id.tv_resin, PreferenceManager.getIntCurrentResin(_context).toString())
                 view.setTextViewText(R.id.tv_resin_max, "/"+PreferenceManager.getIntMaxResin(_context).toString())
 
-                when (PreferenceManager.getIntTimeNotation(_context)) {
+                when (PreferenceManager.getIntResinTimeNotation(_context)) {
                     Constant.PREF_TIME_NOTATION_REMAIN_TIME -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringResinRecoveryTime(_context)))
                     Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToFullChargeTime(_context, PreferenceManager.getStringResinRecoveryTime(_context)))
                     else -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringResinRecoveryTime(_context)))

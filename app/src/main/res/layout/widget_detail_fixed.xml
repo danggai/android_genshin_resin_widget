@@ -110,17 +110,16 @@
                 >
 
                 <TextView
-                    style="@style/TextView"
                     android:id="@+id/tv_resin_time_title"
+                    style="@style/TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/until_fully_replenished"
-                    android:textSize="12sp"
-                    android:textColor="@color/widget_font_main"
                     android:layout_alignParentLeft="true"
-                    android:singleLine="true"
                     android:layout_marginLeft="18dp"
-                    />
+                    android:singleLine="true"
+                    android:text="@string/until_fully_replenished"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
 
                 <TextView
                     style="@style/TextView"
@@ -359,17 +358,16 @@
                 >
 
                 <TextView
-                    style="@style/TextView"
                     android:id="@+id/tv_expedition_time_title"
+                    style="@style/TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/until_all_completed"
-                    android:textSize="12sp"
-                    android:textColor="@color/widget_font_main"
                     android:layout_alignParentLeft="true"
-                    android:singleLine="true"
                     android:layout_marginLeft="18dp"
-                    />
+                    android:singleLine="true"
+                    android:text="@string/until_all_completed"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
 
                 <TextView
                     style="@style/TextView"

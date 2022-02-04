@@ -46,6 +46,10 @@
 
     <string name="done">Done</string>
 
+    <string name="date_st">st</string>
+    <string name="date_nd">nd</string>
+    <string name="date_rd">rd</string>
+    <string name="date_th">th</string>
 
     <string name="permission_accept">Permission Accept</string>
     <string name="data_save_mode_disable">Data Save Mode Disable</string>
@@ -154,14 +158,18 @@
     <string name="widget_ui_simple_time">%sh %sm</string>
     <string name="widget_ui_remain_time">%sh %sm left</string>
     <string name="widget_ui_max_time">Full at %s:%s</string>
+    <string name="widget_ui_time">%s:%s</string>
+    <string name="widget_ui_date">%s, %s:%s</string>
     <string name="widget_ui_max_time_resin_max">Already full</string>
 
     <string name="until_fully_replenished">Until Fully Replenished</string>
+    <string name="when_fully_replenished">When Fully Replenished</string>
     <string name="daily_commissions">Daily Commissions</string>
     <string name="enemies_of_note">Enemies Of Note</string>
     <string name="number_of_expedition">Number Of Expedition</string>
     <string name="realm_currency">Realm Currency</string>
     <string name="until_all_completed">Until All Completed</string>
+    <string name="estimated_completion_time">Estimated Completion Time</string>
 
     <string name="foreground_genshin_check_in_progress">HoYoLAB Genshin Check-in progressing</string>
 
@@ -171,5 +179,4 @@
 
     <string name="google_ads_test_app_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="google_ads_test_banner_id">ca-app-pub-3940256099942544/6300978111</string>
-
 </resources>

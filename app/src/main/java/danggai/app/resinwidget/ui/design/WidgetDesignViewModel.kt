@@ -15,7 +15,8 @@ class WidgetDesignViewModel(override val app: Application, private val api: ApiR
 
     var lvWidgetTheme: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_WIDGET_THEME_AUTOMATIC)
     var lvResinImageVisibility: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE)
-    var lvTimeNotation: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
+    var lvResinTimeNotation: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
+    var lvDetailTimeNotation: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
 
     var lvResinDataVisibility: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(true)
     var lvDailyCommissionDataVisibility: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(true)
@@ -52,10 +53,18 @@ class WidgetDesignViewModel(override val app: Application, private val api: ApiR
         }
     }
 
-
-    fun onClickSetTimeNotation(view: View) {
+    fun onClickSetResinTimeNotation(view: View) {
         log.e()
-        lvTimeNotation.value = when (view.id) {
+        lvResinTimeNotation.value = when (view.id) {
+            R.id.rb_remain_time -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
+            R.id.rb_full_charge_time -> Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME
+            else -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
+        }
+    }
+
+    fun onClickSetDetailTimeNotation(view: View) {
+        log.e()
+        lvDetailTimeNotation.value = when (view.id) {
             R.id.rb_remain_time -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
             R.id.rb_full_charge_time -> Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME
             else -> Constant.PREF_TIME_NOTATION_REMAIN_TIME

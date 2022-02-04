@@ -1,6 +1,5 @@
-package danggai.app.resinwidget.ui.design.checkin
+package danggai.app.resinwidget.ui.design.detail
 
-import android.app.WallpaperManager
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
@@ -14,7 +13,6 @@ import danggai.app.resinwidget.databinding.FragmentWidgetDesignDetailBinding
 import danggai.app.resinwidget.ui.BindingFragment
 import danggai.app.resinwidget.ui.design.WidgetDesignViewModel
 import danggai.app.resinwidget.util.CommonFunction.isDarkMode
-import danggai.app.resinwidget.util.EventObserver
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -55,16 +53,24 @@ class WidgetDesignFragmentDetail : BindingFragment<FragmentWidgetDesignDetailBin
         }
 
         context?.let {
+            mVM.lvDetailTimeNotation.value = PreferenceManager.getIntDetailTimeNotation(it)
+
             mVM.lvResinDataVisibility.value = PreferenceManager.getBooleanWidgetResinDataVisibility(it)
             mVM.lvDailyCommissionDataVisibility.value = PreferenceManager.getBooleanWidgetDailyCommissionDataVisibility(it)
             mVM.lvWeeklyBossDataVisibility.value = PreferenceManager.getBooleanWidgetWeeklyBossDataVisibility(it)
             mVM.lvRealmCurrencyDataVisibility.value = PreferenceManager.getBooleanWidgetRealmCurrencyDataVisibility(it)
             mVM.lvExpeditionDataVisibility.value = PreferenceManager.getBooleanWidgetExpeditionDataVisibility(it)
+
+            when(mVM.lvDetailTimeNotation.value) {
+                Constant.PREF_TIME_NOTATION_REMAIN_TIME -> binding.rbRemainTime.isChecked = true
+                Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked = true
+                else -> binding.rbRemainTime.isChecked = true
+            }
         }
     }
 
     private fun initLv() {
-        mVM.lvTransparency.observe(viewLifecycleOwner, {
+        mVM.lvTransparency.observe(viewLifecycleOwner) {
             context?.let { _context ->
                 log.e()
                 val unwrappedDrawable = AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
@@ -78,9 +84,9 @@ class WidgetDesignFragmentDetail : BindingFragment<FragmentWidgetDesignDetailBin
 
                 binding.widget.llRoot.background = wrappedDrawable
             }
-        })
+        }
 
-        mVM.lvWidgetTheme.observe(viewLifecycleOwner, {
+        mVM.lvWidgetTheme.observe(viewLifecycleOwner) {
             context?.let { _context ->
                 log.e()
                 val unwrappedDrawable = AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
@@ -134,35 +140,57 @@ class WidgetDesignFragmentDetail : BindingFragment<FragmentWidgetDesignDetailBin
 
                 binding.widget.llRoot.background = wrappedDrawable
             }
-        })
+        }
 
-        mVM.lvResinDataVisibility.observe(viewLifecycleOwner, {
+        mVM.lvDetailTimeNotation.observe(viewLifecycleOwner) {
+            context?.let { _context ->
+                log.e()
+
+                if (mVM.lvDetailTimeNotation.value == Constant.PREF_TIME_NOTATION_REMAIN_TIME) {
+                    binding.widget.tvResinTimeTitle.text = _context.getString(R.string.until_fully_replenished)
+                    binding.widget.tvResinTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
+                    binding.widget.tvRealmCurrencyTimeTitle.text = _context.getString(R.string.until_fully_replenished)
+                    binding.widget.tvRealmCurrencyTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
+                    binding.widget.tvExpeditionTimeTitle.text = _context.getString(R.string.until_all_completed)
+                    binding.widget.tvExpeditionTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
+                } else {
+                    binding.widget.tvResinTimeTitle.text = _context.getString(R.string.when_fully_replenished)
+                    binding.widget.tvResinTime.text = String.format(getString(R.string.widget_ui_time), 0, 0)
+                    binding.widget.tvRealmCurrencyTimeTitle.text = _context.getString(R.string.when_fully_replenished)
+                    binding.widget.tvRealmCurrencyTime.text = String.format(getString(R.string.widget_ui_date), "1"+getString(R.string.date_st), 0, 0)
+                    binding.widget.tvExpeditionTimeTitle.text = _context.getString(R.string.estimated_completion_time)
+                    binding.widget.tvExpeditionTime.text = String.format(getString(R.string.widget_ui_time), 0, 0)
+                }
+            }
+        }
+
+        mVM.lvResinDataVisibility.observe(viewLifecycleOwner) {
             log.e()
             binding.widget.rlResin.visibility = if (it) View.VISIBLE else View.GONE
             binding.widget.rlResinTime.visibility = if (it) View.VISIBLE else View.GONE
-        })
+        }
 
-        mVM.lvDailyCommissionDataVisibility.observe(viewLifecycleOwner, {
+        mVM.lvDailyCommissionDataVisibility.observe(viewLifecycleOwner) {
             log.e()
             binding.widget.rlDailyCommission.visibility = if (it) View.VISIBLE else View.GONE
-        })
+        }
 
-        mVM.lvWeeklyBossDataVisibility.observe(viewLifecycleOwner, {
+        mVM.lvWeeklyBossDataVisibility.observe(viewLifecycleOwner) {
             log.e()
             binding.widget.rlWeeklyBoss.visibility = if (it) View.VISIBLE else View.GONE
-        })
+        }
 
-        mVM.lvRealmCurrencyDataVisibility.observe(viewLifecycleOwner, {
+        mVM.lvRealmCurrencyDataVisibility.observe(viewLifecycleOwner) {
             log.e()
             binding.widget.rlRealmCurrency.visibility = if (it) View.VISIBLE else View.GONE
             binding.widget.rlRealmCurrencyTime.visibility = if (it) View.VISIBLE else View.GONE
-        })
+        }
 
-        mVM.lvExpeditionDataVisibility.observe(viewLifecycleOwner, {
+        mVM.lvExpeditionDataVisibility.observe(viewLifecycleOwner) {
             log.e()
             binding.widget.rlExpedition.visibility = if (it) View.VISIBLE else View.GONE
             binding.widget.rlExpeditionTime.visibility = if (it) View.VISIBLE else View.GONE
-        })
+        }
 
     }
 }

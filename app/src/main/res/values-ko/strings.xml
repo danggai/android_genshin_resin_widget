@@ -46,7 +46,10 @@
 
     <string name="done">완료</string>
 
-
+    <string name="date_st">일</string>
+    <string name="date_nd">일</string>
+    <string name="date_rd">일</string>
+    <string name="date_th">일</string>
 
     <string name="permission_accept">권한 허용</string>
     <string name="data_save_mode_disable">데이터 절약 모드 해제</string>
@@ -155,14 +158,18 @@
     <string name="widget_ui_simple_time">%s시간 %s분</string>
     <string name="widget_ui_remain_time">%s시간 %s분 남음</string>
     <string name="widget_ui_max_time">%s시 %s분에 가득 참</string>
+    <string name="widget_ui_time">%s시 %s분</string>
+    <string name="widget_ui_date">%s %s시 %s분</string>
     <string name="widget_ui_max_time_resin_max">이미 가득 참</string>
 
     <string name="until_fully_replenished">전부 충전까지</string>
+    <string name="when_fully_replenished">완충 예정 시각</string>
     <string name="daily_commissions">남은 일일 의뢰</string>
     <string name="enemies_of_note">남은 주간 보스</string>
     <string name="number_of_expedition">탐사 진행 수</string>
     <string name="realm_currency">선계 주화</string>
     <string name="until_all_completed">모두 완료까지</string>
+    <string name="estimated_completion_time">예상 완료 시간</string>
 
     <string name="foreground_genshin_check_in_progress">호요랩 원신 출석체크 진행 중</string>
 

@@ -138,10 +138,10 @@ class DetailWidget : AppWidgetProvider() {
                 val dailyNote = CommonFunction.getDailyNoteData(_context)
 
                 view.setTextViewText(R.id.tv_resin, dailyNote.current_resin.toString()+"/"+dailyNote.max_resin.toString())
-                view.setTextViewText(R.id.tv_resin_time, CommonFunction.secondToTime(_context, dailyNote.resin_recovery_time.toString()))
+//                view.setTextViewText(R.id.tv_resin_time, CommonFunction.secondToTime(_context, dailyNote.resin_recovery_time.toString()))
 
                 view.setTextViewText(R.id.tv_daily_commission,
-                    if (dailyNote.is_extra_task_reward_received) { context.getString(R.string.done) }
+                    if (dailyNote.is_extra_task_reward_received) { _context.getString(R.string.done) }
                     else { (dailyNote.total_task_num - dailyNote.finished_task_num).toString()+"/"+dailyNote.total_task_num.toString() }
                 )
 
@@ -151,21 +151,51 @@ class DetailWidget : AppWidgetProvider() {
                 )
 
                 view.setTextViewText(R.id.tv_realm_currency, (dailyNote.current_home_coin?:0).toString()+"/"+(dailyNote.max_home_coin?:0).toString())
-                view.setTextViewText(R.id.tv_realm_currency_time, CommonFunction.secondToTime(_context, PreferenceManager.getStringHomeCoinRecoveryTime(_context)))
 
                 view.setTextViewText(R.id.tv_expedition, dailyNote.current_expedition_num.toString()+"/"+dailyNote.max_expedition_num.toString())
-                view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToTime(_context, PreferenceManager.getStringExpeditionTime(_context)))
 
                 view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getStringRecentSyncTime(_context))
 
-                view.setViewVisibility(R.id.rl_resin, if (PreferenceManager.getBooleanWidgetResinDataVisibility(context)) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_resin_time, if (PreferenceManager.getBooleanWidgetResinDataVisibility(context)) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_daily_commission, if (PreferenceManager.getBooleanWidgetDailyCommissionDataVisibility(context)) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_weekly_boss, if (PreferenceManager.getBooleanWidgetWeeklyBossDataVisibility(context)) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_realm_currency, if (PreferenceManager.getBooleanWidgetRealmCurrencyDataVisibility(context)) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_realm_currency_time, if (PreferenceManager.getBooleanWidgetRealmCurrencyDataVisibility(context)) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_expedition, if (PreferenceManager.getBooleanWidgetExpeditionDataVisibility(context)) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_expedition_time, if (PreferenceManager.getBooleanWidgetExpeditionDataVisibility(context)) View.VISIBLE else View.GONE)
+
+                when (PreferenceManager.getIntDetailTimeNotation(_context)) {
+                    Constant.PREF_TIME_NOTATION_REMAIN_TIME -> {
+                        log.e()
+                        view.setTextViewText(R.id.tv_resin_time_title, _context.getString(R.string.until_fully_replenished))
+                        view.setTextViewText(R.id.tv_resin_time, CommonFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time.toString()))
+                        view.setTextViewText(R.id.tv_realm_currency_time_title, _context.getString(R.string.until_fully_replenished))
+                        view.setTextViewText(R.id.tv_realm_currency_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringHomeCoinRecoveryTime(_context)))
+                        view.setTextViewText(R.id.tv_expedition_time_title, _context.getString(R.string.until_all_completed))
+                        view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringExpeditionTime(_context)))
+                    }
+                    Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
+                        log.e()
+                        view.setTextViewText(R.id.tv_resin_time_title, _context.getString(R.string.when_fully_replenished))
+                        view.setTextViewText(R.id.tv_resin_time, CommonFunction.secondToTime(_context, dailyNote.resin_recovery_time.toString(), false))
+                        view.setTextViewText(R.id.tv_realm_currency_time_title, _context.getString(R.string.when_fully_replenished))
+                        view.setTextViewText(R.id.tv_realm_currency_time, CommonFunction.secondToTime(_context, PreferenceManager.getStringHomeCoinRecoveryTime(_context), true))
+                        view.setTextViewText(R.id.tv_resin_time_title, _context.getString(R.string.when_fully_replenished))
+                        view.setTextViewText(R.id.tv_expedition_time_title, _context.getString(R.string.estimated_completion_time))
+                        view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToTime(_context, PreferenceManager.getStringExpeditionTime(_context), false))
+                    }
+                    else -> {
+                        log.e()
+                        view.setTextViewText(R.id.tv_resin_time_title, _context.getString(R.string.until_fully_replenished))
+                        view.setTextViewText(R.id.tv_resin_time, CommonFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time.toString()))
+                        view.setTextViewText(R.id.tv_realm_currency_time_title, _context.getString(R.string.until_fully_replenished))
+                        view.setTextViewText(R.id.tv_realm_currency_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringHomeCoinRecoveryTime(_context)))
+                        view.setTextViewText(R.id.tv_expedition_time_title, _context.getString(R.string.until_all_completed))
+                        view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringExpeditionTime(_context)))
+                    }
+                }
+
+                view.setViewVisibility(R.id.rl_resin, if (PreferenceManager.getBooleanWidgetResinDataVisibility(_context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_resin_time, if (PreferenceManager.getBooleanWidgetResinDataVisibility(_context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_daily_commission, if (PreferenceManager.getBooleanWidgetDailyCommissionDataVisibility(_context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_weekly_boss, if (PreferenceManager.getBooleanWidgetWeeklyBossDataVisibility(_context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_realm_currency, if (PreferenceManager.getBooleanWidgetRealmCurrencyDataVisibility(_context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_realm_currency_time, if (PreferenceManager.getBooleanWidgetRealmCurrencyDataVisibility(_context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_expedition, if (PreferenceManager.getBooleanWidgetExpeditionDataVisibility(_context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_expedition_time, if (PreferenceManager.getBooleanWidgetExpeditionDataVisibility(_context)) View.VISIBLE else View.GONE)
             }
         }
     }
