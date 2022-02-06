@@ -40,6 +40,13 @@ class CheckInForegroundService() : Service() {
 
     override fun onCreate() {
         super.onCreate()
+
+        if (!PreferenceManager.getBooleanEnableAutoCheckIn(applicationContext)) {
+            log.e()
+            onDestroy()
+            return
+        }
+
         rxApiCheckIn.onNext(true)
     }
 
@@ -135,6 +142,7 @@ class CheckInForegroundService() : Service() {
 
     override fun onDestroy() {
         stopForeground(true)
+        super.onDestroy()
     }
 
     private var iconNotification: Bitmap? = null

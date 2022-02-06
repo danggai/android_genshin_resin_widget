@@ -35,8 +35,6 @@ class CheckInReceiver : BroadcastReceiver() {
             val startCalendar = Calendar.getInstance()
             val targetCalendar = Calendar.getInstance()
 
-            if (pendingIntent != null) { log.d("Alarm is already active") } else { log.d("Alarm is inactive") }
-
             targetCalendar.timeZone = TimeZone.getTimeZone(Constant.CHINA_TIMEZONE)
             targetCalendar.set(Calendar.MINUTE, 1)
             targetCalendar.set(Calendar.HOUR, 0)
@@ -71,7 +69,7 @@ class CheckInReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
-        if (!PreferenceManager.getBooleanNotiCheckInSuccess(context)) return
+        if (!PreferenceManager.getBooleanEnableAutoCheckIn(context)) return
 
         if (intent.action.equals("android.intent.action.BOOT_COMPLETED") ||
                 intent.action.equals("android.intent.action.LOCKED_BOOT_COMPLETED")) {
