@@ -32,6 +32,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     var lvStartCheckInAlarm = MutableLiveData<Event<Boolean>>()
     var lvStartWidgetDesignActivity = MutableLiveData<Event<Boolean>>()
     var lvStartForegroundService = MutableLiveData<Event<Boolean>>()
+    var lvChangeLanguage = MutableLiveData<Event<Boolean>>()
 
     var lvServer: NonNullMutableLiveData<Int> = NonNullMutableLiveData(0)
     var lvAutoRefreshPeriod: NonNullMutableLiveData<Long> = NonNullMutableLiveData(15L)
@@ -420,6 +421,11 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     private fun setProgress(boolean: Boolean) {
         log.e()
         lvSetProgress.value = Event(boolean)
+    }
+
+    fun onClickChangeLanguage() {
+        log.e()
+        lvChangeLanguage.value = Event(true)
     }
 
 

@@ -3,6 +3,7 @@ package danggai.app.resinwidget.util
 import android.content.Context
 import android.content.SharedPreferences
 import danggai.app.resinwidget.Constant
+import java.util.*
 
 
 object PreferenceManager {
@@ -90,6 +91,10 @@ object PreferenceManager {
     fun getString(context: Context, key: String?): String {
         val prefs = getPreferences(context)
         return prefs.getString(key, DEFAULT_VALUE_STRING)?:DEFAULT_VALUE_STRING
+    }
+    fun getString(context: Context, key: String?, default: String): String {
+        val prefs = getPreferences(context)
+        return prefs.getString(key, default)?:default
     }
 
     /**
@@ -462,5 +467,11 @@ object PreferenceManager {
         setBoolean(context, Constant.PREF_NOTI_CHECK_IN_FAILED, value)
     }
 
+    fun getStringLocale(context: Context): String {
+        return getString(context, Constant.PREF_LOCALE, Locale.getDefault().language)
+    }
+    fun setStringLocale(context: Context, value: String) {
+        setString(context, Constant.PREF_LOCALE, value)
+    }
 
 }

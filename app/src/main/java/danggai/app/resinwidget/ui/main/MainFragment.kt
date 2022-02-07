@@ -1,6 +1,7 @@
 package danggai.app.resinwidget.ui.main
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -25,12 +26,10 @@ import danggai.app.resinwidget.ui.cookie_web_view.CookieWebViewActivity
 import danggai.app.resinwidget.ui.design.WidgetDesignActivity
 import danggai.app.resinwidget.ui.main.checkin.MainCheckInFragment
 import danggai.app.resinwidget.ui.main.resin.MainResinFragment
-import danggai.app.resinwidget.util.CommonFunction
+import danggai.app.resinwidget.util.*
 import danggai.app.resinwidget.util.CommonFunction.setDailyNoteData
-import danggai.app.resinwidget.util.EventObserver
-import danggai.app.resinwidget.util.PreferenceManager
-import danggai.app.resinwidget.util.log
 import org.koin.androidx.viewmodel.ext.android.getViewModel
+import java.util.*
 
 
 class MainFragment : BindingFragment<FragmentMainBinding>() {
@@ -76,7 +75,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
 
         binding.vpMain.adapter = pagerAdapter
 
-        TabLayoutMediator(binding.tlBottom, binding.vpMain) { tab, position ->
+        TabLayoutMediator(binding.tlTop, binding.vpMain) { tab, position ->
             tab.text = when (position) {
                 0 -> "Resin Widget"
                 1 -> "HoYoLAB Check In"
@@ -318,6 +317,27 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
                 } else {
                     _context.startService(Intent(context, CheckInForegroundService::class.java))
                 }
+            }
+        })
+
+        mVM.lvChangeLanguage.observe(viewLifecycleOwner, EventObserver {
+            log.e()
+            activity?.let {
+                val builder = AlertDialog.Builder(it)
+                builder.setTitle("Select Language")
+                    .setItems(arrayOf("English", "한국어"),
+                        DialogInterface.OnClickListener { dialog, which ->
+                            log.e(which)
+                            val locale: String = when (which) {
+                                0 -> "en"
+                                1 -> "ko"
+                                else -> Locale.getDefault().language
+                            }
+
+                            PreferenceManager.setStringLocale(it.baseContext, locale)
+                            it.recreate()
+                        })
+                builder.show()
             }
         })
     }

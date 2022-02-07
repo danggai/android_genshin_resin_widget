@@ -129,6 +129,8 @@ object Constant {
     const val PREF_NOTI_CHECK_IN_SUCCESS = "PREF_NOTI_CHECK_IN_SUCCESS"
     const val PREF_NOTI_CHECK_IN_FAILED = "PREF_NOTI_CHECK_IN_FAILED"
 
+    const val PREF_LOCALE = "PREF_LOCALE"
+
     const val PREF_DEFAULT_REFRESH_PERIOD = 15L
 
     const val PREF_SERVER_ASIA = 0

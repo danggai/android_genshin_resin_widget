@@ -1,6 +1,7 @@
 package danggai.app.resinwidget.ui.design
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -9,6 +10,7 @@ import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.ActivityWidgetDesignBinding
 import danggai.app.resinwidget.ui.BindingActivity
+import danggai.app.resinwidget.util.LocaleWrapper
 import danggai.app.resinwidget.util.log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.BehaviorSubject

@@ -70,8 +70,8 @@ class CheckInForegroundService() : Service() {
                                 if (PreferenceManager.getBooleanNotiCheckInSuccess(applicationContext)) {
                                     log.e()
                                     sendNoti(Constant.NOTI_TYPE_CHECK_IN_SUCCESS)
-                                    CheckInReceiver.setAlarmRepeatly(applicationContext)
                                 }
+                                CheckInReceiver.setAlarmRepeatly(applicationContext)
                             }
                             Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
                             Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> {
@@ -79,8 +79,8 @@ class CheckInForegroundService() : Service() {
                                 if (PreferenceManager.getBooleanNotiCheckInSuccess(applicationContext)) {
                                     log.e()
                                     sendNoti(Constant.NOTI_TYPE_CHECK_IN_ALREADY)
-                                    CheckInReceiver.setAlarmRepeatly(applicationContext)
                                 }
+                                CheckInReceiver.setAlarmRepeatly(applicationContext)
                             }
                             else -> {
                                 log.e()
@@ -100,7 +100,6 @@ class CheckInForegroundService() : Service() {
                             sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                         }
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, null)
-                        applicationContext.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
                         CheckInReceiver.setAlarmOneShot(applicationContext)
                     }
                 }
@@ -108,11 +107,9 @@ class CheckInForegroundService() : Service() {
                 stopForeground(true)
             }, {
                 it.message?.let { msg ->
-                    applicationContext.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
-
-                    stopForeground(true)
                     log.e(msg)
                 }
+                stopForeground(true)
             })
             .addCompositeDisposable()
     }

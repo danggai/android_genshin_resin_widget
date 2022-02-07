@@ -14,8 +14,10 @@ import danggai.app.resinwidget.R
 import danggai.app.resinwidget.ui.main.MainActivity
 import danggai.app.resinwidget.util.CommonFunction
 import danggai.app.resinwidget.util.CommonFunction.isDarkMode
+import danggai.app.resinwidget.util.LocaleWrapper
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
+import java.util.*
 
 
 class DetailWidget : AppWidgetProvider() {
@@ -23,6 +25,12 @@ class DetailWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         log.e()
+
+        val sLocale = Locale(PreferenceManager.getStringLocale(context))
+
+        val res = context.resources
+        val config = res.configuration
+        config.setLocale(sLocale)
 
         appWidgetIds.forEach { appWidgetId ->
             val views: RemoteViews = addViews(context)
@@ -137,21 +145,25 @@ class DetailWidget : AppWidgetProvider() {
 
                 val dailyNote = CommonFunction.getDailyNoteData(_context)
 
+                view.setTextViewText(R.id.tv_resin_title, _context.getString(R.string.resin))
                 view.setTextViewText(R.id.tv_resin, dailyNote.current_resin.toString()+"/"+dailyNote.max_resin.toString())
-//                view.setTextViewText(R.id.tv_resin_time, CommonFunction.secondToTime(_context, dailyNote.resin_recovery_time.toString()))
 
+                view.setTextViewText(R.id.tv_daily_commission_title, _context.getString(R.string.daily_commissions))
                 view.setTextViewText(R.id.tv_daily_commission,
                     if (dailyNote.is_extra_task_reward_received) { _context.getString(R.string.done) }
                     else { (dailyNote.total_task_num - dailyNote.finished_task_num).toString()+"/"+dailyNote.total_task_num.toString() }
                 )
 
+                view.setTextViewText(R.id.tv_weekly_boss_title, _context.getString(R.string.enemies_of_note))
                 view.setTextViewText(R.id.tv_weekly_boss,
                     if (dailyNote.remain_resin_discount_num == 0) { context.getString(R.string.done) }
                     else { dailyNote.remain_resin_discount_num.toString()+"/"+dailyNote.resin_discount_num_limit.toString() }
                 )
 
+                view.setTextViewText(R.id.tv_realm_currency_title, _context.getString(R.string.realm_currency))
                 view.setTextViewText(R.id.tv_realm_currency, (dailyNote.current_home_coin?:0).toString()+"/"+(dailyNote.max_home_coin?:0).toString())
 
+                view.setTextViewText(R.id.tv_expedition_title, _context.getString(R.string.number_of_expedition))
                 view.setTextViewText(R.id.tv_expedition, dailyNote.current_expedition_num.toString()+"/"+dailyNote.max_expedition_num.toString())
 
                 view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getStringRecentSyncTime(_context))
@@ -173,7 +185,6 @@ class DetailWidget : AppWidgetProvider() {
                         view.setTextViewText(R.id.tv_resin_time, CommonFunction.secondToTime(_context, dailyNote.resin_recovery_time.toString(), false))
                         view.setTextViewText(R.id.tv_realm_currency_time_title, _context.getString(R.string.when_fully_replenished))
                         view.setTextViewText(R.id.tv_realm_currency_time, CommonFunction.secondToTime(_context, PreferenceManager.getStringHomeCoinRecoveryTime(_context), true))
-                        view.setTextViewText(R.id.tv_resin_time_title, _context.getString(R.string.when_fully_replenished))
                         view.setTextViewText(R.id.tv_expedition_time_title, _context.getString(R.string.estimated_completion_time))
                         view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToTime(_context, PreferenceManager.getStringExpeditionTime(_context), false))
                     }

@@ -1,12 +1,14 @@
 package danggai.app.resinwidget
 
 import android.app.Application
+import android.content.Context
 import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import danggai.app.resinwidget.di.NetworkModule
 import danggai.app.resinwidget.di.ViewModelModule
 import danggai.app.resinwidget.di.WorkerModule
 import danggai.app.resinwidget.di.repositoryModule
+import danggai.app.resinwidget.util.LocaleWrapper
 import danggai.app.resinwidget.util.log
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
@@ -53,5 +55,9 @@ class App: Application() {
                 return@setErrorHandler
             }
         }
+    }
+
+    override fun attachBaseContext(baseContext: Context) {
+        super.attachBaseContext(LocaleWrapper.wrap(baseContext))
     }
 }

@@ -48,7 +48,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
 
         binding.vpMain.adapter = pagerAdapter
 
-        TabLayoutMediator(binding.tlBottom, binding.vpMain) { tab, position ->
+        TabLayoutMediator(binding.tlTop, binding.vpMain) { tab, position ->
             tab.text = when (position) {
                 0 -> "Resin Widget"
                 1 -> "Detail Widget"

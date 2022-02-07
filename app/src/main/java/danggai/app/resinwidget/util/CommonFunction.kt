@@ -1,11 +1,13 @@
 package danggai.app.resinwidget.util
 
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.content.res.Resources
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -195,14 +197,17 @@ object CommonFunction {
             if (second.toInt() == 0)
                 return context.getString(R.string.widget_ui_max_time_resin_max)
 
-            if (second.toInt() > 144000 || second.toInt() < -144000)
+            if (second.toInt() > 360000 || second.toInt() < -144000)
                 return String.format(context.getString(R.string.widget_ui_time), cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE))
 
             cal.add(Calendar.SECOND, second.toInt())
 
             val minute = String.format("%02d", cal.get(Calendar.MINUTE))
 
-            return if (includeDate) String.format(context.getString(R.string.widget_ui_date), getDayWithMonthSuffix(context, cal.get(Calendar.DATE)), cal.get(Calendar.HOUR_OF_DAY), minute)
+            return if (includeDate) {
+                log.e()
+                String.format(context.getString(R.string.widget_ui_date), getDayWithMonthSuffix(context, cal.get(Calendar.DATE)), cal.get(Calendar.HOUR_OF_DAY), minute)
+            }
             else String.format(context.getString(R.string.widget_ui_time), cal.get(Calendar.HOUR_OF_DAY), minute)
         } catch (e: NumberFormatException) {
             return context.getString(R.string.widget_ui_max_time_resin_max)
