@@ -1,6 +1,7 @@
 package danggai.app.resinwidget.ui.main
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -9,10 +10,13 @@ import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.ActivityMainBinding
 import danggai.app.resinwidget.ui.BindingActivity
+import danggai.app.resinwidget.util.LocaleWrapper.wrap
 import danggai.app.resinwidget.util.log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
+import kotlin.system.exitProcess
+
 
 class MainActivity : BindingActivity<ActivityMainBinding>() {
 
@@ -66,7 +70,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
             .buffer(2,1)
             .map { it[1] - it[0] < Constant.BACK_BUTTON_INTERVAL }
             .subscribe {
-                if (it) { super.onBackPressed() } else { Toast.makeText(applicationContext, getString(
+                if (it) {
+                    super.onBackPressed()
+                    finish()
+                    exitProcess(0)
+                } else { Toast.makeText(applicationContext, getString(
                     R.string.msg_toast_back_button), Toast.LENGTH_SHORT).show() }
             }.addDisposableExt()
     }
