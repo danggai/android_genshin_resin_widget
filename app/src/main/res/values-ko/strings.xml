@@ -87,7 +87,7 @@
     <string name="msg_toast_dailynote_error_wrong_account">다른 사람의 uid에서 정보를 가져올 수는 없어! 쿠키를 얻은 HoYoLAB 계정이 해당 uid의 원신 계정과 연동된 계정인지 확인해 줘!</string>
     <string name="msg_toast_dailynote_error_data_not_public">전적 정보가 비공개여서 정보를 받을 수 없어.. 호요랩 > 설정 > 전적에서 전적 정보를 공개해 줘!</string>
     <string name="msg_toast_dailynote_error_account_not_found">HoYoLAB 계정에 연동 된 원신 계정이 없어서 실시간 메모를 불러올 수 없어!</string>
-    <string name="msg_toast_dailynote_error_invalid_language">HoYoLAB의 사용 언어가 올바르지 않아.. 현재는 Asia 서버 한국어 환경에서만 사용할 수 있어!</string>
+    <string name="msg_toast_dailynote_error_invalid_language">HoYoLAB의 사용 언어가 올바르지 않아.. 서버나 언어를 확인해 줘!</string>
     <string name="msg_toast_dailynote_error_invalid_input">올바르지 않은 uid나 쿠키를 입력했어! uid는 숫자로만 이루어져야 해!</string>
     <string name="msg_toast_dailynote_error_include_error_code">실시간 메모를 불러오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없지만, 오류코드는 %s야! 개발자와 공유해 줘!</string>
     <string name="msg_toast_dailynote_error">실시간 메모를 불러오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없어.. 미안해!</string>

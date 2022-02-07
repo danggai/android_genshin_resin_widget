@@ -155,11 +155,11 @@ class WidgetDesignFragmentDetail : BindingFragment<FragmentWidgetDesignDetailBin
                     binding.widget.tvExpeditionTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
                 } else {
                     binding.widget.tvResinTimeTitle.text = _context.getString(R.string.when_fully_replenished)
-                    binding.widget.tvResinTime.text = String.format(getString(R.string.widget_ui_time), 0, 0)
+                    binding.widget.tvResinTime.text = String.format(getString(R.string.widget_ui_time), 0, "00")
                     binding.widget.tvRealmCurrencyTimeTitle.text = _context.getString(R.string.when_fully_replenished)
-                    binding.widget.tvRealmCurrencyTime.text = String.format(getString(R.string.widget_ui_date), "1"+getString(R.string.date_st), 0, 0)
+                    binding.widget.tvRealmCurrencyTime.text = String.format(getString(R.string.widget_ui_date), "1"+getString(R.string.date_st), 0, "00")
                     binding.widget.tvExpeditionTimeTitle.text = _context.getString(R.string.estimated_completion_time)
-                    binding.widget.tvExpeditionTime.text = String.format(getString(R.string.widget_ui_time), 0, 0)
+                    binding.widget.tvExpeditionTime.text = String.format(getString(R.string.widget_ui_time), 0, "00")
                 }
             }
         }

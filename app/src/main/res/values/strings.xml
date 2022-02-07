@@ -63,53 +63,53 @@
     <string name="dialog_msg_get_storage_permission">When designing a widget, storage permission is required to proceed with the design by substituting it into the wallpaper you actually use.\n\nYou can use the app even if you reject the permission.</string>
 
     <string name="dialog_widget_refresh_not_work">Refresh doesn\'t work on the Widget</string>
-    <string name="dialog_msg_widget_refresh_not_work"><b>절전 모드나 데이터 절약 모드</b>를 사용 중인 경우, 위젯에서 새로고침이 작동하지 않습니다.\n\n설정에서 데이터 절약 모드를 비활성화하거나, 다음 화면에서 원신 레진 위젯을 접근 허용 하는 것으로 우회할 수 있습니다.\n\n해당 권한은 앱이 기기가 수신하는 알림에 접근할 수 있도록 하는 권한이나, 원신 레진 위젯은 알림 수신 서비스를 HoYoLAB 데이터 수신 목적 외에는 이용하지 않으며, 사용자의 개인 정보에 <b>절대</b> 접근하지 않습니다.\n\n원신 레진 위젯은 데이터 절약 모드 비활성화를 권장합니다.</string>
+    <string name="dialog_msg_widget_refresh_not_work">If device using <b>power saving mode or data saving mode.</b>, widget doesn\'t refresh.\n\You can disable data saving mode in setting, or detour to allow access to the genshin resin widget on the next screen.\n\nThis permission allows the app to access the notifications the device receives, but the genshin resin widget does not use the notification reception service other than for HoYoLAB data reception purposes, and <b>never</b> accesses the user\'s personal information.\n\nGenshin resin widget recommends data saving mode deactivation.</string>
 
     <string name="dialog_native_hoyolab_account">Check Your Account</string>
-    <string name="dialog_msg_native_hoyolab_account">HoYoLAB 계정 사용 시 <b>호요랩 계정</b> 버튼을 눌러주세요.\n구글, 애플, 페이스북, 트위터 계정 사용 시 <b>SNS 계정</b> 버튼을 눌러주세요.</string>
+    <string name="dialog_msg_native_hoyolab_account">When using the HoYoLab account, Press <b>HoYoLab Account</b> button.\nWhen using the Google, Apple, FaceBook, Twitter account, Press <b>SNS Account</b> button.</string>
 
-    <string name="dialog_msg_dailynote_not_public_error_repeat">전적 정보 비공개 에러가 반복적으로 발생한다면, 정확한 uid를 입력했는지 확인 해주세요.</string>
+    <string name="dialog_msg_dailynote_not_public_error_repeat">If Battle Chronicle error occur repeatedly, Please check if you have entered the correct "uid".</string>
 
     <string name="dialog_realtime_note_private">Realtime Notes is Private</string>
-    <string name="dialog_msg_realtime_note_private">Your realtime note is private and information cannot be imported. Do you want to change it to public?</string>
+    <string name="dialog_msg_realtime_note_private">Your Real-Time Note is private and data cannot be imported. Do you want to change it to public?</string>
 
     <string name="msg_toast_back_button">If you press it one more time, you can shut down the app!</string>
     <string name="msg_toast_save_done">Saved It Successfully!</string>
 
-    <string name="msg_toast_api_error_include_code">HoYoLAB과 통신하는데 실패했어.. 오류 코드는 %s야! 개발자에게 공유하면 해결에 많은 도움이 돼!</string>
+    <string name="msg_toast_api_error_include_code">Failed to communicate with HoYoLAB.. The error code is %s! If you share it with the developer, it helps to solve it!</string>
 
-    <string name="msg_toast_dailynote_success">정상적으로 실시간 메모를 불러왔어!</string>
-    <string name="msg_toast_dailynote_error_charactor_info">캐릭터 정보를 읽을 수 없어.. uid나 쿠키, 서버를 다시 확인해 줘!</string>
-    <string name="msg_toast_dailynote_error_internal_database_error">HoYoLAB의 데이터베이스에서 에러가 발생해서 실시간 메모를 받아올 수 없어!</string>
-    <string name="msg_toast_dailynote_error_too_many_requests">오늘은 너무 많이 시도했어.. 나중에 다시 시도해 줘!</string>
-    <string name="msg_toast_dailynote_error_not_logged_in">잘못 된 쿠키여서 정보를 받아 올 수 없어.. 쿠키를 다시 확인해 줘!</string>
-    <string name="msg_toast_dailynote_error_not_logged_in_3">올바른 쿠키지만, 이 쿠키와 연결 된 HoYoLAB 계정이 없어서 실시간 메모를 불러올 수 없어!</string>
-    <string name="msg_toast_dailynote_error_wrong_account">다른 사람의 uid에서 정보를 가져올 수는 없어! 쿠키를 얻은 HoYoLAB 계정이 해당 uid의 원신 계정과 연동된 계정인지 확인해 줘!</string>
-    <string name="msg_toast_dailynote_error_data_not_public">전적 정보가 비공개여서 정보를 받을 수 없어.. 호요랩 > 설정 > 전적에서 전적 정보를 공개해 줘!</string>
-    <string name="msg_toast_dailynote_error_account_not_found">HoYoLAB 계정에 연동 된 원신 계정이 없어서 실시간 메모를 불러올 수 없어!</string>
-    <string name="msg_toast_dailynote_error_invalid_language">HoYoLAB의 사용 언어가 올바르지 않아.. 현재는 Asia 서버 한국어 환경에서만 사용할 수 있어!</string>
-    <string name="msg_toast_dailynote_error_invalid_input">올바르지 않은 uid나 쿠키를 입력했어! uid는 숫자로만 이루어져야 해!</string>
-    <string name="msg_toast_dailynote_error_include_error_code">실시간 메모를 불러오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없지만, 오류코드는 %s야! 개발자와 공유해 줘!</string>
-    <string name="msg_toast_dailynote_error">실시간 메모를 불러오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없어.. 미안해!</string>
+    <string name="msg_toast_dailynote_success">Successfully get Real-Time Note!</string>
+    <string name="msg_toast_dailynote_error_charactor_info">Can\'t read character information. Please check again uid, cookies, and server!</string>
+    <string name="msg_toast_dailynote_error_internal_database_error">Error occurred in HoYoLAB\'s database, so can\'t get Real-Time Note !</string>
+    <string name="msg_toast_dailynote_error_too_many_requests">Tried too much today.. Try it again later!</string>
+    <string name="msg_toast_dailynote_error_not_logged_in">Can\'t get data because it\'s a wrong cookie. Check the cookie again!</string>
+    <string name="msg_toast_dailynote_error_not_logged_in_3">It\'s the right cookie, but can\'t get a Real-Time Note because no HoYoLAB account linked to this cookie!</string>
+    <string name="msg_toast_dailynote_error_wrong_account">Can\'t get data from other user\'s uid! Please check if the HoYoLAB account with cookies is linked to the this uid\'s Genshin account!</string>
+    <string name="msg_toast_dailynote_error_data_not_public">Can\'t receive data because Battle Chronicle is private. In HoYoLAB Settings, Please make public your Battle Chronicle!</string>
+    <string name="msg_toast_dailynote_error_account_not_found">Can\'t get Real-Time Note because no Genshin account linked with this HoYoLAB account!</string>
+    <string name="msg_toast_dailynote_error_invalid_language">HoYoLAB\'s language is not correct. Check the server or language!</string>
+    <string name="msg_toast_dailynote_error_invalid_input">Typed incorrect uid or cookie! uid should be made up only numbers!</string>
+    <string name="msg_toast_dailynote_error_include_error_code">I failed to get a Real-Time Note. It\'s an unexpected error, so I can\'t give you detailed information, Error code is %s! Please share it with the developer!</string>
+    <string name="msg_toast_dailynote_error">Failed to get a Real-Time Note. It\'s an unexpected error, so I can\'t give you detailed information. sorry!</string>
 
-    <string name="msg_toast_change_data_switch_success">성공적으로 실시간 메모를 공개 상태로 변경했어! 저장 버튼을 눌러 줘!</string>
-    <string name="msg_toast_change_data_switch_error_include_error_code">실시간 메모를 공개 상태로 변경하는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없지만, 오류코드는 %s야! 개발자와 공유해 줘!</string>
+    <string name="msg_toast_change_data_switch_success">Successfully changed the Real-Time Note to public! Press the save button!</string>
+    <string name="msg_toast_change_data_switch_error_include_error_code">Failed to change the Real-Time Note to public.. It\'s an unexpected error, so I can\'t give you detailed information, Error code is %s! Please share it with the developer!</string>
 
-    <string name="msg_toast_check_in_success">계정 연동 성공! 출석 체크 성공했어!</string>
-    <string name="msg_toast_check_in_already">계정 연동 성공! 오늘은 이미 출석했어!</string>
-    <string name="msg_toast_check_in_error_not_logged_in">잘못 된 쿠키여서 정보를 받아 올 수 없어.. 쿠키를 다시 확인해 줘!</string>
-    <string name="msg_toast_check_in_error_too_fast">너무 빠르게 시도했어! 조금 이따 다시 시도해 줘!</string>
+    <string name="msg_toast_check_in_success">Account linked and Checked in Successfully!</string>
+    <string name="msg_toast_check_in_already">Account linked Successfully! Today already checked in!</string>
+    <string name="msg_toast_check_in_error_not_logged_in">Can\'t get data because wrong cookie. Check the cookie again!</string>
+    <string name="msg_toast_check_in_error_too_fast">Tried it too fast! Please try it again later!</string>
 
-    <string name="msg_toast_uid_empty_error">uid 없이는 연동 할 수 없어! uid를 입력해 줘!</string>
-    <string name="msg_toast_cookie_empty_error">쿠키 값 없이는 연동 할 수 없어! 쿠키를 입력해 줘!</string>
+    <string name="msg_toast_uid_empty_error">You can\'t link without uid! Please type in "uid"!</string>
+    <string name="msg_toast_cookie_empty_error">You can\'t link without cookie! Please enter "cookie"!</string>
 
-    <string name="msg_toast_data_save_mode">모바일 데이터, 데이터 세이버와 관련 된 메뉴에서 수정 가능하며 기기마다 메뉴의 이름이 다를 수 있습니다.</string>
+    <string name="msg_toast_data_save_mode">It can be modified in the "Mobile data" and "Data saver" menu, and the name of the menu may vary from device to device.</string>
 
-    <string name="msg_toast_how_to_get_cookie">좌측 상단 슬라임을 누르고 미로그인을 눌러 로그인 후, 상단 Get Cookie를 눌러 줘!</string>
-    <string name="msg_toast_get_cookie_success">쿠키 획득 성공! 자동으로 입력했어!</string>
-    <string name="msg_toast_get_cookie_fail">쿠키 획득에 실패했어.. 로그인 후 다시 시도해줘!</string>
-    <string name="msg_toast_get_cookie_null_fail">쿠키가 존재하지 않아서 가져올 수 없어!</string>
-    <string name="msg_toast_get_cookie_unknown_fail">알 수 없는 이유로 쿠키를 가져오는데 실패했어..</string>
+    <string name="msg_toast_how_to_get_cookie">Press the upper left slime to log in, and press Get Cookie at the top!</string>
+    <string name="msg_toast_get_cookie_success">Successfully acquired cookie! Typed it automatically!</string>
+    <string name="msg_toast_get_cookie_fail">Failed to get cookie.. Please log in and try again!</string>
+    <string name="msg_toast_get_cookie_null_fail">Can\'t get cookie because it doesn\'t exist!</string>
+    <string name="msg_toast_get_cookie_unknown_fail">Failed to get cookie for an unknown reason..</string>
 
     <string name="msg_toast_resizable_widget_enable">If you can\'t see the current resins, press the refresh button at the top right of widget.</string>
 
