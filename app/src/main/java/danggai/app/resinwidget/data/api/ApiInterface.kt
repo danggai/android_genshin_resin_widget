@@ -2,8 +2,8 @@ package danggai.app.resinwidget.data.api
 
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.data.res.ResCheckIn
-import danggai.app.resinwidget.data.res.ResDefault
 import danggai.app.resinwidget.data.res.ResDailyNote
+import danggai.app.resinwidget.data.res.ResDefault
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.*

@@ -13,17 +13,16 @@ import danggai.app.resinwidget.databinding.FragmentWidgetDesignResinBinding
 import danggai.app.resinwidget.ui.BindingFragment
 import danggai.app.resinwidget.ui.design.WidgetDesignViewModel
 import danggai.app.resinwidget.util.CommonFunction.isDarkMode
-import danggai.app.resinwidget.util.EventObserver
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
-class WidgetDesignFragmentResin : BindingFragment<FragmentWidgetDesignResinBinding>() {
+class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBinding>() {
 
     companion object {
-        val TAG: String = WidgetDesignFragmentResin::class.java.simpleName
-        fun newInstance() = WidgetDesignFragmentResin()
+        val TAG: String = WidgetDesignResinFragment::class.java.simpleName
+        fun newInstance() = WidgetDesignResinFragment()
     }
 
     private lateinit var mVM: WidgetDesignViewModel

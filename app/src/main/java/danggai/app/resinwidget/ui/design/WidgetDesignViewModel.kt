@@ -7,7 +7,9 @@ import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.data.api.ApiRepository
 import danggai.app.resinwidget.ui.base.BaseViewModel
-import danggai.app.resinwidget.util.*
+import danggai.app.resinwidget.util.Event
+import danggai.app.resinwidget.util.NonNullMutableLiveData
+import danggai.app.resinwidget.util.log
 
 class WidgetDesignViewModel(override val app: Application, private val api: ApiRepository) : BaseViewModel(app) {
 

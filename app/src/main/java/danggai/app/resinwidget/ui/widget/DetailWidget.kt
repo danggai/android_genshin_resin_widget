@@ -14,7 +14,6 @@ import danggai.app.resinwidget.R
 import danggai.app.resinwidget.ui.main.MainActivity
 import danggai.app.resinwidget.util.CommonFunction
 import danggai.app.resinwidget.util.CommonFunction.isDarkMode
-import danggai.app.resinwidget.util.LocaleWrapper
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
 import java.util.*

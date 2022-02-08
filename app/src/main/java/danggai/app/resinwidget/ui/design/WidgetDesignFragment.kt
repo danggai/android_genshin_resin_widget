@@ -9,8 +9,8 @@ import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.FragmentWidgetDesignBinding
 import danggai.app.resinwidget.ui.BindingFragment
-import danggai.app.resinwidget.ui.design.detail.WidgetDesignFragmentDetail
-import danggai.app.resinwidget.ui.design.resin.WidgetDesignFragmentResin
+import danggai.app.resinwidget.ui.design.detail.WidgetDesignDetailFragment
+import danggai.app.resinwidget.ui.design.resin.WidgetDesignResinFragment
 import danggai.app.resinwidget.ui.main.MainAdapter
 import danggai.app.resinwidget.util.EventObserver
 import danggai.app.resinwidget.util.PreferenceManager
@@ -43,8 +43,8 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
 
         val pagerAdapter = MainAdapter(requireActivity())
 
-        pagerAdapter.addFragment(WidgetDesignFragmentResin())
-        pagerAdapter.addFragment(WidgetDesignFragmentDetail())
+        pagerAdapter.addFragment(WidgetDesignResinFragment())
+        pagerAdapter.addFragment(WidgetDesignDetailFragment())
 
         binding.vpMain.adapter = pagerAdapter
 

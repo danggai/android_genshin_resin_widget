@@ -26,8 +26,11 @@ import danggai.app.resinwidget.ui.cookie_web_view.CookieWebViewActivity
 import danggai.app.resinwidget.ui.design.WidgetDesignActivity
 import danggai.app.resinwidget.ui.main.checkin.MainCheckInFragment
 import danggai.app.resinwidget.ui.main.resin.MainResinFragment
-import danggai.app.resinwidget.util.*
+import danggai.app.resinwidget.util.CommonFunction
 import danggai.app.resinwidget.util.CommonFunction.setDailyNoteData
+import danggai.app.resinwidget.util.EventObserver
+import danggai.app.resinwidget.util.PreferenceManager
+import danggai.app.resinwidget.util.log
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import java.util.*
 

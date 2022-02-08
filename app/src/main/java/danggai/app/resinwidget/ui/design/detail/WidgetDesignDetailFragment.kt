@@ -18,11 +18,11 @@ import danggai.app.resinwidget.util.log
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
-class WidgetDesignFragmentDetail : BindingFragment<FragmentWidgetDesignDetailBinding>() {
+class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBinding>() {
 
     companion object {
-        val TAG: String = WidgetDesignFragmentDetail::class.java.simpleName
-        fun newInstance() = WidgetDesignFragmentDetail()
+        val TAG: String = WidgetDesignDetailFragment::class.java.simpleName
+        fun newInstance() = WidgetDesignDetailFragment()
     }
 
     private lateinit var mVM: WidgetDesignViewModel

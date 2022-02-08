@@ -5,8 +5,8 @@ import danggai.app.resinwidget.data.local.CheckIn
 import danggai.app.resinwidget.data.local.DailyNote
 import danggai.app.resinwidget.data.res.Meta
 import danggai.app.resinwidget.data.res.ResCheckIn
-import danggai.app.resinwidget.data.res.ResDefault
 import danggai.app.resinwidget.data.res.ResDailyNote
+import danggai.app.resinwidget.data.res.ResDefault
 import danggai.app.resinwidget.util.CommonFunction
 import io.reactivex.Observable
 

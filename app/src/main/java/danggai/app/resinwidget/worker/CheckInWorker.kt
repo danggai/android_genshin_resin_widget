@@ -1,24 +1,13 @@
 package danggai.app.resinwidget.worker
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import danggai.app.resinwidget.Constant
-import danggai.app.resinwidget.R
 import danggai.app.resinwidget.data.api.ApiRepository
-import danggai.app.resinwidget.service.CheckInForegroundService
 import danggai.app.resinwidget.util.CommonFunction
-import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
 import java.net.ConnectException
 import java.net.UnknownHostException
 

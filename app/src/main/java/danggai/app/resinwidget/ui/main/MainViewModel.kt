@@ -9,7 +9,10 @@ import danggai.app.resinwidget.R
 import danggai.app.resinwidget.data.api.ApiRepository
 import danggai.app.resinwidget.data.local.DailyNote
 import danggai.app.resinwidget.ui.base.BaseViewModel
-import danggai.app.resinwidget.util.*
+import danggai.app.resinwidget.util.CommonFunction
+import danggai.app.resinwidget.util.Event
+import danggai.app.resinwidget.util.NonNullMutableLiveData
+import danggai.app.resinwidget.util.log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject

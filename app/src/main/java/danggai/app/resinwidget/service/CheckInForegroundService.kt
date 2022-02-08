@@ -10,7 +10,6 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
-import danggai.app.resinwidget.data.api.ApiInterface
 import danggai.app.resinwidget.data.api.ApiRepository
 import danggai.app.resinwidget.ui.main.MainActivity
 import danggai.app.resinwidget.util.CommonFunction
@@ -21,7 +20,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import org.koin.android.ext.android.inject
-import org.koin.core.context.GlobalContext
 
 class CheckInForegroundService() : Service() {
 

@@ -1,13 +1,11 @@
 package danggai.app.resinwidget.util
 
-import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.content.res.Resources
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat

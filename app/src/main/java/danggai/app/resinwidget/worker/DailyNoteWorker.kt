@@ -14,7 +14,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
-import java.lang.Exception
 import java.net.ConnectException
 import java.net.UnknownHostException
 
