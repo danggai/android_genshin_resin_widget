@@ -23,6 +23,27 @@ import org.koin.android.ext.android.inject
 
 class CheckInForegroundService() : Service() {
 
+    companion object {
+        private const val prefix = "danggai.app.resinwidget.service.checkin."
+        const val START_FOREGROUND = prefix + "startforeground"
+        const val STOP_FOREGROUND = prefix + "stopforeground"
+
+        fun startService(context: Context) {
+            val intent = Intent(context, CheckInForegroundService::class.java)
+            intent.action = START_FOREGROUND
+
+            if (!PreferenceManager.getBooleanEnableAutoCheckIn(context)) {
+                log.e()
+                return
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(intent)
+            } else {
+                context.startService(intent)
+            }
+        }
+    }
 
     private val rxApiCheckIn: PublishSubject<Boolean> = PublishSubject.create()
     private val compositeDisposable = CompositeDisposable()
@@ -36,16 +57,29 @@ class CheckInForegroundService() : Service() {
         initRx()
     }
 
+    override fun onBind(intent: Intent?): IBinder? {
+        log.e()
+        return null
+    }
+
     override fun onCreate() {
         super.onCreate()
 
-        if (!PreferenceManager.getBooleanEnableAutoCheckIn(applicationContext)) {
-            log.e()
-            onDestroy()
-            return
-        }
-
         rxApiCheckIn.onNext(true)
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        when (intent?.action) {
+            START_FOREGROUND -> {
+                log.e("Stop Foreground intent received")
+                generateForegroundNotification()
+            }
+            STOP_FOREGROUND -> {
+                log.e("Stop Foreground intent received")
+                stopForegroundService()
+            }
+        }
+        return START_NOT_STICKY
     }
 
     private fun initRx() {
@@ -101,13 +135,12 @@ class CheckInForegroundService() : Service() {
                         CheckInReceiver.setAlarmOneShot(applicationContext)
                     }
                 }
-
-                stopForeground(true)
+                stopForegroundService()
             }, {
                 it.message?.let { msg ->
                     log.e(msg)
                 }
-                stopForeground(true)
+                stopForegroundService()
             })
             .addCompositeDisposable()
     }
@@ -125,60 +158,56 @@ class CheckInForegroundService() : Service() {
         CommonFunction.sendNotification(Constant.NOTI_TYPE_CHECK_IN_SUCCESS, applicationContext, title, msg)
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
-        log.e()
-        return null
-    }
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        generateForegroundNotification()
-        return START_NOT_STICKY
-    }
-
-    override fun onDestroy() {
-        stopForeground(true)
-        super.onDestroy()
-    }
-
     private var iconNotification: Bitmap? = null
     private var notification: Notification? = null
     var mNotificationManager: NotificationManager? = null
     private val mNotificationId = 123
 
     private fun generateForegroundNotification() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val intentMainLanding = Intent(this, MainActivity::class.java)
-            val pendingIntent =
-                PendingIntent.getActivity(this, 0, intentMainLanding, 0)
-            iconNotification = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
-            if (mNotificationManager == null) {
-                mNotificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                assert(mNotificationManager != null)
-                val notificationChannel =
-                    NotificationChannel(Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID, Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_NAME,
-                        NotificationManager.IMPORTANCE_MIN)
-                notificationChannel.enableLights(false)
-                notificationChannel.lockscreenVisibility = Notification.VISIBILITY_SECRET
-                mNotificationManager?.createNotificationChannel(notificationChannel)
-            }
-            val builder = NotificationCompat.Builder(this, Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID)
+        val intentMainLanding = Intent(this, MainActivity::class.java)
+        val pendingIntent =
+            PendingIntent.getActivity(this, 0, intentMainLanding, 0)
+        iconNotification = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
 
-            builder.setContentTitle(applicationContext.getString(R.string.foreground_genshin_check_in_progress))
-                .setTicker(applicationContext.getString(R.string.foreground_genshin_check_in_progress))
-                .setSmallIcon(R.drawable.resin)
-                .setPriority(NotificationCompat.PRIORITY_LOW)
-                .setWhen(0)
-                .setOnlyAlertOnce(true)
-                .setContentIntent(pendingIntent)
-                .setOngoing(true)
-            if (iconNotification != null) {
-                builder.setLargeIcon(Bitmap.createScaledBitmap(iconNotification!!, 128, 128, false))
-            }
-            notification = builder.build()
-            startForeground(mNotificationId, notification)
+        if (mNotificationManager == null) {
+            mNotificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            assert(mNotificationManager != null)
+            val notificationChannel =
+                NotificationChannel(Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID, Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_NAME,
+                    NotificationManager.IMPORTANCE_MIN)
+            notificationChannel.enableLights(false)
+            notificationChannel.lockscreenVisibility = Notification.VISIBILITY_SECRET
+            mNotificationManager?.createNotificationChannel(notificationChannel)
+        }
+
+        val stopIntent = Intent(applicationContext, CheckInForegroundService::class.java)
+        stopIntent.action = STOP_FOREGROUND
+        val stopPendingIntent = PendingIntent
+            .getService(applicationContext, 0, stopIntent, 0)
+
+        val builder = NotificationCompat.Builder(this, Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID)
+
+        builder.setContentTitle(applicationContext.getString(R.string.foreground_genshin_check_in_progress))
+            .setTicker(applicationContext.getString(R.string.foreground_genshin_check_in_progress))
+            .setSmallIcon(R.drawable.resin)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setWhen(0)
+            .setOnlyAlertOnce(true)
+            .setContentIntent(pendingIntent)
+            .setOngoing(true)
+            .addAction(NotificationCompat.Action(0, applicationContext.getString(R.string.force_stop), stopPendingIntent))
+        if (iconNotification != null) {
+            builder.setLargeIcon(Bitmap.createScaledBitmap(iconNotification!!, 128, 128, false))
+        }
+        notification = builder.build()
+        startForeground(mNotificationId, notification)
+    }
+
+    private fun stopForegroundService() {
+        stopForeground(true)
+        stopSelf()
     }
 }

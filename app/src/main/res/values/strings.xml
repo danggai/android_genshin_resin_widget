@@ -18,6 +18,7 @@
     <string name="apply">Apply</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="force_stop">FORCE STOP</string>
 
     <string name="asia">Asia</string>
     <string name="america">America</string>

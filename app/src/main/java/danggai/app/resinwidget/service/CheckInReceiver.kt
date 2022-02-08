@@ -77,10 +77,6 @@ class CheckInReceiver : BroadcastReceiver() {
             setAlarmRepeatly(context)
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startForegroundService(Intent(context, CheckInForegroundService::class.java))
-        } else {
-            context.startService(Intent(context, CheckInForegroundService::class.java))
-        }
+        CheckInForegroundService.startService(context)
     }
 }

@@ -314,12 +314,8 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
 
         mVM.lvStartForegroundService.observe(viewLifecycleOwner, EventObserver {
             log.e()
-            context?.let { _context ->
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    _context.startForegroundService(Intent(context, CheckInForegroundService::class.java))
-                } else {
-                    _context.startService(Intent(context, CheckInForegroundService::class.java))
-                }
+            context?.let { context ->
+                CheckInForegroundService.startService(context)
             }
         })
 

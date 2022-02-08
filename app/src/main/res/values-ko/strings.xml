@@ -18,6 +18,7 @@
     <string name="apply">Apply</string>
     <string name="save">저장</string>
     <string name="cancel">Cancel</string>
+    <string name="force_stop">강제 중지</string>
 
     <string name="asia">Asia</string>
     <string name="america">America</string>
