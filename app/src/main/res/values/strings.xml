@@ -69,6 +69,9 @@
     <string name="dialog_native_hoyolab_account">Check Your Account</string>
     <string name="dialog_msg_native_hoyolab_account">When using the HoYoLab account, Press <b>HoYoLab Account</b> button.\nWhen using the Google, Apple, FaceBook, Twitter account, Press <b>SNS Account</b> button.</string>
 
+    <string name="dialog_restart">Restart Application</string>
+    <string name="dialog_msg_restart">Restart the app to apply the changes.</string>
+
     <string name="dialog_msg_dailynote_not_public_error_repeat">If Battle Chronicle error occur repeatedly, Please check if you have entered the correct "uid".</string>
 
     <string name="dialog_realtime_note_private">Realtime Notes is Private</string>

@@ -30,6 +30,15 @@ import kotlin.streams.asSequence
 
 object CommonFunction {
 
+    fun restartApp(context: Context) {
+        val packageManager = context.packageManager
+        val intent = packageManager.getLaunchIntentForPackage(context.packageName)
+        val componentName = intent!!.component
+        val mainIntent = Intent.makeRestartActivityTask(componentName)
+        context.startActivity(mainIntent)
+        Runtime.getRuntime().exit(0)
+    }
+
     fun getGenshinDS(): String {
         val source = "abcdefghijklmnopqrstuvwxyz"
 

@@ -333,8 +333,20 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
                                 else -> Locale.getDefault().language
                             }
 
+                            if (PreferenceManager.getStringLocale(it.baseContext) == locale) return@OnClickListener
+
                             PreferenceManager.setStringLocale(it.baseContext, locale)
-                            it.recreate()
+
+                            AlertDialog.Builder(requireActivity())
+                                .setTitle(R.string.dialog_restart)
+                                .setMessage(R.string.dialog_msg_restart)
+                                .setCancelable(false)
+                                .setPositiveButton(R.string.apply) { dialog, whichButton ->
+                                    log.e()
+                                    CommonFunction.restartApp(it.baseContext)
+                                }
+                                .create()
+                                .show()
                         })
                 builder.show()
             }
