@@ -416,11 +416,6 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
         rxApiChangeDataSwitchPublic.onNext(true)
     }
 
-    fun makeDailyNotePrivate() {
-        log.e()
-        rxApiChangeDataSwitchPrivate.onNext(false)
-    }
-
     private fun setProgress(boolean: Boolean) {
         log.e()
         lvSetProgress.value = Event(boolean)
@@ -432,6 +427,12 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     }
 
 
+    /*개발용 함수*/
+
+    fun makeDailyNotePrivate() {
+        log.e()
+        rxApiChangeDataSwitchPrivate.onNext(false)
+    }
 
     fun onClickStartForeground() {
         log.e()

@@ -72,6 +72,12 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                 else -> binding.rbRemainTime.isChecked = true
             }
 
+            when(mVM.lvWidgetTheme.value) {
+                Constant.PREF_WIDGET_THEME_AUTOMATIC -> binding.rbThemeAutomatic.isChecked = true
+                Constant.PREF_WIDGET_THEME_LIGHT -> binding.rbThemeLight.isChecked = true
+                Constant.PREF_WIDGET_THEME_DARK -> binding.rbThemeDark.isChecked = true
+                else -> binding.rbThemeAutomatic.isChecked = true
+            }
         }
     }
 
