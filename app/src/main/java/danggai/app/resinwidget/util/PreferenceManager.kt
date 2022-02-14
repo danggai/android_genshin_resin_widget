@@ -353,8 +353,15 @@ object PreferenceManager {
         setInt(context, Constant.PREF_WIDGET_RESIN_IMAGE_VISIBILITY, value)
     }
 
+    fun getIntWidgetDetailFontSize(context: Context): Int {
+        return getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE, Constant.PREF_WIDGET_DETAIL_FONT_SIZE)
+    }
+    fun setIntWidgetDetailFontSize(context: Context, value: Int) {
+        setInt(context, Constant.PREF_WIDGET_DETAIL_FONT_SIZE, value)
+    }
+
     fun getIntBackgroundTransparency(context: Context): Int {
-        return getIntDefault(context, 170, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
+        return getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
     }
     fun setIntBackgroundTransparency(context: Context, value: Int) {
         setInt(context, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY, value)

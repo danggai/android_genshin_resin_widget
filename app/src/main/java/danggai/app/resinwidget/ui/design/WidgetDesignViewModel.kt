@@ -26,8 +26,8 @@ class WidgetDesignViewModel(override val app: Application, private val api: ApiR
     var lvRealmCurrencyDataVisibility: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(true)
     var lvExpeditionDataVisibility: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(true)
 
-    val lvTransparency: NonNullMutableLiveData<Int> = NonNullMutableLiveData(170)
-    val lvDetailFontSize: NonNullMutableLiveData<Int> = NonNullMutableLiveData(12)
+    val lvTransparency: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY)
+    val lvDetailFontSize: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
 
 
 

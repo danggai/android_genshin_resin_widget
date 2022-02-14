@@ -93,6 +93,27 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
             }
         }
 
+        mVM.lvDetailFontSize.observe(viewLifecycleOwner) {
+            log.e()
+
+            binding.widget.tvResin.textSize = it.toFloat()
+            binding.widget.tvResinTitle.textSize = it.toFloat()
+            binding.widget.tvResinTime.textSize = it.toFloat()
+            binding.widget.tvResinTimeTitle.textSize = it.toFloat()
+            binding.widget.tvDailyCommission.textSize = it.toFloat()
+            binding.widget.tvDailyCommissionTitle.textSize = it.toFloat()
+            binding.widget.tvWeeklyBoss.textSize = it.toFloat()
+            binding.widget.tvWeeklyBossTitle.textSize = it.toFloat()
+            binding.widget.tvRealmCurrency.textSize = it.toFloat()
+            binding.widget.tvRealmCurrencyTitle.textSize = it.toFloat()
+            binding.widget.tvRealmCurrencyTime.textSize = it.toFloat()
+            binding.widget.tvRealmCurrencyTimeTitle.textSize = it.toFloat()
+            binding.widget.tvExpedition.textSize = it.toFloat()
+            binding.widget.tvExpeditionTitle.textSize = it.toFloat()
+            binding.widget.tvExpeditionTime.textSize = it.toFloat()
+            binding.widget.tvExpeditionTimeTitle.textSize = it.toFloat()
+        }
+
         mVM.lvWidgetTheme.observe(viewLifecycleOwner) {
             context?.let { _context ->
                 log.e()

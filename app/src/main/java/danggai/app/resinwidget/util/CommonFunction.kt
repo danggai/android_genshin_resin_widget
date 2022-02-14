@@ -366,6 +366,8 @@ object CommonFunction {
             }
             R.layout.widget_detail_fixed -> {
                 log.e()
+                val fontSize = PreferenceManager.getIntWidgetDetailFontSize(context)
+
                 view.setTextColor(R.id.tv_resin, mainFontColor)
                 view.setTextColor(R.id.tv_resin_title, mainFontColor)
                 view.setTextColor(R.id.tv_resin_time, mainFontColor)
@@ -382,6 +384,23 @@ object CommonFunction {
                 view.setTextColor(R.id.tv_realm_currency_title, mainFontColor)
                 view.setTextColor(R.id.tv_realm_currency_time, mainFontColor)
                 view.setTextColor(R.id.tv_realm_currency_time_title, mainFontColor)
+
+                view.setFloat(R.id.tv_resin, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_resin_title, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_resin_time, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_resin_time_title, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_daily_commission, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_daily_commission_title, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_weekly_boss, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_weekly_boss_title, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_expedition, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_expedition_title, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_expedition_time, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_expedition_time_title, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_realm_currency, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_realm_currency_title, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_realm_currency_time, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_realm_currency_time_title, "setTextSize", fontSize.toFloat())
             }
             else -> {
                 log.e()

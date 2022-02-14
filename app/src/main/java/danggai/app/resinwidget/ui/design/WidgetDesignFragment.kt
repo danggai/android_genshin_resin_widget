@@ -66,6 +66,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
         context?.let { it ->
             mVM.lvWidgetTheme.value = PreferenceManager.getIntWidgetTheme(it)
             mVM.lvTransparency.value = PreferenceManager.getIntBackgroundTransparency(it)
+            mVM.lvDetailFontSize.value = PreferenceManager.getIntWidgetDetailFontSize(it)
 
             try {
                 val wallpaperManager = WallpaperManager.getInstance(it)
@@ -86,6 +87,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
                 PreferenceManager.setIntWidgetTheme(_context, mVM.lvWidgetTheme.value)
                 PreferenceManager.setIntWidgetResinImageVisibility(_context, mVM.lvResinImageVisibility.value)
                 PreferenceManager.setIntBackgroundTransparency(_context, mVM.lvTransparency.value)
+                PreferenceManager.setIntWidgetDetailFontSize(_context, mVM.lvDetailFontSize.value)
                 PreferenceManager.setIntResinTimeNotation(_context, mVM.lvResinTimeNotation.value)
                 PreferenceManager.setIntDetailTimeNotation(_context, mVM.lvDetailTimeNotation.value)
 
