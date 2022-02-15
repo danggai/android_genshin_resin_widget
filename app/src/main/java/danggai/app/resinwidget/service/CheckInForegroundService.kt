@@ -66,6 +66,10 @@ class CheckInForegroundService() : Service() {
         super.onCreate()
 
         rxApiCheckIn.onNext(true)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            generateForegroundNotification()
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
