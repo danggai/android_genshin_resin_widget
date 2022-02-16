@@ -481,4 +481,13 @@ object PreferenceManager {
         setString(context, Constant.PREF_LOCALE, value)
     }
 
+
+
+    fun getBooleanCheckedUpdateNote(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_CHECKED_UPDATE_NOTE, false)
+    }
+    fun setBooleanCheckedUpdateNote(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_CHECKED_UPDATE_NOTE, value)
+    }
+
 }

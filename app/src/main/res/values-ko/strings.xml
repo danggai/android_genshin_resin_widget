@@ -20,6 +20,7 @@
     <string name="save">저장</string>
     <string name="cancel">Cancel</string>
     <string name="force_stop">강제 중지</string>
+    <string name="ok">확인</string>
 
     <string name="asia">Asia</string>
     <string name="america">America</string>
@@ -184,4 +185,9 @@
 
     <string name="google_ads_test_app_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="google_ads_test_banner_id">ca-app-pub-3940256099942544/6300978111</string>
+
+
+    <!-- 패치노트 -->
+    <string name="dialog_patch_note">%s 패치 노트</string>
+    <string name="dialog_msg_patch_note">- Widget Design에서 Detail Widget의 폰트 크기 변경이 가능해졌습니다.\n- 앱 안정성이 개선되었습니다.</string>
 </resources>

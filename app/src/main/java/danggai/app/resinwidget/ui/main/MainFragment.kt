@@ -93,6 +93,8 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
         initLv()
 
         permissionCheck()
+
+        updateNoteCheck()
     }
 
     private fun initUi() {
@@ -128,6 +130,25 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
                     }
                     .create()
                     .show()
+            }
+        }
+    }
+
+    private fun updateNoteCheck() {
+        context?.let { it ->
+            if (!PreferenceManager.getBooleanCheckedUpdateNote(it)) {
+                if (!PreferenceManager.getBooleanFirstLaunch(it)) {
+                    AlertDialog.Builder(requireActivity())
+                        .setTitle(String.format(getString(R.string.dialog_patch_note), BuildConfig.VERSION_NAME))
+                        .setMessage(R.string.dialog_msg_patch_note)
+                        .setPositiveButton(R.string.ok) { dialog, whichButton ->
+                            log.e()
+                        }
+                        .create()
+                        .show()
+                }
+
+                PreferenceManager.setBooleanCheckedUpdateNote(it, true)
             }
         }
     }

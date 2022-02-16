@@ -20,6 +20,7 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="force_stop">FORCE STOP</string>
+    <string name="ok">OK</string>
 
     <string name="asia">Asia</string>
     <string name="america">America</string>
@@ -184,4 +185,10 @@
 
     <string name="google_ads_test_app_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="google_ads_test_banner_id">ca-app-pub-3940256099942544/6300978111</string>
+
+
+    <!-- 패치노트 -->
+    <string name="dialog_patch_note">What\'s new in %s</string>
+    <string name="dialog_msg_patch_note">- You can change the font size of Detail Widget in Widget Design.\n</string>
+
 </resources>
