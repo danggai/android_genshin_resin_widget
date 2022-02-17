@@ -27,6 +27,7 @@ class WidgetDesignViewModel(override val app: Application, private val api: ApiR
     var lvExpeditionDataVisibility: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(true)
 
     val lvTransparency: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY)
+    val lvResinFontSize: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE)
     val lvDetailFontSize: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
 
 

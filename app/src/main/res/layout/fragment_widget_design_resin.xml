@@ -169,6 +169,45 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@string/font_size"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="5dp"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@{vm.lvResinFontSize.toString()}"
+                        android:hint="030"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold|italic"
+                        android:gravity="center"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatSeekBar
+                        style="@style/SeekBar"
+                        android:id="@+id/sb_fontsize"
+                        android:progress="@={vm.lvResinFontSize}"
+                        android:max="100"
+                        android:min="20"
+                        />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/background_transparency"
                     android:textColor="@color/black"
                     android:textSize="28sp"
@@ -184,7 +223,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@{vm.lvTransparency.toString()}"
-                        android:hint="100"
+                        android:hint="170"
                         android:textSize="20sp"
                         android:textColor="@color/black"
                         android:textStyle="bold|italic"

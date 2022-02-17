@@ -83,21 +83,20 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/TextView"
                         android:id="@+id/tv_resin"
+                        style="@style/TextView"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:autoSizeMinTextSize="24sp"
                         android:autoSizeMaxTextSize="60sp"
+                        android:autoSizeMinTextSize="24sp"
                         android:autoSizeTextType="uniform"
                         android:gravity="center"
+                        android:hint="000"
                         android:singleLine="true"
                         android:text="0"
-                        android:hint="000"
                         android:textColor="@color/widget_font_main"
                         android:textSize="30sp"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
 
                     <TextView
                         style="@style/TextView"

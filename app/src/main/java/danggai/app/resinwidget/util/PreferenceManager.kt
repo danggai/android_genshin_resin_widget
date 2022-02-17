@@ -360,6 +360,13 @@ object PreferenceManager {
         setInt(context, Constant.PREF_WIDGET_DETAIL_FONT_SIZE, value)
     }
 
+    fun getIntWidgetResinFontSize(context: Context): Int {
+        return getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE, Constant.PREF_WIDGET_RESIN_FONT_SIZE)
+    }
+    fun setIntWidgetResinFontSize(context: Context, value: Int) {
+        setInt(context, Constant.PREF_WIDGET_RESIN_FONT_SIZE, value)
+    }
+
     fun getIntBackgroundTransparency(context: Context): Int {
         return getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
     }

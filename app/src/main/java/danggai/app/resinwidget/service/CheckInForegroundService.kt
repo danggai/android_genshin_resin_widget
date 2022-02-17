@@ -75,7 +75,7 @@ class CheckInForegroundService() : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
             START_FOREGROUND -> {
-                log.e("Stop Foreground intent received")
+                log.e("Start Foreground intent received")
                 generateForegroundNotification()
             }
             STOP_FOREGROUND -> {

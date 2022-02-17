@@ -94,8 +94,6 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
         }
 
         mVM.lvDetailFontSize.observe(viewLifecycleOwner) {
-            log.e()
-
             binding.widget.tvResin.textSize = it.toFloat()
             binding.widget.tvResinTitle.textSize = it.toFloat()
             binding.widget.tvResinTime.textSize = it.toFloat()
