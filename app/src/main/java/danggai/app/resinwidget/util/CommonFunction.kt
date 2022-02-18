@@ -360,6 +360,12 @@ object CommonFunction {
             R.layout.widget_resin_fixed,
             R.layout.widget_resin_resizable -> {
                 log.e()
+
+                if (view.layoutId == R.layout.widget_resin_fixed) {
+                    val fontSize = PreferenceManager.getIntWidgetResinFontSize(context)
+                    view.setFloat(R.id.tv_resin, "setTextSize", fontSize.toFloat())
+                }
+
                 view.setTextColor(R.id.tv_resin, mainFontColor)
                 view.setTextColor(R.id.tv_resin_max, mainFontColor)
                 view.setTextColor(R.id.tv_remain_time, mainFontColor)

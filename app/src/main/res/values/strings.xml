@@ -189,6 +189,6 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- You can change the font size of Detail Widget in Widget Design.\n</string>
+    <string name="dialog_msg_patch_note">- You can change the font size of widget in Widget Design.\n</string>
 
 </resources>
