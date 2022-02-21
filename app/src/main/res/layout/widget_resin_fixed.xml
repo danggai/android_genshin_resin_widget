@@ -84,30 +84,30 @@
                         android:layout_gravity="center"
                         >
 
-                    <TextView
-                        style="@style/TextView"
-                        android:id="@+id/tv_resin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="30sp"
-                        android:textStyle="bold"
-                        android:text="160"
-                        android:textColor="@color/widget_font_main"
-                        android:layout_gravity="left"
-                        android:singleLine="true"
-                        />
+                        <TextView
+                            style="@style/TextView"
+                            android:id="@+id/tv_resin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="30sp"
+                            android:textStyle="bold"
+                            android:text="160"
+                            android:textColor="@color/widget_font_main"
+                            android:layout_gravity="left"
+                            android:singleLine="true"
+                            />
 
-                    <TextView
-                        style="@style/TextView"
-                        android:id="@+id/tv_resin_max"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="/160"
-                        android:textSize="16sp"
-                        android:textColor="@color/widget_font_main"
-                        android:layout_gravity="left|bottom"
-                        android:singleLine="true"
-                        />
+                        <TextView
+                            style="@style/TextView"
+                            android:id="@+id/tv_resin_max"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="/160"
+                            android:textSize="16sp"
+                            android:textColor="@color/widget_font_main"
+                            android:layout_gravity="left|bottom"
+                            android:singleLine="true"
+                            />
 
                     </LinearLayout>
 

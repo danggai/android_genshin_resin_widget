@@ -170,7 +170,7 @@ class CheckInForegroundService() : Service() {
     private fun generateForegroundNotification() {
         val intentMainLanding = Intent(this, MainActivity::class.java)
         val pendingIntent =
-            PendingIntent.getActivity(this, 0, intentMainLanding, 0)
+            PendingIntent.getActivity(this, 0, intentMainLanding, PendingIntent.FLAG_IMMUTABLE)
         iconNotification = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
 
         if (mNotificationManager == null) {
@@ -190,7 +190,7 @@ class CheckInForegroundService() : Service() {
         val stopIntent = Intent(applicationContext, CheckInForegroundService::class.java)
         stopIntent.action = STOP_FOREGROUND
         val stopPendingIntent = PendingIntent
-            .getService(applicationContext, 0, stopIntent, 0)
+            .getService(applicationContext, 0, stopIntent, PendingIntent.FLAG_IMMUTABLE)
 
         val builder = NotificationCompat.Builder(this, Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID)
 

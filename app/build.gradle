@@ -3,18 +3,19 @@ plugins {
     id 'kotlin-android'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'kotlin-kapt'
 }
 
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "danggai.app.resinwidget"
         minSdkVersion 23
-        targetSdkVersion 30
-        versionCode 20
-        versionName "1.1.0"
+        targetSdkVersion 31
+        versionCode 23
+        versionName "1.1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -38,8 +39,8 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures {
-        dataBinding = true
-        viewBinding = true
+        dataBinding true
+        viewBinding true
     }
 }
 
@@ -47,7 +48,6 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def koin_version = "2.2.2"
     def retrofit_version = "2.6.0"
-    def worker_version = "2.5.0"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.6.0'
@@ -76,7 +76,7 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
 
     // worker - Background Action
-    implementation "androidx.work:work-runtime-ktx:$worker_version"
+    implementation "androidx.work:work-runtime-ktx:2.7.1"
 
     // firebase
     implementation platform('com.google.firebase:firebase-bom:28.4.1')

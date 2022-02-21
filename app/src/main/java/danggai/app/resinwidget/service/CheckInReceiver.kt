@@ -18,18 +18,18 @@ class CheckInReceiver : BroadcastReceiver() {
     companion object {
         fun cancelAlarm(context: Context) {
             val receiverIntent = Intent(context, CheckInReceiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context, 0, receiverIntent, PendingIntent.FLAG_CANCEL_CURRENT)
+            val pendingIntent = PendingIntent.getBroadcast(context, 0, receiverIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT)
             val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
 
             alarmManager.cancel(pendingIntent)
 
-            if (PendingIntent.getBroadcast(context, 0, Intent(context, CheckInReceiver::class.java), PendingIntent.FLAG_NO_CREATE) != null) { log.d("Alarm is already active") } else { log.d("Alarm is inactive") }
+            if (PendingIntent.getBroadcast(context, 0, Intent(context, CheckInReceiver::class.java), PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_NO_CREATE) != null) { log.d("Alarm is already active") } else { log.d("Alarm is inactive") }
 
         }
 
         fun setAlarmRepeatly(context: Context) {
             val receiverIntent = Intent(context, CheckInReceiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context, 0, receiverIntent, PendingIntent.FLAG_CANCEL_CURRENT)
+            val pendingIntent = PendingIntent.getBroadcast(context, 0, receiverIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT)
             val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
 
             val startCalendar = Calendar.getInstance()
@@ -51,7 +51,7 @@ class CheckInReceiver : BroadcastReceiver() {
 
         fun setAlarmOneShot(context: Context) {
             val receiverIntent = Intent(context, CheckInReceiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context, 0, receiverIntent, PendingIntent.FLAG_ONE_SHOT)
+            val pendingIntent = PendingIntent.getBroadcast(context, 0, receiverIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_ONE_SHOT)
             val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
 
             val startCalendar = Calendar.getInstance()
@@ -63,7 +63,7 @@ class CheckInReceiver : BroadcastReceiver() {
 
             alarmManager.setAndAllowWhileIdle(AlarmManager.RTC, targetCalendar.timeInMillis, pendingIntent);
 
-            if (PendingIntent.getBroadcast(context, 0, receiverIntent, 0) != null) { log.d("Alarm is already active") } else { log.d("Alarm is inactive") }
+            if (PendingIntent.getBroadcast(context, 0, receiverIntent, PendingIntent.FLAG_IMMUTABLE) != null) { log.d("Alarm is already active") } else { log.d("Alarm is inactive") }
         }
     }
 
