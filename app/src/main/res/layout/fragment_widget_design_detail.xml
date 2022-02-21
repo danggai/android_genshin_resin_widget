@@ -219,7 +219,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@{vm.lvDetailFontSize.toString()}"
+                        android:text="@{vm.lvFontSizeDetail.toString()}"
                         android:hint="12"
                         android:textSize="20sp"
                         android:textColor="@color/black"
@@ -230,9 +230,17 @@
                     <androidx.appcompat.widget.AppCompatSeekBar
                         style="@style/SeekBar"
                         android:id="@+id/sb_fontsize"
-                        android:progress="@={vm.lvDetailFontSize}"
+                        android:progress="@={vm.lvFontSizeDetail}"
                         android:max="24"
                         />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextViewButton"
+                        android:id="@+id/mb_reset_fontsize_detail"
+                        android:text="@string/reset"
+                        android:onClick="@{(v)->vm.onClickResetButton(v)}"
+                        />
+
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -270,6 +278,13 @@
                         android:id="@+id/sb_transparent"
                         android:progress="@={vm.lvTransparency}"
                         android:max="255"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextViewButton"
+                        android:id="@+id/mb_reset_bg_trans"
+                        android:text="@string/reset"
+                        android:onClick="@{(v)->vm.onClickResetButton(v)}"
                         />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>

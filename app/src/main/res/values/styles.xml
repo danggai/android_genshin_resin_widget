@@ -33,5 +33,24 @@
         <item name="android:singleLine">true</item>
     </style>
 
+    <style name="TextViewButton">
+        <item name="android:letterSpacing">-0.04</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:backgroundTint">@color/light_blue_200</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:background">@drawable/rounded_square_skyblue_5dp</item>
+    </style>
+
 
 </resources>

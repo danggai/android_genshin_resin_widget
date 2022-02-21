@@ -354,14 +354,14 @@ object PreferenceManager {
     }
 
     fun getIntWidgetDetailFontSize(context: Context): Int {
-        return getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE, Constant.PREF_WIDGET_DETAIL_FONT_SIZE)
+        return getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_DETAIL, Constant.PREF_WIDGET_DETAIL_FONT_SIZE)
     }
     fun setIntWidgetDetailFontSize(context: Context, value: Int) {
         setInt(context, Constant.PREF_WIDGET_DETAIL_FONT_SIZE, value)
     }
 
     fun getIntWidgetResinFontSize(context: Context): Int {
-        return getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE, Constant.PREF_WIDGET_RESIN_FONT_SIZE)
+        return getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_RESIN, Constant.PREF_WIDGET_RESIN_FONT_SIZE)
     }
     fun setIntWidgetResinFontSize(context: Context, value: Int) {
         setInt(context, Constant.PREF_WIDGET_RESIN_FONT_SIZE, value)

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
 import com.google.android.material.tabs.TabLayoutMediator
-import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.FragmentWidgetDesignBinding
 import danggai.app.resinwidget.ui.BindingFragment
@@ -66,8 +65,8 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
         context?.let { it ->
             mVM.lvWidgetTheme.value = PreferenceManager.getIntWidgetTheme(it)
             mVM.lvTransparency.value = PreferenceManager.getIntBackgroundTransparency(it)
-            mVM.lvDetailFontSize.value = PreferenceManager.getIntWidgetDetailFontSize(it)
-            mVM.lvResinFontSize.value = PreferenceManager.getIntWidgetResinFontSize(it)
+            mVM.lvFontSizeDetail.value = PreferenceManager.getIntWidgetDetailFontSize(it)
+            mVM.lvFontSizeResin.value = PreferenceManager.getIntWidgetResinFontSize(it)
 
             try {
                 val wallpaperManager = WallpaperManager.getInstance(it)
@@ -88,8 +87,8 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
                 PreferenceManager.setIntWidgetTheme(_context, mVM.lvWidgetTheme.value)
                 PreferenceManager.setIntWidgetResinImageVisibility(_context, mVM.lvResinImageVisibility.value)
                 PreferenceManager.setIntBackgroundTransparency(_context, mVM.lvTransparency.value)
-                PreferenceManager.setIntWidgetResinFontSize(_context, mVM.lvResinFontSize.value)
-                PreferenceManager.setIntWidgetDetailFontSize(_context, mVM.lvDetailFontSize.value)
+                PreferenceManager.setIntWidgetResinFontSize(_context, mVM.lvFontSizeResin.value)
+                PreferenceManager.setIntWidgetDetailFontSize(_context, mVM.lvFontSizeDetail.value)
                 PreferenceManager.setIntResinTimeNotation(_context, mVM.lvResinTimeNotation.value)
                 PreferenceManager.setIntDetailTimeNotation(_context, mVM.lvDetailTimeNotation.value)
 

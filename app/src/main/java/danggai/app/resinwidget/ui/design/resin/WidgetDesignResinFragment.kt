@@ -2,7 +2,6 @@ package danggai.app.resinwidget.ui.design.resin
 
 import android.os.Bundle
 import android.view.View
-import android.widget.SeekBar
 import androidx.annotation.LayoutRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat.getColor
@@ -155,7 +154,7 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
             }
         }
 
-        mVM.lvResinFontSize.observe(viewLifecycleOwner) {
+        mVM.lvFontSizeResin.observe(viewLifecycleOwner) {
             binding.widget.tvResin.textSize = it.toFloat()
         }
     }

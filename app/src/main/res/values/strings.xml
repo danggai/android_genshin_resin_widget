@@ -21,6 +21,7 @@
     <string name="cancel">Cancel</string>
     <string name="force_stop">FORCE STOP</string>
     <string name="ok">OK</string>
+    <string name="reset">RESET</string>
 
     <string name="asia">Asia</string>
     <string name="america">America</string>

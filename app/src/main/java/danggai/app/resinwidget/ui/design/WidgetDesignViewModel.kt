@@ -27,8 +27,8 @@ class WidgetDesignViewModel(override val app: Application, private val api: ApiR
     var lvExpeditionDataVisibility: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(true)
 
     val lvTransparency: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY)
-    val lvResinFontSize: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE)
-    val lvDetailFontSize: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
+    val lvFontSizeResin: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_RESIN)
+    val lvFontSizeDetail: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_DETAIL)
 
 
 
@@ -73,6 +73,27 @@ class WidgetDesignViewModel(override val app: Application, private val api: ApiR
             R.id.rb_full_charge_time -> Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME
             else -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
         }
+    }
+
+    fun onClickResetButton(view: View) {
+        log.e()
+        when(view.id) {
+            R.id.mb_reset_bg_trans -> {
+                lvTransparency.value = Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY
+            }
+            R.id.mb_reset_fontsize_detail -> {
+                lvFontSizeDetail.value = Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_DETAIL
+            }
+            R.id.mb_reset_fontsize_resin -> {
+                lvFontSizeResin.value = Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_RESIN
+            }
+            else -> {}
+        }
+//        lvDetailTimeNotation.value = when (view.id) {
+//            R.id.rb_remain_time -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
+//            R.id.rb_full_charge_time -> Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME
+//            else -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
+//        }
     }
 
 }
