@@ -14,6 +14,7 @@ import danggai.app.resinwidget.ui.main.MainActivity
 import danggai.app.resinwidget.util.CommonFunction
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
+import danggai.app.resinwidget.worker.RefreshWorker
 
 
 class ResinWidget : AppWidgetProvider() {
@@ -44,8 +45,7 @@ class ResinWidget : AppWidgetProvider() {
                 if (intent.getBooleanExtra(Constant.REFRESH_DATA, false)) {
                     log.e("REFRESH_DATA")
                     updateAppWidget(context, appWidgetManager, appWidgetIds)
-                    context?.let { CommonFunction.startOneTimeRefreshWorker(context) }
-                    context?.let { CommonFunction.startUniquePeriodicRefreshWorker(context) }
+                    context?.let { RefreshWorker.startWorkerOneTime(context) }
                 } else if (intent.getBooleanExtra(Constant.REFRESH_UI, false)) {
                     log.e("REFRESH_UI")
                     updateAppWidget(context, appWidgetManager, appWidgetIds)
@@ -72,7 +72,7 @@ class ResinWidget : AppWidgetProvider() {
         super.onEnabled(context)
         log.e()
         context?.let {
-            CommonFunction.startUniquePeriodicRefreshWorker(context)
+            RefreshWorker.startWorkerPeriodic(context)
         }
     }
 
@@ -80,7 +80,7 @@ class ResinWidget : AppWidgetProvider() {
         super.onDisabled(context)
         log.e()
         context?.let {
-            CommonFunction.shutdownRefreshWorker(context)
+            RefreshWorker.shutdownWorker(context)
         }
     }
 

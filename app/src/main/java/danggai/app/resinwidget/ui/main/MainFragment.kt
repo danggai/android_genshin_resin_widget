@@ -221,7 +221,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
 
                 requireActivity().sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
 
-                CommonFunction.startUniquePeriodicRefreshWorker(_context)
+                RefreshWorker.startWorkerPeriodic(_context)
             }
         })
 

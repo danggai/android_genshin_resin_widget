@@ -15,6 +15,7 @@ import danggai.app.resinwidget.ui.main.MainActivity
 import danggai.app.resinwidget.util.CommonFunction
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
+import danggai.app.resinwidget.worker.RefreshWorker
 
 
 class ResinWidgetResizable : AppWidgetProvider() {
@@ -45,8 +46,7 @@ class ResinWidgetResizable : AppWidgetProvider() {
                 if (intent.getBooleanExtra(Constant.REFRESH_DATA, false)) {
                     log.e("REFRESH_DATA")
                     updateAppWidget(context, appWidgetManager, appWidgetIds)
-                    context?.let { CommonFunction.startOneTimeRefreshWorker(context) }
-                    context?.let { CommonFunction.startUniquePeriodicRefreshWorker(context) }
+                    context?.let { RefreshWorker.startWorkerOneTime(context) }
                 } else if (intent.getBooleanExtra(Constant.REFRESH_UI, false)) {
                     log.e("REFRESH_UI")
                     updateAppWidget(context, appWidgetManager, appWidgetIds)
@@ -74,8 +74,7 @@ class ResinWidgetResizable : AppWidgetProvider() {
         log.e()
         context?.let {
             Toast.makeText(context, context.getString(R.string.msg_toast_resizable_widget_enable), Toast.LENGTH_SHORT).show()
-            CommonFunction.startOneTimeRefreshWorker(context)
-            CommonFunction.startUniquePeriodicRefreshWorker(context)
+            RefreshWorker.startWorkerOneTime(context)
         }
     }
 
@@ -83,7 +82,7 @@ class ResinWidgetResizable : AppWidgetProvider() {
         super.onDisabled(context)
         log.e()
         context?.let {
-            CommonFunction.shutdownRefreshWorker(context)
+            RefreshWorker.shutdownWorker(context)
         }
     }
 

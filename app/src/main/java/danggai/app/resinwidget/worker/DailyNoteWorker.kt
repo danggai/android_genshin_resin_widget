@@ -1,8 +1,7 @@
 package danggai.app.resinwidget.worker
 
 import android.content.Context
-import androidx.work.Worker
-import androidx.work.WorkerParameters
+import androidx.work.*
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.data.api.ApiRepository
@@ -16,9 +15,54 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import java.net.ConnectException
 import java.net.UnknownHostException
+import java.util.concurrent.TimeUnit
 
 class DailyNoteWorker (val context: Context, workerParams: WorkerParameters, private val api: ApiRepository) :
     Worker(context, workerParams) {
+
+    companion object {
+        fun startWorkerOneTime(context: Context) {
+            log.e()
+
+            if (!PreferenceManager.getBooleanIsValidUserData(context)) {
+                log.e()
+                return
+            }
+
+            val workManager = WorkManager.getInstance(context)
+            val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
+                .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to true))
+                .build()
+            workManager.enqueue(workRequest)
+        }
+
+        fun startWorkerPeriodic(context: Context) {
+            val period = PreferenceManager.getLongAutoRefreshPeriod(context)
+
+            if (PreferenceManager.getLongAutoRefreshPeriod(context) == -1L ||
+                !PreferenceManager.getBooleanIsValidUserData(context)) {
+                log.e()
+                return
+            }
+
+            log.e("period -> $period")
+
+            val workManager = WorkManager.getInstance(context)
+            val workRequest = PeriodicWorkRequestBuilder<RefreshWorker>(period, TimeUnit.MINUTES)
+                .setInitialDelay(period, TimeUnit.MINUTES)
+                .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to false))
+                .build()
+            workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
+        }
+
+        fun shutdownWorker(context: Context) {
+            log.e()
+
+            val workManager = WorkManager.getInstance(context)
+
+            workManager.cancelUniqueWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
+        }
+    }
 
     private val rxApiDailyNote: PublishSubject<Boolean> = PublishSubject.create()
     private val compositeDisposable = CompositeDisposable()
@@ -48,6 +92,11 @@ class DailyNoteWorker (val context: Context, workerParams: WorkerParameters, pri
                 api.dailyNote(uid, server, cookie)
             }
             .subscribe ({ res ->
+                if (inputData.getBoolean(Constant.ARG_IS_ONE_TIME, false)) {
+                    log.e()
+                    startWorkerPeriodic(context)
+                }
+
                 when (res.meta.code) {
                     Constant.META_CODE_SUCCESS -> {
                         log.e()

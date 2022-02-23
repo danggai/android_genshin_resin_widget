@@ -11,7 +11,6 @@ import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
-import androidx.work.*
 import com.google.android.gms.common.internal.Preconditions.checkArgument
 import com.google.firebase.crashlytics.CustomKeysAndValues
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -19,12 +18,10 @@ import danggai.app.resinwidget.BuildConfig
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.data.local.DailyNote
-import danggai.app.resinwidget.worker.RefreshWorker
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.streams.asSequence
 
 
@@ -53,54 +50,6 @@ object CommonFunction {
         }
         val hash = encodeToMD5("salt=${Constant.OS_SALT}&t=$t&r=$r")
         return "${t},${r},${hash}"
-    }
-
-    fun shutdownRefreshWorker(context: Context) {
-//        if (!PreferenceManager.getBooleanAutoRefresh(context)) return
-        log.e()
-
-        val workManager = WorkManager.getInstance(context)
-
-        workManager.cancelUniqueWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
-    }
-
-    fun startOneTimeRefreshWorker(context: Context) {
-//        if (!PreferenceManager.getBooleanAutoRefresh(context)) return
-        log.e()
-
-        if (!PreferenceManager.getBooleanIsValidUserData(context)) {
-            log.e()
-            return
-        }
-
-        val workManager = WorkManager.getInstance(context)
-        val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
-            .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to true))
-            .build()
-        workManager.enqueue(workRequest)
-    }
-
-    fun startUniquePeriodicRefreshWorker(context: Context) {
-        val period = PreferenceManager.getLongAutoRefreshPeriod(context)
-
-        startUniquePeriodicRefreshWorker(context, period)
-    }
-
-    fun startUniquePeriodicRefreshWorker(context: Context, period: Long) {
-        if (PreferenceManager.getLongAutoRefreshPeriod(context) == -1L ||
-            !PreferenceManager.getBooleanIsValidUserData(context)) {
-                log.e()
-                return
-        }
-
-        log.e("period -> $period")
-
-        val workManager = WorkManager.getInstance(context)
-        val workRequest = PeriodicWorkRequestBuilder<RefreshWorker>(period, TimeUnit.MINUTES)
-            .setInitialDelay(period, TimeUnit.MINUTES)
-            .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to false))
-            .build()
-        workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
     }
 
     private fun encodeToMD5(input:String): String {
