@@ -11,7 +11,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
-import androidx.work.WorkManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -20,7 +19,6 @@ import danggai.app.resinwidget.BuildConfig
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.FragmentMainBinding
 import danggai.app.resinwidget.service.CheckInForegroundService
-import danggai.app.resinwidget.service.CheckInReceiver
 import danggai.app.resinwidget.ui.BindingFragment
 import danggai.app.resinwidget.ui.cookie_web_view.CookieWebViewActivity
 import danggai.app.resinwidget.ui.design.WidgetDesignActivity
@@ -31,6 +29,8 @@ import danggai.app.resinwidget.util.CommonFunction.setDailyNoteData
 import danggai.app.resinwidget.util.EventObserver
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
+import danggai.app.resinwidget.worker.CheckInWorker
+import danggai.app.resinwidget.worker.RefreshWorker
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import java.util.*
 
@@ -100,10 +100,6 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
     private fun initUi() {
         context?.let { it ->
             mVM.initUI(PreferenceManager.getStringUid(it), PreferenceManager.getStringCookie(it))
-
-            val workManager = WorkManager.getInstance(it)
-            workManager.cancelUniqueWork("AutoCheckInWork")
-            // TODO("CHECK IN WORKER 관련 잔여 함수 제거")
         }
     }
 
@@ -184,7 +180,8 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
                     PreferenceManager.setBooleanNotiCheckInFailed(_context, mVM.lvEnableNotiCheckinFailed.value)
 
                     if (!mVM.lvEnableAutoCheckIn.value)
-                        CheckInReceiver.cancelAlarm(_context)
+                        CheckInWorker.shutdownWorker(_context)
+//                        CheckInReceiver.cancelAlarm(_context)
 
                     makeToast(_context, getString(R.string.msg_toast_save_done))
                 } else if (!boolean and mVM.lvCookie.value.isEmpty()) {
@@ -316,12 +313,13 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
             binding.llProgress.visibility = if (it) View.VISIBLE else View.GONE
         })
 
-        mVM.lvStartCheckInAlarm.observe(viewLifecycleOwner, EventObserver {
+        mVM.lvStartCheckInWorker.observe(viewLifecycleOwner, EventObserver {
             log.e()
             context?.let {
                 if (PreferenceManager.getBooleanEnableAutoCheckIn(it)) {
                     log.e()
-                    CheckInReceiver.setAlarmRepeatly(it)
+                    CheckInWorker.startWorkerOneTime(it)
+//                    CheckInReceiver.setAlarmRepeatly(it)
                 }
             }
         })

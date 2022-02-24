@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
-import android.os.Build
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
@@ -70,12 +69,6 @@ class CheckInReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
         if (!PreferenceManager.getBooleanEnableAutoCheckIn(context)) return
-
-        if (intent.action.equals("android.intent.action.BOOT_COMPLETED") ||
-                intent.action.equals("android.intent.action.LOCKED_BOOT_COMPLETED")) {
-            log.e()
-            setAlarmRepeatly(context)
-        }
 
         CheckInForegroundService.startService(context)
     }

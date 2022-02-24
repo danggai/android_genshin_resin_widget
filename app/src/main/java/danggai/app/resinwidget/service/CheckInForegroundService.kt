@@ -15,6 +15,7 @@ import danggai.app.resinwidget.ui.main.MainActivity
 import danggai.app.resinwidget.util.CommonFunction
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
+import danggai.app.resinwidget.worker.CheckInWorker
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -87,6 +88,7 @@ class CheckInForegroundService() : Service() {
     }
 
     private fun initRx() {
+
         rxApiCheckIn
             .observeOn(Schedulers.io())
             .filter { it }
@@ -107,7 +109,7 @@ class CheckInForegroundService() : Service() {
                                     log.e()
                                     sendNoti(Constant.NOTI_TYPE_CHECK_IN_SUCCESS)
                                 }
-                                CheckInReceiver.setAlarmRepeatly(applicationContext)
+                                CheckInWorker.startWorkerPeriodic(applicationContext)
                             }
                             Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
                             Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> {
@@ -116,7 +118,7 @@ class CheckInForegroundService() : Service() {
                                     log.e()
                                     sendNoti(Constant.NOTI_TYPE_CHECK_IN_ALREADY)
                                 }
-                                CheckInReceiver.setAlarmRepeatly(applicationContext)
+                                CheckInWorker.startWorkerPeriodic(applicationContext)
                             }
                             else -> {
                                 log.e()
@@ -125,7 +127,7 @@ class CheckInForegroundService() : Service() {
                                     sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                                 }
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, res.data.retcode)
-                                CheckInReceiver.setAlarmOneShot(applicationContext)
+                                CheckInWorker.startWorkerOneTime(applicationContext, 30)
                             }
                         }
                     }
@@ -136,15 +138,19 @@ class CheckInForegroundService() : Service() {
                             sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                         }
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, null)
-                        CheckInReceiver.setAlarmOneShot(applicationContext)
+                        CheckInWorker.startWorkerOneTime(applicationContext, 30)
                     }
                 }
-                stopForegroundService()
             }, {
                 it.message?.let { msg ->
                     log.e(msg)
+                    if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                        log.e()
+                        sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
+                    }
+                    initRx()
+                    CheckInWorker.startWorkerOneTime(applicationContext, 30)
                 }
-                stopForegroundService()
             })
             .addCompositeDisposable()
     }
