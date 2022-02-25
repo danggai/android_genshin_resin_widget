@@ -34,7 +34,6 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     var lvSetProgress = MutableLiveData<Event<Boolean>>()
     var lvStartCheckInWorker = MutableLiveData<Event<Boolean>>()
     var lvStartWidgetDesignActivity = MutableLiveData<Event<Boolean>>()
-    var lvStartForegroundService = MutableLiveData<Event<Boolean>>()
     var lvChangeLanguage = MutableLiveData<Event<Boolean>>()
 
     var lvServer: NonNullMutableLiveData<Int> = NonNullMutableLiveData(0)
@@ -433,10 +432,5 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     fun makeDailyNotePrivate() {
         log.e()
         rxApiChangeDataSwitchPrivate.onNext(false)
-    }
-
-    fun onClickStartForeground() {
-        log.e()
-        lvStartForegroundService.value = Event(true)
     }
 }

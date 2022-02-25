@@ -187,7 +187,7 @@ object Constant {
 
     /* ARGUMENT */
 
-    const val ARG_IS_ONE_TIME = "ARG_IS_ONE_TIME"
+    const val ARG_START_PERIODIC_WORKER = "ARG_START_PERIODIC_WORKER"
 
 
 

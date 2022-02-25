@@ -17,7 +17,6 @@ import com.google.common.util.concurrent.ListenableFuture
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.data.api.ApiRepository
-import danggai.app.resinwidget.service.CheckInForegroundService
 import danggai.app.resinwidget.ui.main.MainActivity
 import danggai.app.resinwidget.util.CommonFunction
 import danggai.app.resinwidget.util.PreferenceManager
@@ -36,13 +35,29 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
     Worker(context, workerParams) {
 
     companion object {
-        fun startWorkerOneTime(context: Context) {
-            log.e()
+        private const val ARG_TYPE = "ARG_TYPE"
+        private const val ARG_NULL = "ARG_NULL"
+        private const val ARG_START_AT_CHINA_MIDNIGHT = "ARG_START_AT_CHINA_MIDNIGHT"
+        private const val ARG_START_PERIODIC_WORKER = "ARG_START_PERIODIC_WORKER"
 
-            startWorkerOneTime(context, 0L)
+        fun startWorkerOneTimeImmediately(context: Context) {
+            log.e()
+            startWorkerOneTime(context, 0L, ARG_START_AT_CHINA_MIDNIGHT)
         }
 
-        fun startWorkerOneTime(context: Context, delay: Long) {
+        fun startWorkerOneTimeAtChinaMidnight(context: Context) {
+            log.e()
+            val delay: Long = CommonFunction.calculateDelayUntilChinaMidnight(Calendar.getInstance())
+
+            startWorkerOneTime(context, delay, ARG_START_PERIODIC_WORKER)
+        }
+
+        fun startWorkerOneTimeRetry(context: Context) {
+            log.e()
+            startWorkerOneTime(context, 30L, null)
+        }
+
+        private fun startWorkerOneTime(context: Context, delay: Long, argType: String?) {
             log.e()
 
             if (!PreferenceManager.getBooleanIsValidUserData(context)) {
@@ -55,9 +70,10 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
             val workManager = WorkManager.getInstance(context)
             val workRequest = OneTimeWorkRequestBuilder<CheckInWorker>()
                 .setInitialDelay(delay, TimeUnit.MINUTES)
-                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-                .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to true))
+//                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                .setInputData(workDataOf(ARG_TYPE to (argType?:ARG_NULL)))
                 .build()
+
             workManager.enqueue(workRequest)
         }
 
@@ -66,13 +82,8 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
                 log.e()
                 return
             }
-
-            val delay: Long = CommonFunction.calculateDelayUntilChinaMidnight(Calendar.getInstance())
-
             val workManager = WorkManager.getInstance(context)
             val workRequest = PeriodicWorkRequestBuilder<CheckInWorker>(1, TimeUnit.DAYS)
-                .setInitialDelay(delay, TimeUnit.MINUTES)
-                .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to false))
                 .build()
             workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
         }
@@ -111,22 +122,30 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
                     Constant.META_CODE_SUCCESS -> {
                         log.e()
                         when (res.data.retcode) {
-                            Constant.RETCODE_SUCCESS -> {
-                                log.e()
-                                if (PreferenceManager.getBooleanNotiCheckInSuccess(context)) {
-                                    log.e()
-                                    sendNoti(Constant.NOTI_TYPE_CHECK_IN_SUCCESS)
-                                }
-                                startWorkerPeriodic(context)
-                            }
+                            Constant.RETCODE_SUCCESS,
                             Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
                             Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> {
                                 log.e()
                                 if (PreferenceManager.getBooleanNotiCheckInSuccess(context)) {
                                     log.e()
-                                    sendNoti(Constant.NOTI_TYPE_CHECK_IN_ALREADY)
+
+                                    when (res.data.retcode) {
+                                        Constant.RETCODE_SUCCESS -> sendNoti(Constant.NOTI_TYPE_CHECK_IN_SUCCESS)
+                                        Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
+                                        Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> sendNoti(Constant.NOTI_TYPE_CHECK_IN_ALREADY)
+                                    }
                                 }
-                                startWorkerPeriodic(context)
+
+                                when (inputData.getString(ARG_TYPE)) {
+                                    ARG_START_AT_CHINA_MIDNIGHT -> {
+                                        log.e()
+                                        startWorkerOneTimeAtChinaMidnight(context)
+                                    }
+                                    ARG_START_PERIODIC_WORKER -> {
+                                        log.e()
+                                        startWorkerPeriodic(context)
+                                    }
+                                }
                             }
                             else -> {
                                 log.e()
@@ -135,7 +154,7 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
                                     sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                                 }
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, res.data.retcode)
-                                startWorkerOneTime(context, 30)
+                                startWorkerOneTimeRetry(context)
                             }
                         }
                     }
@@ -146,7 +165,7 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
                             sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                         }
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, null)
-                        startWorkerOneTime(context, 30)
+                        startWorkerOneTimeRetry(context)
                     }
                 }
             }, {
@@ -157,7 +176,7 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
                         sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                     }
                     initRx()
-                    startWorkerOneTime(context, 30)
+                    startWorkerOneTimeRetry(context)
                 }
             })
             .addCompositeDisposable()
@@ -199,10 +218,10 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
             mNotificationManager.createNotificationChannel(notificationChannel)
         }
 
-        val stopIntent = Intent(applicationContext, CheckInForegroundService::class.java)
-        stopIntent.action = CheckInForegroundService.STOP_FOREGROUND
-        val stopPendingIntent = PendingIntent
-            .getService(applicationContext, 0, stopIntent, PendingIntent.FLAG_IMMUTABLE)
+//        val stopIntent = Intent(applicationContext, CheckInForegroundService::class.java)
+//        stopIntent.action = CheckInForegroundService.STOP_FOREGROUND
+//        val stopPendingIntent = PendingIntent
+//            .getService(applicationContext, 0, stopIntent, PendingIntent.FLAG_IMMUTABLE)
 
         val notification = NotificationCompat.Builder(context, Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID)
             .setContentTitle(applicationContext.getString(R.string.foreground_genshin_check_in_progress))
@@ -213,7 +232,7 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
             .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)
             .setOngoing(true)
-            .addAction(NotificationCompat.Action(0, applicationContext.getString(R.string.force_stop), stopPendingIntent))
+//            .addAction(NotificationCompat.Action(0, applicationContext.getString(R.string.force_stop), stopPendingIntent))
 
         if (iconNotification != null) {
             notification.setLargeIcon(Bitmap.createScaledBitmap(iconNotification, 128, 128, false))

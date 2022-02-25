@@ -18,7 +18,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import danggai.app.resinwidget.BuildConfig
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.FragmentMainBinding
-import danggai.app.resinwidget.service.CheckInForegroundService
 import danggai.app.resinwidget.ui.BindingFragment
 import danggai.app.resinwidget.ui.cookie_web_view.CookieWebViewActivity
 import danggai.app.resinwidget.ui.design.WidgetDesignActivity
@@ -318,8 +317,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
             context?.let {
                 if (PreferenceManager.getBooleanEnableAutoCheckIn(it)) {
                     log.e()
-                    CheckInWorker.startWorkerOneTime(it)
-//                    CheckInReceiver.setAlarmRepeatly(it)
+                    CheckInWorker.startWorkerOneTimeImmediately(it)
                 }
             }
         })
@@ -328,13 +326,6 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
             log.e()
             activity?.let {
                 WidgetDesignActivity.startActivity(it)
-            }
-        })
-
-        mVM.lvStartForegroundService.observe(viewLifecycleOwner, EventObserver {
-            log.e()
-            context?.let { context ->
-                CheckInForegroundService.startService(context)
             }
         })
 

@@ -31,7 +31,7 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
 
             val workManager = WorkManager.getInstance(context)
             val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
-                .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to true))
+                .setInputData(workDataOf(Constant.ARG_START_PERIODIC_WORKER to true))
                 .build()
             workManager.enqueue(workRequest)
         }
@@ -50,7 +50,7 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
             val workManager = WorkManager.getInstance(context)
             val workRequest = PeriodicWorkRequestBuilder<RefreshWorker>(period, TimeUnit.MINUTES)
                 .setInitialDelay(period, TimeUnit.MINUTES)
-                .setInputData(workDataOf(Constant.ARG_IS_ONE_TIME to false))
+                .setInputData(workDataOf(Constant.ARG_START_PERIODIC_WORKER to false))
                 .build()
             workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
         }
@@ -92,7 +92,7 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
                 api.dailyNote(uid, server, cookie)
             }
             .subscribe ({ res ->
-                if (inputData.getBoolean(Constant.ARG_IS_ONE_TIME, false)) {
+                if (inputData.getBoolean(Constant.ARG_START_PERIODIC_WORKER, false)) {
                     log.e()
                     startWorkerPeriodic(context)
                 }
@@ -197,7 +197,7 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
     private fun sendNoti(id: Int, target: Int) {
         log.e()
 
-        if (inputData.getBoolean(Constant.ARG_IS_ONE_TIME, false)) {
+        if (inputData.getBoolean(Constant.ARG_START_PERIODIC_WORKER, false)) {
             log.e()
             return
         }
