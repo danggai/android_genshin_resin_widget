@@ -190,5 +190,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- Widget Design에서 위젯의 글자 크기 변경이 가능해졌습니다.\n- 앱 안정성이 개선되었습니다.</string>
+    <string name="dialog_msg_patch_note">- HoYoVerse로 수정 된 도메인 적용.\n- 앱 안정성이 개선되었습니다.</string>
 </resources>

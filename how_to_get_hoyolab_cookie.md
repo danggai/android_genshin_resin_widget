@@ -10,7 +10,7 @@
 
 
 2. HoYoLAB 원신 출석체크 페이지 진입 및 로그인
-   - https://webstatic-sea.mihoyo.com/ys/event/signin-sea/index.html?act_id=e202102251931481
+   - https://webstatic-sea.hoyoverse.com/ys/event/signin-sea/index.html?act_id=e202102251931481&lang=ko-kr
    - 모바일의 경우, 삼성 인터넷 외의 브라우저를 사용해야 함
 
 ![hoyolab_cookie_1](./hoyolab_cookie_1.png)

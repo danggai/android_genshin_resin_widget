@@ -4,15 +4,15 @@ object Constant {
 
     /* URL */
 
-    const val OS_TAKUMI_URL = "https://bbs-api-os.mihoyo.com"
-    const val CN_TAKUMI_URL = "https://api-takumi.mihoyo.com"
+    const val OS_TAKUMI_URL = "https://bbs-api-os.hoyoverse.com"
+    const val CN_TAKUMI_URL = "https://api-takumi.hoyoverse.com"
 
     const val OS_SALT = "6cqshh5dhw73bzxn20oexa9k516chk7s"
     const val CN_SALT = "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs"
 
-    const val OS_CHECK_IN_URL = "https://hk4e-api-os.mihoyo.com/event/sol/sign"
+    const val OS_CHECK_IN_URL = "https://hk4e-api-os.hoyoverse.com/event/sol/sign"
     const val OS_ACT_ID = "e202102251931481"
-    const val CN_CHECK_IN_URL = "https://api-takumi.mihoyo.com/event/bbs_sign_reward/"
+    const val CN_CHECK_IN_URL = "https://api-takumi.hoyoverse.com/event/bbs_sign_reward/"
     const val CN_ACT_ID = "e202009291139501"
 
     const val SERVER_CN_GF_01 = "cn_gf01"
