@@ -21,12 +21,11 @@ import java.util.concurrent.TimeUnit
 class MainViewModel(override val app: Application, private val api: ApiRepository) : BaseViewModel(app) {
 
     private val rxApiDailyNote: PublishSubject<Boolean> = PublishSubject.create()
-    private val rxApiCheckIn: PublishSubject<Boolean> = PublishSubject.create()
     private val rxApiChangeDataSwitchPublic: PublishSubject<Boolean> = PublishSubject.create()
     private val rxApiChangeDataSwitchPrivate: PublishSubject<Boolean> = PublishSubject.create()
 
-    var lvSaveUserInfo = MutableLiveData<Event<Boolean>>()
-    var lvSaveCookie = MutableLiveData<Event<Boolean>>()
+    var lvSaveResinWidgetData = MutableLiveData<Event<Boolean>>()
+    var lvSaveCheckInData = MutableLiveData<Event<Boolean>>()
     var lvSendWidgetSyncBroadcast = MutableLiveData<Event<DailyNote>>()
     var lvWidgetRefreshNotWork = MutableLiveData<Event<Boolean>>()
     var lvHowCanIGetCookie = MutableLiveData<Event<Boolean>>()
@@ -92,7 +91,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                         when (res.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
                                 log.e()
-                                lvSaveUserInfo.value = Event(true)
+                                lvSaveResinWidgetData.value = Event(true)
                                 lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_success))
 
                                 res.data.data?.let {
@@ -171,72 +170,6 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                 }
             }).addCompositeDisposable()
     }
-//
-//    private fun initRxCheckIn() {
-//        rxApiCheckIn
-//            .map {
-//                setProgress(true)
-//                it
-//            }
-//            .throttleFirst(1, TimeUnit.SECONDS)
-//            .observeOn(Schedulers.newThread())
-//            .debounce(250, TimeUnit.MILLISECONDS)
-//            .filter { it }
-//            .switchMap {
-//                api.checkIn(Constant.SERVER_OS_ASIA, lvCookie.value)
-//            }
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe ({ res ->
-//                setProgress(false)
-//                when (res.meta.code) {
-//                    Constant.META_CODE_SUCCESS -> {
-//                        when (res.data.retcode) {
-//                            Constant.RETCODE_SUCCESS -> {
-//                                log.e()
-//                                lvSaveCookie.value = Event(true)
-//                                lvMakeToast.value = Event(getString(R.string.msg_toast_check_in_success))
-//
-//                                lvStartCheckInAlarm.value = Event(true)
-//                            }
-//                            Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
-//                            Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD -> {
-//                                log.e()
-//                                lvSaveCookie.value = Event(true)
-//                                lvMakeToast.value = Event(getString(R.string.msg_toast_check_in_already))
-//
-//                                lvStartCheckInAlarm.value = Event(true)
-//                            }
-//                            Constant.RETCODE_ERROR_NOT_LOGGED_IN,
-//                            Constant.RETCODE_ERROR_NOT_LOGGED_IN_2-> {
-//                                log.e()
-//                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
-//                                lvMakeToast.value = Event(getString(R.string.msg_toast_check_in_error_not_logged_in))
-//                            }
-//                            Constant.RETCODE_ERROR_TOO_FAST -> {
-//                                log.e()
-//                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
-//                                lvMakeToast.value = Event(getString(R.string.msg_toast_check_in_error_too_fast))
-//                            }
-//                            else -> {
-//                                log.e()
-//                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, res.data.retcode)
-//                                lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_dailynote_error_include_error_code), res.data.retcode))
-//                            }
-//                        }
-//                    } else -> {
-//                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, null)
-//                        lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_api_error_include_code), res.meta.code))
-//                    }
-//                }
-//            }, {
-//                setProgress(false)
-//                it.message?.let { msg ->
-//                    log.e(msg)
-//                    lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error))
-//                    initRxCheckIn()
-//                }
-//            }).addCompositeDisposable()
-//    }
 
     private fun initRxChangeDataSwitchPublic() {
         rxApiChangeDataSwitchPublic
@@ -355,7 +288,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     fun onClickSave() {
         log.e()
         if (lvUid.value.isEmpty() || lvCookie.value.isEmpty())  {
-            lvSaveUserInfo.value = Event(false)
+            lvSaveResinWidgetData.value = Event(false)
         } else {
             lvUid.value = lvUid.value.trim()
             lvCookie.value = lvCookie.value.trim()
@@ -366,10 +299,10 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     fun onClickCheckInSave() {
         log.e()
         if (lvCookie.value.isEmpty())  {
-            lvSaveCookie.value = Event(false)
+            lvSaveCheckInData.value = Event(false)
         } else {
             lvCookie.value = lvCookie.value.trim()
-            lvSaveCookie.value = Event(true)
+            lvSaveCheckInData.value = Event(true)
             lvStartCheckInWorker.value = Event(true)
         }
     }

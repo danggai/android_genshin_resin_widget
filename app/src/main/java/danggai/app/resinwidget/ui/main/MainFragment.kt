@@ -149,7 +149,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
     }
 
     private fun initLv() {
-        mVM.lvSaveUserInfo.observe(viewLifecycleOwner, EventObserver { boolean ->
+        mVM.lvSaveResinWidgetData.observe(viewLifecycleOwner, EventObserver { boolean ->
             context?.let { _context ->
                 if (boolean) {
                     log.e()
@@ -167,7 +167,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
             }
         })
 
-        mVM.lvSaveCookie.observe(viewLifecycleOwner, EventObserver { boolean ->
+        mVM.lvSaveCheckInData.observe(viewLifecycleOwner, EventObserver { boolean ->
             context?.let { _context ->
                 if (boolean) {
                     log.e()
