@@ -89,31 +89,6 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="@string/uid"
-                    android:textColor="@color/black"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_uid"
-                    style="@style/EditTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_uid"
-                    android:singleLine="true"
-                    android:text="@={vm.lvUid}"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray"
-                    android:textSize="16sp" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:text="@string/cookie"
                     android:textColor="@color/black"
                     android:textSize="28sp"
@@ -137,8 +112,40 @@
                     android:layout_gravity="end"
                     android:background="?attr/selectableItemBackground"
                     android:gravity="end"
-                    android:onClick="@{(v)->vm.onClickHowCanIGetCookie()}"
+                    android:onClick="@{(v)->vm.onClickGetCookie()}"
                     android:text="@string/get_cookie"
+                    android:textColor="@color/light_blue_600"
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/uid"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_uid"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_uid"
+                    android:singleLine="true"
+                    android:text="@={vm.lvUid}"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="end"
+                    android:onClick="@{(v)->vm.onClickGetUid()}"
+                    android:text="@string/get_uid"
                     android:textColor="@color/light_blue_600"
                     android:textSize="14sp"
                     android:textStyle="italic" />

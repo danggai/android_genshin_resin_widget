@@ -8,6 +8,7 @@ import danggai.app.resinwidget.data.res.ResCheckIn
 import danggai.app.resinwidget.data.res.ResDailyNote
 import danggai.app.resinwidget.data.res.ResDefault
 import danggai.app.resinwidget.util.CommonFunction
+import danggai.app.resinwidget.util.log
 import io.reactivex.Observable
 
 class ApiRepository(private val api: ApiInterface) {
@@ -38,6 +39,25 @@ class ApiRepository(private val api: ApiInterface) {
                 api.changeDataSwitch(gameId, switchId, isPublic, cookie, CommonFunction.getGenshinDS())
             }
             .map { res ->
+                when {
+                    res.isSuccessful -> {
+                        ResDefault(Meta(res.code(), res.message()), res.body()?:emptyData)
+                    } else -> {
+                        ResDefault(Meta(res.code(), res.message()), emptyData)
+                    }
+                }
+            }
+    }
+
+    fun getCameRecordCard(hoyolabUid: String, cookie: String): Observable<ResDefault> {
+        val emptyData = ResDefault.Data("","")
+
+        return Observable.just(true)
+            .switchMap {
+                api.getGameRecordCard(hoyolabUid, cookie, CommonFunction.getGenshinDS())
+            }
+            .map { res ->
+                log.e(res.body().toString())
                 when {
                     res.isSuccessful -> {
                         ResDefault(Meta(res.code(), res.message()), res.body()?:emptyData)

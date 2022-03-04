@@ -71,6 +71,7 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding>() {
         binding.wvBody.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
+                log.e(url?:"")
                 binding.pgBar.visibility = View.GONE
             }
 

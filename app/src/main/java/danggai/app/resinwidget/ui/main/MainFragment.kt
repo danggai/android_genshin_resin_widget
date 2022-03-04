@@ -255,7 +255,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
             }
         })
 
-        mVM.lvHowCanIGetCookie.observe(viewLifecycleOwner, EventObserver {
+        mVM.lvGetCookie.observe(viewLifecycleOwner, EventObserver {
             activity?.let {
                 log.e()
                 AlertDialog.Builder(requireActivity())

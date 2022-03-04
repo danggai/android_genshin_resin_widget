@@ -63,7 +63,7 @@
                     android:layout_gravity="end"
                     android:background="?attr/selectableItemBackground"
                     android:gravity="end"
-                    android:onClick="@{(v)->vm.onClickHowCanIGetCookie()}"
+                    android:onClick="@{(v)->vm.onClickGetCookie()}"
                     android:text="@string/get_cookie"
                     android:textColor="@color/light_blue_600"
                     android:textSize="14sp"

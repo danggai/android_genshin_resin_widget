@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit
 class MainViewModel(override val app: Application, private val api: ApiRepository) : BaseViewModel(app) {
 
     private val rxApiDailyNote: PublishSubject<Boolean> = PublishSubject.create()
+    private val rxGetUidFromHoyolabUid: PublishSubject<Boolean> = PublishSubject.create()
     private val rxApiChangeDataSwitchPublic: PublishSubject<Boolean> = PublishSubject.create()
     private val rxApiChangeDataSwitchPrivate: PublishSubject<Boolean> = PublishSubject.create()
 
@@ -28,7 +29,7 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
     var lvSaveCheckInData = MutableLiveData<Event<Boolean>>()
     var lvSendWidgetSyncBroadcast = MutableLiveData<Event<DailyNote>>()
     var lvWidgetRefreshNotWork = MutableLiveData<Event<Boolean>>()
-    var lvHowCanIGetCookie = MutableLiveData<Event<Boolean>>()
+    var lvGetCookie = MutableLiveData<Event<Boolean>>()
     var lvWhenDailyNotePrivate = MutableLiveData<Event<Boolean>>()
     var lvSetProgress = MutableLiveData<Event<Boolean>>()
     var lvStartCheckInWorker = MutableLiveData<Event<Boolean>>()
@@ -55,8 +56,8 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
 
     private fun initRx() {
         initRxDailyNote()
-//        initRxCheckIn()
         initRxChangeDataSwitchPublic()
+        initRxGetUidFromHoyolabUid()
 
         if (BuildConfig.DEBUG){
             initRxChangeDataSwitchPrivate()
@@ -277,6 +278,57 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
             }).addCompositeDisposable()
     }
 
+    private fun initRxGetUidFromHoyolabUid() {
+        rxGetUidFromHoyolabUid
+            .map {
+                setProgress(true)
+                it
+            }
+            .observeOn(Schedulers.newThread())
+            .debounce(250, TimeUnit.MILLISECONDS)
+            .switchMap {
+                val list = mutableMapOf<String, String>()
+                lvCookie.value.split(";").onEach { item ->
+                    if (item == "") return@onEach
+
+                    val _list = item.trim().split("=")
+                    list[_list[0]] = _list[1]
+                }
+
+                api.getCameRecordCard(list["ltuid"]?:"", lvCookie.value)
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe ({ res ->
+                setProgress(false)
+                log.e(res)
+                when (res.meta.code) {
+                    Constant.META_CODE_SUCCESS -> {
+                        log.e()
+                        when (res.data.retcode) {
+                            Constant.RETCODE_SUCCESS -> {
+                                lvMakeToast.value = Event(getString(R.string.msg_toast_change_data_switch_success))
+                            }
+                            else -> {
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHANGE_DATA_SWITCH, res.meta.code, res.data.retcode)
+                                lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_change_data_switch_error_include_error_code), res.data.retcode))
+                            }
+                        }
+                    } else -> {
+                        log.e()
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHANGE_DATA_SWITCH, res.meta.code, null)
+                        lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_api_error_include_code), res.meta.code))
+                    }
+                }
+            }, {
+                setProgress(false)
+                it.message?.let { msg ->
+                    log.e(msg)
+                    lvMakeToast.value = Event(getString(R.string.msg_toast_dailynote_error))
+                    initRxGetUidFromHoyolabUid()
+                }
+            }).addCompositeDisposable()
+    }
+
     fun initUI(uid: String, cookie: String) {
         log.e()
         lvUid.value = uid
@@ -339,9 +391,18 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
         lvStartWidgetDesignActivity.value = Event(true)
     }
 
-    fun onClickHowCanIGetCookie() {
+    fun onClickGetCookie() {
         log.e()
-        lvHowCanIGetCookie.value = Event(true)
+        lvGetCookie.value = Event(true)
+    }
+
+    fun onClickGetUid() {
+        log.e()
+        if (!lvCookie.value.contains(("ltuid="))) {
+            lvMakeToast.value = Event("ltuid 없음")
+            return
+        }
+        rxGetUidFromHoyolabUid.onNext(true)
     }
 
     fun makeDailyNotePublic() {
