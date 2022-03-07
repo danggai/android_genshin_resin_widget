@@ -22,6 +22,9 @@ object Constant {
     const val SERVER_OS_ASIA = "os_asia"
     const val SERVER_OS_CHT = "os_cht"
 
+    const val GAME_ID_HONKAI_3RD = 1
+    const val GAME_ID_GENSHIN_IMPACT = 2
+
     /* HTTP STATUS CODE */
 
     const val META_CODE_SUCCESS = 200

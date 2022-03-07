@@ -303,14 +303,24 @@ class MainViewModel(override val app: Application, private val api: ApiRepositor
                 log.e(res)
                 when (res.meta.code) {
                     Constant.META_CODE_SUCCESS -> {
-                        log.e()
                         when (res.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
-                                lvMakeToast.value = Event(getString(R.string.msg_toast_change_data_switch_success))
+                                if (res.data.data.list.isNotEmpty()) {
+                                    log.e()
+                                    res.data.data.list.forEach {
+                                        if (it.game_id == Constant.GAME_ID_GENSHIN_IMPACT)
+                                            lvUid.value = it.game_role_id
+                                    }
+                                    lvMakeToast.value = Event(getString(R.string.msg_toast_get_uid_success))
+                                } else {
+                                    log.e()
+                                    lvMakeToast.value = Event(getString(R.string.msg_toast_get_uid_error_card_list_empty))
+                                }
                             }
                             else -> {
+                                log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHANGE_DATA_SWITCH, res.meta.code, res.data.retcode)
-                                lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_change_data_switch_error_include_error_code), res.data.retcode))
+                                lvMakeToast.value = Event(String.format(getString(R.string.msg_toast_get_uid_error_include_error_code), res.data.retcode))
                             }
                         }
                     } else -> {

@@ -3,12 +3,8 @@ package danggai.app.resinwidget.data.api
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.data.local.CheckIn
 import danggai.app.resinwidget.data.local.DailyNote
-import danggai.app.resinwidget.data.res.Meta
-import danggai.app.resinwidget.data.res.ResCheckIn
-import danggai.app.resinwidget.data.res.ResDailyNote
-import danggai.app.resinwidget.data.res.ResDefault
+import danggai.app.resinwidget.data.res.*
 import danggai.app.resinwidget.util.CommonFunction
-import danggai.app.resinwidget.util.log
 import io.reactivex.Observable
 
 class ApiRepository(private val api: ApiInterface) {
@@ -49,20 +45,20 @@ class ApiRepository(private val api: ApiInterface) {
             }
     }
 
-    fun getCameRecordCard(hoyolabUid: String, cookie: String): Observable<ResDefault> {
-        val emptyData = ResDefault.Data("","")
+    fun getCameRecordCard(hoyolabUid: String, cookie: String): Observable<ResGameRecordCard> {
+        val emptyData = ResGameRecordCard.Data("","", ResGameRecordCard.GameRecordCardList(listOf()))
+//        GameRecordCard("", listOf(), listOf(), "", "", listOf(), false, false, -1, "", "", "", "")
 
         return Observable.just(true)
             .switchMap {
                 api.getGameRecordCard(hoyolabUid, cookie, CommonFunction.getGenshinDS())
             }
             .map { res ->
-                log.e(res.body().toString())
                 when {
                     res.isSuccessful -> {
-                        ResDefault(Meta(res.code(), res.message()), res.body()?:emptyData)
+                        ResGameRecordCard(Meta(res.code(), res.message()), res.body()?:emptyData)
                     } else -> {
-                        ResDefault(Meta(res.code(), res.message()), emptyData)
+                        ResGameRecordCard(Meta(res.code(), res.message()), emptyData)
                     }
                 }
             }
