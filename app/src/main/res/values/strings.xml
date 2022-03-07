@@ -103,10 +103,10 @@
     <string name="msg_toast_change_data_switch_success">Successfully changed the Real-Time Note to public! Press the save button!</string>
     <string name="msg_toast_change_data_switch_error_include_error_code">Failed to change the Real-Time Note to public.. It\'s an unexpected error, so I can\'t give you detailed information, Error code is %s! Please share it with the developer!</string>
 
-    <string name="msg_toast_get_uid_success">성공적으로 인게임 uid를 가져왔어!</string>
-    <string name="msg_toast_get_uid_error_invalid_cookie">쿠키가 정상적이지 않아서 인게임 uid를 가져오는데 실패했어..</string>
-    <string name="msg_toast_get_uid_error_card_list_empty">정상적으로 데이터를 가져왔지만, 인게임 정보가 존재하지 않아서 데이터를 가져올 수 없어!</string>
-    <string name="msg_toast_get_uid_error_include_error_code">인게임 uid를 가져오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없지만, 오류코드는 %s야! 개발자에게 공유해주면, 문제 해결에 도움이 돼!</string>
+    <string name="msg_toast_get_uid_success">Successfully get in-game uid!</string>
+    <string name="msg_toast_get_uid_error_invalid_cookie">The cookie is invalid, so failed to get in-game uid.</string>
+    <string name="msg_toast_get_uid_error_card_list_empty">Got data successfully, but can\'t get in-game uid because in-game user data doesn\'t exist!</string>
+    <string name="msg_toast_get_uid_error_include_error_code">Failed to get in-game uid.. It\'s an unexpected error, so I can\'t give you detailed information, Error code is %s! Please share it with the developer!</string>
 
     <string name="msg_toast_check_in_success">Account linked and Checked in Successfully!</string>
     <string name="msg_toast_check_in_already">Account linked Successfully! Today already checked in!</string>
