@@ -34,7 +34,7 @@
 ## Application Version
 
 - minSdkVersion : 24
-- targetSdkVersion : 30
+- targetSdkVersion : 31
 
 
 

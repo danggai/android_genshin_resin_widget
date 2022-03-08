@@ -32,6 +32,7 @@ class DailyNoteWorker (val context: Context, workerParams: WorkerParameters, pri
             val workManager = WorkManager.getInstance(context)
             val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
                 .setInputData(workDataOf(Constant.ARG_START_PERIODIC_WORKER to true))
+                .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
                 .build()
             workManager.enqueue(workRequest)
         }
@@ -44,6 +45,7 @@ class DailyNoteWorker (val context: Context, workerParams: WorkerParameters, pri
                 log.e()
                 return
             }
+            shutdownWorker(context)
 
             log.e("period -> $period")
 
@@ -51,6 +53,7 @@ class DailyNoteWorker (val context: Context, workerParams: WorkerParameters, pri
             val workRequest = PeriodicWorkRequestBuilder<RefreshWorker>(period, TimeUnit.MINUTES)
                 .setInitialDelay(period, TimeUnit.MINUTES)
                 .setInputData(workDataOf(Constant.ARG_START_PERIODIC_WORKER to false))
+                .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
                 .build()
             workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
         }
@@ -60,6 +63,7 @@ class DailyNoteWorker (val context: Context, workerParams: WorkerParameters, pri
 
             val workManager = WorkManager.getInstance(context)
 
+            workManager.cancelAllWorkByTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
             workManager.cancelUniqueWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
         }
     }

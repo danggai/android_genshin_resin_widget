@@ -183,6 +183,7 @@ object CommonFunction {
     }
 
     fun sendNotification(id: Int, context: Context, title: String, msg: String) {
+        log.e()
         var notificationId = ""
         var notificationDesc = ""
         var periority: Int = 0

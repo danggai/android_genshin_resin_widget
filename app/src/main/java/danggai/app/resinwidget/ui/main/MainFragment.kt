@@ -217,7 +217,11 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
 
                 requireActivity().sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
 
-                RefreshWorker.startWorkerPeriodic(_context)
+                if (mVM.lvAutoRefreshPeriod.value == -1L) {
+                    RefreshWorker.shutdownWorker(_context)
+                } else {
+                    RefreshWorker.startWorkerPeriodic(_context)
+                }
             }
         })
 
