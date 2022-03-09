@@ -32,7 +32,6 @@ class DailyNoteWorker (val context: Context, workerParams: WorkerParameters, pri
             val workManager = WorkManager.getInstance(context)
             val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
                 .setInputData(workDataOf(Constant.ARG_START_PERIODIC_WORKER to true))
-                .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
                 .build()
             workManager.enqueue(workRequest)
         }

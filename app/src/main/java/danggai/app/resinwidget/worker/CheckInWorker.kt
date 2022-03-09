@@ -71,7 +71,6 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
             val workRequest = OneTimeWorkRequestBuilder<CheckInWorker>()
                 .setInitialDelay(delay, TimeUnit.MINUTES)
 //                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-                .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN)
                 .setInputData(workDataOf(ARG_TYPE to (argType?:ARG_NULL)))
                 .build()
 
@@ -83,6 +82,7 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
                 log.e()
                 return
             }
+            shutdownWorker(context)
 
             val workManager = WorkManager.getInstance(context)
             val workRequest = PeriodicWorkRequestBuilder<CheckInWorker>(1, TimeUnit.DAYS)
