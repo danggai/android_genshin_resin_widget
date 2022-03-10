@@ -171,14 +171,14 @@
     <string name="widget_ui_simple_time">%s시간 %s분</string>
     <string name="widget_ui_remain_time">%s시간 %s분 남음</string>
     <string name="widget_ui_max_time">%s시 %s분에 가득 참</string>
-    <string name="widget_ui_time">%s시 %s분</string>
+    <string name="widget_ui_today">오늘, %s시 %s분</string>
     <string name="widget_ui_date">%s %s시 %s분</string>
     <string name="widget_ui_max_time_resin_max">이미 가득 참</string>
 
     <string name="until_fully_replenished">전부 충전까지</string>
     <string name="when_fully_replenished">완충 예정 시각</string>
     <string name="daily_commissions">남은 일일 의뢰</string>
-    <string name="enemies_of_note">남은 주간 보스</string>
+    <string name="enemies_of_note">주간 보스 할인</string>
     <string name="number_of_expedition">탐사 진행 수</string>
     <string name="realm_currency">선계 주화</string>
     <string name="until_all_completed">모두 완료까지</string>

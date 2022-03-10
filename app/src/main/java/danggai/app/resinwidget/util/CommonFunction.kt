@@ -145,30 +145,33 @@ object CommonFunction {
     }
 
     fun secondToTime(context: Context, second: String, includeDate: Boolean): String {
-        val cal = Calendar.getInstance()
+        val now = Calendar.getInstance()
         val date= Date()
-        cal.time = date
+        now.time = date
 
         try {
             if (second.toInt() == 0)
                 return context.getString(R.string.widget_ui_max_time_resin_max)
 
             if (second.toInt() > 360000 || second.toInt() < -144000)
-                return String.format(context.getString(R.string.widget_ui_time), cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE))
+                return String.format(context.getString(R.string.widget_ui_today), now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE))
 
-            cal.add(Calendar.SECOND, second.toInt())
-
-            val minute = String.format("%02d", cal.get(Calendar.MINUTE))
-
-            return if (includeDate) {
-                log.e()
-                String.format(context.getString(R.string.widget_ui_date), getDayWithMonthSuffix(context, cal.get(Calendar.DATE)), cal.get(Calendar.HOUR_OF_DAY), minute)
+            val target: Calendar = Calendar.getInstance().apply {
+                this.time = Date()
+                this.add(Calendar.SECOND, second.toInt())
             }
-            else String.format(context.getString(R.string.widget_ui_time), cal.get(Calendar.HOUR_OF_DAY), minute)
+
+            val minute = String.format("%02d", now.get(Calendar.MINUTE))
+
+            return if (includeDate || now.get(Calendar.DATE) != target.get(Calendar.DATE)) {
+                log.e()
+                String.format(context.getString(R.string.widget_ui_date), getDayWithMonthSuffix(context, target.get(Calendar.DATE)), target.get(Calendar.HOUR_OF_DAY), minute)
+            }
+            else String.format(context.getString(R.string.widget_ui_today), target.get(Calendar.HOUR_OF_DAY), minute)
         } catch (e: NumberFormatException) {
             return context.getString(R.string.widget_ui_max_time_resin_max)
         }
-    }
+}
 
     fun getDayWithMonthSuffix(context: Context, n: Int): String {
         checkArgument(n in 1..31, "illegal day of month: $n")
