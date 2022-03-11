@@ -21,8 +21,10 @@ import danggai.app.resinwidget.ui.main.MainActivity
 import danggai.app.resinwidget.util.CommonFunction
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
+import io.reactivex.Observable.merge
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.internal.schedulers.IoScheduler
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import java.net.ConnectException
@@ -71,6 +73,7 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
             val workRequest = OneTimeWorkRequestBuilder<CheckInWorker>()
                 .setInitialDelay(delay, TimeUnit.MINUTES)
 //                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN)
                 .setInputData(workDataOf(ARG_TYPE to (argType?:ARG_NULL)))
                 .build()
 
@@ -78,18 +81,28 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
         }
 
         fun startWorkerPeriodic(context: Context) {
-            if (!PreferenceManager.getBooleanIsValidUserData(context)) {
-                log.e()
-                return
-            }
-            shutdownWorker(context)
 
-            val workManager = WorkManager.getInstance(context)
-            val workRequest = PeriodicWorkRequestBuilder<CheckInWorker>(1, TimeUnit.DAYS)
-                .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN)
-                .build()
+            val rx: PublishSubject<Boolean> = PublishSubject.create()
 
-            workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
+            rx.observeOn(Schedulers.io())
+                .filter {
+                    log.e()
+                    PreferenceManager.getBooleanIsValidUserData(context)
+                }
+                .map {
+                    log.e()
+                    shutdownWorker(context)
+                }.subscribe({
+                    log.e()
+                    val workManager = WorkManager.getInstance(context)
+                    val workRequest = PeriodicWorkRequestBuilder<CheckInWorker>(1, TimeUnit.DAYS)
+                        .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN)
+                        .build()
+
+                    workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
+                },{},{}).isDisposed
+
+            rx.onNext(true)
         }
 
         fun shutdownWorker(context: Context) {

@@ -32,6 +32,7 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
             val workManager = WorkManager.getInstance(context)
             val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
                 .setInputData(workDataOf(Constant.ARG_START_PERIODIC_WORKER to true))
+                .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
                 .build()
             workManager.enqueue(workRequest)
         }
@@ -39,23 +40,30 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
         fun startWorkerPeriodic(context: Context) {
             val period = PreferenceManager.getLongAutoRefreshPeriod(context)
 
-            if (PreferenceManager.getLongAutoRefreshPeriod(context) == -1L ||
-                !PreferenceManager.getBooleanIsValidUserData(context)) {
-                log.e()
-                return
-            }
+            val rx: PublishSubject<Boolean> = PublishSubject.create()
 
-            shutdownWorker(context)
+            rx.observeOn(Schedulers.io())
+                .filter {
+                    log.e()
+                    !(PreferenceManager.getLongAutoRefreshPeriod(context) == -1L ||
+                            !PreferenceManager.getBooleanIsValidUserData(context))
+                }
+                .map {
+                    log.e()
+                    shutdownWorker(context)
+                }.subscribe({
+                    log.e("period -> $period")
 
-            log.e("period -> $period")
+                    val workManager = WorkManager.getInstance(context)
+                    val workRequest = PeriodicWorkRequestBuilder<RefreshWorker>(period, TimeUnit.MINUTES)
+                        .setInitialDelay(period, TimeUnit.MINUTES)
+                        .setInputData(workDataOf(Constant.ARG_START_PERIODIC_WORKER to false))
+                        .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
+                        .build()
+                    workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
+                },{},{}).isDisposed
 
-            val workManager = WorkManager.getInstance(context)
-            val workRequest = PeriodicWorkRequestBuilder<RefreshWorker>(period, TimeUnit.MINUTES)
-                .setInitialDelay(period, TimeUnit.MINUTES)
-                .setInputData(workDataOf(Constant.ARG_START_PERIODIC_WORKER to false))
-                .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
-                .build()
-            workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
+            rx.onNext(true)
         }
 
         fun shutdownWorker(context: Context) {

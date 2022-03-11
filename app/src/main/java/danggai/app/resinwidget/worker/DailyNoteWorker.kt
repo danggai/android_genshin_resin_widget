@@ -17,6 +17,7 @@ import java.net.ConnectException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 
+@Deprecated("Replaced with RefreshWorker")
 class DailyNoteWorker (val context: Context, workerParams: WorkerParameters, private val api: ApiRepository) :
     Worker(context, workerParams) {
 
