@@ -34,7 +34,7 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
                 .setInputData(workDataOf(Constant.ARG_START_PERIODIC_WORKER to true))
                 .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
                 .build()
-            workManager.enqueue(workRequest)
+            workManager.enqueueUniqueWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingWorkPolicy.REPLACE, workRequest)
         }
 
         fun startWorkerPeriodic(context: Context) {
@@ -44,12 +44,10 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
 
             rx.observeOn(Schedulers.io())
                 .filter {
-                    log.e()
                     !(PreferenceManager.getLongAutoRefreshPeriod(context) == -1L ||
                             !PreferenceManager.getBooleanIsValidUserData(context))
                 }
                 .map {
-                    log.e()
                     shutdownWorker(context)
                 }.subscribe({
                     log.e("period -> $period")
@@ -67,12 +65,10 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
         }
 
         fun shutdownWorker(context: Context) {
-            log.e()
-
             val workManager = WorkManager.getInstance(context)
-
             workManager.cancelAllWorkByTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
-            workManager.cancelUniqueWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
+
+            log.e()
         }
     }
 

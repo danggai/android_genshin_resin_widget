@@ -11,11 +11,14 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.tabs.TabLayoutMediator
 import danggai.app.resinwidget.BuildConfig
+import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.databinding.FragmentMainBinding
 import danggai.app.resinwidget.ui.BindingFragment
@@ -99,6 +102,15 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
     private fun initUi() {
         context?.let { it ->
             mVM.initUI(PreferenceManager.getStringUid(it), PreferenceManager.getStringCookie(it))
+        }
+
+        WorkManager.getInstance(requireContext()).getWorkInfosByTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH).get().forEach {
+            if (it.state !in listOf(WorkInfo.State.SUCCEEDED, WorkInfo.State.FAILED, WorkInfo.State.CANCELLED))
+                log.e("refresh worker ${it.id} state -> ${it.state}")
+        }
+        WorkManager.getInstance(requireContext()).getWorkInfosByTag(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN).get().forEach {
+            if (it.state !in listOf(WorkInfo.State.SUCCEEDED, WorkInfo.State.FAILED, WorkInfo.State.CANCELLED))
+                log.e("checkin worker ${it.id} state -> ${it.state}")
         }
     }
 

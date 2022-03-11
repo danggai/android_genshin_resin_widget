@@ -77,7 +77,7 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
                 .setInputData(workDataOf(ARG_TYPE to (argType?:ARG_NULL)))
                 .build()
 
-            workManager.enqueue(workRequest)
+            workManager.enqueueUniqueWork(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN, ExistingWorkPolicy.REPLACE, workRequest)
         }
 
         fun startWorkerPeriodic(context: Context) {
@@ -86,11 +86,9 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
 
             rx.observeOn(Schedulers.io())
                 .filter {
-                    log.e()
                     PreferenceManager.getBooleanIsValidUserData(context)
                 }
                 .map {
-                    log.e()
                     shutdownWorker(context)
                 }.subscribe({
                     log.e()
@@ -106,12 +104,10 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
         }
 
         fun shutdownWorker(context: Context) {
-            log.e()
-
             val workManager = WorkManager.getInstance(context)
-
             workManager.cancelAllWorkByTag(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN)
-            workManager.cancelUniqueWork(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN)
+
+            log.e()
         }
     }
 
