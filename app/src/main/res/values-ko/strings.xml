@@ -168,11 +168,11 @@
     <string name="widget_label_resin_resizable">레진 위젯 (크기 조절 가능)</string>
     <string name="widget_label_resin_fixed">레진 위젯 (크기 고정)</string>
 
-    <string name="widget_ui_simple_time">%s시간 %s분</string>
-    <string name="widget_ui_remain_time">%s시간 %s분 남음</string>
-    <string name="widget_ui_max_time">%s시 %s분에 가득 참</string>
-    <string name="widget_ui_today">오늘 %s시 %s분</string>
-    <string name="widget_ui_date">%s %s시 %s분</string>
+    <string name="widget_ui_simple_time">%d시간 %d분</string>
+    <string name="widget_ui_remain_time">%d시간 %d분 남음</string>
+    <string name="widget_ui_max_time">%02d:%02d에 가득 참</string>
+    <string name="widget_ui_today">오늘 %02d:%02d</string>
+    <string name="widget_ui_date">%s %02d:%02d</string>
     <string name="widget_ui_max_time_resin_max">이미 가득 참</string>
     <string name="widget_ui_max_time_expedition_done">이미 완료 됨</string>
 

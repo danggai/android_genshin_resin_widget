@@ -136,7 +136,7 @@ object CommonFunction {
 
             cal.add(Calendar.SECOND, second.toInt())
 
-            val minute = String.format("%02d", cal.get(Calendar.MINUTE))
+            val minute = cal.get(Calendar.MINUTE)
 
             return String.format(context.getString(R.string.widget_ui_max_time), cal.get(Calendar.HOUR_OF_DAY), minute)
         } catch (e: NumberFormatException) {
@@ -161,7 +161,7 @@ object CommonFunction {
                 this.add(Calendar.SECOND, second.toInt())
             }
 
-            val minute = String.format("%02d", now.get(Calendar.MINUTE))
+            val minute = now.get(Calendar.MINUTE)
 
             return if (includeDate || now.get(Calendar.DATE) != target.get(Calendar.DATE)) {
                 log.e()
