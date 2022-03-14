@@ -232,7 +232,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
                 if (mVM.lvAutoRefreshPeriod.value == -1L) {
                     RefreshWorker.shutdownWorker(_context)
                 } else {
-                    RefreshWorker.startWorkerPeriodic(_context)
+                    RefreshWorker.startWorkerPeriodic(_context, 10L)
                 }
             }
         })

@@ -45,7 +45,17 @@ class ResinWidget : AppWidgetProvider() {
                 if (intent.getBooleanExtra(Constant.REFRESH_DATA, false)) {
                     log.e("REFRESH_DATA")
                     updateAppWidget(context, appWidgetManager, appWidgetIds)
-                    context?.let { RefreshWorker.startWorkerOneTime(context) }
+
+                    context?.let {
+                        when (PreferenceManager.getLongAutoRefreshPeriod(context)) {
+                            -1L -> {
+                                RefreshWorker.startWorkerOneTime(context)
+                            }
+                            else -> {
+                                RefreshWorker.startWorkerPeriodic(context)
+                            }
+                        }
+                    }
                 } else if (intent.getBooleanExtra(Constant.REFRESH_UI, false)) {
                     log.e("REFRESH_UI")
                     updateAppWidget(context, appWidgetManager, appWidgetIds)

@@ -32,7 +32,7 @@ class DailyNoteWorker (val context: Context, workerParams: WorkerParameters, pri
 
             val workManager = WorkManager.getInstance(context)
             val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
-                .setInputData(workDataOf(Constant.ARG_START_PERIODIC_WORKER to true))
+                .setInputData(workDataOf(Constant.ARG_IS_SINGLE_TIME_WORK to true))
                 .build()
             workManager.enqueue(workRequest)
         }
@@ -52,7 +52,7 @@ class DailyNoteWorker (val context: Context, workerParams: WorkerParameters, pri
             val workManager = WorkManager.getInstance(context)
             val workRequest = PeriodicWorkRequestBuilder<RefreshWorker>(period, TimeUnit.MINUTES)
                 .setInitialDelay(period, TimeUnit.MINUTES)
-                .setInputData(workDataOf(Constant.ARG_START_PERIODIC_WORKER to false))
+                .setInputData(workDataOf(Constant.ARG_IS_SINGLE_TIME_WORK to false))
                 .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
                 .build()
             workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
@@ -96,7 +96,7 @@ class DailyNoteWorker (val context: Context, workerParams: WorkerParameters, pri
                 api.dailyNote(uid, server, cookie)
             }
             .subscribe ({ res ->
-                if (inputData.getBoolean(Constant.ARG_START_PERIODIC_WORKER, false)) {
+                if (inputData.getBoolean(Constant.ARG_IS_SINGLE_TIME_WORK, false)) {
                     log.e()
                     startWorkerPeriodic(context)
                 }
@@ -201,7 +201,7 @@ class DailyNoteWorker (val context: Context, workerParams: WorkerParameters, pri
     private fun sendNoti(id: Int, target: Int) {
         log.e()
 
-        if (inputData.getBoolean(Constant.ARG_START_PERIODIC_WORKER, false)) {
+        if (inputData.getBoolean(Constant.ARG_IS_SINGLE_TIME_WORK, false)) {
             log.e()
             return
         }

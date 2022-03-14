@@ -171,9 +171,10 @@
     <string name="widget_ui_simple_time">%s시간 %s분</string>
     <string name="widget_ui_remain_time">%s시간 %s분 남음</string>
     <string name="widget_ui_max_time">%s시 %s분에 가득 참</string>
-    <string name="widget_ui_today">오늘, %s시 %s분</string>
+    <string name="widget_ui_today">오늘 %s시 %s분</string>
     <string name="widget_ui_date">%s %s시 %s분</string>
     <string name="widget_ui_max_time_resin_max">이미 가득 참</string>
+    <string name="widget_ui_max_time_expedition_done">이미 완료 됨</string>
 
     <string name="until_fully_replenished">전부 충전까지</string>
     <string name="when_fully_replenished">완충 예정 시각</string>
