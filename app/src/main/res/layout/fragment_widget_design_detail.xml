@@ -120,6 +120,13 @@
                         android:onClick="@{(v) -> vm.onClickSetDetailTimeNotation(v)}"
                         android:text="@string/btn_full_charge_time" />
 
+                    <RadioButton
+                        android:id="@+id/rb_disable_time"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetDetailTimeNotation(v)}"
+                        android:text="@string/btn_disable" />
+
                 </RadioGroup>
 
                 <Space

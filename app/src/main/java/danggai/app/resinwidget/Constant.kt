@@ -151,6 +151,7 @@ object Constant {
 
     const val PREF_TIME_NOTATION_REMAIN_TIME = 0
     const val PREF_TIME_NOTATION_FULL_CHARGE_TIME = 1
+    const val PREF_TIME_NOTATION_DISABLE = 2
 
     const val PREF_WIDGET_THEME_AUTOMATIC = 0
     const val PREF_WIDGET_THEME_LIGHT = 1

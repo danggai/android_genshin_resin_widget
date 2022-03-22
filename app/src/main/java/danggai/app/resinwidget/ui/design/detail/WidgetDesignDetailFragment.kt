@@ -64,6 +64,7 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
             when(mVM.lvDetailTimeNotation.value) {
                 Constant.PREF_TIME_NOTATION_REMAIN_TIME -> binding.rbRemainTime.isChecked = true
                 Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked = true
+                Constant.PREF_TIME_NOTATION_DISABLE -> binding.rbDisableTime.isChecked = true
                 else -> binding.rbRemainTime.isChecked = true
             }
 
@@ -172,20 +173,36 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
             context?.let { _context ->
                 log.e()
 
-                if (mVM.lvDetailTimeNotation.value == Constant.PREF_TIME_NOTATION_REMAIN_TIME) {
-                    binding.widget.tvResinTimeTitle.text = _context.getString(R.string.until_fully_replenished)
-                    binding.widget.tvResinTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
-                    binding.widget.tvRealmCurrencyTimeTitle.text = _context.getString(R.string.until_fully_replenished)
-                    binding.widget.tvRealmCurrencyTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
-                    binding.widget.tvExpeditionTimeTitle.text = _context.getString(R.string.until_all_completed)
-                    binding.widget.tvExpeditionTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
-                } else {
-                    binding.widget.tvResinTimeTitle.text = _context.getString(R.string.when_fully_replenished)
-                    binding.widget.tvResinTime.text = String.format(getString(R.string.widget_ui_today), 0, 0)
-                    binding.widget.tvRealmCurrencyTimeTitle.text = _context.getString(R.string.when_fully_replenished)
-                    binding.widget.tvRealmCurrencyTime.text = String.format(getString(R.string.widget_ui_date), "1"+getString(R.string.date_st), 0, 0)
-                    binding.widget.tvExpeditionTimeTitle.text = _context.getString(R.string.estimated_completion_time)
-                    binding.widget.tvExpeditionTime.text = String.format(getString(R.string.widget_ui_today), 0, 0)
+                when (mVM.lvDetailTimeNotation.value) {
+                    Constant.PREF_TIME_NOTATION_REMAIN_TIME -> {
+                        binding.widget.rlResinTime.visibility = if (mVM.lvResinDataVisibility.value) View.VISIBLE else View.GONE
+                        binding.widget.rlExpeditionTime.visibility = if (mVM.lvExpeditionDataVisibility.value) View.VISIBLE else View.GONE
+                        binding.widget.rlRealmCurrencyTime.visibility = if (mVM.lvRealmCurrencyDataVisibility.value) View.VISIBLE else View.GONE
+
+                        binding.widget.tvResinTimeTitle.text = _context.getString(R.string.until_fully_replenished)
+                        binding.widget.tvResinTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
+                        binding.widget.tvRealmCurrencyTimeTitle.text = _context.getString(R.string.until_fully_replenished)
+                        binding.widget.tvRealmCurrencyTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
+                        binding.widget.tvExpeditionTimeTitle.text = _context.getString(R.string.until_all_completed)
+                        binding.widget.tvExpeditionTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
+                    }
+                    Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME ->  {
+                        binding.widget.rlResinTime.visibility = if (mVM.lvResinDataVisibility.value) View.VISIBLE else View.GONE
+                        binding.widget.rlExpeditionTime.visibility = if (mVM.lvExpeditionDataVisibility.value) View.VISIBLE else View.GONE
+                        binding.widget.rlRealmCurrencyTime.visibility = if (mVM.lvRealmCurrencyDataVisibility.value) View.VISIBLE else View.GONE
+                        
+                        binding.widget.tvResinTimeTitle.text = _context.getString(R.string.when_fully_replenished)
+                        binding.widget.tvResinTime.text = String.format(getString(R.string.widget_ui_today), 0, 0)
+                        binding.widget.tvRealmCurrencyTimeTitle.text = _context.getString(R.string.when_fully_replenished)
+                        binding.widget.tvRealmCurrencyTime.text = String.format(getString(R.string.widget_ui_date), "1"+getString(R.string.date_st), 0, 0)
+                        binding.widget.tvExpeditionTimeTitle.text = _context.getString(R.string.estimated_completion_time)
+                        binding.widget.tvExpeditionTime.text = String.format(getString(R.string.widget_ui_today), 0, 0)
+                    }
+                    Constant.PREF_TIME_NOTATION_DISABLE ->  {
+                        binding.widget.rlResinTime.visibility = View.GONE
+                        binding.widget.rlExpeditionTime.visibility = View.GONE
+                        binding.widget.rlRealmCurrencyTime.visibility = View.GONE
+                    }
                 }
             }
         }
@@ -193,7 +210,7 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
         mVM.lvResinDataVisibility.observe(viewLifecycleOwner) {
             log.e()
             binding.widget.rlResin.visibility = if (it) View.VISIBLE else View.GONE
-            binding.widget.rlResinTime.visibility = if (it) View.VISIBLE else View.GONE
+            binding.widget.rlResinTime.visibility = if (it && mVM.lvDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
         }
 
         mVM.lvDailyCommissionDataVisibility.observe(viewLifecycleOwner) {
@@ -209,13 +226,13 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
         mVM.lvRealmCurrencyDataVisibility.observe(viewLifecycleOwner) {
             log.e()
             binding.widget.rlRealmCurrency.visibility = if (it) View.VISIBLE else View.GONE
-            binding.widget.rlRealmCurrencyTime.visibility = if (it) View.VISIBLE else View.GONE
+            binding.widget.rlRealmCurrencyTime.visibility = if (it && mVM.lvDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
         }
 
         mVM.lvExpeditionDataVisibility.observe(viewLifecycleOwner) {
             log.e()
             binding.widget.rlExpedition.visibility = if (it) View.VISIBLE else View.GONE
-            binding.widget.rlExpeditionTime.visibility = if (it) View.VISIBLE else View.GONE
+            binding.widget.rlExpeditionTime.visibility = if (it && mVM.lvDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
         }
 
     }

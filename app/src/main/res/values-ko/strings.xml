@@ -37,6 +37,7 @@
 
     <string name="btn_remain_time">남은 시간</string>
     <string name="btn_full_charge_time">완충 시각</string>
+    <string name="btn_disable">표시 안 함</string>
 
     <string name="btn_dark">다크</string>
     <string name="btn_light">라이트</string>

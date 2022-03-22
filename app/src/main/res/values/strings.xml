@@ -36,7 +36,8 @@
     <string name="btn_home_coin_full">Realm Currency Full</string>
 
     <string name="btn_remain_time">Remaining time</string>
-    <string name="btn_full_charge_time">Time when fully charge</string>
+    <string name="btn_full_charge_time">When fully charge</string>
+    <string name="btn_disable">Disable</string>
 
     <string name="btn_dark">Dark</string>
     <string name="btn_light">Light</string>

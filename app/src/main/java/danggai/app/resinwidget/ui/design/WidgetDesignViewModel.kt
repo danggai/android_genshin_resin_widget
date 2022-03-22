@@ -71,6 +71,7 @@ class WidgetDesignViewModel(override val app: Application, private val api: ApiR
         lvDetailTimeNotation.value = when (view.id) {
             R.id.rb_remain_time -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
             R.id.rb_full_charge_time -> Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME
+            R.id.rb_disable_time -> Constant.PREF_TIME_NOTATION_DISABLE
             else -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
         }
     }

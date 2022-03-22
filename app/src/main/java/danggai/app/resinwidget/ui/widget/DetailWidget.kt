@@ -54,17 +54,7 @@ class DetailWidget : AppWidgetProvider() {
                 if (intent.getBooleanExtra(Constant.REFRESH_DATA, false)) {
                     log.e("REFRESH_DATA")
                     updateAppWidget(context, appWidgetManager, appWidgetIds)
-
-                    context?.let {
-                        when (PreferenceManager.getLongAutoRefreshPeriod(context)) {
-                            -1L -> {
-                                RefreshWorker.startWorkerOneTime(context)
-                            }
-                            else -> {
-                                RefreshWorker.startWorkerPeriodic(context)
-                            }
-                        }
-                    }
+                    context?.let { RefreshWorker.startWorkerOneTime(context) }
                 } else if (intent.getBooleanExtra(Constant.REFRESH_UI, false)) {
                     log.e("REFRESH_UI")
                     updateAppWidget(context, appWidgetManager, appWidgetIds)
@@ -209,13 +199,16 @@ class DetailWidget : AppWidgetProvider() {
                 }
 
                 view.setViewVisibility(R.id.rl_resin, if (PreferenceManager.getBooleanWidgetResinDataVisibility(_context)) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_resin_time, if (PreferenceManager.getBooleanWidgetResinDataVisibility(_context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_resin_time, if (PreferenceManager.getBooleanWidgetResinDataVisibility(_context) && PreferenceManager.getIntDetailTimeNotation(_context) != Constant.PREF_TIME_NOTATION_DISABLE)
+                    View.VISIBLE else View.GONE)
                 view.setViewVisibility(R.id.rl_daily_commission, if (PreferenceManager.getBooleanWidgetDailyCommissionDataVisibility(_context)) View.VISIBLE else View.GONE)
                 view.setViewVisibility(R.id.rl_weekly_boss, if (PreferenceManager.getBooleanWidgetWeeklyBossDataVisibility(_context)) View.VISIBLE else View.GONE)
                 view.setViewVisibility(R.id.rl_realm_currency, if (PreferenceManager.getBooleanWidgetRealmCurrencyDataVisibility(_context)) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_realm_currency_time, if (PreferenceManager.getBooleanWidgetRealmCurrencyDataVisibility(_context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_realm_currency_time, if (PreferenceManager.getBooleanWidgetRealmCurrencyDataVisibility(_context) && PreferenceManager.getIntDetailTimeNotation(_context) != Constant.PREF_TIME_NOTATION_DISABLE)
+                    View.VISIBLE else View.GONE)
                 view.setViewVisibility(R.id.rl_expedition, if (PreferenceManager.getBooleanWidgetExpeditionDataVisibility(_context)) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_expedition_time, if (PreferenceManager.getBooleanWidgetExpeditionDataVisibility(_context)) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_expedition_time, if (PreferenceManager.getBooleanWidgetExpeditionDataVisibility(_context) && PreferenceManager.getIntDetailTimeNotation(_context) != Constant.PREF_TIME_NOTATION_DISABLE)
+                    View.VISIBLE else View.GONE)
             }
         }
     }
