@@ -26,11 +26,8 @@ import danggai.app.resinwidget.ui.cookie_web_view.CookieWebViewActivity
 import danggai.app.resinwidget.ui.design.WidgetDesignActivity
 import danggai.app.resinwidget.ui.main.checkin.MainCheckInFragment
 import danggai.app.resinwidget.ui.main.resin.MainResinFragment
-import danggai.app.resinwidget.util.CommonFunction
+import danggai.app.resinwidget.util.*
 import danggai.app.resinwidget.util.CommonFunction.setDailyNoteData
-import danggai.app.resinwidget.util.EventObserver
-import danggai.app.resinwidget.util.PreferenceManager
-import danggai.app.resinwidget.util.log
 import danggai.app.resinwidget.worker.CheckInWorker
 import danggai.app.resinwidget.worker.RefreshWorker
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -153,6 +150,8 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
                         }
                         .create()
                         .show()
+
+                    if (mVM.lvEnableAutoCheckIn.value && BuildConfig.VERSION_NAME == "1.1.1") mVM.lvSaveCheckInData.value = Event(true)
                 }
 
                 PreferenceManager.setBooleanCheckedUpdateNote(it, true)
