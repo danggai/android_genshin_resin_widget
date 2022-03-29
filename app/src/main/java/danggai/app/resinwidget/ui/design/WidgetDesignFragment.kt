@@ -40,7 +40,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
             it.setCommonFun(view)
         }
 
-        val pagerAdapter = MainAdapter(requireActivity())
+        val pagerAdapter = WidgetDesignAdapter(requireActivity())
 
         pagerAdapter.addFragment(WidgetDesignResinFragment())
         pagerAdapter.addFragment(WidgetDesignDetailFragment())

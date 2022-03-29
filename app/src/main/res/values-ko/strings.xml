@@ -33,7 +33,7 @@
     <string name="btn_140_resin">140레진</string>
     <string name="resin">레진</string>
     <string name="btn_expedition_done">탐험 완료</string>
-    <string name="btn_home_coin_full">선계 코인 가득 참</string>
+    <string name="btn_home_coin_full">선계 주화 가득 참</string>
 
     <string name="btn_remain_time">남은 시간</string>
     <string name="btn_full_charge_time">완충 시각</string>
