@@ -11,30 +11,35 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.hilt.work.HiltWorker
 import androidx.work.*
 import androidx.work.impl.utils.futures.SettableFuture
 import com.google.common.util.concurrent.ListenableFuture
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
-import danggai.app.resinwidget.data.api.ApiRepository
+import danggai.app.resinwidget.data.res.ResCheckIn
+import danggai.app.resinwidget.network.ApiRepository
 import danggai.app.resinwidget.ui.main.MainActivity
 import danggai.app.resinwidget.util.CommonFunction
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
-import io.reactivex.Observable.merge
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.internal.schedulers.IoScheduler
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onEach
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
-class CheckInWorker (val context: Context, workerParams: WorkerParameters, private val api: ApiRepository) :
-    Worker(context, workerParams) {
+@HiltWorker
+class CheckInWorker @AssistedInject constructor(
+    @Assisted context: Context,
+    @Assisted workerParams: WorkerParameters,
+    private val apiRepository: ApiRepository
+    ): Worker(context, workerParams) {
 
     companion object {
         private const val ARG_TYPE = "ARG_TYPE"
@@ -111,90 +116,78 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
         }
     }
 
-    private val rxApiCheckIn: PublishSubject<Boolean> = PublishSubject.create()
-    private val compositeDisposable = CompositeDisposable()
-    private fun Disposable.addCompositeDisposable() {
-        compositeDisposable.add(this)
-    }
-
-    init {
-        initRx()
-    }
-
-    private fun initRx() {
-        rxApiCheckIn
-            .observeOn(Schedulers.io())
-            .filter { it }
-            .switchMap {
-                val cookie = PreferenceManager.getStringCookie(applicationContext)
-
-                api.checkIn(Constant.SERVER_OS_ASIA, cookie)
-            }
-            .subscribe ({ res ->
-                log.e(res)
-                when (res.meta.code) {
-                    Constant.META_CODE_SUCCESS -> {
+    private val flowApiCheckIn: Flow<ResCheckIn> = apiRepository.checkIn(
+        region = Constant.SERVER_OS_ASIA,
+        cookie = PreferenceManager.getStringCookie(applicationContext),
+        onStart = {
+            log.e()
+        },
+        onComplete = {}
+    ).onEach {
+        log.e(it)
+        when (it.meta.code) {
+            Constant.META_CODE_SUCCESS -> {
+                log.e()
+                when (it.data.retcode) {
+                    Constant.RETCODE_SUCCESS,
+                    Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
+                    Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> {
                         log.e()
-                        when (res.data.retcode) {
-                            Constant.RETCODE_SUCCESS,
-                            Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
-                            Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> {
-                                log.e()
-                                if (PreferenceManager.getBooleanNotiCheckInSuccess(context)) {
-                                    log.e()
+                        if (PreferenceManager.getBooleanNotiCheckInSuccess(applicationContext)) {
+                            log.e()
 
-                                    when (res.data.retcode) {
-                                        Constant.RETCODE_SUCCESS -> sendNoti(Constant.NOTI_TYPE_CHECK_IN_SUCCESS)
-                                        Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
-                                        Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> sendNoti(Constant.NOTI_TYPE_CHECK_IN_ALREADY)
-                                    }
-                                }
-
-                                when (inputData.getString(ARG_TYPE)) {
-                                    ARG_START_AT_CHINA_MIDNIGHT -> {
-                                        log.e()
-                                        startWorkerOneTimeAtChinaMidnight(context)
-                                    }
-                                    ARG_START_PERIODIC_WORKER -> {
-                                        log.e()
-                                        startWorkerPeriodic(context)
-                                    }
-                                }
+                            when (it.data.retcode) {
+                                Constant.RETCODE_SUCCESS -> sendNoti(Constant.NOTI_TYPE_CHECK_IN_SUCCESS)
+                                Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
+                                Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> sendNoti(Constant.NOTI_TYPE_CHECK_IN_ALREADY)
                             }
-                            else -> {
+                        }
+
+                        when (inputData.getString(ARG_TYPE)) {
+                            ARG_START_AT_CHINA_MIDNIGHT -> {
                                 log.e()
-                                if (PreferenceManager.getBooleanNotiCheckInFailed(context)) {
-                                    log.e()
-                                    sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
-                                }
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, res.data.retcode)
-                                startWorkerOneTimeRetry(context)
+                                startWorkerOneTimeAtChinaMidnight(applicationContext)
+                            }
+                            ARG_START_PERIODIC_WORKER -> {
+                                log.e()
+                                startWorkerPeriodic(applicationContext)
                             }
                         }
                     }
                     else -> {
                         log.e()
-                        if (PreferenceManager.getBooleanNotiCheckInFailed(context)) {
+                        if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
                             log.e()
                             sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                         }
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, res.meta.code, null)
-                        startWorkerOneTimeRetry(context)
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, it.meta.code, it.data.retcode)
+                        startWorkerOneTimeRetry(applicationContext)
                     }
                 }
-            }, {
-                it.message?.let { msg ->
+            }
+            Constant.META_CODE_CLIENT_ERROR -> {
+                it.meta.message.let { msg ->
                     log.e(msg)
-                    if (PreferenceManager.getBooleanNotiCheckInFailed(context)) {
+                    if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
                         log.e()
                         sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                     }
-                    initRx()
-                    startWorkerOneTimeRetry(context)
+                    startWorkerOneTimeRetry(applicationContext)
                 }
-            })
-            .addCompositeDisposable()
+            }
+            else -> {
+                log.e()
+                if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                    log.e()
+                    sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
+                }
+                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, it.meta.code, null)
+                startWorkerOneTimeRetry(applicationContext)
+            }
+        }
     }
+
+    private val rxApiCheckIn: PublishSubject<Boolean> = PublishSubject.create()
 
     private fun sendNoti(id: Int) {
         log.e()
@@ -217,12 +210,12 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
         var mNotificationManager: NotificationManager? = null
         val mNotificationId = 123
 
-        val intentMainLanding = Intent(context, MainActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(context, 0, intentMainLanding, PendingIntent.FLAG_IMMUTABLE)
-        val iconNotification: Bitmap? = BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher)
+        val intentMainLanding = Intent(applicationContext, MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intentMainLanding, PendingIntent.FLAG_IMMUTABLE)
+        val iconNotification: Bitmap? = BitmapFactory.decodeResource(applicationContext.resources, R.mipmap.ic_launcher)
 
         if (mNotificationManager == null) {
-            mNotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            mNotificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -237,7 +230,7 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
 //        val stopPendingIntent = PendingIntent
 //            .getService(applicationContext, 0, stopIntent, PendingIntent.FLAG_IMMUTABLE)
 
-        val notification = NotificationCompat.Builder(context, Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID)
+        val notification = NotificationCompat.Builder(applicationContext, Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID)
             .setContentTitle(applicationContext.getString(R.string.foreground_genshin_check_in_progress))
             .setTicker(applicationContext.getString(R.string.foreground_genshin_check_in_progress))
             .setSmallIcon(R.drawable.resin)
@@ -271,7 +264,7 @@ class CheckInWorker (val context: Context, workerParams: WorkerParameters, priva
                 else -> log.e("Unknown exception!")
             }
             log.e(e.message.toString())
-            context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+            applicationContext.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
             Result.failure()
         }
     }

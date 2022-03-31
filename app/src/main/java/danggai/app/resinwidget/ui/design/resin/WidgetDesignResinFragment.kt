@@ -7,40 +7,36 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.fragment.app.activityViewModels
+import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
+import danggai.app.resinwidget.core.BindingFragment
 import danggai.app.resinwidget.databinding.FragmentWidgetDesignResinBinding
-import danggai.app.resinwidget.ui.BindingFragment
 import danggai.app.resinwidget.ui.design.WidgetDesignViewModel
 import danggai.app.resinwidget.util.CommonFunction.isDarkMode
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-
-class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBinding>() {
+@AndroidEntryPoint
+class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBinding, WidgetDesignViewModel>() {
 
     companion object {
         val TAG: String = WidgetDesignResinFragment::class.java.simpleName
         fun newInstance() = WidgetDesignResinFragment()
     }
 
-    private lateinit var mVM: WidgetDesignViewModel
-
     @LayoutRes
     override fun getLayoutResId() = R.layout.fragment_widget_design_resin
+
+    private val mVM: WidgetDesignViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.vm = getViewModel()
         binding.lifecycleOwner = viewLifecycleOwner
-
-        binding.vm?.let {
-            mVM = it
-            it.setCommonFun(view)
-        }
-
+        binding.vm = mVM
+        binding.vm?.setCommonFun(view)
 
         initUi()
         initLv()

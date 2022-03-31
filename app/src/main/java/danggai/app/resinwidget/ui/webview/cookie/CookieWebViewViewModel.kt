@@ -1,13 +1,17 @@
-package danggai.app.resinwidget.ui.cookie_web_view
+package danggai.app.resinwidget.ui.webview.cookie
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import danggai.app.resinwidget.data.api.ApiRepository
-import danggai.app.resinwidget.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import danggai.app.resinwidget.core.BaseViewModel
 import danggai.app.resinwidget.util.Event
 import danggai.app.resinwidget.util.log
+import javax.inject.Inject
 
-class CookieWebViewViewModel(override val app: Application, private val api: ApiRepository) : BaseViewModel(app) {
+@HiltViewModel
+class CookieWebViewViewModel @Inject constructor(
+    override val app: Application
+) : BaseViewModel(app) {
 
     var lvGetCookie = MutableLiveData<Event<Boolean>>()
     var lvRefresh = MutableLiveData<Event<Boolean>>()

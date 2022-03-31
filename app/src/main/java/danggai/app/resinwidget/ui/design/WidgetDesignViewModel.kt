@@ -3,15 +3,19 @@ package danggai.app.resinwidget.ui.design
 import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
-import danggai.app.resinwidget.data.api.ApiRepository
-import danggai.app.resinwidget.ui.base.BaseViewModel
+import danggai.app.resinwidget.core.BaseViewModel
 import danggai.app.resinwidget.util.Event
 import danggai.app.resinwidget.util.NonNullMutableLiveData
 import danggai.app.resinwidget.util.log
+import javax.inject.Inject
 
-class WidgetDesignViewModel(override val app: Application, private val api: ApiRepository) : BaseViewModel(app) {
+@HiltViewModel
+class WidgetDesignViewModel @Inject constructor(
+    override val app: Application
+    ) : BaseViewModel(app) {
 
     var lvSaveData = MutableLiveData<Event<Boolean>>()
 

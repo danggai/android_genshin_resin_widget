@@ -4,22 +4,24 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.LayoutRes
+import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
+import danggai.app.resinwidget.core.BindingActivity
 import danggai.app.resinwidget.databinding.ActivityMainBinding
-import danggai.app.resinwidget.ui.BindingActivity
 import danggai.app.resinwidget.util.log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import kotlin.system.exitProcess
 
-
-class MainActivity : BindingActivity<ActivityMainBinding>() {
+@AndroidEntryPoint
+class MainActivity : BindingActivity<ActivityMainBinding, MainViewModel>() {
 
     companion object {
-        val ARG_PARAM_COOKIE = "ARG_PARAM_COOKIE"
+        const val ARG_PARAM_COOKIE = "ARG_PARAM_COOKIE"
 
         fun startActivity(act: Activity, cookie: String) {
             log.e()
@@ -31,12 +33,16 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
 
     private val rxBackButtonAction: Subject<Long> = BehaviorSubject.createDefault(0L).toSerialized()
 
+    private val mVM: MainViewModel by viewModels()
+
     @LayoutRes
     override fun getLayoutResId() = R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding.lifecycleOwner = this
+        binding.vm = mVM
 
         initFragment()
         initRx()

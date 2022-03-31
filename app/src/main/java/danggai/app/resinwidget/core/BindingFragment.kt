@@ -1,4 +1,4 @@
-package danggai.app.resinwidget.ui
+package danggai.app.resinwidget.core
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import danggai.app.resinwidget.ui.base.BaseFragment
 
-abstract class BindingFragment<T: ViewDataBinding> : BaseFragment() {
+abstract class BindingFragment<T: ViewDataBinding, V: BaseViewModel> : BaseFragment() {
     @LayoutRes
     abstract fun getLayoutResId(): Int
 

@@ -1,42 +1,75 @@
-package danggai.app.resinwidget.di
+package danggai.app.resinwidget.di;
 
-import com.google.gson.GsonBuilder
+
+import android.content.Context
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import danggai.app.resinwidget.Constant
+import danggai.app.resinwidget.network.ApiClient
+import danggai.app.resinwidget.network.ApiService
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.android.ext.koin.androidApplication
-import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
-private const val TIMEOUT = 10L
+@Module
+@InstallIn(SingletonComponent::class)
+object NetworkModule {
+        private const val TIMEOUT = 60L
 
-val NetworkModule = module {
+        @Provides
+        @Singleton
+        fun provideApiService(retrofit: Retrofit): ApiService {
+                return retrofit.create(ApiService::class.java)
+        }
 
-    single { Cache(androidApplication().cacheDir, 10L * 1024 * 1024) }
+        @Provides
+        @Singleton
+        fun provideApiClient(apiService: ApiService): ApiClient {
+                return ApiClient(apiService)
+        }
+        
+        @Singleton
+        @Provides
+        fun provideCache(
+                @ApplicationContext applicationContext: Context
+        ): Cache { 
+                return Cache(applicationContext.cacheDir, 10L * 1024 * 1024)
+        }
 
-    single { GsonBuilder().create() }
+        @Singleton
+        @Provides
+        fun provideOkHttpClient(
+                cache: Cache
+        ): OkHttpClient {
+                return OkHttpClient.Builder()
+                        .cache(cache)
+                        .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+                        .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                        .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+                        .addInterceptor(HttpLoggingInterceptor().apply {
+                                level = HttpLoggingInterceptor.Level.BODY
+                        })
+                        .build()
+        }
 
-    single {
-
-        Retrofit.Builder()
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(Constant.OS_TAKUMI_URL)
-            .client(
-                OkHttpClient.Builder()
-                    .cache(get())
-                    .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
-                    .readTimeout(TIMEOUT, TimeUnit.SECONDS)
-                    .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
-                    .addInterceptor(HttpLoggingInterceptor().apply {
-                        level = HttpLoggingInterceptor.Level.BODY
-                    })
-                    .build()
-            )
-            .build()
-    }
+        @Singleton
+        @Provides
+        fun provideRetrofitClient(
+                okHttpClient: OkHttpClient
+        ): Retrofit {
+                return Retrofit.Builder()
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .baseUrl(Constant.OS_TAKUMI_URL)
+                        .client(okHttpClient)
+                        .build()
+        }
 }

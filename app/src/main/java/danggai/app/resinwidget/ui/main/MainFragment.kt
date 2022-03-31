@@ -11,41 +11,42 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.activityViewModels
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.resinwidget.BuildConfig
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
+import danggai.app.resinwidget.core.BindingFragment
 import danggai.app.resinwidget.databinding.FragmentMainBinding
-import danggai.app.resinwidget.ui.BindingFragment
-import danggai.app.resinwidget.ui.cookie_web_view.CookieWebViewActivity
 import danggai.app.resinwidget.ui.design.WidgetDesignActivity
 import danggai.app.resinwidget.ui.main.checkin.MainCheckInFragment
 import danggai.app.resinwidget.ui.main.resin.MainResinFragment
+import danggai.app.resinwidget.ui.webview.cookie.CookieWebViewActivity
 import danggai.app.resinwidget.util.*
 import danggai.app.resinwidget.util.CommonFunction.setDailyNoteData
 import danggai.app.resinwidget.worker.CheckInWorker
 import danggai.app.resinwidget.worker.RefreshWorker
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 import java.util.*
 
-
-class MainFragment : BindingFragment<FragmentMainBinding>() {
+@AndroidEntryPoint
+class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
 
     companion object {
         val TAG: String = MainFragment::class.java.simpleName
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var mVM: MainViewModel
-    private lateinit var mAdView : AdView
-
     @LayoutRes
     override fun getLayoutResId() = R.layout.fragment_main
+
+    private val mVM: MainViewModel by activityViewModels()
+    private lateinit var mAdView : AdView
 
     fun onNewIntent(intent: Intent?) {
         intent?.let {
@@ -62,13 +63,9 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.vm = getViewModel()
         binding.lifecycleOwner = viewLifecycleOwner
-
-        binding.vm?.let {
-            mVM = it
-            it.setCommonFun(view)
-        }
+        binding.vm = mVM
+        binding.vm?.setCommonFun(view)
 
         val pagerAdapter = MainAdapter(requireActivity())
 

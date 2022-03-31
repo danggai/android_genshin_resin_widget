@@ -4,27 +4,27 @@ import android.app.WallpaperManager
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.resinwidget.R
+import danggai.app.resinwidget.core.BindingFragment
 import danggai.app.resinwidget.databinding.FragmentWidgetDesignBinding
-import danggai.app.resinwidget.ui.BindingFragment
 import danggai.app.resinwidget.ui.design.detail.WidgetDesignDetailFragment
 import danggai.app.resinwidget.ui.design.resin.WidgetDesignResinFragment
-import danggai.app.resinwidget.ui.main.MainAdapter
 import danggai.app.resinwidget.util.EventObserver
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-
-class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
+@AndroidEntryPoint
+class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, WidgetDesignViewModel>() {
 
     companion object {
         val TAG: String = WidgetDesignFragment::class.java.simpleName
         fun newInstance() = WidgetDesignFragment()
     }
 
-    private lateinit var mVM: WidgetDesignViewModel
+    private val mVM: WidgetDesignViewModel by activityViewModels()
 
     @LayoutRes
     override fun getLayoutResId() = R.layout.fragment_widget_design
@@ -32,13 +32,9 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.vm = getViewModel()
         binding.lifecycleOwner = viewLifecycleOwner
-
-        binding.vm?.let {
-            mVM = it
-            it.setCommonFun(view)
-        }
+        binding.vm = mVM
+        binding.vm?.setCommonFun(view)
 
         val pagerAdapter = WidgetDesignAdapter(requireActivity())
 

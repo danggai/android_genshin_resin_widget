@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="danggai.app.resinwidget.ui.cookie_web_view.CookieWebViewViewModel"
+            type="danggai.app.resinwidget.ui.webview.cookie.CookieWebViewViewModel"
             />
     </data>
 

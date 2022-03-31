@@ -1,4 +1,4 @@
-package danggai.app.resinwidget.ui.cookie_web_view
+package danggai.app.resinwidget.ui.webview.cookie
 
 import android.content.Context
 import android.os.Bundle
@@ -6,35 +6,35 @@ import android.view.View
 import android.webkit.*
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.LayoutRes
+import androidx.fragment.app.activityViewModels
+import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.resinwidget.R
+import danggai.app.resinwidget.core.BindingFragment
 import danggai.app.resinwidget.databinding.FragmentCookieWebviewBinding
-import danggai.app.resinwidget.ui.BindingFragment
 import danggai.app.resinwidget.ui.main.MainActivity
 import danggai.app.resinwidget.util.EventObserver
 import danggai.app.resinwidget.util.log
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding>() {
+@AndroidEntryPoint
+class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, CookieWebViewViewModel>() {
 
     companion object {
         val TAG: String = CookieWebViewFragment::class.java.simpleName
         fun newInstance() = CookieWebViewFragment()
     }
 
-    private lateinit var mVM: CookieWebViewViewModel
+    private val mVM: CookieWebViewViewModel by activityViewModels()
+
 
     @LayoutRes
     override fun getLayoutResId() = R.layout.fragment_cookie_webview
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.vm = getViewModel()
-        binding.lifecycleOwner = viewLifecycleOwner
 
-        binding.vm?.let {
-            mVM = it
-            it.setCommonFun(view)
-        }
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.vm = mVM
+        binding.vm?.setCommonFun(view)
 
         initUi()
         initLv()

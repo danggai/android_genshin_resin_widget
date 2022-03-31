@@ -1,4 +1,4 @@
-package danggai.app.resinwidget.ui.base
+package danggai.app.resinwidget.core
 
 import android.content.Context
 import android.content.Intent

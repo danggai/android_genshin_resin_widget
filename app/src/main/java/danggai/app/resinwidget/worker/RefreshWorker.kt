@@ -1,24 +1,33 @@
 package danggai.app.resinwidget.worker
 
 import android.content.Context
+import androidx.hilt.work.HiltWorker
 import androidx.work.*
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
-import danggai.app.resinwidget.data.api.ApiRepository
 import danggai.app.resinwidget.data.local.DailyNote
+import danggai.app.resinwidget.data.res.ResDailyNote
+import danggai.app.resinwidget.network.ApiRepository
 import danggai.app.resinwidget.util.CommonFunction
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onEach
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 
-class RefreshWorker (val context: Context, workerParams: WorkerParameters, private val api: ApiRepository) :
-    Worker(context, workerParams) {
+
+@HiltWorker
+class RefreshWorker @AssistedInject constructor(
+    @Assisted context: Context,
+    @Assisted workerParams: WorkerParameters,
+    private val apiRepository: ApiRepository
+    ): Worker(context, workerParams) {
 
     companion object {
         fun startWorkerOneTime(context: Context) {
@@ -78,63 +87,54 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
         }
     }
 
-    private val rxApiDailyNote: PublishSubject<Boolean> = PublishSubject.create()
-    private val compositeDisposable = CompositeDisposable()
-    private fun Disposable.addCompositeDisposable() {
-        compositeDisposable.add(this)
-    }
+    private val flowApiDailyNote: Flow<ResDailyNote> = apiRepository.dailyNote(
+        PreferenceManager.getStringUid(applicationContext),
+        when (PreferenceManager.getIntServer(applicationContext)) {
+            Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
+            Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
+            Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
+            Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
+            else -> Constant.SERVER_OS_ASIA
+        },
+        PreferenceManager.getStringCookie(applicationContext),
+        onStart = {
+            log.e()
+        },
+        onComplete = {}
+    ).onEach {
+        log.e(it)
+        if (inputData.getBoolean(Constant.ARG_IS_SINGLE_TIME_WORK, false)) {
+            log.e()
+            DailyNoteWorker.startWorkerPeriodic(context)
+        }
 
-    init {
-        initRx()
-    }
-
-    private fun initRx() {
-        rxApiDailyNote
-            .observeOn(Schedulers.io())
-            .filter { it }
-            .switchMap {
-                val uid = PreferenceManager.getStringUid(applicationContext)
-                val cookie = PreferenceManager.getStringCookie(applicationContext)
-                val server = when (PreferenceManager.getIntServer(applicationContext)) {
-                    Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
-                    Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
-                    Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
-                    Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
-                    else -> Constant.SERVER_OS_ASIA
-                }
-
-                api.dailyNote(uid, server, cookie)
-            }
-            .subscribe ({ res ->
-                when (res.meta.code) {
-                    Constant.META_CODE_SUCCESS -> {
+        when (it.meta.code) {
+            Constant.META_CODE_SUCCESS -> {
+                log.e()
+                when (it.data.retcode) {
+                    Constant.RETCODE_SUCCESS -> {
                         log.e()
-                        when (res.data.retcode) {
-                            Constant.RETCODE_SUCCESS -> {
-                                log.e()
-                                updateData(res.data.data!!)
-                            }
-                            else -> {
-                                log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, res.data.retcode)
-                                context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
-                            }
-                        }
+                        updateData(it.data.data!!)
                     }
                     else -> {
                         log.e()
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, res.meta.code, null)
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.meta.code, it.data.retcode)
                         context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
                     }
                 }
-            }, {
-                it.message?.let { msg ->
-                    initRx()
+            }
+            Constant.META_CODE_CLIENT_ERROR -> {
+                it.meta.message.let { msg ->
                     context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
                     log.e(msg)
                 }
-            })
-            .addCompositeDisposable()
+            }
+            else -> {
+                log.e()
+                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.meta.code, null)
+                context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+            }
+        }
     }
 
     private fun updateData(dailyNote: DailyNote) {
@@ -243,7 +243,7 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
         log.e()
 
         try {
-            rxApiDailyNote.onNext(true)
+//            rxApiDailyNote.onNext(true)
 
             log.e()
             return Result.success()
@@ -254,7 +254,7 @@ class RefreshWorker (val context: Context, workerParams: WorkerParameters, priva
                 else -> log.e("Unknown exception!")
             }
             log.e(e.message.toString())
-            context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+            applicationContext.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
             return Result.failure()
         }
     }

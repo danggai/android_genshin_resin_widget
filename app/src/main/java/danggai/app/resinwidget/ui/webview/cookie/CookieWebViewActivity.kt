@@ -1,14 +1,17 @@
-package danggai.app.resinwidget.ui.cookie_web_view
+package danggai.app.resinwidget.ui.webview.cookie
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.annotation.LayoutRes
+import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.resinwidget.R
+import danggai.app.resinwidget.core.BindingActivity
 import danggai.app.resinwidget.databinding.ActivityCookieWebviewBinding
-import danggai.app.resinwidget.ui.BindingActivity
 
-class CookieWebViewActivity : BindingActivity<ActivityCookieWebviewBinding>() {
+@AndroidEntryPoint
+class CookieWebViewActivity : BindingActivity<ActivityCookieWebviewBinding, CookieWebViewViewModel>() {
 
     companion object {
         fun startActivity(act: Activity) {
@@ -17,12 +20,16 @@ class CookieWebViewActivity : BindingActivity<ActivityCookieWebviewBinding>() {
         }
     }
 
+    private val mVM: CookieWebViewViewModel by viewModels()
+
     @LayoutRes
     override fun getLayoutResId() = R.layout.activity_cookie_webview
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding.lifecycleOwner = this
+        binding.vm = mVM
 
         initFragment()
     }

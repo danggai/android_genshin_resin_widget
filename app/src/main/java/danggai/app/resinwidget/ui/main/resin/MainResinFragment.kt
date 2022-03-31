@@ -3,38 +3,34 @@ package danggai.app.resinwidget.ui.main.resin
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
-import com.google.android.gms.ads.AdView
+import androidx.fragment.app.activityViewModels
+import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
+import danggai.app.resinwidget.core.BindingFragment
 import danggai.app.resinwidget.databinding.FragmentResinBinding
-import danggai.app.resinwidget.ui.BindingFragment
 import danggai.app.resinwidget.ui.main.MainViewModel
 import danggai.app.resinwidget.util.PreferenceManager
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-
-class MainResinFragment : BindingFragment<FragmentResinBinding>() {
+@AndroidEntryPoint
+class MainResinFragment : BindingFragment<FragmentResinBinding, MainViewModel>() {
 
     companion object {
         val TAG: String = MainResinFragment::class.java.simpleName
         fun newInstance() = MainResinFragment()
     }
 
-    private lateinit var mVM: MainViewModel
-    private lateinit var mAdView : AdView
+    private val mVM: MainViewModel by activityViewModels()
 
     @LayoutRes
     override fun getLayoutResId() = R.layout.fragment_resin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.vm = getViewModel()
-        binding.lifecycleOwner = viewLifecycleOwner
 
-        binding.vm?.let {
-            mVM = it
-            it.setCommonFun(view)
-        }
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.vm = mVM
+        binding.vm?.setCommonFun(view)
 
         initUi()
     }

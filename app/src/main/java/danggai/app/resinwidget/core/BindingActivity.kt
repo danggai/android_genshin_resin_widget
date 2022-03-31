@@ -1,14 +1,13 @@
-package danggai.app.resinwidget.ui
+package danggai.app.resinwidget.core
 
 import android.content.Context
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import danggai.app.resinwidget.ui.base.BaseActivity
 import danggai.app.resinwidget.util.LocaleWrapper
 
-abstract class BindingActivity<T: ViewDataBinding> : BaseActivity() {
+abstract class BindingActivity<T: ViewDataBinding, V: BaseViewModel> : BaseActivity() {
     @LayoutRes
     abstract fun getLayoutResId(): Int
 

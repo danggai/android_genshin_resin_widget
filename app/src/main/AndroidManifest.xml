@@ -100,7 +100,7 @@
 
         </activity>
 
-        <activity android:name=".ui.cookie_web_view.CookieWebViewActivity"
+        <activity android:name=".ui.webview.cookie.CookieWebViewActivity"
             android:exported="false"
             />
         <activity android:name=".ui.design.WidgetDesignActivity"

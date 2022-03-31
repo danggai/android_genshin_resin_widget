@@ -1,4 +1,4 @@
-package danggai.app.resinwidget.ui.base
+package danggai.app.resinwidget.core
 
 import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.disposables.CompositeDisposable
