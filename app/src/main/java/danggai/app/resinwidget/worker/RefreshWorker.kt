@@ -2,21 +2,28 @@ package danggai.app.resinwidget.worker
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
+import androidx.lifecycle.viewModelScope
 import androidx.work.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.data.local.DailyNote
+import danggai.app.resinwidget.data.req.ReqDailyNote
 import danggai.app.resinwidget.data.res.ResDailyNote
 import danggai.app.resinwidget.network.ApiRepository
 import danggai.app.resinwidget.util.CommonFunction
+import danggai.app.resinwidget.util.Event
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
@@ -46,12 +53,7 @@ class RefreshWorker @AssistedInject constructor(
             workManager.enqueueUniqueWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingWorkPolicy.REPLACE, workRequest)
         }
 
-
         fun startWorkerPeriodic(context: Context) {
-            startWorkerPeriodic(context, 0L)
-        }
-
-        fun startWorkerPeriodic(context: Context, delayedTime: Long) {
             val period = PreferenceManager.getLongAutoRefreshPeriod(context)
 
             val rx: PublishSubject<Boolean> = PublishSubject.create()
@@ -64,15 +66,15 @@ class RefreshWorker @AssistedInject constructor(
                 .map {
                     shutdownWorker(context)
                 }.subscribe({
-                    log.e("delayedTime -> $delayedTime")
                     log.e("period -> $period")
 
                     val workManager = WorkManager.getInstance(context)
                     val workRequest = PeriodicWorkRequestBuilder<RefreshWorker>(period, TimeUnit.MINUTES)
                         .setInputData(workDataOf(Constant.ARG_IS_SINGLE_TIME_WORK to false))
-                        .setInitialDelay(delayedTime, TimeUnit.MINUTES)
                         .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
+//                        .setInitialDelay(delayedTime, TimeUnit.MINUTES)
                         .build()
+
                     workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
                 },{},{}).isDisposed
 
@@ -87,52 +89,46 @@ class RefreshWorker @AssistedInject constructor(
         }
     }
 
-    private val flowApiDailyNote: Flow<ResDailyNote> = apiRepository.dailyNote(
-        PreferenceManager.getStringUid(applicationContext),
-        when (PreferenceManager.getIntServer(applicationContext)) {
-            Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
-            Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
-            Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
-            Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
-            else -> Constant.SERVER_OS_ASIA
-        },
-        PreferenceManager.getStringCookie(applicationContext),
-        onStart = {
-            log.e()
-        },
-        onComplete = {}
-    ).onEach {
-        log.e(it)
-        if (inputData.getBoolean(Constant.ARG_IS_SINGLE_TIME_WORK, false)) {
-            log.e()
-            DailyNoteWorker.startWorkerPeriodic(context)
-        }
+    private fun refreshDailyNote(reqDailyNote: ReqDailyNote) {
+        CoroutineScope(Dispatchers.IO).launch {
+            apiRepository.dailyNote(
+                reqDailyNote,
+                onStart = { log.e() },
+                onComplete = { log.e() }
+            ).collect {
+                log.e(it)
+                if (inputData.getBoolean(Constant.ARG_IS_SINGLE_TIME_WORK, false)) {
+                    log.e()
+                    startWorkerPeriodic(applicationContext)
+                }
 
-        when (it.meta.code) {
-            Constant.META_CODE_SUCCESS -> {
-                log.e()
-                when (it.data.retcode) {
-                    Constant.RETCODE_SUCCESS -> {
+                when (it.meta.code) {
+                    Constant.META_CODE_SUCCESS -> {
                         log.e()
-                        updateData(it.data.data!!)
+                        when (it.data.retcode) {
+                            Constant.RETCODE_SUCCESS -> {
+                                log.e()
+                                updateData(it.data.data!!)
+                            }
+                            else -> {
+                                log.e()
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.meta.code, it.data.retcode)
+                                applicationContext.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+                            }
+                        }
+                    }
+                    Constant.META_CODE_CLIENT_ERROR -> {
+                        it.meta.message.let { msg ->
+                            applicationContext.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+                            log.e(msg)
+                        }
                     }
                     else -> {
                         log.e()
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.meta.code, it.data.retcode)
-                        context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.meta.code, null)
+                        applicationContext.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
                     }
                 }
-            }
-            Constant.META_CODE_CLIENT_ERROR -> {
-                it.meta.message.let { msg ->
-                    context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
-                    log.e(msg)
-                }
-            }
-            else -> {
-                log.e()
-                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.meta.code, null)
-                context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
             }
         }
     }
@@ -241,9 +237,23 @@ class RefreshWorker @AssistedInject constructor(
 
     override fun doWork(): Result {
         log.e()
+        val server =
+            when (PreferenceManager.getIntServer(applicationContext)) {
+                Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
+                Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
+                Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
+                Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
+                else -> Constant.SERVER_OS_ASIA
+            }
 
         try {
-//            rxApiDailyNote.onNext(true)
+            refreshDailyNote(
+                ReqDailyNote(
+                    PreferenceManager.getStringUid(applicationContext),
+                    server,
+                    PreferenceManager.getStringCookie(applicationContext),
+                )
+            )
 
             log.e()
             return Result.success()

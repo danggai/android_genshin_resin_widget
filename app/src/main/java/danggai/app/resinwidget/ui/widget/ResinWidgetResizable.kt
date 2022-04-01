@@ -34,8 +34,7 @@ class ResinWidgetResizable : AppWidgetProvider() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
-        val action = intent?.action
-        when (action) {
+        when (val action = intent?.action) {
             Constant.ACTION_APPWIDGET_UPDATE -> {
                 log.e("ACTION_APPWIDGET_UPDATE")
 
@@ -151,7 +150,7 @@ class ResinWidgetResizable : AppWidgetProvider() {
         }
     }
 
-    internal fun updateAppWidget(
+    private fun updateAppWidget(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray

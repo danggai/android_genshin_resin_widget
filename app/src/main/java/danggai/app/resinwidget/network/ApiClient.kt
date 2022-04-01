@@ -4,7 +4,7 @@ import com.skydoves.sandwich.ApiResponse
 import danggai.app.resinwidget.data.res.ResCheckIn
 import danggai.app.resinwidget.data.res.ResDailyNote
 import danggai.app.resinwidget.data.res.ResDefault
-import danggai.app.resinwidget.data.res.ResGameRecordCard
+import danggai.app.resinwidget.data.res.ResGetGameRecordCard
 import javax.inject.Inject
 
 
@@ -43,7 +43,7 @@ class ApiClient @Inject constructor(
         hoyolabUid: String,
         cookie: String,
         ds: String
-    ): ApiResponse<ResGameRecordCard.Data> =
+    ): ApiResponse<ResGetGameRecordCard.Data> =
         apiService.getGameRecordCard(
             hoyolabUid = hoyolabUid,
             cookie = cookie,

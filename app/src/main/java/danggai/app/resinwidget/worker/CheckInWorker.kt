@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
+import androidx.lifecycle.viewModelScope
 import androidx.work.*
 import androidx.work.impl.utils.futures.SettableFuture
 import com.google.common.util.concurrent.ListenableFuture
@@ -19,16 +20,23 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
+import danggai.app.resinwidget.data.req.ReqChangeDataSwitch
+import danggai.app.resinwidget.data.req.ReqCheckIn
 import danggai.app.resinwidget.data.res.ResCheckIn
 import danggai.app.resinwidget.network.ApiRepository
 import danggai.app.resinwidget.ui.main.MainActivity
 import danggai.app.resinwidget.util.CommonFunction
+import danggai.app.resinwidget.util.Event
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.util.*
@@ -39,7 +47,7 @@ class CheckInWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
     private val apiRepository: ApiRepository
-    ): Worker(context, workerParams) {
+): Worker(context, workerParams) {
 
     companion object {
         private const val ARG_TYPE = "ARG_TYPE"
@@ -116,42 +124,62 @@ class CheckInWorker @AssistedInject constructor(
         }
     }
 
-    private val flowApiCheckIn: Flow<ResCheckIn> = apiRepository.checkIn(
-        region = Constant.SERVER_OS_ASIA,
-        cookie = PreferenceManager.getStringCookie(applicationContext),
-        onStart = {
-            log.e()
-        },
-        onComplete = {}
-    ).onEach {
-        log.e(it)
-        when (it.meta.code) {
-            Constant.META_CODE_SUCCESS -> {
-                log.e()
-                when (it.data.retcode) {
-                    Constant.RETCODE_SUCCESS,
-                    Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
-                    Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> {
+    private fun checkIn(reqCheckIn: ReqCheckIn) {
+        CoroutineScope(Dispatchers.IO).launch {
+            apiRepository.checkIn(
+                reqCheckIn,
+                onStart = { log.e () },
+                onComplete = { log.e () }
+            ).collect {
+                log.e(it)
+                when (it.meta.code) {
+                    Constant.META_CODE_SUCCESS -> {
                         log.e()
-                        if (PreferenceManager.getBooleanNotiCheckInSuccess(applicationContext)) {
-                            log.e()
+                        when (it.data.retcode) {
+                            Constant.RETCODE_SUCCESS,
+                            Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
+                            Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> {
+                                log.e()
+                                if (PreferenceManager.getBooleanNotiCheckInSuccess(applicationContext)) {
+                                    log.e()
 
-                            when (it.data.retcode) {
-                                Constant.RETCODE_SUCCESS -> sendNoti(Constant.NOTI_TYPE_CHECK_IN_SUCCESS)
-                                Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
-                                Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> sendNoti(Constant.NOTI_TYPE_CHECK_IN_ALREADY)
+                                    when (it.data.retcode) {
+                                        Constant.RETCODE_SUCCESS -> sendNoti(Constant.NOTI_TYPE_CHECK_IN_SUCCESS)
+                                        Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
+                                        Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> sendNoti(Constant.NOTI_TYPE_CHECK_IN_ALREADY)
+                                    }
+                                }
+
+                                when (inputData.getString(ARG_TYPE)) {
+                                    ARG_START_AT_CHINA_MIDNIGHT -> {
+                                        log.e()
+                                        startWorkerOneTimeAtChinaMidnight(applicationContext)
+                                    }
+                                    ARG_START_PERIODIC_WORKER -> {
+                                        log.e()
+                                        startWorkerPeriodic(applicationContext)
+                                    }
+                                }
+                            }
+                            else -> {
+                                log.e()
+                                if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                                    log.e()
+                                    sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
+                                }
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, it.meta.code, it.data.retcode)
+                                startWorkerOneTimeRetry(applicationContext)
                             }
                         }
-
-                        when (inputData.getString(ARG_TYPE)) {
-                            ARG_START_AT_CHINA_MIDNIGHT -> {
+                    }
+                    Constant.META_CODE_CLIENT_ERROR -> {
+                        it.meta.message.let { msg ->
+                            log.e(msg)
+                            if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
                                 log.e()
-                                startWorkerOneTimeAtChinaMidnight(applicationContext)
+                                sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                             }
-                            ARG_START_PERIODIC_WORKER -> {
-                                log.e()
-                                startWorkerPeriodic(applicationContext)
-                            }
+                            startWorkerOneTimeRetry(applicationContext)
                         }
                     }
                     else -> {
@@ -160,34 +188,13 @@ class CheckInWorker @AssistedInject constructor(
                             log.e()
                             sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                         }
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, it.meta.code, it.data.retcode)
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, it.meta.code, null)
                         startWorkerOneTimeRetry(applicationContext)
                     }
                 }
             }
-            Constant.META_CODE_CLIENT_ERROR -> {
-                it.meta.message.let { msg ->
-                    log.e(msg)
-                    if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
-                        log.e()
-                        sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
-                    }
-                    startWorkerOneTimeRetry(applicationContext)
-                }
-            }
-            else -> {
-                log.e()
-                if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
-                    log.e()
-                    sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
-                }
-                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, it.meta.code, null)
-                startWorkerOneTimeRetry(applicationContext)
-            }
         }
     }
-
-    private val rxApiCheckIn: PublishSubject<Boolean> = PublishSubject.create()
 
     private fun sendNoti(id: Int) {
         log.e()
@@ -254,7 +261,14 @@ class CheckInWorker @AssistedInject constructor(
         log.e()
 
         return try {
-            rxApiCheckIn.onNext(true)
+            checkIn(
+                ReqCheckIn(
+                    region = Constant.SERVER_OS_ASIA,
+                    actId = Constant.OS_ACT_ID,
+                    cookie = PreferenceManager.getStringCookie(applicationContext),
+                )
+            )
+
             log.e()
             Result.success()
         } catch (e: java.lang.Exception) {

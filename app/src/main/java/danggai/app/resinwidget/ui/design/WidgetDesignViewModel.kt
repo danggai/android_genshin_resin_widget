@@ -34,8 +34,6 @@ class WidgetDesignViewModel @Inject constructor(
     val lvFontSizeResin: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_RESIN)
     val lvFontSizeDetail: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_DETAIL)
 
-
-
     fun onClickSave() {
         log.e()
         /* 데이터 저장 */

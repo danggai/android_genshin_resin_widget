@@ -54,7 +54,7 @@ class DetailWidget : AppWidgetProvider() {
                 if (intent.getBooleanExtra(Constant.REFRESH_DATA, false)) {
                     log.e("REFRESH_DATA")
                     updateAppWidget(context, appWidgetManager, appWidgetIds)
-                    context?.let { RefreshWorker.startWorkerOneTime(context) }
+                    context?.let { RefreshWorker.startWorkerPeriodic(context) }
                 } else if (intent.getBooleanExtra(Constant.REFRESH_UI, false)) {
                     log.e("REFRESH_UI")
                     updateAppWidget(context, appWidgetManager, appWidgetIds)

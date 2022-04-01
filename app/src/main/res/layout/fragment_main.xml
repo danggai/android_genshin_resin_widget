@@ -4,6 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="danggai.app.resinwidget.ui.main.MainViewModel"
@@ -76,7 +78,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:clickable="true"
             android:focusable="true"
-            android:visibility="gone">
+            android:visibility="@{vm.lvProgress ?View.VISIBLE :View.GONE}"
+            >
 
             <ProgressBar
                 android:layout_width="70dp"

@@ -71,56 +71,55 @@ class DailyNoteWorker (
         }
     }
 
-
-    private val flowApiDailyNote: Flow<ResDailyNote> = apiRepository.dailyNote(
-        PreferenceManager.getStringUid(applicationContext),
-        when (PreferenceManager.getIntServer(applicationContext)) {
-            Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
-            Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
-            Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
-            Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
-            else -> Constant.SERVER_OS_ASIA
-        },
-        PreferenceManager.getStringCookie(applicationContext),
-        onStart = {
-            log.e()
-        },
-        onComplete = {}
-    ).onEach {
-        log.e(it)
-        if (inputData.getBoolean(Constant.ARG_IS_SINGLE_TIME_WORK, false)) {
-            log.e()
-            startWorkerPeriodic(context)
-        }
-
-        when (it.meta.code) {
-            Constant.META_CODE_SUCCESS -> {
-                log.e()
-                when (it.data.retcode) {
-                    Constant.RETCODE_SUCCESS -> {
-                        log.e()
-                        updateData(it.data.data!!)
-                    }
-                    else -> {
-                        log.e()
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.meta.code, it.data.retcode)
-                        context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
-                    }
-                }
-            }
-            Constant.META_CODE_CLIENT_ERROR -> {
-                it.meta.message.let { msg ->
-                    context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
-                    log.e(msg)
-                }
-            }
-            else -> {
-                log.e()
-                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.meta.code, null)
-                context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
-            }
-        }
-    }
+//    private val flowApiDailyNote: Flow<ResDailyNote> = apiRepository.dailyNote(
+//        PreferenceManager.getStringUid(applicationContext),
+//        when (PreferenceManager.getIntServer(applicationContext)) {
+//            Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
+//            Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
+//            Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
+//            Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
+//            else -> Constant.SERVER_OS_ASIA
+//        },
+//        PreferenceManager.getStringCookie(applicationContext),
+//        onStart = {
+//            log.e()
+//        },
+//        onComplete = {}
+//    ).onEach {
+//        log.e(it)
+//        if (inputData.getBoolean(Constant.ARG_IS_SINGLE_TIME_WORK, false)) {
+//            log.e()
+//            startWorkerPeriodic(context)
+//        }
+//
+//        when (it.meta.code) {
+//            Constant.META_CODE_SUCCESS -> {
+//                log.e()
+//                when (it.data.retcode) {
+//                    Constant.RETCODE_SUCCESS -> {
+//                        log.e()
+//                        updateData(it.data.data!!)
+//                    }
+//                    else -> {
+//                        log.e()
+//                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.meta.code, it.data.retcode)
+//                        context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+//                    }
+//                }
+//            }
+//            Constant.META_CODE_CLIENT_ERROR -> {
+//                it.meta.message.let { msg ->
+//                    context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+//                    log.e(msg)
+//                }
+//            }
+//            else -> {
+//                log.e()
+//                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.meta.code, null)
+//                context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+//            }
+//        }
+//    }
 
     private val rxApiDailyNote: PublishSubject<Boolean> = PublishSubject.create()
 

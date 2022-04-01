@@ -5,7 +5,7 @@ import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.data.res.ResCheckIn
 import danggai.app.resinwidget.data.res.ResDailyNote
 import danggai.app.resinwidget.data.res.ResDefault
-import danggai.app.resinwidget.data.res.ResGameRecordCard
+import danggai.app.resinwidget.data.res.ResGetGameRecordCard
 import retrofit2.http.*
 
 interface ApiService {
@@ -42,7 +42,7 @@ interface ApiService {
     @GET("/game_record/card/wapi/getGameRecordCard")
     suspend fun getGameRecordCard(@Query("uid") hoyolabUid: String,
                                   @Header("Cookie") cookie: String,
-                                  @Header("DS") ds: String): ApiResponse<ResGameRecordCard.Data>
+                                  @Header("DS") ds: String): ApiResponse<ResGetGameRecordCard.Data>
 
     @Headers(
         "x-rpc-client_type: 4",

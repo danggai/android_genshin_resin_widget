@@ -6,6 +6,10 @@ import com.skydoves.sandwich.suspendOnSuccess
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.data.local.CheckIn
 import danggai.app.resinwidget.data.local.DailyNote
+import danggai.app.resinwidget.data.req.ReqChangeDataSwitch
+import danggai.app.resinwidget.data.req.ReqCheckIn
+import danggai.app.resinwidget.data.req.ReqDailyNote
+import danggai.app.resinwidget.data.req.ReqGetGameRecordCard
 import danggai.app.resinwidget.data.res.*
 import danggai.app.resinwidget.util.CommonFunction
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,15 +25,18 @@ class ApiRepository @Inject constructor(
 ) {
 
     fun dailyNote(
-        uid: String,
-        server: String,
-        cookie: String,
+        data: ReqDailyNote,
         onStart: () -> Unit,
         onComplete: () -> Unit
     ) = flow<ResDailyNote> {
         val emptyData = ResDailyNote.Data("","", DailyNote( -1,-1,"-1", -1, -1, false, -1, -1, -1, -1, "-1", -1, -1, listOf()))
 
-        val response = apiClient.dailyNote(uid, server, cookie, CommonFunction.getGenshinDS())
+        val response = apiClient.dailyNote(
+            data.uid,
+            data.server,
+            data.cookie,
+            CommonFunction.getGenshinDS()
+        )
 
         response.suspendOnSuccess {
             emit(ResDailyNote(Meta(this.response.code(), this.response.message()), this.response.body()?:emptyData))
@@ -41,16 +48,19 @@ class ApiRepository @Inject constructor(
     }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 
     fun changeDataSwitch(
-        gameId: Int,
-        switchId: Int,
-        isPublic: Boolean,
-        cookie: String,
+        data: ReqChangeDataSwitch,
         onStart: () -> Unit,
         onComplete: () -> Unit
     ) = flow<ResDefault> {
         val emptyData = ResDefault.Data("","")
 
-        val response = apiClient.changeDataSwitch(gameId, switchId, isPublic, cookie, CommonFunction.getGenshinDS())
+        val response = apiClient.changeDataSwitch(
+            data.gameId,
+            data.switchId,
+            data.isPublic,
+            data.cookie,
+            CommonFunction.getGenshinDS()
+        )
 
         response.suspendOnSuccess {
             emit(ResDefault(Meta(this.response.code(), this.response.message()), this.response.body()?:emptyData))
@@ -61,28 +71,30 @@ class ApiRepository @Inject constructor(
         }
     }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 
-    fun getCameRecordCard(
-        hoyolabUid: String,
-        cookie: String,
+    fun getGameRecordCard(
+        data: ReqGetGameRecordCard,
         onStart: () -> Unit,
         onComplete: () -> Unit
-    ) = flow<ResGameRecordCard> {
-        val emptyData = ResGameRecordCard.Data("","", ResGameRecordCard.GameRecordCardList(listOf()))
+    ) = flow<ResGetGameRecordCard> {
+        val emptyData = ResGetGameRecordCard.Data("","", ResGetGameRecordCard.GameRecordCardList(listOf()))
 
-        val response = apiClient.getGameRecordCard(hoyolabUid, cookie, CommonFunction.getGenshinDS())
+        val response = apiClient.getGameRecordCard(
+            data.hoyolabUid,
+            data.cookie,
+            CommonFunction.getGenshinDS()
+        )
 
         response.suspendOnSuccess {
-            emit(ResGameRecordCard(Meta(this.response.code(), this.response.message()), this.response.body()?:emptyData))
+            emit(ResGetGameRecordCard(Meta(this.response.code(), this.response.message()), this.response.body()?:emptyData))
         }.suspendOnError {
-            emit(ResGameRecordCard(Meta(this.response.code(), this.response.message()), this.response.body()?:emptyData))
+            emit(ResGetGameRecordCard(Meta(this.response.code(), this.response.message()), emptyData))
         }.suspendOnException {
-            emit(ResGameRecordCard(Meta(Constant.META_CODE_CLIENT_ERROR, this.exception.message?:""), emptyData))
+            emit(ResGetGameRecordCard(Meta(Constant.META_CODE_CLIENT_ERROR, this.exception.message?:""), emptyData))
         }
     }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 
     fun checkIn(
-        region: String,
-        cookie: String,
+        data: ReqCheckIn,
         onStart: () -> Unit,
         onComplete: () -> Unit
     ) = flow<ResCheckIn> {
@@ -90,12 +102,17 @@ class ApiRepository @Inject constructor(
 
         val actId = Constant.OS_ACT_ID
 
-        val response = apiClient.checkIn(region, actId, cookie, CommonFunction.getGenshinDS())
+        val response = apiClient.checkIn(
+            data.region,
+            data.actId,
+            data.cookie,
+            CommonFunction.getGenshinDS()
+        )
 
         response.suspendOnSuccess {
             emit(ResCheckIn(Meta(this.response.code(), this.response.message()), this.response.body()?:emptyData))
         }.suspendOnError {
-            emit(ResCheckIn(Meta(this.response.code(), this.response.message()), this.response.body()?:emptyData))
+            emit(ResCheckIn(Meta(this.response.code(), this.response.message()), emptyData))
         }.suspendOnException {
             emit(ResCheckIn(Meta(Constant.META_CODE_CLIENT_ERROR, this.exception.message?:""), emptyData))
         }

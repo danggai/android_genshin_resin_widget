@@ -222,13 +222,13 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                 }
 
                 PreferenceManager.setIntCustomTargetResin(_context, customNotiResin)
-
-                requireActivity().sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+//
+//                requireActivity().sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
 
                 if (mVM.lvAutoRefreshPeriod.value == -1L) {
                     RefreshWorker.shutdownWorker(_context)
                 } else {
-                    RefreshWorker.startWorkerPeriodic(_context, 10L)
+                    RefreshWorker.startWorkerOneTime(_context)
                 }
             }
         })
@@ -317,11 +317,6 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                     .create()
                     .show()
             }
-        })
-
-        mVM.lvSetProgress.observe(viewLifecycleOwner, EventObserver {
-            log.e()
-            binding.llProgress.visibility = if (it) View.VISIBLE else View.GONE
         })
 
         mVM.lvStartCheckInWorker.observe(viewLifecycleOwner, EventObserver {
