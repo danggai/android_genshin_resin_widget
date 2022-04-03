@@ -5,14 +5,11 @@ import androidx.work.*
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.data.local.DailyNote
-import danggai.app.resinwidget.data.res.ResDailyNote
-import danggai.app.resinwidget.network.ApiRepository
+import danggai.app.resinwidget.repository.CheckInRepository
 import danggai.app.resinwidget.util.CommonFunction
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
 import io.reactivex.subjects.PublishSubject
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.onEach
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
@@ -21,7 +18,7 @@ import java.util.concurrent.TimeUnit
 class DailyNoteWorker (
     val context: Context,
     workerParams: WorkerParameters,
-    private val apiRepository: ApiRepository
+    private val checkInRepository: CheckInRepository
     ): Worker(context, workerParams) {
 
     companion object {

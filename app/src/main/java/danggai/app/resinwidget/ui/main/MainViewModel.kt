@@ -2,7 +2,6 @@ package danggai.app.resinwidget.ui.main
 
 import android.app.Application
 import android.view.View
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,14 +12,16 @@ import danggai.app.resinwidget.data.local.DailyNote
 import danggai.app.resinwidget.data.req.ReqChangeDataSwitch
 import danggai.app.resinwidget.data.req.ReqDailyNote
 import danggai.app.resinwidget.data.req.ReqGetGameRecordCard
-import danggai.app.resinwidget.network.ApiRepository
+import danggai.app.resinwidget.repository.ChangeDataSwitchRepository
+import danggai.app.resinwidget.repository.DailyNoteRepository
+import danggai.app.resinwidget.repository.GetGameRecordCardRepository
 import danggai.app.resinwidget.util.CommonFunction
 import danggai.app.resinwidget.util.Event
 import danggai.app.resinwidget.util.NonNullMutableLiveData
 import danggai.app.resinwidget.util.log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,7 +29,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     override val app: Application,
-    private val apiRepository: ApiRepository
+    private val dailyNoteRepository: DailyNoteRepository,
+    private val changeDataSwitchRepository: ChangeDataSwitchRepository,
+    private val getGameRecordCardRepository: GetGameRecordCardRepository,
 ) : BaseViewModel(app) {
     var lvSaveResinWidgetData = MutableLiveData<Event<Boolean>>()
     var lvSaveCheckInData = MutableLiveData<Event<Boolean>>()
@@ -63,7 +66,7 @@ class MainViewModel @Inject constructor(
 
     private fun refreshDailyNote(reqDailyNote: ReqDailyNote) {
         viewModelScope.launch {
-            apiRepository.dailyNote(
+            dailyNoteRepository.dailyNote(
                 reqDailyNote,
                 onStart = {
                     CoroutineScope(Dispatchers.Main).launch {
@@ -165,7 +168,7 @@ class MainViewModel @Inject constructor(
 
     private fun makeBattleChroniclePublic(reqChangeDataSwitch: ReqChangeDataSwitch) {
         viewModelScope.launch {
-            apiRepository.changeDataSwitch(
+            changeDataSwitchRepository.changeDataSwitch(
                 reqChangeDataSwitch,
                 onStart = {
                     CoroutineScope(Dispatchers.Main).launch {
@@ -211,7 +214,7 @@ class MainViewModel @Inject constructor(
 
     private fun getUid(reqGetGameRecordCard: ReqGetGameRecordCard) {
         viewModelScope.launch {
-            apiRepository.getGameRecordCard(
+            getGameRecordCardRepository.getGameRecordCard(
                 reqGetGameRecordCard,
                 onStart = {
                     CoroutineScope(Dispatchers.Main).launch {

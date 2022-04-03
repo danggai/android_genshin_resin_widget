@@ -2,7 +2,6 @@ package danggai.app.resinwidget.worker
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
-import androidx.lifecycle.viewModelScope
 import androidx.work.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -10,19 +9,15 @@ import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.data.local.DailyNote
 import danggai.app.resinwidget.data.req.ReqDailyNote
-import danggai.app.resinwidget.data.res.ResDailyNote
-import danggai.app.resinwidget.network.ApiRepository
+import danggai.app.resinwidget.repository.DailyNoteRepository
 import danggai.app.resinwidget.util.CommonFunction
-import danggai.app.resinwidget.util.Event
 import danggai.app.resinwidget.util.PreferenceManager
 import danggai.app.resinwidget.util.log
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.net.ConnectException
 import java.net.UnknownHostException
@@ -33,7 +28,7 @@ import java.util.concurrent.TimeUnit
 class RefreshWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
-    private val apiRepository: ApiRepository
+    private val dailyNoteRepository: DailyNoteRepository
     ): Worker(context, workerParams) {
 
     companion object {
@@ -91,7 +86,7 @@ class RefreshWorker @AssistedInject constructor(
 
     private fun refreshDailyNote(reqDailyNote: ReqDailyNote) {
         CoroutineScope(Dispatchers.IO).launch {
-            apiRepository.dailyNote(
+            dailyNoteRepository.dailyNote(
                 reqDailyNote,
                 onStart = { log.e() },
                 onComplete = { log.e() }
