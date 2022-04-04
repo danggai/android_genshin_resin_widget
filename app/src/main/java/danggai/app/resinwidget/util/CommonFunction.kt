@@ -2,6 +2,8 @@ package danggai.app.resinwidget.util
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
@@ -18,6 +20,9 @@ import danggai.app.resinwidget.BuildConfig
 import danggai.app.resinwidget.Constant
 import danggai.app.resinwidget.R
 import danggai.app.resinwidget.data.local.DailyNote
+import danggai.app.resinwidget.ui.widget.DetailWidget
+import danggai.app.resinwidget.ui.widget.ResinWidget
+import danggai.app.resinwidget.ui.widget.ResinWidgetResizable
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
@@ -58,13 +63,24 @@ object CommonFunction {
             .lowercase(Locale.getDefault())
     }
 
-    fun getIntentAppWidgetUiUpdate(): Intent {
-        val broadcast= Intent()
-        broadcast.action = Constant.ACTION_APPWIDGET_UPDATE
-        broadcast.putExtra(Constant.REFRESH_DATA, false)
-        broadcast.putExtra(Constant.REFRESH_UI, true)
+    fun sendBroadcastResinWidgetRefreshData(context: Context) {
+        log.e()
 
-        return broadcast
+        context.apply {
+            sendBroadcast( Intent(context, ResinWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_DATA))
+            sendBroadcast( Intent(context, ResinWidgetResizable::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_DATA))
+            sendBroadcast( Intent(context, DetailWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_DATA))
+        }
+    }
+
+    fun sendBroadcastResinWidgetRefreshUI(context: Context) {
+        log.e()
+
+        context.apply {
+            sendBroadcast( Intent(context, ResinWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI))
+            sendBroadcast( Intent(context, ResinWidgetResizable::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI))
+            sendBroadcast( Intent(context, DetailWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI))
+        }
     }
 
     fun getTimeSyncTimeFormat(): String {

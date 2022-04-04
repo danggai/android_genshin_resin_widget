@@ -188,7 +188,6 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
 
                     if (!mVM.lvEnableAutoCheckIn.value)
                         CheckInWorker.shutdownWorker(_context)
-//                        CheckInReceiver.cancelAlarm(_context)
 
                     makeToast(_context, getString(R.string.msg_toast_save_done))
                 } else if (!boolean and mVM.lvCookie.value.isEmpty()) {
@@ -228,7 +227,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                 if (mVM.lvAutoRefreshPeriod.value == -1L) {
                     RefreshWorker.shutdownWorker(_context)
                 } else {
-                    RefreshWorker.startWorkerOneTime(_context)
+                    RefreshWorker.startWorkerPeriodic(_context)
                 }
             }
         })

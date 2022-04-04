@@ -272,7 +272,7 @@ class CheckInWorker @AssistedInject constructor(
                 else -> log.e("Unknown exception!")
             }
             log.e(e.message.toString())
-            applicationContext.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+
             Result.failure()
         }
     }

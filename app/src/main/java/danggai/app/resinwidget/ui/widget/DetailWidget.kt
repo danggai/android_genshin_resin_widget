@@ -43,36 +43,32 @@ class DetailWidget : AppWidgetProvider() {
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
         val action = intent?.action
+
+        val thisWidget = ComponentName(context!!, DetailWidget::class.java)
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+        val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
+
         when (action) {
-            Constant.ACTION_APPWIDGET_UPDATE -> {
-                log.e("ACTION_APPWIDGET_UPDATE")
+            Constant.ACTION_RESIN_WIDGET_REFRESH_UI -> {
+                log.e("REFRESH_UI")
 
-                val thisWidget = ComponentName(context!!, DetailWidget::class.java)
-                val appWidgetManager = AppWidgetManager.getInstance(context)
-                val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
+                context.let { it ->
+                    val _intent = Intent(it, DetailWidget::class.java)
+                    _intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 
-                if (intent.getBooleanExtra(Constant.REFRESH_DATA, false)) {
-                    log.e("REFRESH_DATA")
-                    updateAppWidget(context, appWidgetManager, appWidgetIds)
-                    context?.let { RefreshWorker.startWorkerPeriodic(context) }
-                } else if (intent.getBooleanExtra(Constant.REFRESH_UI, false)) {
-                    log.e("REFRESH_UI")
-                    updateAppWidget(context, appWidgetManager, appWidgetIds)
+                    val ids = AppWidgetManager.getInstance(it.applicationContext).getAppWidgetIds(ComponentName(it.applicationContext, DetailWidget::class.java))
 
-                    context?.let { it ->
-
-                        val _intent = Intent(it, DetailWidget::class.java)
-                        _intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-
-                        val ids = AppWidgetManager.getInstance(it.applicationContext).getAppWidgetIds(ComponentName(it.applicationContext, DetailWidget::class.java))
-
-                        _intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-                        it.sendBroadcast(_intent)
-                    }
-
-                } else {
-                    log.e(action.toString())
+                    _intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+                    it.sendBroadcast(_intent)
                 }
+            }
+            Constant.ACTION_RESIN_WIDGET_REFRESH_DATA -> {
+                log.e("REFRESH_DATA")
+                setWidgetRefreshing(context, appWidgetManager, appWidgetIds)
+                context.let { RefreshWorker.startWorkerPeriodic(context) }
+            }
+            Constant.ACTION_APPWIDGET_UPDATE -> {
+                log.e(action.toString())
             }
         }
     }
@@ -97,14 +93,9 @@ class DetailWidget : AppWidgetProvider() {
         log.e()
         val views = RemoteViews(context!!.packageName, R.layout.widget_detail_fixed)
 
-        val intentUpdate = Intent(context, DetailWidget::class.java)
-        intentUpdate.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-        intentUpdate.putExtra(Constant.REFRESH_DATA, true)
-        intentUpdate.putExtra(Constant.REFRESH_UI, true)
-
-        val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
-        val awId = manager.getAppWidgetIds(ComponentName(context.applicationContext, DetailWidget::class.java))
-
+        val intentUpdate = Intent(context, DetailWidget::class.java).apply {
+            action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
+        }
         views.setOnClickPendingIntent(R.id.ll_sync, PendingIntent.getBroadcast(context, 0, intentUpdate, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT))
 
         val intentMainActivity = Intent(context, MainActivity::class.java)
@@ -114,6 +105,9 @@ class DetailWidget : AppWidgetProvider() {
         views.setOnClickPendingIntent(R.id.iv_serenitea_pot, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
         views.setOnClickPendingIntent(R.id.iv_warp, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
         views.setOnClickPendingIntent(R.id.ll_disable, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
+
+        val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
+        val awId = manager.getAppWidgetIds(ComponentName(context.applicationContext, DetailWidget::class.java))
 
         manager.updateAppWidget(awId, views)
 
@@ -213,7 +207,7 @@ class DetailWidget : AppWidgetProvider() {
         }
     }
 
-    internal fun updateAppWidget(
+    private fun setWidgetRefreshing(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray

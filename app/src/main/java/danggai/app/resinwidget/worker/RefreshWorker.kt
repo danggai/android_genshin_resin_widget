@@ -42,7 +42,6 @@ class RefreshWorker @AssistedInject constructor(
 
             val workManager = WorkManager.getInstance(context)
             val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
-                .setInputData(workDataOf(Constant.ARG_IS_SINGLE_TIME_WORK to true))
                 .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
                 .build()
             workManager.enqueueUniqueWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingWorkPolicy.REPLACE, workRequest)
@@ -65,9 +64,7 @@ class RefreshWorker @AssistedInject constructor(
 
                     val workManager = WorkManager.getInstance(context)
                     val workRequest = PeriodicWorkRequestBuilder<RefreshWorker>(period, TimeUnit.MINUTES)
-                        .setInputData(workDataOf(Constant.ARG_IS_SINGLE_TIME_WORK to false))
                         .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
-//                        .setInitialDelay(delayedTime, TimeUnit.MINUTES)
                         .build()
 
                     workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
@@ -92,10 +89,6 @@ class RefreshWorker @AssistedInject constructor(
                 onComplete = { log.e() }
             ).collect {
                 log.e(it)
-                if (inputData.getBoolean(Constant.ARG_IS_SINGLE_TIME_WORK, false)) {
-                    log.e()
-                    startWorkerPeriodic(applicationContext)
-                }
 
                 when (it.meta.code) {
                     Constant.META_CODE_SUCCESS -> {
@@ -108,20 +101,20 @@ class RefreshWorker @AssistedInject constructor(
                             else -> {
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.meta.code, it.data.retcode)
-                                applicationContext.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+                                CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
                             }
                         }
                     }
                     Constant.META_CODE_CLIENT_ERROR -> {
                         it.meta.message.let { msg ->
-                            applicationContext.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+                            CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
                             log.e(msg)
                         }
                     }
                     else -> {
                         log.e()
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.meta.code, null)
-                        applicationContext.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+                        CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
                     }
                 }
             }
@@ -190,17 +183,11 @@ class RefreshWorker @AssistedInject constructor(
 
         CommonFunction.setDailyNoteData(context, dailyNote)
 
-        context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
-
+        CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
     }
 
     private fun sendNoti(id: Int, target: Int) {
         log.e()
-
-        if (inputData.getBoolean(Constant.ARG_IS_SINGLE_TIME_WORK, false)) {
-            log.e()
-            return
-        }
 
         val title = when (id) {
             Constant.NOTI_TYPE_EACH_40_RESIN,
@@ -259,7 +246,8 @@ class RefreshWorker @AssistedInject constructor(
                 else -> log.e("Unknown exception!")
             }
             log.e(e.message.toString())
-            applicationContext.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+
+            CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
             return Result.failure()
         }
     }

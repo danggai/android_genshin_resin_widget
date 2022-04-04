@@ -190,12 +190,6 @@ object Constant {
 
 
 
-    /* ARGUMENT */
-
-    const val ARG_IS_SINGLE_TIME_WORK = "ARG_IS_SINGLE_TIME_WORK"
-
-
-
     /* TIMEZONE */
 
     const val CHINA_TIMEZONE = "Asia/Shanghai"
@@ -205,10 +199,10 @@ object Constant {
 
     /* ACTION */
 
-    const val ACTION_APPWIDGET_UPDATE = "android.appwidget.action.APPWIDGET_UPDATE"
+    const val ACTION_RESIN_WIDGET_REFRESH_UI = "danggai.app.resinwidget.refresh.resin.ui"
+    const val ACTION_RESIN_WIDGET_REFRESH_DATA = "danggai.app.resinwidget.refresh.resin.data"
 
-    const val REFRESH_UI = "REFRESH_UI_ONLY"
-    const val REFRESH_DATA = "REFRESH_DATA"
+    const val ACTION_APPWIDGET_UPDATE = "android.appwidget.action.APPWIDGET_UPDATE"
 
     const val BACK_BUTTON_INTERVAL: Long = 1000
 

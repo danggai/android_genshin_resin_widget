@@ -32,7 +32,6 @@ class DailyNoteWorker (
 
             val workManager = WorkManager.getInstance(context)
             val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
-                .setInputData(workDataOf(Constant.ARG_IS_SINGLE_TIME_WORK to true))
                 .build()
             workManager.enqueue(workRequest)
         }
@@ -52,7 +51,6 @@ class DailyNoteWorker (
             val workManager = WorkManager.getInstance(context)
             val workRequest = PeriodicWorkRequestBuilder<RefreshWorker>(period, TimeUnit.MINUTES)
                 .setInitialDelay(period, TimeUnit.MINUTES)
-                .setInputData(workDataOf(Constant.ARG_IS_SINGLE_TIME_WORK to false))
                 .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
                 .build()
             workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
@@ -182,17 +180,11 @@ class DailyNoteWorker (
 
         CommonFunction.setDailyNoteData(context, dailyNote)
 
-        context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
-
+        CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
     }
 
     private fun sendNoti(id: Int, target: Int) {
         log.e()
-
-        if (inputData.getBoolean(Constant.ARG_IS_SINGLE_TIME_WORK, false)) {
-            log.e()
-            return
-        }
 
         val title = when (id) {
             Constant.NOTI_TYPE_EACH_40_RESIN,
@@ -237,7 +229,7 @@ class DailyNoteWorker (
                 else -> log.e("Unknown exception!")
             }
             log.e(e.message.toString())
-            context.sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
+            CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
             return Result.failure()
         }
     }

@@ -36,7 +36,8 @@
             android:exported="false">
 
             <intent-filter>
-                <action android:name="danggai.app.resinwidget.btn_refresh" />
+                <action android:name="danggai.app.resinwidget.refresh.resin.ui" />
+                <action android:name="danggai.app.resinwidget.refresh.resin.data" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
                 <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
@@ -52,10 +53,11 @@
         <receiver
             android:name=".ui.widget.ResinWidgetResizable"
             android:label="@string/widget_label_resin_resizable"
-            android:exported="false">
+            android:exported="true">
 
             <intent-filter>
-                <action android:name="danggai.app.resinwidget.btn_refresh" />
+                <action android:name="danggai.app.resinwidget.refresh.resin.ui" />
+                <action android:name="danggai.app.resinwidget.refresh.resin.data" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
                 <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
@@ -71,10 +73,11 @@
         <receiver
             android:name=".ui.widget.DetailWidget"
             android:label="@string/widget_label_detail_fixed"
-            android:exported="false">
+            android:exported="true">
 
             <intent-filter>
-                <action android:name="danggai.app.resinwidget.btn_refresh" />
+                <action android:name="danggai.app.resinwidget.refresh.resin.ui" />
+                <action android:name="danggai.app.resinwidget.refresh.resin.data" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
                 <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
