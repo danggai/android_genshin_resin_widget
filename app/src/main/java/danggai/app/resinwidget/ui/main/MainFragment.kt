@@ -148,7 +148,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                         .create()
                         .show()
 
-                    if (mVM.lvEnableAutoCheckIn.value && BuildConfig.VERSION_NAME == "1.1.1") mVM.lvSaveCheckInData.value = Event(true)
+                    if (PreferenceManager.getBooleanEnableAutoCheckIn(it) && BuildConfig.VERSION_NAME == "1.1.2") mVM.lvStartCheckInWorker.value = Event(true)
                 }
 
                 PreferenceManager.setBooleanCheckedUpdateNote(it, true)

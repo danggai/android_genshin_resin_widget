@@ -23,18 +23,20 @@
 
 ## 개발 환경
 
-- [Android Studio 4.2.1](https://developer.android.com/studio/intro)
+- [Android Studio Bumblebee](https://developer.android.com/studio/intro)
 - [Koltin](https://developer.android.com/kotlin)
-- [RxKotlin](https://github.com/ReactiveX/RxKotlin)
-- [Koin](https://insert-koin.io/)
+- [Coroutine](https://developer.android.com/kotlin/coroutines?hl=ko)
+- [Hilt](https://dagger.dev/hilt/)
 - [Retrofit2](https://square.github.io/retrofit/)
+- [LiveData](https://developer.android.com/topic/libraries/architecture/livedata?hl=ko) (StateFlow로 Refactoring 중)
+- Repository Pattern
 
 
 
 ## Application Version
 
-- minSdkVersion : 24
-- targetSdkVersion : 31
+- minSdkVersion : 23
+- targetSdkVersion : 32
 
 
 
