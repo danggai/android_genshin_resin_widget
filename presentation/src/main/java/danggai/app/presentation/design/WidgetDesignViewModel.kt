@@ -7,9 +7,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BaseViewModel
 import danggai.app.presentation.core.util.Event
-import danggai.domain.util.Constant
 import danggai.app.presentation.core.util.NonNullMutableLiveData
 import danggai.app.presentation.core.util.log
+import danggai.domain.util.Constant
 import javax.inject.Inject
 
 @HiltViewModel

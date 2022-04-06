@@ -1,8 +1,8 @@
 package danggai.domain.getgamerecordcard.usecase
 
 import danggai.domain.base.ApiResult
-import danggai.domain.getgamerecordcard.repository.GetGameRecordCardRepository
 import danggai.domain.getgamerecordcard.entity.GetGameRecordCard
+import danggai.domain.getgamerecordcard.repository.GetGameRecordCardRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetGameRecordCardUseCase(private val getGameRecordCardRepository: GetGameRecordCardRepository) {

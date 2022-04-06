@@ -21,14 +21,14 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.BuildConfig
 import danggai.app.presentation.R
-import danggai.app.presentation.design.WidgetDesignActivity
-import danggai.app.presentation.main.checkin.MainCheckInFragment
-import danggai.app.presentation.main.resin.MainResinFragment
 import danggai.app.presentation.cookie.CookieWebViewActivity
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.core.util.*
 import danggai.app.presentation.core.util.CommonFunction.setDailyNoteData
 import danggai.app.presentation.databinding.FragmentMainBinding
+import danggai.app.presentation.design.WidgetDesignActivity
+import danggai.app.presentation.main.checkin.MainCheckInFragment
+import danggai.app.presentation.main.resin.MainResinFragment
 import danggai.app.presentation.worker.CheckInWorker
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.util.Constant

@@ -1,8 +1,8 @@
 package danggai.data.checkin.remote.api
 
 import com.skydoves.sandwich.ApiResponse
-import danggai.domain.util.Constant
 import danggai.domain.checkin.entity.CheckIn
+import danggai.domain.util.Constant
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST

@@ -3,12 +3,12 @@ package danggai.data.changedataswitch.repository
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
-import danggai.domain.util.Constant
-import danggai.domain.base.Meta
 import danggai.data.changedataswitch.remote.api.ChangeDataSwitchApi
 import danggai.domain.base.ApiResult
-import danggai.domain.changedataswitch.repository.ChangeDataSwitchRepository
+import danggai.domain.base.Meta
 import danggai.domain.changedataswitch.entity.ChangeDataSwitch
+import danggai.domain.changedataswitch.repository.ChangeDataSwitchRepository
+import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn

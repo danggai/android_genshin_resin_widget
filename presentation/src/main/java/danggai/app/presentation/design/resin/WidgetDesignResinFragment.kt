@@ -13,10 +13,10 @@ import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.core.util.CommonFunction.isDarkMode
 import danggai.app.presentation.core.util.PreferenceManager
+import danggai.app.presentation.core.util.log
 import danggai.app.presentation.databinding.FragmentWidgetDesignResinBinding
 import danggai.app.presentation.design.WidgetDesignViewModel
 import danggai.domain.util.Constant
-import danggai.app.presentation.core.util.log
 
 @AndroidEntryPoint
 class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBinding, WidgetDesignViewModel>() {

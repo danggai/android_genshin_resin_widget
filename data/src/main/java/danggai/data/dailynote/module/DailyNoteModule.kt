@@ -3,14 +3,10 @@ package danggai.data.dailynote.module
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import danggai.data.dailynote.remote.api.DailyNoteApi
 import danggai.data.dailynote.repository.DailyNoteRepositoryImpl
 import danggai.data.module.NetworkModule
-import danggai.domain.changedataswitch.repository.ChangeDataSwitchRepository
-import danggai.domain.changedataswitch.usecase.ChangeDataSwitchUseCase
 import danggai.domain.dailynote.repository.DailyNoteRepository
 import danggai.domain.dailynote.usecase.DailyNoteUseCase
 import kotlinx.coroutines.CoroutineDispatcher

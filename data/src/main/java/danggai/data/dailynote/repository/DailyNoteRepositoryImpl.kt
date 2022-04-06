@@ -3,12 +3,12 @@ package danggai.data.dailynote.repository
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
-import danggai.domain.util.Constant
 import danggai.data.dailynote.remote.api.DailyNoteApi
 import danggai.domain.base.ApiResult
 import danggai.domain.base.Meta
 import danggai.domain.dailynote.entity.DailyNote
 import danggai.domain.dailynote.repository.DailyNoteRepository
+import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn

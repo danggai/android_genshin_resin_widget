@@ -1,8 +1,8 @@
 package danggai.domain.checkin.usecase
 
 import danggai.domain.base.ApiResult
-import danggai.domain.checkin.repository.CheckInRepository
 import danggai.domain.checkin.entity.CheckIn
+import danggai.domain.checkin.repository.CheckInRepository
 import kotlinx.coroutines.flow.Flow
 
 class CheckInUseCase (private val checkInRepository: CheckInRepository) {

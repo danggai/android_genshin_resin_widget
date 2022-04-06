@@ -3,12 +3,12 @@ package danggai.data.getgamerecordcard.repository
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
-import danggai.domain.base.Meta
-import danggai.domain.getgamerecordcard.repository.GetGameRecordCardRepository
-import danggai.domain.util.Constant
 import danggai.data.getgamerecordcard.remote.api.GetGameRecordCardApi
 import danggai.domain.base.ApiResult
+import danggai.domain.base.Meta
 import danggai.domain.getgamerecordcard.entity.GetGameRecordCard
+import danggai.domain.getgamerecordcard.repository.GetGameRecordCardRepository
+import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn

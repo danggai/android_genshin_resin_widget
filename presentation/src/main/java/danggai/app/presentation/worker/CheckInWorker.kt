@@ -24,7 +24,9 @@ import danggai.app.presentation.core.util.log
 import danggai.app.presentation.main.MainActivity
 import danggai.domain.checkin.usecase.CheckInUseCase
 import danggai.domain.util.Constant
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.util.*
@@ -90,70 +92,70 @@ class CheckInWorker @AssistedInject constructor(
         cookie: String,
         ds: String
     ) = CoroutineScope(Dispatchers.IO).launch {
-            checkInUseCase.checkIn(
-                region,
-                actId,
-                cookie,
-                ds,
-                onStart = { log.e () },
-                onComplete = { log.e () }
-            ).collect {
-                log.e(it)
-                when (it.meta.code) {
-                    Constant.META_CODE_SUCCESS -> {
-                        log.e()
-                        when (it.data.retcode) {
-                            Constant.RETCODE_SUCCESS,
-                            Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
-                            Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> {
+        checkInUseCase.checkIn(
+            region,
+            actId,
+            cookie,
+            ds,
+            onStart = { log.e () },
+            onComplete = { log.e () }
+        ).collect {
+            log.e(it)
+            when (it.meta.code) {
+                Constant.META_CODE_SUCCESS -> {
+                    log.e()
+                    when (it.data.retcode) {
+                        Constant.RETCODE_SUCCESS,
+                        Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
+                        Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> {
+                            log.e()
+                            if (PreferenceManager.getBooleanNotiCheckInSuccess(applicationContext)) {
                                 log.e()
-                                if (PreferenceManager.getBooleanNotiCheckInSuccess(applicationContext)) {
-                                    log.e()
 
-                                    when (it.data.retcode) {
-                                        Constant.RETCODE_SUCCESS -> sendNoti(Constant.NOTI_TYPE_CHECK_IN_SUCCESS)
-                                        Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
-                                        Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, ->
-                                            sendNoti(Constant.NOTI_TYPE_CHECK_IN_ALREADY)
-                                    }
+                                when (it.data.retcode) {
+                                    Constant.RETCODE_SUCCESS -> sendNoti(Constant.NOTI_TYPE_CHECK_IN_SUCCESS)
+                                    Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
+                                    Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, ->
+                                        sendNoti(Constant.NOTI_TYPE_CHECK_IN_ALREADY)
                                 }
+                            }
 
-                                log.e()
-                                startWorkerOneTimeAtChinaMidnight(applicationContext)
-                            }
-                            else -> {
-                                log.e()
-                                if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
-                                    log.e()
-                                    sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
-                                }
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, it.meta.code, it.data.retcode)
-                                startWorkerOneTimeRetry(applicationContext)
-                            }
+                            log.e()
+                            startWorkerOneTimeAtChinaMidnight(applicationContext)
                         }
-                    }
-                    Constant.META_CODE_CLIENT_ERROR -> {
-                        it.meta.message.let { msg ->
-                            log.e(msg)
+                        else -> {
+                            log.e()
                             if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
                                 log.e()
                                 sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                             }
+                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, it.meta.code, it.data.retcode)
                             startWorkerOneTimeRetry(applicationContext)
                         }
                     }
-                    else -> {
-                        log.e()
+                }
+                Constant.META_CODE_CLIENT_ERROR -> {
+                    it.meta.message.let { msg ->
+                        log.e(msg)
                         if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
                             log.e()
                             sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                         }
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, it.meta.code, null)
                         startWorkerOneTimeRetry(applicationContext)
                     }
                 }
+                else -> {
+                    log.e()
+                    if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                        log.e()
+                        sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
+                    }
+                    CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, it.meta.code, null)
+                    startWorkerOneTimeRetry(applicationContext)
+                }
             }
         }
+    }
 
     private fun sendNoti(id: Int) {
         log.e()
@@ -218,28 +220,28 @@ class CheckInWorker @AssistedInject constructor(
 
     override fun doWork(): Result {
 //        coroutineScope {
+        log.e()
+
+        return try {
+            checkIn(
+                region = Constant.SERVER_OS_ASIA,
+                actId = Constant.OS_ACT_ID,
+                cookie = PreferenceManager.getStringCookie(applicationContext),
+                ds = CommonFunction.getGenshinDS()
+            )
+
             log.e()
-
-            try {
-                checkIn(
-                    region = Constant.SERVER_OS_ASIA,
-                    actId = Constant.OS_ACT_ID,
-                    cookie = PreferenceManager.getStringCookie(applicationContext),
-                    ds = CommonFunction.getGenshinDS()
-                )
-
-                log.e()
-                Result.success()
-            } catch (e: java.lang.Exception) {
-                when (e) {
-                    is UnknownHostException -> log.e("Unknown host!")
-                    is ConnectException -> log.e("No internet!")
-                    else -> log.e("Unknown exception!")
-                }
-                log.e(e.message.toString())
-
-                Result.failure()
+            Result.success()
+        } catch (e: java.lang.Exception) {
+            when (e) {
+                is UnknownHostException -> log.e("Unknown host!")
+                is ConnectException -> log.e("No internet!")
+                else -> log.e("Unknown exception!")
             }
+            log.e(e.message.toString())
+
+            Result.failure()
         }
+    }
 
 }

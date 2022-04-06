@@ -1,7 +1,7 @@
 package danggai.data.checkin.remote.dto
 
-import danggai.domain.checkin.entity.CheckIn
 import danggai.domain.base.Meta
+import danggai.domain.checkin.entity.CheckIn
 
 data class ResCheckIn (
     val meta: Meta,

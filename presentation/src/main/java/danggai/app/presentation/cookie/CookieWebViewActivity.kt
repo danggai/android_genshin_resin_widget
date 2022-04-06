@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.annotation.LayoutRes
 import dagger.hilt.android.AndroidEntryPoint
-import danggai.app.presentation.cookie.CookieWebViewViewModel
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingActivity
 import danggai.app.presentation.databinding.ActivityCookieWebviewBinding

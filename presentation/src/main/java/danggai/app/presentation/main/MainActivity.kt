@@ -9,9 +9,9 @@ import androidx.annotation.LayoutRes
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingActivity
+import danggai.app.presentation.core.util.log
 import danggai.app.presentation.databinding.ActivityMainBinding
 import danggai.domain.util.Constant
-import danggai.app.presentation.core.util.log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject

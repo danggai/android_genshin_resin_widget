@@ -3,12 +3,12 @@ package danggai.data.checkin.repository
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
-import danggai.domain.checkin.repository.CheckInRepository
-import danggai.domain.checkin.entity.CheckIn
-import danggai.domain.base.Meta
-import danggai.domain.util.Constant
 import danggai.data.checkin.remote.api.CheckInApi
 import danggai.domain.base.ApiResult
+import danggai.domain.base.Meta
+import danggai.domain.checkin.entity.CheckIn
+import danggai.domain.checkin.repository.CheckInRepository
+import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn

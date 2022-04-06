@@ -1,7 +1,6 @@
 package danggai.data.changedataswitch.remote.api
 
 import com.skydoves.sandwich.ApiResponse
-import danggai.data.changedataswitch.remote.dto.ResChangeDataSwitch
 import danggai.domain.changedataswitch.entity.ChangeDataSwitch
 import retrofit2.http.Header
 import retrofit2.http.Headers

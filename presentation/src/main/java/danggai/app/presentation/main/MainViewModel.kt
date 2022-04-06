@@ -10,12 +10,12 @@ import danggai.app.presentation.core.BaseViewModel
 import danggai.app.presentation.core.util.CommonFunction
 import danggai.app.presentation.core.util.Event
 import danggai.app.presentation.core.util.NonNullMutableLiveData
-import danggai.domain.util.Constant
+import danggai.app.presentation.core.util.log
 import danggai.domain.changedataswitch.usecase.ChangeDataSwitchUseCase
 import danggai.domain.dailynote.entity.DailyNote
 import danggai.domain.dailynote.usecase.DailyNoteUseCase
 import danggai.domain.getgamerecordcard.usecase.GetGameRecordCardUseCase
-import danggai.app.presentation.core.util.log
+import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

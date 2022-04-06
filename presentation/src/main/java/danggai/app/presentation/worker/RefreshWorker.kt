@@ -5,14 +5,13 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import danggai.app.presentation.R
 import danggai.app.presentation.core.util.CommonFunction
 import danggai.app.presentation.core.util.PreferenceManager
-import danggai.domain.util.Constant
 import danggai.app.presentation.core.util.log
-import danggai.domain.dailynote.repository.DailyNoteRepository
 import danggai.domain.dailynote.entity.DailyNote
-import danggai.app.presentation.R
 import danggai.domain.dailynote.usecase.DailyNoteUseCase
+import danggai.domain.util.Constant
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.CoroutineScope

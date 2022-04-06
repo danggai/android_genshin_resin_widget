@@ -2,6 +2,7 @@ package danggai.app.presentation.core.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import danggai.app.presentation.BuildConfig
 import danggai.domain.util.Constant
 import java.util.*
 
@@ -491,10 +492,10 @@ object PreferenceManager {
 
 
     fun getBooleanCheckedUpdateNote(context: Context): Boolean {
-        return getBoolean(context, Constant.PREF_CHECKED_UPDATE_NOTE, false)
+        return getBoolean(context, Constant.PREF_CHECKED_UPDATE_NOTE + BuildConfig.VERSION_NAME, false)
     }
     fun setBooleanCheckedUpdateNote(context: Context, value: Boolean) {
-        setBoolean(context, Constant.PREF_CHECKED_UPDATE_NOTE, value)
+        setBoolean(context, Constant.PREF_CHECKED_UPDATE_NOTE + BuildConfig.VERSION_NAME, value)
     }
 
 }
