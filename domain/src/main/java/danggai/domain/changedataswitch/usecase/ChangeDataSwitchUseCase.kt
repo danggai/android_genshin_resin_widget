@@ -6,7 +6,7 @@ import danggai.domain.changedataswitch.entity.ChangeDataSwitch
 import kotlinx.coroutines.flow.Flow
 
 class ChangeDataSwitchUseCase (private val changeDataSwitchRepository: ChangeDataSwitchRepository) {
-    suspend fun changeDataSwitch(
+    fun changeDataSwitch(
         gameId: Int,
         switchId: Int,
         isPublic: Boolean,

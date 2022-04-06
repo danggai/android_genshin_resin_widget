@@ -1,6 +1,6 @@
 package danggai.domain.dailynote.entity
 
-data class DailyNote (
+data class DailyNote(
     val retcode: String,
     val message: String,
     val data: Data?
@@ -25,4 +25,26 @@ data class DailyNote (
         val max_expedition_num: Int,
         val expeditions: List<GameRoleExpedition>?
     )
+
+    companion object {
+        val EMPTY = DailyNote(
+            "", "",
+            DailyNote.Data(
+                -1,
+                -1,
+                "-1",
+                -1,
+                -1,
+                false,
+                -1,
+                -1,
+                -1,
+                -1,
+                "-1",
+                -1,
+                -1,
+                listOf()
+            )
+        )
+    }
 }

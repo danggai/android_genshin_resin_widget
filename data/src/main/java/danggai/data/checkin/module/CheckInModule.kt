@@ -30,16 +30,13 @@ class CheckInModule {
     @Singleton
     @Provides
     fun provideCheckInRepository(
-        api: CheckInApi,
-        ioDispatcher: CoroutineDispatcher
-    ): CheckInRepository {
-        return CheckInRepositoryImpl(api, ioDispatcher)
-    }
+        repository: CheckInRepositoryImpl
+    ): CheckInRepository = repository
 
-    @Provides
-    fun provideCheckInUseCase(
-        repository: CheckInRepository
-    ): CheckInUseCase {
-        return CheckInUseCase(repository)
-    }
+//    @Provides
+//    fun provideCheckInUseCase(
+//        repository: CheckInRepository
+//    ): CheckInUseCase {
+//        return CheckInUseCase(repository)
+//    }
 }

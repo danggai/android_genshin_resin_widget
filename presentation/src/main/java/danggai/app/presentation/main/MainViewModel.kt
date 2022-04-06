@@ -333,15 +333,16 @@ class MainViewModel @Inject constructor(
         lvWidgetRefreshNotWork.value = Event(true)
     }
 
-    fun onClickSetServer(view: View) {
+    enum class Server(val pref: Int) {
+        ASIA(Constant.PREF_SERVER_ASIA),
+        USA(Constant.PREF_SERVER_USA),
+        EURO(Constant.PREF_SERVER_EUROPE),
+        CHT(Constant.PREF_SERVER_CHT)
+    }
+
+    fun onClickSetServer(server: Server) {
         log.e()
-        lvServer.value = when (view.id) {
-            R.id.rb_asia -> Constant.PREF_SERVER_ASIA
-            R.id.rb_usa -> Constant.PREF_SERVER_USA
-            R.id.rb_euro -> Constant.PREF_SERVER_EUROPE
-            R.id.rb_cht -> Constant.PREF_SERVER_CHT
-            else -> Constant.PREF_SERVER_ASIA
-        }
+        lvServer.value = server.pref
     }
 
     fun onClickSetAutoRefreshPeriod(view: View) {

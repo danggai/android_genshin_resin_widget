@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface ChangeDataSwitchRepository: Repository {
-    suspend fun changeDataSwitch(
+    fun changeDataSwitch(
         gameId: Int,
         switchId: Int,
         isPublic: Boolean,
