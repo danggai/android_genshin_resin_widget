@@ -202,6 +202,7 @@ object Constant {
 
     const val ACTION_RESIN_WIDGET_REFRESH_UI = "danggai.app.resinwidget.refresh.resin.ui"
     const val ACTION_RESIN_WIDGET_REFRESH_DATA = "danggai.app.resinwidget.refresh.resin.data"
+    const val ACTION_ON_BOOT_COMPLETED = "android.intent.action.BOOT_COMPLETED"
 
     const val ACTION_APPWIDGET_UPDATE = "android.appwidget.action.APPWIDGET_UPDATE"
 

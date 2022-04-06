@@ -62,7 +62,8 @@ class DetailWidget : AppWidgetProvider() {
                     it.sendBroadcast(_intent)
                 }
             }
-            Constant.ACTION_RESIN_WIDGET_REFRESH_DATA -> {
+            Constant.ACTION_RESIN_WIDGET_REFRESH_DATA,
+            Constant.ACTION_ON_BOOT_COMPLETED -> {
                 log.e("REFRESH_DATA")
                 setWidgetRefreshing(context, appWidgetManager, appWidgetIds)
                 context.let { RefreshWorker.startWorkerPeriodic(context) }
