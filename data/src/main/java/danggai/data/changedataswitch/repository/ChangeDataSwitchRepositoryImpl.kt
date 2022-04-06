@@ -20,7 +20,7 @@ class ChangeDataSwitchRepositoryImpl @Inject constructor(
     private val changeDataSwitchApi: ChangeDataSwitchApi,
     private val ioDispatcher: CoroutineDispatcher
 ) : ChangeDataSwitchRepository {
-    override suspend fun changeDataSwitch(
+    override fun changeDataSwitch(
         gameId: Int,
         switchId: Int,
         isPublic: Boolean,

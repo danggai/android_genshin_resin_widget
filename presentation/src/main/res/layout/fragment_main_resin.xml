@@ -4,6 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="danggai.app.presentation.main.MainViewModel.Server" />
+
         <variable
             name="vm"
             type="danggai.app.presentation.main.MainViewModel"
@@ -56,28 +59,28 @@
                         android:id="@+id/rb_asia"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetServer(v)}"
+                        android:onClick="@{() -> vm.onClickSetServer(Server.ASIA)}"
                         android:text="@string/asia" />
 
                     <RadioButton
                         android:id="@+id/rb_usa"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetServer(v)}"
+                        android:onClick="@{() -> vm.onClickSetServer(Server.USA)}"
                         android:text="@string/america" />
 
                     <RadioButton
                         android:id="@+id/rb_euro"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetServer(v)}"
+                        android:onClick="@{() -> vm.onClickSetServer(Server.EURO)}"
                         android:text="@string/europe" />
 
                     <RadioButton
                         android:id="@+id/rb_cht"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetServer(v)}"
+                        android:onClick="@{() -> vm.onClickSetServer(Server.CHT)}"
                         android:text="@string/cht" />
 
                 </RadioGroup>

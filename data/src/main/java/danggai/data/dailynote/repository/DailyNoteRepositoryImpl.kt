@@ -28,21 +28,7 @@ class DailyNoteRepositoryImpl @Inject constructor(
         onStart: () -> Unit,
         onComplete: () -> Unit
     ) = flow<ApiResult<DailyNote>> {
-        val emptyData = DailyNote("","",
-            DailyNote.Data(-1,
-                -1,
-                "-1",
-                -1,
-                -1,
-                false,
-                -1,
-                -1,
-                -1,
-                -1,
-                "-1",
-                -1,
-                -1,
-                listOf()))
+        val emptyData = DailyNote.EMPTY
 
         val response = dailyNoteApi.dailyNote(
             uid,

@@ -2,6 +2,7 @@ package danggai.app.presentation.design
 
 import android.app.Application
 import android.view.View
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import danggai.app.presentation.R
@@ -17,7 +18,8 @@ class WidgetDesignViewModel @Inject constructor(
     override val app: Application
     ) : BaseViewModel(app) {
 
-    var lvSaveData = MutableLiveData<Event<Boolean>>()
+    private val _lvSaveData = MutableLiveData<Event<Boolean>>()
+    val lvSaveData: LiveData<Event<Boolean>> get() = _lvSaveData
 
     var lvWidgetTheme: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_WIDGET_THEME_AUTOMATIC)
     var lvResinImageVisibility: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE)
@@ -37,7 +39,7 @@ class WidgetDesignViewModel @Inject constructor(
     fun onClickSave() {
         log.e()
         /* 데이터 저장 */
-        lvSaveData.value = Event(true)
+        _lvSaveData.value = Event(true)
     }
 
     fun onClickWidgetTheme(view: View) {
