@@ -17,19 +17,14 @@ import androidx.work.impl.utils.futures.SettableFuture
 import com.google.common.util.concurrent.ListenableFuture
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import danggai.domain.checkin.repository.CheckInRepository
-import danggai.domain.util.Constant
-import danggai.app.presentation.core.util.log
 import danggai.app.presentation.R
 import danggai.app.presentation.core.util.CommonFunction
 import danggai.app.presentation.core.util.PreferenceManager
+import danggai.app.presentation.core.util.log
 import danggai.app.presentation.main.MainActivity
 import danggai.domain.checkin.usecase.CheckInUseCase
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import danggai.domain.util.Constant
+import kotlinx.coroutines.*
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.util.*
@@ -43,29 +38,25 @@ class CheckInWorker @AssistedInject constructor(
 ): Worker(context, workerParams) {
 
     companion object {
-        private const val ARG_TYPE = "ARG_TYPE"
-        private const val ARG_NULL = "ARG_NULL"
-        private const val ARG_START_AT_CHINA_MIDNIGHT = "ARG_START_AT_CHINA_MIDNIGHT"
-        private const val ARG_START_PERIODIC_WORKER = "ARG_START_PERIODIC_WORKER"
 
         fun startWorkerOneTimeImmediately(context: Context) {
             log.e()
-            startWorkerOneTime(context, 0L, ARG_START_AT_CHINA_MIDNIGHT)
+            startWorkerOneTime(context, 0L)
         }
 
         fun startWorkerOneTimeAtChinaMidnight(context: Context) {
             log.e()
             val delay: Long = CommonFunction.calculateDelayUntilChinaMidnight(Calendar.getInstance())
 
-            startWorkerOneTime(context, delay, ARG_START_PERIODIC_WORKER)
+            startWorkerOneTime(context, delay)
         }
 
         fun startWorkerOneTimeRetry(context: Context) {
             log.e()
-            startWorkerOneTime(context, 30L, null)
+            startWorkerOneTime(context, 30L)
         }
 
-        private fun startWorkerOneTime(context: Context, delay: Long, argType: String?) {
+        private fun startWorkerOneTime(context: Context, delay: Long) {
             log.e()
 
             if (!PreferenceManager.getBooleanIsValidUserData(context)) {
@@ -80,33 +71,9 @@ class CheckInWorker @AssistedInject constructor(
                 .setInitialDelay(delay, TimeUnit.MINUTES)
 //                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN)
-                .setInputData(workDataOf(ARG_TYPE to (argType?: ARG_NULL)))
                 .build()
 
             workManager.enqueueUniqueWork(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN, ExistingWorkPolicy.REPLACE, workRequest)
-        }
-
-        fun startWorkerPeriodic(context: Context) {
-
-            val rx: PublishSubject<Boolean> = PublishSubject.create()
-
-            rx.observeOn(Schedulers.io())
-                .filter {
-                    PreferenceManager.getBooleanIsValidUserData(context)
-                }
-                .map {
-                    shutdownWorker(context)
-                }.subscribe({
-                    log.e()
-                    val workManager = WorkManager.getInstance(context)
-                    val workRequest = PeriodicWorkRequestBuilder<CheckInWorker>(1, TimeUnit.DAYS)
-                        .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN)
-                        .build()
-
-                    workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
-                },{},{}).isDisposed
-
-            rx.onNext(true)
         }
 
         fun shutdownWorker(context: Context) {
@@ -122,8 +89,7 @@ class CheckInWorker @AssistedInject constructor(
         actId: String,
         cookie: String,
         ds: String
-    ) {
-        CoroutineScope(Dispatchers.IO).launch {
+    ) = CoroutineScope(Dispatchers.IO).launch {
             checkInUseCase.checkIn(
                 region,
                 actId,
@@ -147,21 +113,13 @@ class CheckInWorker @AssistedInject constructor(
                                     when (it.data.retcode) {
                                         Constant.RETCODE_SUCCESS -> sendNoti(Constant.NOTI_TYPE_CHECK_IN_SUCCESS)
                                         Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
-                                        Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> sendNoti(
-                                            Constant.NOTI_TYPE_CHECK_IN_ALREADY)
+                                        Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, ->
+                                            sendNoti(Constant.NOTI_TYPE_CHECK_IN_ALREADY)
                                     }
                                 }
 
-                                when (inputData.getString(ARG_TYPE)) {
-                                    ARG_START_AT_CHINA_MIDNIGHT -> {
-                                        log.e()
-                                        startWorkerOneTimeAtChinaMidnight(applicationContext)
-                                    }
-                                    ARG_START_PERIODIC_WORKER -> {
-                                        log.e()
-                                        startWorkerPeriodic(applicationContext)
-                                    }
-                                }
+                                log.e()
+                                startWorkerOneTimeAtChinaMidnight(applicationContext)
                             }
                             else -> {
                                 log.e()
@@ -196,7 +154,6 @@ class CheckInWorker @AssistedInject constructor(
                 }
             }
         }
-    }
 
     private fun sendNoti(id: Int) {
         log.e()
@@ -260,28 +217,29 @@ class CheckInWorker @AssistedInject constructor(
     }
 
     override fun doWork(): Result {
-        log.e()
-
-        return try {
-            checkIn(
-                region = Constant.SERVER_OS_ASIA,
-                actId = Constant.OS_ACT_ID,
-                cookie = PreferenceManager.getStringCookie(applicationContext),
-                ds = CommonFunction.getGenshinDS()
-            )
-
+//        coroutineScope {
             log.e()
-            Result.success()
-        } catch (e: java.lang.Exception) {
-            when (e) {
-                is UnknownHostException -> log.e("Unknown host!")
-                is ConnectException -> log.e("No internet!")
-                else -> log.e("Unknown exception!")
-            }
-            log.e(e.message.toString())
 
-            Result.failure()
+            try {
+                checkIn(
+                    region = Constant.SERVER_OS_ASIA,
+                    actId = Constant.OS_ACT_ID,
+                    cookie = PreferenceManager.getStringCookie(applicationContext),
+                    ds = CommonFunction.getGenshinDS()
+                )
+
+                log.e()
+                Result.success()
+            } catch (e: java.lang.Exception) {
+                when (e) {
+                    is UnknownHostException -> log.e("Unknown host!")
+                    is ConnectException -> log.e("No internet!")
+                    else -> log.e("Unknown exception!")
+                }
+                log.e(e.message.toString())
+
+                Result.failure()
+            }
         }
-    }
 
 }
