@@ -2,7 +2,7 @@
     <string name="app_name">Genshin Resin Widget</string>
     <string name="genshin_resin_widget">Genshin Resin Widget</string>
 
-    <string name="uid">Uid</string>
+    <string name="uid" translatable="false">Uid</string>
     <string name="cookie">Cookie</string>
     <string name="get_cookie">Get cookie</string>
     <string name="get_uid">Get uid</string>
