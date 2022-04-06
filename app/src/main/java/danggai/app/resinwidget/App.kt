@@ -7,8 +7,8 @@ import androidx.work.Configuration
 import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.HiltAndroidApp
-import danggai.app.resinwidget.util.LocaleWrapper
-import danggai.app.resinwidget.util.log
+import danggai.app.presentation.core.util.LocaleWrapper
+import danggai.app.presentation.core.util.log
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import java.io.IOException
@@ -25,23 +25,14 @@ class App: Application(), Configuration.Provider {
             .setWorkerFactory(workerFactory)
             .build()
 
-//    @KoinExperimentalAPI
     override fun onCreate() {
         super.onCreate()
-
-//        startKoin {
-//            androidLogger(Level.ERROR)
-//            androidContext(this@App)
-//            workManagerFactory()
-//            koin.loadModules(listOf(ViewModelModule, NetworkModule, repositoryModule, WorkerModule))
-//        }
 
         // Crashlytics
         FirebaseApp.initializeApp(this)
 
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
 
-        
 
         RxJavaPlugins.setErrorHandler { e ->
             if (e is UndeliverableException) {

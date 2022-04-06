@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="danggai.app.presentation.main.MainViewModel"
+            />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context="danggai.app.presentation.main.MainFragment">
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/server"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/rb_asia"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetServer(v)}"
+                        android:text="@string/asia" />
+
+                    <RadioButton
+                        android:id="@+id/rb_usa"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetServer(v)}"
+                        android:text="@string/america" />
+
+                    <RadioButton
+                        android:id="@+id/rb_euro"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetServer(v)}"
+                        android:text="@string/europe" />
+
+                    <RadioButton
+                        android:id="@+id/rb_cht"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetServer(v)}"
+                        android:text="@string/cht" />
+
+                </RadioGroup>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cookie"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_cookie"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_cookie"
+                    android:singleLine="true"
+                    android:text="@={vm.lvCookie}"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="end"
+                    android:onClick="@{(v)->vm.onClickGetCookie()}"
+                    android:text="@string/get_cookie"
+                    android:textColor="@color/light_blue_600"
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/uid"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_uid"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_uid"
+                    android:singleLine="true"
+                    android:text="@={vm.lvUid}"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="end"
+                    android:onClick="@{(v)->vm.onClickGetUid()}"
+                    android:text="@string/get_uid"
+                    android:textColor="@color/light_blue_600"
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/refresh_cycle"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/rb_disable"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
+                        android:text="Disable" />
+
+                    <RadioButton
+                        android:id="@+id/rb_15m"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
+                        android:text="15m" />
+
+                    <RadioButton
+                        android:id="@+id/rb_30m"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
+                        android:text="30m" />
+
+                    <RadioButton
+                        android:id="@+id/rb_1h"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
+                        android:text="1h" />
+
+                    <RadioButton
+                        android:id="@+id/rb_2h"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
+                        android:text="2h" />
+
+                </RadioGroup>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notification"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/cb_each_40resin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:checked="@={vm.lvEnableNotiEach40Resin}"
+                        android:text="@string/btn_each_40_resin"
+                        android:textSize="14sp"
+                        app:buttonTint="@color/checkbox_filter_tint" />
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/cb_140resin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:checked="@={vm.lvEnableNoti140Resin}"
+                        android:text="@string/btn_140_resin"
+                        android:textSize="14sp"
+                        app:buttonTint="@color/checkbox_filter_tint" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="10dp"
+                        android:gravity="center_vertical">
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/cb_custom_resin"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:checked="@={vm.lvEnableNotiCustomResin}"
+                            app:buttonTint="@color/checkbox_filter_tint" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_custom_resin"
+                            style="@style/EditTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="160"
+                            android:imeOptions="actionDone"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:paddingHorizontal="8dp"
+                            android:singleLine="true"
+                            android:text="@={vm.lvCustomNotiResin}"
+                            android:textSize="14sp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/resin"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/cb_expedition_done"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:checked="@={vm.lvEnableNotiExpeditionDone}"
+                        android:text="@string/btn_expedition_done"
+                        android:textSize="14sp"
+                        app:buttonTint="@color/checkbox_filter_tint" />
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/cb_home_coin_full"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:checked="@={vm.lvEnableNotiHomeCoinFull}"
+                        android:text="@string/btn_home_coin_full"
+                        android:textSize="14sp"
+                        app:buttonTint="@color/checkbox_filter_tint" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:onClick="@{(v)->vm.onClickWidgetDesign(v)}"
+                    android:text="@string/widget_design"
+                    android:textColor="@color/light_blue_600"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/rounded_square_skyblue_5dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:onClick="@{(v)->vm.onClickSave()}"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="10dp"
+                    android:text="@string/save"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/rounded_square_skyblue_5dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:onClick="@{(v)->vm.onClickWidgetRefreshNotWork()}"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="10dp"
+                    android:text="@string/dialog_widget_refresh_not_work"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <!--                <Space-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="15dp" />-->
+
+                <!--                <TextView-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_gravity="center_horizontal"-->
+                <!--                    android:background="@drawable/rounded_square_skyblue_5dp"-->
+                <!--                    android:foreground="?attr/selectableItemBackground"-->
+                <!--                    android:onClick="@{(v)->vm.makeDailyNotePrivate()}"-->
+                <!--                    android:paddingHorizontal="20dp"-->
+                <!--                    android:paddingVertical="10dp"-->
+                <!--                    android:text="실시간 메모 비공개"-->
+                <!--                    android:textColor="@color/black"-->
+                <!--                    android:textSize="14sp"-->
+                <!--                    android:textStyle="bold" />-->
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

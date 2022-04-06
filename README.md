@@ -1,6 +1,8 @@
 # 원신 레진 위젯 / Genshin Resin Widget
 
-![icon.jpg](./assets/icon.jpg?raw=true)
+<img src="./assets/icon.jpg?raw=true" width="200" height="200">
+
+
 
 개인 프로젝트로 개발 된 코틀린 언어를 사용한 안드로이드 앱이에요.
 
@@ -25,11 +27,12 @@
 
 - [Android Studio Bumblebee](https://developer.android.com/studio/intro)
 - [Koltin](https://developer.android.com/kotlin)
+- [Rx](https://reactivex.io/)
 - [Coroutine](https://developer.android.com/kotlin/coroutines?hl=ko)
 - [Hilt](https://dagger.dev/hilt/)
 - [Retrofit2](https://square.github.io/retrofit/)
 - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata?hl=ko) (StateFlow로 Refactoring 중)
-- Repository Pattern
+- Clean Architecture
 
 
 

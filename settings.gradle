@@ -1,2 +1,5 @@
 rootProject.name = "genshin_resin_widget"
 include ':app'
+include ':data'
+include ':domain'
+include ':presentation'

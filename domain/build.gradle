@@ -1,0 +1,19 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+
+apply from: "$rootDir/dependencies.gradle"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlinGradleVersion"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutineVersion"
+
+//    implementation  "com.google.dagger:hilt-android:$versions.hiltVersion"
+}
