@@ -27,11 +27,4 @@ class DailyNoteModule {
     fun provideDailyNoteRepository(
         repositoryImpl: DailyNoteRepositoryImpl
     ): DailyNoteRepository = repositoryImpl
-
-    @Provides
-    fun provideDailyNoteUseCase(
-        repository: DailyNoteRepository
-    ): DailyNoteUseCase {
-        return DailyNoteUseCase(repository)
-    }
 }

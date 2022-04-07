@@ -28,12 +28,4 @@ class GetGameRecordCardModule {
     fun provideGetGameRecordCardRepository(
         repositoryImpl: GetGameRecordCardRepositoryImpl
     ): GetGameRecordCardRepository = repositoryImpl
-
-
-    @Provides
-    fun provideGetGameRecordCardUseCase(
-        repository: GetGameRecordCardRepository
-    ): GetGameRecordCardUseCase {
-        return GetGameRecordCardUseCase(repository)
-    }
 }

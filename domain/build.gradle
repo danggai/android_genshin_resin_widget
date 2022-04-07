@@ -15,5 +15,5 @@ dependencies {
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutineVersion"
 
-//    implementation  "com.google.dagger:hilt-android:$versions.hiltVersion"
+    implementation "javax.inject:javax.inject:1"
 }

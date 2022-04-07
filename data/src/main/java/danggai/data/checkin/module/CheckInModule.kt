@@ -27,11 +27,4 @@ class CheckInModule {
     fun provideCheckInRepository(
         repositoryImpl: CheckInRepositoryImpl
     ): CheckInRepository = repositoryImpl
-
-    @Provides
-    fun provideCheckInUseCase(
-        repository: CheckInRepository
-    ): CheckInUseCase {
-        return CheckInUseCase(repository)
-    }
 }

@@ -4,8 +4,11 @@ import danggai.domain.base.ApiResult
 import danggai.domain.getgamerecordcard.entity.GetGameRecordCard
 import danggai.domain.getgamerecordcard.repository.GetGameRecordCardRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GetGameRecordCardUseCase(private val getGameRecordCardRepository: GetGameRecordCardRepository) {
+class GetGameRecordCardUseCase @Inject constructor(
+    private val getGameRecordCardRepository: GetGameRecordCardRepository
+    ) {
     suspend fun getGameRecordCard(
         hoyolabUid: String,
         cookie: String,
