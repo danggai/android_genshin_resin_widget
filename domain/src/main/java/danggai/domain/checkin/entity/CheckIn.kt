@@ -1,5 +1,6 @@
 package danggai.domain.checkin.entity
 
+
 data class CheckIn (
     val retcode: String,
     val message: String,
@@ -8,4 +9,13 @@ data class CheckIn (
     data class Data(
         val code: String
     )
+
+    companion object {
+        val EMPTY = CheckIn(
+            retcode = "",
+            message = "",
+            Data("")
+        )
+    }
+
 }

@@ -27,12 +27,6 @@ class GetGameRecordCardRepositoryImpl @Inject constructor(
         onStart: () -> Unit,
         onComplete: () -> Unit
     ) = flow<ApiResult<GetGameRecordCard>> {
-        val emptyData = GetGameRecordCard(
-            "",
-            "",
-            GetGameRecordCard.GameRecordCardList(listOf())
-        )
-
         val response = getGameRecordCardApi.getGameRecordCard(
             hoyolabUid,
             cookie,
@@ -42,15 +36,15 @@ class GetGameRecordCardRepositoryImpl @Inject constructor(
         response.suspendOnSuccess {
             emit(ApiResult<GetGameRecordCard>(
                 Meta(this.response.code(), this.response.message()),
-                this.response.body()?:emptyData))
+                this.response.body()?: GetGameRecordCard.EMPTY))
         }.suspendOnError {
             emit(ApiResult<GetGameRecordCard>(
                 Meta(this.response.code(), this.response.message()),
-                emptyData))
+                GetGameRecordCard.EMPTY))
         }.suspendOnException {
             emit(ApiResult<GetGameRecordCard>(
                 Meta(Constant.META_CODE_CLIENT_ERROR, this.exception.message ?: ""),
-                emptyData))
+                GetGameRecordCard.EMPTY))
         }
     }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 }

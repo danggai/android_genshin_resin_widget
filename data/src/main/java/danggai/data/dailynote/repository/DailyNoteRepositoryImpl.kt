@@ -28,22 +28,6 @@ class DailyNoteRepositoryImpl @Inject constructor(
         onStart: () -> Unit,
         onComplete: () -> Unit
     ) = flow<ApiResult<DailyNote>> {
-        val emptyData = DailyNote("","",
-            DailyNote.Data(-1,
-                -1,
-                "-1",
-                -1,
-                -1,
-                false,
-                -1,
-                -1,
-                -1,
-                -1,
-                "-1",
-                -1,
-                -1,
-                listOf()))
-
         val response = dailyNoteApi.dailyNote(
             uid,
             server,
@@ -54,17 +38,17 @@ class DailyNoteRepositoryImpl @Inject constructor(
         response.suspendOnSuccess {
             emit(ApiResult<DailyNote>(
                 Meta(this.response.code(), this.response.message()),
-                this.response.body()?:emptyData
+                this.response.body()?:DailyNote.EMPTY
             ))
         }.suspendOnError {
             emit(ApiResult<DailyNote>(
                 Meta(this.response.code(), this.response.message()),
-                emptyData
+                DailyNote.EMPTY
             ))
         }.suspendOnException {
             emit(ApiResult<DailyNote>(
                 Meta(Constant.META_CODE_CLIENT_ERROR, this.exception.message ?: ""),
-                emptyData
+                DailyNote.EMPTY
             ))
         }
     }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)

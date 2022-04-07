@@ -28,11 +28,6 @@ class CheckInRepositoryImpl @Inject constructor(
         onStart: () -> Unit,
         onComplete: () -> Unit
     ) = flow<ApiResult<CheckIn>> {
-        val emptyData = CheckIn(
-            "",
-            "",
-            CheckIn.Data(""))
-
         val response = checkInApi.checkIn(
             region,
             actId,
@@ -43,18 +38,18 @@ class CheckInRepositoryImpl @Inject constructor(
         response.suspendOnSuccess {
             emit(ApiResult<CheckIn>(
                 Meta(this.response.code(), this.response.message()),
-                this.response.body()?:emptyData
+                this.response.body()?:CheckIn.EMPTY
             ))
         }.suspendOnError {
             emit(ApiResult<CheckIn>(
                 Meta(this.response.code(), this.response.message()),
-                emptyData
+                CheckIn.EMPTY
             ))
         }.suspendOnException {
             emit(ApiResult<CheckIn>(
                 Meta(Constant.META_CODE_CLIENT_ERROR,
                 this.exception.message ?: ""),
-                emptyData
+                CheckIn.EMPTY
             ))
         }
     }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)

@@ -29,8 +29,6 @@ class ChangeDataSwitchRepositoryImpl @Inject constructor(
         onStart: () -> Unit,
         onComplete: () -> Unit
     ) = flow<ApiResult<ChangeDataSwitch>> {
-        val emptyData = ChangeDataSwitch("","")
-
         val response = changeDataSwitchApi.changeDataSwitch(
             gameId,
             switchId,
@@ -42,17 +40,17 @@ class ChangeDataSwitchRepositoryImpl @Inject constructor(
         response.suspendOnSuccess {
             emit(ApiResult<ChangeDataSwitch>(
                 Meta(this.response.code(), this.response.message()),
-                this.response.body()?:emptyData
+                this.response.body()?:ChangeDataSwitch.EMPTY
             ))
         }.suspendOnError {
             emit(ApiResult<ChangeDataSwitch>(
                 Meta(this.response.code(), this.response.message()),
-                emptyData
+                ChangeDataSwitch.EMPTY
             ))
         }.suspendOnException {
             emit(ApiResult<ChangeDataSwitch>(
                 Meta(Constant.META_CODE_CLIENT_ERROR, this.exception.message ?: ""),
-                emptyData
+                ChangeDataSwitch.EMPTY
             ))
         }
     }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
