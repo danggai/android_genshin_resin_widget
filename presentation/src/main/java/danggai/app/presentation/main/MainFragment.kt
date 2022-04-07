@@ -278,7 +278,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                     }
                     .setNegativeButton(R.string.sns_account) { dialog, whichButton ->
                         log.e()
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_how_can_i_get_cookie)))
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constant.HOW_CAN_I_GET_COOKIE_URL))
                         startActivity(intent)
                     }
                     .create()

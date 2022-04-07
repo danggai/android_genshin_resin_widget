@@ -15,6 +15,8 @@ object Constant {
     const val CN_CHECK_IN_URL = "https://api-takumi.hoyoverse.com/event/bbs_sign_reward/"
     const val CN_ACT_ID = "e202009291139501"
 
+    const val HOW_CAN_I_GET_COOKIE_URL = "https://github.com/danggai/android_genshin_resin_widget/blob/master/how_to_get_hoyolab_cookie.md"
+
     const val SERVER_CN_GF_01 = "cn_gf01"
     const val SERVER_CN_QD_01 = "cn_qd01"
     const val SERVER_OS_USA = "os_usa"

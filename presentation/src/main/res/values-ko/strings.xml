@@ -1,33 +1,10 @@
 <resources>
     <string name="app_name">원신 레진 위젯</string>
-    <string name="genshin_resin_widget">Genshin Resin Widget</string>
 
-    <string name="uid">Uid</string>
-    <string name="cookie">Cookie</string>
-    <string name="get_cookie">Get cookie</string>
-    <string name="get_uid">Get uid</string>
-    <string name="server">Server</string>
-    <string name="refresh_cycle">Refresh Cycle</string>
-    <string name="notification">Notification</string>
-    <string name="auto_check_in">Auto Check In</string>
-    <string name="time_notation">Time Notation</string>
-    <string name="widget_design">Widget Design</string>
-    <string name="widget_theme">Widget Theme</string>
-    <string name="background_transparency">Background Transparency</string>
-    <string name="font_size">Font Size</string>
-    <string name="resin_image">Resin Image</string>
-    <string name="visible_data">Visible Data</string>
-    <string name="apply">Apply</string>
     <string name="save">저장</string>
-    <string name="cancel">Cancel</string>
     <string name="force_stop">강제 중지</string>
     <string name="ok">확인</string>
     <string name="reset">초기화</string>
-
-    <string name="asia">Asia</string>
-    <string name="america">America</string>
-    <string name="europe">Europe</string>
-    <string name="cht">TK, HT, MO</string>
 
     <string name="btn_each_40_resin">40레진 마다</string>
     <string name="btn_140_resin">140레진</string>
@@ -159,9 +136,6 @@
     <string name="hint_cookie">HoYoLAB의 쿠키를 입력해 줘!</string>
 
     <string name="invalid_user_info">유저 정보 없이는\n사용할 수 없어!</string>
-
-    <string name="url_how_can_i_get_cookie">https://github.com/danggai/android_genshin_resin_widget/blob/master/how_to_get_hoyolab_cookie.md</string>
-
 
 
     <!-- Widget UI -->

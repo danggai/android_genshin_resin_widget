@@ -1,33 +1,35 @@
 <resources>
     <string name="app_name">Genshin Resin Widget</string>
-    <string name="genshin_resin_widget">Genshin Resin Widget</string>
 
-    <string name="uid">Uid</string>
-    <string name="cookie">Cookie</string>
-    <string name="get_cookie">Get cookie</string>
-    <string name="get_uid">Get uid</string>
-    <string name="server">Server</string>
-    <string name="refresh_cycle">Refresh Cycle</string>
-    <string name="notification">Notification</string>
-    <string name="auto_check_in">Auto Check In</string>
-    <string name="time_notation">Time Notation</string>
-    <string name="widget_design">Widget Design</string>
-    <string name="widget_theme">Widget Theme</string>
-    <string name="background_transparency">Background Transparency</string>
-    <string name="font_size">Font Size</string>
-    <string name="resin_image">Resin Image</string>
-    <string name="visible_data">Visible Data</string>
-    <string name="apply">Apply</string>
+    <string name="genshin_resin_widget" translatable="false">Genshin Resin Widget</string>
+
+    <string name="uid" translatable="false">Uid</string>
+    <string name="cookie" translatable="false">Cookie</string>
+    <string name="get_cookie" translatable="false">Get cookie</string>
+    <string name="get_uid" translatable="false">Get uid</string>
+    <string name="server" translatable="false">Server</string>
+    <string name="refresh_cycle" translatable="false">Refresh Cycle</string>
+    <string name="notification" translatable="false">Notification</string>
+    <string name="auto_check_in" translatable="false">Auto Check In</string>
+    <string name="time_notation" translatable="false">Time Notation</string>
+    <string name="widget_design" translatable="false">Widget Design</string>
+    <string name="widget_theme" translatable="false">Widget Theme</string>
+    <string name="background_transparency" translatable="false">Background Transparency</string>
+    <string name="font_size" translatable="false">Font Size</string>
+    <string name="resin_image" translatable="false">Resin Image</string>
+    <string name="visible_data" translatable="false">Visible Data</string>
+    <string name="apply" translatable="false">Apply</string>
+    <string name="cancel" translatable="false">Cancel</string>
+
     <string name="save">Save</string>
-    <string name="cancel">Cancel</string>
     <string name="force_stop">FORCE STOP</string>
     <string name="ok">OK</string>
     <string name="reset">RESET</string>
 
-    <string name="asia">Asia</string>
-    <string name="america">America</string>
-    <string name="europe">Europe</string>
-    <string name="cht">TK, HT, MO</string>
+    <string name="asia" translatable="false">Asia</string>
+    <string name="america" translatable="false">America</string>
+    <string name="europe" translatable="false">Europe</string>
+    <string name="cht" translatable="false">TK, HT, MO</string>
 
     <string name="btn_each_40_resin">Each 40 Resins</string>
     <string name="btn_140_resin">140 Resins</string>
@@ -159,9 +161,6 @@
     <string name="hint_cookie">Enter HoYoLAB\'s cookie!</string>
 
     <string name="invalid_user_info">You can\'t use it\nwithout user information!</string>
-
-    <string name="url_how_can_i_get_cookie">https://github.com/danggai/android_genshin_resin_widget/blob/master/how_to_get_hoyolab_cookie.md</string>
-
 
 
     <!-- Widget UI -->
