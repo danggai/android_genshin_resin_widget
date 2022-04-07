@@ -16,7 +16,6 @@ import javax.inject.Singleton
 @Module(includes = [NetworkModule::class])
 @InstallIn(SingletonComponent::class)
 class DailyNoteModule {
-
     @Singleton
     @Provides
     fun provideDailyNoteApi(retrofit: Retrofit) : DailyNoteApi {
@@ -26,11 +25,8 @@ class DailyNoteModule {
     @Singleton
     @Provides
     fun provideDailyNoteRepository(
-        api: DailyNoteApi,
-        ioDispatcher: CoroutineDispatcher
-    ): DailyNoteRepository {
-        return DailyNoteRepositoryImpl(api, ioDispatcher)
-    }
+        repositoryImpl: DailyNoteRepositoryImpl
+    ): DailyNoteRepository = repositoryImpl
 
     @Provides
     fun provideDailyNoteUseCase(

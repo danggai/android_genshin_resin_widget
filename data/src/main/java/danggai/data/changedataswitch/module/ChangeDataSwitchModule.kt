@@ -25,11 +25,8 @@ class ChangeDataSwitchModule {
     @Singleton
     @Provides
     fun provideChangeDataSwitchRepository(
-        api: ChangeDataSwitchApi,
-        ioDispatcher: CoroutineDispatcher
-    ): ChangeDataSwitchRepository {
-        return ChangeDataSwitchRepositoryImpl(api, ioDispatcher)
-    }
+        repositoryImpl: ChangeDataSwitchRepositoryImpl
+    ): ChangeDataSwitchRepository = repositoryImpl
 
     @Provides
     fun provideChangeDataSwitchUseCase(

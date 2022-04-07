@@ -16,7 +16,6 @@ import javax.inject.Singleton
 @Module(includes = [NetworkModule::class])
 @InstallIn(SingletonComponent::class)
 class CheckInModule {
-
     @Singleton
     @Provides
     fun provideCheckInApi(retrofit: Retrofit): CheckInApi {
@@ -26,11 +25,8 @@ class CheckInModule {
     @Singleton
     @Provides
     fun provideCheckInRepository(
-        api: CheckInApi,
-        ioDispatcher: CoroutineDispatcher
-    ): CheckInRepository {
-        return CheckInRepositoryImpl(api, ioDispatcher)
-    }
+        repositoryImpl: CheckInRepositoryImpl
+    ): CheckInRepository = repositoryImpl
 
     @Provides
     fun provideCheckInUseCase(

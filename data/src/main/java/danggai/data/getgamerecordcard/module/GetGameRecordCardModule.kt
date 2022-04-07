@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import danggai.data.checkin.repository.CheckInRepositoryImpl
 import danggai.data.getgamerecordcard.remote.api.GetGameRecordCardApi
 import danggai.data.getgamerecordcard.repository.GetGameRecordCardRepositoryImpl
 import danggai.data.module.NetworkModule
@@ -16,7 +17,6 @@ import javax.inject.Singleton
 @Module(includes = [NetworkModule::class])
 @InstallIn(SingletonComponent::class)
 class GetGameRecordCardModule {
-
     @Singleton
     @Provides
     fun provideChangeDataSwtichApi(retrofit: Retrofit) : GetGameRecordCardApi {
@@ -26,11 +26,9 @@ class GetGameRecordCardModule {
     @Singleton
     @Provides
     fun provideGetGameRecordCardRepository(
-        api: GetGameRecordCardApi,
-        ioDispatcher: CoroutineDispatcher
-    ): GetGameRecordCardRepository {
-        return GetGameRecordCardRepositoryImpl(api, ioDispatcher)
-    }
+        repositoryImpl: GetGameRecordCardRepositoryImpl
+    ): GetGameRecordCardRepository = repositoryImpl
+
 
     @Provides
     fun provideGetGameRecordCardUseCase(
