@@ -1,17 +1,17 @@
 package danggai.app.presentation.cookie
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import danggai.app.presentation.core.BaseViewModel
 import danggai.app.presentation.core.util.Event
 import danggai.app.presentation.core.util.log
+import danggai.domain.util.ResourceProvider
 import javax.inject.Inject
 
 @HiltViewModel
 class CookieWebViewViewModel @Inject constructor(
-    override val app: Application
-) : BaseViewModel(app) {
+    private val resourceProvider: ResourceProvider
+) : BaseViewModel() {
 
     var lvGetCookie = MutableLiveData<Event<Boolean>>()
     var lvRefresh = MutableLiveData<Event<Boolean>>()

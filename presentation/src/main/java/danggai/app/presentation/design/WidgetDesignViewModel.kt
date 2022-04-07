@@ -1,6 +1,5 @@
 package danggai.app.presentation.design
 
-import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,12 +9,13 @@ import danggai.app.presentation.core.util.Event
 import danggai.app.presentation.core.util.NonNullMutableLiveData
 import danggai.app.presentation.core.util.log
 import danggai.domain.util.Constant
+import danggai.domain.util.ResourceProvider
 import javax.inject.Inject
 
 @HiltViewModel
 class WidgetDesignViewModel @Inject constructor(
-    override val app: Application
-    ) : BaseViewModel(app) {
+    private val resourceProvider: ResourceProvider,
+) : BaseViewModel() {
 
     var lvSaveData = MutableLiveData<Event<Boolean>>()
 
@@ -92,11 +92,6 @@ class WidgetDesignViewModel @Inject constructor(
             }
             else -> {}
         }
-//        lvDetailTimeNotation.value = when (view.id) {
-//            R.id.rb_remain_time -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
-//            R.id.rb_full_charge_time -> Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME
-//            else -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
-//        }
     }
 
 }
