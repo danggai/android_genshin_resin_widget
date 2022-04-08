@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="danggai.domain.util.Constant.WidgetTheme" />
+        <import type="danggai.domain.util.Constant.TimeNotation" />
+
         <variable
             name="vm"
             type="danggai.app.presentation.design.WidgetDesignViewModel"
@@ -66,21 +69,21 @@
                         android:id="@+id/rb_theme_automatic"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickWidgetTheme(v)}"
+                        android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.AUTOMATIC)}"
                         android:text="@string/btn_automatic" />
 
                     <RadioButton
                         android:id="@+id/rb_theme_light"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickWidgetTheme(v)}"
+                        android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.LIGHT)}"
                         android:text="@string/btn_light" />
 
                     <RadioButton
                         android:id="@+id/rb_theme_dark"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickWidgetTheme(v)}"
+                        android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.DARK)}"
                         android:text="@string/btn_dark" />
 
                 </RadioGroup>
@@ -109,21 +112,21 @@
                         android:id="@+id/rb_remain_time"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetDetailTimeNotation(v)}"
+                        android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.REMAIN_TIME)}"
                         android:text="@string/btn_remain_time" />
 
                     <RadioButton
                         android:id="@+id/rb_full_charge_time"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetDetailTimeNotation(v)}"
+                        android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.FULL_CHARGE_TIME)}"
                         android:text="@string/btn_full_charge_time" />
 
                     <RadioButton
                         android:id="@+id/rb_disable_time"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetDetailTimeNotation(v)}"
+                        android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.DISABLE_TIME)}"
                         android:text="@string/btn_disable" />
 
                 </RadioGroup>
@@ -242,9 +245,9 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextViewButton"
-                        android:id="@+id/mb_reset_fontsize_detail"
+                        android:id="@+id/mb_reset_detail_fontsize"
                         android:text="@string/reset"
-                        android:onClick="@{(v)->vm.onClickResetButton(v)}"
+                        android:onClick="@{()->vm.onClickDetailFontSize()}"
                         />
 
 
@@ -290,7 +293,7 @@
                         style="@style/TextViewButton"
                         android:id="@+id/mb_reset_bg_trans"
                         android:text="@string/reset"
-                        android:onClick="@{(v)->vm.onClickResetButton(v)}"
+                        android:onClick="@{()->vm.onClickBackgroundTransparent()}"
                         />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>

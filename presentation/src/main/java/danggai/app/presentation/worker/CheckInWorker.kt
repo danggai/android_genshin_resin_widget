@@ -48,9 +48,10 @@ class CheckInWorker @AssistedInject constructor(
 
         fun startWorkerOneTimeAtChinaMidnight(context: Context) {
             log.e()
-            val delay: Long = CommonFunction.calculateDelayUntilChinaMidnight(Calendar.getInstance())
-
-            startWorkerOneTime(context, delay)
+            startWorkerOneTime(
+                context,
+                CommonFunction.getTimeLeftUntilChinaMidnight(Calendar.getInstance())
+                )
         }
 
         fun startWorkerOneTimeRetry(context: Context) {

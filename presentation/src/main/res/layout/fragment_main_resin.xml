@@ -4,6 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="danggai.domain.util.Constant.Server" />
+
         <variable
             name="vm"
             type="danggai.app.presentation.main.MainViewModel"
@@ -56,28 +58,28 @@
                         android:id="@+id/rb_asia"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetServer(v)}"
+                        android:onClick="@{() -> vm.onClickSetServer(Server.ASIA)}"
                         android:text="@string/asia" />
 
                     <RadioButton
                         android:id="@+id/rb_usa"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetServer(v)}"
+                        android:onClick="@{() -> vm.onClickSetServer(Server.USA)}"
                         android:text="@string/america" />
 
                     <RadioButton
                         android:id="@+id/rb_euro"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetServer(v)}"
+                        android:onClick="@{() -> vm.onClickSetServer(Server.EUROPE)}"
                         android:text="@string/europe" />
 
                     <RadioButton
                         android:id="@+id/rb_cht"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetServer(v)}"
+                        android:onClick="@{() -> vm.onClickSetServer(Server.CHT)}"
                         android:text="@string/cht" />
 
                 </RadioGroup>
@@ -112,7 +114,7 @@
                     android:layout_gravity="end"
                     android:background="?attr/selectableItemBackground"
                     android:gravity="end"
-                    android:onClick="@{(v)->vm.onClickGetCookie()}"
+                    android:onClick="@{()->vm.onClickGetCookie()}"
                     android:text="@string/get_cookie"
                     android:textColor="@color/light_blue_600"
                     android:textSize="14sp"
@@ -144,7 +146,7 @@
                     android:layout_gravity="end"
                     android:background="?attr/selectableItemBackground"
                     android:gravity="end"
-                    android:onClick="@{(v)->vm.onClickGetUid()}"
+                    android:onClick="@{()->vm.onClickGetUid()}"
                     android:text="@string/get_uid"
                     android:textColor="@color/light_blue_600"
                     android:textSize="14sp"
@@ -170,35 +172,35 @@
                         android:id="@+id/rb_disable"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
+                        android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(-1L)}"
                         android:text="Disable" />
 
                     <RadioButton
                         android:id="@+id/rb_15m"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
+                        android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(15L)}"
                         android:text="15m" />
 
                     <RadioButton
                         android:id="@+id/rb_30m"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
+                        android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(30L)}"
                         android:text="30m" />
 
                     <RadioButton
                         android:id="@+id/rb_1h"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
+                        android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(60L)}"
                         android:text="1h" />
 
                     <RadioButton
                         android:id="@+id/rb_2h"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
-                        android:onClick="@{(v) -> vm.onClickSetAutoRefreshPeriod(v)}"
+                        android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(120L)}"
                         android:text="2h" />
 
                 </RadioGroup>
@@ -311,7 +313,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
-                    android:onClick="@{(v)->vm.onClickWidgetDesign(v)}"
+                    android:onClick="@{()->vm.onClickWidgetDesign()}"
                     android:text="@string/widget_design"
                     android:textColor="@color/light_blue_600"
                     android:textSize="28sp"
@@ -327,7 +329,7 @@
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/rounded_square_skyblue_5dp"
                     android:foreground="?attr/selectableItemBackground"
-                    android:onClick="@{(v)->vm.onClickSave()}"
+                    android:onClick="@{()->vm.onClickSave()}"
                     android:paddingHorizontal="20dp"
                     android:paddingVertical="10dp"
                     android:text="@string/save"
@@ -345,7 +347,7 @@
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/rounded_square_skyblue_5dp"
                     android:foreground="?attr/selectableItemBackground"
-                    android:onClick="@{(v)->vm.onClickWidgetRefreshNotWork()}"
+                    android:onClick="@{()->vm.onClickWidgetRefreshNotWork()}"
                     android:paddingHorizontal="20dp"
                     android:paddingVertical="10dp"
                     android:text="@string/dialog_widget_refresh_not_work"
@@ -363,7 +365,7 @@
                 <!--                    android:layout_gravity="center_horizontal"-->
                 <!--                    android:background="@drawable/rounded_square_skyblue_5dp"-->
                 <!--                    android:foreground="?attr/selectableItemBackground"-->
-                <!--                    android:onClick="@{(v)->vm.makeDailyNotePrivate()}"-->
+                <!--                    android:onClick="@{()->vm.makeDailyNotePrivate()}"-->
                 <!--                    android:paddingHorizontal="20dp"-->
                 <!--                    android:paddingVertical="10dp"-->
                 <!--                    android:text="실시간 메모 비공개"-->

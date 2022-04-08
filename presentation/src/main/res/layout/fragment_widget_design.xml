@@ -47,7 +47,7 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/rounded_square_skyblue_5dp"
             android:foreground="?attr/selectableItemBackground"
-            android:onClick="@{(v)->vm.onClickSave()}"
+            android:onClick="@{()->vm.onClickSave()}"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp"
             android:text="@string/save"

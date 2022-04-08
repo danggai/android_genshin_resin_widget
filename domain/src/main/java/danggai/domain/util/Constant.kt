@@ -147,19 +147,39 @@ object Constant {
     const val PREF_DEFAULT_WIDGET_FONT_SIZE_RESIN = 30
     const val PREF_DEFAULT_WIDGET_FONT_SIZE_DETAIL = 12
 
+    enum class Server(val pref: Int) {
+        ASIA(PREF_SERVER_ASIA),
+        USA(PREF_SERVER_USA),
+        EUROPE(PREF_SERVER_EUROPE),
+        CHT(PREF_SERVER_CHT),
+    }
     const val PREF_SERVER_ASIA = 0
     const val PREF_SERVER_USA = 1
     const val PREF_SERVER_EUROPE = 2
     const val PREF_SERVER_CHT = 3
 
+    enum class TimeNotation(val pref: Int) {
+        REMAIN_TIME(PREF_TIME_NOTATION_REMAIN_TIME),
+        FULL_CHARGE_TIME(PREF_TIME_NOTATION_FULL_CHARGE_TIME),
+        DISABLE_TIME(PREF_TIME_NOTATION_DISABLE)
+    }
     const val PREF_TIME_NOTATION_REMAIN_TIME = 0
     const val PREF_TIME_NOTATION_FULL_CHARGE_TIME = 1
     const val PREF_TIME_NOTATION_DISABLE = 2
 
+    enum class WidgetTheme(val pref: Int) {
+        AUTOMATIC(PREF_WIDGET_THEME_AUTOMATIC),
+        LIGHT(PREF_WIDGET_THEME_LIGHT),
+        DARK(PREF_WIDGET_THEME_DARK)
+    }
     const val PREF_WIDGET_THEME_AUTOMATIC = 0
     const val PREF_WIDGET_THEME_LIGHT = 1
     const val PREF_WIDGET_THEME_DARK = 2
 
+    enum class ResinImageVisibility(val pref: Int) {
+        VISIBLE(PREF_WIDGET_RESIN_IMAGE_VISIBLE),
+        INVISIBLE(PREF_WIDGET_RESIN_IMAGE_INVISIBLE)
+    }
     const val PREF_WIDGET_RESIN_IMAGE_VISIBLE = 0
     const val PREF_WIDGET_RESIN_IMAGE_INVISIBLE = 1
 

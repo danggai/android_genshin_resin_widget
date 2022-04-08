@@ -36,62 +36,43 @@ class WidgetDesignViewModel @Inject constructor(
 
     fun onClickSave() {
         log.e()
-        /* 데이터 저장 */
         lvSaveData.value = Event(true)
     }
 
-    fun onClickWidgetTheme(view: View) {
-        log.e()
-        lvWidgetTheme.value = when (view.id) {
-            R.id.rb_theme_automatic -> Constant.PREF_WIDGET_THEME_AUTOMATIC
-            R.id.rb_theme_light -> Constant.PREF_WIDGET_THEME_LIGHT
-            R.id.rb_theme_dark -> Constant.PREF_WIDGET_THEME_DARK
-            else -> Constant.PREF_WIDGET_THEME_AUTOMATIC
-        }
+    fun onClickWidgetTheme(widgetTheme: Constant.WidgetTheme) {
+        log.e("widgetTheme -> $widgetTheme")
+        lvWidgetTheme.value = widgetTheme.pref
     }
 
-    fun onClickResinImageVisible(view: View) {
-        log.e()
-        lvResinImageVisibility.value = when (view.id) {
-            R.id.rb_resin_image_visible -> Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE
-            R.id.rb_resin_image_invisible -> Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE
-            else -> Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE
-        }
+    fun onClickResinImageVisible(resinImageVisibility: Constant.ResinImageVisibility) {
+        log.e("resinImageVisibility -> $resinImageVisibility")
+        lvResinImageVisibility.value = resinImageVisibility.pref
     }
 
-    fun onClickSetResinTimeNotation(view: View) {
-        log.e()
-        lvResinTimeNotation.value = when (view.id) {
-            R.id.rb_remain_time -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
-            R.id.rb_full_charge_time -> Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME
-            else -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
-        }
+    fun onClickSetResinTimeNotation(timeNotation: Constant.TimeNotation) {
+        log.e("timeNotation -> $timeNotation")
+        lvResinTimeNotation.value = timeNotation.pref
     }
 
-    fun onClickSetDetailTimeNotation(view: View) {
-        log.e()
-        lvDetailTimeNotation.value = when (view.id) {
-            R.id.rb_remain_time -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
-            R.id.rb_full_charge_time -> Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME
-            R.id.rb_disable_time -> Constant.PREF_TIME_NOTATION_DISABLE
-            else -> Constant.PREF_TIME_NOTATION_REMAIN_TIME
-        }
+    fun onClickSetDetailTimeNotation(timeNotation: Constant.TimeNotation) {
+        log.e("timeNotation -> $timeNotation")
+        lvDetailTimeNotation.value = timeNotation.pref
     }
 
-    fun onClickResetButton(view: View) {
+    fun onClickBackgroundTransparent() {
         log.e()
-        when(view.id) {
-            R.id.mb_reset_bg_trans -> {
-                lvTransparency.value = Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY
-            }
-            R.id.mb_reset_fontsize_detail -> {
-                lvFontSizeDetail.value = Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_DETAIL
-            }
-            R.id.mb_reset_fontsize_resin -> {
-                lvFontSizeResin.value = Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_RESIN
-            }
-            else -> {}
-        }
+        lvTransparency.value = Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY
     }
 
+
+    fun onClickDetailFontSize() {
+        log.e()
+        lvFontSizeDetail.value = Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_DETAIL
+    }
+
+
+    fun onClickResinFontSize() {
+        log.e()
+        lvFontSizeResin.value = Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_RESIN
+    }
 }

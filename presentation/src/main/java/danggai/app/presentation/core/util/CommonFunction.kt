@@ -255,7 +255,7 @@ object CommonFunction {
         notificationManager.notify(id, builder.build())
     }
 
-    fun calculateDelayUntilChinaMidnight(startCalendar: Calendar): Long {
+    fun getTimeLeftUntilChinaMidnight(startCalendar: Calendar): Long {
         val targetCalendar = Calendar.getInstance()
         targetCalendar.timeZone = TimeZone.getTimeZone(Constant.CHINA_TIMEZONE)
         targetCalendar.set(Calendar.MINUTE, 1)
