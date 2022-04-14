@@ -9,7 +9,7 @@ import javax.inject.Inject
 class CheckInUseCase @Inject constructor(
     private val checkInRepository: CheckInRepository
     ) {
-    suspend fun checkIn(
+    suspend operator fun invoke(
         region: String,
         actId: String,
         cookie: String,

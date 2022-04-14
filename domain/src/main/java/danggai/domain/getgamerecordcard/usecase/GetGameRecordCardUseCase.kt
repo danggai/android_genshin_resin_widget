@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetGameRecordCardUseCase @Inject constructor(
     private val getGameRecordCardRepository: GetGameRecordCardRepository
     ) {
-    suspend fun getGameRecordCard(
+    suspend operator fun invoke(
         hoyolabUid: String,
         cookie: String,
         ds: String,

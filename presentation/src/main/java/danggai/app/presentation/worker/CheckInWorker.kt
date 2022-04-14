@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit
 class CheckInWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
-    private val checkInUseCase: CheckInUseCase
+    private val checkIn: CheckInUseCase
 ): Worker(context, workerParams) {
 
     companion object {
@@ -94,7 +94,7 @@ class CheckInWorker @AssistedInject constructor(
         cookie: String,
         ds: String
     ) = CoroutineScope(Dispatchers.IO).launch {
-        checkInUseCase.checkIn(
+        checkIn(
             region,
             actId,
             cookie,

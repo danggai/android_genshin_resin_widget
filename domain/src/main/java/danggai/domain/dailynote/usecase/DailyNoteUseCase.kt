@@ -9,7 +9,7 @@ import javax.inject.Inject
 class DailyNoteUseCase @Inject constructor(
     private val dailyNoteRepository: DailyNoteRepository
     ) {
-    suspend fun dailyNote(
+    suspend operator fun invoke(
         uid: String,
         server: String,
         cookie: String,

@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit
 class RefreshWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
-    private val dailyNoteUseCase: DailyNoteUseCase
+    private val dailyNote: DailyNoteUseCase
     ): Worker(context, workerParams) {
 
     companion object {
@@ -86,7 +86,7 @@ class RefreshWorker @AssistedInject constructor(
         ds: String,
     ) {
         CoroutineScope(Dispatchers.IO).launch {
-            dailyNoteUseCase.dailyNote(
+            dailyNote(
                 uid,
                 server,
                 cookie,

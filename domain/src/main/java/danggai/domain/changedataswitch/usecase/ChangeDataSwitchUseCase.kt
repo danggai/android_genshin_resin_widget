@@ -9,7 +9,7 @@ import javax.inject.Inject
 class ChangeDataSwitchUseCase @Inject constructor(
     private val changeDataSwitchRepository: ChangeDataSwitchRepository
     ) {
-    suspend fun changeDataSwitch(
+    suspend operator fun invoke(
         gameId: Int,
         switchId: Int,
         isPublic: Boolean,

@@ -25,9 +25,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val resourceProvider: ResourceProvider,
-    private val dailyNoteUseCase: DailyNoteUseCase,
-    private val changeDataSwitchUseCase: ChangeDataSwitchUseCase,
-    private val getGameRecordCardUseCase: GetGameRecordCardUseCase,
+    private val dailyNote: DailyNoteUseCase,
+    private val changeDataSwitch: ChangeDataSwitchUseCase,
+    private val getGameRecordCard: GetGameRecordCardUseCase,
 ) : BaseViewModel() {
 
     var lvSaveResinWidgetData = MutableLiveData<Event<Boolean>>()
@@ -68,7 +68,7 @@ class MainViewModel @Inject constructor(
         ds: String
     ) {
         viewModelScope.launch {
-            dailyNoteUseCase.dailyNote(
+            dailyNote(
                 uid = uid,
                 server = server,
                 cookie = cookie,
@@ -184,7 +184,7 @@ class MainViewModel @Inject constructor(
         ds: String
     ) {
         viewModelScope.launch {
-            changeDataSwitchUseCase.changeDataSwitch(
+            changeDataSwitch(
                 gameId = gameId,
                 switchId = switchId,
                 isPublic = isPublic,
@@ -242,7 +242,7 @@ class MainViewModel @Inject constructor(
         ds: String
     ) {
         viewModelScope.launch {
-            getGameRecordCardUseCase.getGameRecordCard(
+            getGameRecordCard(
                 hoyolabUid = hoyolabUid,
                 cookie = cookie,
                 ds = ds,
