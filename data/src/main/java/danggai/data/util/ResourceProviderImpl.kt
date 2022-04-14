@@ -1,7 +1,6 @@
 package danggai.data.util
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import danggai.domain.util.ResourceProvider
 import javax.inject.Inject
 

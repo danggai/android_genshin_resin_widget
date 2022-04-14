@@ -60,6 +60,7 @@ object Constant {
 
     const val API_NAME_DAILY_NOTE = "Daily Note"
     const val API_NAME_CHANGE_DATA_SWITCH = "Change Data Switch"
+    const val API_NAME_GET_GAME_RECORD_CARD = "Get Game Record Card"
     const val API_NAME_CHECK_IN = "Check In"
 
 

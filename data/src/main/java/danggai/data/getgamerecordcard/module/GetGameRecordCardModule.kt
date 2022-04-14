@@ -4,13 +4,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import danggai.data.checkin.repository.CheckInRepositoryImpl
 import danggai.data.getgamerecordcard.remote.api.GetGameRecordCardApi
 import danggai.data.getgamerecordcard.repository.GetGameRecordCardRepositoryImpl
 import danggai.data.module.NetworkModule
 import danggai.domain.getgamerecordcard.repository.GetGameRecordCardRepository
-import danggai.domain.getgamerecordcard.usecase.GetGameRecordCardUseCase
-import kotlinx.coroutines.CoroutineDispatcher
 import retrofit2.Retrofit
 import javax.inject.Singleton
 

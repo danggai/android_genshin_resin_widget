@@ -5,10 +5,8 @@ import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import danggai.data.getgamerecordcard.remote.api.GetGameRecordCardApi
 import danggai.domain.base.ApiResult
-import danggai.domain.base.Meta
 import danggai.domain.getgamerecordcard.entity.GetGameRecordCard
 import danggai.domain.getgamerecordcard.repository.GetGameRecordCardRepository
-import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -34,17 +32,21 @@ class GetGameRecordCardRepositoryImpl @Inject constructor(
         )
 
         response.suspendOnSuccess {
-            emit(ApiResult<GetGameRecordCard>(
-                Meta(this.response.code(), this.response.message()),
-                this.response.body()?: GetGameRecordCard.EMPTY))
+            emit(this.response.body()?.let {
+                ApiResult.Success<GetGameRecordCard>(
+                    this.response.code(),
+                    it
+                )
+            } ?:ApiResult.Null() )
         }.suspendOnError {
-            emit(ApiResult<GetGameRecordCard>(
-                Meta(this.response.code(), this.response.message()),
-                GetGameRecordCard.EMPTY))
+            emit(ApiResult.Failure(
+                this.response.code(),
+                this.response.message()
+            ))
         }.suspendOnException {
-            emit(ApiResult<GetGameRecordCard>(
-                Meta(Constant.META_CODE_CLIENT_ERROR, this.exception.message ?: ""),
-                GetGameRecordCard.EMPTY))
+            emit(ApiResult.Error(
+                this.exception
+            ))
         }
     }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 }

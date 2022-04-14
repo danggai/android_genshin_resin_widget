@@ -22,6 +22,7 @@ import danggai.app.presentation.core.util.CommonFunction
 import danggai.app.presentation.core.util.PreferenceManager
 import danggai.app.presentation.core.util.log
 import danggai.app.presentation.main.MainActivity
+import danggai.domain.base.ApiResult
 import danggai.domain.checkin.usecase.CheckInUseCase
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
@@ -102,9 +103,8 @@ class CheckInWorker @AssistedInject constructor(
             onComplete = { log.e () }
         ).collect {
             log.e(it)
-            when (it.meta.code) {
-                Constant.META_CODE_SUCCESS -> {
-                    log.e()
+            when (it) {
+                is ApiResult.Success -> {
                     when (it.data.retcode) {
                         Constant.RETCODE_SUCCESS,
                         Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
@@ -130,28 +130,30 @@ class CheckInWorker @AssistedInject constructor(
                                 log.e()
                                 sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                             }
-                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, it.meta.code, it.data.retcode)
+                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, it.code, it.data.retcode)
                             startWorkerOneTimeRetry(applicationContext)
                         }
                     }
                 }
-                Constant.META_CODE_CLIENT_ERROR -> {
-                    it.meta.message.let { msg ->
+                is ApiResult.Failure -> {
+                    it.message.let { msg ->
                         log.e(msg)
                         if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
                             log.e()
                             sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                         }
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, it.code, null)
                         startWorkerOneTimeRetry(applicationContext)
                     }
                 }
-                else -> {
+                is ApiResult.Error,
+                is ApiResult.Null -> {
                     log.e()
                     if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
                         log.e()
                         sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
                     }
-                    CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, it.meta.code, null)
+                    CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, null, null)
                     startWorkerOneTimeRetry(applicationContext)
                 }
             }

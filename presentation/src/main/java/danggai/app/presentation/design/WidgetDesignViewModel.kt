@@ -1,9 +1,7 @@
 package danggai.app.presentation.design
 
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import danggai.app.presentation.R
 import danggai.app.presentation.core.BaseViewModel
 import danggai.app.presentation.core.util.Event
 import danggai.app.presentation.core.util.NonNullMutableLiveData

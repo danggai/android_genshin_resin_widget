@@ -5,10 +5,8 @@ import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import danggai.data.checkin.remote.api.CheckInApi
 import danggai.domain.base.ApiResult
-import danggai.domain.base.Meta
 import danggai.domain.checkin.entity.CheckIn
 import danggai.domain.checkin.repository.CheckInRepository
-import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -36,20 +34,20 @@ class CheckInRepositoryImpl @Inject constructor(
         )
 
         response.suspendOnSuccess {
-            emit(ApiResult<CheckIn>(
-                Meta(this.response.code(), this.response.message()),
-                this.response.body()?:CheckIn.EMPTY
-            ))
+            emit( this.response.body()?.let {
+                ApiResult.Success<CheckIn>(
+                    this.response.code(),
+                    it
+                )
+            } ?: ApiResult.Null())
         }.suspendOnError {
-            emit(ApiResult<CheckIn>(
-                Meta(this.response.code(), this.response.message()),
-                CheckIn.EMPTY
+            emit(ApiResult.Failure(
+                this.response.code(),
+                this.response.message()
             ))
         }.suspendOnException {
-            emit(ApiResult<CheckIn>(
-                Meta(Constant.META_CODE_CLIENT_ERROR,
-                this.exception.message ?: ""),
-                CheckIn.EMPTY
+            emit(ApiResult.Error(
+                this.exception
             ))
         }
     }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)

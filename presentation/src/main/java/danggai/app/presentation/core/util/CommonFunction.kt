@@ -83,13 +83,13 @@ object CommonFunction {
         return SimpleDateFormat(Constant.DATE_FORMAT_SYNC_TIME).format(Date())
     }
 
-    fun sendCrashlyticsApiLog(apiName: String, metaCode: Int, retCode: String?) {
+    fun sendCrashlyticsApiLog(apiName: String, metaCode: Int?, retCode: String?) {
         if (BuildConfig.DEBUG) return
 
         log.e()
         val keysAndValues = CustomKeysAndValues.Builder()
             .putString("api name", apiName)
-            .putInt("meta code", metaCode)
+            .putInt("meta code", metaCode?:-1)
             .putString("ret code", retCode?:"")
             .build()
 

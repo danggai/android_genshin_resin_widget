@@ -8,8 +8,6 @@ import danggai.data.checkin.remote.api.CheckInApi
 import danggai.data.checkin.repository.CheckInRepositoryImpl
 import danggai.data.module.NetworkModule
 import danggai.domain.checkin.repository.CheckInRepository
-import danggai.domain.checkin.usecase.CheckInUseCase
-import kotlinx.coroutines.CoroutineDispatcher
 import retrofit2.Retrofit
 import javax.inject.Singleton
 

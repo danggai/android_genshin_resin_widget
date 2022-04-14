@@ -189,7 +189,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                     if (!mVM.lvEnableAutoCheckIn.value)
                         CheckInWorker.shutdownWorker(_context)
 
-                    makeToast(_context, getString(R.string.msg_toast_save_done))
+                    makeToast(_context, getString(R.string.msg_toast_save_done_check_in))
                 } else if (!boolean and mVM.lvCookie.value.isEmpty()) {
                     makeToast(_context, getString(R.string.msg_toast_cookie_empty_error))
                 }

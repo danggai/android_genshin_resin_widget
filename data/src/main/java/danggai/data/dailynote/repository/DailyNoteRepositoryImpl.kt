@@ -5,10 +5,8 @@ import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import danggai.data.dailynote.remote.api.DailyNoteApi
 import danggai.domain.base.ApiResult
-import danggai.domain.base.Meta
 import danggai.domain.dailynote.entity.DailyNote
 import danggai.domain.dailynote.repository.DailyNoteRepository
-import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -36,19 +34,20 @@ class DailyNoteRepositoryImpl @Inject constructor(
         )
 
         response.suspendOnSuccess {
-            emit(ApiResult<DailyNote>(
-                Meta(this.response.code(), this.response.message()),
-                this.response.body()?:DailyNote.EMPTY
-            ))
+            emit(this.response.body()?.let {
+                ApiResult.Success<DailyNote>(
+                    this.response.code(),
+                    it
+                )
+            } ?:ApiResult.Null() )
         }.suspendOnError {
-            emit(ApiResult<DailyNote>(
-                Meta(this.response.code(), this.response.message()),
-                DailyNote.EMPTY
+            emit(ApiResult.Failure(
+                this.response.code(),
+                this.response.message()
             ))
         }.suspendOnException {
-            emit(ApiResult<DailyNote>(
-                Meta(Constant.META_CODE_CLIENT_ERROR, this.exception.message ?: ""),
-                DailyNote.EMPTY
+            emit(ApiResult.Error(
+                this.exception
             ))
         }
     }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)

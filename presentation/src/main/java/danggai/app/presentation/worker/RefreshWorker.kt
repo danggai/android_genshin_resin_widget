@@ -9,6 +9,7 @@ import danggai.app.presentation.R
 import danggai.app.presentation.core.util.CommonFunction
 import danggai.app.presentation.core.util.PreferenceManager
 import danggai.app.presentation.core.util.log
+import danggai.domain.base.ApiResult
 import danggai.domain.dailynote.entity.DailyNote
 import danggai.domain.dailynote.usecase.DailyNoteUseCase
 import danggai.domain.util.Constant
@@ -95,8 +96,8 @@ class RefreshWorker @AssistedInject constructor(
             ).collect {
                 log.e(it)
 
-                when (it.meta.code) {
-                    Constant.META_CODE_SUCCESS -> {
+                when (it) {
+                    is ApiResult.Success -> {
                         log.e()
                         when (it.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
@@ -105,20 +106,20 @@ class RefreshWorker @AssistedInject constructor(
                             }
                             else -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.meta.code, it.data.retcode)
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
                                 CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
                             }
                         }
                     }
-                    Constant.META_CODE_CLIENT_ERROR -> {
-                        it.meta.message.let { msg ->
-                            CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
-                            log.e(msg)
-                        }
+                    is ApiResult.Failure -> {
+                        log.e(it.message)
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, null)
+                        CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
                     }
-                    else -> {
+                    is ApiResult.Error,
+                    is ApiResult.Null -> {
                         log.e()
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.meta.code, null)
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, null, null)
                         CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
                     }
                 }

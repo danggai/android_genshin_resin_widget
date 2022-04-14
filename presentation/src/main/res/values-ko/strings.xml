@@ -61,8 +61,10 @@
 
     <string name="msg_toast_back_button">한 번 더 누르면 앱을 종료할 수 있어!</string>
     <string name="msg_toast_save_done">저장 완료!</string>
+    <string name="msg_toast_save_done_check_in">저장 완료! 출석 체크 결과는 상단 바에서 확인해 줘!</string>
 
-    <string name="msg_toast_api_error_include_code">HoYoLAB과 통신하는데 실패했어.. 오류 코드는 %s야! 개발자에게 공유하면 해결에 많은 도움이 돼!</string>
+    <string name="msg_toast_common_network_error">HoYoLAB 서버와 연결하는데에 실패했어.. 기기의 네트워크 상태를 확인해 줘!</string>
+    <string name="msg_toast_common_body_null_error">HoYoLAB에서 필요한 정보를 제공받지 못했어.. 서버 오류일 수 있으니 이후에 다시 시도해 줘!</string>
 
     <string name="msg_toast_dailynote_success">정상적으로 실시간 메모를 불러왔어!</string>
     <string name="msg_toast_dailynote_error_charactor_info">캐릭터 정보를 읽을 수 없어.. uid나 쿠키, 서버를 다시 확인해 줘!</string>
@@ -80,11 +82,13 @@
 
     <string name="msg_toast_change_data_switch_success">성공적으로 실시간 메모를 공개 상태로 변경했어! 저장 버튼을 눌러 줘!</string>
     <string name="msg_toast_change_data_switch_error_include_error_code">실시간 메모를 공개 상태로 변경하는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없지만, 오류코드는 %s야! 개발자에게 공유해주면, 문제 해결에 도움이 돼!</string>
+    <string name="msg_toast_change_data_switch_error">실시간 메모를 공개 상태로 변경하는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없어.. 미안해!</string>
 
     <string name="msg_toast_get_uid_success">성공적으로 인게임 uid를 가져왔어!</string>
     <string name="msg_toast_get_uid_error_invalid_cookie">쿠키가 정상적이지 않아서 인게임 uid를 가져오는데 실패했어..</string>
     <string name="msg_toast_get_uid_error_card_list_empty">정상적으로 데이터를 가져왔지만, 인게임 정보가 존재하지 않아서 데이터를 가져올 수 없어!</string>
     <string name="msg_toast_get_uid_error_include_error_code">인게임 uid를 가져오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없지만, 오류코드는 %s야! 개발자에게 공유해주면, 문제 해결에 도움이 돼!</string>
+    <string name="msg_toast_get_uid_error">인게임 uid를 가져오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없어.. 미안해!</string>
 
     <string name="msg_toast_check_in_success">계정 연동 성공! 출석체크 성공!</string>
     <string name="msg_toast_check_in_already">계정 연동 성공! 오늘은 이미 출석했어!</string>

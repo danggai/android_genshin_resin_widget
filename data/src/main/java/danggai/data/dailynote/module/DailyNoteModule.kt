@@ -8,8 +8,6 @@ import danggai.data.dailynote.remote.api.DailyNoteApi
 import danggai.data.dailynote.repository.DailyNoteRepositoryImpl
 import danggai.data.module.NetworkModule
 import danggai.domain.dailynote.repository.DailyNoteRepository
-import danggai.domain.dailynote.usecase.DailyNoteUseCase
-import kotlinx.coroutines.CoroutineDispatcher
 import retrofit2.Retrofit
 import javax.inject.Singleton
 

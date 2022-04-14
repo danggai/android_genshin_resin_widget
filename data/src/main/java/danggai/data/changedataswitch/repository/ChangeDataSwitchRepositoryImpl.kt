@@ -5,10 +5,8 @@ import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import danggai.data.changedataswitch.remote.api.ChangeDataSwitchApi
 import danggai.domain.base.ApiResult
-import danggai.domain.base.Meta
 import danggai.domain.changedataswitch.entity.ChangeDataSwitch
 import danggai.domain.changedataswitch.repository.ChangeDataSwitchRepository
-import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -38,19 +36,20 @@ class ChangeDataSwitchRepositoryImpl @Inject constructor(
         )
 
         response.suspendOnSuccess {
-            emit(ApiResult<ChangeDataSwitch>(
-                Meta(this.response.code(), this.response.message()),
-                this.response.body()?:ChangeDataSwitch.EMPTY
-            ))
+            emit(this.response.body()?.let {
+                ApiResult.Success<ChangeDataSwitch>(
+                    this.response.code(),
+                    it
+                )
+            } ?:ApiResult.Null() )
         }.suspendOnError {
-            emit(ApiResult<ChangeDataSwitch>(
-                Meta(this.response.code(), this.response.message()),
-                ChangeDataSwitch.EMPTY
+            emit(ApiResult.Failure(
+                this.response.code(),
+                this.response.message()
             ))
         }.suspendOnException {
-            emit(ApiResult<ChangeDataSwitch>(
-                Meta(Constant.META_CODE_CLIENT_ERROR, this.exception.message ?: ""),
-                ChangeDataSwitch.EMPTY
+            emit(ApiResult.Error(
+                this.exception
             ))
         }
     }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
