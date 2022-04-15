@@ -180,5 +180,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- HoYoVerse로 수정 된 도메인 적용.\n- 앱 안정성이 개선되었습니다.\n- 자동 출석체크 기능 수정으로 인해 업데이트 후 첫 앱 실행 시 기존 사용자에 한해 자동 출석체크가 진행됩니다.</string>
+    <string name="dialog_msg_patch_note">- 이제 붕괴3rd 웹 출석체크를 자동으로 진행할 수 있습니다.\n- 이제 자동 출석체크 진행 시 앱에서 설정한 언어로 우편을 수신합니다.</string>
 </resources>

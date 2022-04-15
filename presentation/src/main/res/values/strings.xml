@@ -201,6 +201,6 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- You can change the font size of widget in Widget Design.\n</string>
+    <string name="dialog_msg_patch_note">- Honkai Impact 3rd Web Attendance Check can now proceed automatically.\n- You will now receive mail in the language set by the app during auto check-in.</string>
 
 </resources>
