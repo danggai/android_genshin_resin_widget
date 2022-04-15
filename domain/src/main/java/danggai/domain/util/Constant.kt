@@ -10,10 +10,13 @@ object Constant {
     const val OS_SALT = "6cqshh5dhw73bzxn20oexa9k516chk7s"
     const val CN_SALT = "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs"
 
-    const val OS_CHECK_IN_URL = "https://hk4e-api-os.hoyoverse.com/event/sol/sign"
-    const val OS_ACT_ID = "e202102251931481"
-    const val CN_CHECK_IN_URL = "https://api-takumi.hoyoverse.com/event/bbs_sign_reward/"
-    const val CN_ACT_ID = "e202009291139501"
+    const val OS_GENSHIN_CHECK_IN_URL = "https://hk4e-api-os.hoyoverse.com/event/sol/sign"
+    const val OS_GENSHIN_ACT_ID = "e202102251931481"
+    const val CN_GENSHIN_CHECK_IN_URL = "https://api-takumi.hoyoverse.com/event/bbs_sign_reward/"
+    const val CN_GENSHIN_ACT_ID = "e202009291139501"
+
+    const val OS_HONKAI_3RD_CHECK_IN_URL = "https://sg-public-api.hoyolab.com/event/mani/sign"
+    const val OS_HONKAI_3RD_ACT_ID = "e202110291205111"
 
     const val HOW_CAN_I_GET_COOKIE_URL = "https://github.com/danggai/android_genshin_resin_widget/blob/master/how_to_get_hoyolab_cookie.md"
 
@@ -23,6 +26,9 @@ object Constant {
     const val SERVER_OS_EURO = "os_euro"
     const val SERVER_OS_ASIA = "os_asia"
     const val SERVER_OS_CHT = "os_cht"
+
+    const val LANG_KO_KR = "ko-kr"
+    const val LANG_EN_US = "en-us"
 
     const val GAME_ID_HONKAI_3RD = 1
     const val GAME_ID_GENSHIN_IMPACT = 2
@@ -135,7 +141,8 @@ object Constant {
     const val PREF_NOTI_EXPEDITION_DONE = "PREF_NOTI_EXPEDITION_DONE"
     const val PREF_NOTI_HOME_COIN_FULL = "PREF_NOTI_HOME_COIN_FULL"
 
-    const val PREF_ENABLE_AUTO_CHECK_IN = "PREF_ENABLE_AUTO_CHECK_IN"
+    const val PREF_ENABLE_GENSHIN_AUTO_CHECK_IN = "PREF_ENABLE_AUTO_CHECK_IN"
+    const val PREF_ENABLE_HONKAI_3RD_AUTO_CHECK_IN = "PREF_ENABLE_AUTO_CHECK_IN_HONKAI_3RD"
     const val PREF_NOTI_CHECK_IN_SUCCESS = "PREF_NOTI_CHECK_IN_SUCCESS"
     const val PREF_NOTI_CHECK_IN_FAILED = "PREF_NOTI_CHECK_IN_FAILED"
 
@@ -184,27 +191,43 @@ object Constant {
     const val PREF_WIDGET_RESIN_IMAGE_VISIBLE = 0
     const val PREF_WIDGET_RESIN_IMAGE_INVISIBLE = 1
 
+    enum class Locale(val index: Int, val locale: String, val lang: String) {
+        ENGLISH(PREF_LANG_ENG, "en", "en-us"),
+        KOREAN(PREF_LANG_KOR, "ko", "ko-kr")
+    }
+    const val PREF_LANG_ENG = 0
+    const val PREF_LANG_KOR = 1
+
+    enum class NotiType {
+        RESIN_EACH_40,
+        RESIN_140,
+        RESIN_CUSTOM,
+        CHECK_IN_GENSHIN_SUCCESS,
+        CHECK_IN_GENSHIN_ALREADY,
+        CHECK_IN_GENSHIN_FAILED,
+        CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND,
+        CHECK_IN_HONKAI_3RD_SUCCESS,
+        CHECK_IN_HONKAI_3RD_ALREADY,
+        CHECK_IN_HONKAI_3RD_FAILED,
+        CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND,
+        EXPEDITION_DONE,
+        REALM_CURRENCY_FULL,
+    }
+
+    enum class WorkDataType(val key: String) {
+        GENSHIN_CHECK_IN_RET_CODE("genshinCheckIn"),
+        HONKAI_3RD_CHECK_IN_RET_CODE("honkai3rdCheckIn"),
 
 
+    }
 
 
     /* ID */
 
-    const val NOTI_TYPE_EACH_40_RESIN = 0
-    const val NOTI_TYPE_140_RESIN = 1
-    const val NOTI_TYPE_CUSTOM_RESIN = 2
-
-    const val NOTI_TYPE_CHECK_IN_SUCCESS = 10
-    const val NOTI_TYPE_CHECK_IN_ALREADY = 11
-    const val NOTI_TYPE_CHECK_IN_FAILED = 12
-
-    const val NOTI_TYPE_EXPEDITION_DONE = 20
-
-    const val NOTI_TYPE_REALM_CURRENCY_FULL = 30
-
     const val PUSH_CHANNEL_DEFAULT_ID = "DEFAULT"
     const val PUSH_CHANNEL_RESIN_NOTI_ID = "RESIN_NOTIFICATION"
-    const val PUSH_CHANNEL_CHECK_IN_NOTI_ID = "CHECK_IN_NOTIFICATION"
+    const val PUSH_CHANNEL_GENSHIN_CHECK_IN_NOTI_ID = "PUSH_CHANNEL_GENSHIN_CHECK_IN_NOTI_ID"
+    const val PUSH_CHANNEL_HONKAI_3RD_CHECK_IN_NOTI_ID = "PUSH_CHANNEL_HONKAI_3RD_CHECK_IN_NOTI_ID"
     const val PUSH_CHANNEL_EXPEDITION_NOTI_ID = "EXPEDITION_NOTIFICATION"
     const val PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID = "REALM_CURRENCY_NOTIFICATION"
 

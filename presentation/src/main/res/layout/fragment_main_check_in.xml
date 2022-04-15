@@ -82,15 +82,24 @@
                     android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatCheckBox
-                        android:id="@+id/cb_auto_check_in_enable"
+                        android:id="@+id/cb_enable_genshin_auto_check_in"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:checked="@={vm.lvEnableAutoCheckIn}"
+                        android:checked="@={vm.lvEnableGenshinAutoCheckIn}"
                         android:text="@string/btn_auto_check_in_enable"
                         android:textSize="14sp"
                         app:buttonTint="@color/checkbox_filter_tint" />
 
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/cb_enable_honkai_3rd_auto_check_in"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:checked="@={vm.lvEnableHonkai3rdAutoCheckIn}"
+                        android:text="@string/btn_auto_check_in_enable_honkai_3rd"
+                        android:textSize="14sp"
+                        app:buttonTint="@color/checkbox_filter_tint" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -131,10 +140,6 @@
                         app:buttonTint="@color/checkbox_filter_tint" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp" />
 
                 <Space
                     android:layout_width="wrap_content"

@@ -136,32 +136,32 @@ class RefreshWorker @AssistedInject constructor(
         if (PreferenceManager.getBooleanNotiEach40Resin(context)) {
             if (200 in (prefResin + 1)..nowResin){
                 log.e()
-                sendNoti(Constant.NOTI_TYPE_EACH_40_RESIN, 200)
+                sendNoti(Constant.NotiType.RESIN_EACH_40, 200)
             } else if (160 in (prefResin + 1)..nowResin){
                 log.e()
-                sendNoti(Constant.NOTI_TYPE_EACH_40_RESIN, 160)
+                sendNoti(Constant.NotiType.RESIN_EACH_40, 160)
             } else if (120 in (prefResin + 1)..nowResin){
                 log.e()
-                sendNoti(Constant.NOTI_TYPE_EACH_40_RESIN, 120)
+                sendNoti(Constant.NotiType.RESIN_EACH_40, 120)
             } else if (80 in (prefResin + 1)..nowResin){
                 log.e()
-                sendNoti(Constant.NOTI_TYPE_EACH_40_RESIN, 80)
+                sendNoti(Constant.NotiType.RESIN_EACH_40, 80)
             } else if (40 in (prefResin + 1)..nowResin){
                 log.e()
-                sendNoti(Constant.NOTI_TYPE_EACH_40_RESIN, 40)
+                sendNoti(Constant.NotiType.RESIN_EACH_40, 40)
             }
         }
         if (PreferenceManager.getBooleanNoti140Resin(context)) {
             if (140 in (prefResin + 1)..nowResin){
                 log.e()
-                sendNoti(Constant.NOTI_TYPE_140_RESIN, 140)
+                sendNoti(Constant.NotiType.RESIN_140, 140)
             }
         }
         if (PreferenceManager.getBooleanNotiCustomResin(context)) {
             val targetResin: Int = PreferenceManager.getIntCustomTargetResin(context)
             if (targetResin in (prefResin + 1)..nowResin){
                 log.e()
-                sendNoti(Constant.NOTI_TYPE_CUSTOM_RESIN, targetResin)
+                sendNoti(Constant.NotiType.RESIN_CUSTOM, targetResin)
             }
         }
 
@@ -172,7 +172,7 @@ class RefreshWorker @AssistedInject constructor(
                 && !dailyNote.expeditions.isNullOrEmpty()
                 && nowExpeditionTime == 0){
                 log.e()
-                sendNoti(Constant.NOTI_TYPE_EXPEDITION_DONE, 0)
+                sendNoti(Constant.NotiType.EXPEDITION_DONE, 0)
             }
         }
 
@@ -183,7 +183,7 @@ class RefreshWorker @AssistedInject constructor(
                 && dailyNote.max_home_coin != 0
                 && nowHomeCoinRecoveryTime == 0){
                 log.e()
-                sendNoti(Constant.NOTI_TYPE_REALM_CURRENCY_FULL, 0)
+                sendNoti(Constant.NotiType.REALM_CURRENCY_FULL, 0)
             }
         }
 
@@ -192,20 +192,20 @@ class RefreshWorker @AssistedInject constructor(
         CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
     }
 
-    private fun sendNoti(id: Int, target: Int) {
+    private fun sendNoti(notiType: Constant.NotiType, target: Int) {
         log.e()
 
-        val title = when (id) {
-            Constant.NOTI_TYPE_EACH_40_RESIN,
-            Constant.NOTI_TYPE_140_RESIN,
-            Constant.NOTI_TYPE_CUSTOM_RESIN -> applicationContext.getString(R.string.push_resin_noti_title)
-            Constant.NOTI_TYPE_EXPEDITION_DONE -> applicationContext.getString(R.string.push_expedition_title)
-            Constant.NOTI_TYPE_REALM_CURRENCY_FULL -> applicationContext.getString(R.string.push_realm_currency_title)
+        val title = when (notiType) {
+            Constant.NotiType.RESIN_EACH_40,
+            Constant.NotiType.RESIN_140,
+            Constant.NotiType.RESIN_CUSTOM,-> applicationContext.getString(R.string.push_resin_noti_title)
+            Constant.NotiType.EXPEDITION_DONE -> applicationContext.getString(R.string.push_expedition_title)
+            Constant.NotiType.REALM_CURRENCY_FULL -> applicationContext.getString(R.string.push_realm_currency_title)
             else -> ""
         }
 
-        val msg = when (id) {
-            Constant.NOTI_TYPE_EACH_40_RESIN ->
+        val msg = when (notiType) {
+            Constant.NotiType.RESIN_EACH_40 ->
                 when (target) {
                     200 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_200), target)
                     160 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_160), target)
@@ -213,14 +213,14 @@ class RefreshWorker @AssistedInject constructor(
                     80 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_40), target)
                     else -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_40), target)
                 }
-            Constant.NOTI_TYPE_140_RESIN -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_140), target)
-            Constant.NOTI_TYPE_CUSTOM_RESIN -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), target)
-            Constant.NOTI_TYPE_EXPEDITION_DONE -> applicationContext.getString(R.string.push_msg_expedition_done)
-            Constant.NOTI_TYPE_REALM_CURRENCY_FULL -> applicationContext.getString(R.string.push_msg_realm_currency_full)
+            Constant.NotiType.RESIN_140 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_140), target)
+            Constant.NotiType.RESIN_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), target)
+            Constant.NotiType.EXPEDITION_DONE -> applicationContext.getString(R.string.push_msg_expedition_done)
+            Constant.NotiType.REALM_CURRENCY_FULL -> applicationContext.getString(R.string.push_msg_realm_currency_full)
             else -> ""
         }
 
-        CommonFunction.sendNotification(id, applicationContext, title, msg)
+        CommonFunction.sendNotification(notiType, applicationContext, title, msg)
     }
 
     override fun doWork(): Result {

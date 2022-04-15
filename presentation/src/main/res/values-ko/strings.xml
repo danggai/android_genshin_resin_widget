@@ -23,7 +23,8 @@
     <string name="btn_visible">보이기</string>
     <string name="btn_invisible">안보이기</string>
 
-    <string name="btn_auto_check_in_enable">자동으로 HoYoLAB에 출석</string>
+    <string name="btn_auto_check_in_enable">원신</string>
+    <string name="btn_auto_check_in_enable_honkai_3rd">붕괴 3rd</string>
     <string name="btn_check_in_success">출석 성공 시</string>
     <string name="btn_check_in_failed">출석 실패 시</string>
 
@@ -122,11 +123,14 @@
     <string name="push_msg_resin_noti_over_140">여행자! 현재 레진이 %d을 넘어섰어! 빨리 사용하러 가자!</string>
     <string name="push_msg_resin_noti_custom">여행자! 현재 레진이 %d을 넘어섰어! 지금 불러달라고 했었지?</string>
 
-    <string name="push_checkin_title">자동 출석 알림</string>
-    <string name="push_checkin_description">호요랩 일일 출석 여부를 여행자에게 알려주기 위해 발송하는 알림이야!</string>
-    <string name="push_msg_checkin_success">HoYoLAB 출석 체크 성공!</string>
+    <string name="push_genshin_checkin_title">원신 출석 알림</string>
+    <string name="push_genshin_checkin_description">원신 출석 결과를 여행자에게 알려주기 위해 발송하는 알림이야!</string>
+    <string name="push_honkai_3rd_checkin_title">붕괴3rd 출석 알림</string>
+    <string name="push_honkai_3rd_checkin_description">붕괴3rd 출석 결과를 여행자에게 알려주기 위해 발송하는 알림이야!</string>
+    <string name="push_msg_checkin_success">출석 체크 성공!</string>
     <string name="push_msg_checkin_already">이미 오늘자 출석 체크가 완료됐어! 내일 1시에 다시 알려줄게!</string>
-    <string name="push_msg_checkin_failed">HoYoLAB 출석 체크에 실패했어.. 30분 후에 다시 시도해볼게!</string>
+    <string name="push_msg_checkin_failed">출석 체크에 실패했어.. 30분 후에 다시 시도해볼게!</string>
+    <string name="push_msg_checkin_account_not_found">연동 된 인게임 계정이 없어서 출석체크를 진행할 수 없어!</string>
 
     <string name="push_expedition_title">탐험 완료 알림</string>
     <string name="push_expedition_description">탐험이 완료되었을 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>

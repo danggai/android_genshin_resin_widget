@@ -88,7 +88,7 @@ dependencies {
     implementation "com.google.firebase:firebase-crashlytics-ktx:$versions.firebaseCrashlyticsVersion"
 
     // worker - Background Action
-    implementation "androidx.work:work-runtime-ktx:2.7.1"
+    implementation "androidx.work:work-runtime-ktx:$versions.workerVersion"
 
     // unittest
     testImplementation "junit:junit:$versions.junitVersion"

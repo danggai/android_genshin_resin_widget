@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.activityViewModels
+import androidx.work.WorkManager
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.core.util.PreferenceManager
+import danggai.app.presentation.core.util.log
 import danggai.app.presentation.databinding.FragmentMainCheckInBinding
 import danggai.app.presentation.main.MainViewModel
+import danggai.domain.util.Constant
+import io.reactivex.rxkotlin.toObservable
 
 @AndroidEntryPoint
 class MainCheckInFragment : BindingFragment<FragmentMainCheckInBinding, MainViewModel>() {
@@ -36,11 +40,10 @@ class MainCheckInFragment : BindingFragment<FragmentMainCheckInBinding, MainView
 
     private fun initUi() {
         context?.let {
-            mVM.lvEnableAutoCheckIn.value = PreferenceManager.getBooleanEnableAutoCheckIn(it)
+            mVM.lvEnableGenshinAutoCheckIn.value = PreferenceManager.getBooleanEnableGenshinAutoCheckIn(it)
+            mVM.lvEnableHonkai3rdAutoCheckIn.value = PreferenceManager.getBooleanEnableHonkai3rdAutoCheckIn(it)
             mVM.lvEnableNotiCheckinSuccess.value = PreferenceManager.getBooleanNotiCheckInSuccess(it)
             mVM.lvEnableNotiCheckinFailed.value = PreferenceManager.getBooleanNotiCheckInFailed(it)
         }
-
     }
-
 }

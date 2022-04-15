@@ -461,11 +461,18 @@ object PreferenceManager {
         setBoolean(context, Constant.PREF_NOTI_HOME_COIN_FULL, value)
     }
 
-    fun getBooleanEnableAutoCheckIn(context: Context): Boolean {
-        return getBoolean(context, Constant.PREF_ENABLE_AUTO_CHECK_IN, false)
+    fun getBooleanEnableGenshinAutoCheckIn(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_ENABLE_GENSHIN_AUTO_CHECK_IN, false)
     }
     fun setBooleanEnableAutoCheckIn(context: Context, value: Boolean) {
-        setBoolean(context, Constant.PREF_ENABLE_AUTO_CHECK_IN, value)
+        setBoolean(context, Constant.PREF_ENABLE_GENSHIN_AUTO_CHECK_IN, value)
+    }
+
+    fun getBooleanEnableHonkai3rdAutoCheckIn(context: Context): Boolean {
+        return getBoolean(context, Constant.PREF_ENABLE_HONKAI_3RD_AUTO_CHECK_IN, false)
+    }
+    fun setBooleanEnableHonkai3rdAutoCheckIn(context: Context, value: Boolean) {
+        setBoolean(context, Constant.PREF_ENABLE_HONKAI_3RD_AUTO_CHECK_IN, value)
     }
 
     fun getBooleanNotiCheckInSuccess(context: Context): Boolean {

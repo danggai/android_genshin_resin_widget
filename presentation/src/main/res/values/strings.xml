@@ -12,7 +12,7 @@
     <string name="notification" translatable="false">Notification</string>
     <string name="auto_check_in" translatable="false">Auto Check In</string>
     <string name="time_notation" translatable="false">Time Notation</string>
-    <string name="widget_design" translatable="false">Widget Design</string>
+    <string name="widget_design" translatable="false">Widget Design >></string>
     <string name="widget_theme" translatable="false">Widget Theme</string>
     <string name="background_transparency" translatable="false">Background Transparency</string>
     <string name="font_size" translatable="false">Font Size</string>
@@ -48,9 +48,11 @@
     <string name="btn_visible">Visible</string>
     <string name="btn_invisible">Invisible</string>
 
-    <string name="btn_auto_check_in_enable">Automatically check-in to HoYoLAB</string>
+    <string name="btn_auto_check_in_enable">Genshin Impact</string>
+    <string name="btn_auto_check_in_enable_honkai_3rd">Honkai Impact 3rd</string>
     <string name="btn_check_in_success">Succeed</string>
     <string name="btn_check_in_failed">Failed</string>
+
 
     <string name="done">Done</string>
 
@@ -142,11 +144,14 @@
     <string name="push_msg_resin_noti_over_140">Traveler! Your resin is over %d!</string>
     <string name="push_msg_resin_noti_custom">Traveler! Your resin is over %d!</string>
 
-    <string name="push_checkin_title">Auto Check-in Notification</string>
-    <string name="push_checkin_description">This is a notification sent to inform travelers of their daily check-in at HoYoLAB!</string>
+    <string name="push_genshin_checkin_title">Genshin Impact Check-in Notification</string>
+    <string name="push_genshin_checkin_description">This is a notification to inform travelers of the daily check-in result of Genshin Impact!</string>
+    <string name="push_honkai_3rd_checkin_title">Honkai Impact 3rd Check-in Notification</string>
+    <string name="push_honkai_3rd_checkin_description">This is a notification to inform travelers of the daily check-in result of Honkai Impact 3rd!</string>
     <string name="push_msg_checkin_success">HoYoLAB check-in successful!</string>
     <string name="push_msg_checkin_already">Already finished today\'s daily check in!</string>
     <string name="push_msg_checkin_failed">Failed HoYoLAB check-in. I\'ll try again in 30 minutes!</string>
+    <string name="push_msg_checkin_account_not_found">Can\'t proceed check-in because this HoYoLAB account doesn\'t have a linked in-game account!</string>
 
     <string name="push_expedition_title">Expedition Done Notification</string>
     <string name="push_expedition_description">This is a notification sent to travelers when the expedition is complete!</string>

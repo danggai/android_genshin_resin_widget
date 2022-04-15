@@ -147,8 +147,6 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                         }
                         .create()
                         .show()
-
-                    if (PreferenceManager.getBooleanEnableAutoCheckIn(it) && BuildConfig.VERSION_NAME == "1.1.2") mVM.lvStartCheckInWorker.value = Event(true)
                 }
 
                 PreferenceManager.setBooleanCheckedUpdateNote(it, true)
@@ -182,11 +180,13 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                     PreferenceManager.setBooleanIsValidUserData(_context, true)
                     PreferenceManager.setStringCookie(_context, mVM.lvCookie.value)
 
-                    PreferenceManager.setBooleanEnableAutoCheckIn(_context, mVM.lvEnableAutoCheckIn.value)
+                    PreferenceManager.setBooleanEnableAutoCheckIn(_context, mVM.lvEnableGenshinAutoCheckIn.value)
+                    PreferenceManager.setBooleanEnableHonkai3rdAutoCheckIn(_context, mVM.lvEnableHonkai3rdAutoCheckIn.value)
                     PreferenceManager.setBooleanNotiCheckInSuccess(_context, mVM.lvEnableNotiCheckinSuccess.value)
                     PreferenceManager.setBooleanNotiCheckInFailed(_context, mVM.lvEnableNotiCheckinFailed.value)
 
-                    if (!mVM.lvEnableAutoCheckIn.value)
+                    if (!mVM.lvEnableGenshinAutoCheckIn.value &&
+                            !mVM.lvEnableHonkai3rdAutoCheckIn.value)
                         CheckInWorker.shutdownWorker(_context)
 
                     makeToast(_context, getString(R.string.msg_toast_save_done_check_in))
@@ -321,7 +321,8 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         mVM.lvStartCheckInWorker.observe(viewLifecycleOwner, EventObserver {
             log.e()
             context?.let {
-                if (PreferenceManager.getBooleanEnableAutoCheckIn(it)) {
+                if (PreferenceManager.getBooleanEnableGenshinAutoCheckIn(it) ||
+                        PreferenceManager.getBooleanEnableHonkai3rdAutoCheckIn(it)) {
                     log.e()
                     CheckInWorker.startWorkerOneTimeImmediately(it)
                 }
@@ -344,8 +345,8 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                         DialogInterface.OnClickListener { dialog, which ->
                             log.e(which)
                             val locale: String = when (which) {
-                                0 -> "en"
-                                1 -> "ko"
+                                Constant.Locale.ENGLISH.index -> Constant.Locale.ENGLISH.locale
+                                Constant.Locale.KOREAN.index -> Constant.Locale.KOREAN.locale
                                 else -> Locale.getDefault().language
                             }
 

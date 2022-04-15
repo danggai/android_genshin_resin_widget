@@ -55,7 +55,8 @@ class MainViewModel @Inject constructor(
     val lvEnableNotiExpeditionDone: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
     val lvEnableNotiHomeCoinFull: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
 
-    val lvEnableAutoCheckIn: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
+    val lvEnableGenshinAutoCheckIn: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
+    val lvEnableHonkai3rdAutoCheckIn: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
     val lvEnableNotiCheckinSuccess: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
     val lvEnableNotiCheckinFailed: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
 

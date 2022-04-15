@@ -9,19 +9,32 @@ import javax.inject.Inject
 class CheckInUseCase @Inject constructor(
     private val checkInRepository: CheckInRepository
     ) {
-    suspend operator fun invoke(
-        region: String,
+    suspend fun genshinImpact(
+        lang: String,
         actId: String,
         cookie: String,
-        ds: String,
         onStart: () -> Unit,
         onComplete: () -> Unit
     ): Flow<ApiResult<CheckIn>> =
-        checkInRepository.checkIn(
-            region = region,
+        checkInRepository.genshinImpact(
+            lang = lang,
             actId = actId,
             cookie = cookie,
-            ds = ds,
+            onStart = onStart,
+            onComplete = onComplete
+        )
+
+    suspend fun honkai3rd(
+        lang: String,
+        actId: String,
+        cookie: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit
+    ): Flow<ApiResult<CheckIn>> =
+        checkInRepository.honkai3rd(
+            lang = lang,
+            actId = actId,
+            cookie = cookie,
             onStart = onStart,
             onComplete = onComplete
         )

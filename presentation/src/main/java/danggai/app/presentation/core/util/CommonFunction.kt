@@ -197,37 +197,50 @@ object CommonFunction {
         }
     }
 
-    fun sendNotification(id: Int, context: Context, title: String, msg: String) {
+    fun sendNotification(notiType: Constant.NotiType, context: Context, title: String, msg: String) {
         log.e()
-        var notificationId = ""
-        var notificationDesc = ""
-        var periority: Int = 0
+        val notificationId: String
+        val notificationDesc: String
+        val priority: Int
 
-        when (id) {
-            in 1..9 -> {
+        when (notiType) {
+            Constant.NotiType.RESIN_EACH_40,
+            Constant.NotiType.RESIN_140,
+            Constant.NotiType.RESIN_CUSTOM -> {
                 notificationId = Constant.PUSH_CHANNEL_RESIN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_resin_noti_description)
-                periority = NotificationCompat.PRIORITY_DEFAULT
+                priority = NotificationCompat.PRIORITY_DEFAULT
             }
-            in 10..19 -> {
-                notificationId = Constant.PUSH_CHANNEL_CHECK_IN_NOTI_ID
-                notificationDesc = context.getString(R.string.push_checkin_description)
-                periority = NotificationCompat.PRIORITY_LOW
+            Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS,
+            Constant.NotiType.CHECK_IN_GENSHIN_FAILED,
+            Constant.NotiType.CHECK_IN_GENSHIN_ALREADY,
+            Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND -> {
+                notificationId = Constant.PUSH_CHANNEL_GENSHIN_CHECK_IN_NOTI_ID
+                notificationDesc = context.getString(R.string.push_genshin_checkin_description)
+                priority = NotificationCompat.PRIORITY_LOW
             }
-            in 20..29 -> {
+            Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS,
+            Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED,
+            Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY,
+            Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND -> {
+                notificationId = Constant.PUSH_CHANNEL_HONKAI_3RD_CHECK_IN_NOTI_ID
+                notificationDesc = context.getString(R.string.push_honkai_3rd_checkin_description)
+                priority = NotificationCompat.PRIORITY_LOW
+            }
+            Constant.NotiType.EXPEDITION_DONE -> {
                 notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
                 notificationDesc = context.getString(R.string.push_expedition_description)
-                periority = NotificationCompat.PRIORITY_DEFAULT
+                priority = NotificationCompat.PRIORITY_DEFAULT
             }
-            in 30..39 -> {
+            Constant.NotiType.REALM_CURRENCY_FULL -> {
                 notificationId = Constant.PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID
                 notificationDesc = context.getString(R.string.push_realm_currency_description)
-                periority = NotificationCompat.PRIORITY_DEFAULT
+                priority = NotificationCompat.PRIORITY_DEFAULT
             }
             else -> {
                 notificationId = Constant.PUSH_CHANNEL_DEFAULT_ID
                 notificationDesc = context.getString(R.string.push_default_noti_description)
-                periority = NotificationCompat.PRIORITY_DEFAULT
+                priority = NotificationCompat.PRIORITY_DEFAULT
             }
         }
 
@@ -242,7 +255,7 @@ object CommonFunction {
             .setContentText(msg)
             .setAutoCancel(true)
             .setStyle(NotificationCompat.BigTextStyle().bigText(msg))
-            .setPriority(periority)
+            .setPriority(priority)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(
@@ -252,7 +265,7 @@ object CommonFunction {
             )
         }
 
-        notificationManager.notify(id, builder.build())
+        notificationManager.notify(notiType.ordinal, builder.build())
     }
 
     fun getTimeLeftUntilChinaMidnight(startCalendar: Calendar): Long {

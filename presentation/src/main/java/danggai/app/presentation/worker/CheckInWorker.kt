@@ -1,6 +1,5 @@
 package danggai.app.presentation.worker
 
-import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -13,8 +12,6 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.*
-import androidx.work.impl.utils.futures.SettableFuture
-import com.google.common.util.concurrent.ListenableFuture
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import danggai.app.presentation.R
@@ -23,14 +20,16 @@ import danggai.app.presentation.core.util.PreferenceManager
 import danggai.app.presentation.core.util.log
 import danggai.app.presentation.main.MainActivity
 import danggai.domain.base.ApiResult
+import danggai.domain.checkin.entity.CheckIn
 import danggai.domain.checkin.usecase.CheckInUseCase
 import danggai.domain.util.Constant
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.util.*
+import java.util.concurrent.CancellationException
 import java.util.concurrent.TimeUnit
 
 @HiltWorker
@@ -38,7 +37,7 @@ class CheckInWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
     private val checkIn: CheckInUseCase
-): Worker(context, workerParams) {
+): CoroutineWorker(context, workerParams) {
 
     companion object {
 
@@ -52,7 +51,7 @@ class CheckInWorker @AssistedInject constructor(
             startWorkerOneTime(
                 context,
                 CommonFunction.getTimeLeftUntilChinaMidnight(Calendar.getInstance())
-                )
+            )
         }
 
         fun startWorkerOneTimeRetry(context: Context) {
@@ -77,7 +76,9 @@ class CheckInWorker @AssistedInject constructor(
                 .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN)
                 .build()
 
-            workManager.enqueueUniqueWork(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN, ExistingWorkPolicy.REPLACE, workRequest)
+            workManager.enqueueUniqueWork(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN,
+                ExistingWorkPolicy.REPLACE,
+                workRequest)
         }
 
         fun shutdownWorker(context: Context) {
@@ -88,49 +89,60 @@ class CheckInWorker @AssistedInject constructor(
         }
     }
 
-    private fun checkIn(
-        region: String,
+    private suspend fun checkInGenshin(
+        lang: String,
         actId: String,
-        cookie: String,
-        ds: String
-    ) = CoroutineScope(Dispatchers.IO).launch {
-        checkIn(
-            region,
+        cookie: String
+    ) = withContext(Dispatchers.IO) {
+        checkIn.genshinImpact(
+            lang,
             actId,
             cookie,
-            ds,
-            onStart = { log.e () },
-            onComplete = { log.e () }
-        ).collect {
-            log.e(it)
+            onStart = { log.e() },
+            onComplete = { log.e() }
+        ).map {
             when (it) {
                 is ApiResult.Success -> {
                     when (it.data.retcode) {
                         Constant.RETCODE_SUCCESS,
                         Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
-                        Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, -> {
+                        Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
+                        -> {
                             log.e()
                             if (PreferenceManager.getBooleanNotiCheckInSuccess(applicationContext)) {
                                 log.e()
 
                                 when (it.data.retcode) {
-                                    Constant.RETCODE_SUCCESS -> sendNoti(Constant.NOTI_TYPE_CHECK_IN_SUCCESS)
+                                    Constant.RETCODE_SUCCESS -> sendNoti(Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS)
                                     Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
-                                    Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB, ->
-                                        sendNoti(Constant.NOTI_TYPE_CHECK_IN_ALREADY)
+                                    Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
+                                    -> sendNoti(Constant.NotiType.CHECK_IN_GENSHIN_ALREADY)
                                 }
                             }
 
                             log.e()
                             startWorkerOneTimeAtChinaMidnight(applicationContext)
                         }
+                        Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
+                            log.e()
+                            if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                                log.e()
+                                sendNoti(Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND)
+                            }
+                            PreferenceManager.setBooleanEnableAutoCheckIn(applicationContext, false)
+                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                                it.code,
+                                it.data.retcode)
+                        }
                         else -> {
                             log.e()
                             if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
                                 log.e()
-                                sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
+                                sendNoti(Constant.NotiType.CHECK_IN_GENSHIN_FAILED)
                             }
-                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, it.code, it.data.retcode)
+                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                                it.code,
+                                it.data.retcode)
                             startWorkerOneTimeRetry(applicationContext)
                         }
                     }
@@ -140,68 +152,186 @@ class CheckInWorker @AssistedInject constructor(
                         log.e(msg)
                         if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
                             log.e()
-                            sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
+                            sendNoti(Constant.NotiType.CHECK_IN_GENSHIN_FAILED)
                         }
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, it.code, null)
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                            it.code,
+                            null)
                         startWorkerOneTimeRetry(applicationContext)
                     }
                 }
                 is ApiResult.Error,
-                is ApiResult.Null -> {
+                is ApiResult.Null,
+                -> {
                     log.e()
                     if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
                         log.e()
-                        sendNoti(Constant.NOTI_TYPE_CHECK_IN_FAILED)
+                        sendNoti(Constant.NotiType.CHECK_IN_GENSHIN_FAILED)
                     }
                     CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, null, null)
                     startWorkerOneTimeRetry(applicationContext)
                 }
             }
-        }
+            it
+        }.stateIn(CoroutineScope(Dispatchers.IO))
     }
 
-    private fun sendNoti(id: Int) {
+    private suspend fun checkInHonkai3rd(
+        lang: String,
+        actId: String,
+        cookie: String
+    ) = withContext(Dispatchers.IO) {
+        checkIn.honkai3rd(
+            lang,
+            actId,
+            cookie,
+            onStart = { log.e() },
+            onComplete = { log.e() }
+        ).map {
+            when (it) {
+                is ApiResult.Success -> {
+                    when (it.data.retcode) {
+                        Constant.RETCODE_SUCCESS,
+                        Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
+                        Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
+                        -> {
+                            log.e()
+                            if (PreferenceManager.getBooleanNotiCheckInSuccess(applicationContext)) {
+                                log.e()
+
+                                when (it.data.retcode) {
+                                    Constant.RETCODE_SUCCESS -> sendNoti(Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS)
+                                    Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
+                                    Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
+                                    -> sendNoti(Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY)
+                                }
+                            }
+
+                            log.e()
+                            startWorkerOneTimeAtChinaMidnight(applicationContext)
+                        }
+                        Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
+                            log.e()
+                            if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                                log.e()
+                                sendNoti(Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND)
+                            }
+                            PreferenceManager.setBooleanEnableHonkai3rdAutoCheckIn(
+                                applicationContext,
+                                false)
+                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                                it.code,
+                                it.data.retcode)
+                        }
+                        else -> {
+                            log.e()
+                            if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                                log.e()
+                                sendNoti(Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED)
+                            }
+                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                                it.code,
+                                it.data.retcode)
+                            startWorkerOneTimeRetry(applicationContext)
+                        }
+                    }
+                }
+                is ApiResult.Failure -> {
+                    it.message.let { msg ->
+                        log.e(msg)
+                        if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                            log.e()
+                            sendNoti(Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED)
+                        }
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                            it.code,
+                            null)
+                        startWorkerOneTimeRetry(applicationContext)
+                    }
+                }
+                is ApiResult.Error,
+                is ApiResult.Null,
+                -> {
+                    log.e()
+                    if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                        log.e()
+                        sendNoti(Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED)
+                    }
+                    CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, null, null)
+                    startWorkerOneTimeRetry(applicationContext)
+                }
+            }
+            it
+        }.stateIn(CoroutineScope(Dispatchers.IO))
+    }
+
+    private fun sendNoti(notiType: Constant.NotiType) {
         log.e()
 
-        val title = applicationContext.getString(R.string.push_checkin_title)
-        val msg = when (id) {
-            Constant.NOTI_TYPE_CHECK_IN_SUCCESS -> applicationContext.getString(R.string.push_msg_checkin_success)
-            Constant.NOTI_TYPE_CHECK_IN_ALREADY -> applicationContext.getString(R.string.push_msg_checkin_already)
-            Constant.NOTI_TYPE_CHECK_IN_FAILED -> applicationContext.getString(R.string.push_msg_checkin_failed)
+        val title = when (notiType) {
+            Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS,
+            Constant.NotiType.CHECK_IN_GENSHIN_ALREADY,
+            Constant.NotiType.CHECK_IN_GENSHIN_FAILED,
+            Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND
+            -> applicationContext.getString(R.string.push_genshin_checkin_title)
+            Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS,
+            Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY,
+            Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED,
+            Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND
+            -> applicationContext.getString(R.string.push_honkai_3rd_checkin_title)
             else -> ""
         }
 
-        CommonFunction.sendNotification(Constant.NOTI_TYPE_CHECK_IN_SUCCESS, applicationContext, title, msg)
+        val msg = when (notiType) {
+            Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS,
+            Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS
+            -> applicationContext.getString(R.string.push_msg_checkin_success)
+            Constant.NotiType.CHECK_IN_GENSHIN_ALREADY,
+            Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY
+            -> applicationContext.getString(R.string.push_msg_checkin_already)
+            Constant.NotiType.CHECK_IN_GENSHIN_FAILED,
+            Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED
+            -> applicationContext.getString(R.string.push_msg_checkin_failed)
+            Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND,
+            Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND
+            -> applicationContext.getString(R.string.push_msg_checkin_account_not_found)
+            else -> ""
+        }
+
+        CommonFunction.sendNotification(notiType, applicationContext, title, msg)
     }
 
-    @SuppressLint("RestrictedApi")
-    override fun getForegroundInfoAsync(): ListenableFuture<ForegroundInfo> {
-        val future = SettableFuture.create<ForegroundInfo>()
+    override suspend fun getForegroundInfo(): ForegroundInfo {
+//        val future = SettableFuture.create<ForegroundInfo>()      // use it when this worker is Worker class, not CoroutineWorker
 
         var mNotificationManager: NotificationManager? = null
         val mNotificationId = 123
 
         val intentMainLanding = Intent(applicationContext, MainActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intentMainLanding, PendingIntent.FLAG_IMMUTABLE)
-        val iconNotification: Bitmap? = BitmapFactory.decodeResource(applicationContext.resources, R.mipmap.ic_launcher)
+        val pendingIntent = PendingIntent.getActivity(applicationContext,
+            0,
+            intentMainLanding,
+            PendingIntent.FLAG_IMMUTABLE)
+        val iconNotification: Bitmap? =
+            BitmapFactory.decodeResource(applicationContext.resources, R.mipmap.ic_launcher)
 
         if (mNotificationManager == null) {
-            mNotificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            mNotificationManager =
+                applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID, Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_NAME, NotificationManager.IMPORTANCE_MIN)
+            val notificationChannel =
+                NotificationChannel(Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID,
+                    Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_NAME,
+                    NotificationManager.IMPORTANCE_MIN)
             notificationChannel.enableLights(false)
             notificationChannel.lockscreenVisibility = Notification.VISIBILITY_SECRET
             mNotificationManager.createNotificationChannel(notificationChannel)
         }
 
-//        val stopIntent = Intent(applicationContext, CheckInForegroundService::class.java)
-//        stopIntent.action = CheckInForegroundService.STOP_FOREGROUND
-//        val stopPendingIntent = PendingIntent
-//            .getService(applicationContext, 0, stopIntent, PendingIntent.FLAG_IMMUTABLE)
-
-        val notification = NotificationCompat.Builder(applicationContext, Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID)
+        val notification = NotificationCompat.Builder(applicationContext,
+            Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID)
             .setContentTitle(applicationContext.getString(R.string.foreground_genshin_check_in_progress))
             .setTicker(applicationContext.getString(R.string.foreground_genshin_check_in_progress))
             .setSmallIcon(R.drawable.resin)
@@ -210,41 +340,53 @@ class CheckInWorker @AssistedInject constructor(
             .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)
             .setOngoing(true)
-//            .addAction(NotificationCompat.Action(0, applicationContext.getString(R.string.force_stop), stopPendingIntent))
 
         if (iconNotification != null) {
             notification.setLargeIcon(Bitmap.createScaledBitmap(iconNotification, 128, 128, false))
         }
 
-        future.set(ForegroundInfo(mNotificationId, notification.build()))
+//        future.set(ForegroundInfo(mNotificationId, notification.build()))
+//        return future
 
-        return future
+        return ForegroundInfo(mNotificationId, notification.build())
     }
 
-    override fun doWork(): Result {
-//        coroutineScope {
-        log.e()
-
+    override suspend fun doWork(): Result {
         return try {
-            checkIn(
-                region = Constant.SERVER_OS_ASIA,
-                actId = Constant.OS_ACT_ID,
-                cookie = PreferenceManager.getStringCookie(applicationContext),
-                ds = CommonFunction.getGenshinDS()
-            )
-
             log.e()
+            CoroutineScope(Dispatchers.IO).launch {
+
+                val lang = when (PreferenceManager.getStringLocale(applicationContext)) {
+                    Constant.Locale.ENGLISH.locale -> Constant.Locale.ENGLISH.lang
+                    Constant.Locale.KOREAN.locale -> Constant.Locale.KOREAN.lang
+                    else -> Constant.Locale.ENGLISH.locale
+                }
+
+                if (PreferenceManager.getBooleanEnableGenshinAutoCheckIn(applicationContext))
+                    checkInGenshin(
+                        lang = lang,
+                        actId = Constant.OS_GENSHIN_ACT_ID,
+                        cookie = PreferenceManager.getStringCookie(applicationContext),
+                    )
+
+
+                if (PreferenceManager.getBooleanEnableHonkai3rdAutoCheckIn(applicationContext))
+                    checkInHonkai3rd(
+                        lang = lang,
+                        actId = Constant.OS_HONKAI_3RD_ACT_ID,
+                        cookie = PreferenceManager.getStringCookie(applicationContext)
+                    )
+            }
+
             Result.success()
         } catch (e: java.lang.Exception) {
             when (e) {
                 is UnknownHostException -> log.e("Unknown host!")
                 is ConnectException -> log.e("No internet!")
-                else -> log.e("Unknown exception!")
+                is CancellationException -> log.e("Job cancelled!")
+                else -> log.e(e.message.toString())
             }
-            log.e(e.message.toString())
-
             Result.failure()
         }
     }
-
 }
