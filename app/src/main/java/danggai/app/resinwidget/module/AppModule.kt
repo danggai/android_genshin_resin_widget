@@ -7,8 +7,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import danggai.app.resinwidget.App
-import danggai.data.util.ResourceProviderImpl
-import danggai.domain.util.ResourceProvider
+import danggai.data.resource.repository.ResourceProviderRepositoryImpl
+import danggai.domain.resource.repository.ResourceProviderRepository
 import javax.inject.Singleton
 
 @Module
@@ -24,5 +24,5 @@ object AppModule {
     @Provides
     fun provideResourceProvider(
         @ApplicationContext context: Context
-    ): ResourceProvider = ResourceProviderImpl(context)
+    ): ResourceProviderRepository = ResourceProviderRepositoryImpl(context)
 }

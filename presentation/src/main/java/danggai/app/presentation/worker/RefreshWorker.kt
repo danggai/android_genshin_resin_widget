@@ -10,8 +10,8 @@ import danggai.app.presentation.core.util.CommonFunction
 import danggai.app.presentation.core.util.PreferenceManager
 import danggai.app.presentation.core.util.log
 import danggai.domain.base.ApiResult
-import danggai.domain.dailynote.entity.DailyNote
-import danggai.domain.dailynote.usecase.DailyNoteUseCase
+import danggai.domain.network.dailynote.entity.DailyNote
+import danggai.domain.network.dailynote.usecase.DailyNoteUseCase
 import danggai.domain.util.Constant
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject

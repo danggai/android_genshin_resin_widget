@@ -16,8 +16,8 @@ import com.google.firebase.crashlytics.CustomKeysAndValues
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import danggai.app.presentation.BuildConfig
 import danggai.app.presentation.R
-import danggai.app.presentation.widget.ResinWidget
-import danggai.domain.dailynote.entity.DailyNote
+import danggai.app.presentation.ui.widget.ResinWidget
+import danggai.domain.network.dailynote.entity.DailyNote
 import danggai.domain.util.Constant
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -64,8 +64,8 @@ object CommonFunction {
 
         context.apply {
             sendBroadcast( Intent(context, ResinWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_DATA))
-            sendBroadcast( Intent(context, danggai.app.presentation.widget.ResinWidgetResizable::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_DATA))
-            sendBroadcast( Intent(context, danggai.app.presentation.widget.DetailWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_DATA))
+            sendBroadcast( Intent(context, danggai.app.presentation.ui.widget.ResinWidgetResizable::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_DATA))
+            sendBroadcast( Intent(context, danggai.app.presentation.ui.widget.DetailWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_DATA))
         }
     }
 
@@ -73,9 +73,9 @@ object CommonFunction {
         log.e()
 
         context.apply {
-            sendBroadcast( Intent(context, danggai.app.presentation.widget.ResinWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI))
-            sendBroadcast( Intent(context, danggai.app.presentation.widget.ResinWidgetResizable::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI))
-            sendBroadcast( Intent(context, danggai.app.presentation.widget.DetailWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI))
+            sendBroadcast( Intent(context, danggai.app.presentation.ui.widget.ResinWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI))
+            sendBroadcast( Intent(context, danggai.app.presentation.ui.widget.ResinWidgetResizable::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI))
+            sendBroadcast( Intent(context, danggai.app.presentation.ui.widget.DetailWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI))
         }
     }
 

@@ -32,7 +32,7 @@
         </service>
 
         <receiver
-            android:name="danggai.app.presentation.widget.ResinWidget"
+            android:name="danggai.app.presentation.ui.widget.ResinWidget"
             android:label="@string/widget_label_resin_fixed"
             android:exported="false">
 
@@ -53,7 +53,7 @@
         </receiver>
 
         <receiver
-            android:name="danggai.app.presentation.widget.ResinWidgetResizable"
+            android:name="danggai.app.presentation.ui.widget.ResinWidgetResizable"
             android:label="@string/widget_label_resin_resizable"
             android:exported="true">
 
@@ -74,7 +74,7 @@
         </receiver>
 
         <receiver
-            android:name="danggai.app.presentation.widget.DetailWidget"
+            android:name="danggai.app.presentation.ui.widget.DetailWidget"
             android:label="@string/widget_label_detail_fixed"
             android:exported="true">
 
@@ -95,7 +95,7 @@
         </receiver>
 
         <activity
-            android:name="danggai.app.presentation.main.MainActivity"
+            android:name="danggai.app.presentation.ui.main.MainActivity"
             android:launchMode="singleTask"
             android:exported="true"
             >
@@ -107,11 +107,11 @@
 
         </activity>
 
-        <activity android:name="danggai.app.presentation.cookie.CookieWebViewActivity"
+        <activity android:name="danggai.app.presentation.ui.cookie.CookieWebViewActivity"
             android:exported="false"
             />
 
-        <activity android:name="danggai.app.presentation.design.WidgetDesignActivity"
+        <activity android:name="danggai.app.presentation.ui.design.WidgetDesignActivity"
             android:exported="false"
             />
 
