@@ -1,4 +1,4 @@
-package danggai.domain.base
+package danggai.domain.core
 
 sealed class ApiResult<T>{
 

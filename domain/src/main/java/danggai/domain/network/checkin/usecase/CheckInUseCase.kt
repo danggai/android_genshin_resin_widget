@@ -1,6 +1,6 @@
 package danggai.domain.network.checkin.usecase
 
-import danggai.domain.base.ApiResult
+import danggai.domain.core.ApiResult
 import danggai.domain.network.checkin.entity.CheckIn
 import danggai.domain.network.checkin.repository.CheckInRepository
 import kotlinx.coroutines.flow.Flow

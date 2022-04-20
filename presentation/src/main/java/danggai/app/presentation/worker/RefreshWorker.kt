@@ -9,7 +9,7 @@ import danggai.app.presentation.R
 import danggai.app.presentation.core.util.CommonFunction
 import danggai.app.presentation.core.util.PreferenceManager
 import danggai.app.presentation.core.util.log
-import danggai.domain.base.ApiResult
+import danggai.domain.core.ApiResult
 import danggai.domain.network.dailynote.entity.DailyNote
 import danggai.domain.network.dailynote.usecase.DailyNoteUseCase
 import danggai.domain.util.Constant

@@ -4,7 +4,7 @@ import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import danggai.data.network.dailynote.remote.api.DailyNoteApi
-import danggai.domain.base.ApiResult
+import danggai.domain.core.ApiResult
 import danggai.domain.network.dailynote.entity.DailyNote
 import danggai.domain.network.dailynote.repository.DailyNoteRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -32,6 +32,7 @@ class DailyNoteRepositoryImpl @Inject constructor(
             cookie,
             ds
         )
+
 
         response.suspendOnSuccess {
             emit(this.response.body()?.let {

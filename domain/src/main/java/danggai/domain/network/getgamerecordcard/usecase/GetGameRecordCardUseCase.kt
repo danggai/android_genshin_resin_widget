@@ -1,6 +1,6 @@
 package danggai.domain.network.getgamerecordcard.usecase
 
-import danggai.domain.base.ApiResult
+import danggai.domain.core.ApiResult
 import danggai.domain.network.getgamerecordcard.entity.GetGameRecordCard
 import danggai.domain.network.getgamerecordcard.repository.GetGameRecordCardRepository
 import kotlinx.coroutines.flow.Flow

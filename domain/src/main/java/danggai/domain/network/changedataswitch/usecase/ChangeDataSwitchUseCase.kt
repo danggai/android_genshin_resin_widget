@@ -1,6 +1,6 @@
 package danggai.domain.network.changedataswitch.usecase
 
-import danggai.domain.base.ApiResult
+import danggai.domain.core.ApiResult
 import danggai.domain.network.changedataswitch.entity.ChangeDataSwitch
 import danggai.domain.network.changedataswitch.repository.ChangeDataSwitchRepository
 import kotlinx.coroutines.flow.Flow

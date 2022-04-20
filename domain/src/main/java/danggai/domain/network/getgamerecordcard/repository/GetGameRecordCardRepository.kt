@@ -1,7 +1,7 @@
 package danggai.domain.network.getgamerecordcard.repository
 
-import danggai.domain.base.ApiResult
-import danggai.domain.base.Repository
+import danggai.domain.core.ApiResult
+import danggai.domain.core.Repository
 import danggai.domain.network.getgamerecordcard.entity.GetGameRecordCard
 import kotlinx.coroutines.flow.Flow
 

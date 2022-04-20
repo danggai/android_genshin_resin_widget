@@ -1,7 +1,7 @@
 package danggai.domain.network.checkin.repository
 
-import danggai.domain.base.ApiResult
-import danggai.domain.base.Repository
+import danggai.domain.core.ApiResult
+import danggai.domain.core.Repository
 import danggai.domain.network.checkin.entity.CheckIn
 import kotlinx.coroutines.flow.Flow
 

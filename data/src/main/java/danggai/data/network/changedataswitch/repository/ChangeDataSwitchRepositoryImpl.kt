@@ -4,7 +4,7 @@ import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import danggai.data.network.changedataswitch.remote.api.ChangeDataSwitchApi
-import danggai.domain.base.ApiResult
+import danggai.domain.core.ApiResult
 import danggai.domain.network.changedataswitch.entity.ChangeDataSwitch
 import danggai.domain.network.changedataswitch.repository.ChangeDataSwitchRepository
 import kotlinx.coroutines.CoroutineDispatcher

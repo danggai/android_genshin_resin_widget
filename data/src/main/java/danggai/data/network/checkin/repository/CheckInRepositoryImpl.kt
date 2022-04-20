@@ -4,7 +4,7 @@ import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import danggai.data.network.checkin.remote.api.CheckInApi
-import danggai.domain.base.ApiResult
+import danggai.domain.core.ApiResult
 import danggai.domain.network.checkin.entity.CheckIn
 import danggai.domain.network.checkin.repository.CheckInRepository
 import kotlinx.coroutines.CoroutineDispatcher

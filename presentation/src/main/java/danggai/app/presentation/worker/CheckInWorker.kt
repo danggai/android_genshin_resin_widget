@@ -19,7 +19,7 @@ import danggai.app.presentation.core.util.CommonFunction
 import danggai.app.presentation.core.util.PreferenceManager
 import danggai.app.presentation.core.util.log
 import danggai.app.presentation.ui.main.MainActivity
-import danggai.domain.base.ApiResult
+import danggai.domain.core.ApiResult
 import danggai.domain.network.checkin.usecase.CheckInUseCase
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope

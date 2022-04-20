@@ -1,6 +1,6 @@
 package danggai.domain.network.dailynote.usecase
 
-import danggai.domain.base.ApiResult
+import danggai.domain.core.ApiResult
 import danggai.domain.network.dailynote.entity.DailyNote
 import danggai.domain.network.dailynote.repository.DailyNoteRepository
 import kotlinx.coroutines.flow.Flow

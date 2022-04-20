@@ -9,7 +9,7 @@ import danggai.app.presentation.core.util.CommonFunction
 import danggai.app.presentation.core.util.Event
 import danggai.app.presentation.core.util.NonNullMutableLiveData
 import danggai.app.presentation.core.util.log
-import danggai.domain.base.ApiResult
+import danggai.domain.core.ApiResult
 import danggai.domain.network.changedataswitch.usecase.ChangeDataSwitchUseCase
 import danggai.domain.network.dailynote.entity.DailyNote
 import danggai.domain.network.dailynote.usecase.DailyNoteUseCase
