@@ -6,7 +6,7 @@
 
 개인 프로젝트로 개발 된 코틀린 언어를 사용한 안드로이드 앱이에요.
 
-[<img src = "./assets/google-play-logo.png" width="150px">](https://play.google.com/store/apps/details?id=danggai.app.parcelwhere)
+[<img src = "./assets/google-play-logo.png" width="150px">](https://play.google.com/store/apps/details?id=danggai.app.resinwidget)
 
 - 연락처: donggi9313@gmail.com
 
