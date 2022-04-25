@@ -12,6 +12,7 @@ import danggai.app.presentation.core.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.network.dailynote.entity.DailyNote
 import danggai.domain.network.dailynote.usecase.DailyNoteUseCase
+import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
@@ -26,6 +27,7 @@ import java.util.concurrent.TimeUnit
 class RefreshWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
+    private val preference: PreferenceManagerRepository,
     private val dailyNote: DailyNoteUseCase
     ): Worker(context, workerParams) {
 
@@ -33,7 +35,7 @@ class RefreshWorker @AssistedInject constructor(
         fun startWorkerOneTime(context: Context) {
             log.e()
 
-            if (!PreferenceManager.getBooleanIsValidUserData(context)) {
+            if (!PreferenceManager.getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)) {
                 log.e()
                 return
             }
@@ -46,14 +48,13 @@ class RefreshWorker @AssistedInject constructor(
         }
 
         fun startWorkerPeriodic(context: Context) {
-            val period = PreferenceManager.getLongAutoRefreshPeriod(context)
+            val period = PreferenceManager.getLong(context, Constant.PREF_AUTO_REFRESH_PERIOD, Constant.PREF_DEFAULT_REFRESH_PERIOD)
 
             val rx: PublishSubject<Boolean> = PublishSubject.create()
 
             rx.observeOn(Schedulers.io())
                 .filter {
-                    !(PreferenceManager.getLongAutoRefreshPeriod(context) == -1L ||
-                            !PreferenceManager.getBooleanIsValidUserData(context))
+                    !(period == -1L || !PreferenceManager.getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false))
                 }
                 .map {
                     shutdownWorker(context)
@@ -129,11 +130,10 @@ class RefreshWorker @AssistedInject constructor(
 
     private fun updateData(dailyNote: DailyNote.Data) {
         log.e()
-        val context = applicationContext
 
-        val prefResin: Int = PreferenceManager.getIntCurrentResin(context)
+        val prefResin: Int = preference.getIntCurrentResin()
         val nowResin: Int = dailyNote.current_resin
-        if (PreferenceManager.getBooleanNotiEach40Resin(context)) {
+        if (preference.getBooleanNotiEach40Resin()) {
             if (200 in (prefResin + 1)..nowResin){
                 log.e()
                 sendNoti(Constant.NotiType.RESIN_EACH_40, 200)
@@ -151,23 +151,23 @@ class RefreshWorker @AssistedInject constructor(
                 sendNoti(Constant.NotiType.RESIN_EACH_40, 40)
             }
         }
-        if (PreferenceManager.getBooleanNoti140Resin(context)) {
+        if (preference.getBooleanNoti140Resin()) {
             if (140 in (prefResin + 1)..nowResin){
                 log.e()
                 sendNoti(Constant.NotiType.RESIN_140, 140)
             }
         }
-        if (PreferenceManager.getBooleanNotiCustomResin(context)) {
-            val targetResin: Int = PreferenceManager.getIntCustomTargetResin(context)
+        if (preference.getBooleanNotiCustomResin()) {
+            val targetResin: Int = preference.getIntCustomTargetResin()
             if (targetResin in (prefResin + 1)..nowResin){
                 log.e()
                 sendNoti(Constant.NotiType.RESIN_CUSTOM, targetResin)
             }
         }
 
-        val prefExpeditionTime: Int = try { PreferenceManager.getStringExpeditionTime(context).toInt() } catch (e: Exception) { 0 }
+        val prefExpeditionTime: Int = try { preference.getStringExpeditionTime().toInt() } catch (e: Exception) { 0 }
         val nowExpeditionTime: Int = CommonFunction.getExpeditionTime(dailyNote).toInt()
-        if (PreferenceManager.getBooleanNotiExpeditionDone(context)) {
+        if (preference.getBooleanNotiExpeditionDone()) {
             if (1 in (nowExpeditionTime)..prefExpeditionTime
                 && !dailyNote.expeditions.isNullOrEmpty()
                 && nowExpeditionTime == 0){
@@ -176,9 +176,9 @@ class RefreshWorker @AssistedInject constructor(
             }
         }
 
-        val prefHomeCoinRecoveryTime: Int = try { PreferenceManager.getStringHomeCoinRecoveryTime(context).toInt() } catch (e: Exception) { 0 }
+        val prefHomeCoinRecoveryTime: Int = try { preference.getStringHomeCoinRecoveryTime().toInt() } catch (e: Exception) { 0 }
         val nowHomeCoinRecoveryTime: Int = try { (dailyNote.home_coin_recovery_time?:"0").toInt() } catch (e: Exception) { 0 }
-        if (PreferenceManager.getBooleanNotiExpeditionDone(context)) {
+        if (preference.getBooleanNotiExpeditionDone()) {
             if (1 in (nowHomeCoinRecoveryTime)..prefHomeCoinRecoveryTime
                 && dailyNote.max_home_coin != 0
                 && nowHomeCoinRecoveryTime == 0){
@@ -187,7 +187,7 @@ class RefreshWorker @AssistedInject constructor(
             }
         }
 
-        CommonFunction.setDailyNoteData(context, dailyNote)
+        CommonFunction.setDailyNoteData(preference, dailyNote)
 
         CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
     }
@@ -226,7 +226,7 @@ class RefreshWorker @AssistedInject constructor(
     override fun doWork(): Result {
         log.e()
         val server =
-            when (PreferenceManager.getIntServer(applicationContext)) {
+            when (preference.getIntServer()) {
                 Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
                 Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
                 Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
@@ -236,9 +236,9 @@ class RefreshWorker @AssistedInject constructor(
 
         try {
             refreshDailyNote(
-                PreferenceManager.getStringUid(applicationContext),
+                preference.getStringUid(),
                 server,
-                PreferenceManager.getStringCookie(applicationContext),
+                preference.getStringCookie(),
                 CommonFunction.getGenshinDS()
             )
 

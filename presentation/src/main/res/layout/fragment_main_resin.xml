@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="danggai.app.presentation.main.MainViewModel"
+            type="danggai.app.presentation.ui.main.MainViewModel"
             />
     </data>
 

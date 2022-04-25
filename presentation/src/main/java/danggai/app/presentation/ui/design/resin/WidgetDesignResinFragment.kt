@@ -12,7 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.core.util.CommonFunction.isDarkMode
-import danggai.app.presentation.core.util.PreferenceManager
 import danggai.app.presentation.core.util.log
 import danggai.app.presentation.databinding.FragmentWidgetDesignResinBinding
 import danggai.app.presentation.ui.design.WidgetDesignViewModel
@@ -53,9 +52,6 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
         }
 
         context?.let { it ->
-            mVM.lvResinImageVisibility.value = PreferenceManager.getIntWidgetResinImageVisibility(it)
-            mVM.lvResinTimeNotation.value = PreferenceManager.getIntResinTimeNotation(it)
-
             when(mVM.lvResinImageVisibility.value) {
                 Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE -> binding.rbResinImageVisible.isChecked = true
                 Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE -> binding.rbResinImageInvisible.isChecked = true
@@ -127,26 +123,22 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
         }
 
         mVM.lvResinImageVisibility.observe(viewLifecycleOwner) {
-            context?.let { _context ->
-                log.e()
+            log.e()
 
-                if (mVM.lvResinImageVisibility.value == Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE) {
-                    binding.widget.ivResin.visibility = View.GONE
-                } else {
-                    binding.widget.ivResin.visibility = View.VISIBLE
-                }
+            if (mVM.lvResinImageVisibility.value == Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE) {
+                binding.widget.ivResin.visibility = View.GONE
+            } else {
+                binding.widget.ivResin.visibility = View.VISIBLE
             }
         }
 
         mVM.lvResinTimeNotation.observe(viewLifecycleOwner) {
-            context?.let { _context ->
-                log.e()
+            log.e()
 
-                if (mVM.lvResinTimeNotation.value == Constant.PREF_TIME_NOTATION_REMAIN_TIME) {
-                    binding.widget.tvRemainTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
-                } else {
-                    binding.widget.tvRemainTime.text = String.format(getString(R.string.widget_ui_max_time), 0, 0)
-                }
+            if (mVM.lvResinTimeNotation.value == Constant.PREF_TIME_NOTATION_REMAIN_TIME) {
+                binding.widget.tvRemainTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
+            } else {
+                binding.widget.tvRemainTime.text = String.format(getString(R.string.widget_ui_max_time), 0, 0)
             }
         }
 

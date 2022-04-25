@@ -14,6 +14,24 @@ android {
     defaultConfig {
         minSdk versions.minSdk
         targetSdk versions.compileSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
+            buildConfigField("long", "VERSION_CODE", "${defaultConfig.versionCode}")
+            buildConfigField("String","VERSION_NAME","\"${defaultConfig.versionName}\"")
+        }
+        debug {
+//            applicationIdSuffix ".debug"
+            debuggable true
+            buildConfigField("long", "VERSION_CODE", "${defaultConfig.versionCode}")
+            buildConfigField("String","VERSION_NAME","\"${defaultConfig.versionName}\"")
+        }
     }
 }
 

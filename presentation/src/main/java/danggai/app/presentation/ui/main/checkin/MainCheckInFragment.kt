@@ -7,7 +7,6 @@ import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
-import danggai.app.presentation.core.util.PreferenceManager
 import danggai.app.presentation.databinding.FragmentMainCheckInBinding
 import danggai.app.presentation.ui.main.MainViewModel
 
@@ -30,16 +29,5 @@ class MainCheckInFragment : BindingFragment<FragmentMainCheckInBinding, MainView
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = mVM
         binding.vm?.setCommonFun(view)
-
-        initUi()
-    }
-
-    private fun initUi() {
-        context?.let {
-            mVM.lvEnableGenshinAutoCheckIn.value = PreferenceManager.getBooleanEnableGenshinAutoCheckIn(it)
-            mVM.lvEnableHonkai3rdAutoCheckIn.value = PreferenceManager.getBooleanEnableHonkai3rdAutoCheckIn(it)
-            mVM.lvEnableNotiCheckinSuccess.value = PreferenceManager.getBooleanNotiCheckInSuccess(it)
-            mVM.lvEnableNotiCheckinFailed.value = PreferenceManager.getBooleanNotiCheckInFailed(it)
-        }
     }
 }

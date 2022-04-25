@@ -11,14 +11,16 @@ import android.widget.RemoteViews
 import android.widget.Toast
 import danggai.app.presentation.R
 import danggai.app.presentation.core.util.CommonFunction
-import danggai.app.presentation.core.util.PreferenceManager
 import danggai.app.presentation.core.util.log
 import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.worker.RefreshWorker
+import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 
 
-class ResinWidgetResizable : AppWidgetProvider() {
+class ResinWidgetResizable(
+    private val preference: PreferenceManagerRepository
+) : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
@@ -106,9 +108,9 @@ class ResinWidgetResizable : AppWidgetProvider() {
 
     private fun syncData(view: RemoteViews, context: Context?) {
         context?.let { _context ->
-            CommonFunction.applyWidgetTheme(view, _context)
+            CommonFunction.applyWidgetTheme(preference, _context, view)
 
-            if (!PreferenceManager.getBooleanIsValidUserData(context)) {
+            if (!preference.getBooleanIsValidUserData()) {
                 log.e()
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
                 view.setViewVisibility(R.id.iv_resin, View.GONE)
@@ -117,18 +119,18 @@ class ResinWidgetResizable : AppWidgetProvider() {
 
             } else {
                 log.e()
-                view.setTextViewText(R.id.tv_resin, PreferenceManager.getIntCurrentResin(_context).toString())
-                view.setTextViewText(R.id.tv_resin_max, "/"+ PreferenceManager.getIntMaxResin(_context).toString())
+                view.setTextViewText(R.id.tv_resin, preference.getIntCurrentResin().toString())
+                view.setTextViewText(R.id.tv_resin_max, "/"+ preference.getIntMaxResin().toString())
 
-                when (PreferenceManager.getIntResinTimeNotation(_context)) {
-                    Constant.PREF_TIME_NOTATION_REMAIN_TIME -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringResinRecoveryTime(_context)))
-                    Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToFullChargeTime(_context, PreferenceManager.getStringResinRecoveryTime(_context)))
-                    else -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringResinRecoveryTime(_context)))
+                when (preference.getIntResinTimeNotation()) {
+                    Constant.PREF_TIME_NOTATION_REMAIN_TIME -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToRemainTime(_context, preference.getStringResinRecoveryTime()))
+                    Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToFullChargeTime(_context, preference.getStringResinRecoveryTime()))
+                    else -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToRemainTime(_context, preference.getStringResinRecoveryTime()))
                 }
 
-                view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getStringRecentSyncTime(_context))
+                view.setTextViewText(R.id.tv_sync_time, preference.getStringRecentSyncTime())
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.iv_resin, if (PreferenceManager.getIntWidgetResinImageVisibility(context) == Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE) View.GONE else View.VISIBLE)
+                view.setViewVisibility(R.id.iv_resin, if (preference.getIntWidgetResinImageVisibility() == Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE) View.GONE else View.VISIBLE)
                 view.setViewVisibility(R.id.ll_resin, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_disable, View.GONE)
             }

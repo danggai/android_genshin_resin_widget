@@ -10,7 +10,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.core.util.EventObserver
-import danggai.app.presentation.core.util.PreferenceManager
 import danggai.app.presentation.core.util.log
 import danggai.app.presentation.databinding.FragmentWidgetDesignBinding
 import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
@@ -58,12 +57,8 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
 
 
     private fun initUi() {
+        mVM.initUi()
         context?.let { it ->
-            mVM.lvWidgetTheme.value = PreferenceManager.getIntWidgetTheme(it)
-            mVM.lvTransparency.value = PreferenceManager.getIntBackgroundTransparency(it)
-            mVM.lvFontSizeDetail.value = PreferenceManager.getIntWidgetDetailFontSize(it)
-            mVM.lvFontSizeResin.value = PreferenceManager.getIntWidgetResinFontSize(it)
-
             try {
                 val wallpaperManager = WallpaperManager.getInstance(it)
                 val wallpaperDrawable = wallpaperManager.drawable
@@ -77,26 +72,8 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
     }
 
     private fun initLv() {
-        mVM.lvSaveData.observe(viewLifecycleOwner, EventObserver { boolean ->
-            context?.let { _context ->
-                log.e()
-                PreferenceManager.setIntWidgetTheme(_context, mVM.lvWidgetTheme.value)
-                PreferenceManager.setIntWidgetResinImageVisibility(_context, mVM.lvResinImageVisibility.value)
-                PreferenceManager.setIntBackgroundTransparency(_context, mVM.lvTransparency.value)
-                PreferenceManager.setIntWidgetResinFontSize(_context, mVM.lvFontSizeResin.value)
-                PreferenceManager.setIntWidgetDetailFontSize(_context, mVM.lvFontSizeDetail.value)
-                PreferenceManager.setIntResinTimeNotation(_context, mVM.lvResinTimeNotation.value)
-                PreferenceManager.setIntDetailTimeNotation(_context, mVM.lvDetailTimeNotation.value)
-
-                PreferenceManager.setBooleanWidgetResinDataVisibility(_context, mVM.lvResinDataVisibility.value)
-                PreferenceManager.setBooleanWidgetDailyCommissionDataVisibility(_context, mVM.lvDailyCommissionDataVisibility.value)
-                PreferenceManager.setBooleanWidgetWeeklyBossDataVisibility(_context, mVM.lvWeeklyBossDataVisibility.value)
-                PreferenceManager.setBooleanWidgetRealmCurrencyDataVisibility(_context, mVM.lvRealmCurrencyDataVisibility.value)
-                PreferenceManager.setBooleanWidgetExpeditionDataVisibility(_context, mVM.lvExpeditionDataVisibility.value)
-
-                makeToast(_context, getString(R.string.msg_toast_save_done))
-                activity?.finish()
-            }
+        mVM.lvFinishActivity.observe(viewLifecycleOwner, EventObserver {
+            activity?.finish()
         })
     }
 

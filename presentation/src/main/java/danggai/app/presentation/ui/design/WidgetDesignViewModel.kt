@@ -1,21 +1,25 @@
 package danggai.app.presentation.ui.design
 
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import danggai.app.presentation.R
 import danggai.app.presentation.core.BaseViewModel
 import danggai.app.presentation.core.util.Event
 import danggai.app.presentation.core.util.NonNullMutableLiveData
 import danggai.app.presentation.core.util.log
+import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.resource.repository.ResourceProviderRepository
 import danggai.domain.util.Constant
 import javax.inject.Inject
 
 @HiltViewModel
 class WidgetDesignViewModel @Inject constructor(
+    private val preference: PreferenceManagerRepository,
     private val resource: ResourceProviderRepository,
 ) : BaseViewModel() {
 
-    var lvSaveData = MutableLiveData<Event<Boolean>>()
+    var lvFinishActivity = MutableLiveData<Event<Boolean>>()
 
     var lvWidgetTheme: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_WIDGET_THEME_AUTOMATIC)
     var lvResinImageVisibility: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE)
@@ -32,9 +36,48 @@ class WidgetDesignViewModel @Inject constructor(
     val lvFontSizeResin: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_RESIN)
     val lvFontSizeDetail: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_DETAIL)
 
+    fun initUi() {
+        lvWidgetTheme.value = preference.getIntWidgetTheme()
+        lvTransparency.value = preference.getIntBackgroundTransparency()
+
+        lvResinTimeNotation.value = preference.getIntResinTimeNotation()
+        lvFontSizeResin.value = preference.getIntWidgetResinFontSize()
+        lvResinImageVisibility.value = preference.getIntWidgetResinImageVisibility()
+
+        lvDetailTimeNotation.value = preference.getIntDetailTimeNotation()
+        lvFontSizeDetail.value = preference.getIntWidgetDetailFontSize()
+        lvResinDataVisibility.value = preference.getBooleanWidgetResinDataVisibility()
+        lvDailyCommissionDataVisibility.value = preference.getBooleanWidgetDailyCommissionDataVisibility()
+        lvWeeklyBossDataVisibility.value = preference.getBooleanWidgetWeeklyBossDataVisibility()
+        lvRealmCurrencyDataVisibility.value = preference.getBooleanWidgetRealmCurrencyDataVisibility()
+        lvExpeditionDataVisibility.value = preference.getBooleanWidgetExpeditionDataVisibility()
+
+    }
+
+    private fun saveData() {
+        log.e()
+        preference.setIntWidgetTheme(lvWidgetTheme.value)
+        preference.setIntWidgetResinImageVisibility(lvResinImageVisibility.value)
+        preference.setIntBackgroundTransparency(lvTransparency.value)
+        preference.setIntWidgetResinFontSize(lvFontSizeResin.value)
+        preference.setIntWidgetDetailFontSize(lvFontSizeDetail.value)
+        preference.setIntResinTimeNotation(lvResinTimeNotation.value)
+        preference.setIntDetailTimeNotation(lvDetailTimeNotation.value)
+
+        preference.setBooleanWidgetResinDataVisibility(lvResinDataVisibility.value)
+        preference.setBooleanWidgetDailyCommissionDataVisibility(lvDailyCommissionDataVisibility.value)
+        preference.setBooleanWidgetWeeklyBossDataVisibility(lvWeeklyBossDataVisibility.value)
+        preference.setBooleanWidgetRealmCurrencyDataVisibility(lvRealmCurrencyDataVisibility.value)
+        preference.setBooleanWidgetExpeditionDataVisibility(lvExpeditionDataVisibility.value)
+
+        lvMakeToast.value = Event(resource.getString(R.string.msg_toast_save_done))
+
+        lvFinishActivity.value = Event(true)
+    }
+    
     fun onClickSave() {
         log.e()
-        lvSaveData.value = Event(true)
+        saveData()
     }
 
     fun onClickWidgetTheme(widgetTheme: Constant.WidgetTheme) {

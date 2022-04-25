@@ -12,7 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.core.util.CommonFunction.isDarkMode
-import danggai.app.presentation.core.util.PreferenceManager
 import danggai.app.presentation.core.util.log
 import danggai.app.presentation.databinding.FragmentWidgetDesignDetailBinding
 import danggai.app.presentation.ui.design.WidgetDesignViewModel
@@ -49,14 +48,6 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
         }
 
         context?.let {
-            mVM.lvDetailTimeNotation.value = PreferenceManager.getIntDetailTimeNotation(it)
-
-            mVM.lvResinDataVisibility.value = PreferenceManager.getBooleanWidgetResinDataVisibility(it)
-            mVM.lvDailyCommissionDataVisibility.value = PreferenceManager.getBooleanWidgetDailyCommissionDataVisibility(it)
-            mVM.lvWeeklyBossDataVisibility.value = PreferenceManager.getBooleanWidgetWeeklyBossDataVisibility(it)
-            mVM.lvRealmCurrencyDataVisibility.value = PreferenceManager.getBooleanWidgetRealmCurrencyDataVisibility(it)
-            mVM.lvExpeditionDataVisibility.value = PreferenceManager.getBooleanWidgetExpeditionDataVisibility(it)
-
             when(mVM.lvDetailTimeNotation.value) {
                 Constant.PREF_TIME_NOTATION_REMAIN_TIME -> binding.rbRemainTime.isChecked = true
                 Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked = true
@@ -116,11 +107,11 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                 val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
 
                 val bgColor: Int =  if (mVM.lvWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) {
-                    ColorUtils.setAlphaComponent(getColor(_context, R.color.white), PreferenceManager.getIntBackgroundTransparency(_context))
+                    ColorUtils.setAlphaComponent(getColor(_context, R.color.white), mVM.lvTransparency.value)
                 } else if ((mVM.lvWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
-                    ColorUtils.setAlphaComponent(getColor(_context, R.color.black), PreferenceManager.getIntBackgroundTransparency(_context))
+                    ColorUtils.setAlphaComponent(getColor(_context, R.color.black), mVM.lvTransparency.value)
                 } else {
-                    ColorUtils.setAlphaComponent(getColor(_context, R.color.white), PreferenceManager.getIntBackgroundTransparency(_context))
+                    ColorUtils.setAlphaComponent(getColor(_context, R.color.white), mVM.lvTransparency.value)
                 }
 
                 val mainFontColor: Int =  if (mVM.lvWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) {

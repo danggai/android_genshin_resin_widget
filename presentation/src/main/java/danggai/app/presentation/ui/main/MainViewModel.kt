@@ -2,6 +2,7 @@ package danggai.app.presentation.ui.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.work.Worker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BaseViewModel
@@ -9,11 +10,14 @@ import danggai.app.presentation.core.util.CommonFunction
 import danggai.app.presentation.core.util.Event
 import danggai.app.presentation.core.util.NonNullMutableLiveData
 import danggai.app.presentation.core.util.log
+import danggai.app.presentation.worker.CheckInWorker
+import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.core.ApiResult
 import danggai.domain.network.changedataswitch.usecase.ChangeDataSwitchUseCase
 import danggai.domain.network.dailynote.entity.DailyNote
 import danggai.domain.network.dailynote.usecase.DailyNoteUseCase
 import danggai.domain.network.getgamerecordcard.usecase.GetGameRecordCardUseCase
+import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.resource.repository.ResourceProviderRepository
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
@@ -25,20 +29,19 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val resource: ResourceProviderRepository,
+    private val preference: PreferenceManagerRepository,
     private val dailyNote: DailyNoteUseCase,
     private val changeDataSwitch: ChangeDataSwitchUseCase,
     private val getGameRecordCard: GetGameRecordCardUseCase,
 ) : BaseViewModel() {
 
-    var lvSaveResinWidgetData = MutableLiveData<Event<Boolean>>()
-    var lvSaveCheckInData = MutableLiveData<Event<Boolean>>()
-    var lvSendWidgetSyncBroadcast = MutableLiveData<Event<DailyNote.Data>>()
     var lvWidgetRefreshNotWork = MutableLiveData<Event<Boolean>>()
     var lvGetCookie = MutableLiveData<Event<Boolean>>()
     var lvWhenDailyNotePrivate = MutableLiveData<Event<Boolean>>()
-    var lvStartCheckInWorker = MutableLiveData<Event<Boolean>>()
     var lvStartWidgetDesignActivity = MutableLiveData<Event<Boolean>>()
     var lvChangeLanguage = MutableLiveData<Event<Boolean>>()
+    var lvStartShutRefreshWorker = MutableLiveData<Event<Boolean>>()
+    var lvStartShutCheckInWorker = MutableLiveData<Event<Boolean>>()
 
     var lvProgress: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
 
@@ -60,7 +63,9 @@ class MainViewModel @Inject constructor(
     val lvEnableNotiCheckinSuccess: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
     val lvEnableNotiCheckinFailed: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(false)
 
-    val lvDailyNotePrivateErrorCount: NonNullMutableLiveData<Int> = NonNullMutableLiveData(0)
+    private var _dailyNotePrivateErrorCount = 0
+    val dailyNotePrivateErrorCount
+        get() = _dailyNotePrivateErrorCount
 
     private fun refreshDailyNote(
         uid: String,
@@ -91,11 +96,11 @@ class MainViewModel @Inject constructor(
                         when (it.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
                                 log.e()
-                                lvSaveResinWidgetData.value = Event(true)
+                                saveWidgetData(true)
                                 lvMakeToast.value = Event(resource.getString(R.string.msg_toast_dailynote_success))
 
                                 it.data.data?.let { data ->
-                                    lvSendWidgetSyncBroadcast.value = Event(data)
+                                    sendWidgetSyncBroadcast(data)
                                 }
                             }
                             Constant.RETCODE_ERROR_CHARACTOR_INFO -> {
@@ -131,7 +136,7 @@ class MainViewModel @Inject constructor(
                             }
                             Constant.RETCODE_ERROR_DATA_NOT_PUBLIC -> {
                                 log.e()
-                                lvDailyNotePrivateErrorCount.value += 1
+                                _dailyNotePrivateErrorCount += 1
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
                                 lvWhenDailyNotePrivate.value = Event(true)
                             }
@@ -302,17 +307,39 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun initUI(uid: String, cookie: String) {
-        log.e(uid)
-        log.e(cookie)
-        lvUid.value = uid
-        lvCookie.value = cookie
+    fun initUI() {
+        preference.getStringUid().let {
+            log.e(it)
+            lvUid.value = it
+        }
+
+        preference.getStringCookie().let {
+            log.e(it)
+            lvCookie.value = it
+        }
+
+        lvServer.value = preference.getIntServer()
+        lvAutoRefreshPeriod.value = preference.getLongAutoRefreshPeriod()
+
+        lvEnableNotiEach40Resin.value = preference.getBooleanNotiEach40Resin()
+        lvEnableNoti140Resin.value = preference.getBooleanNoti140Resin()
+        lvEnableNotiCustomResin.value = preference.getBooleanNotiCustomResin()
+        lvCustomNotiResin.value = preference.getIntCustomTargetResin().let { int ->
+            if (int == -1) "0" else int.toString()
+        }
+        lvEnableNotiExpeditionDone.value = preference.getBooleanNotiExpeditionDone()
+        lvEnableNotiHomeCoinFull.value = preference.getBooleanNotiHomeCoinFull()
+
+        lvEnableGenshinAutoCheckIn.value = preference.getBooleanEnableGenshinAutoCheckIn()
+        lvEnableHonkai3rdAutoCheckIn.value = preference.getBooleanEnableHonkai3rdAutoCheckIn()
+        lvEnableNotiCheckinSuccess.value = preference.getBooleanNotiCheckInSuccess()
+        lvEnableNotiCheckinFailed.value = preference.getBooleanNotiCheckInFailed()
     }
 
     fun onClickSave() {
         log.e()
         if (lvUid.value.isEmpty() || lvCookie.value.isEmpty())  {
-            lvSaveResinWidgetData.value = Event(false)
+            saveWidgetData(false)
         } else {
             lvUid.value = lvUid.value.trim()
             lvCookie.value = lvCookie.value.trim()
@@ -331,15 +358,92 @@ class MainViewModel @Inject constructor(
             )
         }
     }
+    
+    private fun saveWidgetData(isDataValid: Boolean) {
+        if (isDataValid) {
+            log.e()
+            preference.setBooleanIsValidUserData(true)
+            preference.setIntServer(lvServer.value)
+            preference.setStringUid(lvUid.value)
+            preference.setStringCookie(lvCookie.value)
+
+            lvMakeToast.value = Event(resource.getString(R.string.msg_toast_save_done))
+        } else if (!isDataValid and lvUid.value.isEmpty()) {
+            lvMakeToast.value = Event(resource.getString(R.string.msg_toast_uid_empty_error))
+        } else if (!isDataValid and lvCookie.value.isEmpty()) {
+            lvMakeToast.value = Event(resource.getString(R.string.msg_toast_cookie_empty_error))
+        }
+    }
+    
+    private fun saveCheckInData(isDataValid: Boolean) {
+        if (isDataValid) {
+            log.e()
+            preference.setBooleanIsValidUserData(true)
+            preference.setStringCookie(lvCookie.value)
+
+            preference.setBooleanEnableAutoCheckIn(lvEnableGenshinAutoCheckIn.value)
+            preference.setBooleanEnableHonkai3rdAutoCheckIn(lvEnableHonkai3rdAutoCheckIn.value)
+            preference.setBooleanNotiCheckInSuccess(lvEnableNotiCheckinSuccess.value)
+            preference.setBooleanNotiCheckInFailed(lvEnableNotiCheckinFailed.value)
+
+            if (!lvEnableGenshinAutoCheckIn.value &&
+                !lvEnableHonkai3rdAutoCheckIn.value)
+                lvStartShutCheckInWorker.value = Event(false)
+
+            lvMakeToast.value = Event(resource.getString(R.string.msg_toast_save_done_check_in))
+        } else if (!isDataValid and lvCookie.value.isEmpty()) {
+            lvMakeToast.value = Event(resource.getString(R.string.msg_toast_cookie_empty_error))
+        }
+    }
+
+    private fun sendWidgetSyncBroadcast(dailyNote: DailyNote.Data) {
+        log.e()
+        CommonFunction.setDailyNoteData(preference, dailyNote)
+
+        preference.setBooleanNotiEach40Resin(lvEnableNotiEach40Resin.value)
+        preference.setBooleanNoti140Resin(lvEnableNoti140Resin.value)
+        preference.setBooleanNotiCustomResin(lvEnableNotiCustomResin.value)
+        preference.setBooleanNotiExpeditionDone(lvEnableNotiExpeditionDone.value)
+        preference.setBooleanNotiHomeCoinFull(lvEnableNotiHomeCoinFull.value)
+
+        preference.setLongAutoRefreshPeriod(lvAutoRefreshPeriod.value)
+
+        val customNotiResin: Int = try {
+            if (lvCustomNotiResin.value.isEmpty()
+                || lvCustomNotiResin.value.toInt() < 0) 0
+            else if (lvCustomNotiResin.value.toInt() > dailyNote.max_resin) {
+                lvCustomNotiResin.value = dailyNote.max_resin.toString()
+                dailyNote.max_resin
+            } else lvCustomNotiResin.value.toInt()
+        } catch (e:java.lang.Exception) {
+            0
+        }
+
+        preference.setIntCustomTargetResin(customNotiResin)
+
+        if (lvAutoRefreshPeriod.value == -1L) {
+            lvStartShutRefreshWorker.value = Event(false)
+        } else {
+            lvStartShutRefreshWorker.value = Event(true)
+        }
+    }
+
+    private fun startCheckIn() {
+        if (preference.getBooleanEnableGenshinAutoCheckIn() ||
+            preference.getBooleanEnableHonkai3rdAutoCheckIn()) {
+            log.e()
+            lvStartShutCheckInWorker.value = Event(true)
+        }
+    }
 
     fun onClickCheckInSave() {
         log.e()
         if (lvCookie.value.isEmpty())  {
-            lvSaveCheckInData.value = Event(false)
+            saveCheckInData(false)
         } else {
             lvCookie.value = lvCookie.value.trim()
-            lvSaveCheckInData.value = Event(true)
-            lvStartCheckInWorker.value = Event(true)
+            saveCheckInData(true)
+            startCheckIn()
         }
     }
 

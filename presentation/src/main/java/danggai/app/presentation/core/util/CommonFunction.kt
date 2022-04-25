@@ -18,6 +18,7 @@ import danggai.app.presentation.BuildConfig
 import danggai.app.presentation.R
 import danggai.app.presentation.ui.widget.ResinWidget
 import danggai.domain.network.dailynote.entity.DailyNote
+import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -304,33 +305,39 @@ object CommonFunction {
         }
     }
 
-    fun applyWidgetTheme(view: RemoteViews, context: Context) {
-        val bgColor: Int =  if (PreferenceManager.getIntWidgetTheme(context) == Constant.PREF_WIDGET_THEME_LIGHT) {
+    fun applyWidgetTheme(
+        preference: PreferenceManagerRepository,
+        context: Context,
+        view: RemoteViews,
+    ) {
+        val bgColor: Int = if (preference.getIntWidgetTheme() == Constant.PREF_WIDGET_THEME_LIGHT) {
             ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.white),
-                PreferenceManager.getIntBackgroundTransparency(context))
-        } else if  ((PreferenceManager.getIntWidgetTheme(context) == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
+                preference.getIntBackgroundTransparency())
+        } else if ((preference.getIntWidgetTheme() == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
             ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.black),
-                PreferenceManager.getIntBackgroundTransparency(context))
+                preference.getIntBackgroundTransparency())
         } else {
             ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.white),
-                PreferenceManager.getIntBackgroundTransparency(context))
+                preference.getIntBackgroundTransparency())
         }
 
-        val mainFontColor: Int =  if (PreferenceManager.getIntWidgetTheme(context) == Constant.PREF_WIDGET_THEME_LIGHT) {
-            ContextCompat.getColor(context, R.color.widget_font_main_light)
-        } else if  ((PreferenceManager.getIntWidgetTheme(context) == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
-            ContextCompat.getColor(context, R.color.widget_font_main_dark)
-        } else {
-            ContextCompat.getColor(context, R.color.widget_font_main_light)
-        }
+        val mainFontColor: Int =
+            if (preference.getIntWidgetTheme() == Constant.PREF_WIDGET_THEME_LIGHT) {
+                ContextCompat.getColor(context, R.color.widget_font_main_light)
+            } else if ((preference.getIntWidgetTheme() == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
+                ContextCompat.getColor(context, R.color.widget_font_main_dark)
+            } else {
+                ContextCompat.getColor(context, R.color.widget_font_main_light)
+            }
 
-        val subFontColor: Int =  if (PreferenceManager.getIntWidgetTheme(context) == Constant.PREF_WIDGET_THEME_LIGHT) {
-            ContextCompat.getColor(context, R.color.widget_font_sub_light)
-        } else if  ((PreferenceManager.getIntWidgetTheme(context) == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
-            ContextCompat.getColor(context, R.color.widget_font_sub_dark)
-        } else {
-            ContextCompat.getColor(context, R.color.widget_font_sub_light)
-        }
+        val subFontColor: Int =
+            if (preference.getIntWidgetTheme() == Constant.PREF_WIDGET_THEME_LIGHT) {
+                ContextCompat.getColor(context, R.color.widget_font_sub_light)
+            } else if ((preference.getIntWidgetTheme() == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
+                ContextCompat.getColor(context, R.color.widget_font_sub_dark)
+            } else {
+                ContextCompat.getColor(context, R.color.widget_font_sub_light)
+            }
 
         view.setInt(R.id.ll_root, "setBackgroundColor", bgColor)
         view.setInt(R.id.iv_refersh, "setColorFilter", subFontColor)
@@ -339,11 +346,12 @@ object CommonFunction {
 
         when (view.layoutId) {
             R.layout.widget_resin_fixed,
-            R.layout.widget_resin_resizable -> {
+            R.layout.widget_resin_resizable
+            -> {
                 log.e()
 
                 if (view.layoutId == R.layout.widget_resin_fixed) {
-                    val fontSize = PreferenceManager.getIntWidgetResinFontSize(context)
+                    val fontSize = preference.getIntWidgetResinFontSize()
                     view.setFloat(R.id.tv_resin, "setTextSize", fontSize.toFloat())
                 }
 
@@ -353,7 +361,7 @@ object CommonFunction {
             }
             R.layout.widget_detail_fixed -> {
                 log.e()
-                val fontSize = PreferenceManager.getIntWidgetDetailFontSize(context)
+                val fontSize = preference.getIntWidgetDetailFontSize()
 
                 view.setTextColor(R.id.tv_resin, mainFontColor)
                 view.setTextColor(R.id.tv_resin_title, mainFontColor)
@@ -395,54 +403,52 @@ object CommonFunction {
         }
     }
 
-    fun setDailyNoteData(context: Context, dailyNote: DailyNote.Data) {
+    fun setDailyNoteData(preference: PreferenceManagerRepository, dailyNote: DailyNote.Data) {
         log.e()
-        PreferenceManager.setStringRecentSyncTime(context, getTimeSyncTimeFormat())
+        preference.setStringRecentSyncTime(getTimeSyncTimeFormat())
 
-        PreferenceManager.setIntCurrentResin(context, dailyNote.current_resin)
-        PreferenceManager.setIntMaxResin(context, dailyNote.max_resin)
-        PreferenceManager.setStringResinRecoveryTime(context, dailyNote.resin_recovery_time ?: "-1")
+        preference.setIntCurrentResin(dailyNote.current_resin)
+        preference.setIntMaxResin(dailyNote.max_resin)
+        preference.setStringResinRecoveryTime(dailyNote.resin_recovery_time ?: "-1")
 
-        PreferenceManager.setIntCurrentDailyCommission(context, dailyNote.finished_task_num)
-        PreferenceManager.setIntMaxDailyCommission(context, dailyNote.total_task_num)
-        PreferenceManager.setBooleanGetDailyCommissionReward(context,
-            dailyNote.is_extra_task_reward_received)
+        preference.setIntCurrentDailyCommission(dailyNote.finished_task_num)
+        preference.setIntMaxDailyCommission(dailyNote.total_task_num)
+        preference.setBooleanGetDailyCommissionReward(dailyNote.is_extra_task_reward_received)
 
-        PreferenceManager.setIntCurrentHomeCoin(context, dailyNote.current_home_coin ?: 0)
-        PreferenceManager.setIntMaxHomeCoin(context, dailyNote.max_home_coin ?: 0)
-        PreferenceManager.setStringHomeCoinRecoveryTime(context,
-            dailyNote.home_coin_recovery_time ?: "-1")
+        preference.setIntCurrentHomeCoin(dailyNote.current_home_coin ?: 0)
+        preference.setIntMaxHomeCoin(dailyNote.max_home_coin ?: 0)
+        preference.setStringHomeCoinRecoveryTime(dailyNote.home_coin_recovery_time ?: "-1")
 
-        PreferenceManager.setIntCurrentWeeklyBoss(context, dailyNote.remain_resin_discount_num)
-        PreferenceManager.setIntMaxWeeklyBoss(context, dailyNote.resin_discount_num_limit)
+        preference.setIntCurrentWeeklyBoss(dailyNote.remain_resin_discount_num)
+        preference.setIntMaxWeeklyBoss(dailyNote.resin_discount_num_limit)
 
-        PreferenceManager.setIntCurrentExpedition(context, dailyNote.current_expedition_num)
-        PreferenceManager.setIntMaxExpedition(context, dailyNote.max_expedition_num)
+        preference.setIntCurrentExpedition(dailyNote.current_expedition_num)
+        preference.setIntMaxExpedition(dailyNote.max_expedition_num)
 
         val expeditionTime: String = getExpeditionTime(dailyNote)
 
-        PreferenceManager.setStringExpeditionTime(context, expeditionTime)
+        preference.setStringExpeditionTime(expeditionTime)
     }
 
-    fun getDailyNoteData(context: Context): DailyNote.Data {
+    fun getDailyNoteData(preference: PreferenceManagerRepository): DailyNote.Data {
         return DailyNote.Data(
-            PreferenceManager.getIntCurrentResin(context),
-            PreferenceManager.getIntMaxResin(context),
-            PreferenceManager.getStringResinRecoveryTime(context),
+            preference.getIntCurrentResin(),
+            preference.getIntMaxResin(),
+            preference.getStringResinRecoveryTime(),
 
-            PreferenceManager.getIntCurrentDailyCommission(context),
-            PreferenceManager.getIntMaxDailyCommission(context),
-            PreferenceManager.getBooleanGetDailyCommissionReward(context),
+            preference.getIntCurrentDailyCommission(),
+            preference.getIntMaxDailyCommission(),
+            preference.getBooleanGetDailyCommissionReward(),
 
-            PreferenceManager.getIntCurrentWeeklyBoss(context),
-            PreferenceManager.getIntMaxWeeklyBoss(context),
+            preference.getIntCurrentWeeklyBoss(),
+            preference.getIntMaxWeeklyBoss(),
 
-            PreferenceManager.getIntCurrentHomeCoin(context),
-            PreferenceManager.getIntMaxHomeCoin(context),
-            PreferenceManager.getStringHomeCoinRecoveryTime(context),
+            preference.getIntCurrentHomeCoin(),
+            preference.getIntMaxHomeCoin(),
+            preference.getStringHomeCoinRecoveryTime(),
 
-            PreferenceManager.getIntCurrentExpedition(context),
-            PreferenceManager.getIntMaxExpedition(context),
+            preference.getIntCurrentExpedition(),
+            preference.getIntMaxExpedition(),
             listOf()
         )
     }

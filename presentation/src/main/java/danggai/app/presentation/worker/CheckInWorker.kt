@@ -21,6 +21,7 @@ import danggai.app.presentation.core.util.log
 import danggai.app.presentation.ui.main.MainActivity
 import danggai.domain.core.ApiResult
 import danggai.domain.network.checkin.usecase.CheckInUseCase
+import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,6 +39,7 @@ import java.util.concurrent.TimeUnit
 class CheckInWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
+    private val preference: PreferenceManagerRepository,
     private val checkIn: CheckInUseCase
 ): CoroutineWorker(context, workerParams) {
 
@@ -64,7 +66,7 @@ class CheckInWorker @AssistedInject constructor(
         private fun startWorkerOneTime(context: Context, delay: Long) {
             log.e()
 
-            if (!PreferenceManager.getBooleanIsValidUserData(context)) {
+            if (!PreferenceManager.getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)) {
                 log.e()
                 return
             }
@@ -111,7 +113,7 @@ class CheckInWorker @AssistedInject constructor(
                         Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
                         -> {
                             log.e()
-                            if (PreferenceManager.getBooleanNotiCheckInSuccess(applicationContext)) {
+                            if (preference.getBooleanNotiCheckInSuccess()) {
                                 log.e()
 
                                 when (it.data.retcode) {
@@ -127,18 +129,18 @@ class CheckInWorker @AssistedInject constructor(
                         }
                         Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
                             log.e()
-                            if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                            if (preference.getBooleanNotiCheckInFailed()) {
                                 log.e()
                                 sendNoti(Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND)
                             }
-                            PreferenceManager.setBooleanEnableAutoCheckIn(applicationContext, false)
+                            preference.setBooleanEnableAutoCheckIn(false)
                             CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
                                 it.code,
                                 it.data.retcode)
                         }
                         else -> {
                             log.e()
-                            if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                            if (preference.getBooleanNotiCheckInFailed()) {
                                 log.e()
                                 sendNoti(Constant.NotiType.CHECK_IN_GENSHIN_FAILED)
                             }
@@ -152,7 +154,7 @@ class CheckInWorker @AssistedInject constructor(
                 is ApiResult.Failure -> {
                     it.message.let { msg ->
                         log.e(msg)
-                        if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                        if (preference.getBooleanNotiCheckInFailed()) {
                             log.e()
                             sendNoti(Constant.NotiType.CHECK_IN_GENSHIN_FAILED)
                         }
@@ -166,7 +168,7 @@ class CheckInWorker @AssistedInject constructor(
                 is ApiResult.Null,
                 -> {
                     log.e()
-                    if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                    if (preference.getBooleanNotiCheckInFailed()) {
                         log.e()
                         sendNoti(Constant.NotiType.CHECK_IN_GENSHIN_FAILED)
                     }
@@ -198,7 +200,7 @@ class CheckInWorker @AssistedInject constructor(
                         Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
                         -> {
                             log.e()
-                            if (PreferenceManager.getBooleanNotiCheckInSuccess(applicationContext)) {
+                            if (preference.getBooleanNotiCheckInSuccess()) {
                                 log.e()
 
                                 when (it.data.retcode) {
@@ -214,20 +216,18 @@ class CheckInWorker @AssistedInject constructor(
                         }
                         Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
                             log.e()
-                            if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                            if (preference.getBooleanNotiCheckInFailed()) {
                                 log.e()
                                 sendNoti(Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND)
                             }
-                            PreferenceManager.setBooleanEnableHonkai3rdAutoCheckIn(
-                                applicationContext,
-                                false)
+                            preference.setBooleanEnableHonkai3rdAutoCheckIn(false)
                             CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
                                 it.code,
                                 it.data.retcode)
                         }
                         else -> {
                             log.e()
-                            if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                            if (preference.getBooleanNotiCheckInFailed()) {
                                 log.e()
                                 sendNoti(Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED)
                             }
@@ -241,7 +241,7 @@ class CheckInWorker @AssistedInject constructor(
                 is ApiResult.Failure -> {
                     it.message.let { msg ->
                         log.e(msg)
-                        if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                        if (preference.getBooleanNotiCheckInFailed()) {
                             log.e()
                             sendNoti(Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED)
                         }
@@ -255,7 +255,7 @@ class CheckInWorker @AssistedInject constructor(
                 is ApiResult.Null,
                 -> {
                     log.e()
-                    if (PreferenceManager.getBooleanNotiCheckInFailed(applicationContext)) {
+                    if (preference.getBooleanNotiCheckInFailed()) {
                         log.e()
                         sendNoti(Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED)
                     }
@@ -358,25 +358,25 @@ class CheckInWorker @AssistedInject constructor(
             log.e()
             CoroutineScope(Dispatchers.IO).launch {
 
-                val lang = when (PreferenceManager.getStringLocale(applicationContext)) {
+                val lang = when (preference.getStringLocale()) {
                     Constant.Locale.ENGLISH.locale -> Constant.Locale.ENGLISH.lang
                     Constant.Locale.KOREAN.locale -> Constant.Locale.KOREAN.lang
                     else -> Constant.Locale.ENGLISH.locale
                 }
 
-                if (PreferenceManager.getBooleanEnableGenshinAutoCheckIn(applicationContext))
+                if (preference.getBooleanEnableGenshinAutoCheckIn())
                     checkInGenshin(
                         lang = lang,
                         actId = Constant.OS_GENSHIN_ACT_ID,
-                        cookie = PreferenceManager.getStringCookie(applicationContext),
+                        cookie = preference.getStringCookie(),
                     )
 
 
-                if (PreferenceManager.getBooleanEnableHonkai3rdAutoCheckIn(applicationContext))
+                if (preference.getBooleanEnableHonkai3rdAutoCheckIn())
                     checkInHonkai3rd(
                         lang = lang,
                         actId = Constant.OS_HONKAI_3RD_ACT_ID,
-                        cookie = PreferenceManager.getStringCookie(applicationContext)
+                        cookie = preference.getStringCookie()
                     )
             }
 

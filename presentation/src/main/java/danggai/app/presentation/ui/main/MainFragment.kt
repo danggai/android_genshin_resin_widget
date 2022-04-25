@@ -23,11 +23,7 @@ import danggai.app.presentation.BuildConfig
 import danggai.app.presentation.R
 import danggai.app.presentation.ui.cookie.CookieWebViewActivity
 import danggai.app.presentation.core.BindingFragment
-import danggai.app.presentation.core.util.CommonFunction
-import danggai.app.presentation.core.util.CommonFunction.setDailyNoteData
-import danggai.app.presentation.core.util.EventObserver
-import danggai.app.presentation.core.util.PreferenceManager
-import danggai.app.presentation.core.util.log
+import danggai.app.presentation.core.util.*
 import danggai.app.presentation.databinding.FragmentMainBinding
 import danggai.app.presentation.ui.design.WidgetDesignActivity
 import danggai.app.presentation.ui.main.checkin.MainCheckInFragment
@@ -98,7 +94,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
 
     private fun initUi() {
         context?.let { it ->
-            mVM.initUI(PreferenceManager.getStringUid(it), PreferenceManager.getStringCookie(it))
+            mVM.initUI()
         }
 
         WorkManager.getInstance(requireContext()).getWorkInfosByTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH).get().forEach {
@@ -113,11 +109,11 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
 
     private fun permissionCheck() {
         context?.let { it ->
-            if (PreferenceManager.getBooleanFirstLaunch(it)) {
+            if (PreferenceManager.getBoolean(it, Constant.PREF_FIRST_LAUNCH, true)) {
                 log.e()
 
                 val permissionLauncher: ActivityResultLauncher<String> = registerForActivityResult(RequestPermission()) { isGranted: Boolean ->
-                    PreferenceManager.setBooleanFirstLaunch(it, false)
+                    PreferenceManager.setBoolean(it, Constant.PREF_FIRST_LAUNCH, false)
                     if (isGranted) {
                         log.e()
                     } else {
@@ -140,8 +136,9 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
 
     private fun updateNoteCheck() {
         context?.let { it ->
-            if (!PreferenceManager.getBooleanCheckedUpdateNote(it)) {
-                if (!PreferenceManager.getBooleanFirstLaunch(it)) {
+
+            if (!PreferenceManager.getBoolean(it, Constant.PREF_CHECKED_UPDATE_NOTE + BuildConfig.VERSION_NAME, false)) {
+                if (!PreferenceManager.getBoolean(it, Constant.PREF_FIRST_LAUNCH, true)) {
                     AlertDialog.Builder(requireActivity())
                         .setTitle(String.format(getString(R.string.dialog_patch_note), BuildConfig.VERSION_NAME))
                         .setMessage(R.string.dialog_msg_patch_note)
@@ -152,89 +149,12 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                         .show()
                 }
 
-                PreferenceManager.setBooleanCheckedUpdateNote(it, true)
+                PreferenceManager.setBoolean(it, Constant.PREF_CHECKED_UPDATE_NOTE + BuildConfig.VERSION_NAME, true)
             }
         }
     }
 
     private fun initLv() {
-        mVM.lvSaveResinWidgetData.observe(viewLifecycleOwner, EventObserver { boolean ->
-            context?.let { _context ->
-                if (boolean) {
-                    log.e()
-                    PreferenceManager.setBooleanIsValidUserData(_context, true)
-                    PreferenceManager.setIntServer(_context, mVM.lvServer.value)
-                    PreferenceManager.setStringUid(_context, mVM.lvUid.value)
-                    PreferenceManager.setStringCookie(_context, mVM.lvCookie.value)
-                    
-                    makeToast(_context, getString(R.string.msg_toast_save_done))
-                } else if (!boolean and mVM.lvUid.value.isEmpty()) {
-                    makeToast(_context, getString(R.string.msg_toast_uid_empty_error))
-                } else if (!boolean and mVM.lvCookie.value.isEmpty()) {
-                    makeToast(_context, getString(R.string.msg_toast_cookie_empty_error))
-                }
-            }
-        })
-
-        mVM.lvSaveCheckInData.observe(viewLifecycleOwner, EventObserver { boolean ->
-            context?.let { _context ->
-                if (boolean) {
-                    log.e()
-                    PreferenceManager.setBooleanIsValidUserData(_context, true)
-                    PreferenceManager.setStringCookie(_context, mVM.lvCookie.value)
-
-                    PreferenceManager.setBooleanEnableAutoCheckIn(_context, mVM.lvEnableGenshinAutoCheckIn.value)
-                    PreferenceManager.setBooleanEnableHonkai3rdAutoCheckIn(_context, mVM.lvEnableHonkai3rdAutoCheckIn.value)
-                    PreferenceManager.setBooleanNotiCheckInSuccess(_context, mVM.lvEnableNotiCheckinSuccess.value)
-                    PreferenceManager.setBooleanNotiCheckInFailed(_context, mVM.lvEnableNotiCheckinFailed.value)
-
-                    if (!mVM.lvEnableGenshinAutoCheckIn.value &&
-                            !mVM.lvEnableHonkai3rdAutoCheckIn.value)
-                        CheckInWorker.shutdownWorker(_context)
-
-                    makeToast(_context, getString(R.string.msg_toast_save_done_check_in))
-                } else if (!boolean and mVM.lvCookie.value.isEmpty()) {
-                    makeToast(_context, getString(R.string.msg_toast_cookie_empty_error))
-                }
-            }
-        })
-
-        mVM.lvSendWidgetSyncBroadcast.observe(viewLifecycleOwner, EventObserver { dailyNote ->
-            context?.let { _context ->
-                log.e()
-                setDailyNoteData(_context, dailyNote)
-
-                PreferenceManager.setBooleanNotiEach40Resin(_context, mVM.lvEnableNotiEach40Resin.value)
-                PreferenceManager.setBooleanNoti140Resin(_context, mVM.lvEnableNoti140Resin.value)
-                PreferenceManager.setBooleanNotiCustomResin(_context, mVM.lvEnableNotiCustomResin.value)
-                PreferenceManager.setBooleanNotiExpeditionDone(_context, mVM.lvEnableNotiExpeditionDone.value)
-                PreferenceManager.setBooleanNotiHomeCoinFull(_context, mVM.lvEnableNotiHomeCoinFull.value)
-
-                PreferenceManager.setLongAutoRefreshPeriod(_context, mVM.lvAutoRefreshPeriod.value)
-
-                val customNotiResin: Int = try {
-                    if (mVM.lvCustomNotiResin.value.isEmpty()
-                        || mVM.lvCustomNotiResin.value.toInt() < 0) 0
-                    else if (mVM.lvCustomNotiResin.value.toInt() > dailyNote.max_resin) {
-                        mVM.lvCustomNotiResin.value = dailyNote.max_resin.toString()
-                        dailyNote.max_resin
-                    } else mVM.lvCustomNotiResin.value.toInt()
-                } catch (e:java.lang.Exception) {
-                    0
-                }
-
-                PreferenceManager.setIntCustomTargetResin(_context, customNotiResin)
-//
-//                requireActivity().sendBroadcast(CommonFunction.getIntentAppWidgetUiUpdate())
-
-                if (mVM.lvAutoRefreshPeriod.value == -1L) {
-                    RefreshWorker.shutdownWorker(_context)
-                } else {
-                    RefreshWorker.startWorkerPeriodic(_context)
-                }
-            }
-        })
-
         mVM.lvWidgetRefreshNotWork.observe(viewLifecycleOwner, EventObserver {
             activity?.let {
                 AlertDialog.Builder(requireActivity())
@@ -292,7 +212,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         mVM.lvWhenDailyNotePrivate.observe(viewLifecycleOwner, EventObserver {
             activity?.let {
                 log.e()
-                if (mVM.lvDailyNotePrivateErrorCount.value >= 2) {
+                if (mVM.dailyNotePrivateErrorCount >= 2) {
                     AlertDialog.Builder(requireActivity())
                         .setTitle(R.string.dialog_realtime_note_private)
                         .setMessage(R.string.dialog_msg_dailynote_not_public_error_repeat)
@@ -321,17 +241,6 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             }
         })
 
-        mVM.lvStartCheckInWorker.observe(viewLifecycleOwner, EventObserver {
-            log.e()
-            context?.let {
-                if (PreferenceManager.getBooleanEnableGenshinAutoCheckIn(it) ||
-                        PreferenceManager.getBooleanEnableHonkai3rdAutoCheckIn(it)) {
-                    log.e()
-                    CheckInWorker.startWorkerOneTimeImmediately(it)
-                }
-            }
-        })
-
         mVM.lvStartWidgetDesignActivity.observe(viewLifecycleOwner, EventObserver {
             log.e()
             activity?.let {
@@ -353,9 +262,9 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                                 else -> Locale.getDefault().language
                             }
 
-                            if (PreferenceManager.getStringLocale(it.baseContext) == locale) return@OnClickListener
+                            if (PreferenceManager.getString(it.baseContext, Constant.PREF_LOCALE, Locale.getDefault().language) == locale) return@OnClickListener
 
-                            PreferenceManager.setStringLocale(it.baseContext, locale)
+                            PreferenceManager.setString(it.baseContext, Constant.PREF_LOCALE, locale)
 
                             AlertDialog.Builder(requireActivity())
                                 .setTitle(R.string.dialog_restart)
@@ -369,6 +278,22 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                                 .show()
                         })
                 builder.show()
+            }
+        })
+
+        mVM.lvStartShutRefreshWorker.observe(viewLifecycleOwner, EventObserver {
+            log.e()
+            context?.let { context ->
+                if (it) RefreshWorker.startWorkerPeriodic(context)
+                else RefreshWorker.shutdownWorker(context)
+            }
+        })
+
+        mVM.lvStartShutCheckInWorker.observe(viewLifecycleOwner, EventObserver {
+            log.e()
+            context?.let { context ->
+                if (it) CheckInWorker.startWorkerOneTimeImmediately(context)
+                else CheckInWorker.shutdownWorker(context)
             }
         })
     }

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="vm"
-            type="danggai.app.presentation.cookie.CookieWebViewViewModel"/>
+            type="danggai.app.presentation.ui.cookie.CookieWebViewViewModel"/>
     </data>
 
     <FrameLayout

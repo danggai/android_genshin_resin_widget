@@ -7,7 +7,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import danggai.app.resinwidget.App
+import danggai.data.preference.repository.PreferenceManagerRepositoryImpl
 import danggai.data.resource.repository.ResourceProviderRepositoryImpl
+import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.resource.repository.ResourceProviderRepository
 import javax.inject.Singleton
 
@@ -25,4 +27,10 @@ object AppModule {
     fun provideResourceProvider(
         @ApplicationContext context: Context
     ): ResourceProviderRepository = ResourceProviderRepositoryImpl(context)
+
+    @Singleton
+    @Provides
+    fun providePreferenceManager(
+        @ApplicationContext context: Context
+    ): PreferenceManagerRepository = PreferenceManagerRepositoryImpl(context)
 }

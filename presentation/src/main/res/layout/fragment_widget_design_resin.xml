@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="danggai.app.presentation.design.WidgetDesignViewModel"
+            type="danggai.app.presentation.ui.design.WidgetDesignViewModel"
             />
     </data>
 

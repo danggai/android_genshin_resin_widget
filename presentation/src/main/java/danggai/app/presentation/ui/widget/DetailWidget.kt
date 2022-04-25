@@ -12,21 +12,23 @@ import androidx.core.content.ContextCompat.getColor
 import danggai.app.presentation.R
 import danggai.app.presentation.core.util.CommonFunction
 import danggai.app.presentation.core.util.CommonFunction.isDarkMode
-import danggai.app.presentation.core.util.PreferenceManager
 import danggai.app.presentation.core.util.log
 import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.worker.RefreshWorker
+import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import java.util.*
 
 
-class DetailWidget : AppWidgetProvider() {
+class DetailWidget(
+    private val preference: PreferenceManagerRepository
+) : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         log.e()
 
-        val sLocale = Locale(PreferenceManager.getStringLocale(context))
+        val sLocale = Locale(preference.getStringLocale())
 
         val res = context.resources
         val config = res.configuration
@@ -117,15 +119,15 @@ class DetailWidget : AppWidgetProvider() {
 
     private fun syncData(view: RemoteViews, context: Context?) {
         context?.let { _context ->
-            CommonFunction.applyWidgetTheme(view, _context)
+            CommonFunction.applyWidgetTheme(preference, _context, view)
 
-            if (!PreferenceManager.getBooleanIsValidUserData(context)) {
+            if (!preference.getBooleanIsValidUserData()) {
                 log.e()
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
                 view.setViewVisibility(R.id.ll_body, View.GONE)
                 view.setViewVisibility(R.id.ll_disable, View.VISIBLE)
 
-                if ((PreferenceManager.getIntWidgetTheme(_context) == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
+                if ((preference.getIntWidgetTheme() == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
                     view.setTextColor(R.id.tv_disable, getColor(_context, R.color.widget_font_main_dark))
                 } else {
                     view.setTextColor(R.id.tv_disable, getColor(_context, R.color.widget_font_main_light))
@@ -137,7 +139,7 @@ class DetailWidget : AppWidgetProvider() {
                 view.setViewVisibility(R.id.ll_body, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_disable, View.GONE)
 
-                val dailyNote = CommonFunction.getDailyNoteData(_context)
+                val dailyNote = CommonFunction.getDailyNoteData(preference)
 
                 view.setTextViewText(R.id.tv_resin_title, _context.getString(R.string.resin))
                 view.setTextViewText(R.id.tv_resin, dailyNote.current_resin.toString()+"/"+dailyNote.max_resin.toString())
@@ -160,49 +162,49 @@ class DetailWidget : AppWidgetProvider() {
                 view.setTextViewText(R.id.tv_expedition_title, _context.getString(R.string.number_of_expedition))
                 view.setTextViewText(R.id.tv_expedition, dailyNote.current_expedition_num.toString()+"/"+dailyNote.max_expedition_num.toString())
 
-                view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getStringRecentSyncTime(_context))
+                view.setTextViewText(R.id.tv_sync_time, preference.getStringRecentSyncTime())
 
 
-                when (PreferenceManager.getIntDetailTimeNotation(_context)) {
+                when (preference.getIntDetailTimeNotation()) {
                     Constant.PREF_TIME_NOTATION_REMAIN_TIME -> {
                         log.e()
                         view.setTextViewText(R.id.tv_resin_time_title, _context.getString(R.string.until_fully_replenished))
                         view.setTextViewText(R.id.tv_resin_time, CommonFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time.toString()))
                         view.setTextViewText(R.id.tv_realm_currency_time_title, _context.getString(R.string.until_fully_replenished))
-                        view.setTextViewText(R.id.tv_realm_currency_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringHomeCoinRecoveryTime(_context)))
+                        view.setTextViewText(R.id.tv_realm_currency_time, CommonFunction.secondToRemainTime(_context, preference.getStringHomeCoinRecoveryTime()))
                         view.setTextViewText(R.id.tv_expedition_time_title, _context.getString(R.string.until_all_completed))
-                        view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringExpeditionTime(_context)))
+                        view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToRemainTime(_context, preference.getStringExpeditionTime()))
                     }
                     Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
                         log.e()
                         view.setTextViewText(R.id.tv_resin_time_title, _context.getString(R.string.when_fully_replenished))
                         view.setTextViewText(R.id.tv_resin_time, CommonFunction.secondToTime(_context, dailyNote.resin_recovery_time.toString(), false))
                         view.setTextViewText(R.id.tv_realm_currency_time_title, _context.getString(R.string.when_fully_replenished))
-                        view.setTextViewText(R.id.tv_realm_currency_time, CommonFunction.secondToTime(_context, PreferenceManager.getStringHomeCoinRecoveryTime(_context), true))
+                        view.setTextViewText(R.id.tv_realm_currency_time, CommonFunction.secondToTime(_context, preference.getStringHomeCoinRecoveryTime(), true))
                         view.setTextViewText(R.id.tv_expedition_time_title, _context.getString(R.string.estimated_completion_time))
-                        view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToTime(_context, PreferenceManager.getStringExpeditionTime(_context), false))
+                        view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToTime(_context, preference.getStringExpeditionTime(), false))
                     }
                     else -> {
                         log.e()
                         view.setTextViewText(R.id.tv_resin_time_title, _context.getString(R.string.until_fully_replenished))
                         view.setTextViewText(R.id.tv_resin_time, CommonFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time.toString()))
                         view.setTextViewText(R.id.tv_realm_currency_time_title, _context.getString(R.string.until_fully_replenished))
-                        view.setTextViewText(R.id.tv_realm_currency_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringHomeCoinRecoveryTime(_context)))
+                        view.setTextViewText(R.id.tv_realm_currency_time, CommonFunction.secondToRemainTime(_context, preference.getStringHomeCoinRecoveryTime()))
                         view.setTextViewText(R.id.tv_expedition_time_title, _context.getString(R.string.until_all_completed))
-                        view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getStringExpeditionTime(_context)))
+                        view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToRemainTime(_context, preference.getStringExpeditionTime()))
                     }
                 }
 
-                view.setViewVisibility(R.id.rl_resin, if (PreferenceManager.getBooleanWidgetResinDataVisibility(_context)) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_resin_time, if (PreferenceManager.getBooleanWidgetResinDataVisibility(_context) && PreferenceManager.getIntDetailTimeNotation(_context) != Constant.PREF_TIME_NOTATION_DISABLE)
+                view.setViewVisibility(R.id.rl_resin, if (preference.getBooleanWidgetResinDataVisibility()) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_resin_time, if (preference.getBooleanWidgetResinDataVisibility() && preference.getIntDetailTimeNotation() != Constant.PREF_TIME_NOTATION_DISABLE)
                     View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_daily_commission, if (PreferenceManager.getBooleanWidgetDailyCommissionDataVisibility(_context)) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_weekly_boss, if (PreferenceManager.getBooleanWidgetWeeklyBossDataVisibility(_context)) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_realm_currency, if (PreferenceManager.getBooleanWidgetRealmCurrencyDataVisibility(_context)) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_realm_currency_time, if (PreferenceManager.getBooleanWidgetRealmCurrencyDataVisibility(_context) && PreferenceManager.getIntDetailTimeNotation(_context) != Constant.PREF_TIME_NOTATION_DISABLE)
+                view.setViewVisibility(R.id.rl_daily_commission, if (preference.getBooleanWidgetDailyCommissionDataVisibility()) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_weekly_boss, if (preference.getBooleanWidgetWeeklyBossDataVisibility()) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_realm_currency, if (preference.getBooleanWidgetRealmCurrencyDataVisibility()) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_realm_currency_time, if (preference.getBooleanWidgetRealmCurrencyDataVisibility() && preference.getIntDetailTimeNotation() != Constant.PREF_TIME_NOTATION_DISABLE)
                     View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_expedition, if (PreferenceManager.getBooleanWidgetExpeditionDataVisibility(_context)) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_expedition_time, if (PreferenceManager.getBooleanWidgetExpeditionDataVisibility(_context) && PreferenceManager.getIntDetailTimeNotation(_context) != Constant.PREF_TIME_NOTATION_DISABLE)
+                view.setViewVisibility(R.id.rl_expedition, if (preference.getBooleanWidgetExpeditionDataVisibility()) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_expedition_time, if (preference.getBooleanWidgetExpeditionDataVisibility() && preference.getIntDetailTimeNotation() != Constant.PREF_TIME_NOTATION_DISABLE)
                     View.VISIBLE else View.GONE)
             }
         }
