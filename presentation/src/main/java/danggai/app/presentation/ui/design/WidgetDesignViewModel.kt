@@ -8,6 +8,8 @@ import danggai.app.presentation.core.BaseViewModel
 import danggai.app.presentation.core.util.Event
 import danggai.app.presentation.core.util.NonNullMutableLiveData
 import danggai.app.presentation.core.util.log
+import danggai.domain.local.DetailWidgetDesignSettings
+import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.resource.repository.ResourceProviderRepository
 import danggai.domain.util.Constant
@@ -37,38 +39,51 @@ class WidgetDesignViewModel @Inject constructor(
     val lvFontSizeDetail: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_DETAIL)
 
     fun initUi() {
-        lvWidgetTheme.value = preference.getIntWidgetTheme()
-        lvTransparency.value = preference.getIntBackgroundTransparency()
+        preference.getResinWidgetDesignSettings().let {
+            lvWidgetTheme.value = it.widgetTheme
+            lvTransparency.value = it.backgroundTransparency
+            lvResinTimeNotation.value = it.timeNotation
+            lvFontSizeResin.value = it.fontSize
+            lvResinImageVisibility.value = it.resinImageVisibility
+        }
 
-        lvResinTimeNotation.value = preference.getIntResinTimeNotation()
-        lvFontSizeResin.value = preference.getIntWidgetResinFontSize()
-        lvResinImageVisibility.value = preference.getIntWidgetResinImageVisibility()
-
-        lvDetailTimeNotation.value = preference.getIntDetailTimeNotation()
-        lvFontSizeDetail.value = preference.getIntWidgetDetailFontSize()
-        lvResinDataVisibility.value = preference.getBooleanWidgetResinDataVisibility()
-        lvDailyCommissionDataVisibility.value = preference.getBooleanWidgetDailyCommissionDataVisibility()
-        lvWeeklyBossDataVisibility.value = preference.getBooleanWidgetWeeklyBossDataVisibility()
-        lvRealmCurrencyDataVisibility.value = preference.getBooleanWidgetRealmCurrencyDataVisibility()
-        lvExpeditionDataVisibility.value = preference.getBooleanWidgetExpeditionDataVisibility()
-
+        preference.getDetailWidgetDesignSettings().let {
+            lvDetailTimeNotation.value = it.timeNotation
+            lvFontSizeDetail.value = it.fontSize
+            lvResinDataVisibility.value = it.resinDataVisibility
+            lvDailyCommissionDataVisibility.value = it.dailyCommissinDataVisibility
+            lvWeeklyBossDataVisibility.value = it.weeklyBossDataVisibility
+            lvRealmCurrencyDataVisibility.value = it.realmCurrencyDataVisibility
+            lvExpeditionDataVisibility.value = it.expeditionDataVisibility
+        }
     }
 
     private fun saveData() {
         log.e()
-        preference.setIntWidgetTheme(lvWidgetTheme.value)
-        preference.setIntWidgetResinImageVisibility(lvResinImageVisibility.value)
-        preference.setIntBackgroundTransparency(lvTransparency.value)
-        preference.setIntWidgetResinFontSize(lvFontSizeResin.value)
-        preference.setIntWidgetDetailFontSize(lvFontSizeDetail.value)
-        preference.setIntResinTimeNotation(lvResinTimeNotation.value)
-        preference.setIntDetailTimeNotation(lvDetailTimeNotation.value)
 
-        preference.setBooleanWidgetResinDataVisibility(lvResinDataVisibility.value)
-        preference.setBooleanWidgetDailyCommissionDataVisibility(lvDailyCommissionDataVisibility.value)
-        preference.setBooleanWidgetWeeklyBossDataVisibility(lvWeeklyBossDataVisibility.value)
-        preference.setBooleanWidgetRealmCurrencyDataVisibility(lvRealmCurrencyDataVisibility.value)
-        preference.setBooleanWidgetExpeditionDataVisibility(lvExpeditionDataVisibility.value)
+        preference.setResinWidgetDesignSettings(
+            ResinWidgetDesignSettings(
+                lvWidgetTheme.value,
+                lvResinTimeNotation.value,
+                lvResinImageVisibility.value,
+                lvFontSizeResin.value,
+                lvTransparency.value
+            )
+        )
+
+        preference.setDetailWidgetDesignSettings(
+            DetailWidgetDesignSettings(
+                lvWidgetTheme.value,
+                lvDetailTimeNotation.value,
+                lvResinDataVisibility.value,
+                lvDailyCommissionDataVisibility.value,
+                lvWeeklyBossDataVisibility.value,
+                lvRealmCurrencyDataVisibility.value,
+                lvExpeditionDataVisibility.value,
+                lvFontSizeDetail.value,
+                lvTransparency.value
+            )
+        )
 
         lvMakeToast.value = Event(resource.getString(R.string.msg_toast_save_done))
 

@@ -2,7 +2,13 @@ package danggai.data.preference.repository
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.google.gson.GsonBuilder
 import danggai.data.BuildConfig
+import danggai.domain.local.CheckInSettings
+import danggai.domain.local.DetailWidgetDesignSettings
+import danggai.domain.local.ResinWidgetDesignSettings
+import danggai.domain.local.DailyNoteSettings
+import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import java.util.*
@@ -18,10 +24,11 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         private const val DEFAULT_VALUE_INT = -1
         private const val DEFAULT_VALUE_LONG = -1L
         private const val DEFAULT_VALUE_FLOAT = -1f
-        private fun getPreferences(context: Context): SharedPreferences {
-            return context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
-        }
+
+        fun getPreferences(context: Context): SharedPreferences =
+            context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
     }
+
 
     /**
      * String 값 저장
@@ -157,6 +164,36 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
     }
 
     /**
+     * Saves object into the Preferences.
+     *
+     * @param `object` Object of model class (of type [T]) to save
+     * @param key Key with which Shared preferences to
+     **/
+    fun <T> setT(context: Context, key: String, value: T) {
+        //Convert object to JSON String.
+        val jsonString = GsonBuilder().create().toJson(value)
+
+        val prefs = getPreferences(context)
+        val editor = prefs.edit()
+        editor.putString(key, jsonString).apply()
+    }
+
+    /**
+     * Used to retrieve object from the Preferences.
+     *
+     * @param key Shared Preference key with which object was saved.
+     **/
+    inline fun <reified T> getT(context: Context, key: String): T? {
+        //We read JSON String which was saved.
+        val prefs = getPreferences(context)
+        val value = prefs.getString(key, null)
+        //JSON String was found which means object can be read.
+        //We convert this JSON String to model object. Parameter "c" (of
+        //type Class < T >" is used to cast.
+        return GsonBuilder().create().fromJson(value, T::class.java)
+    }
+
+    /**
      * 키 값 삭제
      * @param context
      * @param key
@@ -182,329 +219,83 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
     /**
      * 커스텀 함수
      */
-    override fun getBooleanFirstLaunch(): Boolean {
-        return getBoolean(context, Constant.PREF_FIRST_LAUNCH, true)
-    }
-    override fun setBooleanFirstLaunch(value: Boolean) {
+    override fun getBooleanFirstLaunch(): Boolean =
+        getBoolean(context, Constant.PREF_FIRST_LAUNCH, true)
+    override fun setBooleanFirstLaunch(value: Boolean) =
         setBoolean(context, Constant.PREF_FIRST_LAUNCH, value)
-    }
 
-
-    override fun getIntServer(): Int {
-        return getInt(context, Constant.PREF_SERVER)
-    }
-    override fun setIntServer(value: Int) {
+    override fun getIntServer(): Int =
+        getInt(context, Constant.PREF_SERVER)
+    override fun setIntServer(value: Int) =
         setInt(context, Constant.PREF_SERVER, value)
-    }
 
-    override fun getStringUid(): String {
-        return getString(context, Constant.PREF_UID)
-    }
-    override fun setStringUid(value: String) {
-        setString(context, Constant.PREF_UID, value)
-    }
+    override fun getStringUid(): String =
+        getString(context, Constant.PREF_UID)
+    override fun setStringUid(value: String) =setString(context, Constant.PREF_UID, value)
 
-    override fun getStringCookie(): String {
-        return getString(context, Constant.PREF_COOKIE)
-    }
-    override fun setStringCookie(value: String) {
+    override fun getStringCookie(): String =
+        getString(context, Constant.PREF_COOKIE)
+    override fun setStringCookie(value: String) =
         setString(context, Constant.PREF_COOKIE, value)
-    }
 
-
-    override fun getIntCurrentResin(): Int {
-        return getInt(context, Constant.PREF_CURRENT_RESIN)
-    }
-    override fun setIntCurrentResin(value: Int) {
-        setInt(context, Constant.PREF_CURRENT_RESIN, value)
-    }
-
-    override fun getIntMaxResin(): Int {
-        return getInt(context, Constant.PREF_MAX_RESIN)
-    }
-    override fun setIntMaxResin(value: Int) {
-        setInt(context, Constant.PREF_MAX_RESIN, value)
-    }
-
-    override fun getStringResinRecoveryTime(): String {
-        return getString(context, Constant.PREF_RESIN_RECOVERY_TIME)
-    }
-    override fun setStringResinRecoveryTime(value: String) {
-        setString(context, Constant.PREF_RESIN_RECOVERY_TIME, value)
-    }
-
-
-    override fun getIntCurrentDailyCommission(): Int {
-        return getInt(context, Constant.PREF_CURRENT_DAILY_COMMISSION)
-    }
-    override fun setIntCurrentDailyCommission(value: Int) {
-        setInt(context, Constant.PREF_CURRENT_DAILY_COMMISSION, value)
-    }
-
-    override fun getIntMaxDailyCommission(): Int {
-        return getInt(context, Constant.PREF_MAX_DAILY_COMMISSION)
-    }
-    override fun setIntMaxDailyCommission(value: Int) {
-        setInt(context, Constant.PREF_MAX_DAILY_COMMISSION, value)
-    }
-
-    override fun getBooleanGetDailyCommissionReward(): Boolean {
-        return getBoolean(context, Constant.PREF_GET_DAILY_COMMISSION_REWARD, false)
-    }
-    override fun setBooleanGetDailyCommissionReward(value: Boolean) {
-        setBoolean(context, Constant.PREF_GET_DAILY_COMMISSION_REWARD, value)
-    }
-
-
-
-    override fun getIntCurrentWeeklyBoss(): Int {
-        return getInt(context, Constant.PREF_CURRENT_WEEKLY_BOSS)
-    }
-    override fun setIntCurrentWeeklyBoss(value: Int) {
-        setInt(context, Constant.PREF_CURRENT_WEEKLY_BOSS, value)
-    }
-
-    override fun getIntMaxWeeklyBoss(): Int {
-        return getInt(context, Constant.PREF_MAX_WEEKLY_BOSS)
-    }
-    override fun setIntMaxWeeklyBoss(value: Int) {
-        setInt(context, Constant.PREF_MAX_WEEKLY_BOSS, value)
-    }
-
-
-    override fun getIntCurrentHomeCoin(): Int {
-        return getInt(context, Constant.PREF_CURRENT_HOME_COIN)
-    }
-    override fun setIntCurrentHomeCoin(value: Int) {
-        setInt(context, Constant.PREF_CURRENT_HOME_COIN, value)
-    }
-
-    override fun getIntMaxHomeCoin(): Int {
-        return getInt(context, Constant.PREF_MAX_HOME_COIN)
-    }
-    override fun setIntMaxHomeCoin(value: Int) {
-        setInt(context, Constant.PREF_MAX_HOME_COIN, value)
-    }
-
-    override fun getStringHomeCoinRecoveryTime(): String {
-        return getString(context, Constant.PREF_HOME_COIN_RECOVERY_TIME)
-    }
-    override fun setStringHomeCoinRecoveryTime(value: String) {
-        setString(context, Constant.PREF_HOME_COIN_RECOVERY_TIME, value)
-    }
-
-
-    override fun getIntCurrentExpedition(): Int {
-        return getInt(context, Constant.PREF_CURRENT_EXPEDITION)
-    }
-
-    override fun setIntCurrentExpedition(value: Int) {
-        setInt(context, Constant.PREF_CURRENT_EXPEDITION, value)
-    }
-
-    override fun getIntMaxExpedition(): Int {
-        return getInt(context, Constant.PREF_MAX_EXPEDITION)
-    }
-    override fun setIntMaxExpedition(value: Int) {
-        setInt(context, Constant.PREF_MAX_EXPEDITION, value)
-    }
-
-    override fun getStringExpeditionTime(): String {
-        return getString(context, Constant.PREF_EXPEDITION_TIME)
-    }
-    override fun setStringExpeditionTime(value: String) {
-        setString(context, Constant.PREF_EXPEDITION_TIME, value)
-    }
-
-
-    override fun getStringRecentSyncTime(): String {
-        return getString(context, Constant.PREF_RECENT_SYNC_TIME)
-    }
-    override fun setStringRecentSyncTime(value: String) {
-        setString(context, Constant.PREF_RECENT_SYNC_TIME, value)
-    }
-
-    override fun getLongAutoRefreshPeriod(): Long {
-        return getLong(context, Constant.PREF_AUTO_REFRESH_PERIOD, Constant.PREF_DEFAULT_REFRESH_PERIOD)
-    }
-    override fun setLongAutoRefreshPeriod(value: Long) {
-        setLong(context, Constant.PREF_AUTO_REFRESH_PERIOD, value)
-    }
-
-    override fun getIntResinTimeNotation(): Int {
-        return getInt(context, Constant.PREF_RESIN_TIME_NOTATION)
-    }
-    override fun setIntResinTimeNotation(value: Int) {
-        setInt(context, Constant.PREF_RESIN_TIME_NOTATION, value)
-    }
-
-    override fun getIntDetailTimeNotation(): Int {
-        return getInt(context, Constant.PREF_DETAIL_TIME_NOTATION)
-    }
-    override fun setIntDetailTimeNotation(value: Int) {
-        setInt(context, Constant.PREF_DETAIL_TIME_NOTATION, value)
-    }
-
-    override fun getIntWidgetTheme(): Int {
-        return getInt(context, Constant.PREF_WIDGET_THEME)
-    }
-    override fun setIntWidgetTheme(value: Int) {
-        setInt(context, Constant.PREF_WIDGET_THEME, value)
-    }
-
-    override fun getIntWidgetResinImageVisibility(): Int {
-        return getInt(context, Constant.PREF_WIDGET_RESIN_IMAGE_VISIBILITY)
-    }
-    override fun setIntWidgetResinImageVisibility(value: Int) {
-        setInt(context, Constant.PREF_WIDGET_RESIN_IMAGE_VISIBILITY, value)
-    }
-
-    override fun getIntWidgetDetailFontSize(): Int {
-        return getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_DETAIL, Constant.PREF_WIDGET_DETAIL_FONT_SIZE)
-    }
-    override fun setIntWidgetDetailFontSize(value: Int) {
-        setInt(context, Constant.PREF_WIDGET_DETAIL_FONT_SIZE, value)
-    }
-
-    override fun getIntWidgetResinFontSize(): Int {
-        return getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_RESIN, Constant.PREF_WIDGET_RESIN_FONT_SIZE)
-    }
-    override fun setIntWidgetResinFontSize(value: Int) {
-        setInt(context, Constant.PREF_WIDGET_RESIN_FONT_SIZE, value)
-    }
-
-    override fun getIntBackgroundTransparency(): Int {
-        return getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
-    }
-    override fun setIntBackgroundTransparency(value: Int) {
-        setInt(context, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY, value)
-    }
-
-    override fun getBooleanWidgetResinDataVisibility(): Boolean {
-        return getBoolean(context, Constant.PREF_WIDGET_RESIN_DATA_VISIBILITY, true)
-    }
-    override fun setBooleanWidgetResinDataVisibility(value: Boolean) {
-        setBoolean(context, Constant.PREF_WIDGET_RESIN_DATA_VISIBILITY, value)
-    }
-
-    override fun getBooleanWidgetDailyCommissionDataVisibility(): Boolean {
-        return getBoolean(context, Constant.PREF_WIDGET_DAILY_COMMISSION_DATA_VISIBILITY, true)
-    }
-    override fun setBooleanWidgetDailyCommissionDataVisibility(value: Boolean) {
-        setBoolean(context, Constant.PREF_WIDGET_DAILY_COMMISSION_DATA_VISIBILITY, value)
-    }
-
-    override fun getBooleanWidgetWeeklyBossDataVisibility(): Boolean {
-        return getBoolean(context, Constant.PREF_WIDGET_WEEKLY_BOSS_DATA_VISIBILITY, true)
-    }
-    override fun setBooleanWidgetWeeklyBossDataVisibility(value: Boolean) {
-        setBoolean(context, Constant.PREF_WIDGET_WEEKLY_BOSS_DATA_VISIBILITY, value)
-    }
-
-    override fun getBooleanWidgetRealmCurrencyDataVisibility(): Boolean {
-        return getBoolean(context, Constant.PREF_WIDGET_REALM_CURRENCY_DATA_VISIBILITY, true)
-    }
-    override fun setBooleanWidgetRealmCurrencyDataVisibility(value: Boolean) {
-        setBoolean(context, Constant.PREF_WIDGET_REALM_CURRENCY_DATA_VISIBILITY, value)
-    }
-
-    override fun getBooleanWidgetExpeditionDataVisibility(): Boolean {
-        return getBoolean(context, Constant.PREF_WIDGET_EXPEDITION_DATA_VISIBILITY, true)
-    }
-    override fun setBooleanWidgetExpeditionDataVisibility(value: Boolean) {
-        setBoolean(context, Constant.PREF_WIDGET_EXPEDITION_DATA_VISIBILITY, value)
-    }
-
-
-
-    override fun getBooleanIsValidUserData(): Boolean {
-        return getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)
-    }
-    override fun setBooleanIsValidUserData(value: Boolean) {
-        setBoolean(context, Constant.PREF_IS_VALID_USERDATA, value)
-    }
-
-    override fun getBooleanNotiEach40Resin(): Boolean {
-        return getBoolean(context, Constant.PREF_NOTI_EACH_40_RESIN, false)
-    }
-    override fun setBooleanNotiEach40Resin(value: Boolean) {
-        setBoolean(context, Constant.PREF_NOTI_EACH_40_RESIN, value)
-    }
-
-    override fun getBooleanNoti140Resin(): Boolean {
-        return getBoolean(context, Constant.PREF_NOTI_140_RESIN, false)
-    }
-    override fun setBooleanNoti140Resin(value: Boolean) {
-        setBoolean(context, Constant.PREF_NOTI_140_RESIN, value)
-    }
-
-    override fun getBooleanNotiCustomResin(): Boolean {
-        return getBoolean(context, Constant.PREF_NOTI_CUSTOM_RESIN_BOOLEAN, false)
-    }
-    override fun setBooleanNotiCustomResin(value: Boolean) {
-        setBoolean(context, Constant.PREF_NOTI_CUSTOM_RESIN_BOOLEAN, value)
-    }
-
-    override fun getIntCustomTargetResin(): Int {
-        return getInt(context, Constant.PREF_NOTI_CUSTOM_TARGET_RESIN )
-    }
-    override fun setIntCustomTargetResin(value: Int) {
-        setInt(context, Constant.PREF_NOTI_CUSTOM_TARGET_RESIN, value)
-    }
-
-    override fun getBooleanNotiExpeditionDone(): Boolean {
-        return getBoolean(context, Constant.PREF_NOTI_EXPEDITION_DONE, false)
-    }
-    override fun setBooleanNotiExpeditionDone(value: Boolean) {
-        setBoolean(context, Constant.PREF_NOTI_EXPEDITION_DONE, value)
-    }
-
-    override fun getBooleanNotiHomeCoinFull(): Boolean {
-        return getBoolean(context, Constant.PREF_NOTI_HOME_COIN_FULL, false)
-    }
-    override fun setBooleanNotiHomeCoinFull(value: Boolean) {
-        setBoolean(context, Constant.PREF_NOTI_HOME_COIN_FULL, value)
-    }
-
-    override fun getBooleanEnableGenshinAutoCheckIn(): Boolean {
-        return getBoolean(context, Constant.PREF_ENABLE_GENSHIN_AUTO_CHECK_IN, false)
-    }
-    override fun setBooleanEnableAutoCheckIn(value: Boolean) {
-        setBoolean(context, Constant.PREF_ENABLE_GENSHIN_AUTO_CHECK_IN, value)
-    }
-
-    override fun getBooleanEnableHonkai3rdAutoCheckIn(): Boolean {
-        return getBoolean(context, Constant.PREF_ENABLE_HONKAI_3RD_AUTO_CHECK_IN, false)
-    }
-    override fun setBooleanEnableHonkai3rdAutoCheckIn(value: Boolean) {
-        setBoolean(context, Constant.PREF_ENABLE_HONKAI_3RD_AUTO_CHECK_IN, value)
-    }
-
-    override fun getBooleanNotiCheckInSuccess(): Boolean {
-        return getBoolean(context, Constant.PREF_NOTI_CHECK_IN_SUCCESS, true)
-    }
-    override fun setBooleanNotiCheckInSuccess(value: Boolean) {
-        setBoolean(context, Constant.PREF_NOTI_CHECK_IN_SUCCESS, value)
-    }
-
-    override fun getBooleanNotiCheckInFailed(): Boolean {
-        return getBoolean(context, Constant.PREF_NOTI_CHECK_IN_FAILED, false)
-    }
-    override fun setBooleanNotiCheckInFailed(value: Boolean) {
-        setBoolean(context, Constant.PREF_NOTI_CHECK_IN_FAILED, value)
-    }
-
-    override fun getStringLocale(): String {
-        return getString(context, Constant.PREF_LOCALE, Locale.getDefault().language)
-    }
-    override fun setStringLocale(value: String) {
-        setString(context, Constant.PREF_LOCALE, value)
-    }
     
-    override fun getBooleanCheckedUpdateNote(): Boolean {
-        return getBoolean(context, Constant.PREF_CHECKED_UPDATE_NOTE + BuildConfig.VERSION_NAME, false)
-    }
-    override fun setBooleanCheckedUpdateNote(value: Boolean) {
+    override fun getDailyNoteData(): DailyNoteData =
+        getT<DailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA)?: DailyNoteData.EMPTY
+    override fun setDailyNote(value: DailyNoteData) =
+        setT(context, Constant.PREF_DAILY_NOTE_DATA, value)
+
+
+    override fun getDailyNoteSettings(): DailyNoteSettings =
+        getT<DailyNoteSettings>(context, Constant.PREF_WIDGET_SETTINGS)?: DailyNoteSettings.EMPTY
+    override fun setDailyNoteSettings(value: DailyNoteSettings) =
+        setT(context, Constant.PREF_WIDGET_SETTINGS, value)
+    
+    override fun getCheckInSettings(): CheckInSettings =
+        getT<CheckInSettings>(context, Constant.PREF_CHECK_IN_SETTINGS)?: CheckInSettings.EMPTY
+    override fun setCheckInSettings(value: CheckInSettings) =
+        setT(context, Constant.PREF_CHECK_IN_SETTINGS, value)
+
+    override fun getResinWidgetDesignSettings(): ResinWidgetDesignSettings =
+        getT<ResinWidgetDesignSettings>(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS)?: ResinWidgetDesignSettings.EMPTY
+    override fun setResinWidgetDesignSettings(value: ResinWidgetDesignSettings) =
+        setT(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS, value)
+    
+    override fun getDetailWidgetDesignSettings(): DetailWidgetDesignSettings =
+        getT<DetailWidgetDesignSettings>(context, Constant.PREF_DETAIL_WIDGET_DESIGN_SETTINGS)?: DetailWidgetDesignSettings.EMPTY
+    override fun setDetailWidgetDesignSettings(value: DetailWidgetDesignSettings) =
+        setT(context, Constant.PREF_DETAIL_WIDGET_DESIGN_SETTINGS, value)
+
+
+    override fun getStringExpeditionTime(): String =
+        getString(context, Constant.PREF_EXPEDITION_TIME)
+    override fun setStringExpeditionTime(value: String) =
+        setString(context, Constant.PREF_EXPEDITION_TIME, value)
+
+    override fun getStringRecentSyncTime(): String =
+        getString(context, Constant.PREF_RECENT_SYNC_TIME)
+    override fun setStringRecentSyncTime(value: String) =
+        setString(context, Constant.PREF_RECENT_SYNC_TIME, value)
+
+    override fun getBooleanIsValidUserData(): Boolean =
+        getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)
+    override fun setBooleanIsValidUserData(value: Boolean) =
+        setBoolean(context, Constant.PREF_IS_VALID_USERDATA, value)
+
+    override fun setBooleanEnableAutoCheckIn(value: Boolean) =
+        setBoolean(context, Constant.PREF_ENABLE_GENSHIN_AUTO_CHECK_IN, value)
+    override fun setBooleanEnableHonkai3rdAutoCheckIn(value: Boolean) =
+        setBoolean(context, Constant.PREF_ENABLE_HONKAI_3RD_AUTO_CHECK_IN, value)
+
+
+    override fun getStringLocale(): String =
+        getString(context, Constant.PREF_LOCALE, Locale.getDefault().language)
+    override fun setStringLocale(value: String) =
+        setString(context, Constant.PREF_LOCALE, value)
+
+
+    override fun getBooleanCheckedUpdateNote(): Boolean =
+        getBoolean(context, Constant.PREF_CHECKED_UPDATE_NOTE + BuildConfig.VERSION_NAME, false)
+    override fun setBooleanCheckedUpdateNote(value: Boolean) =
         setBoolean(context, Constant.PREF_CHECKED_UPDATE_NOTE + BuildConfig.VERSION_NAME, value)
-    }
+
 }

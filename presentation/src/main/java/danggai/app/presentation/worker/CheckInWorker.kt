@@ -20,7 +20,12 @@ import danggai.app.presentation.core.util.PreferenceManager
 import danggai.app.presentation.core.util.log
 import danggai.app.presentation.ui.main.MainActivity
 import danggai.domain.core.ApiResult
+import danggai.domain.local.CheckInSettings
+import danggai.domain.local.DailyNoteSettings
+import danggai.domain.local.DetailWidgetDesignSettings
+import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.checkin.usecase.CheckInUseCase
+import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
@@ -105,6 +110,8 @@ class CheckInWorker @AssistedInject constructor(
             onStart = { log.e() },
             onComplete = { log.e() }
         ).map {
+            val settings = preference.getCheckInSettings()
+
             when (it) {
                 is ApiResult.Success -> {
                     when (it.data.retcode) {
@@ -113,7 +120,7 @@ class CheckInWorker @AssistedInject constructor(
                         Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
                         -> {
                             log.e()
-                            if (preference.getBooleanNotiCheckInSuccess()) {
+                            if (settings.notiCheckInSuccess) {
                                 log.e()
 
                                 when (it.data.retcode) {
@@ -129,7 +136,7 @@ class CheckInWorker @AssistedInject constructor(
                         }
                         Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
                             log.e()
-                            if (preference.getBooleanNotiCheckInFailed()) {
+                            if (settings.notiCheckInFailed) {
                                 log.e()
                                 sendNoti(Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND)
                             }
@@ -140,7 +147,7 @@ class CheckInWorker @AssistedInject constructor(
                         }
                         else -> {
                             log.e()
-                            if (preference.getBooleanNotiCheckInFailed()) {
+                            if (settings.notiCheckInFailed) {
                                 log.e()
                                 sendNoti(Constant.NotiType.CHECK_IN_GENSHIN_FAILED)
                             }
@@ -154,7 +161,7 @@ class CheckInWorker @AssistedInject constructor(
                 is ApiResult.Failure -> {
                     it.message.let { msg ->
                         log.e(msg)
-                        if (preference.getBooleanNotiCheckInFailed()) {
+                        if (settings.notiCheckInFailed) {
                             log.e()
                             sendNoti(Constant.NotiType.CHECK_IN_GENSHIN_FAILED)
                         }
@@ -168,7 +175,7 @@ class CheckInWorker @AssistedInject constructor(
                 is ApiResult.Null,
                 -> {
                     log.e()
-                    if (preference.getBooleanNotiCheckInFailed()) {
+                    if (settings.notiCheckInFailed) {
                         log.e()
                         sendNoti(Constant.NotiType.CHECK_IN_GENSHIN_FAILED)
                     }
@@ -192,6 +199,8 @@ class CheckInWorker @AssistedInject constructor(
             onStart = { log.e() },
             onComplete = { log.e() }
         ).map {
+            val settings = preference.getCheckInSettings()
+
             when (it) {
                 is ApiResult.Success -> {
                     when (it.data.retcode) {
@@ -200,7 +209,7 @@ class CheckInWorker @AssistedInject constructor(
                         Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
                         -> {
                             log.e()
-                            if (preference.getBooleanNotiCheckInSuccess()) {
+                            if (settings.notiCheckInSuccess) {
                                 log.e()
 
                                 when (it.data.retcode) {
@@ -216,7 +225,7 @@ class CheckInWorker @AssistedInject constructor(
                         }
                         Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
                             log.e()
-                            if (preference.getBooleanNotiCheckInFailed()) {
+                            if (settings.notiCheckInFailed) {
                                 log.e()
                                 sendNoti(Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND)
                             }
@@ -227,7 +236,7 @@ class CheckInWorker @AssistedInject constructor(
                         }
                         else -> {
                             log.e()
-                            if (preference.getBooleanNotiCheckInFailed()) {
+                            if (settings.notiCheckInFailed) {
                                 log.e()
                                 sendNoti(Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED)
                             }
@@ -241,7 +250,7 @@ class CheckInWorker @AssistedInject constructor(
                 is ApiResult.Failure -> {
                     it.message.let { msg ->
                         log.e(msg)
-                        if (preference.getBooleanNotiCheckInFailed()) {
+                        if (settings.notiCheckInFailed) {
                             log.e()
                             sendNoti(Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED)
                         }
@@ -255,7 +264,7 @@ class CheckInWorker @AssistedInject constructor(
                 is ApiResult.Null,
                 -> {
                     log.e()
-                    if (preference.getBooleanNotiCheckInFailed()) {
+                    if (settings.notiCheckInFailed) {
                         log.e()
                         sendNoti(Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED)
                     }
@@ -356,6 +365,13 @@ class CheckInWorker @AssistedInject constructor(
     override suspend fun doWork(): Result {
         return try {
             log.e()
+            if (preference.getDailyNoteData() == DailyNoteData.EMPTY &&
+                preference.getDailyNoteSettings() == DailyNoteSettings.EMPTY &&
+                preference.getCheckInSettings() == CheckInSettings.EMPTY &&
+                preference.getResinWidgetDesignSettings() == ResinWidgetDesignSettings.EMPTY &&
+                preference.getDetailWidgetDesignSettings() == DetailWidgetDesignSettings.EMPTY
+            ) CommonFunction.migrateSettings(applicationContext)
+
             CoroutineScope(Dispatchers.IO).launch {
 
                 val lang = when (preference.getStringLocale()) {
@@ -364,20 +380,22 @@ class CheckInWorker @AssistedInject constructor(
                     else -> Constant.Locale.ENGLISH.locale
                 }
 
-                if (preference.getBooleanEnableGenshinAutoCheckIn())
-                    checkInGenshin(
-                        lang = lang,
-                        actId = Constant.OS_GENSHIN_ACT_ID,
-                        cookie = preference.getStringCookie(),
-                    )
+                preference.getCheckInSettings().let { settings ->
+                    if (settings.genshinCheckInEnable)
+                        checkInGenshin(
+                            lang = lang,
+                            actId = Constant.OS_GENSHIN_ACT_ID,
+                            cookie = preference.getStringCookie(),
+                        )
 
 
-                if (preference.getBooleanEnableHonkai3rdAutoCheckIn())
-                    checkInHonkai3rd(
-                        lang = lang,
-                        actId = Constant.OS_HONKAI_3RD_ACT_ID,
-                        cookie = preference.getStringCookie()
-                    )
+                    if (settings.honkai3rdCheckInEnable)
+                        checkInHonkai3rd(
+                            lang = lang,
+                            actId = Constant.OS_HONKAI_3RD_ACT_ID,
+                            cookie = preference.getStringCookie()
+                        )
+                }
             }
 
             Result.success()

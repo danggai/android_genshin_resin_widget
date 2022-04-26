@@ -2,6 +2,7 @@ package danggai.app.presentation.core.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.google.gson.GsonBuilder
 
 
 object PreferenceManager {
@@ -11,7 +12,8 @@ object PreferenceManager {
     private const val DEFAULT_VALUE_INT = -1
     private const val DEFAULT_VALUE_LONG = -1L
     private const val DEFAULT_VALUE_FLOAT = -1f
-    private fun getPreferences(context: Context): SharedPreferences {
+
+    fun getPreferences(context: Context): SharedPreferences {
         return context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
     }
 
@@ -146,6 +148,36 @@ object PreferenceManager {
     fun getFloat(context: Context, key: String?): Float {
         val prefs = getPreferences(context)
         return prefs.getFloat(key, DEFAULT_VALUE_FLOAT)
+    }
+
+    /**
+     * Saves object into the Preferences.
+     *
+     * @param `object` Object of model class (of type [T]) to save
+     * @param key Key with which Shared preferences to
+     **/
+    fun <T> setT(context: Context, key: String, value: T) {
+        //Convert object to JSON String.
+        val jsonString = GsonBuilder().create().toJson(value)
+
+        val prefs = getPreferences(context)
+        val editor = prefs.edit()
+        editor.putString(key, jsonString).apply()
+    }
+
+    /**
+     * Used to retrieve object from the Preferences.
+     *
+     * @param key Shared Preference key with which object was saved.
+     **/
+    inline fun <reified T> getT(context: Context, key: String): T? {
+        //We read JSON String which was saved.
+        val prefs = getPreferences(context)
+        val value = prefs.getString(key, null)
+        //JSON String was found which means object can be read.
+        //We convert this JSON String to model object. Parameter "c" (of
+        //type Class < T >" is used to cast.
+        return GsonBuilder().create().fromJson(value, T::class.java)
     }
 
     /**

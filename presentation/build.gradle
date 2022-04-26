@@ -57,6 +57,9 @@ dependencies {
     implementation "com.google.android.material:material:$versions.materialVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlinGradleVersion"
 
+    // gson
+    implementation "com.google.code.gson:gson:$versions.gsonVersion"
+
     // layout
     implementation "com.google.android.material:material:$versions.materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraintVersion"

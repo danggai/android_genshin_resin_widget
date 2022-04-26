@@ -30,6 +30,11 @@ import danggai.app.presentation.ui.main.checkin.MainCheckInFragment
 import danggai.app.presentation.ui.main.resin.MainResinFragment
 import danggai.app.presentation.worker.CheckInWorker
 import danggai.app.presentation.worker.RefreshWorker
+import danggai.domain.local.CheckInSettings
+import danggai.domain.local.DailyNoteSettings
+import danggai.domain.local.DetailWidgetDesignSettings
+import danggai.domain.local.ResinWidgetDesignSettings
+import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.util.Constant
 import java.util.*
 
@@ -80,6 +85,8 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                 else -> ""
             }
         }.attach()
+
+        migrateCheck()
 
         if (!BuildConfig.DEBUG)
             initAd()
@@ -151,6 +158,17 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
 
                 PreferenceManager.setBoolean(it, Constant.PREF_CHECKED_UPDATE_NOTE + BuildConfig.VERSION_NAME, true)
             }
+        }
+    }
+
+    private fun migrateCheck() {
+        context?.let { context ->
+            if (PreferenceManager.getT<DailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA)?: DailyNoteData.EMPTY == DailyNoteData.EMPTY &&
+                PreferenceManager.getT<DailyNoteSettings>(context, Constant.PREF_WIDGET_SETTINGS)?: DailyNoteSettings.EMPTY == DailyNoteSettings.EMPTY &&
+                PreferenceManager.getT<CheckInSettings>(context, Constant.PREF_CHECK_IN_SETTINGS)?: CheckInSettings.EMPTY == CheckInSettings.EMPTY &&
+                PreferenceManager.getT<ResinWidgetDesignSettings>(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS)?: ResinWidgetDesignSettings.EMPTY == ResinWidgetDesignSettings.EMPTY &&
+                PreferenceManager.getT<DetailWidgetDesignSettings>(context, Constant.PREF_DETAIL_WIDGET_DESIGN_SETTINGS)?: DetailWidgetDesignSettings.EMPTY == DetailWidgetDesignSettings.EMPTY
+            ) CommonFunction.migrateSettings(context)
         }
     }
 

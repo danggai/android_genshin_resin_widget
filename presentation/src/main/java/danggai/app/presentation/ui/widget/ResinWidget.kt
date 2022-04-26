@@ -10,16 +10,16 @@ import android.view.View
 import android.widget.RemoteViews
 import danggai.app.presentation.R
 import danggai.app.presentation.core.util.CommonFunction
+import danggai.app.presentation.core.util.PreferenceManager
 import danggai.app.presentation.core.util.log
 import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.worker.RefreshWorker
-import danggai.domain.preference.repository.PreferenceManagerRepository
+import danggai.domain.local.ResinWidgetDesignSettings
+import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.util.Constant
 
 
-class ResinWidget(
-    private val preference: PreferenceManagerRepository
-) : AppWidgetProvider() {
+class ResinWidget() : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
@@ -106,9 +106,12 @@ class ResinWidget(
 
     private fun syncData(view: RemoteViews, context: Context?) {
         context?.let { _context ->
-            CommonFunction.applyWidgetTheme(preference, _context, view)
+            val widgetDesign =
+                PreferenceManager.getT<ResinWidgetDesignSettings>(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS)?: ResinWidgetDesignSettings.EMPTY
 
-            if (!preference.getBooleanIsValidUserData()) {
+            CommonFunction.applyWidgetTheme(widgetDesign, _context, view)
+
+            if (!PreferenceManager.getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)) {
                 log.e()
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
                 view.setViewVisibility(R.id.iv_resin, View.GONE)
@@ -117,22 +120,25 @@ class ResinWidget(
 
             } else {
                 log.e()
-                view.setTextViewText(R.id.tv_resin, preference.getIntCurrentResin().toString())
-                view.setTextViewText(R.id.tv_resin_max, "/"+ preference.getIntMaxResin().toString())
+                val dailyNote = PreferenceManager.getT<DailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA)?: DailyNoteData.EMPTY
 
-                when (preference.getIntResinTimeNotation()) {
-                    Constant.PREF_TIME_NOTATION_REMAIN_TIME -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToRemainTime(_context, preference.getStringResinRecoveryTime()))
-                    Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToFullChargeTime(_context, preference.getStringResinRecoveryTime()))
-                    else -> view.setTextViewText(R.id.tv_remain_time, CommonFunction.secondToRemainTime(_context, preference.getStringResinRecoveryTime()))
-                }
+                view.setTextViewText(R.id.tv_resin, dailyNote.current_resin.toString())
+                view.setTextViewText(R.id.tv_resin_max, "/"+ dailyNote.max_resin.toString())
 
-                view.setTextViewText(R.id.tv_sync_time, preference.getStringRecentSyncTime())
+                view.setTextViewText(R.id.tv_remain_time,
+                    when (widgetDesign.timeNotation) {
+                        Constant.PREF_TIME_NOTATION_REMAIN_TIME -> CommonFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time)
+                        Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> CommonFunction.secondToFullChargeTime(_context, dailyNote.resin_recovery_time)
+                        else -> CommonFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time)
+                    }
+                )
+
+                view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME))
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.iv_resin, if (preference.getIntWidgetResinImageVisibility() == Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE) View.GONE else View.VISIBLE)
+                view.setViewVisibility(R.id.iv_resin, if (widgetDesign.resinImageVisibility == Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE) View.GONE else View.VISIBLE)
                 view.setViewVisibility(R.id.ll_resin, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_disable, View.GONE)
             }
-
         }
     }
 

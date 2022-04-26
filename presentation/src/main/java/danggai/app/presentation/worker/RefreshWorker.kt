@@ -10,7 +10,11 @@ import danggai.app.presentation.core.util.CommonFunction
 import danggai.app.presentation.core.util.PreferenceManager
 import danggai.app.presentation.core.util.log
 import danggai.domain.core.ApiResult
-import danggai.domain.network.dailynote.entity.DailyNote
+import danggai.domain.local.CheckInSettings
+import danggai.domain.local.DailyNoteSettings
+import danggai.domain.local.DetailWidgetDesignSettings
+import danggai.domain.local.ResinWidgetDesignSettings
+import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.network.dailynote.usecase.DailyNoteUseCase
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
@@ -128,12 +132,15 @@ class RefreshWorker @AssistedInject constructor(
         }
     }
 
-    private fun updateData(dailyNote: DailyNote.Data) {
+    private fun updateData(dailyNote: DailyNoteData) {
         log.e()
 
-        val prefResin: Int = preference.getIntCurrentResin()
+        val prefDailyNote = preference.getDailyNoteData()
+        val settings = preference.getDailyNoteSettings()
+
+        val prefResin: Int = prefDailyNote.current_resin
         val nowResin: Int = dailyNote.current_resin
-        if (preference.getBooleanNotiEach40Resin()) {
+        if (settings.notiEach40Resin) {
             if (200 in (prefResin + 1)..nowResin){
                 log.e()
                 sendNoti(Constant.NotiType.RESIN_EACH_40, 200)
@@ -151,14 +158,14 @@ class RefreshWorker @AssistedInject constructor(
                 sendNoti(Constant.NotiType.RESIN_EACH_40, 40)
             }
         }
-        if (preference.getBooleanNoti140Resin()) {
+        if (settings.notiEach40Resin) {
             if (140 in (prefResin + 1)..nowResin){
                 log.e()
                 sendNoti(Constant.NotiType.RESIN_140, 140)
             }
         }
-        if (preference.getBooleanNotiCustomResin()) {
-            val targetResin: Int = preference.getIntCustomTargetResin()
+        if (settings.notiCustomResin) {
+            val targetResin: Int = settings.customResin
             if (targetResin in (prefResin + 1)..nowResin){
                 log.e()
                 sendNoti(Constant.NotiType.RESIN_CUSTOM, targetResin)
@@ -167,7 +174,7 @@ class RefreshWorker @AssistedInject constructor(
 
         val prefExpeditionTime: Int = try { preference.getStringExpeditionTime().toInt() } catch (e: Exception) { 0 }
         val nowExpeditionTime: Int = CommonFunction.getExpeditionTime(dailyNote).toInt()
-        if (preference.getBooleanNotiExpeditionDone()) {
+        if (settings.notiExpedition) {
             if (1 in (nowExpeditionTime)..prefExpeditionTime
                 && !dailyNote.expeditions.isNullOrEmpty()
                 && nowExpeditionTime == 0){
@@ -176,9 +183,9 @@ class RefreshWorker @AssistedInject constructor(
             }
         }
 
-        val prefHomeCoinRecoveryTime: Int = try { preference.getStringHomeCoinRecoveryTime().toInt() } catch (e: Exception) { 0 }
-        val nowHomeCoinRecoveryTime: Int = try { (dailyNote.home_coin_recovery_time?:"0").toInt() } catch (e: Exception) { 0 }
-        if (preference.getBooleanNotiExpeditionDone()) {
+        val prefHomeCoinRecoveryTime: Int = try { prefDailyNote.home_coin_recovery_time.toInt() } catch (e: Exception) { 0 }
+        val nowHomeCoinRecoveryTime: Int = try { (dailyNote.home_coin_recovery_time).toInt() } catch (e: Exception) { 0 }
+        if (settings.notiHomeCoin) {
             if (1 in (nowHomeCoinRecoveryTime)..prefHomeCoinRecoveryTime
                 && dailyNote.max_home_coin != 0
                 && nowHomeCoinRecoveryTime == 0){
@@ -187,7 +194,13 @@ class RefreshWorker @AssistedInject constructor(
             }
         }
 
-        CommonFunction.setDailyNoteData(preference, dailyNote)
+
+        preference.setStringRecentSyncTime(CommonFunction.getTimeSyncTimeFormat())
+
+        val expeditionTime: String = CommonFunction.getExpeditionTime(dailyNote)
+        preference.setStringExpeditionTime(expeditionTime)
+
+        preference.setDailyNote(dailyNote)
 
         CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
     }
@@ -225,6 +238,13 @@ class RefreshWorker @AssistedInject constructor(
 
     override fun doWork(): Result {
         log.e()
+        if (preference.getDailyNoteData() == DailyNoteData.EMPTY &&
+            preference.getDailyNoteSettings() == DailyNoteSettings.EMPTY &&
+            preference.getCheckInSettings() == CheckInSettings.EMPTY &&
+            preference.getResinWidgetDesignSettings() == ResinWidgetDesignSettings.EMPTY &&
+            preference.getDetailWidgetDesignSettings() == DetailWidgetDesignSettings.EMPTY
+        ) CommonFunction.migrateSettings(applicationContext)
+
         val server =
             when (preference.getIntServer()) {
                 Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA

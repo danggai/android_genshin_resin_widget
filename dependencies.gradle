@@ -25,6 +25,7 @@ ext.versions = [
         kotlinGradleVersion     : "1.6.20",
         googleServiceVersion    : "4.3.10",
         crashlyticsGradleVersion : "2.7.1",
+        gsonVersion             : "2.9.0",
 
         // android support library
         coreVersion             : "1.6.0",
