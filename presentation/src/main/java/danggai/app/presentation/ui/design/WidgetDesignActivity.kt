@@ -8,8 +8,8 @@ import androidx.annotation.LayoutRes
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingActivity
-import danggai.app.presentation.core.util.log
 import danggai.app.presentation.databinding.ActivityWidgetDesignBinding
+import danggai.app.presentation.util.log
 
 @AndroidEntryPoint
 class WidgetDesignActivity : BindingActivity<ActivityWidgetDesignBinding, WidgetDesignViewModel>() {

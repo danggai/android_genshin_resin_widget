@@ -1,4 +1,4 @@
-package danggai.app.presentation.core.util
+package danggai.app.presentation.util
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
-import android.preference.Preference
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -24,9 +23,7 @@ import danggai.domain.local.CheckInSettings
 import danggai.domain.local.DailyNoteSettings
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
-import danggai.domain.network.dailynote.entity.DailyNote
 import danggai.domain.network.dailynote.entity.DailyNoteData
-import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -501,9 +498,9 @@ object CommonFunction {
         PreferenceManager.setT(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS,
             ResinWidgetDesignSettings(
                 PreferenceManager.getInt(context, Constant.PREF_WIDGET_THEME),
-                PreferenceManager.getInt(context, Constant.PREF_RESIN_TIME_NOTATION),
+                PreferenceManager.getInt(context, Constant.PREF_WIDGET_RESIN_TIME_NOTATION),
                 PreferenceManager.getInt(context, Constant.PREF_WIDGET_RESIN_IMAGE_VISIBILITY),
-                PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_RESIN, Constant.PREF_WIDGET_RESIN_FONT_SIZE),
+                PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE, Constant.PREF_WIDGET_RESIN_FONT_SIZE),
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
             )
         )
@@ -511,13 +508,13 @@ object CommonFunction {
         PreferenceManager.setT(context, Constant.PREF_DETAIL_WIDGET_DESIGN_SETTINGS,
             DetailWidgetDesignSettings(
                 PreferenceManager.getInt(context, Constant.PREF_WIDGET_THEME),
-                PreferenceManager.getInt(context, Constant.PREF_DETAIL_TIME_NOTATION),
+                PreferenceManager.getInt(context, Constant.PREF_WIDGET_DETAIL_TIME_NOTATION),
                 PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_RESIN_DATA_VISIBILITY, true),
                 PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_DAILY_COMMISSION_DATA_VISIBILITY, true),
                 PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_WEEKLY_BOSS_DATA_VISIBILITY, true),
                 PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_REALM_CURRENCY_DATA_VISIBILITY, true),
                 PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_EXPEDITION_DATA_VISIBILITY, true),
-                PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_DETAIL, Constant.PREF_WIDGET_DETAIL_FONT_SIZE),
+                PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE, Constant.PREF_WIDGET_DETAIL_FONT_SIZE),
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
             )
         )

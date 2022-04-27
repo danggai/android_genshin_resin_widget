@@ -186,7 +186,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@{vm.lvFontSizeResin.toString()}"
+                        android:text="@{vm.lvResinFontSize.toString()}"
                         android:hint="030"
                         android:textSize="20sp"
                         android:textColor="@color/black"
@@ -197,7 +197,7 @@
                     <androidx.appcompat.widget.AppCompatSeekBar
                         style="@style/SeekBar"
                         android:id="@+id/sb_fontsize"
-                        android:progress="@={vm.lvFontSizeResin}"
+                        android:progress="@={vm.lvResinFontSize}"
                         android:max="100"
                         android:min="20"
                         />

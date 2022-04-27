@@ -29,12 +29,11 @@ class MainResinFragment : BindingFragment<FragmentMainResinBinding, MainViewMode
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = mVM
-        binding.vm?.setCommonFun(view)
 
         initUi()
     }
 
-    fun initUi() {
+    private fun initUi() {
         mVM.initUI()
 
         when (mVM.lvServer.value) {

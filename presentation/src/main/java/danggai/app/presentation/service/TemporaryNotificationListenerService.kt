@@ -1,7 +1,7 @@
 package danggai.app.presentation.service
 
 import android.service.notification.NotificationListenerService
-import danggai.app.presentation.core.util.log
+import danggai.app.presentation.util.log
 
 class TemporaryNotificationListenerService: NotificationListenerService() {
 

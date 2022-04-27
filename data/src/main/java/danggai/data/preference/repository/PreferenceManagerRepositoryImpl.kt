@@ -5,9 +5,9 @@ import android.content.SharedPreferences
 import com.google.gson.GsonBuilder
 import danggai.data.BuildConfig
 import danggai.domain.local.CheckInSettings
+import danggai.domain.local.DailyNoteSettings
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
-import danggai.domain.local.DailyNoteSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant

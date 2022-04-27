@@ -14,7 +14,7 @@ data class ResinWidgetDesignSettings(
             widgetTheme = 0,
             timeNotation = 0,
             resinImageVisibility = 0,
-            fontSize = Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_RESIN,
+            fontSize = Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE,
             backgroundTransparency = Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY
         )
     }

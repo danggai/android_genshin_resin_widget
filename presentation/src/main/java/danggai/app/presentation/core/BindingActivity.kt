@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import danggai.app.presentation.core.util.LocaleWrapper
+import danggai.app.presentation.util.LocaleWrapper
 
 abstract class
 BindingActivity<T: ViewDataBinding, V: BaseViewModel> : BaseActivity() {

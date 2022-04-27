@@ -32,7 +32,6 @@
 - [Flow](https://developer.android.com/kotlin/flow?hl=ko)
 - [Hilt](https://dagger.dev/hilt/)
 - [Retrofit2](https://square.github.io/retrofit/)
-- [LiveData](https://developer.android.com/topic/libraries/architecture/livedata?hl=ko) (StateFlow로 Refactoring 중)
 - Clean Architecture
 
 

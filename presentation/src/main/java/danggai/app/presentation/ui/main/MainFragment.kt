@@ -21,13 +21,16 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.BuildConfig
 import danggai.app.presentation.R
-import danggai.app.presentation.ui.cookie.CookieWebViewActivity
 import danggai.app.presentation.core.BindingFragment
-import danggai.app.presentation.core.util.*
 import danggai.app.presentation.databinding.FragmentMainBinding
+import danggai.app.presentation.ui.cookie.CookieWebViewActivity
 import danggai.app.presentation.ui.design.WidgetDesignActivity
 import danggai.app.presentation.ui.main.checkin.MainCheckInFragment
 import danggai.app.presentation.ui.main.resin.MainResinFragment
+import danggai.app.presentation.util.CommonFunction
+import danggai.app.presentation.util.Event
+import danggai.app.presentation.util.PreferenceManager
+import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.CheckInWorker
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.CheckInSettings
@@ -69,22 +72,9 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = mVM
-        binding.vm?.setCommonFun(view)
+        binding.vm?.setCommonFun()
 
-        val pagerAdapter = MainAdapter(requireActivity())
-
-        pagerAdapter.addFragment(MainResinFragment())
-        pagerAdapter.addFragment(MainCheckInFragment())
-
-        binding.vpMain.adapter = pagerAdapter
-
-        TabLayoutMediator(binding.tlTop, binding.vpMain) { tab, position ->
-            tab.text = when (position) {
-                0 -> "Resin Widget"
-                1 -> "HoYoLAB Check In"
-                else -> ""
-            }
-        }.attach()
+        initTabLayout()
 
         migrateCheck()
 
@@ -92,7 +82,6 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             initAd()
 
         initUi()
-        initLv()
 
         permissionCheck()
 
@@ -141,6 +130,23 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         }
     }
 
+    private fun initTabLayout() {
+        val pagerAdapter = MainAdapter(requireActivity())
+
+        pagerAdapter.addFragment(MainResinFragment())
+        pagerAdapter.addFragment(MainCheckInFragment())
+
+        binding.vpMain.adapter = pagerAdapter
+
+        TabLayoutMediator(binding.tlTop, binding.vpMain) { tab, position ->
+            tab.text = when (position) {
+                0 -> "Resin Widget"
+                1 -> "HoYoLAB Check In"
+                else -> ""
+            }
+        }.attach()
+    }
+
     private fun updateNoteCheck() {
         context?.let { it ->
 
@@ -172,158 +178,157 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         }
     }
 
-    private fun initLv() {
-        mVM.lvWidgetRefreshNotWork.observe(viewLifecycleOwner, EventObserver {
-            activity?.let {
-                AlertDialog.Builder(requireActivity())
-                    .setTitle(R.string.dialog_widget_refresh_not_work)
-                    .setMessage(R.string.dialog_msg_widget_refresh_not_work)
-                    .setPositiveButton(R.string.data_save_mode_disable) { dialog, whichButton ->
-                        log.e()
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                            makeToast(requireContext(), getString(R.string.data_save_mode_not_supported))
-                        } else {
-                            try {
-                                startActivity(Intent("android.settings.DATA_USAGE_SETTINGS"))
-                            } catch (e: Exception) {
-                                log.e(e.message.toString())
-
-                                AlertDialog.Builder(requireActivity())
-                                    .setMessage(R.string.msg_toast_data_save_mode)
-                                    .setCancelable(false)
-                                    .setPositiveButton("OK") { dialog, whichButton ->
-                                        startActivity(Intent("android.settings.WIRELESS_SETTINGS"))
-                                    }
-                                    .show()
-                            }
-                        }
-                    }
-                    .setNegativeButton(R.string.permission_accept) { dialog, whichButton ->
-                        log.e()
-                        startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
-                    }
-                    .create()
-                    .show()
-            }
-        })
-
-        mVM.lvGetCookie.observe(viewLifecycleOwner, EventObserver {
-            activity?.let {
-                log.e()
-                AlertDialog.Builder(requireActivity())
-                    .setTitle(R.string.dialog_native_hoyolab_account)
-                    .setMessage(R.string.dialog_msg_native_hoyolab_account)
-                    .setPositiveButton(R.string.native_hoyolab_account) { dialog, whichButton ->
-                        log.e()
-                        CookieWebViewActivity.startActivity(requireActivity())
-                    }
-                    .setNegativeButton(R.string.sns_account) { dialog, whichButton ->
-                        log.e()
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constant.HOW_CAN_I_GET_COOKIE_URL))
-                        startActivity(intent)
-                    }
-                    .create()
-                    .show()
-            }
-        })
-
-        mVM.lvWhenDailyNotePrivate.observe(viewLifecycleOwner, EventObserver {
-            activity?.let {
-                log.e()
-                if (mVM.dailyNotePrivateErrorCount >= 2) {
-                    AlertDialog.Builder(requireActivity())
-                        .setTitle(R.string.dialog_realtime_note_private)
-                        .setMessage(R.string.dialog_msg_dailynote_not_public_error_repeat)
-                        .setCancelable(false)
-                        .setPositiveButton(R.string.apply) { dialog, whichButton ->
-                            log.e()
-                        }
-                        .create()
-                        .show()
-                }
-
-                AlertDialog.Builder(requireActivity())
-                    .setTitle(R.string.dialog_realtime_note_private)
-                    .setMessage(R.string.dialog_msg_realtime_note_private)
-                    .setCancelable(false)
-                    .setPositiveButton(R.string.apply) { dialog, whichButton ->
-                        log.e()
-                        mVM.makeDailyNotePublic()
-                    }
-                    .setNegativeButton(R.string.cancel) { dialog, whichButton ->
-                        log.e()
-                        makeToast(requireContext(), getString(R.string.msg_toast_dailynote_error_data_not_public))
-                    }
-                    .create()
-                    .show()
-            }
-        })
-
-        mVM.lvStartWidgetDesignActivity.observe(viewLifecycleOwner, EventObserver {
-            log.e()
-            activity?.let {
-                WidgetDesignActivity.startActivity(it)
-            }
-        })
-
-        mVM.lvChangeLanguage.observe(viewLifecycleOwner, EventObserver {
-            log.e()
-            activity?.let {
-                val builder = AlertDialog.Builder(it)
-                builder.setTitle("Select Language")
-                    .setItems(arrayOf("English", "한국어"),
-                        DialogInterface.OnClickListener { dialog, which ->
-                            log.e(which)
-                            val locale: String = when (which) {
-                                Constant.Locale.ENGLISH.index -> Constant.Locale.ENGLISH.locale
-                                Constant.Locale.KOREAN.index -> Constant.Locale.KOREAN.locale
-                                else -> Locale.getDefault().language
-                            }
-
-                            if (PreferenceManager.getString(it.baseContext, Constant.PREF_LOCALE, Locale.getDefault().language) == locale) return@OnClickListener
-
-                            PreferenceManager.setString(it.baseContext, Constant.PREF_LOCALE, locale)
-
-                            AlertDialog.Builder(requireActivity())
-                                .setTitle(R.string.dialog_restart)
-                                .setMessage(R.string.dialog_msg_restart)
-                                .setCancelable(false)
-                                .setPositiveButton(R.string.apply) { dialog, whichButton ->
-                                    log.e()
-                                    CommonFunction.restartApp(it.baseContext)
-                                }
-                                .create()
-                                .show()
-                        })
-                builder.show()
-            }
-        })
-
-        mVM.lvStartShutRefreshWorker.observe(viewLifecycleOwner, EventObserver {
-            log.e()
-            context?.let { context ->
-                if (it) RefreshWorker.startWorkerPeriodic(context)
-                else RefreshWorker.shutdownWorker(context)
-            }
-        })
-
-        mVM.lvStartShutCheckInWorker.observe(viewLifecycleOwner, EventObserver {
-            log.e()
-            context?.let { context ->
-                if (it) CheckInWorker.startWorkerOneTimeImmediately(context)
-                else CheckInWorker.shutdownWorker(context)
-            }
-        })
-    }
-
     private fun initAd() {
         log.e()
         MobileAds.initialize(requireContext())
 
         mAdView = binding.adView
 
+
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
+    }
+
+    override fun handleEvents(event: Event) {
+        super.handleEvents(event)
+
+        when (event) {
+            is Event.WidgetRefreshNotWork -> {
+                activity?.let {
+                    AlertDialog.Builder(requireActivity())
+                        .setTitle(R.string.dialog_widget_refresh_not_work)
+                        .setMessage(R.string.dialog_msg_widget_refresh_not_work)
+                        .setPositiveButton(R.string.data_save_mode_disable) { dialog, whichButton ->
+                            log.e()
+                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                                makeToast(requireContext(), getString(R.string.data_save_mode_not_supported))
+                            } else {
+                                try {
+                                    startActivity(Intent("android.settings.DATA_USAGE_SETTINGS"))
+                                } catch (e: Exception) {
+                                    log.e(e.message.toString())
+
+                                    AlertDialog.Builder(requireActivity())
+                                        .setMessage(R.string.msg_toast_data_save_mode)
+                                        .setCancelable(false)
+                                        .setPositiveButton("OK") { dialog, whichButton ->
+                                            startActivity(Intent("android.settings.WIRELESS_SETTINGS"))
+                                        }
+                                        .show()
+                                }
+                            }
+                        }
+                        .setNegativeButton(R.string.permission_accept) { dialog, whichButton ->
+                            log.e()
+                            startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
+                        }
+                        .create()
+                        .show()
+                }
+            }
+            is Event.GetCookie -> {
+                activity?.let {
+                    log.e()
+                    AlertDialog.Builder(requireActivity())
+                        .setTitle(R.string.dialog_native_hoyolab_account)
+                        .setMessage(R.string.dialog_msg_native_hoyolab_account)
+                        .setPositiveButton(R.string.native_hoyolab_account) { dialog, whichButton ->
+                            log.e()
+                            CookieWebViewActivity.startActivity(requireActivity())
+                        }
+                        .setNegativeButton(R.string.sns_account) { dialog, whichButton ->
+                            log.e()
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constant.HOW_CAN_I_GET_COOKIE_URL))
+                            startActivity(intent)
+                        }
+                        .create()
+                        .show()
+                }
+            }
+            is Event.WhenDailyNoteIsPrivate -> {
+                activity?.let {
+                    log.e()
+                    if (mVM.dailyNotePrivateErrorCount >= 2) {
+                        AlertDialog.Builder(requireActivity())
+                            .setTitle(R.string.dialog_realtime_note_private)
+                            .setMessage(R.string.dialog_msg_dailynote_not_public_error_repeat)
+                            .setCancelable(false)
+                            .setPositiveButton(R.string.apply) { dialog, whichButton ->
+                                log.e()
+                            }
+                            .create()
+                            .show()
+                    }
+
+                    AlertDialog.Builder(requireActivity())
+                        .setTitle(R.string.dialog_realtime_note_private)
+                        .setMessage(R.string.dialog_msg_realtime_note_private)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.apply) { dialog, whichButton ->
+                            log.e()
+                            mVM.makeDailyNotePublic()
+                        }
+                        .setNegativeButton(R.string.cancel) { dialog, whichButton ->
+                            log.e()
+                            makeToast(requireContext(), getString(R.string.msg_toast_dailynote_error_data_not_public))
+                        }
+                        .create()
+                        .show()
+                }
+            }
+            is Event.StartWidgetDesignActivity -> {
+                log.e()
+                activity?.let {
+                    WidgetDesignActivity.startActivity(it)
+                }
+            }
+            is Event.ChangeLanguage -> {
+                log.e()
+                activity?.let {
+                    val builder = AlertDialog.Builder(it)
+                    builder.setTitle("Select Language")
+                        .setItems(arrayOf("English", "한국어"),
+                            DialogInterface.OnClickListener { dialog, which ->
+                                log.e(which)
+                                val locale: String = when (which) {
+                                    Constant.Locale.ENGLISH.index -> Constant.Locale.ENGLISH.locale
+                                    Constant.Locale.KOREAN.index -> Constant.Locale.KOREAN.locale
+                                    else -> Locale.getDefault().language
+                                }
+
+                                if (PreferenceManager.getString(it.baseContext, Constant.PREF_LOCALE, Locale.getDefault().language) == locale) return@OnClickListener
+
+                                PreferenceManager.setString(it.baseContext, Constant.PREF_LOCALE, locale)
+
+                                AlertDialog.Builder(requireActivity())
+                                    .setTitle(R.string.dialog_restart)
+                                    .setMessage(R.string.dialog_msg_restart)
+                                    .setCancelable(false)
+                                    .setPositiveButton(R.string.apply) { dialog, whichButton ->
+                                        log.e()
+                                        CommonFunction.restartApp(it.baseContext)
+                                    }
+                                    .create()
+                                    .show()
+                            })
+                    builder.show()
+                }
+            }
+            is Event.StartShutRefreshWorker -> {
+                log.e()
+                context?.let { context ->
+                    if (event.isValid) RefreshWorker.startWorkerPeriodic(context)
+                    else RefreshWorker.shutdownWorker(context)
+                }
+            }
+            is Event.StartShutCheckInWorker -> {
+                log.e()
+                context?.let { context ->
+                    if (event.isValid) CheckInWorker.startWorkerOneTimeImmediately(context)
+                    else CheckInWorker.shutdownWorker(context)
+                }
+            }
+        }
     }
 
 }

@@ -7,8 +7,8 @@ import androidx.work.Configuration
 import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.HiltAndroidApp
-import danggai.app.presentation.core.util.LocaleWrapper
-import danggai.app.presentation.core.util.log
+import danggai.app.presentation.util.LocaleWrapper
+import danggai.app.presentation.util.log
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import java.io.IOException

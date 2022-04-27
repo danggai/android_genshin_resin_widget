@@ -10,10 +10,10 @@ import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
-import danggai.app.presentation.core.util.EventObserver
-import danggai.app.presentation.core.util.log
 import danggai.app.presentation.databinding.FragmentCookieWebviewBinding
 import danggai.app.presentation.ui.main.MainActivity
+import danggai.app.presentation.util.Event
+import danggai.app.presentation.util.log
 
 @AndroidEntryPoint
 class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, CookieWebViewViewModel>() {
@@ -34,10 +34,9 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = mVM
-        binding.vm?.setCommonFun(view)
+        binding.vm?.setCommonFun()
 
         initUi()
-        initLv()
     }
 
     override fun onAttach(context: Context) {
@@ -110,36 +109,34 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
         makeToastLong(requireContext(), getString(R.string.msg_toast_how_to_get_cookie))
     }
 
-    private fun initLv() {
-        mVM.lvGetCookie.observe(viewLifecycleOwner, EventObserver { boolean ->
-            try {
-                val cookieManager = CookieManager.getInstance()
-                val cookie = cookieManager.getCookie("https://www.hoyolab.com/")
-                log.e(cookie)
+    override fun handleEvents(event: Event) {
+        super.handleEvents(event)
 
-                if (cookie.contains("ltuid") && cookie.contains("ltoken")) {
-                    MainActivity.startActivity(requireActivity(), cookie)
-                    makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_success))
-                } else {
-                    makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_fail))
+        when (event) {
+            is Event.GetCookie -> {
+                try {
+                    val cookieManager = CookieManager.getInstance()
+                    val cookie = cookieManager.getCookie("https://www.hoyolab.com/")
+                    log.e(cookie)
+
+                    if (cookie.contains("ltuid") && cookie.contains("ltoken")) {
+                        MainActivity.startActivity(requireActivity(), cookie)
+                        makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_success))
+                    } else {
+                        makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_fail))
+                    }
+                } catch (e: NullPointerException) {
+                    log.e(e.message.toString())
+                    makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_null_fail))
+                } catch (e: Exception) {
+                    log.e(e.message.toString())
+                    makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_unknown_fail))
                 }
-            } catch (e: NullPointerException) {
-                log.e(e.message.toString())
-                makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_null_fail))
-            } catch (e: Exception) {
-                log.e(e.message.toString())
-                makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_unknown_fail))
             }
-        })
-
-        mVM.lvRefresh.observe(viewLifecycleOwner, EventObserver { boolean ->
-            log.e()
-            binding.wvBody.reload()
-        })
-
-        mVM.lvFinish.observe(viewLifecycleOwner, EventObserver { boolean ->
-            log.e()
-            requireActivity().finish()
-        })
+            is Event.RefreshWebView -> {
+                log.e()
+                binding.wvBody.reload()
+            }
+        }
     }
 }

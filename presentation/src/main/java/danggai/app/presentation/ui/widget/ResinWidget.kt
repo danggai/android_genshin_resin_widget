@@ -9,10 +9,10 @@ import android.content.Intent
 import android.view.View
 import android.widget.RemoteViews
 import danggai.app.presentation.R
-import danggai.app.presentation.core.util.CommonFunction
-import danggai.app.presentation.core.util.PreferenceManager
-import danggai.app.presentation.core.util.log
 import danggai.app.presentation.ui.main.MainActivity
+import danggai.app.presentation.util.CommonFunction
+import danggai.app.presentation.util.PreferenceManager
+import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData

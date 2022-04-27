@@ -22,7 +22,7 @@ data class DetailWidgetDesignSettings(
             weeklyBossDataVisibility = true,
             realmCurrencyDataVisibility = true,
             expeditionDataVisibility = true,
-            fontSize = Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_DETAIL,
+            fontSize = Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE,
             backgroundTransparency = Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY
         )
     }

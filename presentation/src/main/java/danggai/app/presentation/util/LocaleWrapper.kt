@@ -1,4 +1,4 @@
-package danggai.app.presentation.core.util
+package danggai.app.presentation.util
 
 import android.content.Context
 import danggai.domain.util.Constant

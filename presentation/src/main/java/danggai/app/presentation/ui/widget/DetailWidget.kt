@@ -10,11 +10,11 @@ import android.view.View
 import android.widget.RemoteViews
 import androidx.core.content.ContextCompat.getColor
 import danggai.app.presentation.R
-import danggai.app.presentation.core.util.CommonFunction
-import danggai.app.presentation.core.util.CommonFunction.isDarkMode
-import danggai.app.presentation.core.util.PreferenceManager
-import danggai.app.presentation.core.util.log
 import danggai.app.presentation.ui.main.MainActivity
+import danggai.app.presentation.util.CommonFunction
+import danggai.app.presentation.util.CommonFunction.isDarkMode
+import danggai.app.presentation.util.PreferenceManager
+import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData

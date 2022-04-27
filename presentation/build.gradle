@@ -65,7 +65,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraintVersion"
 
     // lifecycle
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycleVersion"
 
     // coroutine

@@ -4,11 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import danggai.app.presentation.core.util.EventObserver
-import danggai.app.presentation.core.util.log
+import androidx.lifecycle.lifecycleScope
+import danggai.app.presentation.util.Event
+import danggai.app.presentation.util.log
+import kotlinx.coroutines.launch
 
 open class BaseFragment: Fragment() {
 
@@ -38,12 +39,27 @@ open class BaseFragment: Fragment() {
         return ""
     }
 
-    fun BaseViewModel.setCommonFun(view: View) {
-        lvMakeToast.observe(viewLifecycleOwner, EventObserver { msg ->
-            activity?.let {
-                if (msg.isNotBlank()) makeToast(it, msg)
+    fun BaseViewModel.setCommonFun() {
+        lifecycleScope.launch { eventFlow.collect { event -> handleEvents(event) } }
+    }
+
+    /**
+     * MakeToast와 FinishThisActivity를 사용하고 싶다면
+     * 반드시 super method를 override 할 것
+     */
+    open fun handleEvents(event: Event) {
+        log.e(event::class.java.name)
+
+        when (event) {
+            is Event.MakeToast -> {
+                activity?.let {
+                    if (event.message.isNotBlank()) makeToast(it, event.message)
+                }
             }
-        })
+            is Event.FinishThisActivity -> {
+                activity?.finish()
+            }
+        }
     }
 
 }

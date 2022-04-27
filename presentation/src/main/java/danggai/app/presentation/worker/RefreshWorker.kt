@@ -6,9 +6,9 @@ import androidx.work.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import danggai.app.presentation.R
-import danggai.app.presentation.core.util.CommonFunction
-import danggai.app.presentation.core.util.PreferenceManager
-import danggai.app.presentation.core.util.log
+import danggai.app.presentation.util.CommonFunction
+import danggai.app.presentation.util.PreferenceManager
+import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.local.CheckInSettings
 import danggai.domain.local.DailyNoteSettings

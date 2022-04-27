@@ -28,6 +28,5 @@ class MainCheckInFragment : BindingFragment<FragmentMainCheckInBinding, MainView
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = mVM
-        binding.vm?.setCommonFun(view)
     }
 }

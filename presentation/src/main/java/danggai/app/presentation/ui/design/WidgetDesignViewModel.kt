@@ -1,18 +1,16 @@
 package danggai.app.presentation.ui.design
 
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BaseViewModel
-import danggai.app.presentation.core.util.Event
-import danggai.app.presentation.core.util.NonNullMutableLiveData
-import danggai.app.presentation.core.util.log
+import danggai.app.presentation.util.Event
+import danggai.app.presentation.util.log
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.resource.repository.ResourceProviderRepository
 import danggai.domain.util.Constant
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,29 +19,27 @@ class WidgetDesignViewModel @Inject constructor(
     private val resource: ResourceProviderRepository,
 ) : BaseViewModel() {
 
-    var lvFinishActivity = MutableLiveData<Event<Boolean>>()
+    val lvWidgetTheme = MutableStateFlow(Constant.PREF_WIDGET_THEME_AUTOMATIC)
+    val lvTransparency = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY)
 
-    var lvWidgetTheme: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_WIDGET_THEME_AUTOMATIC)
-    var lvResinImageVisibility: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE)
-    var lvResinTimeNotation: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
-    var lvDetailTimeNotation: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
+    val lvResinTimeNotation = MutableStateFlow(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
+    val lvResinImageVisibility = MutableStateFlow(Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE)
+    val lvResinFontSize = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE)
 
-    var lvResinDataVisibility: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(true)
-    var lvDailyCommissionDataVisibility: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(true)
-    var lvWeeklyBossDataVisibility: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(true)
-    var lvRealmCurrencyDataVisibility: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(true)
-    var lvExpeditionDataVisibility: NonNullMutableLiveData<Boolean> = NonNullMutableLiveData(true)
-
-    val lvTransparency: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY)
-    val lvFontSizeResin: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_RESIN)
-    val lvFontSizeDetail: NonNullMutableLiveData<Int> = NonNullMutableLiveData(Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_DETAIL)
+    val lvDetailTimeNotation = MutableStateFlow(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
+    val lvResinDataVisibility = MutableStateFlow(true)
+    val lvDailyCommissionDataVisibility = MutableStateFlow(true)
+    val lvWeeklyBossDataVisibility = MutableStateFlow(true)
+    val lvRealmCurrencyDataVisibility = MutableStateFlow(true)
+    val lvExpeditionDataVisibility = MutableStateFlow(true)
+    val lvFontSizeDetail = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
 
     fun initUi() {
         preference.getResinWidgetDesignSettings().let {
             lvWidgetTheme.value = it.widgetTheme
             lvTransparency.value = it.backgroundTransparency
             lvResinTimeNotation.value = it.timeNotation
-            lvFontSizeResin.value = it.fontSize
+            lvResinFontSize.value = it.fontSize
             lvResinImageVisibility.value = it.resinImageVisibility
         }
 
@@ -66,7 +62,7 @@ class WidgetDesignViewModel @Inject constructor(
                 lvWidgetTheme.value,
                 lvResinTimeNotation.value,
                 lvResinImageVisibility.value,
-                lvFontSizeResin.value,
+                lvResinFontSize.value,
                 lvTransparency.value
             )
         )
@@ -85,9 +81,10 @@ class WidgetDesignViewModel @Inject constructor(
             )
         )
 
-        lvMakeToast.value = Event(resource.getString(R.string.msg_toast_save_done))
 
-        lvFinishActivity.value = Event(true)
+        sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_save_done)))
+
+        sendEvent(Event.FinishThisActivity())
     }
     
     fun onClickSave() {
@@ -123,12 +120,12 @@ class WidgetDesignViewModel @Inject constructor(
 
     fun onClickDetailFontSize() {
         log.e()
-        lvFontSizeDetail.value = Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_DETAIL
+        lvFontSizeDetail.value = Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE
     }
 
 
     fun onClickResinFontSize() {
         log.e()
-        lvFontSizeResin.value = Constant.PREF_DEFAULT_WIDGET_FONT_SIZE_RESIN
+        lvResinFontSize.value = Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE
     }
 }

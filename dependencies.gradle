@@ -34,7 +34,7 @@ ext.versions = [
         fragmentKtxVersion      : "1.4.0",
         materialVersion         : "1.4.0",
         constraintVersion       : "2.1.0",
-        lifecycleVersion        : "2.3.1",
+        lifecycleVersion        : "2.4.1",
 
         // coroutine
         coroutineVersion         : "1.6.0",

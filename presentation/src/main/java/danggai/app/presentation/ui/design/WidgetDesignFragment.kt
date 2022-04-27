@@ -9,11 +9,10 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
-import danggai.app.presentation.core.util.EventObserver
-import danggai.app.presentation.core.util.log
 import danggai.app.presentation.databinding.FragmentWidgetDesignBinding
 import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
 import danggai.app.presentation.ui.design.resin.WidgetDesignResinFragment
+import danggai.app.presentation.util.log
 
 @AndroidEntryPoint
 class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, WidgetDesignViewModel>() {
@@ -33,8 +32,14 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = mVM
-        binding.vm?.setCommonFun(view)
+        binding.vm?.setCommonFun()
 
+        initTabLayout()
+
+        initUi()
+    }
+
+    private fun initTabLayout() {
         val pagerAdapter = WidgetDesignAdapter(requireActivity())
 
         pagerAdapter.addFragment(WidgetDesignResinFragment())
@@ -49,12 +54,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
                 else -> ""
             }
         }.attach()
-
-        initUi()
-        initLv()
     }
-
-
 
     private fun initUi() {
         mVM.initUi()
@@ -70,11 +70,4 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
             }
         }
     }
-
-    private fun initLv() {
-        mVM.lvFinishActivity.observe(viewLifecycleOwner, EventObserver {
-            activity?.finish()
-        })
-    }
-
 }
