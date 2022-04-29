@@ -36,7 +36,7 @@ class MainResinFragment : BindingFragment<FragmentMainResinBinding, MainViewMode
     private fun initUi() {
         mVM.initUI()
 
-        when (mVM.lvServer.value) {
+        when (mVM.sfServer.value) {
             Constant.PREF_SERVER_ASIA -> binding.rbAsia.isChecked = true
             Constant.PREF_SERVER_USA -> binding.rbUsa.isChecked = true
             Constant.PREF_SERVER_EUROPE -> binding.rbEuro.isChecked = true
@@ -44,7 +44,7 @@ class MainResinFragment : BindingFragment<FragmentMainResinBinding, MainViewMode
             else -> binding.rbAsia.isChecked = true
         }
 
-        when (mVM.lvAutoRefreshPeriod.value) {
+        when (mVM.sfAutoRefreshPeriod.value) {
             15L -> binding.rb15m.isChecked = true
             30L -> binding.rb30m.isChecked = true
             60L -> binding.rb1h.isChecked = true

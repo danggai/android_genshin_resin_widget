@@ -32,25 +32,25 @@ class MainViewModel @Inject constructor(
     private val changeDataSwitch: ChangeDataSwitchUseCase,
     private val getGameRecordCard: GetGameRecordCardUseCase,
 ) : BaseViewModel() {
-    val lvProgress = MutableStateFlow(false)
+    val sfProgress = MutableStateFlow(false)
 
-    val lvServer = MutableStateFlow(0)
-    val lvAutoRefreshPeriod = MutableStateFlow(15L)
+    val sfServer = MutableStateFlow(0)
+    val sfAutoRefreshPeriod = MutableStateFlow(15L)
 
-    val lvUid = MutableStateFlow("")
-    val lvCookie = MutableStateFlow("")
+    val sfUid = MutableStateFlow("")
+    val sfCookie = MutableStateFlow("")
 
-    val lvEnableNotiEach40Resin = MutableStateFlow(false)
-    val lvEnableNoti140Resin = MutableStateFlow(false)
-    val lvEnableNotiCustomResin = MutableStateFlow(false)
-    val lvCustomNotiResin = MutableStateFlow("0")
-    val lvEnableNotiExpeditionDone = MutableStateFlow(false)
-    val lvEnableNotiHomeCoinFull = MutableStateFlow(false)
+    val sfEnableNotiEach40Resin = MutableStateFlow(false)
+    val sfEnableNoti140Resin = MutableStateFlow(false)
+    val sfEnableNotiCustomResin = MutableStateFlow(false)
+    val sfCustomNotiResin = MutableStateFlow("0")
+    val sfEnableNotiExpeditionDone = MutableStateFlow(false)
+    val sfEnableNotiHomeCoinFull = MutableStateFlow(false)
 
-    val lvEnableGenshinAutoCheckIn = MutableStateFlow(false)
-    val lvEnableHonkai3rdAutoCheckIn = MutableStateFlow(false)
-    val lvEnableNotiCheckinSuccess = MutableStateFlow(false)
-    val lvEnableNotiCheckinFailed = MutableStateFlow(false)
+    val sfEnableGenshinAutoCheckIn = MutableStateFlow(false)
+    val sfEnableHonkai3rdAutoCheckIn = MutableStateFlow(false)
+    val sfEnableNotiCheckinSuccess = MutableStateFlow(false)
+    val sfEnableNotiCheckinFailed = MutableStateFlow(false)
 
     private var _dailyNotePrivateErrorCount = 0
     val dailyNotePrivateErrorCount
@@ -70,12 +70,12 @@ class MainViewModel @Inject constructor(
                 ds = ds,
                 onStart = {
                     CoroutineScope(Dispatchers.Main).launch {
-                        lvProgress.value = true
+                        sfProgress.value = true
                     }
                 },
                 onComplete = {
                     CoroutineScope(Dispatchers.Main).launch {
-                        lvProgress.value = false
+                        sfProgress.value = false
                     }
                 }
             ).collect {
@@ -187,12 +187,12 @@ class MainViewModel @Inject constructor(
                 ds = ds,
                 onStart = {
                     CoroutineScope(Dispatchers.Main).launch {
-                        lvProgress.value = true
+                        sfProgress.value = true
                     }
                 },
                 onComplete = {
                     CoroutineScope(Dispatchers.Main).launch {
-                        lvProgress.value = false
+                        sfProgress.value = false
                     }
                 }
             ).collect {
@@ -243,12 +243,12 @@ class MainViewModel @Inject constructor(
                 ds = ds,
                 onStart = {
                     CoroutineScope(Dispatchers.Main).launch {
-                        lvProgress.value = true
+                        sfProgress.value = true
                     }
                 },
                 onComplete = {
                     CoroutineScope(Dispatchers.Main).launch {
-                        lvProgress.value = false
+                        sfProgress.value = false
                     }
                 }
             ).collect {
@@ -261,7 +261,7 @@ class MainViewModel @Inject constructor(
                                     log.e()
                                     it.data.data.list.forEach { recordCard ->
                                         if (recordCard.game_id == Constant.GAME_ID_GENSHIN_IMPACT)
-                                            lvUid.value = recordCard.game_role_id
+                                            sfUid.value = recordCard.game_role_id
                                     }
                                     sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_get_uid_success)))
                                 } else {
@@ -299,51 +299,51 @@ class MainViewModel @Inject constructor(
     fun initUI() {
         preference.getStringUid().let {
             log.e(it)
-            lvUid.value = it
+            sfUid.value = it
         }
 
         preference.getStringCookie().let {
             log.e(it)
-            lvCookie.value = it
+            sfCookie.value = it
         }
 
         preference.getDailyNoteSettings().let {
-            lvServer.value = it.server
-            lvAutoRefreshPeriod.value = it.autoRefreshPeriod
-            lvEnableNotiEach40Resin.value = it.notiEach40Resin
-            lvEnableNoti140Resin.value = it.noti140Resin
-            lvEnableNotiCustomResin.value = it.notiCustomResin
-            lvCustomNotiResin.value = it.customResin.toString()
-            lvEnableNotiExpeditionDone.value = it.notiExpedition
-            lvEnableNotiHomeCoinFull.value = it.notiHomeCoin
+            sfServer.value = it.server
+            sfAutoRefreshPeriod.value = it.autoRefreshPeriod
+            sfEnableNotiEach40Resin.value = it.notiEach40Resin
+            sfEnableNoti140Resin.value = it.noti140Resin
+            sfEnableNotiCustomResin.value = it.notiCustomResin
+            sfCustomNotiResin.value = it.customResin.toString()
+            sfEnableNotiExpeditionDone.value = it.notiExpedition
+            sfEnableNotiHomeCoinFull.value = it.notiHomeCoin
         }
 
         preference.getCheckInSettings().let {
-            lvEnableGenshinAutoCheckIn.value = it.genshinCheckInEnable
-            lvEnableHonkai3rdAutoCheckIn.value = it.honkai3rdCheckInEnable
-            lvEnableNotiCheckinSuccess.value = it.notiCheckInSuccess
-            lvEnableNotiCheckinFailed.value = it.notiCheckInFailed
+            sfEnableGenshinAutoCheckIn.value = it.genshinCheckInEnable
+            sfEnableHonkai3rdAutoCheckIn.value = it.honkai3rdCheckInEnable
+            sfEnableNotiCheckinSuccess.value = it.notiCheckInSuccess
+            sfEnableNotiCheckinFailed.value = it.notiCheckInFailed
         }
     }
 
     fun onClickSave() {
         log.e()
-        if (lvUid.value.isEmpty() || lvCookie.value.isEmpty())  {
+        if (sfUid.value.isEmpty() || sfCookie.value.isEmpty())  {
             saveWidgetData(false, null)
         } else {
-            lvUid.value = lvUid.value.trim()
-            lvCookie.value = lvCookie.value.trim()
+            sfUid.value = sfUid.value.trim()
+            sfCookie.value = sfCookie.value.trim()
 
             refreshDailyNote(
-                lvUid.value,
-                when (lvServer.value) {
+                sfUid.value,
+                when (sfServer.value) {
                     Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
                     Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
                     Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
                     Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
                     else -> Constant.SERVER_OS_ASIA
                 },
-                lvCookie.value,
+                sfCookie.value,
                 CommonFunction.getGenshinDS()
             )
         }
@@ -354,39 +354,39 @@ class MainViewModel @Inject constructor(
             log.e()
 
             dailyNote?.let {
-                preference.setStringUid(lvUid.value)
-                preference.setStringCookie(lvCookie.value)
+                preference.setStringUid(sfUid.value)
+                preference.setStringCookie(sfCookie.value)
                 preference.setBooleanIsValidUserData(true)
 
                 val customNotiResin: Int = try {
-                    if (lvCustomNotiResin.value.isEmpty()
-                        || lvCustomNotiResin.value.toInt() < 0) 0
-                    else if (lvCustomNotiResin.value.toInt() > dailyNote.max_resin) {
-                        lvCustomNotiResin.value = dailyNote.max_resin.toString()
+                    if (sfCustomNotiResin.value.isEmpty()
+                        || sfCustomNotiResin.value.toInt() < 0) 0
+                    else if (sfCustomNotiResin.value.toInt() > dailyNote.max_resin) {
+                        sfCustomNotiResin.value = dailyNote.max_resin.toString()
                         dailyNote.max_resin
-                    } else lvCustomNotiResin.value.toInt()
+                    } else sfCustomNotiResin.value.toInt()
                 } catch (e:java.lang.Exception) {
                     0
                 }
 
                 preference.setDailyNoteSettings(
                     DailyNoteSettings(
-                        lvServer.value,
-                        lvAutoRefreshPeriod.value,
-                        lvEnableNotiEach40Resin.value,
-                        lvEnableNoti140Resin.value,
-                        lvEnableNotiCustomResin.value,
+                        sfServer.value,
+                        sfAutoRefreshPeriod.value,
+                        sfEnableNotiEach40Resin.value,
+                        sfEnableNoti140Resin.value,
+                        sfEnableNotiCustomResin.value,
                         customNotiResin,
-                        lvEnableNotiExpeditionDone.value,
-                        lvEnableNotiHomeCoinFull.value
+                        sfEnableNotiExpeditionDone.value,
+                        sfEnableNotiHomeCoinFull.value
                     )
                 )
             }
 
             sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_save_done)))
-        } else if (!isDataValid and lvUid.value.isEmpty()) {
+        } else if (!isDataValid and sfUid.value.isEmpty()) {
             sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_uid_empty_error)))
-        } else if (!isDataValid and lvCookie.value.isEmpty()) {
+        } else if (!isDataValid and sfCookie.value.isEmpty()) {
             sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_cookie_empty_error)))
         }
     }
@@ -395,23 +395,23 @@ class MainViewModel @Inject constructor(
         if (isDataValid) {
             log.e()
             preference.setBooleanIsValidUserData(true)
-            preference.setStringCookie(lvCookie.value)
+            preference.setStringCookie(sfCookie.value)
 
             preference.setCheckInSettings(
                 CheckInSettings(
-                    lvEnableGenshinAutoCheckIn.value,
-                    lvEnableHonkai3rdAutoCheckIn.value,
-                    lvEnableNotiCheckinSuccess.value,
-                    lvEnableNotiCheckinFailed.value
+                    sfEnableGenshinAutoCheckIn.value,
+                    sfEnableHonkai3rdAutoCheckIn.value,
+                    sfEnableNotiCheckinSuccess.value,
+                    sfEnableNotiCheckinFailed.value
                 )
             )
 
-            if (!lvEnableGenshinAutoCheckIn.value &&
-                !lvEnableHonkai3rdAutoCheckIn.value)
+            if (!sfEnableGenshinAutoCheckIn.value &&
+                !sfEnableHonkai3rdAutoCheckIn.value)
                 sendEvent(Event.StartShutCheckInWorker(false))
 
             sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_save_done_check_in)))
-        } else if (!isDataValid and lvCookie.value.isEmpty()) {
+        } else if (!isDataValid and sfCookie.value.isEmpty()) {
             sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_cookie_empty_error)))
         }
     }
@@ -426,7 +426,7 @@ class MainViewModel @Inject constructor(
 
         preference.setDailyNote(dailyNote)
 
-        if (lvAutoRefreshPeriod.value == -1L) {
+        if (sfAutoRefreshPeriod.value == -1L) {
             sendEvent(Event.StartShutRefreshWorker(false))
         } else {
             sendEvent(Event.StartShutRefreshWorker(true))
@@ -444,10 +444,10 @@ class MainViewModel @Inject constructor(
 
     fun onClickCheckInSave() {
         log.e()
-        if (lvCookie.value.isEmpty())  {
+        if (sfCookie.value.isEmpty())  {
             saveCheckInData(false)
         } else {
-            lvCookie.value = lvCookie.value.trim()
+            sfCookie.value = sfCookie.value.trim()
             saveCheckInData(true)
             startCheckIn()
         }
@@ -460,12 +460,12 @@ class MainViewModel @Inject constructor(
 
     fun onClickSetServer(server: Constant.Server) {
         log.e("server -> $server")
-        lvServer.value = server.pref
+        sfServer.value = server.pref
     }
 
     fun onClickSetAutoRefreshPeriod(period: Long) {
         log.e("period -> $period")
-        lvAutoRefreshPeriod.value = period
+        sfAutoRefreshPeriod.value = period
     }
 
     fun onClickWidgetDesign() {
@@ -480,14 +480,14 @@ class MainViewModel @Inject constructor(
 
     fun onClickGetUid() {
         log.e()
-        if (!lvCookie.value.contains(("ltuid="))) {
+        if (!sfCookie.value.contains(("ltuid="))) {
             sendEvent(Event.MakeToast("ltuid 없음"))
             return
         }
 
         val cookieData = mutableMapOf<String, String>()
 
-        lvCookie.value.split(";").onEach { item ->
+        sfCookie.value.split(";").onEach { item ->
             if (item == "") return@onEach
 
             val parsedKeyValue = item.trim().split("=")
@@ -496,7 +496,7 @@ class MainViewModel @Inject constructor(
 
         getUid(
             cookieData["ltuid"]?:"",
-            lvCookie.value,
+            sfCookie.value,
             CommonFunction.getGenshinDS()
         )
     }
@@ -507,7 +507,7 @@ class MainViewModel @Inject constructor(
             gameId = 2,
             switchId = 3,
             isPublic = true,
-            cookie = lvCookie.value,
+            cookie = sfCookie.value,
             ds = CommonFunction.getGenshinDS()
         )
     }

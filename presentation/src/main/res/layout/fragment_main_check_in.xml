@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_cookie"
                     android:singleLine="true"
-                    android:text="@={vm.lvCookie}"
+                    android:text="@={vm.sfCookie}"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
                     android:textSize="16sp" />
@@ -86,7 +86,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:checked="@={vm.lvEnableGenshinAutoCheckIn}"
+                        android:checked="@={vm.sfEnableGenshinAutoCheckIn}"
                         android:text="@string/btn_auto_check_in_enable"
                         android:textSize="14sp"
                         app:buttonTint="@color/checkbox_filter_tint" />
@@ -96,7 +96,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:checked="@={vm.lvEnableHonkai3rdAutoCheckIn}"
+                        android:checked="@={vm.sfEnableHonkai3rdAutoCheckIn}"
                         android:text="@string/btn_auto_check_in_enable_honkai_3rd"
                         android:textSize="14sp"
                         app:buttonTint="@color/checkbox_filter_tint" />
@@ -124,7 +124,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:checked="@={vm.lvEnableNotiCheckinSuccess}"
+                        android:checked="@={vm.sfEnableNotiCheckinSuccess}"
                         android:text="@string/btn_check_in_success"
                         android:textSize="14sp"
                         app:buttonTint="@color/checkbox_filter_tint" />
@@ -134,7 +134,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:checked="@={vm.lvEnableNotiCheckinFailed}"
+                        android:checked="@={vm.sfEnableNotiCheckinFailed}"
                         android:text="@string/btn_check_in_failed"
                         android:textSize="14sp"
                         app:buttonTint="@color/checkbox_filter_tint" />

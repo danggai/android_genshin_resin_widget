@@ -77,7 +77,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:clickable="true"
             android:focusable="true"
-            android:visibility="@{vm.lvProgress ?View.VISIBLE :View.GONE}"
+            android:visibility="@{vm.sfProgress ?View.VISIBLE :View.GONE}"
             >
 
             <ProgressBar

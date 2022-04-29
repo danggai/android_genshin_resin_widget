@@ -186,7 +186,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@{vm.lvResinFontSize.toString()}"
+                        android:text="@{vm.sfResinFontSize.toString()}"
                         android:hint="030"
                         android:textSize="20sp"
                         android:textColor="@color/black"
@@ -197,7 +197,7 @@
                     <androidx.appcompat.widget.AppCompatSeekBar
                         style="@style/SeekBar"
                         android:id="@+id/sb_fontsize"
-                        android:progress="@={vm.lvResinFontSize}"
+                        android:progress="@={vm.sfResinFontSize}"
                         android:max="100"
                         android:min="20"
                         />
@@ -232,7 +232,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@{vm.lvTransparency.toString()}"
+                        android:text="@{vm.sfTransparency.toString()}"
                         android:hint="170"
                         android:textSize="20sp"
                         android:textColor="@color/black"
@@ -243,7 +243,7 @@
                     <androidx.appcompat.widget.AppCompatSeekBar
                         style="@style/SeekBar"
                         android:id="@+id/sb_transparent"
-                        android:progress="@={vm.lvTransparency}"
+                        android:progress="@={vm.sfTransparency}"
                         android:max="255"
                         />
 

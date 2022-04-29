@@ -19,38 +19,38 @@ class WidgetDesignViewModel @Inject constructor(
     private val resource: ResourceProviderRepository,
 ) : BaseViewModel() {
 
-    val lvWidgetTheme = MutableStateFlow(Constant.PREF_WIDGET_THEME_AUTOMATIC)
-    val lvTransparency = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY)
+    val sfWidgetTheme = MutableStateFlow(Constant.PREF_WIDGET_THEME_AUTOMATIC)
+    val sfTransparency = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY)
 
-    val lvResinTimeNotation = MutableStateFlow(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
-    val lvResinImageVisibility = MutableStateFlow(Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE)
-    val lvResinFontSize = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE)
+    val sfResinTimeNotation = MutableStateFlow(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
+    val sfResinImageVisibility = MutableStateFlow(Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE)
+    val sfResinFontSize = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE)
 
-    val lvDetailTimeNotation = MutableStateFlow(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
-    val lvResinDataVisibility = MutableStateFlow(true)
-    val lvDailyCommissionDataVisibility = MutableStateFlow(true)
-    val lvWeeklyBossDataVisibility = MutableStateFlow(true)
-    val lvRealmCurrencyDataVisibility = MutableStateFlow(true)
-    val lvExpeditionDataVisibility = MutableStateFlow(true)
-    val lvFontSizeDetail = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
+    val sfDetailTimeNotation = MutableStateFlow(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
+    val sfResinDataVisibility = MutableStateFlow(true)
+    val sfDailyCommissionDataVisibility = MutableStateFlow(true)
+    val sfWeeklyBossDataVisibility = MutableStateFlow(true)
+    val sfRealmCurrencyDataVisibility = MutableStateFlow(true)
+    val sfExpeditionDataVisibility = MutableStateFlow(true)
+    val sfFontSizeDetail = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
 
     fun initUi() {
         preference.getResinWidgetDesignSettings().let {
-            lvWidgetTheme.value = it.widgetTheme
-            lvTransparency.value = it.backgroundTransparency
-            lvResinTimeNotation.value = it.timeNotation
-            lvResinFontSize.value = it.fontSize
-            lvResinImageVisibility.value = it.resinImageVisibility
+            sfWidgetTheme.value = it.widgetTheme
+            sfTransparency.value = it.backgroundTransparency
+            sfResinTimeNotation.value = it.timeNotation
+            sfResinFontSize.value = it.fontSize
+            sfResinImageVisibility.value = it.resinImageVisibility
         }
 
         preference.getDetailWidgetDesignSettings().let {
-            lvDetailTimeNotation.value = it.timeNotation
-            lvFontSizeDetail.value = it.fontSize
-            lvResinDataVisibility.value = it.resinDataVisibility
-            lvDailyCommissionDataVisibility.value = it.dailyCommissinDataVisibility
-            lvWeeklyBossDataVisibility.value = it.weeklyBossDataVisibility
-            lvRealmCurrencyDataVisibility.value = it.realmCurrencyDataVisibility
-            lvExpeditionDataVisibility.value = it.expeditionDataVisibility
+            sfDetailTimeNotation.value = it.timeNotation
+            sfFontSizeDetail.value = it.fontSize
+            sfResinDataVisibility.value = it.resinDataVisibility
+            sfDailyCommissionDataVisibility.value = it.dailyCommissinDataVisibility
+            sfWeeklyBossDataVisibility.value = it.weeklyBossDataVisibility
+            sfRealmCurrencyDataVisibility.value = it.realmCurrencyDataVisibility
+            sfExpeditionDataVisibility.value = it.expeditionDataVisibility
         }
     }
 
@@ -59,25 +59,25 @@ class WidgetDesignViewModel @Inject constructor(
 
         preference.setResinWidgetDesignSettings(
             ResinWidgetDesignSettings(
-                lvWidgetTheme.value,
-                lvResinTimeNotation.value,
-                lvResinImageVisibility.value,
-                lvResinFontSize.value,
-                lvTransparency.value
+                sfWidgetTheme.value,
+                sfResinTimeNotation.value,
+                sfResinImageVisibility.value,
+                sfResinFontSize.value,
+                sfTransparency.value
             )
         )
 
         preference.setDetailWidgetDesignSettings(
             DetailWidgetDesignSettings(
-                lvWidgetTheme.value,
-                lvDetailTimeNotation.value,
-                lvResinDataVisibility.value,
-                lvDailyCommissionDataVisibility.value,
-                lvWeeklyBossDataVisibility.value,
-                lvRealmCurrencyDataVisibility.value,
-                lvExpeditionDataVisibility.value,
-                lvFontSizeDetail.value,
-                lvTransparency.value
+                sfWidgetTheme.value,
+                sfDetailTimeNotation.value,
+                sfResinDataVisibility.value,
+                sfDailyCommissionDataVisibility.value,
+                sfWeeklyBossDataVisibility.value,
+                sfRealmCurrencyDataVisibility.value,
+                sfExpeditionDataVisibility.value,
+                sfFontSizeDetail.value,
+                sfTransparency.value
             )
         )
 
@@ -94,38 +94,38 @@ class WidgetDesignViewModel @Inject constructor(
 
     fun onClickWidgetTheme(widgetTheme: Constant.WidgetTheme) {
         log.e("widgetTheme -> $widgetTheme")
-        lvWidgetTheme.value = widgetTheme.pref
+        sfWidgetTheme.value = widgetTheme.pref
     }
 
     fun onClickResinImageVisible(resinImageVisibility: Constant.ResinImageVisibility) {
         log.e("resinImageVisibility -> $resinImageVisibility")
-        lvResinImageVisibility.value = resinImageVisibility.pref
+        sfResinImageVisibility.value = resinImageVisibility.pref
     }
 
     fun onClickSetResinTimeNotation(timeNotation: Constant.TimeNotation) {
         log.e("timeNotation -> $timeNotation")
-        lvResinTimeNotation.value = timeNotation.pref
+        sfResinTimeNotation.value = timeNotation.pref
     }
 
     fun onClickSetDetailTimeNotation(timeNotation: Constant.TimeNotation) {
         log.e("timeNotation -> $timeNotation")
-        lvDetailTimeNotation.value = timeNotation.pref
+        sfDetailTimeNotation.value = timeNotation.pref
     }
 
     fun onClickBackgroundTransparent() {
         log.e()
-        lvTransparency.value = Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY
+        sfTransparency.value = Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY
     }
 
 
     fun onClickDetailFontSize() {
         log.e()
-        lvFontSizeDetail.value = Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE
+        sfFontSizeDetail.value = Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE
     }
 
 
     fun onClickResinFontSize() {
         log.e()
-        lvResinFontSize.value = Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE
+        sfResinFontSize.value = Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE
     }
 }

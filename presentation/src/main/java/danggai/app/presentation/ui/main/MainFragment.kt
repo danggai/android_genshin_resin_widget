@@ -60,7 +60,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             try {
                 log.e()
                 val cookie = it.getStringExtra(MainActivity.ARG_PARAM_COOKIE)!!
-                mVM.lvCookie.value = cookie
+                mVM.sfCookie.value = cookie
             } catch (e: Exception) {
                 log.e(e.toString())
             }

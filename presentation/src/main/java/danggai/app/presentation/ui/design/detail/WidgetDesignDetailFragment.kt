@@ -48,14 +48,14 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
             it.llDisable.visibility = View.GONE
         }
 
-        when(mVM.lvDetailTimeNotation.value) {
+        when(mVM.sfDetailTimeNotation.value) {
             Constant.PREF_TIME_NOTATION_REMAIN_TIME -> binding.rbRemainTime.isChecked = true
             Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked = true
             Constant.PREF_TIME_NOTATION_DISABLE -> binding.rbDisableTime.isChecked = true
             else -> binding.rbRemainTime.isChecked = true
         }
 
-        when(mVM.lvWidgetTheme.value) {
+        when(mVM.sfWidgetTheme.value) {
             Constant.PREF_WIDGET_THEME_AUTOMATIC -> binding.rbThemeAutomatic.isChecked = true
             Constant.PREF_WIDGET_THEME_LIGHT -> binding.rbThemeLight.isChecked = true
             Constant.PREF_WIDGET_THEME_DARK -> binding.rbThemeDark.isChecked = true
@@ -66,16 +66,16 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
     private fun initLv() {
         viewLifecycleOwner.repeatOnLifeCycleStarted {
             launch {
-                mVM.lvTransparency.collect {
+                mVM.sfTransparency.collect {
                     context?.let { _context ->
                         val unwrappedDrawable = AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
                         val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
 
-                        val color: Int = if (mVM.lvWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) getColor(_context, R.color.white)
-                        else if ((mVM.lvWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) getColor(_context, R.color.black)
+                        val color: Int = if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) getColor(_context, R.color.white)
+                        else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) getColor(_context, R.color.black)
                         else getColor(_context, R.color.white)
 
-                        DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(color, mVM.lvTransparency.value))
+                        DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(color, mVM.sfTransparency.value))
 
                         binding.widget.llRoot.background = wrappedDrawable
                     }
@@ -83,7 +83,7 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
             }
 
             launch {
-                mVM.lvFontSizeDetail.collect {
+                mVM.sfFontSizeDetail.collect {
                     binding.widget.tvResin.textSize = it.toFloat()
                     binding.widget.tvResinTitle.textSize = it.toFloat()
                     binding.widget.tvResinTime.textSize = it.toFloat()
@@ -104,7 +104,7 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
             }
 
             launch {
-                mVM.lvFontSizeDetail.collect {
+                mVM.sfFontSizeDetail.collect {
                     binding.widget.tvResin.textSize = it.toFloat()
                     binding.widget.tvResinTitle.textSize = it.toFloat()
                     binding.widget.tvResinTime.textSize = it.toFloat()
@@ -125,31 +125,31 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
             }
 
             launch {
-                mVM.lvWidgetTheme.collect {
+                mVM.sfWidgetTheme.collect {
                     context?.let { _context ->
                         log.e()
                         val unwrappedDrawable = AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
                         val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
 
-                        val bgColor: Int =  if (mVM.lvWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) {
-                            ColorUtils.setAlphaComponent(getColor(_context, R.color.white), mVM.lvTransparency.value)
-                        } else if ((mVM.lvWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
-                            ColorUtils.setAlphaComponent(getColor(_context, R.color.black), mVM.lvTransparency.value)
+                        val bgColor: Int =  if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) {
+                            ColorUtils.setAlphaComponent(getColor(_context, R.color.white), mVM.sfTransparency.value)
+                        } else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
+                            ColorUtils.setAlphaComponent(getColor(_context, R.color.black), mVM.sfTransparency.value)
                         } else {
-                            ColorUtils.setAlphaComponent(getColor(_context, R.color.white), mVM.lvTransparency.value)
+                            ColorUtils.setAlphaComponent(getColor(_context, R.color.white), mVM.sfTransparency.value)
                         }
 
-                        val mainFontColor: Int =  if (mVM.lvWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) {
+                        val mainFontColor: Int =  if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) {
                             R.color.widget_font_main_light
-                        } else if ((mVM.lvWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
+                        } else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
                             R.color.widget_font_main_dark
                         } else {
                             R.color.widget_font_main_light
                         }
 
-                        val subFontColor: Int = if (mVM.lvWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) {
+                        val subFontColor: Int = if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) {
                             R.color.widget_font_sub_light
-                        } else if ((mVM.lvWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
+                        } else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
                             R.color.widget_font_sub_dark
                         } else {
                             R.color.widget_font_sub_light
@@ -183,15 +183,15 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
             }
 
             launch {
-                mVM.lvDetailTimeNotation.collect {
+                mVM.sfDetailTimeNotation.collect {
                     context?.let { _context ->
                         log.e()
 
-                        when (mVM.lvDetailTimeNotation.value) {
+                        when (mVM.sfDetailTimeNotation.value) {
                             Constant.PREF_TIME_NOTATION_REMAIN_TIME -> {
-                                binding.widget.rlResinTime.visibility = if (mVM.lvResinDataVisibility.value) View.VISIBLE else View.GONE
-                                binding.widget.rlExpeditionTime.visibility = if (mVM.lvExpeditionDataVisibility.value) View.VISIBLE else View.GONE
-                                binding.widget.rlRealmCurrencyTime.visibility = if (mVM.lvRealmCurrencyDataVisibility.value) View.VISIBLE else View.GONE
+                                binding.widget.rlResinTime.visibility = if (mVM.sfResinDataVisibility.value) View.VISIBLE else View.GONE
+                                binding.widget.rlExpeditionTime.visibility = if (mVM.sfExpeditionDataVisibility.value) View.VISIBLE else View.GONE
+                                binding.widget.rlRealmCurrencyTime.visibility = if (mVM.sfRealmCurrencyDataVisibility.value) View.VISIBLE else View.GONE
 
                                 binding.widget.tvResinTimeTitle.text = _context.getString(R.string.until_fully_replenished)
                                 binding.widget.tvResinTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
@@ -201,9 +201,9 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                                 binding.widget.tvExpeditionTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
                             }
                             Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME ->  {
-                                binding.widget.rlResinTime.visibility = if (mVM.lvResinDataVisibility.value) View.VISIBLE else View.GONE
-                                binding.widget.rlExpeditionTime.visibility = if (mVM.lvExpeditionDataVisibility.value) View.VISIBLE else View.GONE
-                                binding.widget.rlRealmCurrencyTime.visibility = if (mVM.lvRealmCurrencyDataVisibility.value) View.VISIBLE else View.GONE
+                                binding.widget.rlResinTime.visibility = if (mVM.sfResinDataVisibility.value) View.VISIBLE else View.GONE
+                                binding.widget.rlExpeditionTime.visibility = if (mVM.sfExpeditionDataVisibility.value) View.VISIBLE else View.GONE
+                                binding.widget.rlRealmCurrencyTime.visibility = if (mVM.sfRealmCurrencyDataVisibility.value) View.VISIBLE else View.GONE
 
                                 binding.widget.tvResinTimeTitle.text = _context.getString(R.string.when_fully_replenished)
                                 binding.widget.tvResinTime.text = String.format(getString(R.string.widget_ui_today), 0, 0)
@@ -223,40 +223,40 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
             }
 
             launch {
-                mVM.lvResinDataVisibility.collect {
+                mVM.sfResinDataVisibility.collect {
                     log.e()
                     binding.widget.rlResin.visibility = if (it) View.VISIBLE else View.GONE
-                    binding.widget.rlResinTime.visibility = if (it && mVM.lvDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
+                    binding.widget.rlResinTime.visibility = if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
                 }
             }
 
             launch {
-                mVM.lvDailyCommissionDataVisibility.collect {
+                mVM.sfDailyCommissionDataVisibility.collect {
                     log.e()
                     binding.widget.rlDailyCommission.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
 
             launch {
-                mVM.lvWeeklyBossDataVisibility.collect {
+                mVM.sfWeeklyBossDataVisibility.collect {
                     log.e()
                     binding.widget.rlWeeklyBoss.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
 
             launch {
-                mVM.lvRealmCurrencyDataVisibility.collect {
+                mVM.sfRealmCurrencyDataVisibility.collect {
                     log.e()
                     binding.widget.rlRealmCurrency.visibility = if (it) View.VISIBLE else View.GONE
-                    binding.widget.rlRealmCurrencyTime.visibility = if (it && mVM.lvDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
+                    binding.widget.rlRealmCurrencyTime.visibility = if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
                 }
             }
 
             launch {
-                mVM.lvExpeditionDataVisibility.collect {
+                mVM.sfExpeditionDataVisibility.collect {
                     log.e()
                     binding.widget.rlExpedition.visibility = if (it) View.VISIBLE else View.GONE
-                    binding.widget.rlExpeditionTime.visibility = if (it && mVM.lvDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
+                    binding.widget.rlExpeditionTime.visibility = if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
                 }
             }
         }

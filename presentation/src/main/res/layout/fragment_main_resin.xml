@@ -103,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_cookie"
                     android:singleLine="true"
-                    android:text="@={vm.lvCookie}"
+                    android:text="@={vm.sfCookie}"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
                     android:textSize="16sp" />
@@ -135,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_uid"
                     android:singleLine="true"
-                    android:text="@={vm.lvUid}"
+                    android:text="@={vm.sfUid}"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
                     android:textSize="16sp" />
@@ -226,7 +226,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:checked="@={vm.lvEnableNotiEach40Resin}"
+                        android:checked="@={vm.sfEnableNotiEach40Resin}"
                         android:text="@string/btn_each_40_resin"
                         android:textSize="14sp"
                         app:buttonTint="@color/checkbox_filter_tint" />
@@ -236,7 +236,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:checked="@={vm.lvEnableNoti140Resin}"
+                        android:checked="@={vm.sfEnableNoti140Resin}"
                         android:text="@string/btn_140_resin"
                         android:textSize="14sp"
                         app:buttonTint="@color/checkbox_filter_tint" />
@@ -251,7 +251,7 @@
                             android:id="@+id/cb_custom_resin"
                             android:layout_width="30dp"
                             android:layout_height="match_parent"
-                            android:checked="@={vm.lvEnableNotiCustomResin}"
+                            android:checked="@={vm.sfEnableNotiCustomResin}"
                             app:buttonTint="@color/checkbox_filter_tint" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -265,7 +265,7 @@
                             android:maxLength="4"
                             android:paddingHorizontal="8dp"
                             android:singleLine="true"
-                            android:text="@={vm.lvCustomNotiResin}"
+                            android:text="@={vm.sfCustomNotiResin}"
                             android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -288,7 +288,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:checked="@={vm.lvEnableNotiExpeditionDone}"
+                        android:checked="@={vm.sfEnableNotiExpeditionDone}"
                         android:text="@string/btn_expedition_done"
                         android:textSize="14sp"
                         app:buttonTint="@color/checkbox_filter_tint" />
@@ -298,7 +298,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:checked="@={vm.lvEnableNotiHomeCoinFull}"
+                        android:checked="@={vm.sfEnableNotiHomeCoinFull}"
                         android:text="@string/btn_home_coin_full"
                         android:textSize="14sp"
                         app:buttonTint="@color/checkbox_filter_tint" />
