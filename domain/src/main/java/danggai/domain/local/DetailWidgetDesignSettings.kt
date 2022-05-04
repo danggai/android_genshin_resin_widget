@@ -10,6 +10,7 @@ data class DetailWidgetDesignSettings(
     val weeklyBossDataVisibility: Boolean,
     val realmCurrencyDataVisibility: Boolean,
     val expeditionDataVisibility: Boolean,
+    val transformerDataVisibility: Boolean = true,
     val fontSize: Int,
     val backgroundTransparency: Int
 ) {
@@ -22,6 +23,7 @@ data class DetailWidgetDesignSettings(
             weeklyBossDataVisibility = true,
             realmCurrencyDataVisibility = true,
             expeditionDataVisibility = true,
+            transformerDataVisibility = true,
             fontSize = Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE,
             backgroundTransparency = Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY
         )

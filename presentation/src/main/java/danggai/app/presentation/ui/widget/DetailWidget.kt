@@ -165,8 +165,17 @@ class DetailWidget() : AppWidgetProvider() {
                 view.setTextViewText(R.id.tv_expedition_title, _context.getString(R.string.number_of_expedition))
                 view.setTextViewText(R.id.tv_expedition, dailyNote.current_expedition_num.toString()+"/"+dailyNote.max_expedition_num.toString())
 
-                view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME))
+                view.setTextViewText(R.id.tv_transformer_title, _context.getString(R.string.parametric_transformer))
+                view.setTextViewText(R.id.tv_transformer,
+                    when {
+                        dailyNote.transformer == null -> _context.getString(R.string.widget_ui_unknown)
+                        !dailyNote.transformer!!.obtained -> _context.getString(R.string.widget_ui_transformer_not_obtained)
+                        !dailyNote.transformer!!.recovery_time.reached -> _context.getString(R.string.widget_ui_transformer_not_reached)
+                        else -> _context.getString(R.string.widget_ui_transformer_reached)
+                    }
+                )
 
+                view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME))
 
                 when (widgetDesign.timeNotation) {
                     Constant.PREF_TIME_NOTATION_REMAIN_TIME -> {
@@ -177,38 +186,63 @@ class DetailWidget() : AppWidgetProvider() {
                         view.setTextViewText(R.id.tv_realm_currency_time, CommonFunction.secondToRemainTime(_context, dailyNote.home_coin_recovery_time))
                         view.setTextViewText(R.id.tv_expedition_time_title, _context.getString(R.string.until_all_completed))
                         view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getString(context, Constant.PREF_EXPEDITION_TIME)))
+                        view.setTextViewText(R.id.tv_transformer_time_title, _context.getString(R.string.until_reusable))
+
+                        view.setTextViewText(R.id.tv_transformer_time,
+                            if (dailyNote.transformer != null) CommonFunction.secondToRemainTime(_context, CommonFunction.transformerTimeToSecond(dailyNote.transformer!!.recovery_time))
+                            else _context.getString(R.string.widget_ui_unknown)
+                        )
                     }
                     Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
                         log.e()
-                        view.setTextViewText(R.id.tv_resin_time_title, _context.getString(R.string.when_fully_replenished))
-                        view.setTextViewText(R.id.tv_resin_time, CommonFunction.secondToTime(_context, dailyNote.resin_recovery_time, false))
-                        view.setTextViewText(R.id.tv_realm_currency_time_title, _context.getString(R.string.when_fully_replenished))
-                        view.setTextViewText(R.id.tv_realm_currency_time, CommonFunction.secondToTime(_context, dailyNote.home_coin_recovery_time, true))
+                        view.setTextViewText(R.id.tv_resin_time_title, _context.getString(R.string.estimated_replenishment_time))
+                        view.setTextViewText(R.id.tv_resin_time, CommonFunction.secondToTime(_context, dailyNote.resin_recovery_time, false, isMaxParam = true))
+                        view.setTextViewText(R.id.tv_realm_currency_time_title, _context.getString(R.string.estimated_replenishment_time))
+                        view.setTextViewText(R.id.tv_realm_currency_time, CommonFunction.secondToTime(_context, dailyNote.home_coin_recovery_time, true, isMaxParam = true))
                         view.setTextViewText(R.id.tv_expedition_time_title, _context.getString(R.string.estimated_completion_time))
-                        view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToTime(_context, PreferenceManager.getString(context, Constant.PREF_EXPEDITION_TIME), false))
-                    }
-                    else -> {
-                        log.e()
-                        view.setTextViewText(R.id.tv_resin_time_title, _context.getString(R.string.until_fully_replenished))
-                        view.setTextViewText(R.id.tv_resin_time, CommonFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time))
-                        view.setTextViewText(R.id.tv_realm_currency_time_title, _context.getString(R.string.until_fully_replenished))
-                        view.setTextViewText(R.id.tv_realm_currency_time, CommonFunction.secondToRemainTime(_context, dailyNote.home_coin_recovery_time))
-                        view.setTextViewText(R.id.tv_expedition_time_title, _context.getString(R.string.until_all_completed))
-                        view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToRemainTime(_context, PreferenceManager.getString(context, Constant.PREF_EXPEDITION_TIME)))
+                        view.setTextViewText(R.id.tv_expedition_time, CommonFunction.secondToTime(_context, PreferenceManager.getString(context, Constant.PREF_EXPEDITION_TIME), false, isDoneParam = true))
+                        view.setTextViewText(R.id.tv_transformer_time_title, _context.getString(R.string.estimated_reusable_time))
+
+                        view.setTextViewText(R.id.tv_transformer_time,
+                            if (dailyNote.transformer != null) CommonFunction.secondToTime(_context, CommonFunction.transformerTimeToSecond(dailyNote.transformer!!.recovery_time), true, isDoneParam = true)
+                            else _context.getString(R.string.widget_ui_unknown)
+                        )
                     }
                 }
 
-                view.setViewVisibility(R.id.rl_resin, if (widgetDesign.resinDataVisibility) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_resin_time, if (widgetDesign.resinDataVisibility && widgetDesign.timeNotation != Constant.PREF_TIME_NOTATION_DISABLE)
-                    View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_daily_commission, if (widgetDesign.dailyCommissinDataVisibility) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_weekly_boss, if (widgetDesign.weeklyBossDataVisibility) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_realm_currency, if (widgetDesign.realmCurrencyDataVisibility) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_realm_currency_time, if (widgetDesign.realmCurrencyDataVisibility && widgetDesign.timeNotation != Constant.PREF_TIME_NOTATION_DISABLE)
-                    View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_expedition, if (widgetDesign.expeditionDataVisibility) View.VISIBLE else View.GONE)
-                view.setViewVisibility(R.id.rl_expedition_time, if (widgetDesign.expeditionDataVisibility && widgetDesign.timeNotation != Constant.PREF_TIME_NOTATION_DISABLE)
-                    View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_resin,
+                    if (widgetDesign.resinDataVisibility) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_resin_time,
+                    if (widgetDesign.resinDataVisibility &&
+                        widgetDesign.timeNotation != Constant.PREF_TIME_NOTATION_DISABLE
+                    ) View.VISIBLE else View.GONE)
+
+                view.setViewVisibility(R.id.rl_daily_commission,
+                    if (widgetDesign.dailyCommissinDataVisibility) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_weekly_boss,
+                    if (widgetDesign.weeklyBossDataVisibility) View.VISIBLE else View.GONE)
+
+                view.setViewVisibility(R.id.rl_realm_currency,
+                    if (widgetDesign.realmCurrencyDataVisibility) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_realm_currency_time,
+                    if (widgetDesign.realmCurrencyDataVisibility &&
+                        widgetDesign.timeNotation != Constant.PREF_TIME_NOTATION_DISABLE
+                    ) View.VISIBLE else View.GONE)
+
+                view.setViewVisibility(R.id.rl_expedition,
+                    if (widgetDesign.expeditionDataVisibility) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_expedition_time,
+                    if (widgetDesign.expeditionDataVisibility &&
+                        widgetDesign.timeNotation != Constant.PREF_TIME_NOTATION_DISABLE
+                    ) View.VISIBLE else View.GONE)
+
+                view.setViewVisibility(R.id.rl_transformer,
+                    if (widgetDesign.transformerDataVisibility) View.VISIBLE else View.GONE)
+                view.setViewVisibility(R.id.rl_transformer_time,
+                    if (widgetDesign.transformerDataVisibility &&
+                        widgetDesign.timeNotation != Constant.PREF_TIME_NOTATION_DISABLE &&
+                        dailyNote.transformer?.obtained == true
+                    ) View.VISIBLE else View.GONE)
             }
         }
     }

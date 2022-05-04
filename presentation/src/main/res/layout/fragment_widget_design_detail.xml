@@ -206,6 +206,21 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/cb_parametric_transformer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:checked="@={vm.sfTransformerDataVisibility}"
+                        android:text="@string/parametric_transformer"
+                        android:textSize="14sp"
+                        app:buttonTint="@color/checkbox_filter_tint" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <Space
                     android:layout_width="wrap_content"

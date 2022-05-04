@@ -156,17 +156,24 @@
     <string name="widget_ui_max_time">%02d:%02d에 가득 참</string>
     <string name="widget_ui_today">오늘 %02d:%02d</string>
     <string name="widget_ui_date">%s %02d:%02d</string>
-    <string name="widget_ui_max_time_resin_max">이미 가득 참</string>
-    <string name="widget_ui_max_time_expedition_done">이미 완료 됨</string>
+    <string name="widget_ui_parameter_max">가득 참</string>
+    <string name="widget_ui_parameter_done">완료 됨</string>
+    <string name="widget_ui_transformer_not_obtained">미해금</string>
+    <string name="widget_ui_transformer_not_reached">준비 중</string>
+    <string name="widget_ui_transformer_reached">준비 완료</string>
+    <string name="widget_ui_unknown">알 수 없음</string>
 
-    <string name="until_fully_replenished">전부 충전까지</string>
-    <string name="when_fully_replenished">완충 예정 시각</string>
     <string name="daily_commissions">남은 일일 의뢰</string>
     <string name="enemies_of_note">주간 보스 할인</string>
     <string name="number_of_expedition">탐사 진행 수</string>
+    <string name="parametric_transformer">매개변수 변환기</string>
     <string name="realm_currency">선계 주화</string>
+    <string name="until_fully_replenished">전부 충전까지</string>
+    <string name="estimated_replenishment_time">완충 예정 시각</string>
     <string name="until_all_completed">모두 완료까지</string>
-    <string name="estimated_completion_time">예상 완료 시간</string>
+    <string name="estimated_completion_time">완료 예정 시각</string>
+    <string name="until_reusable">재사용 가능까지</string>
+    <string name="estimated_reusable_time">재사용 예정 시각</string>
 
     <string name="foreground_genshin_check_in_progress">호요랩 원신 출석체크 진행 중</string>
 
@@ -180,5 +187,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 이제 붕괴3rd 웹 출석체크를 자동으로 진행할 수 있습니다.\n- 이제 자동 출석체크 진행 시 앱에서 설정한 언어로 우편을 수신합니다.</string>
+    <string name="dialog_msg_patch_note">- 이제 Detail Widget에서 매개변수 변환기 대기 시간을 알 수 있습니다.</string>
 </resources>

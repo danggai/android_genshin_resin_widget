@@ -24,6 +24,7 @@ import danggai.domain.local.DailyNoteSettings
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
+import danggai.domain.network.dailynote.entity.TransformerTime
 import danggai.domain.util.Constant
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -108,52 +109,32 @@ object CommonFunction {
         FirebaseCrashlytics.getInstance().setCustomKeys(keysAndValues)
     }
 
-    fun secondToTime(context: Context, _second: String): String {
-        var hour: Int = 0
-        var minute: Int = 0
-        var second: Int = 0
-
-        if (_second == "0") return context.getString(R.string.done)
-
-        try {
-            hour = _second.toInt() / 3600
-            minute = (_second.toInt() - hour * 3600) / 60
-            second = _second.toInt() % 600
-        } catch (e: Exception) {
-            hour = 0
-            minute = 0
-            second = 0
-        }
-
-        return String.format(context.getString(R.string.widget_ui_simple_time), hour, minute)
-    }
-
     fun secondToRemainTime(context: Context, _second: String): String {
-        var hour: Int = 0
-        var minute: Int = 0
-        var second: Int = 0
+        var hour: Int
+        var minute: Int
 
         try {
             hour = _second.toInt() / 3600
             minute = (_second.toInt() - hour * 3600) / 60
-            second = _second.toInt() % 600
         } catch (e: Exception) {
             hour = 0
             minute = 0
-            second = 0
         }
 
         return String.format(context.getString(R.string.widget_ui_remain_time), hour, minute)
     }
 
-    fun secondToFullChargeTime(context: Context, second: String): String {
+    fun secondToFullChargeTime(
+        context: Context,
+        second: String
+    ): String {
         val cal = Calendar.getInstance()
         val date = Date()
         cal.time = date
 
         try {
             if (second.toInt() == 0)
-                return context.getString(R.string.widget_ui_max_time_resin_max)
+                return context.getString(R.string.widget_ui_parameter_max)
 
             if (second.toInt() > 144000 || second.toInt() < -144000)
                 return String.format(context.getString(R.string.widget_ui_max_time),
@@ -168,18 +149,28 @@ object CommonFunction {
                 cal.get(Calendar.HOUR_OF_DAY),
                 minute)
         } catch (e: NumberFormatException) {
-            return context.getString(R.string.widget_ui_max_time_resin_max)
+            return context.getString(R.string.widget_ui_parameter_max)
         }
     }
 
-    fun secondToTime(context: Context, second: String, includeDate: Boolean): String {
+    fun secondToTime(
+        context: Context,
+        second: String,
+        includeDate: Boolean,
+        isMaxParam: Boolean = false,
+        isDoneParam: Boolean = false,
+    ): String {
         val now = Calendar.getInstance()
         val date = Date()
         now.time = date
 
         try {
             if (second.toInt() == 0)
-                return context.getString(R.string.widget_ui_max_time_resin_max)
+                return when {
+                    isMaxParam -> context.getString(R.string.widget_ui_parameter_max)
+                    isDoneParam -> context.getString(R.string.widget_ui_parameter_done)
+                    else -> context.getString(R.string.widget_ui_parameter_max)
+                }
 
             if (second.toInt() > 360000 || second.toInt() < -144000)
                 return String.format(context.getString(R.string.widget_ui_today),
@@ -203,8 +194,19 @@ object CommonFunction {
                 target.get(Calendar.HOUR_OF_DAY),
                 minute)
         } catch (e: NumberFormatException) {
-            return context.getString(R.string.widget_ui_max_time_resin_max)
+            return when {
+                isMaxParam -> context.getString(R.string.widget_ui_parameter_max)
+                isDoneParam -> context.getString(R.string.widget_ui_parameter_done)
+                else -> context.getString(R.string.widget_ui_parameter_max)
+            }
         }
+    }
+
+    fun transformerTimeToSecond(time: TransformerTime): String {
+        return (time.Day*86400 +
+                time.Hour*3600 +
+                time.Minute*60 +
+                time.Second).toString()
     }
 
     fun getDayWithMonthSuffix(context: Context, n: Int): String {
@@ -443,6 +445,10 @@ object CommonFunction {
         view.setTextColor(R.id.tv_expedition_title, mainFontColor)
         view.setTextColor(R.id.tv_expedition_time, mainFontColor)
         view.setTextColor(R.id.tv_expedition_time_title, mainFontColor)
+        view.setTextColor(R.id.tv_transformer_title, mainFontColor)
+        view.setTextColor(R.id.tv_transformer, mainFontColor)
+        view.setTextColor(R.id.tv_transformer_time_title, mainFontColor)
+        view.setTextColor(R.id.tv_transformer_time, mainFontColor)
         view.setTextColor(R.id.tv_realm_currency, mainFontColor)
         view.setTextColor(R.id.tv_realm_currency_title, mainFontColor)
         view.setTextColor(R.id.tv_realm_currency_time, mainFontColor)
@@ -460,6 +466,10 @@ object CommonFunction {
         view.setFloat(R.id.tv_expedition_title, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_expedition_time, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_expedition_time_title, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_transformer_title, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_transformer, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_transformer_time_title, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_transformer_time, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_realm_currency, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_realm_currency_title, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_realm_currency_time, "setTextSize", fontSize.toFloat())
@@ -514,6 +524,7 @@ object CommonFunction {
                 PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_WEEKLY_BOSS_DATA_VISIBILITY, true),
                 PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_REALM_CURRENCY_DATA_VISIBILITY, true),
                 PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_EXPEDITION_DATA_VISIBILITY, true),
+                true,
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE, Constant.PREF_WIDGET_DETAIL_FONT_SIZE),
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
             )

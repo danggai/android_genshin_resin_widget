@@ -177,17 +177,24 @@
     <string name="widget_ui_max_time">Full at %02d:%02d</string>
     <string name="widget_ui_today">today, %02d:%02d</string>
     <string name="widget_ui_date">%s, %02d:%02d</string>
-    <string name="widget_ui_max_time_resin_max">Already full</string>
-    <string name="widget_ui_max_time_expedition_done">Already done</string>
+    <string name="widget_ui_parameter_max">Already full</string>
+    <string name="widget_ui_parameter_done">Already done</string>
+    <string name="widget_ui_transformer_not_obtained">Not Obtained</string>
+    <string name="widget_ui_transformer_not_reached">In Cooldown</string>
+    <string name="widget_ui_transformer_reached">Cooldown ended</string>
+    <string name="widget_ui_unknown">Unknown</string>
 
-    <string name="until_fully_replenished">Until Fully Replenished</string>
-    <string name="when_fully_replenished">When Fully Replenished</string>
     <string name="daily_commissions">Daily Commissions</string>
     <string name="enemies_of_note">Enemies Of Note</string>
     <string name="number_of_expedition">Number Of Expedition</string>
+    <string name="parametric_transformer">Parametric Transformer</string>
     <string name="realm_currency">Realm Currency</string>
+    <string name="until_fully_replenished">Until Fully Replenished</string>
+    <string name="estimated_replenishment_time">Estimated Replenishment Time</string>
     <string name="until_all_completed">Until All Completed</string>
     <string name="estimated_completion_time">Estimated Completion Time</string>
+    <string name="until_reusable">Until Reusable</string>
+    <string name="estimated_reusable_time">Estimated Reusable Time</string>
 
     <string name="foreground_genshin_check_in_progress">HoYoLAB Genshin Check-in progressing</string>
 
@@ -201,6 +208,6 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Honkai Impact 3rd Web Attendance Check can now proceed automatically.\n- You will now receive mail in the language set by the app during auto check-in.</string>
+    <string name="dialog_msg_patch_note">- Now you can see the parametric transformer cooldown in the Detail Widget.</string>
 
 </resources>

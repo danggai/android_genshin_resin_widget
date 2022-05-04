@@ -100,27 +100,10 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                     binding.widget.tvExpeditionTitle.textSize = it.toFloat()
                     binding.widget.tvExpeditionTime.textSize = it.toFloat()
                     binding.widget.tvExpeditionTimeTitle.textSize = it.toFloat()
-                }
-            }
-
-            launch {
-                mVM.sfFontSizeDetail.collect {
-                    binding.widget.tvResin.textSize = it.toFloat()
-                    binding.widget.tvResinTitle.textSize = it.toFloat()
-                    binding.widget.tvResinTime.textSize = it.toFloat()
-                    binding.widget.tvResinTimeTitle.textSize = it.toFloat()
-                    binding.widget.tvDailyCommission.textSize = it.toFloat()
-                    binding.widget.tvDailyCommissionTitle.textSize = it.toFloat()
-                    binding.widget.tvWeeklyBoss.textSize = it.toFloat()
-                    binding.widget.tvWeeklyBossTitle.textSize = it.toFloat()
-                    binding.widget.tvRealmCurrency.textSize = it.toFloat()
-                    binding.widget.tvRealmCurrencyTitle.textSize = it.toFloat()
-                    binding.widget.tvRealmCurrencyTime.textSize = it.toFloat()
-                    binding.widget.tvRealmCurrencyTimeTitle.textSize = it.toFloat()
-                    binding.widget.tvExpedition.textSize = it.toFloat()
-                    binding.widget.tvExpeditionTitle.textSize = it.toFloat()
-                    binding.widget.tvExpeditionTime.textSize = it.toFloat()
-                    binding.widget.tvExpeditionTimeTitle.textSize = it.toFloat()
+                    binding.widget.tvTransformer.textSize = it.toFloat()
+                    binding.widget.tvTransformerTitle.textSize = it.toFloat()
+                    binding.widget.tvTransformerTime.textSize = it.toFloat()
+                    binding.widget.tvTransformerTimeTitle.textSize = it.toFloat()
                 }
             }
 
@@ -176,6 +159,10 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                         binding.widget.tvRealmCurrencyTitle.setTextColor(getColor(_context, mainFontColor))
                         binding.widget.tvRealmCurrencyTime.setTextColor(getColor(_context, mainFontColor))
                         binding.widget.tvRealmCurrencyTimeTitle.setTextColor(getColor(_context, mainFontColor))
+                        binding.widget.tvTransformer.setTextColor(getColor(_context, mainFontColor))
+                        binding.widget.tvTransformerTitle.setTextColor(getColor(_context, mainFontColor))
+                        binding.widget.tvTransformerTime.setTextColor(getColor(_context, mainFontColor))
+                        binding.widget.tvTransformerTimeTitle.setTextColor(getColor(_context, mainFontColor))
 
                         binding.widget.llRoot.background = wrappedDrawable
                     }
@@ -192,6 +179,7 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                                 binding.widget.rlResinTime.visibility = if (mVM.sfResinDataVisibility.value) View.VISIBLE else View.GONE
                                 binding.widget.rlExpeditionTime.visibility = if (mVM.sfExpeditionDataVisibility.value) View.VISIBLE else View.GONE
                                 binding.widget.rlRealmCurrencyTime.visibility = if (mVM.sfRealmCurrencyDataVisibility.value) View.VISIBLE else View.GONE
+                                binding.widget.rlTransformerTime.visibility = if (mVM.sfTransformerDataVisibility.value) View.VISIBLE else View.GONE
 
                                 binding.widget.tvResinTimeTitle.text = _context.getString(R.string.until_fully_replenished)
                                 binding.widget.tvResinTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
@@ -199,23 +187,29 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                                 binding.widget.tvRealmCurrencyTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
                                 binding.widget.tvExpeditionTimeTitle.text = _context.getString(R.string.until_all_completed)
                                 binding.widget.tvExpeditionTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
+                                binding.widget.tvTransformerTimeTitle.text = _context.getString(R.string.until_reusable)
+                                binding.widget.tvTransformerTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
                             }
                             Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME ->  {
                                 binding.widget.rlResinTime.visibility = if (mVM.sfResinDataVisibility.value) View.VISIBLE else View.GONE
                                 binding.widget.rlExpeditionTime.visibility = if (mVM.sfExpeditionDataVisibility.value) View.VISIBLE else View.GONE
                                 binding.widget.rlRealmCurrencyTime.visibility = if (mVM.sfRealmCurrencyDataVisibility.value) View.VISIBLE else View.GONE
+                                binding.widget.rlTransformerTime.visibility = if (mVM.sfTransformerDataVisibility.value) View.VISIBLE else View.GONE
 
-                                binding.widget.tvResinTimeTitle.text = _context.getString(R.string.when_fully_replenished)
+                                binding.widget.tvResinTimeTitle.text = _context.getString(R.string.estimated_replenishment_time)
                                 binding.widget.tvResinTime.text = String.format(getString(R.string.widget_ui_today), 0, 0)
-                                binding.widget.tvRealmCurrencyTimeTitle.text = _context.getString(R.string.when_fully_replenished)
+                                binding.widget.tvRealmCurrencyTimeTitle.text = _context.getString(R.string.estimated_replenishment_time)
                                 binding.widget.tvRealmCurrencyTime.text = String.format(getString(R.string.widget_ui_date), "1"+getString(R.string.date_st), 0, 0)
                                 binding.widget.tvExpeditionTimeTitle.text = _context.getString(R.string.estimated_completion_time)
                                 binding.widget.tvExpeditionTime.text = String.format(getString(R.string.widget_ui_today), 0, 0)
+                                binding.widget.tvTransformerTimeTitle.text = _context.getString(R.string.estimated_reusable_time)
+                                binding.widget.tvTransformerTime.text = String.format(getString(R.string.widget_ui_date), "1"+getString(R.string.date_st), 0, 0)
                             }
                             Constant.PREF_TIME_NOTATION_DISABLE ->  {
                                 binding.widget.rlResinTime.visibility = View.GONE
                                 binding.widget.rlExpeditionTime.visibility = View.GONE
                                 binding.widget.rlRealmCurrencyTime.visibility = View.GONE
+                                binding.widget.rlTransformerTime.visibility = View.GONE
                             }
                         }
                     }
@@ -257,6 +251,14 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                     log.e()
                     binding.widget.rlExpedition.visibility = if (it) View.VISIBLE else View.GONE
                     binding.widget.rlExpeditionTime.visibility = if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
+                }
+            }
+
+            launch {
+                mVM.sfTransformerDataVisibility.collect {
+                    log.e()
+                    binding.widget.rlTransformer.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widget.rlTransformerTime.visibility = if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
                 }
             }
         }

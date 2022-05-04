@@ -32,6 +32,7 @@ class WidgetDesignViewModel @Inject constructor(
     val sfWeeklyBossDataVisibility = MutableStateFlow(true)
     val sfRealmCurrencyDataVisibility = MutableStateFlow(true)
     val sfExpeditionDataVisibility = MutableStateFlow(true)
+    val sfTransformerDataVisibility = MutableStateFlow(true)
     val sfFontSizeDetail = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
 
     fun initUi() {
@@ -51,6 +52,7 @@ class WidgetDesignViewModel @Inject constructor(
             sfWeeklyBossDataVisibility.value = it.weeklyBossDataVisibility
             sfRealmCurrencyDataVisibility.value = it.realmCurrencyDataVisibility
             sfExpeditionDataVisibility.value = it.expeditionDataVisibility
+            sfTransformerDataVisibility.value = it.transformerDataVisibility
         }
     }
 
@@ -76,11 +78,11 @@ class WidgetDesignViewModel @Inject constructor(
                 sfWeeklyBossDataVisibility.value,
                 sfRealmCurrencyDataVisibility.value,
                 sfExpeditionDataVisibility.value,
+                sfTransformerDataVisibility.value,
                 sfFontSizeDetail.value,
                 sfTransparency.value
             )
         )
-
 
         sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_save_done)))
 
