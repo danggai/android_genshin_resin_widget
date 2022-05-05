@@ -172,11 +172,6 @@ object CommonFunction {
                     else -> context.getString(R.string.widget_ui_parameter_max)
                 }
 
-            if (second.toInt() > 360000 || second.toInt() < -144000)
-                return String.format(context.getString(R.string.widget_ui_today),
-                    now.get(Calendar.HOUR_OF_DAY),
-                    now.get(Calendar.MINUTE))
-
             val target: Calendar = Calendar.getInstance().apply {
                 this.time = Date()
                 this.add(Calendar.SECOND, second.toInt())
@@ -333,7 +328,7 @@ object CommonFunction {
     fun getExpeditionTime(dailyNote: DailyNoteData): String {
         return try {
             if (dailyNote.expeditions.isNullOrEmpty()) "0"
-            else dailyNote.expeditions!!.maxOf { it.remained_time }
+            else dailyNote.expeditions.maxOf { it.remained_time }
         } catch (e: java.lang.Exception) {
             "0"
         }
