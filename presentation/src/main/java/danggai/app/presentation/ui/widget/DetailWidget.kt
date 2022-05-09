@@ -189,7 +189,13 @@ class DetailWidget() : AppWidgetProvider() {
                         view.setTextViewText(R.id.tv_transformer_time_title, _context.getString(R.string.until_reusable))
 
                         view.setTextViewText(R.id.tv_transformer_time,
-                            if (dailyNote.transformer != null) CommonFunction.secondToRemainTime(_context, CommonFunction.transformerTimeToSecond(dailyNote.transformer!!.recovery_time))
+                            // 1일 이상 남음
+                            if (dailyNote.transformer != null && dailyNote.transformer!!.recovery_time.Day > 0) String.format(_context.getString(R.string.widget_ui_remain_days), dailyNote.transformer!!.recovery_time.Day)
+
+                            // 1일 이내로 남음
+                            else if (dailyNote.transformer != null && dailyNote.transformer!!.recovery_time.Day == 0) CommonFunction.secondToRemainTime(_context, CommonFunction.transformerTimeToSecond(dailyNote.transformer!!.recovery_time))
+
+                            // transformer == null
                             else _context.getString(R.string.widget_ui_unknown)
                         )
                     }
@@ -204,7 +210,13 @@ class DetailWidget() : AppWidgetProvider() {
                         view.setTextViewText(R.id.tv_transformer_time_title, _context.getString(R.string.estimated_reusable_time))
 
                         view.setTextViewText(R.id.tv_transformer_time,
-                            if (dailyNote.transformer != null) CommonFunction.secondToTime(_context, CommonFunction.transformerTimeToSecond(dailyNote.transformer!!.recovery_time), true, isDoneParam = true)
+                            // 1일 이상 남음
+                            if (dailyNote.transformer != null && dailyNote.transformer!!.recovery_time.Day > 0) String.format(_context.getString(R.string.widget_ui_expect_date), CommonFunction.getExpectDate(_context, dailyNote.transformer!!.recovery_time.Day))
+
+                            // 1일 이내로 남음
+                            else if (dailyNote.transformer != null && dailyNote.transformer!!.recovery_time.Day == 0) CommonFunction.secondToTime(_context, CommonFunction.transformerTimeToSecond(dailyNote.transformer!!.recovery_time), true, isDoneParam = true)
+
+                            // transformer == null
                             else _context.getString(R.string.widget_ui_unknown)
                         )
                     }

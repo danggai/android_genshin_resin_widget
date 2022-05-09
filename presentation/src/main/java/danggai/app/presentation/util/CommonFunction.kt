@@ -204,6 +204,15 @@ object CommonFunction {
                 time.Second).toString()
     }
 
+    fun getExpectDate(context: Context, days: Int): String {
+        val target = Calendar.getInstance().apply {
+            this.time = Date()
+            this.add(Calendar.DAY_OF_MONTH, days)
+        }
+
+        return getDayWithMonthSuffix(context, target.get(Calendar.DAY_OF_MONTH))
+    }
+
     fun getDayWithMonthSuffix(context: Context, n: Int): String {
         checkArgument(n in 1..31, "illegal day of month: $n")
         return if (n in 11..13) {

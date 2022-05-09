@@ -177,6 +177,8 @@
     <string name="widget_ui_max_time">Full at %02d:%02d</string>
     <string name="widget_ui_today">today, %02d:%02d</string>
     <string name="widget_ui_date">%s, %02d:%02d</string>
+    <string name="widget_ui_expect_date">Scheduled on %s</string>
+    <string name="widget_ui_remain_days">%s day(s) left</string>
     <string name="widget_ui_parameter_max">Already full</string>
     <string name="widget_ui_parameter_done">Already done</string>
     <string name="widget_ui_transformer_not_obtained">Not Obtained</string>

@@ -156,6 +156,8 @@
     <string name="widget_ui_max_time">%02d:%02d에 가득 참</string>
     <string name="widget_ui_today">오늘 %02d:%02d</string>
     <string name="widget_ui_date">%s %02d:%02d</string>
+    <string name="widget_ui_expect_date">%s 예정</string>
+    <string name="widget_ui_remain_days">%s일 남음</string>
     <string name="widget_ui_parameter_max">가득 참</string>
     <string name="widget_ui_parameter_done">완료 됨</string>
     <string name="widget_ui_transformer_not_obtained">미해금</string>
