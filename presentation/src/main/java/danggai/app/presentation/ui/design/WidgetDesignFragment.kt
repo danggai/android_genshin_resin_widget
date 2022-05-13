@@ -49,8 +49,9 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
 
         TabLayoutMediator(binding.tlTop, binding.vpMain) { tab, position ->
             tab.text = when (position) {
-                0 -> "Resin Widget"
-                1 -> "Detail Widget"
+                0 -> "Resin"
+                1 -> "Detail"
+                2 -> "Characters"
                 else -> ""
             }
         }.attach()
