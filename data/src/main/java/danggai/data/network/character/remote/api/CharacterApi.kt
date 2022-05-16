@@ -20,8 +20,8 @@ interface CharacterApi {
     )
     @POST("/game_record/genshin/api/character")
     suspend fun character(
-        @Query("role_id") roleId: Int,
-        @Query("server") server: Int,
+        @Query("role_id") roleId: String,
+        @Query("server") server: String,
         @Header("Cookie") cookie: String,
         @Header("DS") ds: String
     ): ApiResponse<Character>

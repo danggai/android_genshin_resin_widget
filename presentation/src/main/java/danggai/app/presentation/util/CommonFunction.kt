@@ -480,9 +480,67 @@ object CommonFunction {
         view.setFloat(R.id.tv_realm_currency_time_title, "setTextSize", fontSize.toFloat())
     }
 
+    fun Int.idToName(context: Context) {
+        when (this) {
+            10000001 -> context.getString(R.string.kate)
+            10000002 -> context.getString(R.string.ayaka)
+            10000003 -> context.getString(R.string.jean)
+            10000005 -> context.getString(R.string.aither)
+            10000006 -> context.getString(R.string.lisa)
+            10000007 -> context.getString(R.string.lisa)
+            10000014 -> context.getString(R.string.barbara)
+            10000015 -> context.getString(R.string.keaya)
+            10000016 -> context.getString(R.string.diluc)
+            10000020 -> context.getString(R.string.razor)
+            10000021 -> context.getString(R.string.amber)
+            10000022 -> context.getString(R.string.venti)
+            10000023 -> context.getString(R.string.xiangling)
+            10000024 -> context.getString(R.string.beidou)
+            10000025 -> context.getString(R.string.xingqiu)
+            10000026 -> context.getString(R.string.xiao)
+            10000027 -> context.getString(R.string.ningguang)
+            10000029 -> context.getString(R.string.klee)
+            10000030 -> context.getString(R.string.zhongli)
+            10000031 -> context.getString(R.string.fischl)
+            10000032 -> context.getString(R.string.bennett)
+            10000033 -> context.getString(R.string.childe)
+            10000034 -> context.getString(R.string.noelle)
+            10000035 -> context.getString(R.string.qiqi)
+            10000036 -> context.getString(R.string.chongyun)
+            10000037 -> context.getString(R.string.ganyu)
+            10000038 -> context.getString(R.string.albedo)
+            10000039 -> context.getString(R.string.diona)
+            10000041 -> context.getString(R.string.mona)
+            10000042 -> context.getString(R.string.keqing)
+            10000043 -> context.getString(R.string.sucrose)
+            10000044 -> context.getString(R.string.xinyan)
+            10000045 -> context.getString(R.string.rosaria)
+            10000046 -> context.getString(R.string.hutao)
+            10000047 -> context.getString(R.string.kazuha)
+            10000048 -> context.getString(R.string.yanfei)
+            10000049 -> context.getString(R.string.yoimiya)
+            10000050 -> context.getString(R.string.thoma)
+            10000051 -> context.getString(R.string.eula)
+            10000052 -> context.getString(R.string.raiden)
+            10000053 -> context.getString(R.string.sayu)
+            10000054 -> context.getString(R.string.kokomi)
+            10000055 -> context.getString(R.string.gorou)
+            10000056 -> context.getString(R.string.sara)
+            10000057 -> context.getString(R.string.itto)
+            10000058 -> context.getString(R.string.yae)
+            10000060 -> context.getString(R.string.yeran)
+            10000062 -> context.getString(R.string.aloy)
+            10000063 -> context.getString(R.string.shenhe)
+            10000064 -> context.getString(R.string.yunjin)
+            10000065 -> context.getString(R.string.kuki)
+            10000066 -> context.getString(R.string.ayato)
+            else -> "?"
+        }
+    }
+
     /*
     * preference 마이그레이션용 임시 함수.
-    * 차후 버전(1.1.5)에서 삭제 요망
+    * 차후 버전(1.1.6~7)에서 삭제 요망
     * */
     fun migrateSettings(context: Context) {
         log.e()
@@ -533,6 +591,5 @@ object CommonFunction {
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
             )
         )
-
     }
 }

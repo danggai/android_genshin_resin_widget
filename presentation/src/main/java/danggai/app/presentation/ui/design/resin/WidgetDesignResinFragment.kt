@@ -17,6 +17,8 @@ import danggai.app.presentation.ui.design.WidgetDesignViewModel
 import danggai.app.presentation.util.CommonFunction.isDarkMode
 import danggai.app.presentation.util.log
 import danggai.domain.util.Constant
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -71,25 +73,7 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
     }
 
     private fun initLv() {
-        viewLifecycleOwner.repeatOnLifeCycleStarted {
-            launch {
-                mVM.sfTransparency.collect {
-                    context?.let { _context ->
-                        log.e()
-                        val unwrappedDrawable = AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
-                        val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
-
-                        val color: Int = if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) getColor(_context, R.color.white)
-                        else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) getColor(_context, R.color.black)
-                        else getColor(_context, R.color.white)
-
-                        DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(color, mVM.sfTransparency.value))
-
-                        binding.widget.llRoot.background = wrappedDrawable
-                    }
-                }
-            }
-
+        CoroutineScope(Dispatchers.IO).launch {
             launch {
                 mVM.sfWidgetTheme.collect {
                     context?.let { _context ->
@@ -119,6 +103,26 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                             binding.widget.ivRefersh.setColorFilter(getColor(_context, R.color.widget_font_sub_light))
                             binding.widget.tvSyncTime.setTextColor(getColor(_context, R.color.widget_font_sub_light))
                         }
+                        binding.widget.llRoot.background = wrappedDrawable
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.repeatOnLifeCycleStarted {
+            launch {
+                mVM.sfTransparency.collect {
+                    context?.let { _context ->
+                        log.e()
+                        val unwrappedDrawable = AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
+                        val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
+
+                        val color: Int = if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) getColor(_context, R.color.white)
+                        else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) getColor(_context, R.color.black)
+                        else getColor(_context, R.color.white)
+
+                        DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(color, mVM.sfTransparency.value))
+
                         binding.widget.llRoot.background = wrappedDrawable
                     }
                 }

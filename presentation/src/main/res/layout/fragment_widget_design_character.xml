@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="danggai.domain.util.Constant.Characters" />
+        <import type="danggai.domain.util.Constant.WidgetTheme" />
+        <import type="android.view.View" />
 
         <variable
             name="vm"
@@ -11,301 +12,159 @@
             />
     </data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
 
-        <ScrollView
+        <GridView
+            android:id="@+id/gv_characters"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:numColumns="4"
+            android:gravity="center"
             android:background="@color/white"
+            android:paddingHorizontal="10dp"
+            app:item="@{vm.characterList}"
+            app:viewModel="@{vm}"
+            app:refreshSwitch="@{vm.sfRefreshSwitch}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ll_bottom"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextViewButton"
+                android:text="refresh character info"
+                android:onClick="@{()->vm.onClickRefreshCharacterInfo()}"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/widget_theme"
+                android:textColor="@color/black"
+                android:textSize="28sp"
+                android:textStyle="bold|italic"
+                />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <RadioButton
+                    android:id="@+id/rb_theme_automatic"
+                    style="@style/RadioButton"
+                    android:layout_marginEnd="10dp"
+                    android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.AUTOMATIC)}"
+                    android:text="@string/btn_automatic" />
+
+                <RadioButton
+                    android:id="@+id/rb_theme_light"
+                    style="@style/RadioButton"
+                    android:layout_marginEnd="10dp"
+                    android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.LIGHT)}"
+                    android:text="@string/btn_light" />
+
+                <RadioButton
+                    android:id="@+id/rb_theme_dark"
+                    style="@style/RadioButton"
+                    android:layout_marginEnd="10dp"
+                    android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.DARK)}"
+                    android:text="@string/btn_dark" />
+
+            </RadioGroup>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="15dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/background_transparency"
+                android:textColor="@color/black"
+                android:textSize="28sp"
+                android:textStyle="bold|italic" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingHorizontal="20dp"
+                android:paddingHorizontal="5dp"
                 >
 
-<!--                <Space-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="15dp" />-->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@{vm.sfTransparency.toString()}"
+                    android:hint="100"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold|italic"
+                    android:gravity="center"
+                    />
 
-<!--                <androidx.appcompat.widget.AppCompatTextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@string/widget_theme"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="28sp"-->
-<!--                    android:textStyle="bold|italic"-->
-<!--                    />-->
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    style="@style/SeekBar"
+                    android:id="@+id/sb_transparent"
+                    android:progress="@={vm.sfTransparency}"
+                    android:max="255"
+                    />
 
-<!--                <RadioGroup-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintRight_toRightOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    >-->
-
-<!--                    <RadioButton-->
-<!--                        android:id="@+id/rb_theme_automatic"-->
-<!--                        style="@style/RadioButton"-->
-<!--                        android:layout_marginEnd="10dp"-->
-<!--                        android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.AUTOMATIC)}"-->
-<!--                        android:text="@string/btn_automatic" />-->
-
-<!--                    <RadioButton-->
-<!--                        android:id="@+id/rb_theme_light"-->
-<!--                        style="@style/RadioButton"-->
-<!--                        android:layout_marginEnd="10dp"-->
-<!--                        android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.LIGHT)}"-->
-<!--                        android:text="@string/btn_light" />-->
-
-<!--                    <RadioButton-->
-<!--                        android:id="@+id/rb_theme_dark"-->
-<!--                        style="@style/RadioButton"-->
-<!--                        android:layout_marginEnd="10dp"-->
-<!--                        android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.DARK)}"-->
-<!--                        android:text="@string/btn_dark" />-->
-
-<!--                </RadioGroup>-->
-
-<!--                <Space-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="15dp" />-->
-
-<!--                <androidx.appcompat.widget.AppCompatTextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@string/time_notation"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="28sp"-->
-<!--                    android:textStyle="bold|italic" />-->
-
-<!--                <RadioGroup-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintRight_toRightOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent">-->
-
-<!--                    <RadioButton-->
-<!--                        android:id="@+id/rb_remain_time"-->
-<!--                        style="@style/RadioButton"-->
-<!--                        android:layout_marginEnd="10dp"-->
-<!--                        android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.REMAIN_TIME)}"-->
-<!--                        android:text="@string/btn_remain_time" />-->
-
-<!--                    <RadioButton-->
-<!--                        android:id="@+id/rb_full_charge_time"-->
-<!--                        style="@style/RadioButton"-->
-<!--                        android:layout_marginEnd="10dp"-->
-<!--                        android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.FULL_CHARGE_TIME)}"-->
-<!--                        android:text="@string/btn_full_charge_time" />-->
-
-<!--                    <RadioButton-->
-<!--                        android:id="@+id/rb_disable_time"-->
-<!--                        style="@style/RadioButton"-->
-<!--                        android:layout_marginEnd="10dp"-->
-<!--                        android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.DISABLE_TIME)}"-->
-<!--                        android:text="@string/btn_disable" />-->
-
-<!--                </RadioGroup>-->
-
-<!--                <Space-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="15dp" />-->
-
-<!--                <androidx.appcompat.widget.AppCompatTextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@string/visible_data"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="28sp"-->
-<!--                    android:textStyle="bold|italic"-->
-<!--                    />-->
-
-<!--                <androidx.appcompat.widget.LinearLayoutCompat-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
-
-<!--                    <androidx.appcompat.widget.AppCompatCheckBox-->
-<!--                        android:id="@+id/cb_resin"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginEnd="10dp"-->
-<!--                        android:checked="@={vm.sfResinDataVisibility}"-->
-<!--                        android:text="@string/resin"-->
-<!--                        android:textSize="14sp"-->
-<!--                        app:buttonTint="@color/checkbox_filter_tint" />-->
-
-<!--                    <androidx.appcompat.widget.AppCompatCheckBox-->
-<!--                        android:id="@+id/cb_daily_commission"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginEnd="10dp"-->
-<!--                        android:checked="@={vm.sfDailyCommissionDataVisibility}"-->
-<!--                        android:text="@string/daily_commissions"-->
-<!--                        android:textSize="14sp"-->
-<!--                        app:buttonTint="@color/checkbox_filter_tint" />-->
-
-<!--                    <androidx.appcompat.widget.AppCompatCheckBox-->
-<!--                        android:id="@+id/cb_enemies_of_note"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginEnd="10dp"-->
-<!--                        android:checked="@={vm.sfWeeklyBossDataVisibility}"-->
-<!--                        android:text="@string/enemies_of_note"-->
-<!--                        android:textSize="14sp"-->
-<!--                        app:buttonTint="@color/checkbox_filter_tint" />-->
-
-<!--                </androidx.appcompat.widget.LinearLayoutCompat>-->
-
-<!--                <androidx.appcompat.widget.LinearLayoutCompat-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
-
-<!--                    <androidx.appcompat.widget.AppCompatCheckBox-->
-<!--                        android:id="@+id/cb_realm_currency"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginEnd="10dp"-->
-<!--                        android:checked="@={vm.sfRealmCurrencyDataVisibility}"-->
-<!--                        android:text="@string/realm_currency"-->
-<!--                        android:textSize="14sp"-->
-<!--                        app:buttonTint="@color/checkbox_filter_tint" />-->
-
-<!--                    <androidx.appcompat.widget.AppCompatCheckBox-->
-<!--                        android:id="@+id/cb_number_of_expedition"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginEnd="10dp"-->
-<!--                        android:checked="@={vm.sfExpeditionDataVisibility}"-->
-<!--                        android:text="@string/number_of_expedition"-->
-<!--                        android:textSize="14sp"-->
-<!--                        app:buttonTint="@color/checkbox_filter_tint" />-->
-
-<!--                </androidx.appcompat.widget.LinearLayoutCompat>-->
-
-<!--                <androidx.appcompat.widget.LinearLayoutCompat-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
-
-<!--                    <androidx.appcompat.widget.AppCompatCheckBox-->
-<!--                        android:id="@+id/cb_parametric_transformer"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginEnd="10dp"-->
-<!--                        android:checked="@={vm.sfTransformerDataVisibility}"-->
-<!--                        android:text="@string/parametric_transformer"-->
-<!--                        android:textSize="14sp"-->
-<!--                        app:buttonTint="@color/checkbox_filter_tint" />-->
-
-<!--                </androidx.appcompat.widget.LinearLayoutCompat>-->
-
-<!--                <Space-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="15dp" />-->
-
-<!--                <androidx.appcompat.widget.AppCompatTextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@string/font_size"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="28sp"-->
-<!--                    android:textStyle="bold|italic" />-->
-
-<!--                <androidx.appcompat.widget.LinearLayoutCompat-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:paddingHorizontal="5dp"-->
-<!--                    >-->
-
-<!--                    <androidx.appcompat.widget.AppCompatTextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:text="@{vm.sfFontSizeDetail.toString()}"-->
-<!--                        android:hint="12"-->
-<!--                        android:textSize="20sp"-->
-<!--                        android:textColor="@color/black"-->
-<!--                        android:textStyle="bold|italic"-->
-<!--                        android:gravity="center"-->
-<!--                        />-->
-
-<!--                    <androidx.appcompat.widget.AppCompatSeekBar-->
-<!--                        style="@style/SeekBar"-->
-<!--                        android:id="@+id/sb_fontsize"-->
-<!--                        android:progress="@={vm.sfFontSizeDetail}"-->
-<!--                        android:max="24"-->
-<!--                        />-->
-
-<!--                    <androidx.appcompat.widget.AppCompatTextView-->
-<!--                        style="@style/TextViewButton"-->
-<!--                        android:id="@+id/mb_reset_detail_fontsize"-->
-<!--                        android:text="@string/reset"-->
-<!--                        android:onClick="@{()->vm.onClickDetailFontSize()}"-->
-<!--                        />-->
-
-
-<!--                </androidx.appcompat.widget.LinearLayoutCompat>-->
-
-<!--                <Space-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="15dp" />-->
-
-<!--                <androidx.appcompat.widget.AppCompatTextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@string/background_transparency"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="28sp"-->
-<!--                    android:textStyle="bold|italic" />-->
-
-<!--                <androidx.appcompat.widget.LinearLayoutCompat-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:paddingHorizontal="5dp"-->
-<!--                    >-->
-
-<!--                    <androidx.appcompat.widget.AppCompatTextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:text="@{vm.sfTransparency.toString()}"-->
-<!--                        android:hint="100"-->
-<!--                        android:textSize="20sp"-->
-<!--                        android:textColor="@color/black"-->
-<!--                        android:textStyle="bold|italic"-->
-<!--                        android:gravity="center"-->
-<!--                        />-->
-
-<!--                    <androidx.appcompat.widget.AppCompatSeekBar-->
-<!--                        style="@style/SeekBar"-->
-<!--                        android:id="@+id/sb_transparent"-->
-<!--                        android:progress="@={vm.sfTransparency}"-->
-<!--                        android:max="255"-->
-<!--                        />-->
-
-<!--                    <androidx.appcompat.widget.AppCompatTextView-->
-<!--                        style="@style/TextViewButton"-->
-<!--                        android:id="@+id/mb_reset_bg_trans"-->
-<!--                        android:text="@string/reset"-->
-<!--                        android:onClick="@{()->vm.onClickBackgroundTransparent()}"-->
-<!--                        />-->
-
-<!--                </androidx.appcompat.widget.LinearLayoutCompat>-->
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextViewButton"
+                    android:id="@+id/mb_reset_bg_trans"
+                    android:text="@string/reset"
+                    android:onClick="@{()->vm.onClickBackgroundTransparent()}"
+                    />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-        </ScrollView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="@{vm.sfProgress ?View.VISIBLE :View.GONE}"
+            >
+
+            <ProgressBar
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:indeterminateTint="@color/light_blue_600"
+                />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

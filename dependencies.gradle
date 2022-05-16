@@ -13,6 +13,7 @@
 // * See the License for the specific language governing permissions and
 // * limitations under the License.
 // */
+
 ext.versions = [
         minSdk                  : 23,
         compileSdk              : 32,
@@ -24,7 +25,7 @@ ext.versions = [
         buildGradleVersion      : "7.1.0",
         kotlinGradleVersion     : "1.6.20",
         googleServiceVersion    : "4.3.10",
-        crashlyticsGradleVersion : "2.7.1",
+        crashlyticsGradleVersion: "2.7.1",
         gsonVersion             : "2.9.0",
 
         // android support library
@@ -37,7 +38,7 @@ ext.versions = [
         lifecycleVersion        : "2.4.1",
 
         // coroutine
-        coroutineVersion         : "1.6.0",
+        coroutineVersion        : "1.6.0",
 
         // rx
         rxAndroidVersion        : "2.1.1",
@@ -52,6 +53,7 @@ ext.versions = [
         okhttpVersion           : "4.9.0",
         retrofitVersion         : "2.6.0",
         sandwichVersion         : "1.2.3",
+        glideVersion            : "4.12.0",
 
         // google ads
         googleAdsVersion        : "20.4.0",

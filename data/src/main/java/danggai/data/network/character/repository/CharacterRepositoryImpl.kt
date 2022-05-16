@@ -19,8 +19,8 @@ class CharacterRepositoryImpl @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher
 ) : CharacterRepository {
     override suspend fun character(
-        roleId: Int,
-        server: Int,
+        roleId: String,
+        server: String,
         cookie: String,
         ds: String,
         onStart: () -> Unit,

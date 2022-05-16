@@ -11,7 +11,7 @@ data class Avatar(
     val actived_constellation_num: Int,     // 별자리 활성화 수
     val costumes: List<Costume>,            // 코스튬 목록
     val element: String,                    // 속성
-    val fetter: Int,
+    val fetter: Int,                        // 1 2 3 4 5 6 7 8 9 10
     val icon: String,                       // 명함 사진
     val image: String,                      // 반투명 전신 사진 (배경)
 )

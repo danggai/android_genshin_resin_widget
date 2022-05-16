@@ -67,6 +67,7 @@ object Constant {
     const val API_NAME_DAILY_NOTE = "Daily Note"
     const val API_NAME_CHANGE_DATA_SWITCH = "Change Data Switch"
     const val API_NAME_GET_GAME_RECORD_CARD = "Get Game Record Card"
+    const val API_NAME_CHARACTERS = "Characters"
     const val API_NAME_CHECK_IN = "Check In"
 
 
@@ -196,67 +197,22 @@ object Constant {
     const val PREF_WIDGET_THEME_LIGHT = 1
     const val PREF_WIDGET_THEME_DARK = 2
 
-    enum class Characters {
-//        10000001 케이트
-//        10000002 카미사토 아야카
-//        10000003 진
-//        10000005 아이테르 (남행자)
-//        10000006 리사
-//        10000007 루미네 (여행자)
-//        10000014 바바라
-//        10000015 케이아
-//        10000016 다이루크
-//        10000020 레이저
-//        10000021 엠버
-//        10000022 벤티
-//        10000023 향릉
-//        10000024 북두
-//        10000025 행추
-//        10000026 소
-//        10000027 응광
-//        10000029 클레
-//        10000030 종려
-//        10000031 피슬
-//        10000032 베넷
-//        10000033 타르탈리아
-//        10000034 노엘
-//        10000035 치치
-//        10000036 중운
-//        10000037 감우
-//        10000038 알베도
-//        10000039 디오나
-//        10000041 모나
-//        10000042 각청
-//        10000043 설탕
-//        10000044 신염
-//        10000045 로자리아
-//        10000046 호두
-//        10000047 카즈하
-//        10000048 연비
-//        10000049 요이미야
-//        10000050 토마
-//        10000051 유라
-//        10000052 라이덴 쇼군
-//        10000053 사유
-//        10000054 코코미
-//        10000055 고로
-//        10000056 쿠죠 사라
-//        10000057 아라타키 이토
-//        10000058 야에 미코
-//        10000060 야란
-//        10000062 에일로이
-//        10000063 신학
-//        10000064 운근
-//        10000065 쿠키 시노부
-//        10000066 카미사토 아야토
+    enum class WeaponType(val attr: Int) {
+        Sword(1),
+        Catalysts(10),
+        Claymore(11),
+        Bow(12),
+        Polearm(13)
     }
 
-    enum class WeaponType {
-    //        1한손검
-    //        10법구
-    //        11양손검
-    //        12활
-    //        13장병기
+    enum class Elements(val attr: Int) {
+        PYRO(1),
+        HYDRO(6),
+        ANEMO(2),
+        ELECTRO(5),
+        DENDRO(4),
+        CYRO(7),
+        GEO(3)
     }
 
     enum class ResinImageVisibility(val pref: Int) {

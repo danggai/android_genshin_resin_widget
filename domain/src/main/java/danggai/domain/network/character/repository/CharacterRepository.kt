@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface CharacterRepository: Repository {
     suspend fun character(
-        roleId: Int,
-        server: Int,
+        roleId: String,
+        server: String,
         cookie: String,
         ds: String,
         onStart: () -> Unit,

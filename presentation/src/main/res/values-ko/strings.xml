@@ -20,8 +20,8 @@
     <string name="btn_light">라이트</string>
     <string name="btn_automatic">자동</string>
 
-    <string name="btn_visible">보이기</string>
-    <string name="btn_invisible">안보이기</string>
+    <string name="btn_visible">표시</string>
+    <string name="btn_invisible">표시 안 함</string>
 
     <string name="btn_auto_check_in_enable">원신</string>
     <string name="btn_auto_check_in_enable_honkai_3rd">붕괴 3rd</string>
@@ -60,6 +60,8 @@
     <string name="dialog_realtime_note_private">실시간 메모 비공개</string>
     <string name="dialog_msg_realtime_note_private">실시간 메모가 비공개 상태여서 정보를 가져올 수 없습니다. 공개 상태로 변경하시겠습니까?</string>
 
+    <string name="item_character_list_empty">확인 된 캐릭터 목록이 없습니다.\n아래로 스크롤 해서 동기화 할 수 있습니다.</string>
+
     <string name="msg_toast_back_button">한 번 더 누르면 앱을 종료할 수 있어!</string>
     <string name="msg_toast_save_done">저장 완료!</string>
     <string name="msg_toast_save_done_check_in">저장 완료! 출석 체크 결과는 상단 바에서 확인해 줘!</string>
@@ -91,10 +93,7 @@
     <string name="msg_toast_get_uid_error_include_error_code">인게임 uid를 가져오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없지만, 오류코드는 %s야! 개발자에게 공유해주면, 문제 해결에 도움이 돼!</string>
     <string name="msg_toast_get_uid_error">인게임 uid를 가져오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없어.. 미안해!</string>
 
-    <string name="msg_toast_check_in_success">계정 연동 성공! 출석체크 성공!</string>
-    <string name="msg_toast_check_in_already">계정 연동 성공! 오늘은 이미 출석했어!</string>
-    <string name="msg_toast_check_in_error_not_logged_in">잘못 된 쿠키여서 정보를 받아 올 수 없어.. 쿠키를 다시 확인해 줘!</string>
-    <string name="msg_toast_check_in_error_too_fast">너무 빠르게 시도했어! 조금 이따 다시 시도해 줘!</string>
+    <string name="msg_toast_get_characters_error">인게임 캐릭터 목록을 가져오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없어.. 미안해!</string>
 
     <string name="msg_toast_uid_empty_error">uid 없이는 연동 할 수 없어! uid를 입력해 줘!</string>
     <string name="msg_toast_cookie_empty_error">쿠키 값 없이는 연동 할 수 없어! 쿠키를 입력해 줘!</string>
@@ -144,6 +143,61 @@
     <string name="hint_cookie">HoYoLAB의 쿠키를 입력해 줘!</string>
 
     <string name="invalid_user_info">유저 정보 없이는\n사용할 수 없어!</string>
+
+
+    <!-- Character Name -->
+    <string name="kate">케이트</string>
+    <string name="ayaka">카미사토 아야카</string>
+    <string name="jean">진</string>
+    <string name="aither">아이테르</string>
+    <string name="lisa">리사</string>
+    <string name="lumine">루미네</string>
+    <string name="barbara">바바라</string>
+    <string name="keaya">케이아</string>
+    <string name="diluc">다이루크</string>
+    <string name="razor">레이저</string>
+    <string name="amber">엠버</string>
+    <string name="venti">벤티</string>
+    <string name="xiangling">향릉</string>
+    <string name="beidou">북두</string>
+    <string name="xingqiu">행추</string>
+    <string name="xiao">소</string>
+    <string name="ningguang">응광</string>
+    <string name="klee">클레</string>
+    <string name="zhongli">종려</string>
+    <string name="fischl">피슬</string>
+    <string name="bennett">베넷</string>
+    <string name="childe">타르탈리아</string>
+    <string name="noelle">노엘</string>
+    <string name="qiqi">치치</string>
+    <string name="chongyun">중운</string>
+    <string name="ganyu">감우</string>
+    <string name="albedo">알베도</string>
+    <string name="diona">디오나</string>
+    <string name="mona">모나</string>
+    <string name="keqing">각청</string>
+    <string name="sucrose">설탕</string>
+    <string name="xinyan">신염</string>
+    <string name="rosaria">로자리아</string>
+    <string name="hutao">호두</string>
+    <string name="kazuha">카에데하라 카즈하</string>
+    <string name="yanfei">연비</string>
+    <string name="yoimiya">요이미야</string>
+    <string name="thoma">토마</string>
+    <string name="eula">유라</string>
+    <string name="raiden">라이덴 쇼군</string>
+    <string name="sayu">사유</string>
+    <string name="kokomi">산고노미야 코코미</string>
+    <string name="gorou">고로</string>
+    <string name="sara">쿠죠 사라</string>
+    <string name="itto">아라타키 이토</string>
+    <string name="yae">야에 미코</string>
+    <string name="yeran">야란</string>
+    <string name="aloy">에일로이</string>
+    <string name="shenhe">신학</string>
+    <string name="yunjin">운근</string>
+    <string name="kuki">쿠키 시노부</string>
+    <string name="ayato">카미사토 아야토</string>
 
 
     <!-- Widget UI -->

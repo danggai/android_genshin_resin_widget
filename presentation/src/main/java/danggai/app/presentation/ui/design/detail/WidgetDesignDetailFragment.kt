@@ -17,6 +17,9 @@ import danggai.app.presentation.ui.design.WidgetDesignViewModel
 import danggai.app.presentation.util.CommonFunction.isDarkMode
 import danggai.app.presentation.util.log
 import danggai.domain.util.Constant
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -64,49 +67,7 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
     }
 
     private fun initLv() {
-        viewLifecycleOwner.repeatOnLifeCycleStarted {
-            launch {
-                mVM.sfTransparency.collect {
-                    context?.let { _context ->
-                        val unwrappedDrawable = AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
-                        val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
-
-                        val color: Int = if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) getColor(_context, R.color.white)
-                        else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) getColor(_context, R.color.black)
-                        else getColor(_context, R.color.white)
-
-                        DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(color, mVM.sfTransparency.value))
-
-                        binding.widget.llRoot.background = wrappedDrawable
-                    }
-                }
-            }
-
-            launch {
-                mVM.sfFontSizeDetail.collect {
-                    binding.widget.tvResin.textSize = it.toFloat()
-                    binding.widget.tvResinTitle.textSize = it.toFloat()
-                    binding.widget.tvResinTime.textSize = it.toFloat()
-                    binding.widget.tvResinTimeTitle.textSize = it.toFloat()
-                    binding.widget.tvDailyCommission.textSize = it.toFloat()
-                    binding.widget.tvDailyCommissionTitle.textSize = it.toFloat()
-                    binding.widget.tvWeeklyBoss.textSize = it.toFloat()
-                    binding.widget.tvWeeklyBossTitle.textSize = it.toFloat()
-                    binding.widget.tvRealmCurrency.textSize = it.toFloat()
-                    binding.widget.tvRealmCurrencyTitle.textSize = it.toFloat()
-                    binding.widget.tvRealmCurrencyTime.textSize = it.toFloat()
-                    binding.widget.tvRealmCurrencyTimeTitle.textSize = it.toFloat()
-                    binding.widget.tvExpedition.textSize = it.toFloat()
-                    binding.widget.tvExpeditionTitle.textSize = it.toFloat()
-                    binding.widget.tvExpeditionTime.textSize = it.toFloat()
-                    binding.widget.tvExpeditionTimeTitle.textSize = it.toFloat()
-                    binding.widget.tvTransformer.textSize = it.toFloat()
-                    binding.widget.tvTransformerTitle.textSize = it.toFloat()
-                    binding.widget.tvTransformerTime.textSize = it.toFloat()
-                    binding.widget.tvTransformerTimeTitle.textSize = it.toFloat()
-                }
-            }
-
+        CoroutineScope(Dispatchers.IO).launch {
             launch {
                 mVM.sfWidgetTheme.collect {
                     context?.let { _context ->
@@ -166,6 +127,50 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
 
                         binding.widget.llRoot.background = wrappedDrawable
                     }
+                }
+            }
+        }
+
+        viewLifecycleOwner.repeatOnLifeCycleStarted {
+            launch {
+                mVM.sfTransparency.collect {
+                    context?.let { _context ->
+                        val unwrappedDrawable = AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
+                        val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
+
+                        val color: Int = if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) getColor(_context, R.color.white)
+                        else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) getColor(_context, R.color.black)
+                        else getColor(_context, R.color.white)
+
+                        DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(color, mVM.sfTransparency.value))
+
+                        binding.widget.llRoot.background = wrappedDrawable
+                    }
+                }
+            }
+
+            launch {
+                mVM.sfFontSizeDetail.collect {
+                    binding.widget.tvResin.textSize = it.toFloat()
+                    binding.widget.tvResinTitle.textSize = it.toFloat()
+                    binding.widget.tvResinTime.textSize = it.toFloat()
+                    binding.widget.tvResinTimeTitle.textSize = it.toFloat()
+                    binding.widget.tvDailyCommission.textSize = it.toFloat()
+                    binding.widget.tvDailyCommissionTitle.textSize = it.toFloat()
+                    binding.widget.tvWeeklyBoss.textSize = it.toFloat()
+                    binding.widget.tvWeeklyBossTitle.textSize = it.toFloat()
+                    binding.widget.tvRealmCurrency.textSize = it.toFloat()
+                    binding.widget.tvRealmCurrencyTitle.textSize = it.toFloat()
+                    binding.widget.tvRealmCurrencyTime.textSize = it.toFloat()
+                    binding.widget.tvRealmCurrencyTimeTitle.textSize = it.toFloat()
+                    binding.widget.tvExpedition.textSize = it.toFloat()
+                    binding.widget.tvExpeditionTitle.textSize = it.toFloat()
+                    binding.widget.tvExpeditionTime.textSize = it.toFloat()
+                    binding.widget.tvExpeditionTimeTitle.textSize = it.toFloat()
+                    binding.widget.tvTransformer.textSize = it.toFloat()
+                    binding.widget.tvTransformerTitle.textSize = it.toFloat()
+                    binding.widget.tvTransformerTime.textSize = it.toFloat()
+                    binding.widget.tvTransformerTimeTitle.textSize = it.toFloat()
                 }
             }
 

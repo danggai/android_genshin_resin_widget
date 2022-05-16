@@ -83,6 +83,9 @@ dependencies {
     implementation  "androidx.hilt:hilt-work:$versions.hiltWorkVersion"
     kapt            "androidx.hilt:hilt-compiler:$versions.hiltWorkVersion"
 
+    // gilde - image
+    implementation "com.github.bumptech.glide:glide:$versions.glideVersion"
+
     // google ad
     implementation "com.google.android.gms:play-services-ads:$versions.googleAdsVersion"
 

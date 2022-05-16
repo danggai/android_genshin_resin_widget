@@ -86,6 +86,8 @@
     <string name="dialog_realtime_note_private">Realtime Notes is Private</string>
     <string name="dialog_msg_realtime_note_private">Your Real-Time Note is private and data cannot be imported. Do you want to change it to public?</string>
 
+    <string name="item_character_list_empty">There is no verified characters.\nYou can scroll down to sync.</string>
+
     <string name="msg_toast_back_button">If you press it one more time, you can shut down the app!</string>
     <string name="msg_toast_save_done">Saved It Successfully!</string>
     <string name="msg_toast_save_done_check_in">Saved It Successfully! Check attendance result at the top bar!</string>
@@ -116,6 +118,8 @@
     <string name="msg_toast_get_uid_error_card_list_empty">Got data successfully, but can\'t get in-game uid because in-game user data doesn\'t exist!</string>
     <string name="msg_toast_get_uid_error_include_error_code">Failed to get in-game uid.. It\'s an unexpected error, so I can\'t give you detailed information, Error code is %s! Please share it with the developer!</string>
     <string name="msg_toast_get_uid_error">Failed to get in-game uid.. It\'s an unexpected error, so I can\'t give you detailed information. sorry!</string>
+
+    <string name="msg_toast_get_characters_error">Failed to get in-game character list.. It\'s an unexpected error, so I can\'t give you detailed information. sorry!</string>
 
     <string name="msg_toast_uid_empty_error">You can\'t link without uid! Please type in "uid"!</string>
     <string name="msg_toast_cookie_empty_error">You can\'t link without cookie! Please enter "cookie"!</string>
@@ -165,6 +169,61 @@
     <string name="hint_cookie">Enter HoYoLAB\'s cookie!</string>
 
     <string name="invalid_user_info">You can\'t use it\nwithout user information!</string>
+
+
+    <!-- Character Name -->
+    <string name="kate">Kate</string>
+    <string name="ayaka">Kamisato Ayaka</string>
+    <string name="jean">Jean</string>
+    <string name="aither">Aither</string>
+    <string name="lisa">Lisa</string>
+    <string name="lumine">Lumine</string>
+    <string name="barbara">Barbara</string>
+    <string name="keaya">Keaya</string>
+    <string name="diluc">Diluc</string>
+    <string name="razor">Razor</string>
+    <string name="amber">Amber</string>
+    <string name="venti">Venti</string>
+    <string name="xiangling">Xiangling</string>
+    <string name="beidou">Beidou</string>
+    <string name="xingqiu">Xingqiu</string>
+    <string name="xiao">Xiao</string>
+    <string name="ningguang">Ningguang</string>
+    <string name="klee">Klee</string>
+    <string name="zhongli">Zhongli</string>
+    <string name="fischl">Fischl</string>
+    <string name="bennett">Bennett</string>
+    <string name="childe">Childe</string>
+    <string name="noelle">Noelle</string>
+    <string name="qiqi">Qiqi</string>
+    <string name="chongyun">Chongyun</string>
+    <string name="ganyu">Ganyu</string>
+    <string name="albedo">Albedo</string>
+    <string name="diona">Diona</string>
+    <string name="mona">Mona</string>
+    <string name="keqing">Keqing</string>
+    <string name="sucrose">Sucrose</string>
+    <string name="xinyan">Xinyan</string>
+    <string name="rosaria">Rosaria</string>
+    <string name="hutao">Hu tao</string>
+    <string name="kazuha">Kaedehara Kazuha</string>
+    <string name="yanfei">Yanfei</string>
+    <string name="yoimiya">Yoimiya</string>
+    <string name="thoma">Thoma</string>
+    <string name="eula">Eula</string>
+    <string name="raiden">Raiden Shogun</string>
+    <string name="sayu">Sayu</string>
+    <string name="kokomi">Sangonomiya Kokomi</string>
+    <string name="gorou">Gorou</string>
+    <string name="sara">Kujou Sara</string>
+    <string name="itto">Arataki Itto</string>
+    <string name="yae">Yae Miko</string>
+    <string name="yeran">Yeran</string>
+    <string name="aloy">Aloy</string>
+    <string name="shenhe">Shenhe</string>
+    <string name="yunjin">Yun Jin</string>
+    <string name="kuki">Kuki Shinobu</string>
+    <string name="ayato">Kamisato Ayato</string>
 
 
     <!-- Widget UI -->

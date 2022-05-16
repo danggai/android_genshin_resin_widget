@@ -10,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentWidgetDesignBinding
+import danggai.app.presentation.ui.design.charaters.WidgetDesignCharacterFragment
 import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
 import danggai.app.presentation.ui.design.resin.WidgetDesignResinFragment
 import danggai.app.presentation.util.log
@@ -44,6 +45,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
 
         pagerAdapter.addFragment(WidgetDesignResinFragment())
         pagerAdapter.addFragment(WidgetDesignDetailFragment())
+        pagerAdapter.addFragment(WidgetDesignCharacterFragment())
 
         binding.vpMain.adapter = pagerAdapter
 

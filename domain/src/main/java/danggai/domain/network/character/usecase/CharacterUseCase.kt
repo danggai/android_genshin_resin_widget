@@ -8,10 +8,10 @@ import javax.inject.Inject
 
 class CharacterUseCase @Inject constructor(
     private val characterRepository: CharacterRepository
-    ) {
+) {
     suspend operator fun invoke(
-        roleId: Int,
-        server: Int,
+        roleId: String,
+        server: String,
         cookie: String,
         ds: String,
         onStart: () -> Unit,
