@@ -14,4 +14,5 @@ data class Avatar(
     val fetter: Int,                        // 1 2 3 4 5 6 7 8 9 10
     val icon: String,                       // 명함 사진
     val image: String,                      // 반투명 전신 사진 (배경)
+    var selected: Boolean = false
 )

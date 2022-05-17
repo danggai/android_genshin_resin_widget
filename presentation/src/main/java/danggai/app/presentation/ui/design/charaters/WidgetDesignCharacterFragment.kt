@@ -12,12 +12,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentWidgetDesignCharacterBinding
-import danggai.app.presentation.databinding.FragmentWidgetDesignDetailBinding
 import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.design.WidgetDesignViewModel
 import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
 import danggai.app.presentation.util.CommonFunction.isDarkMode
-import danggai.app.presentation.util.log
 import danggai.domain.util.Constant
 import kotlinx.coroutines.launch
 
@@ -69,6 +67,10 @@ class WidgetDesignCharacterFragment : BindingFragment<FragmentWidgetDesignCharac
                     }
                 }
             }
+        }
+
+        binding.srlCharacters.setOnRefreshListener {
+            mVM.refreshCharacterInfo()
         }
     }
 }

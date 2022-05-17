@@ -86,7 +86,8 @@
     <string name="dialog_realtime_note_private">Realtime Notes is Private</string>
     <string name="dialog_msg_realtime_note_private">Your Real-Time Note is private and data cannot be imported. Do you want to change it to public?</string>
 
-    <string name="item_character_list_empty">There is no verified characters.\nYou can scroll down to sync.</string>
+    <string name="character_list">Characters in possession</string>
+    <string name="character_list_empty">There is no verified characters.\nYou can scroll down to sync.\n\nSelected characters are displayed in the widget\nwhen you can obtain required Talent Level-Up Materials.</string>
 
     <string name="msg_toast_back_button">If you press it one more time, you can shut down the app!</string>
     <string name="msg_toast_save_done">Saved It Successfully!</string>

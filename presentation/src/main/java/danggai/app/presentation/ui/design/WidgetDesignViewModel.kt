@@ -46,9 +46,11 @@ class WidgetDesignViewModel @Inject constructor(
     val sfFontSizeDetail = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
     val sfRefreshSwitch = MutableStateFlow(false)
 
-    private var _characterList: MutableList<Avatar> = mutableListOf()
-    val characterList: MutableList<Avatar>
-       get() = _characterList
+    val sfIsSrlRefreshing = MutableStateFlow(false)
+
+    private var _sfCharacterList: MutableStateFlow<MutableList<Avatar>> = MutableStateFlow(mutableListOf())
+    val sfCharacterList: MutableStateFlow<MutableList<Avatar>>
+       get() = _sfCharacterList
 
     fun initUi() {
         preference.getResinWidgetDesignSettings().let {
@@ -71,7 +73,7 @@ class WidgetDesignViewModel @Inject constructor(
         }
     }
 
-    fun refreshCharacters(
+    private fun refreshCharacters(
         roleId: String,
         server: String,
         cookie: String,
@@ -85,21 +87,22 @@ class WidgetDesignViewModel @Inject constructor(
                 ds = ds,
                 onStart = {
                     CoroutineScope(Dispatchers.Main).launch {
-                        sfProgress.value = true
+                        sfIsSrlRefreshing.value = true
                     }
                 },
                 onComplete = {
                     CoroutineScope(Dispatchers.Main).launch {
-                        sfProgress.value = false
+                        sfIsSrlRefreshing.value = false
                     }
                 }
             ).collect {
                 log.e(it)
+
                 when (it) {
                     is ApiResult.Success -> {
                         when (it.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
-                                _characterList = it.data.data.avatars as MutableList<Avatar>
+                                _sfCharacterList.value = it.data.data.avatars as MutableList<Avatar>
                                 sfRefreshSwitch.value = !sfRefreshSwitch.value
                             }
                             else -> {
@@ -203,7 +206,7 @@ class WidgetDesignViewModel @Inject constructor(
         sfResinFontSize.value = Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE
     }
 
-    fun onClickRefreshCharacterInfo() {
+    fun refreshCharacterInfo() {
         log.e()
         refreshCharacters(
             preference.getStringUid(),
@@ -217,5 +220,10 @@ class WidgetDesignViewModel @Inject constructor(
             preference.getStringCookie(),
             CommonFunction.getGenshinDS()
         )
+    }
+
+    fun onClickCharacterItem(item: Avatar) {
+        log.e(item.name)
+
     }
 }

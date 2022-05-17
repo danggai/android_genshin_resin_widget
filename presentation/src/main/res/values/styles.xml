@@ -30,7 +30,7 @@
 
     <style name="TextView">
         <item name="android:letterSpacing">-0.04</item>
-        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
     </style>
 
     <style name="TextViewButton">

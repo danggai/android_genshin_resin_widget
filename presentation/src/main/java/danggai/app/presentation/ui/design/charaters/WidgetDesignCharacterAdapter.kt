@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import danggai.app.presentation.R
 import danggai.app.presentation.databinding.ItemCharacterBinding
 import danggai.app.presentation.ui.design.WidgetDesignViewModel
+import danggai.app.presentation.util.log
 import danggai.domain.network.character.entity.Avatar
 
 class WidgetDesignCharacterAdapter(val vm: WidgetDesignViewModel) :
@@ -18,58 +18,66 @@ class WidgetDesignCharacterAdapter(val vm: WidgetDesignViewModel) :
 
     private var items: MutableList<Avatar> = arrayListOf()
 
-    fun clearData() {
-        items.clear()
-        notifyDataSetChanged()
-    }
-
     fun setItemList(_itemList: MutableList<Avatar>) {
         items.clear()
-        items.addAll(_itemList)
+        _itemList.apply {
+            sortBy { -it.id }
+            sortBy { -it.rarity }
+
+            while (this.size >= 1 && this[0].rarity >= 100) {
+                add(this[0])
+                removeFirst()
+            }
+            items.addAll(this)
+        }
         notifyDataSetChanged()
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         lateinit var holder: ItemViewHolder
-
         if (convertView == null) {
+            log.e()
             val itemBinding: ItemCharacterBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.item_character,
                 parent,
                 false
             )
-
             holder = ItemViewHolder(itemBinding)
             holder.view = itemBinding.root
             holder.view.tag = holder
-
-            holder.binding.item = items[position]
-            holder.binding.vm = vm
-
-            Glide.with(holder.view.context)
-                .load(items[position].icon)
-                .apply(RequestOptions().fitCenter())
-                .into(holder.binding.ivIcon)
-
-            when (items[position].rarity) {
-                5 -> {
-                    holder.binding.ivBackground.setImageResource(R.drawable.bg_character_5stars)
-                    holder.binding.ivStars.setImageResource(R.drawable.icon_5stars)
-                }
-                4 -> {
-                    holder.binding.ivBackground.setImageResource(R.drawable.bg_character_4stars)
-                    holder.binding.ivStars.setImageResource(R.drawable.icon_4stars)
-                }
-                105 -> {  // 콜라보 5성
-                    holder.binding.ivBackground.setImageResource(R.drawable.bg_character_collabo)
-                    holder.binding.ivStars.setImageResource(R.drawable.icon_5stars_collabo)
-                }
-            }
         } else {
             holder = convertView.tag as ItemViewHolder
         }
+
+        holder.binding.vm = vm
         holder.binding.item = items[position]
+
+        Glide.with(holder.view.context)
+            .load(items[position].icon)
+            .apply(RequestOptions().fitCenter())
+            .into(holder.binding.ivIcon)
+
+        when (items[position].rarity) {
+            5 -> {
+                holder.binding.ivBackground.setImageResource(R.drawable.bg_character_5stars)
+                holder.binding.ivStars.setImageResource(R.drawable.icon_5stars)
+            }
+            4 -> {
+                holder.binding.ivBackground.setImageResource(R.drawable.bg_character_4stars)
+                holder.binding.ivStars.setImageResource(R.drawable.icon_4stars)
+            }
+            105 -> {  // 콜라보 5성
+                holder.binding.ivBackground.setImageResource(R.drawable.bg_character_collabo)
+                holder.binding.ivStars.setImageResource(R.drawable.icon_5stars_collabo)
+            }
+        }
+
+        holder.binding.llRoot.setOnClickListener {
+            items[position].selected = !items[position].selected
+            vm.onClickCharacterItem(items[position])
+            notifyDataSetChanged()
+        }
 
         return holder.view
     }
@@ -84,8 +92,8 @@ class WidgetDesignCharacterAdapter(val vm: WidgetDesignViewModel) :
         return 0
     }
 
-    class ItemViewHolder internal constructor(binding: ItemCharacterBinding) {
-        var view: View = binding.root
-        var binding: ItemCharacterBinding = binding
+    class ItemViewHolder internal constructor(_binding: ItemCharacterBinding) {
+        var view: View = _binding.root
+        var binding: ItemCharacterBinding = _binding
     }
 }
