@@ -5,20 +5,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import androidx.databinding.DataBindingUtil
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import danggai.app.presentation.R
 import danggai.app.presentation.databinding.ItemCharacterBinding
 import danggai.app.presentation.ui.design.WidgetDesignViewModel
+import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.log
-import danggai.domain.network.character.entity.Avatar
+import danggai.domain.local.Elements
+import danggai.domain.local.LocalCharacter
+import danggai.domain.util.Constant
+import java.util.*
 
 class WidgetDesignCharacterAdapter(val vm: WidgetDesignViewModel) :
     BaseAdapter() {
 
-    private var items: MutableList<Avatar> = arrayListOf()
+    private var items: MutableList<LocalCharacter> = arrayListOf()
 
-    fun setItemList(_itemList: MutableList<Avatar>) {
+    fun setItemList(_itemList: MutableList<LocalCharacter>) {
+        log.e(_itemList.size)
         items.clear()
         _itemList.apply {
             sortBy { -it.id }
@@ -52,17 +55,36 @@ class WidgetDesignCharacterAdapter(val vm: WidgetDesignViewModel) :
         holder.binding.vm = vm
         holder.binding.item = items[position]
 
-        for (character in vm.selectedCharacterList) {
+        for (character in vm.selectedCharacterIdList) {
             if (character == items[position].id) {
-                items[position].selected = true
+                items[position].isSelected = true
                 break
             }
         }
 
-        Glide.with(holder.view.context)
-            .load(items[position].icon)
-            .apply(RequestOptions().fitCenter())
-            .into(holder.binding.ivIcon)
+        holder.binding.ivIcon.apply {
+            this.setImageResource(items[position].icon)
+        }
+
+        holder.binding.tvName.apply {
+            this.text =
+                when (PreferenceManager.getString(context, Constant.PREF_LOCALE, Locale.getDefault().language)) {
+                    Constant.Locale.ENGLISH.locale -> items[position].name_en
+                    Constant.Locale.KOREAN.locale -> items[position].name_ko
+                    else -> items[position].name_en
+                }
+        }
+
+        holder.binding.ivElement.apply {
+            this.setImageResource(when (items[position].element) {
+                Elements.PYRO -> R.drawable.icon_element_pyro
+                Elements.HYDRO -> R.drawable.icon_element_hydro
+                Elements.ELECTRO -> R.drawable.icon_element_electro
+                Elements.CYRO -> R.drawable.icon_element_cyro
+                Elements.ANEMO -> R.drawable.icon_element_anemo
+                Elements.GEO -> R.drawable.icon_element_geo
+            })
+        }
 
         when (items[position].rarity) {
             5 -> {
@@ -80,7 +102,7 @@ class WidgetDesignCharacterAdapter(val vm: WidgetDesignViewModel) :
         }
 
         holder.binding.llRoot.setOnClickListener {
-            items[position].selected = !items[position].selected
+            items[position].isSelected = !items[position].isSelected
             vm.onClickCharacterItem(items[position])
             notifyDataSetChanged()
         }

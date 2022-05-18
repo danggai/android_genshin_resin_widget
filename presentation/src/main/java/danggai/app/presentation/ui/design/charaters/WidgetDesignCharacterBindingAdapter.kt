@@ -5,6 +5,7 @@ import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import danggai.app.presentation.ui.design.WidgetDesignViewModel
 import danggai.app.presentation.util.log
+import danggai.domain.local.LocalCharacter
 import danggai.domain.network.character.entity.Avatar
 
 object WidgetDesignCharacterBindingAdapter {
@@ -13,7 +14,7 @@ object WidgetDesignCharacterBindingAdapter {
     @JvmStatic
     fun setCharacterListRecyclerView(
         view: GridView,
-        item: MutableList<Avatar>,
+        item: MutableList<LocalCharacter>,
         viewModel: WidgetDesignViewModel,
         refreshSwitch: Boolean
     ) {

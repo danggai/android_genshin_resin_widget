@@ -6,12 +6,12 @@ import danggai.app.presentation.R
 import danggai.app.presentation.core.BaseViewModel
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.Event
+import danggai.app.presentation.util.PlayableCharacters
 import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.local.DetailWidgetDesignSettings
+import danggai.domain.local.LocalCharacter
 import danggai.domain.local.ResinWidgetDesignSettings
-import danggai.domain.local.SelectedCharacter
-import danggai.domain.network.character.entity.Avatar
 import danggai.domain.network.character.usecase.CharacterUseCase
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.resource.repository.ResourceProviderRepository
@@ -28,6 +28,8 @@ class WidgetDesignViewModel @Inject constructor(
     private val resource: ResourceProviderRepository,
     private val characters: CharacterUseCase
 ) : BaseViewModel() {
+    val sfProgress = MutableStateFlow(false)
+
     val sfWidgetTheme = MutableStateFlow(Constant.PREF_WIDGET_THEME_AUTOMATIC)
     val sfTransparency = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY)
 
@@ -45,15 +47,14 @@ class WidgetDesignViewModel @Inject constructor(
     val sfFontSizeDetail = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
 
     val sfRefreshSwitch = MutableStateFlow(false)
-    val sfIsSrlRefreshing = MutableStateFlow(false)
 
-    private var _sfCharacterList: MutableStateFlow<MutableList<Avatar>> = MutableStateFlow(mutableListOf())
-    val sfCharacterList: MutableStateFlow<MutableList<Avatar>>
+    private var _sfCharacterList: MutableStateFlow<MutableList<LocalCharacter>> = MutableStateFlow(mutableListOf())
+    val sfCharacterList: MutableStateFlow<MutableList<LocalCharacter>>
        get() = _sfCharacterList
 
-    private var _selectedCharacterList: MutableList<Int> = mutableListOf()
-    val selectedCharacterList: MutableList<Int>
-        get() = _selectedCharacterList
+    private var _selectedCharacterIdList: MutableList<Int> = mutableListOf()
+    val selectedCharacterIdList: MutableList<Int>
+        get() = _selectedCharacterIdList
 
     fun initUi() {
         preference.getResinWidgetDesignSettings().let {
@@ -77,13 +78,8 @@ class WidgetDesignViewModel @Inject constructor(
 
         preference.getSelectedCharacterIdList().let {
             log.e(it)
-//            for (item in it) { log.e(item) }
 
-            _selectedCharacterList = it.toMutableList()
-        }
-
-        if (preference.getStringCookie() != "") {
-            refreshCharacterInfo()
+            _selectedCharacterIdList = it.toMutableList()
         }
     }
 
@@ -103,12 +99,12 @@ class WidgetDesignViewModel @Inject constructor(
                 ds = ds,
                 onStart = {
                     CoroutineScope(Dispatchers.Main).launch {
-                        sfIsSrlRefreshing.value = true
+                        sfProgress.value = true
                     }
                 },
                 onComplete = {
                     CoroutineScope(Dispatchers.Main).launch {
-                        sfIsSrlRefreshing.value = false
+                        sfProgress.value = false
                     }
                 }
             ).collect {
@@ -118,7 +114,19 @@ class WidgetDesignViewModel @Inject constructor(
                     is ApiResult.Success -> {
                         when (it.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
-                                _sfCharacterList.value = it.data.data.avatars as MutableList<Avatar>
+                                val list = mutableListOf<LocalCharacter>()
+
+                                for (avatar in it.data.data.avatars) {
+                                    for (pbc in PlayableCharacters) {
+                                        if (avatar.id == pbc.id
+                                            && pbc.id != Constant.ID_LUMINE
+                                            && pbc.id != Constant.ID_AITHER
+                                        ) list.add(pbc)
+                                    }
+                                }
+
+                                _sfCharacterList.value = list
+
                                 sfRefreshSwitch.value = !sfRefreshSwitch.value
                             }
                             else -> {
@@ -177,7 +185,7 @@ class WidgetDesignViewModel @Inject constructor(
         )
 
         preference.setSelectedCharacterIdList(
-            _selectedCharacterList
+            _selectedCharacterIdList
         )
 
         makeToast(resource.getString(R.string.msg_toast_save_done))
@@ -252,22 +260,26 @@ class WidgetDesignViewModel @Inject constructor(
         )
     }
 
-    fun onClickCharacterItem(item: Avatar) {
-        log.e(item.name)
+    fun onClickCharacterItem(item: LocalCharacter) {
+        log.e(item.name_ko)
 
-        if (_selectedCharacterList.filter { it == item.id }.count() > 0) {
+        if (_selectedCharacterIdList.filter { it == item.id }.count() > 0) {
             log.e()
-            for (character in _selectedCharacterList) {
+            for (character in _selectedCharacterIdList) {
                 if (character == item.id) {
-                    _selectedCharacterList.remove(character)
+                    _selectedCharacterIdList.remove(character)
                     break
                 }
             }
         } else {
             log.e()
-            _selectedCharacterList.add(item.id)
+            _selectedCharacterIdList.add(item.id)
         }
 
-        log.e(_selectedCharacterList)
+        log.e(_selectedCharacterIdList)
+    }
+
+    fun onClickSetAllCharacters() {
+        _sfCharacterList.value = PlayableCharacters.toMutableList()
     }
 }

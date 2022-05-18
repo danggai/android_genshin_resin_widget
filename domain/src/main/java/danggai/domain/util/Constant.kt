@@ -1,5 +1,8 @@
 package danggai.domain.util
 
+import danggai.domain.local.Elements
+import danggai.domain.local.LocalCharacter
+
 object Constant {
 
     /* URL */
@@ -198,23 +201,15 @@ object Constant {
     const val PREF_WIDGET_THEME_LIGHT = 1
     const val PREF_WIDGET_THEME_DARK = 2
 
-    enum class WeaponType(val attr: Int) {
-        Sword(1),
-        Catalysts(10),
-        Claymore(11),
-        Bow(12),
-        Polearm(13)
-    }
+    const val TALENT_AREA_MONDSTADT = 0
+    const val TALENT_AREA_LIYUE = 1
+    const val TALENT_AREA_INAZUMA = 2
+    const val TALENT_AREA_SUMERU = 3
 
-    enum class Elements(val attr: Int) {
-        PYRO(1),
-        HYDRO(6),
-        ANEMO(2),
-        ELECTRO(5),
-        DENDRO(4),
-        CYRO(7),
-        GEO(3)
-    }
+    const val TALENT_DATE_MONTHU = 0
+    const val TALENT_DATE_TUEFRI = 1
+    const val TALENT_DATE_WEDSAT = 2
+    const val TALENT_DATE_ALL = 3
 
     enum class ResinImageVisibility(val pref: Int) {
         VISIBLE(PREF_WIDGET_RESIN_IMAGE_VISIBLE),
@@ -339,84 +334,4 @@ object Constant {
     const val ID_YUNJIN = 10000064
     const val ID_KUKI = 10000065
     const val ID_AYATO = 10000066
-
-    /* Talent */
-
-    val TenentMondMonThurs: List<Int> = listOf(
-        ID_DIONA,
-        ID_BARBARA,
-        ID_SUCROSE,
-        ID_AMBER,
-        ID_KLEE,
-        ID_CHILDE,
-        ID_ALOY
-    )
-
-    val TelentRiyueMonThurs: List<Int> = listOf(
-        ID_KEQING,
-        ID_XIAO,
-        ID_NINGGUANG,
-        ID_QIQI,
-        ID_SHENHE,
-        ID_YERAN
-    )
-
-    val TelentInazumaMonThurs: List<Int> = listOf(
-        ID_YOIMIYA,
-        ID_KOKOMI,
-        ID_THOMA
-    )
-
-
-    val TenentMondTuesFri: List<Int> = listOf(
-        ID_NOELLE,
-        ID_DILUC,
-        ID_RAZOR,
-        ID_MONA,
-        ID_BENNETT,
-        ID_JEAN,
-        ID_EULA,
-    )
-
-    val TelentRiyueTuesFri: List<Int> = listOf(
-        ID_GANYU,
-        ID_CHONGYUN,
-        ID_XIANGLING,
-        ID_HUTAO,
-        ID_KAZUHA,
-        ID_YUNJIN
-    )
-
-    val TelentInazumaTuesFri: List<Int> = listOf(
-        ID_AYAKA,
-        ID_SARA,
-        ID_ITTO,
-        ID_AYATO,
-        ID_KUKI
-    )
-
-
-    val TenentMondWedSat: List<Int> = listOf(
-        ID_ROSIRIA,
-        ID_LISA,
-        ID_VENTI,
-        ID_ALBEDO,
-        ID_KEAYA,
-        ID_FISCHL
-    )
-
-    val TelentRiyueWedSat: List<Int> = listOf(
-        ID_BEIDOU,
-        ID_XINYAN,
-        ID_ZHONGLI,
-        ID_XINGQIU,
-        ID_YANFEI
-    )
-
-    val TelentInazumaWedSat: List<Int> = listOf(
-        ID_RAIDEN,
-        ID_SAYU,
-        ID_GOROU,
-        ID_YAE
-    )
 }

@@ -10,7 +10,7 @@
             />
         <variable
             name="item"
-            type="danggai.domain.network.character.entity.Avatar"
+            type="danggai.domain.local.LocalCharacter"
             />
     </data>
 
@@ -40,11 +40,21 @@
                 android:id="@+id/iv_icon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:scaleType="fitCenter"
                 app:layout_constraintTop_toTopOf="@id/iv_background"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/iv_background"
                 />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_element"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_margin="3dp"
+                android:src="@drawable/icon_element_pyro"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_stars"
@@ -62,7 +72,7 @@
                 android:gravity="center"
                 android:background="@color/gray"
                 android:animateLayoutChanges="true"
-                android:visibility="@{item.selected ? View.VISIBLE : View.GONE}"
+                android:visibility="@{item.isSelected ?View.VISIBLE :View.GONE}"
                 >
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -84,7 +94,6 @@
             app:autoSizeTextType="uniform"
             app:autoSizeMinTextSize="6sp"
             app:autoSizeMaxTextSize="16sp"
-            android:text="@{item.name}"
             android:textAlignment="center"
             android:paddingTop="2dp"
             android:paddingBottom="5dp"

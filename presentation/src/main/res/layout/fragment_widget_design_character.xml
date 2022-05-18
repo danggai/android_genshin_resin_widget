@@ -20,62 +20,63 @@
         android:background="@color/white"
         >
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextView"
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/character_list"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold|italic"
-            android:background="@color/light_blue_200"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/srl_characters"
-            />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextView"
-            android:id="@+id/tv_empty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/character_list_empty"
-            android:maxLines="5"
-            android:visibility="@{vm.sfCharacterList.empty ? View.VISIBLE : View.GONE}"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
-            app:layout_constraintBottom_toTopOf="@id/ll_bottom"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            />
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/srl_characters"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:paddingHorizontal="10dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{vm.sfCharacterList.empty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/ll_bottom"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            isRefreshing="@{vm.sfIsSrlRefreshing}"
             >
 
-            <GridView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:numColumns="4"
-                android:gravity="center"
-                android:visibility="@{vm.sfCharacterList.empty ? View.GONE : View.VISIBLE}"
-                item="@{vm.sfCharacterList}"
-                viewModel="@{vm}"
-                refreshSwitch="@{vm.sfRefreshSwitch}"
+            <androidx.appcompat.widget.AppCompatButton
+                style="@style/TextViewButton"
+                android:layout_height="wrap_content"
+                android:text="@string/character_list_own"
+                android:onClick="@{() -> vm.refreshCharacterInfo()}"
                 />
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                style="@style/TextViewButton"
+                android:layout_height="wrap_content"
+                android:text="@string/character_list_all"
+                android:onClick="@{() -> vm.onClickSetAllCharacters()}"
+                />
+
+            <androidx.legacy.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="10dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextView"
+                android:id="@+id/tv_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/character_list_empty"
+                android:maxLines="3"
+                />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:numColumns="4"
+            android:gravity="center"
+            android:visibility="@{vm.sfCharacterList.empty ? View.GONE : View.VISIBLE}"
+            item="@{vm.sfCharacterList}"
+            viewModel="@{vm}"
+            refreshSwitch="@{vm.sfRefreshSwitch}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ll_bottom"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_bottom"
@@ -129,7 +130,7 @@
 
             </RadioGroup>
 
-            <Space
+            <androidx.legacy.widget.Space
                 android:layout_width="wrap_content"
                 android:layout_height="15dp" />
 
@@ -173,6 +174,28 @@
                     />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="@{vm.sfProgress ?View.VISIBLE :View.GONE}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            >
+
+            <ProgressBar
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:indeterminateTint="@color/light_blue_600"
+                />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

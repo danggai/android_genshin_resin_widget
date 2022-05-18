@@ -68,9 +68,5 @@ class WidgetDesignCharacterFragment : BindingFragment<FragmentWidgetDesignCharac
                 }
             }
         }
-
-        binding.srlCharacters.setOnRefreshListener {
-            mVM.refreshCharacterInfo()
-        }
     }
 }

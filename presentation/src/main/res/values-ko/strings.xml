@@ -60,8 +60,9 @@
     <string name="dialog_realtime_note_private">실시간 메모 비공개</string>
     <string name="dialog_msg_realtime_note_private">실시간 메모가 비공개 상태여서 정보를 가져올 수 없습니다. 공개 상태로 변경하시겠습니까?</string>
 
-    <string name="character_list">보유 중인 캐릭터</string>
-    <string name="character_list_empty">확인 된 캐릭터 목록이 없습니다.\n아래로 스크롤 해서 동기화 할 수 있습니다.\n\n선택 된 캐릭터는 필요한 특성 소재를\n얻을 수 있는 날에 위젯에 표시됩니다.</string>
+    <string name="character_list_all">모든 캐릭터 보기</string>
+    <string name="character_list_own">보유 중 캐릭터 보기</string>
+    <string name="character_list_empty">선택 된 캐릭터는 필요한 특성 소재를\n얻을 수 있는 날에 위젯에 표시됩니다.</string>
 
     <string name="msg_toast_back_button">한 번 더 누르면 앱을 종료할 수 있어!</string>
     <string name="msg_toast_save_done">저장 완료!</string>
