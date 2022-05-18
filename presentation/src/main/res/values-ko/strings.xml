@@ -88,12 +88,14 @@
     <string name="msg_toast_change_data_switch_error_include_error_code">실시간 메모를 공개 상태로 변경하는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없지만, 오류코드는 %s야! 개발자에게 공유해주면, 문제 해결에 도움이 돼!</string>
     <string name="msg_toast_change_data_switch_error">실시간 메모를 공개 상태로 변경하는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없어.. 미안해!</string>
 
+    <string name="msg_toast_get_uid_error_no_ltuid">쿠키에 ltuid가 없으면 자동으로 uid를 가져올 수 없어! 쿠키를 다시 확인하고 시도해 줘!</string>
     <string name="msg_toast_get_uid_success">성공적으로 인게임 uid를 가져왔어!</string>
     <string name="msg_toast_get_uid_error_invalid_cookie">쿠키가 정상적이지 않아서 인게임 uid를 가져오는데 실패했어..</string>
     <string name="msg_toast_get_uid_error_card_list_empty">정상적으로 데이터를 가져왔지만, 인게임 정보가 존재하지 않아서 데이터를 가져올 수 없어!</string>
     <string name="msg_toast_get_uid_error_include_error_code">인게임 uid를 가져오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없지만, 오류코드는 %s야! 개발자에게 공유해주면, 문제 해결에 도움이 돼!</string>
     <string name="msg_toast_get_uid_error">인게임 uid를 가져오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없어.. 미안해!</string>
 
+    <string name="msg_toast_get_characters_no_cookie">쿠키가 없으면 보유중인 캐릭터 목록을 가져올 수 없어! 만약 입력했다면, 메인 화면에서 저장 버튼을 누르고 다시 시도해 줘!</string>
     <string name="msg_toast_get_characters_error">인게임 캐릭터 목록을 가져오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없어.. 미안해!</string>
 
     <string name="msg_toast_uid_empty_error">uid 없이는 연동 할 수 없어! uid를 입력해 줘!</string>

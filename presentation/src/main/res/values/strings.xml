@@ -114,12 +114,14 @@
     <string name="msg_toast_change_data_switch_error_include_error_code">Failed to change the Real-Time Note to public.. It\'s an unexpected error, so I can\'t give you detailed information, Error code is %s! Please share it with the developer!</string>
     <string name="msg_toast_change_data_switch_error">Failed to change the Real-Time Note to public.. It\'s an unexpected error, so I can\'t give you detailed information. sorry!</string>
 
+    <string name="msg_toast_get_uid_error_no_ltuid">If no ltuid in your cookie, I can\'t automatically get a uid! Please check the cookies again and try!</string>
     <string name="msg_toast_get_uid_success">Successfully get in-game uid!</string>
     <string name="msg_toast_get_uid_error_invalid_cookie">The cookie is invalid, so failed to get in-game uid.</string>
     <string name="msg_toast_get_uid_error_card_list_empty">Got data successfully, but can\'t get in-game uid because in-game user data doesn\'t exist!</string>
     <string name="msg_toast_get_uid_error_include_error_code">Failed to get in-game uid.. It\'s an unexpected error, so I can\'t give you detailed information, Error code is %s! Please share it with the developer!</string>
     <string name="msg_toast_get_uid_error">Failed to get in-game uid.. It\'s an unexpected error, so I can\'t give you detailed information. sorry!</string>
 
+    <string name="msg_toast_get_characters_no_cookie">I can\'t get a list of characters without cookies! If you did, press the Save button on the main screen and try again!</string>
     <string name="msg_toast_get_characters_error">Failed to get in-game character list.. It\'s an unexpected error, so I can\'t give you detailed information. sorry!</string>
 
     <string name="msg_toast_uid_empty_error">You can\'t link without uid! Please type in "uid"!</string>

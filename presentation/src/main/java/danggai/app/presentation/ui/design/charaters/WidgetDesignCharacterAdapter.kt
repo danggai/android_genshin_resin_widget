@@ -36,7 +36,6 @@ class WidgetDesignCharacterAdapter(val vm: WidgetDesignViewModel) :
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         lateinit var holder: ItemViewHolder
         if (convertView == null) {
-            log.e()
             val itemBinding: ItemCharacterBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.item_character,
@@ -52,6 +51,13 @@ class WidgetDesignCharacterAdapter(val vm: WidgetDesignViewModel) :
 
         holder.binding.vm = vm
         holder.binding.item = items[position]
+
+        for (character in vm.selectedCharacterList) {
+            if (character == items[position].id) {
+                items[position].selected = true
+                break
+            }
+        }
 
         Glide.with(holder.view.context)
             .load(items[position].icon)

@@ -10,6 +10,7 @@ import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
+import danggai.domain.local.SelectedCharacter
 import danggai.domain.network.character.entity.Avatar
 import danggai.domain.network.character.usecase.CharacterUseCase
 import danggai.domain.preference.repository.PreferenceManagerRepository
@@ -27,8 +28,6 @@ class WidgetDesignViewModel @Inject constructor(
     private val resource: ResourceProviderRepository,
     private val characters: CharacterUseCase
 ) : BaseViewModel() {
-    val sfProgress = MutableStateFlow(false)
-
     val sfWidgetTheme = MutableStateFlow(Constant.PREF_WIDGET_THEME_AUTOMATIC)
     val sfTransparency = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY)
 
@@ -44,13 +43,17 @@ class WidgetDesignViewModel @Inject constructor(
     val sfExpeditionDataVisibility = MutableStateFlow(true)
     val sfTransformerDataVisibility = MutableStateFlow(true)
     val sfFontSizeDetail = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
-    val sfRefreshSwitch = MutableStateFlow(false)
 
+    val sfRefreshSwitch = MutableStateFlow(false)
     val sfIsSrlRefreshing = MutableStateFlow(false)
 
     private var _sfCharacterList: MutableStateFlow<MutableList<Avatar>> = MutableStateFlow(mutableListOf())
     val sfCharacterList: MutableStateFlow<MutableList<Avatar>>
        get() = _sfCharacterList
+
+    private var _selectedCharacterList: MutableList<Int> = mutableListOf()
+    val selectedCharacterList: MutableList<Int>
+        get() = _selectedCharacterList
 
     fun initUi() {
         preference.getResinWidgetDesignSettings().let {
@@ -71,11 +74,23 @@ class WidgetDesignViewModel @Inject constructor(
             sfExpeditionDataVisibility.value = it.expeditionDataVisibility
             sfTransformerDataVisibility.value = it.transformerDataVisibility
         }
+
+        preference.getSelectedCharacterIdList().let {
+            log.e(it)
+//            for (item in it) { log.e(item) }
+
+            _selectedCharacterList = it.toMutableList()
+        }
+
+        if (preference.getStringCookie() != "") {
+            refreshCharacterInfo()
+        }
     }
 
     private fun refreshCharacters(
         roleId: String,
         server: String,
+        lang: String,
         cookie: String,
         ds: String
     ) {
@@ -83,6 +98,7 @@ class WidgetDesignViewModel @Inject constructor(
             characters(
                 roleId = roleId,
                 server = server,
+                lang = lang,
                 cookie = cookie,
                 ds = ds,
                 onStart = {
@@ -108,7 +124,7 @@ class WidgetDesignViewModel @Inject constructor(
                             else -> {
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHARACTERS, null, null)
-                                sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_get_characters_error)))
+                                makeToast(resource.getString(R.string.msg_toast_get_characters_error))
                             }
                         }
                     }
@@ -116,16 +132,16 @@ class WidgetDesignViewModel @Inject constructor(
                         it.message.let { msg ->
                             log.e(msg)
                             CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHARACTERS, it.code, null)
-                            sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_common_network_error)))
+                            makeToast(resource.getString(R.string.msg_toast_common_network_error))
                         }
                     }
                     is ApiResult.Error -> {
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHARACTERS, null, null)
-                        sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_get_characters_error)))
+                        makeToast(resource.getString(R.string.msg_toast_get_characters_error))
                     }
                     is ApiResult.Null -> {
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHARACTERS, null, null)
-                        sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_common_body_null_error)))
+                        makeToast(resource.getString(R.string.msg_toast_common_body_null_error))
                     }
                 }
             }
@@ -160,7 +176,11 @@ class WidgetDesignViewModel @Inject constructor(
             )
         )
 
-        sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_save_done)))
+        preference.setSelectedCharacterIdList(
+            _selectedCharacterList
+        )
+
+        makeToast(resource.getString(R.string.msg_toast_save_done))
 
         sendEvent(Event.FinishThisActivity())
     }
@@ -195,7 +215,6 @@ class WidgetDesignViewModel @Inject constructor(
         sfTransparency.value = Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY
     }
 
-
     fun onClickDetailFontSize() {
         log.e()
         sfFontSizeDetail.value = Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE
@@ -208,6 +227,12 @@ class WidgetDesignViewModel @Inject constructor(
 
     fun refreshCharacterInfo() {
         log.e()
+
+        if (preference.getStringCookie() == "") {
+            makeToast(resource.getString(R.string.msg_toast_get_characters_no_cookie))
+            return
+        }
+
         refreshCharacters(
             preference.getStringUid(),
             when (preference.getIntServer()) {
@@ -217,6 +242,11 @@ class WidgetDesignViewModel @Inject constructor(
                 Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
                 else -> Constant.SERVER_OS_ASIA
             },
+            when (preference.getStringLocale()) {
+                Constant.Locale.ENGLISH.locale -> Constant.Locale.ENGLISH.lang
+                Constant.Locale.KOREAN.locale -> Constant.Locale.KOREAN.lang
+                else -> Constant.Locale.ENGLISH.locale
+            },
             preference.getStringCookie(),
             CommonFunction.getGenshinDS()
         )
@@ -225,5 +255,19 @@ class WidgetDesignViewModel @Inject constructor(
     fun onClickCharacterItem(item: Avatar) {
         log.e(item.name)
 
+        if (_selectedCharacterList.filter { it == item.id }.count() > 0) {
+            log.e()
+            for (character in _selectedCharacterList) {
+                if (character == item.id) {
+                    _selectedCharacterList.remove(character)
+                    break
+                }
+            }
+        } else {
+            log.e()
+            _selectedCharacterList.add(item.id)
+        }
+
+        log.e(_selectedCharacterList)
     }
 }

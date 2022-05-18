@@ -487,7 +487,7 @@ object CommonFunction {
             10000003 -> context.getString(R.string.jean)
             10000005 -> context.getString(R.string.aither)
             10000006 -> context.getString(R.string.lisa)
-            10000007 -> context.getString(R.string.lisa)
+            10000007 -> context.getString(R.string.lumine)
             10000014 -> context.getString(R.string.barbara)
             10000015 -> context.getString(R.string.keaya)
             10000016 -> context.getString(R.string.diluc)

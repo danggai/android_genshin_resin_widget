@@ -33,5 +33,4 @@ object log {
 
         Log.e(TAG, "(" + element[1].fileName + ":" + element[1].lineNumber + ") " +  element[1].methodName + ": " + msg.toString())
     }
-
 }

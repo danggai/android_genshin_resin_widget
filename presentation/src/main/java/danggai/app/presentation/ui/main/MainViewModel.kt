@@ -86,7 +86,7 @@ class MainViewModel @Inject constructor(
                             Constant.RETCODE_SUCCESS -> {
                                 log.e()
                                 saveWidgetData(true, it.data.data)
-                                sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_dailynote_success)))
+                                makeToast(resource.getString(R.string.msg_toast_dailynote_success))
 
                                 it.data.data?.let { data ->
                                     sendWidgetSyncBroadcast(data)
@@ -95,33 +95,33 @@ class MainViewModel @Inject constructor(
                             Constant.RETCODE_ERROR_CHARACTOR_INFO -> {
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
-                                sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_dailynote_error_charactor_info)))
+                                makeToast(resource.getString(R.string.msg_toast_dailynote_error_charactor_info))
                             }
                             Constant.RETCODE_ERROR_INTERNAL_DATABASE_ERROR -> {
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
-                                sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_dailynote_error_internal_database_error)))
+                                makeToast(resource.getString(R.string.msg_toast_dailynote_error_internal_database_error))
                             }
                             Constant.RETCODE_ERROR_TOO_MANY_REQUESTS -> {
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
-                                sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_dailynote_error_too_many_requests)))
+                                makeToast(resource.getString(R.string.msg_toast_dailynote_error_too_many_requests))
                             }
                             Constant.RETCODE_ERROR_NOT_LOGGED_IN,
                             Constant.RETCODE_ERROR_NOT_LOGGED_IN_2-> {
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
-                                sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_dailynote_error_not_logged_in)))
+                                makeToast(resource.getString(R.string.msg_toast_dailynote_error_not_logged_in))
                             }
                             Constant.RETCODE_ERROR_NOT_LOGGED_IN_3 -> {
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
-                                sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_dailynote_error_not_logged_in_3)))
+                                makeToast(resource.getString(R.string.msg_toast_dailynote_error_not_logged_in_3))
                             }
                             Constant.RETCODE_ERROR_WRONG_ACCOUNT -> {
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
-                                sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_dailynote_error_wrong_account)))
+                                makeToast(resource.getString(R.string.msg_toast_dailynote_error_wrong_account))
                             }
                             Constant.RETCODE_ERROR_DATA_NOT_PUBLIC -> {
                                 log.e()
@@ -132,22 +132,22 @@ class MainViewModel @Inject constructor(
                             Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
-                                sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_dailynote_error_account_not_found)))
+                                makeToast(resource.getString(R.string.msg_toast_dailynote_error_account_not_found))
                             }
                             Constant.RETCODE_ERROR_INVALID_LANGUAGE -> {
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
-                                sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_dailynote_error_invalid_language)))
+                                makeToast(resource.getString(R.string.msg_toast_dailynote_error_invalid_language))
                             }
                             Constant.RETCODE_ERROR_INVALID_INPUT_FORMAT -> {
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
-                                sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_dailynote_error_invalid_input)))
+                                makeToast(resource.getString(R.string.msg_toast_dailynote_error_invalid_input))
                             }
                             else -> {
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
-                                sendEvent(Event.MakeToast(String.format(resource.getString(R.string.msg_toast_dailynote_error_include_error_code), it.data.retcode)))
+                                makeToast(String.format(resource.getString(R.string.msg_toast_dailynote_error_include_error_code), it.data.retcode))
                             }
                         }
                     }
@@ -155,16 +155,16 @@ class MainViewModel @Inject constructor(
                         it.message.let { msg ->
                             log.e(msg)
                             CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, null)
-                            sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_common_network_error)))
+                            makeToast(resource.getString(R.string.msg_toast_common_network_error))
                         }
                     }
                     is ApiResult.Error -> {
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, null, null)
-                        sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_dailynote_error)))
+                        makeToast(resource.getString(R.string.msg_toast_dailynote_error))
                     }
                     is ApiResult.Null -> {
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, null,null)
-                        sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_common_body_null_error)))
+                        makeToast(resource.getString(R.string.msg_toast_common_body_null_error))
                     }
                 }
             }
@@ -202,12 +202,12 @@ class MainViewModel @Inject constructor(
                         when (it.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
                                 log.e()
-                                sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_change_data_switch_success)))
+                                makeToast(resource.getString(R.string.msg_toast_change_data_switch_success))
                             }
                             else -> {
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHANGE_DATA_SWITCH, it.code, it.data.retcode)
-                                sendEvent(Event.MakeToast(String.format(resource.getString(R.string.msg_toast_change_data_switch_error_include_error_code), it.data.retcode)))
+                                makeToast(String.format(resource.getString(R.string.msg_toast_change_data_switch_error_include_error_code), it.data.retcode))
                             }
                         }
                     }
@@ -215,16 +215,16 @@ class MainViewModel @Inject constructor(
                         it.message.let { msg ->
                             log.e(msg)
                             CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHANGE_DATA_SWITCH, it.code, null)
-                            sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_common_network_error)))
+                            makeToast(resource.getString(R.string.msg_toast_common_network_error))
                         }
                     }
                     is ApiResult.Error -> {
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHANGE_DATA_SWITCH, null, null)
-                        sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_change_data_switch_error)))
+                        makeToast(resource.getString(R.string.msg_toast_change_data_switch_error))
                     }
                     is ApiResult.Null -> {
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHANGE_DATA_SWITCH, null, null)
-                        sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_common_body_null_error)))
+                        makeToast(resource.getString(R.string.msg_toast_common_body_null_error))
                     }
                 }
             }
@@ -263,16 +263,16 @@ class MainViewModel @Inject constructor(
                                         if (recordCard.game_id == Constant.GAME_ID_GENSHIN_IMPACT)
                                             sfUid.value = recordCard.game_role_id
                                     }
-                                    sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_get_uid_success)))
+                                    makeToast(resource.getString(R.string.msg_toast_get_uid_success))
                                 } else {
                                     log.e()
-                                    sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_get_uid_error_card_list_empty)))
+                                    makeToast(resource.getString(R.string.msg_toast_get_uid_error_card_list_empty))
                                 }
                             }
                             else -> {
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_GET_GAME_RECORD_CARD, it.code, it.data.retcode)
-                                sendEvent(Event.MakeToast(String.format(resource.getString(R.string.msg_toast_get_uid_error_include_error_code), it.data.retcode)))
+                                makeToast(String.format(resource.getString(R.string.msg_toast_get_uid_error_include_error_code), it.data.retcode))
                             }
                         }
                     }
@@ -280,16 +280,16 @@ class MainViewModel @Inject constructor(
                         it.message.let { msg ->
                             log.e(msg)
                             CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_GET_GAME_RECORD_CARD, it.code, null)
-                            sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_common_network_error)))
+                            makeToast(resource.getString(R.string.msg_toast_common_network_error))
                         }
                     }
                     is ApiResult.Error -> {
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_GET_GAME_RECORD_CARD, null, null)
-                        sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_get_uid_error)))
+                        makeToast(resource.getString(R.string.msg_toast_get_uid_error))
                     }
                     is ApiResult.Null -> {
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_GET_GAME_RECORD_CARD, null, null)
-                        sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_common_body_null_error)))
+                        makeToast(resource.getString(R.string.msg_toast_common_body_null_error))
                     }
                 }
             }
@@ -383,11 +383,11 @@ class MainViewModel @Inject constructor(
                 )
             }
 
-            sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_save_done)))
+            makeToast(resource.getString(R.string.msg_toast_save_done))
         } else if (!isDataValid and sfUid.value.isEmpty()) {
-            sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_uid_empty_error)))
+            makeToast(resource.getString(R.string.msg_toast_uid_empty_error))
         } else if (!isDataValid and sfCookie.value.isEmpty()) {
-            sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_cookie_empty_error)))
+            makeToast(resource.getString(R.string.msg_toast_cookie_empty_error))
         }
     }
     
@@ -410,9 +410,9 @@ class MainViewModel @Inject constructor(
                 !sfEnableHonkai3rdAutoCheckIn.value)
                 sendEvent(Event.StartShutCheckInWorker(false))
 
-            sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_save_done_check_in)))
+            makeToast(resource.getString(R.string.msg_toast_save_done_check_in))
         } else if (!isDataValid and sfCookie.value.isEmpty()) {
-            sendEvent(Event.MakeToast(resource.getString(R.string.msg_toast_cookie_empty_error)))
+            makeToast(resource.getString(R.string.msg_toast_cookie_empty_error))
         }
     }
 
@@ -481,7 +481,7 @@ class MainViewModel @Inject constructor(
     fun onClickGetUid() {
         log.e()
         if (!sfCookie.value.contains(("ltuid="))) {
-            sendEvent(Event.MakeToast("ltuid 없음"))
+            makeToast(resource.getString(R.string.msg_toast_get_uid_error_no_ltuid))
             return
         }
 

@@ -12,6 +12,7 @@ class CharacterUseCase @Inject constructor(
     suspend operator fun invoke(
         roleId: String,
         server: String,
+        lang: String,
         cookie: String,
         ds: String,
         onStart: () -> Unit,
@@ -20,6 +21,7 @@ class CharacterUseCase @Inject constructor(
         characterRepository.character(
             roleId = roleId,
             server = server,
+            lang = lang,
             cookie = cookie,
             ds = ds,
             onStart = onStart,

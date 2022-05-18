@@ -101,6 +101,7 @@ object Constant {
     const val PREF_CHECK_IN_SETTINGS = "PREF_CHECK_IN_SETTINGS"
     const val PREF_RESIN_WIDGET_DESIGN_SETTINGS = "PREF_RESIN_WIDGET_DESIGN_SETTINGS"
     const val PREF_DETAIL_WIDGET_DESIGN_SETTINGS = "PREF_DETAIL_WIDGET_DESIGN_SETTINGS"
+    const val PREF_SELECTED_CHARACTER_ID_LIST = "PREF_SELECTED_CHARACTER_ID_LIST"
     const val PREF_DAILY_NOTE_DATA = "PREF_DAILY_NOTE_DATA"
 
     /*resin widget settings*/
@@ -282,4 +283,140 @@ object Constant {
 
     const val BACK_BUTTON_INTERVAL: Long = 1000
 
+
+    /* CHARACTER ID */
+
+    const val ID_KATE = 10000001
+    const val ID_AYAKA = 10000002
+    const val ID_JEAN = 10000003
+    const val ID_AITHER = 10000005
+    const val ID_LISA = 10000006
+    const val ID_LUMINE = 10000007
+    const val ID_BARBARA = 10000014
+    const val ID_KEAYA = 10000015
+    const val ID_DILUC = 10000016
+    const val ID_RAZOR = 10000020
+    const val ID_AMBER = 10000021
+    const val ID_VENTI = 10000022
+    const val ID_XIANGLING = 10000023
+    const val ID_BEIDOU = 10000024
+    const val ID_XINGQIU = 10000025
+    const val ID_XIAO = 10000026
+    const val ID_NINGGUANG = 10000027
+    const val ID_KLEE = 10000029
+    const val ID_ZHONGLI = 10000030
+    const val ID_FISCHL = 10000031
+    const val ID_BENNETT = 10000032
+    const val ID_CHILDE = 10000033
+    const val ID_NOELLE = 10000034
+    const val ID_QIQI = 10000035
+    const val ID_CHONGYUN = 10000036
+    const val ID_GANYU = 10000037
+    const val ID_ALBEDO = 10000038
+    const val ID_DIONA = 10000039
+    const val ID_MONA = 10000041
+    const val ID_KEQING = 10000042
+    const val ID_SUCROSE = 10000043
+    const val ID_XINYAN = 10000044
+    const val ID_ROSARIA = 10000045
+    const val ID_HUTAO = 10000046
+    const val ID_KAZUHA = 10000047
+    const val ID_YANFEI = 10000048
+    const val ID_YOIMIYA = 10000049
+    const val ID_THOMA = 10000050
+    const val ID_EULA = 10000051
+    const val ID_RAIDEN = 10000052
+    const val ID_SAYU = 10000053
+    const val ID_KOKOMI = 10000054
+    const val ID_GOROU = 10000055
+    const val ID_SARA = 10000056
+    const val ID_ITTO = 10000057
+    const val ID_YAE = 10000058
+    const val ID_HEIZOU = 10000059
+    const val ID_YERAN = 10000060
+    const val ID_ALOY = 10000062
+    const val ID_SHENHE = 10000063
+    const val ID_YUNJIN = 10000064
+    const val ID_KUKI = 10000065
+    const val ID_AYATO = 10000066
+
+    /* Talent */
+
+    val TenentMondMonThurs: List<Int> = listOf(
+        ID_DIONA,
+        ID_BARBARA,
+        ID_SUCROSE,
+        ID_AMBER,
+        ID_KLEE,
+        ID_CHILDE,
+        ID_ALOY
+    )
+
+    val TelentRiyueMonThurs: List<Int> = listOf(
+        ID_KEQING,
+        ID_XIAO,
+        ID_NINGGUANG,
+        ID_QIQI,
+        ID_SHENHE,
+        ID_YERAN
+    )
+
+    val TelentInazumaMonThurs: List<Int> = listOf(
+        ID_YOIMIYA,
+        ID_KOKOMI,
+        ID_THOMA
+    )
+
+
+    val TenentMondTuesFri: List<Int> = listOf(
+        ID_NOELLE,
+        ID_DILUC,
+        ID_RAZOR,
+        ID_MONA,
+        ID_BENNETT,
+        ID_JEAN,
+        ID_EULA,
+    )
+
+    val TelentRiyueTuesFri: List<Int> = listOf(
+        ID_GANYU,
+        ID_CHONGYUN,
+        ID_XIANGLING,
+        ID_HUTAO,
+        ID_KAZUHA,
+        ID_YUNJIN
+    )
+
+    val TelentInazumaTuesFri: List<Int> = listOf(
+        ID_AYAKA,
+        ID_SARA,
+        ID_ITTO,
+        ID_AYATO,
+        ID_KUKI
+    )
+
+
+    val TenentMondWedSat: List<Int> = listOf(
+        ID_ROSIRIA,
+        ID_LISA,
+        ID_VENTI,
+        ID_ALBEDO,
+        ID_KEAYA,
+        ID_FISCHL
+    )
+
+    val TelentRiyueWedSat: List<Int> = listOf(
+        ID_BEIDOU,
+        ID_XINYAN,
+        ID_ZHONGLI,
+        ID_XINGQIU,
+        ID_YANFEI
+    )
+
+    val TelentInazumaWedSat: List<Int> = listOf(
+        ID_RAIDEN,
+        ID_SAYU,
+        ID_GOROU,
+        ID_YAE
+    )
 }

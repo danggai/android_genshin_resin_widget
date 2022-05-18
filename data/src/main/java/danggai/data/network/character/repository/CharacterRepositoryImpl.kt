@@ -21,6 +21,7 @@ class CharacterRepositoryImpl @Inject constructor(
     override suspend fun character(
         roleId: String,
         server: String,
+        lang: String,
         cookie: String,
         ds: String,
         onStart: () -> Unit,
@@ -29,6 +30,7 @@ class CharacterRepositoryImpl @Inject constructor(
         val response = characterApi.character(
             roleId,
             server,
+            lang,
             cookie,
             ds
         )

@@ -16,12 +16,12 @@ interface CharacterApi {
         "sec-ch-ua-platform: Android",
         "x-rpc-client_type: 4",
         "x-rpc-app_version: 1.5.0",
-        "x-rpc-language: ko-kr",
     )
     @POST("/game_record/genshin/api/character")
     suspend fun character(
         @Query("role_id") roleId: String,
         @Query("server") server: String,
+        @Header ("x-rpc-language") lang: String,
         @Header("Cookie") cookie: String,
         @Header("DS") ds: String
     ): ApiResponse<Character>

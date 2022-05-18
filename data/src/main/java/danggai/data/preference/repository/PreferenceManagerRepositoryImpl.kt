@@ -4,18 +4,21 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.GsonBuilder
 import danggai.data.BuildConfig
-import danggai.domain.local.CheckInSettings
-import danggai.domain.local.DailyNoteSettings
-import danggai.domain.local.DetailWidgetDesignSettings
-import danggai.domain.local.ResinWidgetDesignSettings
+import danggai.domain.local.*
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
+import org.json.JSONArray
 import java.util.*
 import javax.inject.Inject
+import org.json.JSONException
+
+
+
+
 
 class PreferenceManagerRepositoryImpl @Inject constructor(
-    private val context: Context
+    private val context: Context,
 ): PreferenceManagerRepository {
     companion object {
         private const val PREFERENCES_NAME = "danggai.app.resinwidget"
@@ -193,6 +196,37 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         return GsonBuilder().create().fromJson(value, T::class.java)
     }
 
+    private fun setIntArray(context: Context, key: String, values: ArrayList<Int>) {
+        val prefs: SharedPreferences = getPreferences(context)
+        val editor = prefs.edit()
+        val a = JSONArray()
+        for (i in 0 until values.size) {
+            a.put(values[i])
+        }
+        if (!values.isEmpty()) {
+            editor.putString(key, a.toString())
+        } else {
+            editor.putString(key, null)
+        }
+        editor.apply()
+    }
+
+    private fun getIntArray(context: Context, key: String): ArrayList<Int> {
+        val prefs: SharedPreferences = getPreferences(context)
+        val json = prefs.getString(key, "")
+        val urls = ArrayList<Int>()
+        try {
+            val a = JSONArray(json)
+            for (i in 0 until a.length()) {
+                val url = a.optInt(i)
+                urls.add(url)
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        return urls
+    }
+
     /**
      * 키 값 삭제
      * @param context
@@ -264,6 +298,11 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         getT<DetailWidgetDesignSettings>(context, Constant.PREF_DETAIL_WIDGET_DESIGN_SETTINGS)?: DetailWidgetDesignSettings.EMPTY
     override fun setDetailWidgetDesignSettings(value: DetailWidgetDesignSettings) =
         setT(context, Constant.PREF_DETAIL_WIDGET_DESIGN_SETTINGS, value)
+
+    override fun getSelectedCharacterIdList(): List<Int> =
+        getIntArray(context, Constant.PREF_SELECTED_CHARACTER_ID_LIST)
+    override fun setSelectedCharacterIdList(value: List<Int>) =
+        setIntArray(context, Constant.PREF_SELECTED_CHARACTER_ID_LIST, value as ArrayList<Int>)
 
 
     override fun getStringExpeditionTime(): String =

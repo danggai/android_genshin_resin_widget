@@ -1,9 +1,7 @@
 package danggai.domain.preference.repository
 
-import danggai.domain.local.CheckInSettings
-import danggai.domain.local.DetailWidgetDesignSettings
-import danggai.domain.local.ResinWidgetDesignSettings
-import danggai.domain.local.DailyNoteSettings
+import danggai.domain.local.*
+import danggai.domain.network.character.entity.Avatar
 import danggai.domain.network.dailynote.entity.DailyNoteData
 
 
@@ -39,6 +37,9 @@ interface PreferenceManagerRepository {
 
     fun getDetailWidgetDesignSettings(): DetailWidgetDesignSettings
     fun setDetailWidgetDesignSettings(value: DetailWidgetDesignSettings)
+
+    fun getSelectedCharacterIdList(): List<Int>
+    fun setSelectedCharacterIdList(value: List<Int>)
 
 
     fun getStringRecentSyncTime(): String

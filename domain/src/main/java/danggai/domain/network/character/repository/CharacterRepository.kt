@@ -10,6 +10,7 @@ interface CharacterRepository: Repository {
     suspend fun character(
         roleId: String,
         server: String,
+        lang: String,
         cookie: String,
         ds: String,
         onStart: () -> Unit,

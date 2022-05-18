@@ -51,10 +51,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="16dp"
                 android:src="@drawable/icon_5stars"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/iv_background"
-                />
+                app:layout_constraintRight_toRightOf="parent" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/ll_selected"
@@ -83,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="8sp"
+            app:autoSizeMinTextSize="6sp"
             app:autoSizeMaxTextSize="16sp"
             android:text="@{item.name}"
             android:textAlignment="center"
