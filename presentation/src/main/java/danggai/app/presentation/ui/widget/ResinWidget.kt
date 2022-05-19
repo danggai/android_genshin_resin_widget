@@ -23,9 +23,9 @@ class ResinWidget() : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-        log.e()
 
         appWidgetIds.forEach { appWidgetId ->
+            log.e(appWidgetId)
             val views: RemoteViews = addViews(context)
             syncData(views, context)
 

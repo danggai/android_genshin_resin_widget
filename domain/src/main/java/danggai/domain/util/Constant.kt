@@ -1,8 +1,5 @@
 package danggai.domain.util
 
-import danggai.domain.local.Elements
-import danggai.domain.local.LocalCharacter
-
 object Constant {
 
     /* URL */
@@ -79,6 +76,7 @@ object Constant {
 
     const val WORKER_UNIQUE_NAME_AUTO_REFRESH = "AutoRefreshWork"
     const val WORKER_UNIQUE_NAME_AUTO_CHECK_IN = "AutoCheckInWork"
+    const val WORKER_UNIQUE_NAME_TALENT_WIDGET_REFRESH = "TalentWidgetRefreshWork"
 
 
 
@@ -272,6 +270,7 @@ object Constant {
 
     const val ACTION_RESIN_WIDGET_REFRESH_UI = "danggai.app.resinwidget.refresh.resin.ui"
     const val ACTION_RESIN_WIDGET_REFRESH_DATA = "danggai.app.resinwidget.refresh.resin.data"
+    const val ACTION_TALENT_WIDGET_REFRESH = "danggai.app.resinwidget.refresh.talent"
     const val ACTION_ON_BOOT_COMPLETED = "android.intent.action.BOOT_COMPLETED"
 
     const val ACTION_APPWIDGET_UPDATE = "android.appwidget.action.APPWIDGET_UPDATE"

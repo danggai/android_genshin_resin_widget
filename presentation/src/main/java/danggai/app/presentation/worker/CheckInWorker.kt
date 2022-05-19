@@ -59,7 +59,7 @@ class CheckInWorker @AssistedInject constructor(
             log.e()
             startWorkerOneTime(
                 context,
-                CommonFunction.getTimeLeftUntilChinaMidnight(Calendar.getInstance())
+                CommonFunction.getTimeLeftUntilChinaTime(true, 0, Calendar.getInstance())
             )
         }
 

@@ -3,6 +3,9 @@ package danggai.app.presentation.util
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.GsonBuilder
+import org.json.JSONArray
+import org.json.JSONException
+import java.util.ArrayList
 
 
 object PreferenceManager {
@@ -178,6 +181,38 @@ object PreferenceManager {
         //We convert this JSON String to model object. Parameter "c" (of
         //type Class < T >" is used to cast.
         return GsonBuilder().create().fromJson(value, T::class.java)
+    }
+
+    fun setIntArray(context: Context, key: String, values: ArrayList<Int>) {
+        val prefs: SharedPreferences = getPreferences(context)
+        val editor = prefs.edit()
+        val a = JSONArray()
+        for (i in 0 until values.size) {
+            a.put(values[i])
+        }
+        if (!values.isEmpty()) {
+            editor.putString(key, a.toString())
+        } else {
+            editor.putString(key, null)
+        }
+        editor.apply()
+    }
+
+    fun getIntArray(context: Context, key: String): ArrayList<Int> {
+        val prefs: SharedPreferences = getPreferences(context)
+        val json = prefs.getString(key, "")
+        val urls = ArrayList<Int>()
+        try {
+            val a = JSONArray(json)
+            for (i in 0 until a.length()) {
+                val url = a.optInt(i)
+                urls.add(url)
+            }
+        } catch (e: JSONException) {
+            log.e()
+//            e.printStackTrace()
+        }
+        return urls
     }
 
     /**

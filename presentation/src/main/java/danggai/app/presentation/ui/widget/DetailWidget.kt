@@ -26,7 +26,6 @@ class DetailWidget() : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-        log.e()
 
         val sLocale = Locale(PreferenceManager.getString(context, Constant.PREF_LOCALE, Locale.getDefault().language))
 
@@ -35,6 +34,7 @@ class DetailWidget() : AppWidgetProvider() {
         config.setLocale(sLocale)
 
         appWidgetIds.forEach { appWidgetId ->
+            log.e(appWidgetId)
             val views: RemoteViews = addViews(context)
             syncData(views, context)
 

@@ -18,6 +18,7 @@ import danggai.domain.resource.repository.ResourceProviderRepository
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,6 +29,8 @@ class WidgetDesignViewModel @Inject constructor(
     private val resource: ResourceProviderRepository,
     private val characters: CharacterUseCase
 ) : BaseViewModel() {
+    val sfApplySavedData = MutableSharedFlow<Boolean>()
+
     val sfProgress = MutableStateFlow(false)
 
     val sfWidgetTheme = MutableStateFlow(Constant.PREF_WIDGET_THEME_AUTOMATIC)
@@ -187,6 +190,8 @@ class WidgetDesignViewModel @Inject constructor(
         preference.setSelectedCharacterIdList(
             _selectedCharacterIdList
         )
+
+        sfApplySavedData.emitInVmScope(true)
 
         makeToast(resource.getString(R.string.msg_toast_save_done))
 

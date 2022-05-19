@@ -39,7 +39,6 @@
                 android:orientation="vertical"
                 >
 
-
                 <LinearLayout
                     android:id="@+id/ll_sync"
                     android:layout_width="wrap_content"
@@ -144,6 +143,7 @@
                 android:textSize="12sp"
                 android:textColor="@color/widget_font_main"
                 android:gravity="center"
+                android:maxLines="2"
                 android:text="@string/invalid_user_info"
                 />
 

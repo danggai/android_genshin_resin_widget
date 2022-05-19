@@ -306,12 +306,12 @@ object CommonFunction {
         notificationManager.notify(notiType.ordinal, builder.build())
     }
 
-    fun getTimeLeftUntilChinaMidnight(startCalendar: Calendar): Long {
+    fun getTimeLeftUntilChinaTime(isAM: Boolean, hour: Int, startCalendar: Calendar): Long {
         val targetCalendar = Calendar.getInstance()
         targetCalendar.timeZone = TimeZone.getTimeZone(Constant.CHINA_TIMEZONE)
         targetCalendar.set(Calendar.MINUTE, 1)
-        targetCalendar.set(Calendar.HOUR, 0)
-        targetCalendar.set(Calendar.AM_PM, Calendar.AM)
+        targetCalendar.set(Calendar.HOUR, hour)
+        targetCalendar.set(Calendar.AM_PM, if (isAM) Calendar.AM else Calendar.PM)
 
         if (startCalendar.get(Calendar.HOUR_OF_DAY) >= 1) targetCalendar.add(Calendar.DAY_OF_YEAR,
             1)
@@ -328,6 +328,15 @@ object CommonFunction {
         } else {
             delay
         }
+    }
+
+    /* 중국 기준, 실제 시간보다 4시간 전 요일을 반환 함. */
+    fun getDateInGenshin(): Int {
+        val targetCalendar = Calendar.getInstance()
+        targetCalendar.timeZone = TimeZone.getTimeZone(Constant.CHINA_TIMEZONE)
+        targetCalendar.add(Calendar.HOUR, -4)
+
+        return targetCalendar.get(Calendar.DAY_OF_WEEK)     // 1일 2월 3화 4수 5목 6금 7토
     }
 
     fun Context.isDarkMode(): Boolean {

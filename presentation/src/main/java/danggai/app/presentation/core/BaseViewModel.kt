@@ -21,4 +21,10 @@ open class BaseViewModel : ViewModel() {
     fun makeToast(msg: String) {
         sendEvent(Event.MakeToast(msg))
     }
+
+    fun <T> MutableSharedFlow<T>.emitInVmScope(value: T) {
+        viewModelScope.launch {
+            emit(value)
+        }
+    }
 }

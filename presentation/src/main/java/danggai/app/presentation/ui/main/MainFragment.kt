@@ -101,6 +101,10 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             if (it.state !in listOf(WorkInfo.State.SUCCEEDED, WorkInfo.State.FAILED, WorkInfo.State.CANCELLED))
                 log.e("checkin worker ${it.id} state -> ${it.state}")
         }
+        WorkManager.getInstance(requireContext()).getWorkInfosByTag(Constant.WORKER_UNIQUE_NAME_TALENT_WIDGET_REFRESH).get().forEach {
+            if (it.state !in listOf(WorkInfo.State.SUCCEEDED, WorkInfo.State.FAILED, WorkInfo.State.CANCELLED))
+                log.e("talent worker ${it.id} state -> ${it.state}")
+        }
     }
 
     private fun permissionCheck() {

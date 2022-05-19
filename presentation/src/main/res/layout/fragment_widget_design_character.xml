@@ -35,7 +35,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 style="@style/TextViewButton"
                 android:layout_height="wrap_content"
-                android:text="@string/character_list_own"
+                android:text="@string/character_list_possession"
                 android:onClick="@{() -> vm.refreshCharacterInfo()}"
                 />
 

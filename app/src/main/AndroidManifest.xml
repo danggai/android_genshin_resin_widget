@@ -94,6 +94,31 @@
 
         </receiver>
 
+        <receiver
+            android:name="danggai.app.presentation.ui.widget.TalentWidget"
+            android:label="@string/widget_label_talent"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="danggai.app.resinwidget.refresh.talent" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/talent_widget_info" />
+
+        </receiver>
+
+        <service android:name="danggai.app.presentation.service.TalentWidgetItemService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
         <activity
             android:name="danggai.app.presentation.ui.main.MainActivity"
             android:launchMode="singleTask"

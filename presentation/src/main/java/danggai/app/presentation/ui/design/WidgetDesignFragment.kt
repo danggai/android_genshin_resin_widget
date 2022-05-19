@@ -1,6 +1,7 @@
 package danggai.app.presentation.ui.design
 
 import android.app.WallpaperManager
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
@@ -10,10 +11,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentWidgetDesignBinding
+import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.design.charaters.WidgetDesignCharacterFragment
 import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
 import danggai.app.presentation.ui.design.resin.WidgetDesignResinFragment
+import danggai.app.presentation.ui.widget.ResinWidget
 import danggai.app.presentation.util.log
+import danggai.domain.util.Constant
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, WidgetDesignViewModel>() {
@@ -38,6 +43,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
         initTabLayout()
 
         initUi()
+        initSf()
     }
 
     private fun initTabLayout() {
@@ -70,6 +76,22 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
             } catch (e:SecurityException) {
                 log.e()
                 makeToast(it, getString(R.string.msg_toast_storage_permission_denied))
+            }
+        }
+    }
+
+    private fun initSf() {
+        viewLifecycleOwner.repeatOnLifeCycleStarted {
+            launch {
+                context?.let { _context ->
+                    mVM.sfApplySavedData.collect {
+                        log.e()
+                        _context.sendBroadcast(
+                            Intent(_context, ResinWidget::class.java)
+                                .setAction(Constant.ACTION_TALENT_WIDGET_REFRESH)
+                        )
+                    }
+                }
             }
         }
     }
