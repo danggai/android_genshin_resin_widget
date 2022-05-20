@@ -44,6 +44,11 @@ class TalentWidgetItemFactory(
                             else -> false
                         }
             } as ArrayList<LocalCharacter>
+
+        data.apply {
+            sortBy { -it.id }
+            sortBy { -it.rarity }
+        }
     }
 
     override fun onDestroy() {}

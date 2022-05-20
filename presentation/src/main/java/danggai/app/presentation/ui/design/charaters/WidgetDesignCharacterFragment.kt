@@ -3,10 +3,6 @@ package danggai.app.presentation.ui.design.charaters
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat.getColor
-import androidx.core.graphics.ColorUtils
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
@@ -15,7 +11,6 @@ import danggai.app.presentation.databinding.FragmentWidgetDesignCharacterBinding
 import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.design.WidgetDesignViewModel
 import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
-import danggai.app.presentation.util.CommonFunction.isDarkMode
 import danggai.domain.util.Constant
 import kotlinx.coroutines.launch
 
@@ -39,8 +34,7 @@ class WidgetDesignCharacterFragment : BindingFragment<FragmentWidgetDesignCharac
         binding.vm = mVM
 
         initUi()
-        initLv()
-    }
+        initSf()    }
 
     private fun initUi() {
         when(mVM.sfWidgetTheme.value) {
@@ -51,19 +45,16 @@ class WidgetDesignCharacterFragment : BindingFragment<FragmentWidgetDesignCharac
         }
     }
 
-    private fun initLv() {
+    private fun initSf() {
         viewLifecycleOwner.repeatOnLifeCycleStarted {
             launch {
-                mVM.sfTransparency.collect {
-                    context?.let { _context ->
-                        val unwrappedDrawable = AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
-                        val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
-
-                        val color: Int = if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) getColor(_context, R.color.white)
-                        else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) getColor(_context, R.color.black)
-                        else getColor(_context, R.color.white)
-
-                        DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(color, mVM.sfTransparency.value))
+                mVM.sfCharacterListRefreshSwitch.collect {
+                    if (mVM.sfSelectedCharacterList.value.size == 0) {
+                        binding.llDisable.visibility = View.VISIBLE
+                        binding.gvCharacters.visibility = View.GONE
+                    } else {
+                        binding.llDisable.visibility = View.GONE
+                        binding.gvCharacters.visibility = View.VISIBLE
                     }
                 }
             }

@@ -21,35 +21,17 @@
         >
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_disable"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="@{vm.sfCharacterList.empty ? View.VISIBLE : View.GONE}"
+            android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/ll_bottom"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             >
-
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/TextViewButton"
-                android:layout_height="wrap_content"
-                android:text="@string/character_list_possession"
-                android:onClick="@{() -> vm.refreshCharacterInfo()}"
-                />
-
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/TextViewButton"
-                android:layout_height="wrap_content"
-                android:text="@string/character_list_all"
-                android:onClick="@{() -> vm.onClickSetAllCharacters()}"
-                />
-
-            <androidx.legacy.widget.Space
-                android:layout_width="0dp"
-                android:layout_height="10dp"
-                />
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextView"
@@ -64,14 +46,14 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <GridView
+            android:id="@+id/gv_characters"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:numColumns="4"
             android:gravity="center"
-            android:visibility="@{vm.sfCharacterList.empty ? View.GONE : View.VISIBLE}"
-            item="@{vm.sfCharacterList}"
+            item="@{vm.sfSelectedCharacterList}"
             viewModel="@{vm}"
-            refreshSwitch="@{vm.sfRefreshSwitch}"
+            refreshSwitch="@{vm.sfCharacterListRefreshSwitch}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/ll_bottom"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -88,6 +70,44 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/select_character"
+                android:textColor="@color/black"
+                android:textSize="28sp"
+                android:textStyle="bold|italic" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="5dp"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextViewButton"
+                    android:layout_height="25dp"
+                    android:text="@string/character_list_possession"
+                    android:onClick="@{() -> vm.refreshCharacterInfo()}"
+                    />
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="15dp"
+                    android:layout_height="0dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextViewButton"
+                    android:layout_height="25dp"
+                    android:text="@string/character_list_all"
+                    android:onClick="@{() -> vm.onClickSetAllCharacters()}"
+                    />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.legacy.widget.Space
+                android:layout_width="wrap_content"
+                android:layout_height="15dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"

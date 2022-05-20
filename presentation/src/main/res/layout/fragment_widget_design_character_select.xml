@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="danggai.domain.util.Constant.WidgetTheme" />
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="danggai.app.presentation.ui.design.WidgetDesignViewModel"
+            />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ll_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@color/light_blue_200"
+            android:gravity="center_vertical|right"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/select_character_title"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_close"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end"
+                android:padding="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:onClick="@{() -> vm.onClickFinishSelectChara()}"
+                android:src="@drawable/baseline_close_24"
+                app:tint="@color/white"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:numColumns="4"
+            android:gravity="center"
+            android:visibility="@{vm.sfCharacterList.empty ? View.GONE : View.VISIBLE}"
+            item="@{vm.sfCharacterList}"
+            viewModel="@{vm}"
+            refreshSwitch="@{vm.sfCharacterListRefreshSwitch}"
+            app:layout_constraintTop_toBottomOf="@id/ll_toolbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

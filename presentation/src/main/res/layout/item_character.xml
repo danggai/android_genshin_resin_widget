@@ -70,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:background="@color/gray"
+                android:background="@color/mid_light_gray"
                 android:animateLayoutChanges="true"
                 android:visibility="@{item.isSelected ?View.VISIBLE :View.GONE}"
                 >

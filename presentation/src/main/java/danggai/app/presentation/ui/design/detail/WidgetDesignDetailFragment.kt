@@ -19,7 +19,6 @@ import danggai.app.presentation.util.log
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

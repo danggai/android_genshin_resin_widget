@@ -114,7 +114,7 @@ class WidgetDesignCharacterAdapter(val vm: WidgetDesignViewModel) :
 
     override fun getItem(position: Int) = items[position]
 
-    override fun getItemId(position: Int): Long = position.toLong()
+    override fun getItemId(position: Int): Long = items[position].id.toLong()
 
     override fun getItemViewType(position: Int): Int {
         return 0

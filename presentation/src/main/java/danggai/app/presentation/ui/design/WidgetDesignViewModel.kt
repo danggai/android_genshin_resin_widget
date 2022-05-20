@@ -30,6 +30,8 @@ class WidgetDesignViewModel @Inject constructor(
     private val characters: CharacterUseCase
 ) : BaseViewModel() {
     val sfApplySavedData = MutableSharedFlow<Boolean>()
+    val sfStartSelectFragment = MutableSharedFlow<Boolean>()
+    val sfFinishSelectFragment = MutableSharedFlow<Boolean>()
 
     val sfProgress = MutableStateFlow(false)
 
@@ -49,11 +51,15 @@ class WidgetDesignViewModel @Inject constructor(
     val sfTransformerDataVisibility = MutableStateFlow(true)
     val sfFontSizeDetail = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
 
-    val sfRefreshSwitch = MutableStateFlow(false)
+    val sfCharacterListRefreshSwitch = MutableStateFlow(false)
 
     private var _sfCharacterList: MutableStateFlow<MutableList<LocalCharacter>> = MutableStateFlow(mutableListOf())
     val sfCharacterList: MutableStateFlow<MutableList<LocalCharacter>>
        get() = _sfCharacterList
+
+    private var _sfSelectedCharacterList: MutableStateFlow<MutableList<LocalCharacter>> = MutableStateFlow(mutableListOf())
+    val sfSelectedCharacterList: MutableStateFlow<MutableList<LocalCharacter>>
+        get() = _sfSelectedCharacterList
 
     private var _selectedCharacterIdList: MutableList<Int> = mutableListOf()
     val selectedCharacterIdList: MutableList<Int>
@@ -82,7 +88,14 @@ class WidgetDesignViewModel @Inject constructor(
         preference.getSelectedCharacterIdList().let {
             log.e(it)
 
+            for (pbc in PlayableCharacters) {
+                if (pbc.id in it) {
+                    _sfSelectedCharacterList.value.add(pbc)
+                }
+            }
+
             _selectedCharacterIdList = it.toMutableList()
+            sfCharacterListRefreshSwitch.value = !sfCharacterListRefreshSwitch.value
         }
     }
 
@@ -130,7 +143,9 @@ class WidgetDesignViewModel @Inject constructor(
 
                                 _sfCharacterList.value = list
 
-                                sfRefreshSwitch.value = !sfRefreshSwitch.value
+                                sfCharacterListRefreshSwitch.value = !sfCharacterListRefreshSwitch.value
+
+                                sfStartSelectFragment.emitInVmScope(true)
                             }
                             else -> {
                                 log.e()
@@ -187,10 +202,6 @@ class WidgetDesignViewModel @Inject constructor(
             )
         )
 
-        preference.setSelectedCharacterIdList(
-            _selectedCharacterIdList
-        )
-
         sfApplySavedData.emitInVmScope(true)
 
         makeToast(resource.getString(R.string.msg_toast_save_done))
@@ -244,6 +255,9 @@ class WidgetDesignViewModel @Inject constructor(
         if (preference.getStringCookie() == "") {
             makeToast(resource.getString(R.string.msg_toast_get_characters_no_cookie))
             return
+        } else if (preference.getStringUid() == "") {
+            makeToast(resource.getString(R.string.msg_toast_get_characters_no_uid))
+            return
         }
 
         refreshCharacters(
@@ -273,18 +287,31 @@ class WidgetDesignViewModel @Inject constructor(
             for (character in _selectedCharacterIdList) {
                 if (character == item.id) {
                     _selectedCharacterIdList.remove(character)
+                    _sfSelectedCharacterList.value.remove(item)
                     break
                 }
             }
         } else {
             log.e()
             _selectedCharacterIdList.add(item.id)
+            _sfSelectedCharacterList.value.add(item)
         }
+
+        sfCharacterListRefreshSwitch.value = !sfCharacterListRefreshSwitch.value
+
+        preference.setSelectedCharacterIdList(_selectedCharacterIdList)
 
         log.e(_selectedCharacterIdList)
     }
 
     fun onClickSetAllCharacters() {
         _sfCharacterList.value = PlayableCharacters.toMutableList()
+
+        sfStartSelectFragment.emitInVmScope(true)
+    }
+
+    fun onClickFinishSelectChara() {
+        log.e()
+        sfFinishSelectFragment.emitInVmScope(true)
     }
 }

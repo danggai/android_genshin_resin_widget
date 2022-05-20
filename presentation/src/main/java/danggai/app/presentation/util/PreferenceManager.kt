@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import com.google.gson.GsonBuilder
 import org.json.JSONArray
 import org.json.JSONException
-import java.util.ArrayList
 
 
 object PreferenceManager {

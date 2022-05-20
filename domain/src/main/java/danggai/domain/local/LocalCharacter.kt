@@ -1,7 +1,6 @@
 package danggai.domain.local
 
 import danggai.domain.network.character.entity.Avatar
-import danggai.domain.util.Constant
 
 data class LocalCharacter(
     val id: Int,                            // 고유 id

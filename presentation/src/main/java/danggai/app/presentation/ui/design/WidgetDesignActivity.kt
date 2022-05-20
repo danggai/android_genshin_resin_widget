@@ -9,6 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingActivity
 import danggai.app.presentation.databinding.ActivityWidgetDesignBinding
+import danggai.app.presentation.ui.design.charaters.select.WidgetDesignSelectCharacterFragment
 import danggai.app.presentation.util.log
 
 @AndroidEntryPoint
@@ -42,4 +43,15 @@ class WidgetDesignActivity : BindingActivity<ActivityWidgetDesignBinding, Widget
             .commit()
     }
 
+    override fun onBackPressed() {
+        if (supportFragmentManager.findFragmentByTag(WidgetDesignSelectCharacterFragment.TAG) != null) {
+            log.e()
+            supportFragmentManager.beginTransaction()
+                .remove(supportFragmentManager.findFragmentByTag(WidgetDesignSelectCharacterFragment.TAG)!!)
+                .commit()
+        } else {
+            log.e()
+            super.onBackPressed()
+        }
+    }
 }

@@ -27,7 +27,7 @@ class ResinWidget() : AppWidgetProvider() {
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
             val views: RemoteViews = addViews(context)
-            syncData(views, context)
+            syncView(views, context)
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
@@ -104,7 +104,7 @@ class ResinWidget() : AppWidgetProvider() {
         return views
     }
 
-    private fun syncData(view: RemoteViews, context: Context?) {
+    private fun syncView(view: RemoteViews, context: Context?) {
         context?.let { _context ->
             val widgetDesign =
                 PreferenceManager.getT<ResinWidgetDesignSettings>(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS)?: ResinWidgetDesignSettings.EMPTY

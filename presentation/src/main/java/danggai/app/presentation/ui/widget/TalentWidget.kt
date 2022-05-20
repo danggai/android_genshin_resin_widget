@@ -26,7 +26,7 @@ class TalentWidget() : AppWidgetProvider() {
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
             val views: RemoteViews = addViews(context)
-            syncData(views, context)
+            syncView(views, context)
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
@@ -49,8 +49,7 @@ class TalentWidget() : AppWidgetProvider() {
 
         when (action) {
             Constant.ACTION_TALENT_WIDGET_REFRESH,
-            Constant.ACTION_ON_BOOT_COMPLETED,
-            -> {
+            Constant.ACTION_ON_BOOT_COMPLETED -> {
                 log.e("REFRESH_UI")
 
                 context.let {
@@ -104,7 +103,7 @@ class TalentWidget() : AppWidgetProvider() {
         return views
     }
 
-    private fun syncData(view: RemoteViews, context: Context?) {
+    private fun syncView(view: RemoteViews, context: Context?) {
         context?.let { _context ->
 
             val widgetDesign =
@@ -126,33 +125,23 @@ class TalentWidget() : AppWidgetProvider() {
                             }
                 }
 
-            if (targetCharacters.isNotEmpty()) {
-                view.setViewVisibility(R.id.tv_disable, View.GONE)
-                view.setViewVisibility(R.id.gv_characters, View.VISIBLE)
+            view.setTextViewText(R.id.tv_no_talent_ingredient, _context.getString(R.string.widget_ui_no_talent_ingredient))
+            view.setTextViewText(R.id.tv_no_selected_characters, _context.getString(R.string.widget_ui_no_selected_characters))
+
+            view.setViewVisibility(R.id.gv_characters, View.GONE)
+            view.setViewVisibility(R.id.tv_no_talent_ingredient, View.GONE)
+            view.setViewVisibility(R.id.tv_no_selected_characters, View.GONE)
+
+            if (selectedCharacterIds.isEmpty()) {
+                view.setViewVisibility(R.id.tv_no_selected_characters, View.VISIBLE)
+            } else if (targetCharacters.isEmpty()) {
+                view.setViewVisibility(R.id.tv_no_talent_ingredient, View.VISIBLE)
             } else {
-                view.setViewVisibility(R.id.tv_disable, View.VISIBLE)
-                view.setViewVisibility(R.id.gv_characters, View.GONE)
+                view.setViewVisibility(R.id.gv_characters, View.VISIBLE)
             }
 
             view.setTextViewText(R.id.tv_sync_time, getTimeSyncTimeFormat())
             view.setViewVisibility(R.id.pb_loading, View.GONE)
-        }
-    }
-
-    private fun setWidgetRefreshing(
-        context: Context,
-        appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray,
-    ) {
-        appWidgetIds.forEach { appWidgetId ->
-            log.e()
-            val view = RemoteViews(context.packageName, R.layout.widget_talent)
-
-            view.setViewVisibility(R.id.pb_loading, View.VISIBLE)
-            view.setViewVisibility(R.id.gv_characters, View.INVISIBLE)
-            view.setViewVisibility(R.id.ll_disable, View.GONE)
-
-            appWidgetManager.updateAppWidget(appWidgetId, view)
         }
     }
 }

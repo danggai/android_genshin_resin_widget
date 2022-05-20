@@ -391,6 +391,10 @@ object CommonFunction {
         view.setTextColor(R.id.tv_sync_time, subFontColor)
         view.setTextColor(R.id.tv_disable, mainFontColor)
 
+        /* Talent Widget 꼽사리ㅎㅎ; */
+        view.setTextColor(R.id.tv_no_talent_ingredient, mainFontColor)
+        view.setTextColor(R.id.tv_no_selected_characters, mainFontColor)
+
         log.e()
 
         if (view.layoutId == R.layout.widget_resin_fixed) {
@@ -441,9 +445,10 @@ object CommonFunction {
         view.setInt(R.id.iv_refersh, "setColorFilter", subFontColor)
         view.setTextColor(R.id.tv_sync_time, subFontColor)
         view.setTextColor(R.id.tv_disable, mainFontColor)
-
+        view.setTextColor(R.id.tv_no_selected_characters, mainFontColor)
 
         log.e()
+
         val fontSize = widgetDesign.fontSize
 
         view.setTextColor(R.id.tv_resin, mainFontColor)

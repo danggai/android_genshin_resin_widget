@@ -13,9 +13,10 @@ import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentWidgetDesignBinding
 import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.design.charaters.WidgetDesignCharacterFragment
+import danggai.app.presentation.ui.design.charaters.select.WidgetDesignSelectCharacterFragment
 import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
 import danggai.app.presentation.ui.design.resin.WidgetDesignResinFragment
-import danggai.app.presentation.ui.widget.ResinWidget
+import danggai.app.presentation.ui.widget.TalentWidget
 import danggai.app.presentation.util.log
 import danggai.domain.util.Constant
 import kotlinx.coroutines.launch
@@ -83,14 +84,25 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
     private fun initSf() {
         viewLifecycleOwner.repeatOnLifeCycleStarted {
             launch {
-                context?.let { _context ->
-                    mVM.sfApplySavedData.collect {
+                mVM.sfApplySavedData.collect {
+                    context?.let { _context ->
                         log.e()
                         _context.sendBroadcast(
-                            Intent(_context, ResinWidget::class.java)
+                            Intent(_context, TalentWidget::class.java)
                                 .setAction(Constant.ACTION_TALENT_WIDGET_REFRESH)
                         )
                     }
+                }
+            }
+
+            launch {
+                mVM.sfStartSelectFragment.collect {
+                    parentFragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down, R.anim.slide_in_up, R.anim.slide_out_down)
+                        .add(R.id.fragment,
+                            WidgetDesignSelectCharacterFragment.newInstance(),
+                            WidgetDesignSelectCharacterFragment.TAG)
+                        .commit()
                 }
             }
         }

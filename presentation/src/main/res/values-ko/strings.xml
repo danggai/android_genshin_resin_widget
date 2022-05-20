@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">원신 레진 위젯</string>
 
+    <string name="select_character_title">위젯에 표시할 캐릭터</string>
+
     <string name="save">저장</string>
     <string name="force_stop">강제 중지</string>
     <string name="ok">확인</string>
@@ -62,7 +64,7 @@
 
     <string name="character_list_all">모든 캐릭터</string>
     <string name="character_list_possession">보유 중 캐릭터</string>
-    <string name="character_list_empty">선택 된 캐릭터는 필요한 특성 소재를\n얻을 수 있는 날에 위젯에 표시됩니다.</string>
+    <string name="character_list_empty">선택 된 캐릭터는 필요한 특성 소재를\n얻을 수 있는 날에 특성 위젯에 표시됩니다.</string>
 
     <string name="msg_toast_back_button">한 번 더 누르면 앱을 종료할 수 있어!</string>
     <string name="msg_toast_save_done">저장 완료!</string>
@@ -97,6 +99,7 @@
     <string name="msg_toast_get_uid_error">인게임 uid를 가져오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없어.. 미안해!</string>
 
     <string name="msg_toast_get_characters_no_cookie">쿠키가 없으면 보유중인 캐릭터 목록을 가져올 수 없어! 만약 입력했다면, 메인 화면에서 저장 버튼을 누르고 다시 시도해 줘!</string>
+    <string name="msg_toast_get_characters_no_uid">uid가 없으면 보유중인 캐릭터 목록을 가져올 수 없어! 만약 입력했다면, 메인 화면에서 저장 버튼을 누르고 다시 시도해 줘!</string>
     <string name="msg_toast_get_characters_error">인게임 캐릭터 목록을 가져오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없어.. 미안해!</string>
 
     <string name="msg_toast_uid_empty_error">uid 없이는 연동 할 수 없어! uid를 입력해 줘!</string>
@@ -224,6 +227,7 @@
     <string name="widget_ui_transformer_reached">준비 완료</string>
     <string name="widget_ui_unknown">알 수 없음</string>
     <string name="widget_ui_no_talent_ingredient">오늘은 선택 된 캐릭터가 필요한 특성 소재를 얻을 수 없습니다.</string>
+    <string name="widget_ui_no_selected_characters">Widget Design > Characters 에서 대상 캐릭터를 지정해주세요.</string>
 
     <string name="daily_commissions">남은 일일 의뢰</string>
     <string name="enemies_of_note">주간 보스 할인</string>

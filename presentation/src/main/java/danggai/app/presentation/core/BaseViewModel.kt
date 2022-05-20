@@ -2,7 +2,6 @@ package danggai.app.presentation.core
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import danggai.app.presentation.R
 import danggai.app.presentation.util.Event
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

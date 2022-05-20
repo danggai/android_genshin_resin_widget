@@ -1,7 +1,9 @@
 package danggai.domain.preference.repository
 
-import danggai.domain.local.*
-import danggai.domain.network.character.entity.Avatar
+import danggai.domain.local.CheckInSettings
+import danggai.domain.local.DailyNoteSettings
+import danggai.domain.local.DetailWidgetDesignSettings
+import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 
 

@@ -53,11 +53,24 @@
 
         <TextView
             style="@style/TextView"
-            android:id="@+id/tv_disable"
+            android:id="@+id/tv_no_talent_ingredient"
             android:maxLines="10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="@string/widget_ui_no_talent_ingredient"
+            android:textSize="12sp"
+            />
+
+        <TextView
+            style="@style/TextView"
+            android:id="@+id/tv_no_selected_characters"
+            android:maxLines="10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="@string/widget_ui_no_selected_characters"
+            android:textSize="12sp"
             />
 
     </LinearLayout>

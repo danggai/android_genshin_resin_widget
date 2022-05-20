@@ -36,7 +36,7 @@ class DetailWidget() : AppWidgetProvider() {
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
             val views: RemoteViews = addViews(context)
-            syncData(views, context)
+            syncView(views, context)
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
@@ -117,7 +117,7 @@ class DetailWidget() : AppWidgetProvider() {
         return views
     }
 
-    private fun syncData(view: RemoteViews, context: Context?) {
+    private fun syncView(view: RemoteViews, context: Context?) {
         context?.let { _context ->
             val widgetDesign =
                 PreferenceManager.getT<DetailWidgetDesignSettings>(context, Constant.PREF_DETAIL_WIDGET_DESIGN_SETTINGS)?: DetailWidgetDesignSettings.EMPTY
@@ -178,7 +178,7 @@ class DetailWidget() : AppWidgetProvider() {
                 view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME))
 
                 when (widgetDesign.timeNotation) {
-                    Constant.PREF_TIME_NOTATION_REMAIN_TIME -> {
+                    Constant.PREF_TIME_NOTATION_REMAIN_TIME, -1 -> {        // -1 : Preference Int Default value
                         log.e()
                         view.setTextViewText(R.id.tv_resin_time_title, _context.getString(R.string.until_fully_replenished))
                         view.setTextViewText(R.id.tv_resin_time, CommonFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time))
