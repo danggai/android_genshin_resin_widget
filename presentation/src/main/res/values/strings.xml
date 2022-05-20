@@ -279,6 +279,6 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Now you can see the parametric transformer cooldown in the Detail Widget.</string>
+    <string name="dialog_msg_patch_note">- Talent Widget has been added, allowing you to see a list of characters to obtain materials for Talent Level-up.</string>
 
 </resources>
