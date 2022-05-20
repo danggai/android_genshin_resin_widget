@@ -49,9 +49,9 @@
 
 
 
-| ![screenshot_00.jpg](./assets/00.jpg?raw=true)<br /><center>메인 화면</center> | ![screenshot_01.jpg](./assets/01.jpg?raw=true)<br /><center>메인 화면</center> | ![screenshot_02.jpg](./assets/02.jpg?raw=true)<br /><center>디자인 화면</center> |
+| ![screenshot_00.jpg](./assets/en00.jpg?raw=true)<br /><center>메인 화면</center> | ![screenshot_01.jpg](./assets/en01.jpg?raw=true)<br /><center>디자인 화면</center> | ![screenshot_02.jpg](./assets/en02.jpg?raw=true)<br /><center>디자인 화면</center> |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![screenshot_00.jpg](./assets/03.jpg?raw=true)<br /><center>디자인 화면</center> | ![screenshot_01.jpg](./assets/04.jpg?raw=true)<br /><center>위젯 예시</center> | ![screenshot_02.jpg](./assets/05.jpg?raw=true)<br /><center>알림 예시</center> |
+| ![screenshot_00.jpg](./assets/en03.jpg?raw=true)<br /><center>디자인 화면</center> | ![screenshot_01.jpg](./assets/en04.jpg?raw=true)<br /><center>위젯 예시</center> | ![screenshot_02.jpg](./assets/kr05.jpg?raw=true)<br /><center>알림 예시</center> |
 
 
 
