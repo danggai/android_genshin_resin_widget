@@ -18,7 +18,7 @@ ext.versions = [
         minSdk                  : 23,
         compileSdk              : 32,
 
-        versionCode             : 30,
+        versionCode             : 31,
         versionName             : "1.1.5",
 
         // gradle plugins
@@ -26,7 +26,7 @@ ext.versions = [
         kotlinGradleVersion     : "1.6.20",
         googleServiceVersion    : "4.3.10",
         crashlyticsGradleVersion: "2.7.1",
-        gsonVersion             : "2.9.0",
+        gsonVersion             : "2.8.6",
 
         // android support library
         coreVersion             : "1.6.0",
@@ -53,7 +53,7 @@ ext.versions = [
         okhttpVersion           : "4.9.0",
         retrofitVersion         : "2.6.0",
         sandwichVersion         : "1.2.3",
-        glideVersion            : "4.12.0",
+        glideVersion            : "4.13.0",
 
         // google ads
         googleAdsVersion        : "20.4.0",

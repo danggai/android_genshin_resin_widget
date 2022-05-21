@@ -85,6 +85,7 @@ dependencies {
 
     // gilde - image
     implementation "com.github.bumptech.glide:glide:$versions.glideVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$versions.glideVersion"
 
     // google ad
     implementation "com.google.android.gms:play-services-ads:$versions.googleAdsVersion"

@@ -18,6 +18,7 @@ import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.TalentWorker
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.util.Constant
+import kotlinx.coroutines.*
 
 
 class TalentWidget() : AppWidgetProvider() {
@@ -26,9 +27,13 @@ class TalentWidget() : AppWidgetProvider() {
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
             val views: RemoteViews = addViews(context)
-            syncView(views, context)
 
-            appWidgetManager.updateAppWidget(appWidgetId, views)
+            CoroutineScope(Dispatchers.IO).launch {
+                syncView(views, context)
+                delay(200L)
+
+                appWidgetManager.updateAppWidget(appWidgetId, views)
+            }
         }
 
         val serviceIntent = Intent(context, TalentWidgetItemService::class.java)
@@ -105,6 +110,7 @@ class TalentWidget() : AppWidgetProvider() {
 
     private fun syncView(view: RemoteViews, context: Context?) {
         context?.let { _context ->
+            log.e()
 
             val widgetDesign =
                 PreferenceManager.getT<ResinWidgetDesignSettings>(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS)?: ResinWidgetDesignSettings.EMPTY
