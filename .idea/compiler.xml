@@ -2,7 +2,9 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
+      <module name="android_genshin_resin_widget.buildSrc" target="11" />
       <module name="genshin_resin_widget.app" target="11" />
+      <module name="genshin_resin_widget.BuildSrc" target="11" />
       <module name="genshin_resin_widget.presentation" target="11" />
     </bytecodeTargetLevel>
   </component>
