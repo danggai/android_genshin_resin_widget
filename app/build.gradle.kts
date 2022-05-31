@@ -8,9 +8,8 @@ plugins {
     id ("com.google.gms.google-services")
     id ("com.google.firebase.crashlytics")
 }
-android {
-    apply ("$rootDir/dependencies.gradle")
 
+android {
     compileSdkVersion(Versions.compileSdk)
 
     defaultConfig {
@@ -52,9 +51,9 @@ android {
 }
 
 dependencies {
-    implementation project(":data")
-    implementation project(":domain")
-    implementation project(":presentation")
+    implementation (project(":data"))
+    implementation (project(":domain"))
+    implementation (project(":presentation"))
 
     // coroutine
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutineVersion}")
@@ -66,8 +65,8 @@ dependencies {
     implementation ("io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlinVersion}")
 
     // hilt - DI
-    implementation  ("com.google.dagger:hilt-android:${Versions.hiltVersion}")
-    kapt            ("com.google.dagger:hilt-android-compiler:${Versions.hiltVersion}")
+    implementation  ("com.google.dagger:hilt-android:${Versions.daggerHiltVersion}")
+    kapt            ("com.google.dagger:hilt-android-compiler:${Versions.daggerHiltVersion}")
     implementation  ("androidx.hilt:hilt-work:${Versions.hiltVersion}")
     kapt            ("androidx.hilt:hilt-compiler:${Versions.hiltVersion}")
 

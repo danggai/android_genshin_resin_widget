@@ -4,11 +4,9 @@ plugins {
     id ("com.android.library")
     id ("kotlin-android")
     id ("kotlin-kapt")
-    id ("dagger.hilt.android.plugin")
     id ("com.google.gms.google-services")
+    id ("dagger.hilt.android.plugin")
 }
-
-apply ("$rootDir/dependencies.gradle")
 
 android {
     compileSdkVersion(Versions.compileSdk)
@@ -16,23 +14,21 @@ android {
     defaultConfig {
         minSdkVersion(Versions.minSdk)
         targetSdkVersion(Versions.compileSdk)
-        versionCode = Versions.versionCode
-        versionName = Versions.versionName
     }
 
     buildTypes {
         getByName("release") {
-            isDebuggable = false
+//            isDebuggable = false
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            buildConfigField("long", "VERSION_CODE", "${.versionCode}")
-            buildConfigField("String","VERSION_NAME","\"${.versionName}\"")
+            buildConfigField("long", "VERSION_CODE", "${Versions.versionCode}")
+            buildConfigField("String","VERSION_NAME","\"${Versions.versionName}\"")
         }
         getByName("debug") {
 //            applicationIdSuffix ".debug"
-            isDebuggable = true
-            buildConfigField("long", "VERSION_CODE", "${.versionCode}")
-            buildConfigField("String","VERSION_NAME","\"${.versionName}\"")
+//            isDebuggable = true
+            buildConfigField("long", "VERSION_CODE", "${Versions.versionCode}")
+            buildConfigField("String","VERSION_NAME","\"${Versions.versionName}\"")
         }
     }
 }
@@ -43,7 +39,7 @@ java {
 }
 
 dependencies {
-    implementation project(":domain")
+    implementation (project(":domain"))
 
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlinGradleVersion}")
 
@@ -60,8 +56,8 @@ dependencies {
     implementation ("io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlinVersion}")
 
     // hilt - DI
-    implementation  ("com.google.dagger:hilt-android:${Versions.hiltVersion}")
-    kapt            ("com.google.dagger:hilt-android-compiler:${Versions.hiltVersion}")
+    implementation ("com.google.dagger:hilt-android:${Versions.daggerHiltVersion}")
+    kapt           ("com.google.dagger:hilt-android-compiler:${Versions.daggerHiltVersion}")
 
     // OkHttp3 & Retrofit - for network
     implementation ("com.squareup.okhttp3:logging-interceptor:${Versions.okhttpVersion}")
@@ -73,7 +69,7 @@ dependencies {
     implementation ("com.github.skydoves:sandwich:${Versions.sandwichVersion}")
 
     // firebase
-    implementation platform("com.google.firebase:firebase-bom:${Versions.firebaseVersion}")
+    implementation (platform("com.google.firebase:firebase-bom:${Versions.firebaseVersion}"))
 
     // unittest
     testImplementation ("junit:junit:${Versions.junitVersion}")
@@ -83,8 +79,8 @@ dependencies {
 
 android {
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-                targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility (JavaVersion.VERSION_1_8 )
+        targetCompatibility (JavaVersion.VERSION_1_8)
     }
     kotlinOptions {
         jvmTarget = "1.8"

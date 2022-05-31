@@ -1,13 +1,11 @@
 import dependency.Versions
 
 plugins {
-    id ("com.android.library")
     id ("kotlin-android")
     id ("kotlin-kapt")
+    id ("com.android.library")
     id ("dagger.hilt.android.plugin")
 }
-
-apply ("$rootDir/dependencies.gradle")
 
 android {
     compileSdkVersion(Versions.compileSdk)
@@ -15,25 +13,23 @@ android {
     defaultConfig {
         minSdkVersion(Versions.minSdk)
         targetSdkVersion(Versions.compileSdk)
-        versionCode = Versions.versionCode
-        versionName = Versions.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles = "consumer-rules.pro"
+//        consumerProguardFiles = "consumer-rules.pro"
     }
 
     buildTypes {
         getByName("release") {
-            isDebuggable = false
+//            isDebuggable = false
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            buildConfigField("long", "VERSION_CODE", "${.versionCode}")
-            buildConfigField("String","VERSION_NAME","\"${.versionName}\"")
+            buildConfigField("long", "VERSION_CODE", "${Versions.versionCode}")
+            buildConfigField("String","VERSION_NAME","\"${Versions.versionName}\"")
         }
         getByName("debug") {
-            isDebuggable = true
-            buildConfigField("long", "VERSION_CODE", "${.versionCode}")
-            buildConfigField("String","VERSION_NAME","\"${.versionName}\"")
+//            isDebuggable = true
+            buildConfigField("long", "VERSION_CODE", "${Versions.versionCode}")
+            buildConfigField("String","VERSION_NAME","\"${Versions.versionName}\"")
         }
     }
     compileOptions {
@@ -50,7 +46,7 @@ android {
 }
 
 dependencies {
-    implementation project(":domain")
+    implementation (project(":domain"))
 
     implementation ("androidx.core:core-ktx:${Versions.coreVersion}")
     implementation ("androidx.appcompat:appcompat:${Versions.appCompatVersion}")
@@ -80,10 +76,10 @@ dependencies {
     implementation ("io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlinVersion}")
 
     // hilt - DI
-    implementation  ("com.google.dagger:hilt-android:${Versions.hiltVersion}")
-    kapt            ("com.google.dagger:hilt-android-compiler:${Versions.hiltVersion}")
-    implementation  ("androidx.hilt:hilt-work:${Versions.hiltWorkVersion}")
-    kapt            ("androidx.hilt:hilt-compiler:${Versions.hiltWorkVersion}")
+    implementation  ("com.google.dagger:hilt-android:${Versions.daggerHiltVersion}")
+    kapt            ("com.google.dagger:hilt-android-compiler:${Versions.daggerHiltVersion}")
+    implementation  ("androidx.hilt:hilt-work:${Versions.hiltVersion}")
+    kapt            ("androidx.hilt:hilt-compiler:${Versions.hiltVersion}")
 
     // gilde - image
     implementation ("com.github.bumptech.glide:glide:${Versions.glideVersion}")

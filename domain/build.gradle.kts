@@ -5,8 +5,6 @@ plugins {
     id ("kotlin")
 }
 
-apply ("$rootDir/dependencies.gradle")
-
 java {
     sourceCompatibility = JavaVersion.VERSION_1_7
     targetCompatibility = JavaVersion.VERSION_1_7
