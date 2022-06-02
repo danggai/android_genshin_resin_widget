@@ -1,4 +1,5 @@
 import dependency.Versions
+import dependency.Dependencies
 
 plugins {
     id ("com.android.application")
@@ -10,12 +11,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Versions.compileSdk)
+    compileSdk = Versions.compileSdk
 
     defaultConfig {
         applicationId = "danggai.app.resinwidget"
-        minSdkVersion(Versions.minSdk)
-        targetSdkVersion(Versions.compileSdk)
+        minSdk = Versions.minSdk
+        targetSdk = Versions.compileSdk
         versionCode = Versions.versionCode
         versionName = Versions.versionName
 
@@ -56,30 +57,29 @@ dependencies {
     implementation (project(":presentation"))
 
     // coroutine
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutineVersion}")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutineVersion}")
+    implementation (Dependencies.Coroutine.core)
+    implementation (Dependencies.Coroutine.android)
 
     // rx
-    implementation ("io.reactivex.rxjava2:rxandroid:${Versions.rxAndroidVersion}")
-    implementation ("io.reactivex.rxjava2:rxjava:${Versions.rxJavaVersion}")
-    implementation ("io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlinVersion}")
+    implementation (Dependencies.Rx.android)
+    implementation (Dependencies.Rx.java)
+    implementation (Dependencies.Rx.kotlin)
 
     // hilt - DI
-    implementation  ("com.google.dagger:hilt-android:${Versions.daggerHiltVersion}")
-    kapt            ("com.google.dagger:hilt-android-compiler:${Versions.daggerHiltVersion}")
-    implementation  ("androidx.hilt:hilt-work:${Versions.hiltVersion}")
-    kapt            ("androidx.hilt:hilt-compiler:${Versions.hiltVersion}")
+    implementation (Dependencies.DaggerHilt.android)
+    implementation (Dependencies.DaggerHilt.compiler)
+    implementation (Dependencies.Hilt.work)
+    implementation (Dependencies.Hilt.compiler)
 
     // OkHttp3 & Retrofit - for network
-    implementation ("com.squareup.okhttp3:logging-interceptor:${Versions.okhttpVersion}")
-    implementation ("com.squareup.retrofit2:converter-gson:${Versions.retrofitVersion}")
-    implementation ("com.squareup.retrofit2:retrofit:${Versions.retrofitVersion}")
-    implementation ("com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofitVersion}")
+    implementation (Dependencies.Retrofit.loggingInterceptor)
+    implementation (Dependencies.Retrofit.gsonConverter)
+    implementation (Dependencies.Retrofit.retrofit)
+    implementation (Dependencies.Retrofit.rxjava2Adapter)
 
     // Sandwich - network success/fail Handling
-    implementation ("com.github.skydoves:sandwich:${Versions.sandwichVersion}")
+    implementation (Dependencies.Sandwich.sandwich)
 
     // firebase crashlytics
-    implementation ("com.google.firebase:firebase-crashlytics-ktx:${Versions.firebaseCrashlyticsVersion}")
-
+    implementation (Dependencies.Firebase.crashlyticsKtx)
 }

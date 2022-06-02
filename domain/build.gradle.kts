@@ -11,9 +11,9 @@ java {
 }
 
 dependencies {
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlinGradleVersion}")
+    implementation (dependency.Dependencies.Kotlin.stdlib)
 
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutineVersion}")
+    implementation (dependency.Dependencies.Coroutine.core)
 
-    implementation ("javax.inject:javax.inject:1")
+    implementation (dependency.Dependencies.Java.java)
 }

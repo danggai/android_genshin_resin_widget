@@ -4,6 +4,7 @@ object Dependencies {
     object Android {
         const val gradle = "com.android.tools.build:gradle:${Versions.buildGradleVersion}"
         const val material = "com.google.android.material:material:${Versions.materialVersion}"
+        const val ads = "com.google.android.gms:play-services-ads:${Versions.googleAdsVersion}"
     }
     
     object AndroidX {
@@ -12,7 +13,6 @@ object Dependencies {
         const val activity = "androidx.activity:activity-ktx:${Versions.activityKtxVersion}"
         const val fragment = "androidx.fragment:fragment-ktx:${Versions.fragmentKtxVersion}"
         const val constraintlayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintVersion}"
-
     }
 
     object Lifecycle {
@@ -26,12 +26,12 @@ object Dependencies {
 
     object Kotlin {
         const val gradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinGradleVersion}"
-        const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlinGradleVersion}"    }
+        const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlinGradleVersion}"
+    }
     
     object Google {
         const val services = "com.google.gms:google-services:${Versions.googleServiceVersion}"
         const val gson = "com.google.code.gson:gson:${Versions.gsonVersion}"
-        const val ads = "com.google.android.gms:play-services-ads:${Versions.googleAdsVersion}"
     }
 
     object Rx {
@@ -41,9 +41,13 @@ object Dependencies {
     }
 
     object Coroutine {
-        const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlinGradleVersion}"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutineVersion}"
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutineVersion}"
+    }
+
+    object Glide {
+        const val gilde = "com.github.bumptech.glide:glide:${Versions.glideVersion}"
+        const val compiler = "com.github.bumptech.glide:compiler:${Versions.glideVersion}"
     }
     
     object DaggerHilt {
@@ -82,6 +86,6 @@ object Dependencies {
     object Junit {
         const val junit = "junit:junit:${Versions.junitVersion}"
         const val ext = "androidx.test.ext:junit:${Versions.junitExtVersion}"
-        const val expressoCore = "androidx.test.espresso:espresso-core:${Versions.EspressoVersion}"
+        const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.EspressoVersion}"
     }
 }

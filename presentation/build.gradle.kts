@@ -1,4 +1,5 @@
 import dependency.Versions
+import dependency.Dependencies
 
 plugins {
     id ("kotlin-android")
@@ -8,26 +9,23 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Versions.compileSdk)
+    compileSdk = Versions.compileSdk
 
     defaultConfig {
-        minSdkVersion(Versions.minSdk)
-        targetSdkVersion(Versions.compileSdk)
+        minSdk = Versions.minSdk
+        targetSdk = Versions.compileSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-//        consumerProguardFiles = "consumer-rules.pro"
     }
 
     buildTypes {
         getByName("release") {
-//            isDebuggable = false
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("long", "VERSION_CODE", "${Versions.versionCode}")
             buildConfigField("String","VERSION_NAME","\"${Versions.versionName}\"")
         }
         getByName("debug") {
-//            isDebuggable = true
             buildConfigField("long", "VERSION_CODE", "${Versions.versionCode}")
             buildConfigField("String","VERSION_NAME","\"${Versions.versionName}\"")
         }
@@ -48,55 +46,52 @@ android {
 dependencies {
     implementation (project(":domain"))
 
-    implementation ("androidx.core:core-ktx:${Versions.coreVersion}")
-    implementation ("androidx.appcompat:appcompat:${Versions.appCompatVersion}")
-    implementation ("androidx.activity:activity-ktx:${Versions.activityKtxVersion}")
-    implementation ("androidx.fragment:fragment-ktx:${Versions.fragmentKtxVersion}")
-    implementation ("com.google.android.material:material:${Versions.materialVersion}")
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlinGradleVersion}")
+    implementation (Dependencies.AndroidX.core)
+    implementation (Dependencies.AndroidX.appcompat)
+    implementation (Dependencies.AndroidX.activity)
+    implementation (Dependencies.AndroidX.fragment)
+    implementation (Dependencies.AndroidX.constraintlayout)
+
+    implementation (Dependencies.Android.material)
+    implementation (Dependencies.Android.ads)
+
+    implementation (Dependencies.Kotlin.stdlib)
 
     // gson
-    implementation ("com.google.code.gson:gson:${Versions.gsonVersion}")
-
-    // layout
-    implementation ("com.google.android.material:material:${Versions.materialVersion}")
-    implementation ("androidx.constraintlayout:constraintlayout:${Versions.constraintVersion}")
+    implementation (Dependencies.Google.gson)
 
     // lifecycle
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleVersion}")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleVersion}")
+    implementation (Dependencies.Lifecycle.runtime)
+    implementation (Dependencies.Lifecycle.viewmodel)
 
     // coroutine
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutineVersion}")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutineVersion}")
+    implementation (Dependencies.Coroutine.core)
+    implementation (Dependencies.Coroutine.android)
 
     // rx
-    implementation ("io.reactivex.rxjava2:rxandroid:${Versions.rxAndroidVersion}")
-    implementation ("io.reactivex.rxjava2:rxjava:${Versions.rxJavaVersion}")
-    implementation ("io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlinVersion}")
+    implementation (Dependencies.Rx.android)
+    implementation (Dependencies.Rx.java)
+    implementation (Dependencies.Rx.kotlin)
 
     // hilt - DI
-    implementation  ("com.google.dagger:hilt-android:${Versions.daggerHiltVersion}")
-    kapt            ("com.google.dagger:hilt-android-compiler:${Versions.daggerHiltVersion}")
-    implementation  ("androidx.hilt:hilt-work:${Versions.hiltVersion}")
-    kapt            ("androidx.hilt:hilt-compiler:${Versions.hiltVersion}")
+    implementation (Dependencies.Hilt.work)
+    implementation (Dependencies.Hilt.compiler)
+    implementation (Dependencies.DaggerHilt.android)
+    implementation (Dependencies.DaggerHilt.compiler)
 
     // gilde - image
-    implementation ("com.github.bumptech.glide:glide:${Versions.glideVersion}")
-    annotationProcessor ("com.github.bumptech.glide:compiler:${Versions.glideVersion}")
-
-    // google ad
-    implementation ("com.google.android.gms:play-services-ads:${Versions.googleAdsVersion}")
+    implementation (Dependencies.Glide.gilde)
+    implementation (Dependencies.Glide.compiler)
 
     // firebase crashlytics
-    implementation ("com.google.firebase:firebase-analytics-ktx:${Versions.firebaseAnalyticsVersion}")
-    implementation ("com.google.firebase:firebase-crashlytics-ktx:${Versions.firebaseCrashlyticsVersion}")
+    implementation (Dependencies.Firebase.analytics)
+    implementation (Dependencies.Firebase.crashlyticsKtx)
 
     // worker - Background Action
-    implementation ("androidx.work:work-runtime-ktx:${Versions.workerVersion}")
+    implementation (Dependencies.Work.runtime)
 
     // unittest
-    testImplementation ("junit:junit:${Versions.junitVersion}")
-    androidTestImplementation ("androidx.test.ext:junit:${Versions.junitExtVersion}")
-    androidTestImplementation ("androidx.test.espresso:espresso-core:${Versions.EspressoVersion}")
+    implementation (Dependencies.Junit.junit)
+    implementation (Dependencies.Junit.ext)
+    implementation (Dependencies.Junit.espressoCore)
 }
