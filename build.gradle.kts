@@ -3,6 +3,7 @@
 buildscript {
     repositories {
         google()
+        jcenter()
         mavenCentral()
         maven {
             url = uri("http://jcenter.bintray.com")
@@ -27,6 +28,7 @@ buildscript {
 allprojects {
     repositories {
         google()
+        jcenter()
         mavenCentral()
         maven {
             url = uri("http://jcenter.bintray.com")
