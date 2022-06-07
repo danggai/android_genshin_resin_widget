@@ -8,4 +8,8 @@ repositories {
     jcenter()
     google()
     mavenCentral()
+    maven {
+        setUrl("http://jcenter.bintray.com")
+        isAllowInsecureProtocol = true
+    }
 }

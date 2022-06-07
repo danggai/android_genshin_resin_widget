@@ -260,12 +260,12 @@
     <string name="number_of_expedition">Number Of Expedition</string>
     <string name="parametric_transformer">Parametric Transformer</string>
     <string name="realm_currency">Realm Currency</string>
-    <string name="until_fully_replenished">Until Fully Replenished</string>
-    <string name="estimated_replenishment_time">Estimated Replenishment Time</string>
+    <string name="until_fully_replenished">Until Replenished</string>
+    <string name="estimated_replenishment_time">ETC</string>
     <string name="until_all_completed">Until All Completed</string>
-    <string name="estimated_completion_time">Estimated Completion Time</string>
+    <string name="estimated_completion_time">ETA</string>
     <string name="until_reusable">Until Reusable</string>
-    <string name="estimated_reusable_time">Estimated Reusable Time</string>
+    <string name="estimated_reusable_time">ETC</string>
 
     <string name="foreground_genshin_check_in_progress">HoYoLAB Genshin Check-in progressing</string>
 

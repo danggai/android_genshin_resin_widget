@@ -13,16 +13,16 @@ data class LocalCharacter(
     val icon: Int,                          // 프로필 사진 res ID
     var isSelected: Boolean = false
 ) {
-    override fun equals(any: Any?): Boolean {
-        return when (any) {
+    override fun equals(other: Any?): Boolean {
+        return when (other) {
             is Int -> {
-                id == any
+                id == other
             }
             is Avatar -> {
-                 id == any.id
+                 id == other.id
             }
             is LocalCharacter -> {
-                id == any.id
+                id == other.id
             }
             else -> {
                 false

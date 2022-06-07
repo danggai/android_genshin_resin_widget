@@ -32,8 +32,8 @@ object Versions {
     const val rxKotlinVersion        = "2.4.0"
 
     // di
-    const val daggerHiltVersion            = "2.41"
-    const val hiltVersion        = "1.0.0"
+    const val daggerHiltVersion      = "2.41"
+    const val hiltVersion            = "1.0.0"
 
     // network
     const val okhttpVersion          = "4.9.0"
