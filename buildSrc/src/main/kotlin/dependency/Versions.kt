@@ -8,7 +8,7 @@ object Versions {
     const val versionName            = "1.1.5"
 
     // gradle plugins
-    const val buildGradleVersion     = "7.1.3"
+    const val buildGradleVersion     = "7.2.1"
     const val kotlinGradleVersion    = "1.6.20"
     const val googleServiceVersion   = "4.3.10"
     const val crashlyticsGradleVersion = "2.7.1"

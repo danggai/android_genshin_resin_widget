@@ -123,6 +123,7 @@
             android:name="danggai.app.presentation.ui.main.MainActivity"
             android:launchMode="singleTask"
             android:exported="true"
+            tools:ignore="Instantiatable"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -134,10 +135,12 @@
 
         <activity android:name="danggai.app.presentation.ui.cookie.CookieWebViewActivity"
             android:exported="false"
+            tools:ignore="Instantiatable"
             />
 
         <activity android:name="danggai.app.presentation.ui.design.WidgetDesignActivity"
             android:exported="false"
+            tools:ignore="Instantiatable"
             />
 
         <!-- If you want to disable android.startup completely. -->

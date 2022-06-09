@@ -13,3 +13,11 @@ repositories {
         isAllowInsecureProtocol = true
     }
 }
+
+dependencies {
+    implementation("com.android.tools.build:gradle:7.1.3")
+    implementation("com.android.tools.build:gradle-api:7.1.3")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.20")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20")
+    implementation("com.squareup:javapoet:1.13.0") // <-- added this
+}

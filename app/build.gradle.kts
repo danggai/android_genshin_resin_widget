@@ -38,13 +38,16 @@ android {
             buildConfigField("String","VERSION_NAME","\"${Versions.versionName}\"")
         }
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         dataBinding = true
         viewBinding = true
@@ -67,9 +70,9 @@ dependencies {
 
     // hilt - DI
     implementation (Dependencies.DaggerHilt.android)
-    implementation (Dependencies.DaggerHilt.compiler)
     implementation (Dependencies.Hilt.work)
-    implementation (Dependencies.Hilt.compiler)
+    kapt (Dependencies.DaggerHilt.compiler)
+    kapt (Dependencies.Hilt.compiler)
 
     // OkHttp3 & Retrofit - for network
     implementation (Dependencies.Retrofit.loggingInterceptor)

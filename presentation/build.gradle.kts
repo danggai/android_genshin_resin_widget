@@ -2,9 +2,9 @@ import dependency.Versions
 import dependency.Dependencies
 
 plugins {
+    id ("com.android.library")
     id ("kotlin-android")
     id ("kotlin-kapt")
-    id ("com.android.library")
     id ("dagger.hilt.android.plugin")
 }
 
@@ -31,8 +31,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -41,6 +41,10 @@ android {
         dataBinding = true
         viewBinding = true
     }
+}
+
+kapt {
+    correctErrorTypes = true
 }
 
 dependencies {
@@ -54,8 +58,6 @@ dependencies {
 
     implementation (Dependencies.Android.material)
     implementation (Dependencies.Android.ads)
-
-    implementation (Dependencies.Kotlin.stdlib)
 
     // gson
     implementation (Dependencies.Google.gson)
@@ -75,9 +77,9 @@ dependencies {
 
     // hilt - DI
     implementation (Dependencies.Hilt.work)
-    implementation (Dependencies.Hilt.compiler)
     implementation (Dependencies.DaggerHilt.android)
-    implementation (Dependencies.DaggerHilt.compiler)
+    kapt (Dependencies.Hilt.compiler)
+    kapt (Dependencies.DaggerHilt.compiler)
 
     // gilde - image
     implementation (Dependencies.Glide.gilde)
@@ -91,7 +93,7 @@ dependencies {
     implementation (Dependencies.Work.runtime)
 
     // unittest
-    implementation (Dependencies.Junit.junit)
-    implementation (Dependencies.Junit.ext)
-    implementation (Dependencies.Junit.espressoCore)
+    testImplementation (Dependencies.Junit.junit)
+    androidTestImplementation (Dependencies.Junit.ext)
+    androidTestImplementation (Dependencies.Junit.espressoCore)
 }
