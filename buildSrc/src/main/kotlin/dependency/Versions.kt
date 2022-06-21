@@ -32,8 +32,9 @@ object Versions {
     const val rxKotlinVersion        = "2.4.0"
 
     // di
-    const val daggerHiltVersion      = "2.41"
+    const val daggerHiltVersion      = "2.42"
     const val hiltVersion            = "1.0.0"
+    const val javapoetVersion        = "1.13.0"
 
     // network
     const val okhttpVersion          = "4.9.0"
@@ -54,7 +55,7 @@ object Versions {
 
 
     // test
-    const val junitVersion           = "4.+"
+    const val junitVersion           = "4.13.2"
     const val junitExtVersion        = "1.1.3"
-    const val EspressoVersion        = "3.4.0"
+    const val espressoVersion        = "3.4.0"
 }

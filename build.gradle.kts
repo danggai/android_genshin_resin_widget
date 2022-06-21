@@ -17,6 +17,7 @@ buildscript {
         classpath (dependency.Dependencies.DaggerHilt.gradle)
         classpath (dependency.Dependencies.Google.services)
         classpath (dependency.Dependencies.Firebase.crashlyticsGradle)
+        classpath (dependency.Dependencies.javapoet)
     }
 }
 

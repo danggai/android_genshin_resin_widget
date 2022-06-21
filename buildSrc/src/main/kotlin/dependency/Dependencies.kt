@@ -86,6 +86,8 @@ object Dependencies {
     object Junit {
         const val junit = "junit:junit:${Versions.junitVersion}"
         const val ext = "androidx.test.ext:junit:${Versions.junitExtVersion}"
-        const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.EspressoVersion}"
+        const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoVersion}"
     }
+
+    const val javapoet = "com.squareup:javapoet:${Versions.javapoetVersion}"
 }

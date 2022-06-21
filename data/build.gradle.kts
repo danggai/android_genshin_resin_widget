@@ -69,7 +69,7 @@ dependencies {
     // unittest
     testImplementation (Dependencies.Junit.junit)
     androidTestImplementation (Dependencies.Junit.ext)
-    implementation (Dependencies.Junit.espressoCore)
+    androidTestImplementation (Dependencies.Junit.espressoCore)
 }
 
 android {

@@ -82,8 +82,8 @@ dependencies {
     kapt (Dependencies.DaggerHilt.compiler)
 
     // gilde - image
-    implementation (Dependencies.Glide.gilde)
-    implementation (Dependencies.Glide.compiler)
+//    kapt (Dependencies.Glide.gilde)
+//    kapt (Dependencies.Glide.compiler)
 
     // firebase crashlytics
     implementation (Dependencies.Firebase.analytics)
