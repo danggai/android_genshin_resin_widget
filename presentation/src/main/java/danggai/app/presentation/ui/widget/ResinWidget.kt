@@ -12,6 +12,7 @@ import danggai.app.presentation.R
 import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.PreferenceManager
+import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.ResinWidgetDesignSettings
@@ -128,9 +129,9 @@ class ResinWidget() : AppWidgetProvider() {
                 view.setTextViewText(R.id.tv_remain_time,
                     when (widgetDesign.timeNotation) {
                         Constant.PREF_TIME_NOTATION_DEFAULT,
-                        Constant.PREF_TIME_NOTATION_REMAIN_TIME -> CommonFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time, timeType = Constant.TIME_TYPE_MAX)
-                        Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> CommonFunction.getSecondsLaterTime(_context, dailyNote.resin_recovery_time, Constant.TIME_TYPE_MAX)
-                        else -> CommonFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time, timeType = Constant.TIME_TYPE_MAX)
+                        Constant.PREF_TIME_NOTATION_REMAIN_TIME -> TimeFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time, timeType = Constant.TIME_TYPE_MAX)
+                        Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> TimeFunction.getSecondsLaterTime(_context, dailyNote.resin_recovery_time, Constant.TIME_TYPE_MAX)
+                        else -> TimeFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time, timeType = Constant.TIME_TYPE_MAX)
                     }
                 )
 

@@ -11,14 +11,17 @@ import android.widget.RemoteViews
 import danggai.app.presentation.R
 import danggai.app.presentation.service.TalentWidgetItemService
 import danggai.app.presentation.util.CommonFunction
-import danggai.app.presentation.util.CommonFunction.getTimeSyncTimeFormat
 import danggai.app.presentation.util.PlayableCharacters
 import danggai.app.presentation.util.PreferenceManager
+import danggai.app.presentation.util.TimeFunction.getSyncTimeString
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.TalentWorker
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.util.Constant
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class TalentWidget() : AppWidgetProvider() {
@@ -146,7 +149,7 @@ class TalentWidget() : AppWidgetProvider() {
                 view.setViewVisibility(R.id.gv_characters, View.VISIBLE)
             }
 
-            view.setTextViewText(R.id.tv_sync_time, getTimeSyncTimeFormat())
+            view.setTextViewText(R.id.tv_sync_time, getSyncTimeString())
             view.setViewVisibility(R.id.pb_loading, View.GONE)
         }
     }

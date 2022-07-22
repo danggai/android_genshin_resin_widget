@@ -6,6 +6,7 @@ import danggai.app.presentation.R
 import danggai.app.presentation.core.BaseViewModel
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.Event
+import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.local.CheckInSettings
@@ -419,7 +420,7 @@ class MainViewModel @Inject constructor(
     private fun sendWidgetSyncBroadcast(dailyNote: DailyNoteData) {
         log.e()
 
-        preference.setStringRecentSyncTime(CommonFunction.getTimeSyncTimeFormat())
+        preference.setStringRecentSyncTime(TimeFunction.getSyncTimeString())
 
         val expeditionTime: String = CommonFunction.getExpeditionTime(dailyNote)
         preference.setStringExpeditionTime(expeditionTime)

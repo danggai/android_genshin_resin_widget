@@ -16,6 +16,7 @@ import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.design.WidgetDesignViewModel
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.CommonFunction.isDarkMode
+import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.log
 import danggai.domain.network.dailynote.entity.Transformer
 import danggai.domain.network.dailynote.entity.TransformerTime
@@ -210,10 +211,10 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                                 }
                             }
 
-                            tvResinTime.text = CommonFunction.resinSecondToTime(_context, fakeResinRemainTime, mVM.sfDetailTimeNotation.value)
-                            tvRealmCurrencyTime.text = CommonFunction.realmCurrencySecondToTime(_context, fakeRealmCurrencyRemainTime, mVM.sfDetailTimeNotation.value)
-                            tvExpeditionTime.text = CommonFunction.expeditionSecondToTime(_context, fakeExpedtionRemainTime, mVM.sfDetailTimeNotation.value)
-                            tvTransformer.text = CommonFunction.transformerToTime(_context, fakeTransformer, mVM.sfDetailTimeNotation.value)
+                            tvResinTime.text = TimeFunction.resinSecondToTime(_context, fakeResinRemainTime, mVM.sfDetailTimeNotation.value)
+                            tvRealmCurrencyTime.text = TimeFunction.realmCurrencySecondToTime(_context, fakeRealmCurrencyRemainTime, mVM.sfDetailTimeNotation.value)
+                            tvExpeditionTime.text = TimeFunction.expeditionSecondToTime(_context, fakeExpedtionRemainTime, mVM.sfDetailTimeNotation.value)
+                            tvTransformer.text = TimeFunction.transformerToTime(_context, fakeTransformer, mVM.sfDetailTimeNotation.value)
                         }
                     }
                 }

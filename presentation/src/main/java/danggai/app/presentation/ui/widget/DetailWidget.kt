@@ -14,11 +14,11 @@ import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.CommonFunction.isDarkMode
 import danggai.app.presentation.util.PreferenceManager
+import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
-import danggai.domain.network.dailynote.entity.TransformerTime
 import danggai.domain.util.Constant
 import java.util.*
 
@@ -196,14 +196,14 @@ class DetailWidget() : AppWidgetProvider() {
                 }
 
                 view.setTextViewText(R.id.tv_resin_time,
-                    CommonFunction.resinSecondToTime(_context, dailyNote.resin_recovery_time, widgetDesign.timeNotation))
+                    TimeFunction.resinSecondToTime(_context, dailyNote.resin_recovery_time, widgetDesign.timeNotation))
                 view.setTextViewText(R.id.tv_realm_currency_time,
-                    CommonFunction.realmCurrencySecondToTime(_context, dailyNote.home_coin_recovery_time, widgetDesign.timeNotation))
+                    TimeFunction.realmCurrencySecondToTime(_context, dailyNote.home_coin_recovery_time, widgetDesign.timeNotation))
                 view.setTextViewText(R.id.tv_expedition_time,
-                    CommonFunction.expeditionSecondToTime(_context, PreferenceManager.getString(context, Constant.PREF_EXPEDITION_TIME), widgetDesign.timeNotation))
+                    TimeFunction.expeditionSecondToTime(_context, PreferenceManager.getString(context, Constant.PREF_EXPEDITION_TIME), widgetDesign.timeNotation))
                 if (!dailyNote.transformer!!.recovery_time.reached)
                     view.setTextViewText(R.id.tv_transformer,
-                        CommonFunction.transformerToTime(_context, dailyNote.transformer, widgetDesign.timeNotation))
+                        TimeFunction.transformerToTime(_context, dailyNote.transformer, widgetDesign.timeNotation))
 
                 view.setViewVisibility(R.id.rl_resin,
                     if (widgetDesign.resinDataVisibility) View.VISIBLE else View.GONE)

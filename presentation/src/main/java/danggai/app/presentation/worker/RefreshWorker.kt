@@ -8,6 +8,7 @@ import dagger.assisted.AssistedInject
 import danggai.app.presentation.R
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.PreferenceManager
+import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.local.CheckInSettings
@@ -195,7 +196,7 @@ class RefreshWorker @AssistedInject constructor(
         }
 
 
-        preference.setStringRecentSyncTime(CommonFunction.getTimeSyncTimeFormat())
+        preference.setStringRecentSyncTime(TimeFunction.getSyncTimeString())
 
         val expeditionTime: String = CommonFunction.getExpeditionTime(dailyNote)
         preference.setStringExpeditionTime(expeditionTime)
