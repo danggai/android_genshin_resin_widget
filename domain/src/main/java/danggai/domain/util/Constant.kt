@@ -209,6 +209,9 @@ object Constant {
     const val TALENT_DATE_WEDSAT = 2
     const val TALENT_DATE_ALL = 3
 
+    const val TIME_TYPE_MAX = 0
+    const val TIME_TYPE_DONE = 1
+
     enum class ResinImageVisibility(val pref: Int) {
         VISIBLE(PREF_WIDGET_RESIN_IMAGE_VISIBLE),
         INVISIBLE(PREF_WIDGET_RESIN_IMAGE_INVISIBLE)

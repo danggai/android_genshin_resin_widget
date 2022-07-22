@@ -129,9 +129,10 @@ class ResinWidgetResizable() : AppWidgetProvider() {
 
                 view.setTextViewText(R.id.tv_remain_time,
                     when (widgetDesign.timeNotation) {
-                        Constant.PREF_TIME_NOTATION_REMAIN_TIME -> CommonFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time)
-                        Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> CommonFunction.secondToFullChargeTime(_context, dailyNote.resin_recovery_time)
-                        else -> CommonFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time)
+                        Constant.PREF_TIME_NOTATION_DEFAULT,
+                        Constant.PREF_TIME_NOTATION_REMAIN_TIME -> CommonFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time, timeType = Constant.TIME_TYPE_MAX)
+                        Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> CommonFunction.getSecondsLaterTime(_context, dailyNote.resin_recovery_time, Constant.TIME_TYPE_MAX)
+                        else -> CommonFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time, timeType = Constant.TIME_TYPE_MAX)
                     }
                 )
 

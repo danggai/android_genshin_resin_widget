@@ -323,18 +323,17 @@
                     android:src="@drawable/icon_parametric_transformer" />
 
                 <TextView
-                    style="@style/TextView"
                     android:id="@+id/tv_transformer_title"
+                    style="@style/TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/parametric_transformer"
-                    android:textSize="12sp"
-                    android:textColor="@color/widget_font_main"
-                    android:layout_toRightOf="@id/iv_transformer"
-                    android:layout_toLeftOf="@id/tv_transformer"
-                    android:singleLine="true"
                     android:layout_centerVertical="true"
-                    />
+                    android:layout_toLeftOf="@id/tv_transformer"
+                    android:layout_toRightOf="@id/iv_transformer"
+                    android:singleLine="true"
+                    android:text="@string/parametric_transformer"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_transformer"
@@ -350,38 +349,38 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/rl_transformer_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/rl_transformer_time"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                >-->
 
-                <TextView
-                    android:id="@+id/tv_transformer_time_title"
-                    style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="18dp"
-                    android:layout_toLeftOf="@id/tv_transformer_time"
-                    android:singleLine="true"
-                    android:text="@string/until_reusable"
-                    android:textColor="@color/widget_font_main"
-                    android:textSize="12sp" />
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_transformer_time_title"-->
+<!--                    style="@style/TextView"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_alignParentLeft="true"-->
+<!--                    android:layout_marginLeft="18dp"-->
+<!--                    android:layout_toLeftOf="@id/tv_transformer_time"-->
+<!--                    android:singleLine="true"-->
+<!--                    android:text="@string/until_reusable"-->
+<!--                    android:textColor="@color/widget_font_main"-->
+<!--                    android:textSize="12sp" />-->
 
-                <TextView
-                    style="@style/TextView"
-                    android:id="@+id/tv_transformer_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0d 0h 0m"
-                    android:textSize="12sp"
-                    android:textColor="@color/widget_font_main"
-                    android:layout_alignParentRight="true"
-                    android:singleLine="true"
-                    />
+<!--                <TextView-->
+<!--                    style="@style/TextView"-->
+<!--                    android:id="@+id/tv_transformer_time"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="0d 0h 0m"-->
+<!--                    android:textSize="12sp"-->
+<!--                    android:textColor="@color/widget_font_main"-->
+<!--                    android:layout_alignParentRight="true"-->
+<!--                    android:singleLine="true"-->
+<!--                    />-->
 
-            </RelativeLayout>
+<!--            </RelativeLayout>-->
 
             <RelativeLayout
                 android:id="@+id/rl_expedition"
@@ -400,66 +399,64 @@
                     android:src="@drawable/icon_warp_point" />
 
                 <TextView
-                    style="@style/TextView"
                     android:id="@+id/tv_expedition_title"
+                    style="@style/TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/tv_expedition"
-                    android:text="@string/number_of_expedition"
-                    android:textSize="12sp"
-                    android:textColor="@color/widget_font_main"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_expedition_time"
                     android:layout_toRightOf="@id/iv_warp"
                     android:singleLine="true"
-                    android:layout_centerVertical="true"
-                    />
-
-                <TextView
-                    style="@style/TextView"
-                    android:id="@+id/tv_expedition"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="5/5"
-                    android:textSize="12sp"
-                    android:textColor="@color/widget_font_main"
-                    android:layout_alignParentRight="true"
-                    android:singleLine="true"
-                    android:layout_centerVertical="true"
-                    />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_expedition_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
-
-                <TextView
-                    android:id="@+id/tv_expedition_time_title"
-                    style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="18dp"
-                    android:layout_toLeftOf="@id/tv_expedition_time"
-                    android:singleLine="true"
-                    android:text="@string/until_all_completed"
+                    android:text="@string/until_expeditions_done"
                     android:textColor="@color/widget_font_main"
                     android:textSize="12sp" />
 
                 <TextView
-                    style="@style/TextView"
                     android:id="@+id/tv_expedition_time"
+                    style="@style/TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0h 0m"
-                    android:textSize="12sp"
-                    android:textColor="@color/widget_font_main"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:singleLine="true"
-                    />
+                    android:text="0h 0m"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
 
             </RelativeLayout>
+
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/rl_expedition_time"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                >-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_expedition_time_title"-->
+<!--                    style="@style/TextView"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_alignParentLeft="true"-->
+<!--                    android:layout_marginLeft="18dp"-->
+<!--                    android:layout_toLeftOf="@id/tv_expedition_time"-->
+<!--                    android:singleLine="true"-->
+<!--                    android:text="@string/until_all_completed"-->
+<!--                    android:textColor="@color/widget_font_main"-->
+<!--                    android:textSize="12sp" />-->
+
+<!--                <TextView-->
+<!--                    style="@style/TextView"-->
+<!--                    android:id="@+id/tv_expedition_time"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="0h 0m"-->
+<!--                    android:textSize="12sp"-->
+<!--                    android:textColor="@color/widget_font_main"-->
+<!--                    android:layout_alignParentRight="true"-->
+<!--                    android:singleLine="true"-->
+<!--                    />-->
+
+<!--            </RelativeLayout>-->
 
         </LinearLayout>
 

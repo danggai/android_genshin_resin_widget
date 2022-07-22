@@ -15,5 +15,13 @@ data class TransformerTime(
             0,
             false
         )
+
+        val REACHED = TransformerTime (
+            0,
+            0,
+            0,
+            0,
+            true
+        )
     }
 }

@@ -200,7 +200,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
                         android:checked="@={vm.sfExpeditionDataVisibility}"
-                        android:text="@string/number_of_expedition"
+                        android:text="@string/expedition_time"
                         android:textSize="14sp"
                         app:buttonTint="@color/checkbox_filter_tint" />
 

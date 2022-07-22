@@ -241,7 +241,8 @@
 
     <string name="widget_ui_simple_time">%dh %dm</string>
     <string name="widget_ui_remain_time">%dh %dm left</string>
-    <string name="widget_ui_max_time">Full at %02d:%02d</string>
+    <string name="widget_format_max_time">Full at %02d:%02d</string>
+    <string name="widget_format_done_time">Done at %02d:%02d</string>
     <string name="widget_ui_today">today, %02d:%02d</string>
     <string name="widget_ui_date">%s, %02d:%02d</string>
     <string name="widget_ui_expect_date">Scheduled on %s</string>
@@ -257,9 +258,11 @@
 
     <string name="daily_commissions">Daily Commissions</string>
     <string name="enemies_of_note">Enemies Of Note</string>
-    <string name="number_of_expedition">Expeditions</string>
+    <string name="until_expeditions_done">Until Expeditions Done</string>
+    <string name="expeditions_done_at">Expeditions Done At</string>
     <string name="parametric_transformer">Parametric Transformer</string>
     <string name="realm_currency">Realm Currency</string>
+    <string name="expedition_time">Expedition Time</string>
     <string name="until_fully_replenished">Until Replenished</string>
     <string name="estimated_replenishment_time">ETC</string>
     <string name="until_all_completed">Until All Completed</string>

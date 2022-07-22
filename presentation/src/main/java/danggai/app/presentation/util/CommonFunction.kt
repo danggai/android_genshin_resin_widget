@@ -24,6 +24,7 @@ import danggai.domain.local.DailyNoteSettings
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
+import danggai.domain.network.dailynote.entity.Transformer
 import danggai.domain.network.dailynote.entity.TransformerTime
 import danggai.domain.util.Constant
 import java.math.BigInteger
@@ -109,68 +110,162 @@ object CommonFunction {
         FirebaseCrashlytics.getInstance().setCustomKeys(keysAndValues)
     }
 
-    fun secondToRemainTime(context: Context, _second: String): String {
+    fun resinSecondToTime(
+        context: Context,
+        second: String,
+        timeNotation: Int
+    ): String {
+        return when (timeNotation) {
+            Constant.PREF_TIME_NOTATION_DEFAULT,
+            Constant.PREF_TIME_NOTATION_REMAIN_TIME, -> secondToRemainTime(context, second, timeType = Constant.TIME_TYPE_MAX)
+            Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> getSecondsLaterDate(context, second, false, timeType = Constant.TIME_TYPE_MAX)
+            else -> ""
+        }
+    }
+
+    fun realmCurrencySecondToTime(
+        context: Context,
+        second: String,
+        timeNotation: Int
+    ): String {
+        return when (timeNotation) {
+            Constant.PREF_TIME_NOTATION_DEFAULT,
+            Constant.PREF_TIME_NOTATION_REMAIN_TIME -> secondToRemainTime(context, second, timeType = Constant.TIME_TYPE_MAX)
+            Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> getSecondsLaterDate(context, second, true, timeType = Constant.TIME_TYPE_MAX)
+            else -> ""
+        }
+    }
+
+    fun expeditionSecondToTime(
+        context: Context,
+        second: String,
+        timeNotation: Int
+    ): String {
+        return when (timeNotation) {
+            Constant.PREF_TIME_NOTATION_DEFAULT,
+            Constant.PREF_TIME_NOTATION_REMAIN_TIME -> secondToRemainTime(context, second, timeType = Constant.TIME_TYPE_DONE)
+            Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> getSecondsLaterDate(context, second, false, timeType = Constant.TIME_TYPE_DONE)
+            else -> ""
+        }
+    }
+
+    fun transformerToTime(
+        context: Context,
+        transformer: Transformer?,
+        timeNotation: Int
+    ): String {
+        return when (timeNotation) {
+            Constant.PREF_TIME_NOTATION_DEFAULT,
+            Constant.PREF_TIME_NOTATION_REMAIN_TIME ->  {
+                // 1일 이상 남음
+                if (transformer != null && transformer.recovery_time.Day > 0)
+                    String.format(context.getString(R.string.widget_ui_remain_days), transformer.recovery_time.Day)
+
+                // 1일 이내로 남음
+                else if (transformer != null && transformer.recovery_time.Day == 0)
+                    secondToRemainTime(context, transformerTimeToSecond(transformer.recovery_time), timeType = Constant.TIME_TYPE_DONE)
+
+                // transformer == null
+                else context.getString(R.string.widget_ui_unknown)
+            }
+            Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
+                // 1일 이상 남음
+                if (transformer != null && transformer.recovery_time.Day > 0)
+                    String.format(context.getString(R.string.widget_ui_expect_date), getExpectDate(context, transformer.recovery_time.Day))
+
+                // 1일 이내로 남음
+                else if (transformer != null && transformer.recovery_time.Day == 0)
+                    getSecondsLaterDate(context, transformerTimeToSecond(transformer.recovery_time), true, timeType = Constant.TIME_TYPE_DONE)
+
+                // transformer == null
+                else context.getString(R.string.widget_ui_unknown)
+            }
+            else -> ""
+        }
+    }
+
+    fun secondToRemainTime(
+        context: Context,
+        second: String,
+        timeType: Int = Constant.TIME_TYPE_MAX
+    ): String {
         var hour: Int
         var minute: Int
 
+        val timeOverString = when (timeType) {
+            Constant.TIME_TYPE_MAX -> context.getString(R.string.widget_ui_parameter_max)
+            Constant.TIME_TYPE_DONE -> context.getString(R.string.widget_ui_parameter_done)
+            else -> context.getString(R.string.widget_format_max_time)
+        }
+
         try {
-            hour = _second.toInt() / 3600
-            minute = (_second.toInt() - hour * 3600) / 60
+            hour = second.toInt() / 3600
+            minute = (second.toInt() - hour * 3600) / 60
         } catch (e: Exception) {
             hour = 0
             minute = 0
         }
 
-        return String.format(context.getString(R.string.widget_ui_remain_time), hour, minute)
+        return if (second != "0") String.format(context.getString(R.string.widget_ui_remain_time), hour, minute) else timeOverString
     }
 
-    fun secondToFullChargeTime(
+    fun getSecondsLaterTime(
         context: Context,
-        second: String
+        second: String,
+        timeType: Int = Constant.TIME_TYPE_MAX
     ): String {
         val cal = Calendar.getInstance()
         val date = Date()
         cal.time = date
 
+        val format = when (timeType) {
+            Constant.TIME_TYPE_MAX -> context.getString(R.string.widget_format_max_time)
+            Constant.TIME_TYPE_DONE -> context.getString(R.string.widget_format_done_time)
+            else -> context.getString(R.string.widget_format_max_time)
+        }
+
+        val timeOverString = when (timeType) {
+            Constant.TIME_TYPE_MAX -> context.getString(R.string.widget_ui_parameter_max)
+            Constant.TIME_TYPE_DONE -> context.getString(R.string.widget_ui_parameter_done)
+            else -> context.getString(R.string.widget_format_max_time)
+        }
+
         try {
             if (second.toInt() == 0)
-                return context.getString(R.string.widget_ui_parameter_max)
+                return timeOverString
 
             if (second.toInt() > 144000 || second.toInt() < -144000)
-                return String.format(context.getString(R.string.widget_ui_max_time),
-                    cal.get(Calendar.HOUR_OF_DAY),
-                    cal.get(Calendar.MINUTE))
+                return String.format(format, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE))
 
             cal.add(Calendar.SECOND, second.toInt())
 
             val minute = cal.get(Calendar.MINUTE)
 
-            return String.format(context.getString(R.string.widget_ui_max_time),
-                cal.get(Calendar.HOUR_OF_DAY),
-                minute)
+            return String.format(format, cal.get(Calendar.HOUR_OF_DAY), minute)
         } catch (e: NumberFormatException) {
-            return context.getString(R.string.widget_ui_parameter_max)
+            return timeOverString
         }
     }
 
-    fun secondToTime(
+    fun getSecondsLaterDate(
         context: Context,
         second: String,
         includeDate: Boolean,
-        isMaxParam: Boolean = false,
-        isDoneParam: Boolean = false,
+        timeType: Int = Constant.TIME_TYPE_MAX
     ): String {
         val now = Calendar.getInstance()
         val date = Date()
         now.time = date
 
+        val timeOverString = when (timeType) {
+            Constant.TIME_TYPE_MAX -> context.getString(R.string.widget_ui_parameter_max)
+            Constant.TIME_TYPE_DONE -> context.getString(R.string.widget_ui_parameter_done)
+            else -> context.getString(R.string.widget_format_max_time)
+        }
+
         try {
             if (second.toInt() == 0)
-                return when {
-                    isMaxParam -> context.getString(R.string.widget_ui_parameter_max)
-                    isDoneParam -> context.getString(R.string.widget_ui_parameter_done)
-                    else -> context.getString(R.string.widget_ui_parameter_max)
-                }
+                return timeOverString
 
             val target: Calendar = Calendar.getInstance().apply {
                 this.time = Date()
@@ -189,11 +284,7 @@ object CommonFunction {
                 target.get(Calendar.HOUR_OF_DAY),
                 minute)
         } catch (e: NumberFormatException) {
-            return when {
-                isMaxParam -> context.getString(R.string.widget_ui_parameter_max)
-                isDoneParam -> context.getString(R.string.widget_ui_parameter_done)
-                else -> context.getString(R.string.widget_ui_parameter_max)
-            }
+            return timeOverString
         }
     }
 
@@ -459,14 +550,10 @@ object CommonFunction {
         view.setTextColor(R.id.tv_daily_commission_title, mainFontColor)
         view.setTextColor(R.id.tv_weekly_boss, mainFontColor)
         view.setTextColor(R.id.tv_weekly_boss_title, mainFontColor)
-        view.setTextColor(R.id.tv_expedition, mainFontColor)
         view.setTextColor(R.id.tv_expedition_title, mainFontColor)
         view.setTextColor(R.id.tv_expedition_time, mainFontColor)
-        view.setTextColor(R.id.tv_expedition_time_title, mainFontColor)
         view.setTextColor(R.id.tv_transformer_title, mainFontColor)
         view.setTextColor(R.id.tv_transformer, mainFontColor)
-        view.setTextColor(R.id.tv_transformer_time_title, mainFontColor)
-        view.setTextColor(R.id.tv_transformer_time, mainFontColor)
         view.setTextColor(R.id.tv_realm_currency, mainFontColor)
         view.setTextColor(R.id.tv_realm_currency_title, mainFontColor)
         view.setTextColor(R.id.tv_realm_currency_time, mainFontColor)
@@ -480,14 +567,10 @@ object CommonFunction {
         view.setFloat(R.id.tv_daily_commission_title, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_weekly_boss, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_weekly_boss_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_expedition, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_expedition_title, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_expedition_time, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_expedition_time_title, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_transformer_title, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_transformer, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_transformer_time_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_transformer_time, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_realm_currency, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_realm_currency_title, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_realm_currency_time, "setTextSize", fontSize.toFloat())
