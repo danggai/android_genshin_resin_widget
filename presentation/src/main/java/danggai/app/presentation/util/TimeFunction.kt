@@ -172,7 +172,7 @@ object TimeFunction {
                 this.add(Calendar.SECOND, second.toInt())
             }
 
-            val minute = now.get(Calendar.MINUTE)
+            val minute = target.get(Calendar.MINUTE)
 
             return if (includeDate || now.get(Calendar.DATE) != target.get(Calendar.DATE)) {
                 log.e()
