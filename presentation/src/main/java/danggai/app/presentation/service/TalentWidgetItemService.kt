@@ -71,6 +71,7 @@ class TalentWidgetItemFactory(
                     Constant.TALENT_AREA_MONDSTADT -> R.drawable.icon_emblem_mondstadt
                     Constant.TALENT_AREA_LIYUE -> R.drawable.icon_emblem_liyue
                     Constant.TALENT_AREA_INAZUMA -> R.drawable.icon_emblem_inazuma
+                    Constant.TALENT_AREA_SUMERU -> R.drawable.icon_emblem_sumeru
                     else -> R.drawable.icon_emblem_mondstadt
                 }
             )

@@ -83,6 +83,7 @@ class WidgetDesignCharacterAdapter(val vm: WidgetDesignViewModel) :
                 Elements.CYRO -> R.drawable.icon_element_cyro
                 Elements.ANEMO -> R.drawable.icon_element_anemo
                 Elements.GEO -> R.drawable.icon_element_geo
+                Elements.DENDRO -> R.drawable.icon_element_dendro
             })
         }
 
