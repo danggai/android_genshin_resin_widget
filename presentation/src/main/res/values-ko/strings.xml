@@ -259,5 +259,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 특성 레벨업에 필요한 재료를 얻을 수 있는 캐릭터 목록을 확인 가능한 Talent Widget이 추가되었습니다.</string>
+    <string name="dialog_msg_patch_note">- Detail Widget이 간소화 되었습니다.\n- 분 단위가 비정상적으로 출력되는 문제가 수정되었습니다.\n- 3.0 버전 캐릭터 및 수메르, 풀 속성 대응</string>
 </resources>
