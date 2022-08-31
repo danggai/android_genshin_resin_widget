@@ -2,6 +2,7 @@ package danggai.app.presentation.service
 
 import android.content.Context
 import android.content.Intent
+import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import danggai.app.presentation.R
@@ -56,31 +57,40 @@ class TalentWidgetItemFactory(
     override fun getCount() = data.size
 
     override fun getViewAt(position: Int): RemoteViews {
-        val listviewWidget = RemoteViews(context.packageName, R.layout.item_character_widget).apply {
-            setImageViewResource(R.id.iv_background,
-                when (data[position].rarity) {
-                    5 -> R.drawable.bg_character_5stars
-                    else -> R.drawable.bg_character_4stars
-                }
-            )
+        if (position >= count) {
+            return loadingView
+        } else {
+            val widgetItem = RemoteViews(context.packageName, R.layout.item_character_widget).apply {
+                setImageViewResource(R.id.iv_background,
+                    when (data[position].rarity) {
+                        5 -> R.drawable.bg_character_5stars
+                        else -> R.drawable.bg_character_4stars
+                    }
+                )
 
-            setImageViewResource(R.id.iv_icon, data[position].icon)
+                setImageViewResource(R.id.iv_icon, data[position].icon)
 
-            setImageViewResource(R.id.iv_area_emblem,
-                when (data[position].talentArea) {
-                    Constant.TALENT_AREA_MONDSTADT -> R.drawable.icon_emblem_mondstadt
-                    Constant.TALENT_AREA_LIYUE -> R.drawable.icon_emblem_liyue
-                    Constant.TALENT_AREA_INAZUMA -> R.drawable.icon_emblem_inazuma
-                    Constant.TALENT_AREA_SUMERU -> R.drawable.icon_emblem_sumeru
-                    else -> R.drawable.icon_emblem_mondstadt
-                }
-            )
+                setImageViewResource(R.id.iv_area_emblem,
+                    when (data[position].talentArea) {
+                        Constant.TALENT_AREA_MONDSTADT -> R.drawable.icon_emblem_mondstadt
+                        Constant.TALENT_AREA_LIYUE -> R.drawable.icon_emblem_liyue
+                        Constant.TALENT_AREA_INAZUMA -> R.drawable.icon_emblem_inazuma
+                        Constant.TALENT_AREA_SUMERU -> R.drawable.icon_emblem_sumeru
+                        else -> R.drawable.icon_emblem_mondstadt
+                    }
+                )
+            }
+            return widgetItem
         }
-        return listviewWidget
     }
 
-    override fun getLoadingView(): RemoteViews? {
-        return null
+    override fun getLoadingView(): RemoteViews {
+        return RemoteViews(context.packageName, R.layout.item_character_widget).apply {
+            setImageViewResource(R.id.iv_background, R.drawable.bg_character_4stars)
+            setViewVisibility(R.id.iv_background, View.GONE)
+            setViewVisibility(R.id.iv_icon, View.GONE)
+            setViewVisibility(R.id.iv_area_emblem, View.GONE)
+        }
     }
 
     override fun getViewTypeCount(): Int {
