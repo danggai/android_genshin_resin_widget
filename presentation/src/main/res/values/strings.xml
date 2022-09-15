@@ -285,6 +285,6 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Detail Widget has been simplified.\n- Fixed an issue where minutes were output abnormally.\n- 3.0 Version Character and Sumer, Dendro Attribute Compatible.</string>
+    <string name="dialog_msg_patch_note">- Monor Bug Fixed.\n- 3.1 Version Character Compatible.</string>
 
 </resources>
