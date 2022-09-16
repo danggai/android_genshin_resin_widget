@@ -285,6 +285,6 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Monor Bug Fixed.\n- 3.1 Version Character Compatible.</string>
+    <string name="dialog_msg_patch_note">- 3.1 Version Character Compatible.\n- Monor Bug Fixed.\n- Talent Material Widget Problems Fixed.\n- Fixed an issue where the detail widget cannot refresh when the parametric transformer was not released.</string>
 
 </resources>
