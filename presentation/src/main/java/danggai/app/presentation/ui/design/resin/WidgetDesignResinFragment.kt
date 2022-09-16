@@ -74,7 +74,7 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
     }
 
     private fun initLv() {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             launch {
                 mVM.sfWidgetTheme.collect {
                     context?.let { _context ->

@@ -238,6 +238,8 @@ object CommonFunction {
         context: Context,
         view: RemoteViews,
     ) {
+        log.e()
+
         val bgColor: Int = if (widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_LIGHT) {
             ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.white),
                 widgetDesign.backgroundTransparency)
@@ -275,8 +277,6 @@ object CommonFunction {
         /* Talent Widget 꼽사리ㅎㅎ; */
         view.setTextColor(R.id.tv_no_talent_ingredient, mainFontColor)
         view.setTextColor(R.id.tv_no_selected_characters, mainFontColor)
-
-        log.e()
 
         if (view.layoutId == R.layout.widget_resin_fixed) {
             val fontSize = widgetDesign.fontSize

@@ -373,7 +373,6 @@ class CheckInWorker @AssistedInject constructor(
             ) CommonFunction.migrateSettings(applicationContext)
 
             CoroutineScope(Dispatchers.IO).launch {
-
                 val lang = when (preference.getStringLocale()) {
                     Constant.Locale.ENGLISH.locale -> Constant.Locale.ENGLISH.lang
                     Constant.Locale.KOREAN.locale -> Constant.Locale.KOREAN.lang

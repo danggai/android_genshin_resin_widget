@@ -23,16 +23,20 @@ class WidgetDesignCharacterAdapter(val vm: WidgetDesignViewModel) :
     fun setItemList(_itemList: MutableList<LocalCharacter>) {
         log.e(_itemList.size)
         items.clear()
-        _itemList.apply {
-            sortBy { -it.id }
-            sortBy { -it.rarity }
 
-            while (this.size >= 1 && this[0].rarity >= 100) {
-                add(this[0])
-                removeFirst()
+        if (_itemList.isNotEmpty()) {
+            _itemList.apply {
+                sortBy { -it.id }
+                sortBy { -it.rarity }
+
+                while (this.size >= 1 && this[0].rarity >= 100) {
+                    add(this[0])
+                    removeFirst()
+                }
+                items.addAll(this)
             }
-            items.addAll(this)
         }
+
         notifyDataSetChanged()
     }
 

@@ -201,7 +201,7 @@ class DetailWidget() : AppWidgetProvider() {
                     TimeFunction.realmCurrencySecondToTime(_context, dailyNote.home_coin_recovery_time, widgetDesign.timeNotation))
                 view.setTextViewText(R.id.tv_expedition_time,
                     TimeFunction.expeditionSecondToTime(_context, PreferenceManager.getString(context, Constant.PREF_EXPEDITION_TIME), widgetDesign.timeNotation))
-                if (!dailyNote.transformer!!.recovery_time.reached)
+                if (dailyNote.transformer?.recovery_time?.reached == true)
                     view.setTextViewText(R.id.tv_transformer,
                         TimeFunction.transformerToTime(_context, dailyNote.transformer, widgetDesign.timeNotation))
 

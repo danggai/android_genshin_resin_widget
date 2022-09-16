@@ -61,6 +61,7 @@ class TalentWidgetItemFactory(
             return loadingView
         } else {
             val widgetItem = RemoteViews(context.packageName, R.layout.item_character_widget).apply {
+                setViewVisibility(R.id.iv_background, View.VISIBLE)
                 setImageViewResource(R.id.iv_background,
                     when (data[position].rarity) {
                         5 -> R.drawable.bg_character_5stars
@@ -68,8 +69,10 @@ class TalentWidgetItemFactory(
                     }
                 )
 
+                setViewVisibility(R.id.iv_icon, View.VISIBLE)
                 setImageViewResource(R.id.iv_icon, data[position].icon)
 
+                setViewVisibility(R.id.iv_area_emblem, View.VISIBLE)
                 setImageViewResource(R.id.iv_area_emblem,
                     when (data[position].talentArea) {
                         Constant.TALENT_AREA_MONDSTADT -> R.drawable.icon_emblem_mondstadt
