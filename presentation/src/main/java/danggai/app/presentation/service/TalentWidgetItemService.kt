@@ -101,7 +101,11 @@ class TalentWidgetItemFactory(
     }
 
     override fun getItemId(position: Int): Long {
-        return data[position].id.toLong()
+        return try {
+            data[position].id.toLong()
+        } catch (e: Exception) {
+            position.toLong()
+        }
     }
 
     override fun hasStableIds(): Boolean {
