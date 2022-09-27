@@ -188,7 +188,6 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
 
         mAdView = binding.adView
 
-
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
     }
@@ -290,7 +289,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                 log.e()
                 activity?.let {
                     val builder = AlertDialog.Builder(it)
-                    builder.setTitle("Select Language")
+                    builder.setTitle("Change Language")
                         .setItems(arrayOf("English", "한국어"),
                             DialogInterface.OnClickListener { dialog, which ->
                                 log.e(which)

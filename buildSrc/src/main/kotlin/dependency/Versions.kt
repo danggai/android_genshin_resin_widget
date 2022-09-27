@@ -19,7 +19,7 @@ object Versions {
     const val appCompatVersion       = "1.3.1"
     const val activityKtxVersion     = "1.3.1"
     const val fragmentKtxVersion     = "1.4.0"
-    const val materialVersion        = "1.4.0"
+    const val materialVersion        = "1.8.0-alpha01"
     const val constraintVersion      = "2.1.0"
     const val lifecycleVersion       = "2.4.1"
 

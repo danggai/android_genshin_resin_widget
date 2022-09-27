@@ -1,10 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Genshin_resin_widget" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="Theme.Genshin_resin_widget" parent="Theme.Material3.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/light_blue_200</item>
+        <item name="colorPrimary">@color/light_blue_600</item>
         <item name="colorPrimaryVariant">@color/light_blue_600</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/gray</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/light_blue_200</item>
         <!-- Customize your theme here. -->

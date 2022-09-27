@@ -127,21 +127,21 @@
                 app:layout_constraintTop_toTopOf="parent"
                 >
 
-                <RadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rb_theme_automatic"
                     style="@style/RadioButton"
                     android:layout_marginEnd="10dp"
                     android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.AUTOMATIC)}"
                     android:text="@string/btn_automatic" />
 
-                <RadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rb_theme_light"
                     style="@style/RadioButton"
                     android:layout_marginEnd="10dp"
                     android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.LIGHT)}"
                     android:text="@string/btn_light" />
 
-                <RadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rb_theme_dark"
                     style="@style/RadioButton"
                     android:layout_marginEnd="10dp"

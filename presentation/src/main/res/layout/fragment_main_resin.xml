@@ -54,28 +54,28 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <RadioButton
+                    <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_asia"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{() -> vm.onClickSetServer(Server.ASIA)}"
                         android:text="@string/asia" />
 
-                    <RadioButton
+                    <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_usa"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{() -> vm.onClickSetServer(Server.USA)}"
                         android:text="@string/america" />
 
-                    <RadioButton
+                    <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_euro"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{() -> vm.onClickSetServer(Server.EUROPE)}"
                         android:text="@string/europe" />
 
-                    <RadioButton
+                    <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_cht"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
@@ -168,35 +168,35 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <RadioButton
+                    <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_disable"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(-1L)}"
                         android:text="Disable" />
 
-                    <RadioButton
+                    <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_15m"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(15L)}"
                         android:text="15m" />
 
-                    <RadioButton
+                    <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_30m"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(30L)}"
                         android:text="30m" />
 
-                    <RadioButton
+                    <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_1h"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
                         android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(60L)}"
                         android:text="1h" />
 
-                    <RadioButton
+                    <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_2h"
                         style="@style/RadioButton"
                         android:layout_marginEnd="10dp"
@@ -221,7 +221,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <androidx.appcompat.widget.AppCompatCheckBox
+                    <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_each_40resin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -231,7 +231,7 @@
                         android:textSize="14sp"
                         app:buttonTint="@color/checkbox_filter_tint" />
 
-                    <androidx.appcompat.widget.AppCompatCheckBox
+                    <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_140resin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -247,7 +247,7 @@
                         android:layout_marginEnd="10dp"
                         android:gravity="center_vertical">
 
-                        <androidx.appcompat.widget.AppCompatCheckBox
+                        <com.google.android.material.checkbox.MaterialCheckBox
                             android:id="@+id/cb_custom_resin"
                             android:layout_width="30dp"
                             android:layout_height="match_parent"
@@ -283,7 +283,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <androidx.appcompat.widget.AppCompatCheckBox
+                    <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_expedition_done"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -293,7 +293,7 @@
                         android:textSize="14sp"
                         app:buttonTint="@color/checkbox_filter_tint" />
 
-                    <androidx.appcompat.widget.AppCompatCheckBox
+                    <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_home_coin_full"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -314,7 +314,7 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:onClick="@{()->vm.onClickWidgetDesign()}"
-                    android:text="@string/widget_design"
+                    android:text="@string/widget_setting"
                     android:textColor="@color/light_blue_600"
                     android:textSize="28sp"
                     android:textStyle="bold|italic" />
