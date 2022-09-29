@@ -197,13 +197,19 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                         binding.widget.apply {
                             when (mVM.sfDetailTimeNotation.value) {
                                 Constant.PREF_TIME_NOTATION_DEFAULT,
-                                Constant.PREF_TIME_NOTATION_REMAIN_TIME -> {
-                                    rlResinTime.visibility = if (mVM.sfResinDataVisibility.value) View.VISIBLE else View.GONE
-                                    rlRealmCurrencyTime.visibility = if (mVM.sfRealmCurrencyDataVisibility.value) View.VISIBLE else View.GONE
+                                Constant.PREF_TIME_NOTATION_REMAIN_TIME,
+                                -> {
+                                    rlResinTime.visibility =
+                                        if (mVM.sfResinDataVisibility.value) View.VISIBLE else View.GONE
+                                    rlRealmCurrencyTime.visibility =
+                                        if (mVM.sfRealmCurrencyDataVisibility.value) View.VISIBLE else View.GONE
 
-                                    tvResinTimeTitle.text = _context.getString(R.string.until_fully_replenished)
-                                    tvRealmCurrencyTimeTitle.text = _context.getString(R.string.until_fully_replenished)
-                                    tvExpeditionTitle.text = _context.getString(R.string.until_expeditions_done)
+                                    tvResinTimeTitle.text =
+                                        _context.getString(R.string.until_fully_replenished)
+                                    tvRealmCurrencyTimeTitle.text =
+                                        _context.getString(R.string.until_fully_replenished)
+                                    tvExpeditionTitle.text =
+                                        _context.getString(R.string.until_expeditions_done)
                                 }
                                 Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME ->  {
                                     rlResinTime.visibility = if (mVM.sfResinDataVisibility.value) View.VISIBLE else View.GONE

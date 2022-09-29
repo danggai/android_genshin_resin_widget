@@ -57,28 +57,27 @@
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_asia"
                         style="@style/RadioButton"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginEnd="5dp"
                         android:onClick="@{() -> vm.onClickSetServer(Server.ASIA)}"
                         android:text="@string/asia" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_usa"
                         style="@style/RadioButton"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginEnd="5dp"
                         android:onClick="@{() -> vm.onClickSetServer(Server.USA)}"
                         android:text="@string/america" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_euro"
                         style="@style/RadioButton"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginEnd="5dp"
                         android:onClick="@{() -> vm.onClickSetServer(Server.EUROPE)}"
                         android:text="@string/europe" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_cht"
                         style="@style/RadioButton"
-                        android:layout_marginEnd="10dp"
                         android:onClick="@{() -> vm.onClickSetServer(Server.CHT)}"
                         android:text="@string/cht" />
 
@@ -171,35 +170,30 @@
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_disable"
                         style="@style/RadioButton"
-                        android:layout_marginEnd="10dp"
                         android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(-1L)}"
                         android:text="Disable" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_15m"
                         style="@style/RadioButton"
-                        android:layout_marginEnd="10dp"
                         android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(15L)}"
                         android:text="15m" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_30m"
                         style="@style/RadioButton"
-                        android:layout_marginEnd="10dp"
                         android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(30L)}"
                         android:text="30m" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_1h"
                         style="@style/RadioButton"
-                        android:layout_marginEnd="10dp"
                         android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(60L)}"
                         android:text="1h" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_2h"
                         style="@style/RadioButton"
-                        android:layout_marginEnd="10dp"
                         android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(120L)}"
                         android:text="2h" />
 
@@ -222,37 +216,35 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
                         android:id="@+id/cb_each_40resin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
                         android:checked="@={vm.sfEnableNotiEach40Resin}"
-                        android:text="@string/btn_each_40_resin"
-                        android:textSize="14sp"
-                        app:buttonTint="@color/checkbox_filter_tint" />
+                        android:text="@string/btn_each_40_resin" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
                         android:id="@+id/cb_140resin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
                         android:checked="@={vm.sfEnableNoti140Resin}"
-                        android:text="@string/btn_140_resin"
-                        android:textSize="14sp"
-                        app:buttonTint="@color/checkbox_filter_tint" />
+                        android:text="@string/btn_140_resin"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginEnd="10dp"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:layout_marginEnd="6dp">
 
                         <com.google.android.material.checkbox.MaterialCheckBox
+                            style="@style/Checkbox"
                             android:id="@+id/cb_custom_resin"
-                            android:layout_width="30dp"
-                            android:layout_height="match_parent"
-                            android:checked="@={vm.sfEnableNotiCustomResin}"
-                            app:buttonTint="@color/checkbox_filter_tint" />
+                            android:layout_width="32dp"
+                            android:layout_marginEnd="0dp"
+                            android:checked="@={vm.sfEnableNotiCustomResin}" />
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/et_custom_resin"
@@ -277,31 +269,23 @@
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_expedition_done"
+                        android:checked="@={vm.sfEnableNotiExpeditionDone}"
+                        android:text="@string/btn_expedition_done" />
+
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content" >
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_expedition_done"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:checked="@={vm.sfEnableNotiExpeditionDone}"
-                        android:text="@string/btn_expedition_done"
-                        android:textSize="14sp"
-                        app:buttonTint="@color/checkbox_filter_tint" />
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
                         android:id="@+id/cb_home_coin_full"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
                         android:checked="@={vm.sfEnableNotiHomeCoinFull}"
-                        android:text="@string/btn_home_coin_full"
-                        android:textSize="14sp"
-                        app:buttonTint="@color/checkbox_filter_tint" />
+                        android:text="@string/btn_home_coin_full" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -309,69 +293,53 @@
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
+                    android:text="@string/widget_customizing"
+                    android:textColor="@color/black"
                     android:onClick="@{()->vm.onClickWidgetDesign()}"
-                    android:text="@string/widget_setting"
-                    android:textColor="@color/light_blue_600"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic" />
+                    android:backgroundTint="@color/light_blue_200"
+                    app:icon="@drawable/baseline_manage_accounts_24"
+                    app:iconSize="26dp"
+                    app:iconTint="@color/black"
+                    android:textSize="26sp"
+                    android:textStyle="bold|italic"
+                    android:textAllCaps="false" />
 
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
-                <TextView
+                <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/rounded_square_skyblue_5dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:onClick="@{()->vm.onClickSave()}"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="10dp"
                     android:text="@string/save"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:onClick="@{()->vm.onClickSave()}"
+                    android:backgroundTint="@color/light_blue_200"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="10dp"
+                    android:textAllCaps="false" />
 
                 <Space
                     android:layout_width="wrap_content"
-                    android:layout_height="15dp" />
+                    android:layout_height="5dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/rounded_square_skyblue_5dp"
                     android:foreground="?attr/selectableItemBackground"
                     android:onClick="@{()->vm.onClickWidgetRefreshNotWork()}"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="10dp"
                     android:text="@string/dialog_widget_refresh_not_work"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <!--                <Space-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="15dp" />-->
-
-                <!--                <TextView-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_gravity="center_horizontal"-->
-                <!--                    android:background="@drawable/rounded_square_skyblue_5dp"-->
-                <!--                    android:foreground="?attr/selectableItemBackground"-->
-                <!--                    android:onClick="@{()->vm.makeDailyNotePrivate()}"-->
-                <!--                    android:paddingHorizontal="20dp"-->
-                <!--                    android:paddingVertical="10dp"-->
-                <!--                    android:text="실시간 메모 비공개"-->
-                <!--                    android:textColor="@color/black"-->
-                <!--                    android:textSize="14sp"-->
-                <!--                    android:textStyle="bold" />-->
+                    android:textColor="@color/light_blue_600"
+                    android:textSize="15sp"
+                    android:textStyle="bold|italic"
+                    />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

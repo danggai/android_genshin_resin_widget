@@ -12,7 +12,7 @@
     <string name="notification" translatable="false">Notification</string>
     <string name="auto_check_in" translatable="false">Auto Check In</string>
     <string name="time_notation" translatable="false">Time Notation</string>
-    <string name="widget_setting" translatable="false">Widget Setting >></string>
+    <string name="widget_customizing" translatable="false">Widget Customizing</string>
     <string name="widget_theme" translatable="false">Widget Theme</string>
     <string name="background_transparency" translatable="false">Background Transparency</string>
     <string name="font_size" translatable="false">Font Size</string>
@@ -74,7 +74,7 @@
     <string name="dialog_get_storage_permission">Allowing permission</string>
     <string name="dialog_msg_get_storage_permission">When designing a widget, storage permission is required to proceed with the design by substituting it into the wallpaper you actually use.\n\nYou can use the app even if you reject the permission.</string>
 
-    <string name="dialog_widget_refresh_not_work">Refresh doesn\'t work on the Widget</string>
+    <string name="dialog_widget_refresh_not_work">Refresh doesn\'t work on the Widget?</string>
     <string name="dialog_msg_widget_refresh_not_work">If device using <b>power saving mode or data saving mode.</b>, widget doesn\'t refresh.\n\You can disable data saving mode in setting, or detour to allow access to the genshin resin widget on the next screen.\n\nThis permission allows the app to access the notifications the device receives, but the genshin resin widget does not use the notification reception service other than for HoYoLAB data reception purposes, and <b>never</b> accesses the user\'s personal information.\n\nGenshin resin widget recommends data saving mode deactivation.</string>
 
     <string name="dialog_native_hoyolab_account">Check Your Account</string>

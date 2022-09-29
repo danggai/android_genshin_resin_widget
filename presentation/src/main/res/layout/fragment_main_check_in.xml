@@ -82,24 +82,16 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
                         android:id="@+id/cb_enable_genshin_auto_check_in"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
                         android:checked="@={vm.sfEnableGenshinAutoCheckIn}"
-                        android:text="@string/btn_auto_check_in_enable"
-                        android:textSize="14sp"
-                        app:buttonTint="@color/checkbox_filter_tint" />
+                        android:text="@string/btn_auto_check_in_enable" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
                         android:id="@+id/cb_enable_honkai_3rd_auto_check_in"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
                         android:checked="@={vm.sfEnableHonkai3rdAutoCheckIn}"
-                        android:text="@string/btn_auto_check_in_enable_honkai_3rd"
-                        android:textSize="14sp"
-                        app:buttonTint="@color/checkbox_filter_tint" />
+                        android:text="@string/btn_auto_check_in_enable_honkai_3rd" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -120,24 +112,16 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
                         android:id="@+id/cb_check_in_success"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
                         android:checked="@={vm.sfEnableNotiCheckinSuccess}"
-                        android:text="@string/btn_check_in_success"
-                        android:textSize="14sp"
-                        app:buttonTint="@color/checkbox_filter_tint" />
+                        android:text="@string/btn_check_in_success" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
                         android:id="@+id/cb_check_in_fail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
                         android:checked="@={vm.sfEnableNotiCheckinFailed}"
-                        android:text="@string/btn_check_in_failed"
-                        android:textSize="14sp"
-                        app:buttonTint="@color/checkbox_filter_tint" />
+                        android:text="@string/btn_check_in_failed" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
