@@ -89,7 +89,7 @@ class TalentWidgetItemFactory(
 
     override fun getLoadingView(): RemoteViews {
         return RemoteViews(context.packageName, R.layout.item_character_widget).apply {
-            setImageViewResource(R.id.iv_background, R.drawable.bg_character_4stars)
+            setImageViewResource(R.id.iv_icon, R.drawable.icon_unknown)
             setViewVisibility(R.id.iv_background, View.GONE)
             setViewVisibility(R.id.iv_icon, View.GONE)
             setViewVisibility(R.id.iv_area_emblem, View.GONE)
