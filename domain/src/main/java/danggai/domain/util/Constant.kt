@@ -86,6 +86,7 @@ object Constant {
     const val PATTERN_NUM_ONLY = "[^\\d]"
 
     const val DATE_FORMAT_SYNC_TIME = "MM/dd HH:mm"
+    const val DATE_FORMAT_SYNC_DAY = "MM/dd (E)"
 
 
 

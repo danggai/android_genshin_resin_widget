@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:singleLine="true"
-                android:text="MM/dd hh:mm"
+                android:text="MM/dd (E)"
                 android:textColor="@color/widget_font_sub"
                 android:textSize="10sp" />
 

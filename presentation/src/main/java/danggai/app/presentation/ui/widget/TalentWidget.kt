@@ -13,15 +13,13 @@ import danggai.app.presentation.service.TalentWidgetItemService
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.PlayableCharacters
 import danggai.app.presentation.util.PreferenceManager
-import danggai.app.presentation.util.TimeFunction.getSyncTimeString
+import danggai.app.presentation.util.TimeFunction.getSyncDayString
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.TalentWorker
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.util.Constant
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import io.reactivex.internal.schedulers.IoScheduler
+import kotlinx.coroutines.*
 
 
 class TalentWidget() : AppWidgetProvider() {
@@ -33,7 +31,6 @@ class TalentWidget() : AppWidgetProvider() {
 
             CoroutineScope(Dispatchers.IO).launch {
                 syncView(views, context)
-                delay(200L)
 
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             }
@@ -59,18 +56,23 @@ class TalentWidget() : AppWidgetProvider() {
             Constant.ACTION_TALENT_WIDGET_REFRESH,
             Constant.ACTION_ON_BOOT_COMPLETED -> {
                 log.e("REFRESH_UI")
+                setWidgetRefreshing(context, appWidgetManager, appWidgetIds)
 
-                context.let {
-                    val _intent = Intent(it, TalentWidget::class.java)
-                    _intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+                CoroutineScope(Dispatchers.IO).launch {
+                    delay(500L)
 
-                    val ids = AppWidgetManager.getInstance(it.applicationContext).getAppWidgetIds(ComponentName(it.applicationContext, TalentWidget::class.java))
+                    context.let {
+                        val _intent = Intent(it, TalentWidget::class.java)
+                        _intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 
-                    _intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-                    it.sendBroadcast(_intent)
+                        val ids = AppWidgetManager.getInstance(it.applicationContext).getAppWidgetIds(ComponentName(it.applicationContext, TalentWidget::class.java))
+
+                        _intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+                        it.sendBroadcast(_intent)
+                    }
+
+                    appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.gv_characters)
                 }
-
-                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.gv_characters)
             }
             Constant.ACTION_APPWIDGET_UPDATE -> {
                 log.e(action.toString())
@@ -149,8 +151,24 @@ class TalentWidget() : AppWidgetProvider() {
                 view.setViewVisibility(R.id.gv_characters, View.VISIBLE)
             }
 
-            view.setTextViewText(R.id.tv_sync_time, getSyncTimeString())
+            view.setTextViewText(R.id.tv_sync_time, getSyncDayString())
             view.setViewVisibility(R.id.pb_loading, View.GONE)
+        }
+    }
+
+    private fun setWidgetRefreshing(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
+        appWidgetIds.forEach { appWidgetId ->
+            log.e()
+            val view = RemoteViews(context.packageName, R.layout.widget_resin_fixed)
+
+            view.setViewVisibility(R.id.pb_loading, View.VISIBLE)
+            view.setViewVisibility(R.id.ll_root, View.GONE)
+
+            appWidgetManager.updateAppWidget(appWidgetId, view)
         }
     }
 }

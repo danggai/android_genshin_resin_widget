@@ -192,6 +192,10 @@ object TimeFunction {
         return SimpleDateFormat(Constant.DATE_FORMAT_SYNC_TIME).format(Date())
     }
 
+    fun getSyncDayString(): String {
+        return SimpleDateFormat(Constant.DATE_FORMAT_SYNC_DAY).format(Date())
+    }
+
     private fun transformerTimeToSecond(time: TransformerTime): String {
         return (time.Day*86400 +
                 time.Hour*3600 +
