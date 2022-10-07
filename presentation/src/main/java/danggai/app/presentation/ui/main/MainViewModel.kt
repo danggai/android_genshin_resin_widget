@@ -298,15 +298,8 @@ class MainViewModel @Inject constructor(
     }
 
     fun initUI() {
-        preference.getStringUid().let {
-            log.e(it)
-            sfUid.value = it
-        }
-
-        preference.getStringCookie().let {
-            log.e(it)
-            sfCookie.value = it
-        }
+        sfUid.value = preference.getStringUid()
+        sfCookie.value = preference.getStringCookie()
 
         preference.getDailyNoteSettings().let {
             sfServer.value = it.server
