@@ -129,19 +129,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
-                <TextView
+                <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/rounded_square_skyblue_5dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:onClick="@{()->vm.onClickCheckInSave()}"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="10dp"
                     android:text="@string/save"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:onClick="@{()->vm.onClickCheckInSave()}"
+                    android:backgroundTint="@color/light_blue_200"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="10dp"
+                    android:textAllCaps="false" />
 
                 <Space
                     android:layout_width="wrap_content"

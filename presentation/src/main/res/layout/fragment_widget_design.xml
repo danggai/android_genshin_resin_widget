@@ -40,22 +40,23 @@
             android:background="@color/white"
             />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/tv_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/rounded_square_skyblue_5dp"
-            android:foreground="?attr/selectableItemBackground"
-            android:onClick="@{()->vm.onClickSave()}"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp"
             android:text="@string/save"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:textAlignment="center"
+            android:onClick="@{()->vm.onClickSave()}"
+            android:backgroundTint="@color/light_blue_200"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
+            android:textAllCaps="false"
             android:gravity="bottom"
             />
 

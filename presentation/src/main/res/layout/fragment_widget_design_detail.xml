@@ -231,15 +231,15 @@
                         android:id="@+id/sb_fontsize"
                         android:progress="@={vm.sfFontSizeDetail}"
                         android:max="24"
+                        android:layout_gravity="center_vertical"
                         />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextViewButton"
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/SmallMaterialButton"
                         android:id="@+id/mb_reset_detail_fontsize"
                         android:text="@string/reset"
-                        android:onClick="@{()->vm.onClickDetailFontSize()}"
-                        />
-
+                        android:onClick="@{()->vm.onClickDetailFontSize()}" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -277,14 +277,14 @@
                         android:id="@+id/sb_transparent"
                         android:progress="@={vm.sfTransparency}"
                         android:max="255"
+                        android:layout_gravity="center_vertical"
                         />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextViewButton"
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/SmallMaterialButton"
                         android:id="@+id/mb_reset_bg_trans"
                         android:text="@string/reset"
-                        android:onClick="@{()->vm.onClickBackgroundTransparent()}"
-                        />
+                        android:onClick="@{()->vm.onClickBackgroundTransparent()}" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

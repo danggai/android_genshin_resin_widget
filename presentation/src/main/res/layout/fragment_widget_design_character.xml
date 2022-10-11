@@ -85,23 +85,20 @@
                 android:paddingHorizontal="5dp"
                 >
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextViewButton"
-                    android:layout_height="25dp"
+                <com.google.android.material.button.MaterialButton
+                    style="@style/SmallMaterialButton"
                     android:text="@string/character_list_possession"
-                    android:onClick="@{() -> vm.refreshCharacterInfo()}"
-                    />
+                    android:onClick="@{() -> vm.refreshCharacterInfo()}" />
 
                 <androidx.legacy.widget.Space
                     android:layout_width="15dp"
                     android:layout_height="0dp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextViewButton"
-                    android:layout_height="25dp"
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/SmallMaterialButton"
                     android:text="@string/character_list_all"
-                    android:onClick="@{() -> vm.onClickSetAllCharacters()}"
-                    />
+                    android:onClick="@{() -> vm.onClickSetAllCharacters()}" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -181,14 +178,14 @@
                     android:id="@+id/sb_transparent"
                     android:progress="@={vm.sfTransparency}"
                     android:max="255"
+                    android:layout_gravity="center_vertical"
                     />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextViewButton"
+                <com.google.android.material.button.MaterialButton
+                    style="@style/SmallMaterialButton"
                     android:id="@+id/mb_reset_bg_trans"
                     android:text="@string/reset"
-                    android:onClick="@{()->vm.onClickBackgroundTransparent()}"
-                    />
+                    android:onClick="@{()->vm.onClickBackgroundTransparent()}" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
