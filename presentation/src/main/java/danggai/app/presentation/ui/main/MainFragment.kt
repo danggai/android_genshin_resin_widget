@@ -1,11 +1,14 @@
 package danggai.app.presentation.ui.main
 
 import android.Manifest
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
+import android.provider.Settings
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
@@ -39,7 +42,11 @@ import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.util.Constant
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
+
 
 @AndroidEntryPoint
 class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
@@ -83,7 +90,9 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
 
         initUi()
 
-        permissionCheck()
+        context?.let { it ->
+            antidozePermisisonCheck(it)
+        }
 
         updateNoteCheck()
     }
@@ -107,30 +116,28 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         }
     }
 
-    private fun permissionCheck() {
-        context?.let { it ->
-            if (PreferenceManager.getBoolean(it, Constant.PREF_FIRST_LAUNCH, true)) {
-                log.e()
+    private fun antidozePermisisonCheck(context: Context) {
+        if (PreferenceManager.getBoolean(context, Constant.PREF_CHECKED_ANTIDOZE_PERMISSION, true)) {
+            AlertDialog.Builder(requireActivity())
+                .setTitle(R.string.dialog_title_permission)
+                .setMessage(R.string.dialog_msg_permission_antidoze)
+                .setCancelable(false)
+                .setPositiveButton(R.string.apply) { dialog, whichButton ->
+                    log.e()
+                    PreferenceManager.setBoolean(context, Constant.PREF_CHECKED_ANTIDOZE_PERMISSION, false)
 
-                val permissionLauncher: ActivityResultLauncher<String> = registerForActivityResult(RequestPermission()) { isGranted: Boolean ->
-                    PreferenceManager.setBoolean(it, Constant.PREF_FIRST_LAUNCH, false)
-                    if (isGranted) {
-                        log.e()
-                    } else {
-                        log.e()
+                    val intent = Intent()
+                    val packageName = context.packageName
+                    val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+                    if (pm.isIgnoringBatteryOptimizations(packageName)) intent.action =
+                        Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS else {
+                        intent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+                        intent.data = Uri.parse("package:$packageName")
                     }
+                    context.startActivity(intent)
                 }
-
-                AlertDialog.Builder(requireActivity())
-                    .setTitle(R.string.dialog_get_storage_permission)
-                    .setMessage(R.string.dialog_msg_get_storage_permission)
-                    .setPositiveButton(R.string.apply) { dialog, whichButton ->
-                        log.e()
-                        permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-                    }
-                    .create()
-                    .show()
-            }
+                .create()
+                .show()
         }
     }
 
@@ -155,7 +162,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         context?.let { it ->
 
             if (!PreferenceManager.getBoolean(it, Constant.PREF_CHECKED_UPDATE_NOTE + BuildConfig.VERSION_NAME, false)) {
-                if (!PreferenceManager.getBoolean(it, Constant.PREF_FIRST_LAUNCH, true)) {
+                if (!PreferenceManager.getBoolean(it, Constant.PREF_CHECKED_STORAGE_PERMISSION, true)) {
                     AlertDialog.Builder(requireActivity())
                         .setTitle(String.format(getString(R.string.dialog_patch_note), BuildConfig.VERSION_NAME))
                         .setMessage(R.string.dialog_msg_patch_note)

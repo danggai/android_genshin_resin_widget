@@ -20,8 +20,8 @@
     <string name="visible_data" translatable="false">Visible Data</string>
     <string name="select_character" translatable="false">Select Character</string>
     <string name="select_character_title">Characters display in widget</string>
-    <string name="apply" translatable="false">Apply</string>
-    <string name="cancel" translatable="false">Cancel</string>
+    <string name="apply">Apply</string>
+    <string name="cancel">Cancel</string>
 
     <string name="save">Save</string>
     <string name="force_stop">FORCE STOP</string>
@@ -71,8 +71,9 @@
 
     <string name="data_save_mode_not_supported">Data saving mode is not supported under Android 7.</string>
 
-    <string name="dialog_get_storage_permission">Allowing permission</string>
-    <string name="dialog_msg_get_storage_permission">When designing a widget, storage permission is required to proceed with the design by substituting it into the wallpaper you actually use.\n\nYou can use the app even if you reject the permission.</string>
+    <string name="dialog_title_permission">Allowing permission</string>
+    <string name="dialog_msg_permission_storage">When customizing widget, storage permission is required to proceed with the design by substituting it into the wallpaper you actually use.\n\nYou can use the app even if you reject the permission.</string>
+    <string name="dialog_msg_permission_antidoze">Power saving exclusion is required to prevent problems with widget refresh/auto checkin due to issues such as low battery/sleep mode.\n\nYou can use the app even if you deny the permission.</string>
 
     <string name="dialog_widget_refresh_not_work">Refresh doesn\'t work on the Widget?</string>
     <string name="dialog_msg_widget_refresh_not_work">If device using <b>power saving mode or data saving mode.</b>, widget doesn\'t refresh.\n\You can disable data saving mode in setting, or detour to allow access to the genshin resin widget on the next screen.\n\nThis permission allows the app to access the notifications the device receives, but the genshin resin widget does not use the notification reception service other than for HoYoLAB data reception purposes, and <b>never</b> accesses the user\'s personal information.\n\nGenshin resin widget recommends data saving mode deactivation.</string>

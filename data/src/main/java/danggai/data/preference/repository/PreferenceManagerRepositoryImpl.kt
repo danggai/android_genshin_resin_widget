@@ -254,9 +254,9 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
      * 커스텀 함수
      */
     override fun getBooleanFirstLaunch(): Boolean =
-        getBoolean(context, Constant.PREF_FIRST_LAUNCH, true)
+        getBoolean(context, Constant.PREF_CHECKED_STORAGE_PERMISSION, true)
     override fun setBooleanFirstLaunch(value: Boolean) =
-        setBoolean(context, Constant.PREF_FIRST_LAUNCH, value)
+        setBoolean(context, Constant.PREF_CHECKED_STORAGE_PERMISSION, value)
 
     override fun getIntServer(): Int =
         getInt(context, Constant.PREF_SERVER)

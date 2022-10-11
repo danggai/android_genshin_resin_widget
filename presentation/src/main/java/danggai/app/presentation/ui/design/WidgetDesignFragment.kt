@@ -1,10 +1,15 @@
 package danggai.app.presentation.ui.design
 
+import android.Manifest
 import android.app.WallpaperManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +22,7 @@ import danggai.app.presentation.ui.design.charaters.select.WidgetDesignSelectCha
 import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
 import danggai.app.presentation.ui.design.resin.WidgetDesignResinFragment
 import danggai.app.presentation.ui.widget.TalentWidget
+import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.log
 import danggai.domain.util.Constant
 import kotlinx.coroutines.launch
@@ -40,6 +46,10 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = mVM
         binding.vm?.setCommonFun()
+
+        context?.let { it ->
+            storagePermissionCheck(it)
+        }
 
         initTabLayout()
 
@@ -78,6 +88,29 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
                 log.e()
                 makeToast(it, getString(R.string.msg_toast_storage_permission_denied))
             }
+        }
+    }
+
+    private fun storagePermissionCheck(context: Context) {
+        if (PreferenceManager.getBoolean(context, Constant.PREF_CHECKED_STORAGE_PERMISSION, true)) {
+            log.e()
+
+            val permissionLauncher: ActivityResultLauncher<String> = registerForActivityResult(
+                ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+                PreferenceManager.setBoolean(context, Constant.PREF_CHECKED_STORAGE_PERMISSION, false)
+                initUi()
+            }
+
+            AlertDialog.Builder(requireActivity())
+                .setTitle(R.string.dialog_title_permission)
+                .setMessage(R.string.dialog_msg_permission_storage)
+                .setCancelable(false)
+                .setPositiveButton(R.string.apply) { dialog, whichButton ->
+                    log.e()
+                    permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                }
+                .create()
+                .show()
         }
     }
 
