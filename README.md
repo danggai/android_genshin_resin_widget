@@ -27,12 +27,16 @@
 
 - [Android Studio Bumblebee](https://developer.android.com/studio/intro)
 - [Koltin](https://developer.android.com/kotlin)
+- [Hilt](https://dagger.dev/hilt/)
+- Clean Architecture
+
 - [Rx](https://reactivex.io/)
 - [Coroutine](https://developer.android.com/kotlin/coroutines?hl=ko)
 - [Flow](https://developer.android.com/kotlin/flow?hl=ko)
-- [Hilt](https://dagger.dev/hilt/)
+
 - [Retrofit2](https://square.github.io/retrofit/)
-- Clean Architecture
+- [WorkManager](https://developer.android.com/jetpack/androidx/releases/work?hl=ko)
+- [Room](https://developer.android.com/training/data-storage/room/)
 
 
 
