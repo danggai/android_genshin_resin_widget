@@ -230,7 +230,8 @@
                         style="@style/SeekBar"
                         android:id="@+id/sb_fontsize"
                         android:progress="@={vm.sfFontSizeDetail}"
-                        android:max="24"
+                        android:min="5"
+                        android:max="30"
                         android:layout_gravity="center_vertical"
                         />
 

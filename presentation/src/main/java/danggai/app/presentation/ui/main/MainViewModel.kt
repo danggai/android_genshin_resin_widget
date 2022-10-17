@@ -349,7 +349,7 @@ class MainViewModel @Inject constructor(
             )
         }
     }
-    
+
     private fun saveWidgetData(isDataValid: Boolean, dailyNote: DailyNoteData?) {
         if (isDataValid) {
             log.e()
@@ -391,7 +391,7 @@ class MainViewModel @Inject constructor(
             makeToast(resource.getString(R.string.msg_toast_cookie_empty_error))
         }
     }
-    
+
     private fun saveCheckInData(isDataValid: Boolean) {
         if (isDataValid) {
             log.e()
@@ -472,6 +472,11 @@ class MainViewModel @Inject constructor(
     fun onClickWidgetDesign() {
         log.e()
         sendEvent(Event.StartWidgetDesignActivity())
+    }
+
+    fun onClickNewHoyolabAccount() {
+        log.e()
+        sendEvent(Event.StartNewHoyolabAccountActivity())
     }
 
     fun onClickGetCookie() {

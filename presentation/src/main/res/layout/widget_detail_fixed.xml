@@ -37,8 +37,6 @@
                 <TextView
                     style="@style/TextView"
                     android:id="@+id/tv_sync_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="MM/dd hh:mm"
                     android:textSize="10sp"
                     android:textColor="@color/widget_font_sub"
@@ -76,8 +74,6 @@
                 <TextView
                     android:id="@+id/tv_resin_title"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@id/tv_resin"
                     android:layout_toRightOf="@id/iv_resin_icon"
@@ -89,8 +85,6 @@
                 <TextView
                     style="@style/TextView"
                     android:id="@+id/tv_resin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="160/160"
                     android:textSize="12sp"
                     android:textColor="@color/widget_font_main"
@@ -110,8 +104,6 @@
                 <TextView
                     android:id="@+id/tv_resin_time_title"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/tv_resin_time"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="18dp"
@@ -123,8 +115,6 @@
                 <TextView
                     style="@style/TextView"
                     android:id="@+id/tv_resin_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="0h 0m"
                     android:textSize="12sp"
                     android:textColor="@color/widget_font_main"
@@ -156,8 +146,6 @@
                 <TextView
                     android:id="@+id/tv_daily_commission_title"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/iv_daily_commission"
                     android:layout_toLeftOf="@id/tv_daily_commission"
@@ -169,8 +157,6 @@
                 <TextView
                     style="@style/TextView"
                     android:id="@+id/tv_daily_commission"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="4/4"
                     android:textSize="12sp"
                     android:textColor="@color/widget_font_main"
@@ -202,8 +188,6 @@
                 <TextView
                     style="@style/TextView"
                     android:id="@+id/tv_weekly_boss_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="@string/enemies_of_note"
                     android:textSize="12sp"
                     android:textColor="@color/widget_font_main"
@@ -216,8 +200,6 @@
                 <TextView
                     style="@style/TextView"
                     android:id="@+id/tv_weekly_boss"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="3/3"
                     android:textSize="12sp"
                     android:textColor="@color/widget_font_main"
@@ -248,8 +230,6 @@
                 <TextView
                     style="@style/TextView"
                     android:id="@+id/tv_realm_currency_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="@string/realm_currency"
                     android:textSize="12sp"
                     android:textColor="@color/widget_font_main"
@@ -262,8 +242,6 @@
                 <TextView
                     style="@style/TextView"
                     android:id="@+id/tv_realm_currency"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="2400/2400"
                     android:textSize="12sp"
                     android:textColor="@color/widget_font_main"
@@ -283,8 +261,6 @@
                 <TextView
                     android:id="@+id/tv_realm_currency_time_title"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="18dp"
                     android:layout_toLeftOf="@id/tv_realm_currency_time"
@@ -296,8 +272,6 @@
                 <TextView
                     android:id="@+id/tv_realm_currency_time"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:singleLine="true"
                     android:text="0h 0m"
@@ -325,8 +299,6 @@
                 <TextView
                     android:id="@+id/tv_transformer_title"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@id/tv_transformer"
                     android:layout_toRightOf="@id/iv_transformer"
@@ -338,8 +310,6 @@
                 <TextView
                     android:id="@+id/tv_transformer"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:singleLine="true"
@@ -358,8 +328,6 @@
 <!--                <TextView-->
 <!--                    android:id="@+id/tv_transformer_time_title"-->
 <!--                    style="@style/TextView"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
 <!--                    android:layout_alignParentLeft="true"-->
 <!--                    android:layout_marginLeft="18dp"-->
 <!--                    android:layout_toLeftOf="@id/tv_transformer_time"-->
@@ -371,8 +339,6 @@
 <!--                <TextView-->
 <!--                    style="@style/TextView"-->
 <!--                    android:id="@+id/tv_transformer_time"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
 <!--                    android:text="0d 0h 0m"-->
 <!--                    android:textSize="12sp"-->
 <!--                    android:textColor="@color/widget_font_main"-->
@@ -401,8 +367,6 @@
                 <TextView
                     android:id="@+id/tv_expedition_title"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@id/tv_expedition_time"
                     android:layout_toRightOf="@id/iv_warp"
@@ -414,8 +378,6 @@
                 <TextView
                     android:id="@+id/tv_expedition_time"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:singleLine="true"
@@ -434,8 +396,6 @@
 <!--                <TextView-->
 <!--                    android:id="@+id/tv_expedition_time_title"-->
 <!--                    style="@style/TextView"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
 <!--                    android:layout_alignParentLeft="true"-->
 <!--                    android:layout_marginLeft="18dp"-->
 <!--                    android:layout_toLeftOf="@id/tv_expedition_time"-->
@@ -447,8 +407,6 @@
 <!--                <TextView-->
 <!--                    style="@style/TextView"-->
 <!--                    android:id="@+id/tv_expedition_time"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
 <!--                    android:text="0h 0m"-->
 <!--                    android:textSize="12sp"-->
 <!--                    android:textColor="@color/widget_font_main"-->
@@ -471,8 +429,6 @@
             <TextView
                 style="@style/TextView"
                 android:id="@+id/tv_disable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="@color/widget_font_main"
                 android:gravity="center"

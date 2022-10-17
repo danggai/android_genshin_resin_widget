@@ -151,6 +151,23 @@
                     android:textSize="14sp"
                     android:textStyle="italic" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_hoyolab_account"
+                    android:textColor="@color/black"
+                    android:onClick="@{()->vm.onClickNewHoyolabAccount()}"
+                    android:backgroundTint="@color/light_blue_200"
+                    app:iconSize="26dp"
+                    app:iconTint="@color/black"
+                    android:textSize="26sp"
+                    android:textStyle="bold|italic"
+                    android:textAllCaps="false" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

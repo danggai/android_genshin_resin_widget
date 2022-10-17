@@ -10,6 +10,7 @@ sealed class Event {
     data class GetCookie(val unit: Unit = Unit): Event()
     data class WhenDailyNoteIsPrivate(val unit: Unit = Unit): Event()
     data class StartWidgetDesignActivity(val unit: Unit = Unit): Event()
+    data class StartNewHoyolabAccountActivity(val unit: Unit = Unit): Event()
     data class ChangeLanguage(val unit: Unit = Unit): Event()
 
     data class StartShutRefreshWorker(val isValid: Boolean): Event()

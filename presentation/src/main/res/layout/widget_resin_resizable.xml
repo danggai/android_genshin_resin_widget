@@ -52,8 +52,6 @@
                     <TextView
                         style="@style/TextView"
                         android:id="@+id/tv_sync_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:text="MM/dd hh:mm"
                         android:textColor="@color/widget_font_sub"
@@ -83,7 +81,6 @@
                     <TextView
                         android:id="@+id/tv_resin"
                         style="@style/TextView"
-                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:autoSizeMaxTextSize="60sp"
                         android:autoSizeMinTextSize="24sp"
@@ -99,8 +96,6 @@
                     <TextView
                         style="@style/TextView"
                         android:id="@+id/tv_resin_max"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:text="/160"
                         android:textColor="@color/widget_font_main"
@@ -116,7 +111,6 @@
                     style="@style/TextView"
                     android:id="@+id/tv_remain_time"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:text="0h 0m left"
                     android:textSize="12sp"
                     android:textColor="@color/widget_font_main"
@@ -141,8 +135,6 @@
 
             <TextView
                 style="@style/TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="@color/widget_font_main"
                 android:gravity="center"

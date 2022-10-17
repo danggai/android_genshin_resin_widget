@@ -13,6 +13,7 @@
     <string name="auto_check_in" translatable="false">Auto Check In</string>
     <string name="time_notation" translatable="false">Time Notation</string>
     <string name="widget_customizing" translatable="false">Widget Customizing</string>
+    <string name="new_hoyolab_account" translatable="false">New HoyoLab Account</string>
     <string name="widget_theme" translatable="false">Widget Theme</string>
     <string name="background_transparency" translatable="false">Background Transparency</string>
     <string name="font_size" translatable="false">Font Size</string>

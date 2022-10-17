@@ -144,6 +144,11 @@
             tools:ignore="Instantiatable"
             />
 
+        <activity android:name="danggai.app.presentation.ui.newaccount.NewHoyolabAccountActivity"
+            android:exported="false"
+            tools:ignore="Instantiatable"
+            />
+
         <!-- If you want to disable android.startup completely. -->
         <provider
             android:name="androidx.startup.InitializationProvider"

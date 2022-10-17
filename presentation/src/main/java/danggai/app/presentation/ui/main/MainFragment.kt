@@ -30,6 +30,7 @@ import danggai.app.presentation.ui.cookie.CookieWebViewActivity
 import danggai.app.presentation.ui.design.WidgetDesignActivity
 import danggai.app.presentation.ui.main.checkin.MainCheckInFragment
 import danggai.app.presentation.ui.main.resin.MainResinFragment
+import danggai.app.presentation.ui.newaccount.NewHoyolabAccountActivity
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.Event
 import danggai.app.presentation.util.PreferenceManager
@@ -290,6 +291,12 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                 log.e()
                 activity?.let {
                     WidgetDesignActivity.startActivity(it)
+                }
+            }
+            is Event.StartNewHoyolabAccountActivity -> {
+                log.e()
+                activity?.let {
+                    NewHoyolabAccountActivity.startActivity(it)
                 }
             }
             is Event.ChangeLanguage -> {

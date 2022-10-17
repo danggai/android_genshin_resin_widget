@@ -63,6 +63,13 @@ dependencies {
     // Sandwich - network success/fail Handling
     implementation (Dependencies.Sandwich.sandwich)
 
+    // Room - database
+    val room_version = "2.4.3"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+
     // firebase
     implementation (Dependencies.Firebase.bom)
 

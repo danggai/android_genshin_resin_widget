@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="danggai.app.presentation.ui.newaccount.NewHoyolabAccountViewModel"
+            />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/insert_dummy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="insert dummy data"
+            android:onClick="@{() -> vm.insertDummyAccount()}"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/get_all_accounts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="get all accounts"
+            android:onClick="@{() -> vm.getAllAccounts()}"
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:hint="delete target id"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@={vm.sfDeleteTargetId}"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/delete_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="delete dummy data"
+            android:onClick="@{() -> vm.deleteAccount()}"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/deleta_all_datas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="delete all data"
+            android:onClick="@{() -> vm.deleteAllAccounts()}"
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>
