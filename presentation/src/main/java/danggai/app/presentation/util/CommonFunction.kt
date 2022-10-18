@@ -19,6 +19,8 @@ import danggai.app.presentation.R
 import danggai.app.presentation.ui.widget.DetailWidget
 import danggai.app.presentation.ui.widget.ResinWidget
 import danggai.app.presentation.ui.widget.ResinWidgetResizable
+import danggai.domain.db.account.entity.Account
+import danggai.domain.db.account.usecase.AccountDaoUseCase
 import danggai.domain.local.CheckInSettings
 import danggai.domain.local.DailyNoteSettings
 import danggai.domain.local.DetailWidgetDesignSettings
@@ -420,5 +422,35 @@ object CommonFunction {
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
             )
         )
+    }
+
+    fun checkAndMigratePreferenceToDB(dao: AccountDaoUseCase, context: Context) {
+        if (!PreferenceManager.getBoolean(context, Constant.PREF_CHECKED_ROOM_DB_MIGRATION, false)) {
+            PreferenceManager.setBoolean(context, Constant.PREF_CHECKED_ROOM_DB_MIGRATION, true)
+
+            if (
+                PreferenceManager.getString(context, Constant.PREF_COOKIE) != "" &&
+                PreferenceManager.getString(context, Constant.PREF_UID) != "" &&
+                PreferenceManager.getInt(context, Constant.PREF_SERVER) != -1
+            ) {
+                dao.insertAccount(
+                    Account(
+                        context.getString(R.string.traveler),
+                        PreferenceManager.getString(context, Constant.PREF_COOKIE),
+                        PreferenceManager.getString(context, Constant.PREF_UID),
+                        PreferenceManager.getInt(context, Constant.PREF_SERVER),
+                        PreferenceManager.getBoolean(context, Constant.PREF_ENABLE_GENSHIN_AUTO_CHECK_IN, false),
+                        PreferenceManager.getBoolean(context, Constant.PREF_ENABLE_HONKAI_3RD_AUTO_CHECK_IN, false),
+                        false
+                    )
+                )
+            } else if (PreferenceManager.getString(context, Constant.PREF_COOKIE) != "" &&
+                PreferenceManager.getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)
+            ) {
+                dao.insertAccount(
+                    Account.GUEST.copy(cookie = PreferenceManager.getString(context, Constant.PREF_COOKIE))
+                )
+            }
+        }
     }
 }

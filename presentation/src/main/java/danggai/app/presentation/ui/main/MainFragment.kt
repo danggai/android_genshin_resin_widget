@@ -38,6 +38,7 @@ import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.util.Constant
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -184,7 +185,10 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                 PreferenceManager.getT<ResinWidgetDesignSettings>(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS)?: ResinWidgetDesignSettings.EMPTY == ResinWidgetDesignSettings.EMPTY &&
                 PreferenceManager.getT<DetailWidgetDesignSettings>(context, Constant.PREF_DETAIL_WIDGET_DESIGN_SETTINGS)?: DetailWidgetDesignSettings.EMPTY == DetailWidgetDesignSettings.EMPTY
             ) CommonFunction.migrateSettings(context)
+
+            CommonFunction.checkAndMigratePreferenceToDB(mVM.dao, context)
         }
+
     }
 
     private fun initAd() {

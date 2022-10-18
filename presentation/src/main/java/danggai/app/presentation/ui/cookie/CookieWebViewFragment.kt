@@ -105,7 +105,7 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
 
         binding.wvBody.settings.cacheMode = WebSettings.LOAD_NO_CACHE
 
-        binding.wvBody.loadUrl("https://www.hoyolab.com/")
+        binding.wvBody.loadUrl("https://m.hoyolab.com/#/timeline")
 
         makeToastLong(requireContext(), getString(R.string.msg_toast_how_to_get_cookie))
     }

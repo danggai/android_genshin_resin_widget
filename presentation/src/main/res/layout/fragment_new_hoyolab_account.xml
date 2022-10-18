@@ -208,6 +208,18 @@
                     android:textSize="28sp"
                     android:textStyle="bold|italic" />
 
+                <TextView
+                    style="@style/TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:text="@string/hoyolab_checkin_desc"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"
+                    android:maxLines="3"
+                    />
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

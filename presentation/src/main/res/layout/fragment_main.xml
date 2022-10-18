@@ -102,18 +102,19 @@
                     android:paddingVertical="20dp"
                     android:visibility="@{vm.sfAccountList.empty ?View.VISIBLE :View.GONE}" />
 
-                <androidx.legacy.widget.Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp" />
-
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/new_hoyolab_account"
                     android:onClick="@{()->vm.onClickNewHoyolabAccount()}"
-                    android:textSize="22sp"
+                    app:icon="@drawable/baseline_person_add_24"
+                    app:iconSize="24dp"
+                    app:iconTint="@color/white"
+                    android:textSize="18sp"
                     android:textStyle="italic"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    android:layout_gravity="right"
+                    />
 
                 <androidx.legacy.widget.Space
                     android:layout_width="wrap_content"
@@ -293,15 +294,20 @@
                     android:layout_height="15dp" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/save"
-                    android:textSize="18sp"
+                    style="@style/MaterialButton"
+                    android:text="@string/save_setting"
                     android:onClick="@{()->vm.onClickSave()}"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="10dp"
-                    android:textAllCaps="false" />
+                    />
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="5dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/MaterialButton"
+                    android:text="@string/hoyolab_checkin"
+                    android:onClick="@{()->vm.onClickCheckIn()}"
+                    />
 
                 <androidx.legacy.widget.Space
                     android:layout_width="wrap_content"

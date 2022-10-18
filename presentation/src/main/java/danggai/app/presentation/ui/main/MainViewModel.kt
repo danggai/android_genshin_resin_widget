@@ -1,6 +1,5 @@
 package danggai.app.presentation.ui.main
 
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import danggai.app.presentation.R
@@ -28,10 +27,12 @@ class MainViewModel @Inject constructor(
     private val accountDao: AccountDaoUseCase,
     private val preference: PreferenceManagerRepository,
 ): BaseViewModel() {
+    val dao = accountDao
+
     val sfAutoRefreshPeriod = MutableStateFlow(15L)
 
     val sfAccountList: StateFlow<List<Account>> =
-        accountDao.getAllAccount()
+        accountDao.selectAllAccountFlow()
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
@@ -80,21 +81,6 @@ class MainViewModel @Inject constructor(
 
     fun onClickSave() {
         log.e()
-        saveWidgetData()
-
-        // 수동출석으로 전환
-        log.e()
-//        if (sfCookie.value.isEmpty())  {
-//            saveCheckInData(false)
-//        } else {
-//            sfCookie.value = sfCookie.value.trim()
-//            saveCheckInData(true)
-//            startCheckIn()
-//        }
-    }
-
-    private fun saveWidgetData() {
-        log.e()
 
         val customNotiResin: Int = try {
             if (sfCustomNotiResin.value.isEmpty()
@@ -120,7 +106,20 @@ class MainViewModel @Inject constructor(
             )
         )
 
+        preference.setCheckInSettings(
+            CheckInSettings(
+                true,     // deprecated
+                true,   // deprecated
+                sfEnableNotiCheckinSuccess.value,
+                sfEnableNotiCheckinFailed.value
+            )
+        )
+
         makeToast(resource.getString(R.string.msg_toast_save_done))
+    }
+
+    fun onClickCheckIn() {
+        startCheckIn()
     }
 
     fun onClickWidgetRefreshNotWork() {
@@ -164,27 +163,6 @@ class MainViewModel @Inject constructor(
 
 
 
-    private fun saveCheckInData(isDataValid: Boolean) {
-        if (isDataValid) {
-            log.e()
-            preference.setBooleanIsValidUserData(true)
-
-            preference.setCheckInSettings(
-                CheckInSettings(
-                    false,
-                    false,
-                    sfEnableNotiCheckinSuccess.value,
-                    sfEnableNotiCheckinFailed.value
-                )
-            )
-
-//            if (!sfEnableGenshinAutoCheckIn.value &&
-//                !sfEnableHonkai3rdAutoCheckIn.value)
-//                sendEvent(Event.StartShutCheckInWorker(false))
-
-            makeToast(resource.getString(R.string.msg_toast_save_done_check_in))
-        }
-    }
 
     private fun sendWidgetSyncBroadcast(dailyNote: DailyNoteData) {
         log.e()
@@ -204,12 +182,10 @@ class MainViewModel @Inject constructor(
     }
 
     private fun startCheckIn() {
-        val settings = preference.getCheckInSettings()
-        if (settings.genshinCheckInEnable ||
-            settings.honkai3rdCheckInEnable) {
-            log.e()
-            sendEvent(Event.StartShutCheckInWorker(true))
-        }
+        log.e()
+        sendEvent(Event.StartShutCheckInWorker(true))
+
+        makeToast(resource.getString(R.string.msg_toast_save_done_check_in))
     }
 
 }

@@ -22,8 +22,11 @@
     <string name="cancel">Cancel</string>
 
     <string name="new_hoyolab_account">New HoYoLab Account</string>
+    <string name="hoyolab_checkin">HoYoLab CheckIn</string>
     <string name="widget_customizing">Widget Customizing</string>
+    <string name="hoyolab_checkin_desc">For the first time, you must press the \'HoYoLab CheckIn\' button manually to proceed with automatic attendance.</string>
 
+    <string name="save_setting">Save Setting</string>
     <string name="save">Save</string>
     <string name="ok">OK</string>
     <string name="reset">RESET</string>
@@ -189,6 +192,8 @@
 
     <string name="invalid_user_info">You can\'t use it\nwithout user information!</string>
 
+    <string name="guest">Guest</string>
+    <string name="traveler">Traveler</string>
 
     <!-- Character Name -->
     <string name="kate">Kate</string>

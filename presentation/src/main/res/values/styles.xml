@@ -64,4 +64,20 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
+    <style name="MaterialButton">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:letterSpacing">-0.04</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">46dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
 </resources>

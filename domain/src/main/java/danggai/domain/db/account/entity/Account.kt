@@ -19,5 +19,15 @@ data class Account (
             enable_honkai3rd_checkin = false,
             enable_tot_checkin = false
         )
+
+        val GUEST = Account(
+            nickname = "Guest",
+            cookie = "",
+            genshin_uid = "-1",
+            server = -1,
+            enable_genshin_checkin = false,
+            enable_honkai3rd_checkin = true,
+            enable_tot_checkin = false
+        )
     }
 }

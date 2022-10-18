@@ -18,7 +18,10 @@ interface AccountDao {
     fun selectAccountByUid(uid: String): AccountEntity
 
     @Query("SELECT * FROM account")
-    fun getAllAccounts(): Flow<List<AccountEntity>>
+    fun selectAllAccountFlow(): Flow<List<AccountEntity>>
+
+    @Query("SELECT * FROM account")
+    fun selectAllAccount(): List<AccountEntity>
 
     @Query("DELETE FROM account WHERE genshinUid = :uid")
     fun deleteAccount(uid: String): Int

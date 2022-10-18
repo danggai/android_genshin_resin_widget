@@ -8,7 +8,8 @@ import kotlinx.coroutines.flow.Flow
 interface AccountRepository: Repository {
     fun insertAccount(account: Account): Flow<Long>
     fun selectAccountByUid(uid: String): Flow<Account>
-    fun getAllAccount(): Flow<List<Account>>
+    fun selectAllAccountFlow(): Flow<List<Account>>
+    fun selectAllAccount(): Flow<List<Account>>
     fun deleteAccount(uid: String): Flow<Int>
     fun deleteAllAccounts(): Flow<Int>
 }

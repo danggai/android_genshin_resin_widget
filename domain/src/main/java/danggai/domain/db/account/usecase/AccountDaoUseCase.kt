@@ -14,8 +14,11 @@ class AccountDaoUseCase @Inject constructor(
     fun selectAccountByUid(uid: String): Flow<Account> =
         accountRepository.selectAccountByUid(uid)
 
-    fun getAllAccount(): Flow<List<Account>> =
-        accountRepository.getAllAccount()
+    fun selectAllAccountFlow(): Flow<List<Account>> =
+        accountRepository.selectAllAccountFlow()
+
+    fun selectAllAccount(): Flow<List<Account>> =
+        accountRepository.selectAllAccount()
 
     fun deleteAccount(uid: String): Flow<Int> =
         accountRepository.deleteAccount(uid)

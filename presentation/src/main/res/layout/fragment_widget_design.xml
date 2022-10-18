@@ -42,20 +42,12 @@
             />
 
         <com.google.android.material.button.MaterialButton
+            style="@style/MaterialButton"
             android:id="@+id/tv_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:text="@string/save"
-            android:textSize="18sp"
-            android:textAlignment="center"
             android:onClick="@{()->vm.onClickSave()}"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:textAllCaps="false"
-            android:gravity="bottom"
             />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

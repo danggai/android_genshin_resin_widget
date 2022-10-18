@@ -2,13 +2,16 @@
     <string name="app_name">원신 레진 위젯</string>
 
     <string name="new_hoyolab_account">새 호요랩 계정</string>
+    <string name="hoyolab_checkin">호요랩 출석체크</string>
     <string name="widget_customizing">위젯 커스텀</string>
+    <string name="hoyolab_checkin_desc">최초 1회는 \'호요랩 출석체크\'버튼을 눌러 수동으로 진행해야 자동 출석이 정상적으로 진행됩니다.</string>
 
     <string name="apply">확인</string>
     <string name="cancel">취소</string>
 
     <string name="select_character_title">위젯에 표시할 캐릭터</string>
 
+    <string name="save_setting">설정 저장</string>
     <string name="save">저장</string>
     <string name="ok">확인</string>
     <string name="reset">초기화</string>
@@ -168,6 +171,8 @@
 
     <string name="invalid_user_info">유저 정보 없이는\n사용할 수 없어!</string>
 
+    <string name="guest">게스트</string>
+    <string name="traveler">여행자</string>
 
     <!-- Character Name -->
     <string name="kate">케이트</string>

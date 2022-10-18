@@ -6,6 +6,7 @@ import danggai.data.db.account.mapper.mapToAccountEntity
 import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.repository.AccountRepository
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
@@ -28,12 +29,20 @@ class AccountRepositoryImpl @Inject constructor(
         emit(mapToAccount(accountEntity))
     }
 
-    override fun getAllAccount() = flow<List<Account>> {
-        accountDao.getAllAccounts().collect { list ->
+    override fun selectAllAccountFlow() = flow<List<Account>> {
+        accountDao.selectAllAccountFlow().collect { list ->
             emit(list.toList().map { accountEntity ->
                 mapToAccount(accountEntity)
             })
         }
+    }.flowOn(ioDispatcher)
+
+    override fun selectAllAccount() = flow<List<Account>> {
+        val result = accountDao.selectAllAccount()
+
+        emit(result.toList().map { accountEntity ->
+            mapToAccount(accountEntity)
+        })
     }.flowOn(ioDispatcher)
 
     override fun deleteAccount(uid: String) = flow<Int> {

@@ -17,9 +17,9 @@ import dagger.assisted.AssistedInject
 import danggai.app.presentation.R
 import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.util.CommonFunction
-import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
+import danggai.domain.db.account.usecase.AccountDaoUseCase
 import danggai.domain.local.CheckInSettings
 import danggai.domain.local.DailyNoteSettings
 import danggai.domain.local.DetailWidgetDesignSettings
@@ -28,12 +28,9 @@ import danggai.domain.network.checkin.usecase.CheckInUseCase
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.util.*
@@ -45,6 +42,7 @@ class CheckInWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
     private val preference: PreferenceManagerRepository,
+    private val accountDao: AccountDaoUseCase,
     private val checkIn: CheckInUseCase
 ): CoroutineWorker(context, workerParams) {
 
@@ -70,11 +68,6 @@ class CheckInWorker @AssistedInject constructor(
 
         private fun startWorkerOneTime(context: Context, delay: Long) {
             log.e()
-
-            if (!PreferenceManager.getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)) {
-                log.e()
-                return
-            }
 
             log.e("delay -> $delay")
 
@@ -372,27 +365,30 @@ class CheckInWorker @AssistedInject constructor(
                 preference.getDetailWidgetDesignSettings() == DetailWidgetDesignSettings.EMPTY
             ) CommonFunction.migrateSettings(applicationContext)
 
-            CoroutineScope(Dispatchers.IO).launch {
-                val lang = when (preference.getStringLocale()) {
-                    Constant.Locale.ENGLISH.locale -> Constant.Locale.ENGLISH.lang
-                    Constant.Locale.KOREAN.locale -> Constant.Locale.KOREAN.lang
-                    else -> Constant.Locale.ENGLISH.locale
-                }
+            CommonFunction.checkAndMigratePreferenceToDB(accountDao, applicationContext)
+            delay(300L)
 
-                preference.getCheckInSettings().let { settings ->
-                    if (settings.genshinCheckInEnable)
+            val lang = when (preference.getStringLocale()) {
+                Constant.Locale.ENGLISH.locale -> Constant.Locale.ENGLISH.lang
+                Constant.Locale.KOREAN.locale -> Constant.Locale.KOREAN.lang
+                else -> Constant.Locale.ENGLISH.locale
+            }
+
+            accountDao.selectAllAccount().collect { accountList ->
+                accountList.forEach { account ->
+                    if (account.enable_genshin_checkin)
                         checkInGenshin(
                             lang = lang,
                             actId = Constant.OS_GENSHIN_ACT_ID,
-                            cookie = preference.getStringCookie(),
+                            cookie = account.cookie,
                         )
 
 
-                    if (settings.honkai3rdCheckInEnable)
+                    if (account.enable_honkai3rd_checkin)
                         checkInHonkai3rd(
                             lang = lang,
                             actId = Constant.OS_HONKAI_3RD_ACT_ID,
-                            cookie = preference.getStringCookie()
+                            cookie = account.cookie
                         )
                 }
             }

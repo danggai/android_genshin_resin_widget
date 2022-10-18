@@ -57,14 +57,21 @@
             android:src="@drawable/baseline_manage_accounts_24"
             app:tint="@color/light_blue_600"
             android:onClick="@{() -> vm.onClickManageAccount(item)}"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            />
+
+        <androidx.legacy.widget.Space
+            android:layout_width="7dp"
+            android:layout_height="0dp"
             />
 
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/baseline_delete_24"
+            android:src="@drawable/baseline_person_remove_24"
             app:tint="@color/light_blue_600"
             android:onClick="@{() -> vm.onClickDeleteAccount(item)}"
+            android:background="?attr/selectableItemBackgroundBorderless"
             />
 
 
