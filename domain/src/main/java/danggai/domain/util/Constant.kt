@@ -2,6 +2,8 @@ package danggai.domain.util
 
 object Constant {
 
+    const val MAX_RESIN = 160
+
     /* URL */
 
     const val OS_TAKUMI_URL = "https://bbs-api-os.hoyoverse.com"

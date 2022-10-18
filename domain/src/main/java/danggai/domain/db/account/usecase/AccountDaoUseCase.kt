@@ -8,15 +8,18 @@ import javax.inject.Inject
 class AccountDaoUseCase @Inject constructor(
     private val accountRepository: AccountRepository
 ) {
-    suspend fun insertAccount(account: Account): Flow<Long> =
+    fun insertAccount(account: Account): Flow<Long> =
         accountRepository.insertAccount(account)
+    
+    fun selectAccountByUid(uid: String): Flow<Account> =
+        accountRepository.selectAccountByUid(uid)
 
-    suspend fun getAllAccount(): Flow<List<Account>> =
+    fun getAllAccount(): Flow<List<Account>> =
         accountRepository.getAllAccount()
 
-    suspend fun deleteAccount(cookie: String): Flow<Int> =
+    fun deleteAccount(cookie: String): Flow<Int> =
         accountRepository.deleteAccount(cookie)
 
-    suspend fun deleteAllAccounts(): Flow<Int> =
+    fun deleteAllAccounts(): Flow<Int> =
         accountRepository.deleteAllAccounts()
 }

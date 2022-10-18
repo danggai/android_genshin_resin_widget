@@ -1,7 +1,8 @@
 package danggai.data.db.account.respository
 
 import danggai.data.db.account.dao.AccountDao
-import danggai.data.db.account.entity.AccountEntity
+import danggai.data.db.account.mapper.mapToAccount
+import danggai.data.db.account.mapper.mapToAccountEntity
 import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.repository.AccountRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -13,41 +14,35 @@ class AccountRepositoryImpl @Inject constructor(
     private val accountDao: AccountDao,
     private val ioDispatcher: CoroutineDispatcher
 ): AccountRepository {
-    override suspend fun insertAccount(account: Account) = flow<Long> {
-        val entity = AccountEntity(
-            account.cookie,
-            account.genshin_uid,
-            account.enable_genshin_checkin,
-            account.enable_honkai3rd_checkin,
-            account.enable_tot_checkin,
-        )
+    override fun insertAccount(account: Account) = flow<Long> {
+        val accountEntity = mapToAccountEntity(account)
 
-        val result = accountDao.insertAccount(entity)
+        val result = accountDao.insertAccount(accountEntity)
 
         emit(result)
     }.flowOn(ioDispatcher)
 
-    override suspend fun getAllAccount() = flow<List<Account>> {
-        val result = accountDao.getAllAccounts()
+    override fun selectAccountByUid(uid: String) = flow<Account> {
+        val accountEntity = accountDao.selectAccountByUid(uid)
 
-        emit(result.toList().map {
-            Account(
-                it.cookie,
-                it.genshinUid,
-                it.enableGenshinCheckin,
-                it.enableHonkai3rdCheckin,
-                it.enableTotCheckin
-            )
-        })
+        emit(mapToAccount(accountEntity))
+    }
+
+    override fun getAllAccount() = flow<List<Account>> {
+        accountDao.getAllAccounts().collect { list ->
+            emit(list.toList().map { accountEntity ->
+                mapToAccount(accountEntity)
+            })
+        }
     }.flowOn(ioDispatcher)
 
-    override suspend fun deleteAccount(cookie: String) = flow<Int> {
+    override fun deleteAccount(cookie: String) = flow<Int> {
         val result = accountDao.deleteAccount(cookie)
 
         emit(result)
     }.flowOn(ioDispatcher)
 
-    override suspend fun deleteAllAccounts() = flow<Int> {
+    override fun deleteAllAccounts() = flow<Int> {
         val result = accountDao.deleteAllAccounts()
 
         emit(result)

@@ -3,58 +3,267 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View" />
+        <import type="danggai.domain.util.Constant.Server" />
+
         <variable
             name="vm"
             type="danggai.app.presentation.ui.newaccount.NewHoyolabAccountViewModel"
             />
     </data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/ll_root"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@color/white"
         >
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/insert_dummy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="insert dummy data"
-            android:onClick="@{() -> vm.insertDummyAccount()}"
-            />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            >
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/get_all_accounts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="get all accounts"
-            android:onClick="@{() -> vm.getAllAccounts()}"
-            />
+            <LinearLayout
+                android:id="@+id/ll_cookie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:hint="delete target id"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="@={vm.sfDeleteTargetId}"
-            />
+                <androidx.legacy.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/delete_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="delete dummy data"
-            android:onClick="@{() -> vm.deleteAccount()}"
-            />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cookie"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/deleta_all_datas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="delete all data"
-            android:onClick="@{() -> vm.deleteAllAccounts()}"
-            />
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_cookie"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_cookie"
+                    android:singleLine="true"
+                    android:text="@={vm.sfHoyolabCookie}"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:textSize="16sp" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/get_cookie_btn"
+                    android:onClick="@{()->vm.onClickGetCookie()}"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_ingame_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="@{vm.sfHoyolabCookie.empty ?View.GONE :View.VISIBLE}"
+                >
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/server"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic"/>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rb_asia"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="5dp"
+                        android:checked="@{vm.sfServer == Server.ASIA.pref}"
+                        android:onClick="@{() -> vm.onClickSetServer(Server.ASIA)}"
+                        android:text="@string/asia" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rb_usa"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="5dp"
+                        android:checked="@{vm.sfServer == Server.USA.pref}"
+                        android:onClick="@{() -> vm.onClickSetServer(Server.USA)}"
+                        android:text="@string/america" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rb_euro"
+                        style="@style/RadioButton"
+                        android:layout_marginEnd="5dp"
+                        android:checked="@{vm.sfServer == Server.EUROPE.pref}"
+                        android:onClick="@{() -> vm.onClickSetServer(Server.EUROPE)}"
+                        android:text="@string/europe" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rb_cht"
+                        style="@style/RadioButton"
+                        android:checked="@{vm.sfServer == Server.CHT.pref}"
+                        android:onClick="@{() -> vm.onClickSetServer(Server.CHT)}"
+                        android:text="@string/cht" />
+
+                </RadioGroup>
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nickname"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_nickname"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_nickname"
+                    android:singleLine="true"
+                    android:text="@={vm.sfNickname}"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:textSize="16sp" />
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/uid"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_uid"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_uid"
+                    android:singleLine="true"
+                    android:text="@={vm.sfGenshinUid}"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:textSize="16sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/get_uid"
+                    android:onClick="@{()->vm.onClickGetUid()}"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_checkin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="@{vm.sfGenshinUid.empty ?View.GONE :View.VISIBLE}"
+                >
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auto_check_in"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_enable_genshin_auto_check_in"
+                        android:checked="@={vm.sfEnableGenshinAutoCheckIn}"
+                        android:text="@string/btn_auto_check_in_enable" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_enable_honkai_3rd_auto_check_in"
+                        android:checked="@={vm.sfEnableHonkai3rdAutoCheckIn}"
+                        android:text="@string/btn_auto_check_in_enable_honkai_3rd" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save"
+                    android:onClick="@{()->vm.onClickSave()}"
+                    />
+
+            </LinearLayout>
+
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="clear db"-->
+<!--                android:onClick="@{()->vm.clearDB()}"-->
+<!--                />-->
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:visibility="@{vm.sfProgress ?View.VISIBLE :View.GONE}">
+
+            <ProgressBar
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:indeterminateTint="@color/light_blue_600" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

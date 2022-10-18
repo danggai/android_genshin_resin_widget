@@ -7,11 +7,15 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "account")
 data class AccountEntity(
-    @PrimaryKey(autoGenerate = false)
+    @SerializedName("nickname")
+    val accountNickName: String,
     @SerializedName("cookie")
     val cookie: String,
+    @PrimaryKey(autoGenerate = false)
     @SerializedName("genshinUid")
     val genshinUid: String,
+    @SerializedName("server")
+    val server: Int,
     @SerializedName("enableGenshinCheckin")
     val enableGenshinCheckin: Boolean,
     @SerializedName("enableHonkai3rdCheckin")

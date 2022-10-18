@@ -1,6 +1,5 @@
 package danggai.app.presentation.ui.main
 
-import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -10,8 +9,6 @@ import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
 import android.view.View
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
@@ -20,7 +17,6 @@ import androidx.work.WorkManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.BuildConfig
 import danggai.app.presentation.R
@@ -28,8 +24,6 @@ import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentMainBinding
 import danggai.app.presentation.ui.cookie.CookieWebViewActivity
 import danggai.app.presentation.ui.design.WidgetDesignActivity
-import danggai.app.presentation.ui.main.checkin.MainCheckInFragment
-import danggai.app.presentation.ui.main.resin.MainResinFragment
 import danggai.app.presentation.ui.newaccount.NewHoyolabAccountActivity
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.Event
@@ -43,9 +37,6 @@ import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.util.Constant
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -63,26 +54,12 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
     private val mVM: MainViewModel by activityViewModels()
     private lateinit var mAdView : AdView
 
-    fun onNewIntent(intent: Intent?) {
-        intent?.let {
-            try {
-                log.e()
-                val cookie = it.getStringExtra(MainActivity.ARG_PARAM_COOKIE)!!
-                mVM.sfCookie.value = cookie
-            } catch (e: Exception) {
-                log.e(e.toString())
-            }
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = mVM
         binding.vm?.setCommonFun()
-
-        initTabLayout()
 
         migrateCheck()
 
@@ -115,6 +92,14 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             if (it.state !in listOf(WorkInfo.State.SUCCEEDED, WorkInfo.State.FAILED, WorkInfo.State.CANCELLED))
                 log.e("talent worker ${it.id} state -> ${it.state}")
         }
+
+        when (mVM.sfAutoRefreshPeriod.value) {
+            15L -> binding.rb15m.isChecked = true
+            30L -> binding.rb30m.isChecked = true
+            60L -> binding.rb1h.isChecked = true
+            120L -> binding.rb2h.isChecked = true
+            else -> binding.rbDisable.isChecked = true
+        }
     }
 
     private fun antidozePermisisonCheck(context: Context) {
@@ -140,23 +125,6 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                 .create()
                 .show()
         }
-    }
-
-    private fun initTabLayout() {
-        val pagerAdapter = MainAdapter(requireActivity())
-
-        pagerAdapter.addFragment(MainResinFragment())
-        pagerAdapter.addFragment(MainCheckInFragment())
-
-        binding.vpMain.adapter = pagerAdapter
-
-        TabLayoutMediator(binding.tlTop, binding.vpMain) { tab, position ->
-            tab.text = when (position) {
-                0 -> "Resin Widget"
-                1 -> "HoYoLAB Check In"
-                else -> ""
-            }
-        }.attach()
     }
 
     private fun updateNoteCheck() {
@@ -256,37 +224,6 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                         .show()
                 }
             }
-            is Event.WhenDailyNoteIsPrivate -> {
-                activity?.let {
-                    log.e()
-                    if (mVM.dailyNotePrivateErrorCount >= 2) {
-                        AlertDialog.Builder(requireActivity())
-                            .setTitle(R.string.dialog_realtime_note_private)
-                            .setMessage(R.string.dialog_msg_dailynote_not_public_error_repeat)
-                            .setCancelable(false)
-                            .setPositiveButton(R.string.apply) { dialog, whichButton ->
-                                log.e()
-                            }
-                            .create()
-                            .show()
-                    }
-
-                    AlertDialog.Builder(requireActivity())
-                        .setTitle(R.string.dialog_realtime_note_private)
-                        .setMessage(R.string.dialog_msg_realtime_note_private)
-                        .setCancelable(false)
-                        .setPositiveButton(R.string.apply) { dialog, whichButton ->
-                            log.e()
-                            mVM.makeDailyNotePublic()
-                        }
-                        .setNegativeButton(R.string.cancel) { dialog, whichButton ->
-                            log.e()
-                            makeToast(requireContext(), getString(R.string.msg_toast_dailynote_error_data_not_public))
-                        }
-                        .create()
-                        .show()
-                }
-            }
             is Event.StartWidgetDesignActivity -> {
                 log.e()
                 activity?.let {
@@ -347,5 +284,4 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             }
         }
     }
-
 }

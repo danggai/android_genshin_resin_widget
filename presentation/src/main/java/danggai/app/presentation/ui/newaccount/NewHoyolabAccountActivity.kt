@@ -11,15 +11,35 @@ import danggai.app.presentation.core.BindingActivity
 import danggai.app.presentation.databinding.ActivityNewHoyolabAccountBinding
 import danggai.app.presentation.databinding.ActivityWidgetDesignBinding
 import danggai.app.presentation.ui.design.charaters.select.WidgetDesignSelectCharacterFragment
+import danggai.app.presentation.ui.main.MainActivity
+import danggai.app.presentation.ui.main.MainFragment
 import danggai.app.presentation.util.log
+import danggai.domain.db.account.entity.Account
 
 @AndroidEntryPoint
 class NewHoyolabAccountActivity : BindingActivity<ActivityNewHoyolabAccountBinding, NewHoyolabAccountViewModel>() {
 
     companion object {
+        const val ARG_PARAM_COOKIE = "ARG_PARAM_COOKIE"
+        const val ARG_PARAM_UID = "ARG_PARAM_UID"
+
         fun startActivity(act: Activity) {
             log.e()
             val itn = Intent(act, NewHoyolabAccountActivity::class.java)
+            act.startActivity(itn)
+        }
+
+        fun startActivityWithCookie(act: Activity, cookie: String) {
+            log.e()
+            val itn = Intent(act, NewHoyolabAccountActivity::class.java)
+            itn.putExtra(ARG_PARAM_COOKIE, cookie)
+            act.startActivity(itn)
+        }
+
+        fun startActivityWithUid(act: Activity, uid: String) {
+            log.e()
+            val itn = Intent(act, NewHoyolabAccountActivity::class.java)
+            itn.putExtra(ARG_PARAM_UID, uid)
             act.startActivity(itn)
         }
     }
@@ -36,6 +56,16 @@ class NewHoyolabAccountActivity : BindingActivity<ActivityNewHoyolabAccountBindi
         binding.vm = mVM
 
         initFragment()
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        log.e()
+        if (intent.hasExtra(ARG_PARAM_COOKIE)) {
+            log.e()
+            val mFragment = supportFragmentManager.fragments[0] as NewHoyolabAccountFragment
+            mFragment.onNewIntent(intent)
+        }
+        super.onNewIntent(intent)
     }
 
     private fun initFragment() {

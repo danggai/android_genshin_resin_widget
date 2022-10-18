@@ -1,15 +1,22 @@
 <resources>
     <string name="app_name">원신 레진 위젯</string>
 
+    <string name="new_hoyolab_account">새 호요랩 계정</string>
+    <string name="widget_customizing">위젯 커스텀</string>
+
     <string name="apply">확인</string>
     <string name="cancel">취소</string>
 
     <string name="select_character_title">위젯에 표시할 캐릭터</string>
 
     <string name="save">저장</string>
-    <string name="force_stop">강제 중지</string>
     <string name="ok">확인</string>
     <string name="reset">초기화</string>
+
+    <string name="no_hoyolab_accounts">등록 된 호요랩 계정이 없습니다.</string>
+    <string name="get_cookie">로그인 후 여기를 눌러주세요!</string>
+    <string name="get_cookie_btn">호요랩에 로그인 해 쿠키 가져오기</string>
+    <string name="get_uid">원신 인게임 정보 가져오기</string>
 
     <string name="btn_each_40_resin">40레진 마다</string>
     <string name="btn_140_resin">140레진</string>
@@ -77,7 +84,7 @@
     <string name="msg_toast_common_network_error">HoYoLAB 서버와 연결하는데에 실패했어.. 기기의 네트워크 상태를 확인해 줘!</string>
     <string name="msg_toast_common_body_null_error">HoYoLAB에서 필요한 정보를 제공받지 못했어.. 서버 오류일 수 있으니 이후에 다시 시도해 줘!</string>
 
-    <string name="msg_toast_dailynote_success">정상적으로 실시간 메모를 불러왔어!</string>
+    <string name="msg_toast_dailynote_success">정상적으로 실시간 메모 연동 여부를 확인했어!</string>
     <string name="msg_toast_dailynote_error_charactor_info">캐릭터 정보를 읽을 수 없어.. uid나 쿠키, 서버를 다시 확인해 줘!</string>
     <string name="msg_toast_dailynote_error_internal_database_error">HoYoLAB의 데이터베이스에서 에러가 발생해서 실시간 메모를 받아올 수 없어!</string>
     <string name="msg_toast_dailynote_error_too_many_requests">오늘은 너무 많이 시도했어.. 나중에 다시 시도해 줘!</string>
@@ -95,6 +102,7 @@
     <string name="msg_toast_change_data_switch_error_include_error_code">실시간 메모를 공개 상태로 변경하는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없지만, 오류코드는 %s야! 개발자에게 공유해주면, 문제 해결에 도움이 돼!</string>
     <string name="msg_toast_change_data_switch_error">실시간 메모를 공개 상태로 변경하는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없어.. 미안해!</string>
 
+    <string name="msg_toast_get_uid_no_cookie">쿠키가 있어야 인게임 정보를 가져올 수 있어! 쿠키를 먼저 입력해 줘!</string>
     <string name="msg_toast_get_uid_error_no_ltuid">쿠키에 ltuid가 없으면 자동으로 uid를 가져올 수 없어! 쿠키를 다시 확인하고 시도해 줘!</string>
     <string name="msg_toast_get_uid_success">성공적으로 인게임 uid를 가져왔어!</string>
     <string name="msg_toast_get_uid_error_invalid_cookie">쿠키가 정상적이지 않아서 인게임 uid를 가져오는데 실패했어..</string>
@@ -111,7 +119,7 @@
 
     <string name="msg_toast_data_save_mode">모바일 데이터, 데이터 세이버와 관련 된 메뉴에서 수정 가능하며 기기마다 메뉴의 이름이 다를 수 있습니다.</string>
 
-    <string name="msg_toast_how_to_get_cookie">좌측 상단 슬라임을 누르고 미로그인을 눌러 로그인 후, 상단 Get Cookie를 눌러 줘!</string>
+    <string name="msg_toast_how_to_get_cookie">좌측 상단 슬라임을 누르고 미로그인을 눌러 로그인 후, 상단 탭 제목을 눌러 줘!</string>
     <string name="msg_toast_get_cookie_success">쿠키 획득 성공! 자동으로 입력했어!</string>
     <string name="msg_toast_get_cookie_fail">쿠키 획득에 실패했어.. 로그인 후 다시 시도해줘!</string>
     <string name="msg_toast_get_cookie_null_fail">쿠키가 존재하지 않아서 가져올 수 없어!</string>
@@ -150,8 +158,9 @@
     <string name="push_realm_currency_description">선계 화폐가 충전 될 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
     <string name="push_msg_realm_currency_full">여행자! 선계 주화가 가득 찼어! 확인하러 가자!</string>
 
-    <string name="hint_uid">uid를 입력해 줘!</string>
     <string name="hint_cookie">HoYoLAB의 쿠키를 입력해 줘!</string>
+    <string name="hint_uid">uid를 적어야 하는 장소야!</string>
+    <string name="hint_nickname">여행자의 이름을 적어 줘!</string>
 
     <string name="invalid_user_info">유저 정보 없이는\n사용할 수 없어!</string>
 

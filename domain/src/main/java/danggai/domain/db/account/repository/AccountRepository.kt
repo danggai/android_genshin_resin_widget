@@ -6,8 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface AccountRepository: Repository {
-    suspend fun insertAccount(account: Account): Flow<Long>
-    suspend fun getAllAccount(): Flow<List<Account>>
-    suspend fun deleteAccount(cookie: String): Flow<Int>
-    suspend fun deleteAllAccounts(): Flow<Int>
+    fun insertAccount(account: Account): Flow<Long>
+    fun selectAccountByUid(uid: String): Flow<Account>
+    fun getAllAccount(): Flow<List<Account>>
+    fun deleteAccount(cookie: String): Flow<Int>
+    fun deleteAllAccounts(): Flow<Int>
 }

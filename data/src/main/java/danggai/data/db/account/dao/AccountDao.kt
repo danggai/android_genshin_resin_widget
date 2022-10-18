@@ -7,14 +7,18 @@ import androidx.room.Query
 import danggai.data.db.account.entity.AccountEntity
 import io.reactivex.Completable
 import io.reactivex.Single
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AccountDao {
     @Insert(onConflict = REPLACE)
     fun insertAccount(account: AccountEntity): Long
 
+    @Query("SELECT * FROM account WHERE genshinUid = :uid")
+    fun selectAccountByUid(uid: String): AccountEntity
+
     @Query("SELECT * FROM account")
-    fun getAllAccounts(): List<AccountEntity>
+    fun getAllAccounts(): Flow<List<AccountEntity>>
 
     @Query("DELETE FROM account WHERE cookie = :cookie")
     fun deleteAccount(cookie: String): Int

@@ -3,17 +3,14 @@
 
     <string name="genshin_resin_widget" translatable="false">Genshin Resin Widget</string>
 
-    <string name="uid" translatable="false">Uid</string>
+    <string name="uid" translatable="false">Genshin Uid</string>
+    <string name="nickname" translatable="false">Nickname</string>
     <string name="cookie" translatable="false">Cookie</string>
-    <string name="get_cookie" translatable="false">Get cookie</string>
-    <string name="get_uid" translatable="false">Get uid</string>
     <string name="server" translatable="false">Server</string>
     <string name="refresh_cycle" translatable="false">Refresh Cycle</string>
     <string name="notification" translatable="false">Notification</string>
     <string name="auto_check_in" translatable="false">Auto Check In</string>
     <string name="time_notation" translatable="false">Time Notation</string>
-    <string name="widget_customizing" translatable="false">Widget Customizing</string>
-    <string name="new_hoyolab_account" translatable="false">New HoyoLab Account</string>
     <string name="widget_theme" translatable="false">Widget Theme</string>
     <string name="background_transparency" translatable="false">Background Transparency</string>
     <string name="font_size" translatable="false">Font Size</string>
@@ -24,10 +21,17 @@
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
 
+    <string name="new_hoyolab_account">New HoYoLab Account</string>
+    <string name="widget_customizing">Widget Customizing</string>
+
     <string name="save">Save</string>
-    <string name="force_stop">FORCE STOP</string>
     <string name="ok">OK</string>
     <string name="reset">RESET</string>
+
+    <string name="no_hoyolab_accounts">No HoYoLab account registered.</string>
+    <string name="get_cookie">Click here after Login!</string>
+    <string name="get_cookie_btn">Log in to get cookies</string>
+    <string name="get_uid">Get Genshin in-game data</string>
 
     <string name="asia" translatable="false">Asia</string>
     <string name="america" translatable="false">America</string>
@@ -53,8 +57,8 @@
 
     <string name="btn_auto_check_in_enable">Genshin Impact</string>
     <string name="btn_auto_check_in_enable_honkai_3rd">Honkai Impact 3rd</string>
-    <string name="btn_check_in_success">Succeed</string>
-    <string name="btn_check_in_failed">Failed</string>
+    <string name="btn_check_in_success">Checkin Succeed</string>
+    <string name="btn_check_in_failed">Checkin Failed</string>
 
 
     <string name="done">Done</string>
@@ -119,6 +123,7 @@
     <string name="msg_toast_change_data_switch_error_include_error_code">Failed to change the Real-Time Note to public.. It\'s an unexpected error, so I can\'t give you detailed information, Error code is %s! Please share it with the developer!</string>
     <string name="msg_toast_change_data_switch_error">Failed to change the Real-Time Note to public.. It\'s an unexpected error, so I can\'t give you detailed information. sorry!</string>
 
+    <string name="msg_toast_get_uid_no_cookie">Need cookies to get in-game information! Please enter the cookie first!</string>
     <string name="msg_toast_get_uid_error_no_ltuid">If no ltuid in your cookie, I can\'t automatically get a uid! Please check the cookies again and try!</string>
     <string name="msg_toast_get_uid_success">Successfully get in-game uid!</string>
     <string name="msg_toast_get_uid_error_invalid_cookie">The cookie is invalid, so failed to get in-game uid.</string>
@@ -135,7 +140,7 @@
 
     <string name="msg_toast_data_save_mode">It can be modified in the "Mobile data" and "Data saver" menu, and the name of the menu may vary from device to device.</string>
 
-    <string name="msg_toast_how_to_get_cookie">Press the upper left slime to log in, and press Get Cookie at the top!</string>
+    <string name="msg_toast_how_to_get_cookie">Press the upper left slime to log in, and press title at the top!</string>
     <string name="msg_toast_get_cookie_success">Successfully acquired cookie! Typed it automatically!</string>
     <string name="msg_toast_get_cookie_fail">Failed to get cookie.. Please log in and try again!</string>
     <string name="msg_toast_get_cookie_null_fail">Can\'t get cookie because it doesn\'t exist!</string>
@@ -174,8 +179,9 @@
     <string name="push_realm_currency_description">This is a notification sent to travelers when the realm currency is full!</string>
     <string name="push_msg_realm_currency_full">Traveler! Now full of realm currency!</string>
 
-    <string name="hint_uid">Enter uid!</string>
     <string name="hint_cookie">Enter HoYoLAB\'s cookie!</string>
+    <string name="hint_uid">Enter uid!</string>
+    <string name="hint_nickname">Enter name of traveler!</string>
 
     <string name="invalid_user_info">You can\'t use it\nwithout user information!</string>
 

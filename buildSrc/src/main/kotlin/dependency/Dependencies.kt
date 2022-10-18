@@ -72,6 +72,12 @@ object Dependencies {
         const val sandwich = "com.github.skydoves:sandwich:${Versions.sandwichVersion}"
     }
 
+    object Room {
+        const val runtime = "androidx.room:room-runtime:${Versions.roomVersion}"
+        const val compiler = "androidx.room:room-compiler:${Versions.roomVersion}"
+        const val ktx = "androidx.room:room-ktx:${Versions.roomVersion}"
+    }
+
     object Firebase {
         const val bom = "com.google.firebase:firebase-bom:${Versions.firebaseVersion}"
         const val analytics = "com.google.firebase:firebase-analytics-ktx:${Versions.firebaseAnalyticsVersion}"

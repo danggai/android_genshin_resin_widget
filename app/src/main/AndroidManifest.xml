@@ -145,6 +145,7 @@
             />
 
         <activity android:name="danggai.app.presentation.ui.newaccount.NewHoyolabAccountActivity"
+            android:launchMode="singleTask"
             android:exported="false"
             tools:ignore="Instantiatable"
             />
