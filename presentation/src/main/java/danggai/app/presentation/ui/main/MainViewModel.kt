@@ -1,5 +1,6 @@
 package danggai.app.presentation.ui.main
 
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import danggai.app.presentation.R
@@ -16,10 +17,7 @@ import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.resource.repository.ResourceProviderRepository
 import danggai.domain.util.Constant
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -52,6 +50,8 @@ class MainViewModel @Inject constructor(
 
     val sfAccountListRefreshSwitch = MutableStateFlow(false)
 
+    val sfDeleteAccount = MutableSharedFlow<Account>()
+
     fun initUI() {
         preference.getDailyNoteSettings().let {
             sfAutoRefreshPeriod.value = it.autoRefreshPeriod
@@ -66,6 +66,15 @@ class MainViewModel @Inject constructor(
         preference.getCheckInSettings().let {
             sfEnableNotiCheckinSuccess.value = it.notiCheckInSuccess
             sfEnableNotiCheckinFailed.value = it.notiCheckInFailed
+        }
+    }
+
+    fun deleteAccount(uid: String) {
+        viewModelScope.launch {
+            accountDao.deleteAccount(uid).collect {
+                log.e()
+                makeToast(resource.getString(R.string.msg_toast_hoyolab_account_deleted))
+            }
         }
     }
 
@@ -113,6 +122,47 @@ class MainViewModel @Inject constructor(
 
         makeToast(resource.getString(R.string.msg_toast_save_done))
     }
+
+    fun onClickWidgetRefreshNotWork() {
+        log.e()
+        sendEvent(Event.WidgetRefreshNotWork())
+    }
+
+    fun onClickSetAutoRefreshPeriod(period: Long) {
+        log.e("period -> $period")
+        sfAutoRefreshPeriod.value = period
+    }
+
+    fun onClickDeleteAccount(account: Account) {
+        log.e()
+
+        sfDeleteAccount.emitInVmScope(account)
+    }
+
+    fun onClickWidgetDesign() {
+        log.e()
+        sendEvent(Event.StartWidgetDesignActivity())
+    }
+
+    fun onClickNewHoyolabAccount() {
+        log.e()
+        sendEvent(Event.StartNewHoyolabAccountActivity())
+    }
+
+    fun onClickManageAccount(account: Account) {
+        log.e()
+        sendEvent(Event.StartManageAccount(account))
+    }
+
+    fun onClickChangeLanguage() {
+        log.e()
+        sendEvent(Event.ChangeLanguage())
+    }
+
+
+
+
+
 
     private fun saveCheckInData(isDataValid: Boolean) {
         if (isDataValid) {
@@ -162,28 +212,4 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun onClickWidgetRefreshNotWork() {
-        log.e()
-        sendEvent(Event.WidgetRefreshNotWork())
-    }
-
-    fun onClickSetAutoRefreshPeriod(period: Long) {
-        log.e("period -> $period")
-        sfAutoRefreshPeriod.value = period
-    }
-
-    fun onClickWidgetDesign() {
-        log.e()
-        sendEvent(Event.StartWidgetDesignActivity())
-    }
-
-    fun onClickNewHoyolabAccount() {
-        log.e()
-        sendEvent(Event.StartNewHoyolabAccountActivity())
-    }
-
-    fun onClickChangeLanguage() {
-        log.e()
-        sendEvent(Event.ChangeLanguage())
-    }
 }

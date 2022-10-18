@@ -20,8 +20,8 @@ interface AccountDao {
     @Query("SELECT * FROM account")
     fun getAllAccounts(): Flow<List<AccountEntity>>
 
-    @Query("DELETE FROM account WHERE cookie = :cookie")
-    fun deleteAccount(cookie: String): Int
+    @Query("DELETE FROM account WHERE genshinUid = :uid")
+    fun deleteAccount(uid: String): Int
 
     @Query("DELETE FROM account")
     fun deleteAllAccounts(): Int

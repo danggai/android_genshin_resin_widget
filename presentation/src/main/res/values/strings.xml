@@ -150,6 +150,10 @@
 
     <string name="msg_toast_storage_permission_denied">App is not allowed to get wallpaper image because storage access permission are not allowed.</string>
 
+    <string name="dialog_hoyolab_account_delete">Confirm account deletion</string>
+    <string name="dialog_msg_hoyolab_account_delete">Are you really going disconnect with %s account?</string>
+    <string name="msg_toast_hoyolab_account_deleted">Your account has been disconnected successfully!</string>
+
     <string name="push_default_noti_title">Notification</string>
     <string name="push_default_noti_description">Description</string>
 

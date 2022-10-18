@@ -22,6 +22,7 @@ import danggai.app.presentation.BuildConfig
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentMainBinding
+import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.cookie.CookieWebViewActivity
 import danggai.app.presentation.ui.design.WidgetDesignActivity
 import danggai.app.presentation.ui.newaccount.NewHoyolabAccountActivity
@@ -37,6 +38,7 @@ import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.util.Constant
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -67,6 +69,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             initAd()
 
         initUi()
+        initSf()
 
         context?.let { it ->
             antidozePermisisonCheck(it)
@@ -99,6 +102,32 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             60L -> binding.rb1h.isChecked = true
             120L -> binding.rb2h.isChecked = true
             else -> binding.rbDisable.isChecked = true
+        }
+    }
+
+    private fun initSf() {
+        viewLifecycleOwner.repeatOnLifeCycleStarted {
+            launch {
+                mVM.sfDeleteAccount.collect { account ->
+                    activity?.let { activity ->
+                        AlertDialog.Builder(activity)
+                            .setTitle(R.string.dialog_hoyolab_account_delete)
+                            .setMessage(
+                                String.format(getString(R.string.dialog_msg_hoyolab_account_delete), account.nickname)
+                            )
+                            .setCancelable(false)
+                            .setPositiveButton(R.string.apply) { dialog, whichButton ->
+                                log.e()
+                                mVM.deleteAccount(account.genshin_uid)
+                            }
+                            .setNegativeButton(R.string.cancel) { dialog, whichButton ->
+                                log.e()
+                            }
+                            .create()
+                            .show()
+                    }
+                }
+            }
         }
     }
 
@@ -234,6 +263,12 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                 log.e()
                 activity?.let {
                     NewHoyolabAccountActivity.startActivity(it)
+                }
+            }
+            is Event.StartManageAccount -> {
+                log.e()
+                activity?.let {
+                    NewHoyolabAccountActivity.startActivityWithUid(it, event.account.genshin_uid)
                 }
             }
             is Event.ChangeLanguage -> {

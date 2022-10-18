@@ -17,8 +17,8 @@ class AccountDaoUseCase @Inject constructor(
     fun getAllAccount(): Flow<List<Account>> =
         accountRepository.getAllAccount()
 
-    fun deleteAccount(cookie: String): Flow<Int> =
-        accountRepository.deleteAccount(cookie)
+    fun deleteAccount(uid: String): Flow<Int> =
+        accountRepository.deleteAccount(uid)
 
     fun deleteAllAccounts(): Flow<Int> =
         accountRepository.deleteAllAccounts()

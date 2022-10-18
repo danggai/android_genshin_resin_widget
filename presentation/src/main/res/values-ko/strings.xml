@@ -127,7 +127,11 @@
 
     <string name="msg_toast_resizable_widget_enable">현재 레진 갯수가 보이지 않는다면, 위젯 우상단 새로고침 버튼을 눌러주세요.</string>
 
-    <string name="msg_toast_storage_permission_denied">저장소 접근 권한이 허용되지 않아 배경화면 이미지를 불러올 수 없습니다.</string>
+    <string name="msg_toast_storage_permission_denied">배경화면 이미지를 불러오려면 저장소 접근 권한이 필요해!</string>
+
+    <string name="dialog_hoyolab_account_delete">계정 삭제 확인</string>
+    <string name="dialog_msg_hoyolab_account_delete">정말로 %s 계정과의 연동을 해제할거야?</string>
+    <string name="msg_toast_hoyolab_account_deleted">호요랩 계정과의 연동을 해제했어!</string>
 
     <string name="push_default_noti_title">알림</string>
     <string name="push_default_noti_description">설명</string>

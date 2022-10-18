@@ -59,7 +59,9 @@ class NewHoyolabAccountFragment : BindingFragment<FragmentNewHoyolabAccountBindi
         binding.vm = mVM
         binding.vm?.setCommonFun()
 
-        initSf()
+        activity?.intent?.getStringExtra(NewHoyolabAccountActivity.ARG_PARAM_UID)?.let { uid ->
+            mVM.selectAccountByUid(uid)
+        }
     }
 
     fun onNewIntent(intent: Intent?) {
@@ -73,34 +75,6 @@ class NewHoyolabAccountFragment : BindingFragment<FragmentNewHoyolabAccountBindi
             }
         }
     }
-
-    private fun initSf() {
-        viewLifecycleOwner.repeatOnLifeCycleStarted {
-//            launch {
-//                mVM.sfApplySavedData.collect {
-//                    context?.let { _context ->
-//                        log.e()
-//                        _context.sendBroadcast(
-//                            Intent(_context, TalentWidget::class.java)
-//                                .setAction(Constant.ACTION_TALENT_WIDGET_REFRESH)
-//                        )
-//                    }
-//                }
-//            }
-//
-//            launch {
-//                mVM.sfStartSelectFragment.collect {
-//                    parentFragmentManager.beginTransaction()
-//                        .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down, R.anim.slide_in_up, R.anim.slide_out_down)
-//                        .add(R.id.fragment,
-//                            WidgetDesignSelectCharacterFragment.newInstance(),
-//                            WidgetDesignSelectCharacterFragment.TAG)
-//                        .commit()
-//                }
-//            }
-        }
-    }
-
 
     override fun handleEvents(event: Event) {
         super.handleEvents(event)

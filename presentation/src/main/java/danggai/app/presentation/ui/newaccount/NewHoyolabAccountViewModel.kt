@@ -371,10 +371,15 @@ class NewHoyolabAccountViewModel @Inject constructor(
         )
     }
 
-    fun clearDB() {
+    fun selectAccountByUid(uid: String) {
         viewModelScope.launch {
-            accountDao.deleteAllAccounts().collect {
-                makeToast("done")
+            accountDao.selectAccountByUid(uid).collect { account ->
+                sfHoyolabCookie.value = account.cookie
+                sfGenshinUid.value = account.genshin_uid
+                sfNickname.value = account.nickname
+                sfServer.value = account.server
+                sfEnableGenshinAutoCheckIn.value = account.enable_genshin_checkin
+                sfEnableHonkai3rdAutoCheckIn.value = account.enable_honkai3rd_checkin
             }
         }
     }

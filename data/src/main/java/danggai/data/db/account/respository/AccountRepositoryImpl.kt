@@ -36,8 +36,8 @@ class AccountRepositoryImpl @Inject constructor(
         }
     }.flowOn(ioDispatcher)
 
-    override fun deleteAccount(cookie: String) = flow<Int> {
-        val result = accountDao.deleteAccount(cookie)
+    override fun deleteAccount(uid: String) = flow<Int> {
+        val result = accountDao.deleteAccount(uid)
 
         emit(result)
     }.flowOn(ioDispatcher)
