@@ -172,7 +172,7 @@ class DetailWidget() : AppWidgetProvider() {
                     when {
                         dailyNote.transformer == null -> _context.getString(R.string.widget_ui_unknown)
                         !dailyNote.transformer!!.obtained -> _context.getString(R.string.widget_ui_transformer_not_obtained)
-                        !dailyNote.transformer!!.recovery_time.reached -> _context.getString(R.string.widget_ui_transformer_not_reached)
+                        !dailyNote.transformer!!.recovery_time.reached -> TimeFunction.transformerToTime(_context, dailyNote.transformer, widgetDesign.timeNotation)
                         else -> _context.getString(R.string.widget_ui_transformer_reached)
                     }
                 )
@@ -201,9 +201,6 @@ class DetailWidget() : AppWidgetProvider() {
                     TimeFunction.realmCurrencySecondToTime(_context, dailyNote.home_coin_recovery_time, widgetDesign.timeNotation))
                 view.setTextViewText(R.id.tv_expedition_time,
                     TimeFunction.expeditionSecondToTime(_context, PreferenceManager.getString(context, Constant.PREF_EXPEDITION_TIME), widgetDesign.timeNotation))
-                if (dailyNote.transformer?.recovery_time?.reached == true)
-                    view.setTextViewText(R.id.tv_transformer,
-                        TimeFunction.transformerToTime(_context, dailyNote.transformer, widgetDesign.timeNotation))
 
                 view.setViewVisibility(R.id.rl_resin,
                     if (widgetDesign.resinDataVisibility) View.VISIBLE else View.GONE)
