@@ -150,6 +150,14 @@
             tools:ignore="Instantiatable"
             />
 
+        <activity android:name="danggai.app.presentation.ui.widget.config.WidgetConfigActivity"
+            android:exported="false"
+            >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
         <!-- If you want to disable android.startup completely. -->
         <provider
             android:name="androidx.startup.InitializationProvider"

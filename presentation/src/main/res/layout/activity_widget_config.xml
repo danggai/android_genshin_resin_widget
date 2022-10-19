@@ -5,13 +5,13 @@
     <data>
         <variable
             name="vm"
-            type="danggai.app.presentation.ui.newaccount.NewHoyolabAccountViewModel"/>
+            type="danggai.app.presentation.ui.widget.config.WidgetConfigViewModel"/>
     </data>
 
     <FrameLayout
         android:id="@+id/fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.newaccount.NewHoyolabAccountActivity" />
+        android:layout_height="wrap_content"
+        tools:context=".ui.widget.config.WidgetConfigActivity" />
 
 </layout>

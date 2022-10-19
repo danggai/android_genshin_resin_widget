@@ -25,6 +25,8 @@ import java.util.*
 
 class DetailWidget() : AppWidgetProvider() {
 
+    var uid = "-1"
+
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
 
@@ -47,6 +49,11 @@ class DetailWidget() : AppWidgetProvider() {
         super.onReceive(context, intent)
         val action = intent?.action
 
+        intent?.getStringExtra("uid")?.let {
+            log.e("uid -> $it")
+            uid = it
+        }
+
         val thisWidget = ComponentName(context!!, DetailWidget::class.java)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
@@ -67,7 +74,7 @@ class DetailWidget() : AppWidgetProvider() {
             }
             Constant.ACTION_RESIN_WIDGET_REFRESH_DATA,
             Constant.ACTION_ON_BOOT_COMPLETED -> {
-                log.e("REFRESH_DATA")
+                log.e("REFRESH_DATA > $uid")
                 setWidgetRefreshing(context, appWidgetManager, appWidgetIds)
                 context.let { RefreshWorker.startWorkerPeriodic(context) }
             }

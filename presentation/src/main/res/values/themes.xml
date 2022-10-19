@@ -7,7 +7,7 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnSurface">@color/gray</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/light_blue_200</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/light_blue_600</item>
         <!-- Customize your theme here. -->
         <item name="android:letterSpacing">-0.04</item>
         <item name="windowNoTitle">true</item>

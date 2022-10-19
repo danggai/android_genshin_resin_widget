@@ -11,6 +11,7 @@ import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
+import danggai.domain.db.account.usecase.AccountDaoUseCase
 import danggai.domain.local.CheckInSettings
 import danggai.domain.local.DailyNoteSettings
 import danggai.domain.local.DetailWidgetDesignSettings
@@ -23,6 +24,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.net.ConnectException
 import java.net.UnknownHostException
@@ -33,6 +35,7 @@ class RefreshWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
     private val preference: PreferenceManagerRepository,
+    private val accountDao: AccountDaoUseCase,
     private val dailyNote: DailyNoteUseCase
     ): Worker(context, workerParams) {
 
@@ -245,6 +248,9 @@ class RefreshWorker @AssistedInject constructor(
             preference.getResinWidgetDesignSettings() == ResinWidgetDesignSettings.EMPTY &&
             preference.getDetailWidgetDesignSettings() == DetailWidgetDesignSettings.EMPTY
         ) CommonFunction.migrateSettings(applicationContext)
+
+        CommonFunction.checkAndMigratePreferenceToDB(accountDao, applicationContext)
+//        delay(300L)
 
         val server =
             when (preference.getIntServer()) {
