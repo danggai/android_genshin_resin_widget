@@ -358,8 +358,7 @@ class CheckInWorker @AssistedInject constructor(
     override suspend fun doWork(): Result {
         return try {
             log.e()
-            if (preference.getDailyNoteData() == DailyNoteData.EMPTY &&
-                preference.getDailyNoteSettings() == DailyNoteSettings.EMPTY &&
+            if (preference.getDailyNoteSettings() == DailyNoteSettings.EMPTY &&
                 preference.getCheckInSettings() == CheckInSettings.EMPTY &&
                 preference.getResinWidgetDesignSettings() == ResinWidgetDesignSettings.EMPTY &&
                 preference.getDetailWidgetDesignSettings() == DetailWidgetDesignSettings.EMPTY

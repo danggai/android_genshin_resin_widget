@@ -24,6 +24,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:gravity="center"
+            android:paddingBottom="3dp"
             >
 
             <ImageView
@@ -155,6 +156,17 @@
         android:layout_gravity="center"
         android:layout_centerInParent="true"
         android:visibility="gone"
+        />
+
+    <TextView
+        style="@style/TextView"
+        android:id="@+id/tv_uid"
+        android:text="800000000"
+        android:textSize="10sp"
+        android:textColor="@color/widget_font_sub"
+        android:singleLine="true"
+        android:layout_alignBottom="@id/ll_root"
+        android:layout_alignRight="@id/ll_root"
         />
 
 </RelativeLayout>

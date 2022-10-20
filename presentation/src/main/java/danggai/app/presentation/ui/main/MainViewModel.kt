@@ -70,11 +70,11 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun deleteAccount(uid: String) {
+    fun deleteAccount(account: Account) {
         viewModelScope.launch {
-            accountDao.deleteAccount(uid).collect {
+            accountDao.deleteAccount(account.genshin_uid).collect {
                 log.e()
-                makeToast(resource.getString(R.string.msg_toast_hoyolab_account_deleted))
+                makeToast(account.nickname + " " + resource.getString(R.string.msg_toast_hoyolab_account_deleted))
             }
         }
     }
@@ -167,12 +167,12 @@ class MainViewModel @Inject constructor(
     private fun sendWidgetSyncBroadcast(dailyNote: DailyNoteData) {
         log.e()
 
-        preference.setStringRecentSyncTime(TimeFunction.getSyncTimeString())
-
-        val expeditionTime: String = CommonFunction.getExpeditionTime(dailyNote)
-        preference.setStringExpeditionTime(expeditionTime)
-
-        preference.setDailyNote(dailyNote)
+//        preference.setStringRecentSyncTime(TimeFunction.getSyncTimeString())
+//
+//        val expeditionTime: String = CommonFunction.getExpeditionTime(dailyNote)
+//        preference.setStringExpeditionTime(expeditionTime)
+//
+//        preference.setDailyNote(dailyNote)
 
         if (sfAutoRefreshPeriod.value == -1L) {
             sendEvent(Event.StartShutRefreshWorker(false))

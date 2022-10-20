@@ -24,10 +24,6 @@ interface PreferenceManagerRepository {
     fun setStringCookie(value: String)
 
 
-    fun getDailyNoteData(): DailyNoteData
-    fun setDailyNote(value: DailyNoteData)
-
-
     fun getDailyNoteSettings(): DailyNoteSettings
     fun setDailyNoteSettings(value: DailyNoteSettings)
 
@@ -44,14 +40,18 @@ interface PreferenceManagerRepository {
     fun setSelectedCharacterIdList(value: List<Int>)
 
 
-    fun getStringRecentSyncTime(): String
-    fun setStringRecentSyncTime(value: String)
+    fun getDailyNoteData(uid: String): DailyNoteData
+    fun setDailyNote(uid: String, value: DailyNoteData)
 
-    fun getStringExpeditionTime(): String
-    fun setStringExpeditionTime(value: String)
+    fun getStringRecentSyncTime(uid: String): String
+    fun setStringRecentSyncTime(uid: String, value: String)
+
+    fun getStringExpeditionTime(uid: String): String
+    fun setStringExpeditionTime(uid: String, value: String)
 
     fun setBooleanEnableAutoCheckIn(value: Boolean)
     fun setBooleanEnableHonkai3rdAutoCheckIn(value: Boolean)
+
 
     fun getStringLocale(): String
     fun setStringLocale(value: String)

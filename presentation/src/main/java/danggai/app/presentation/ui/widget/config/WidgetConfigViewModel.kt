@@ -17,13 +17,14 @@ class WidgetConfigViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val sfSelectAccount = MutableSharedFlow<Account>()
+    val sfNoAccount = MutableSharedFlow<Boolean>()
 
     val sfAccountList: StateFlow<List<Account>> =
         accountDao.selectAllAccountFlow()
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
-                initialValue = listOf()
+                initialValue = listOf(Account.GUEST)
             )
 
     fun onClickCb(account: Account) {

@@ -148,6 +148,18 @@
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
+                        android:id="@+id/cb_uid"
+                        android:checked="@={vm.sfUidVisibility}"
+                        android:text="@string/uid" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
                         android:id="@+id/cb_resin"
                         android:checked="@={vm.sfResinDataVisibility}"
                         android:text="@string/resin" />

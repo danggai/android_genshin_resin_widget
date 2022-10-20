@@ -103,7 +103,9 @@
                         android:layout_marginEnd="5dp"
                         android:checked="@{vm.sfServer == Server.ASIA.pref}"
                         android:onClick="@{() -> vm.onClickSetServer(Server.ASIA)}"
-                        android:text="@string/asia" />
+                        android:text="@string/asia"
+                        android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
+                        />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_usa"
@@ -111,7 +113,9 @@
                         android:layout_marginEnd="5dp"
                         android:checked="@{vm.sfServer == Server.USA.pref}"
                         android:onClick="@{() -> vm.onClickSetServer(Server.USA)}"
-                        android:text="@string/america" />
+                        android:text="@string/america"
+                        android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
+                        />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_euro"
@@ -119,14 +123,18 @@
                         android:layout_marginEnd="5dp"
                         android:checked="@{vm.sfServer == Server.EUROPE.pref}"
                         android:onClick="@{() -> vm.onClickSetServer(Server.EUROPE)}"
-                        android:text="@string/europe" />
+                        android:text="@string/europe"
+                        android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
+                        />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_cht"
                         style="@style/RadioButton"
                         android:checked="@{vm.sfServer == Server.CHT.pref}"
                         android:onClick="@{() -> vm.onClickSetServer(Server.CHT)}"
-                        android:text="@string/cht" />
+                        android:text="@string/cht"
+                        android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
+                        />
 
                 </RadioGroup>
 
@@ -150,9 +158,9 @@
                     android:hint="@string/hint_nickname"
                     android:singleLine="true"
                     android:text="@={vm.sfNickname}"
-                    android:textColor="@color/black"
                     android:textColorHint="@color/gray"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    />
 
                 <androidx.legacy.widget.Space
                     android:layout_width="wrap_content"
@@ -162,7 +170,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="@string/uid"
+                    android:text="@string/genshin_uid"
                     android:textColor="@color/black"
                     android:textSize="28sp"
                     android:textStyle="bold|italic" />
@@ -175,9 +183,26 @@
                     android:hint="@string/hint_uid"
                     android:singleLine="true"
                     android:text="@={vm.sfGenshinUid}"
-                    android:textColor="@color/black"
                     android:textColorHint="@color/gray"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
+                    />
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    style="@style/Checkbox"
+                    android:id="@+id/cb_no_genshin_account"
+                    android:checked="@={vm.sfNoGenshinAccount}"
+                    android:text="@string/btn_no_genshin_account"
+                    android:onClick="@{() -> vm.onClickNoGenshinAccount()}"
+                    />
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"

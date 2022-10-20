@@ -277,6 +277,13 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                     binding.widget.rlTransformer.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
+
+            launch {
+                mVM.sfUidVisibility.collect {
+                    log.e()
+                    binding.widget.tvUid.visibility = if (it) View.VISIBLE else View.GONE
+                }
+            }
         }
     }
 }

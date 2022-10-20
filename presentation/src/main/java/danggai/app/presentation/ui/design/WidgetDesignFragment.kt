@@ -21,6 +21,9 @@ import danggai.app.presentation.ui.design.charaters.WidgetDesignCharacterFragmen
 import danggai.app.presentation.ui.design.charaters.select.WidgetDesignSelectCharacterFragment
 import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
 import danggai.app.presentation.ui.design.resin.WidgetDesignResinFragment
+import danggai.app.presentation.ui.widget.DetailWidget
+import danggai.app.presentation.ui.widget.ResinWidget
+import danggai.app.presentation.ui.widget.ResinWidgetResizable
 import danggai.app.presentation.ui.widget.TalentWidget
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.log
@@ -120,6 +123,18 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
                 mVM.sfApplySavedData.collect {
                     context?.let { _context ->
                         log.e()
+                        _context.sendBroadcast(
+                            Intent(_context, ResinWidget::class.java)
+                                .setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI)
+                        )
+                        _context.sendBroadcast(
+                            Intent(_context, ResinWidgetResizable::class.java)
+                                .setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI)
+                        )
+                        _context.sendBroadcast(
+                            Intent(_context, DetailWidget::class.java)
+                                .setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI)
+                        )
                         _context.sendBroadcast(
                             Intent(_context, TalentWidget::class.java)
                                 .setAction(Constant.ACTION_TALENT_WIDGET_REFRESH)

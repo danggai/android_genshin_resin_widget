@@ -9,6 +9,9 @@ import danggai.app.presentation.R
 import danggai.app.presentation.databinding.ItemWidgetConfigAccountBinding
 import danggai.app.presentation.util.log
 import danggai.domain.db.account.entity.Account
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class WidgetConfigAdapter(
     val vm: WidgetConfigViewModel
@@ -24,6 +27,10 @@ class WidgetConfigAdapter(
             _itemList.apply {
                 items.addAll(this)
             }
+        } else {
+            CoroutineScope(Dispatchers.IO).launch {
+                vm.sfNoAccount.emit (true)
+            }
         }
 
         notifyDataSetChanged()
@@ -36,12 +43,16 @@ class WidgetConfigAdapter(
                 holder.binding.item = items[position]
 
                 holder.binding.tvUid.apply {
-                    this.text = items[position].genshin_uid
+                    this.text =
+                        if (items[position].genshin_uid != "-1" ) items[position].genshin_uid
+                        else resources.getString(R.string.guest)
                 }
 
                 holder.binding.tvNickname.apply {
                     this.text = items[position].nickname
                 }
+
+                holder.binding.cb.isEnabled = items[position].genshin_uid != "-1"
             }
         }
     }

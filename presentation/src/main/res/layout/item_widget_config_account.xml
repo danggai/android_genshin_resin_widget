@@ -52,9 +52,9 @@
         </LinearLayout>
 
         <CheckBox
+            android:id="@+id/cb"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:enabled="@{item.genshin_uid != `-1` ?true :false}"
             android:checked="false"
             android:onClick="@{() -> vm.onClickCb(item)}"
             />

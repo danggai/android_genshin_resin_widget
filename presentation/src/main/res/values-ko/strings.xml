@@ -4,6 +4,7 @@
     <string name="new_hoyolab_account">새 호요랩 계정</string>
     <string name="hoyolab_checkin">호요랩 출석체크</string>
     <string name="widget_customizing">위젯 커스텀</string>
+    <string name="btn_no_genshin_account">원신 계정 없음</string>
     <string name="hoyolab_checkin_desc">최초 1회는 \'호요랩 출석체크\'버튼을 눌러 수동으로 진행해야 자동 출석이 정상적으로 진행됩니다.</string>
 
     <string name="apply">확인</string>
@@ -62,6 +63,7 @@
     <string name="dialog_msg_permission_storage">위젯 커스텀 중, 실제로 사용하는 배경화면에 대입하여 디자인을 진행하기 위해 저장소 권한이 필요합니다.\n\n권한을 거부하여도 앱 사용이 가능합니다.</string>
     <string name="dialog_msg_permission_antidoze">배터리 부족/절전모드 등의 문제로 위젯 새로고침/자동 출석체크에 문제가 생기는 것을 방지하기 위해 배터리 절약 설정 예외 권한이 필요합니다.\n\n권한을 거부하여도 앱 사용이 가능합니다.</string>
 
+    <string name="msg_toast_widget_no_account">연동 된 호요랩 계정이 없으면  위젯을 사용할 수 없어!</string>
     <string name="dialog_widget_refresh_not_work">위젯이 새로고침 되지 않나요?</string>
     <string name="dialog_msg_widget_refresh_not_work"><b>절전 모드나 데이터 절약 모드</b>를 사용 중인 경우, 위젯에서 새로고침이 작동하지 않습니다.\n\n설정에서 데이터 절약 모드를 비활성화하거나, 다음 화면에서 원신 레진 위젯을 접근 허용 하는 것으로 우회할 수 있습니다.\n\n해당 권한은 앱이 기기가 수신하는 알림에 접근할 수 있도록 하는 권한이나, 원신 레진 위젯은 알림 수신 서비스를 HoYoLAB 데이터 수신 목적 외에는 이용하지 않으며, 사용자의 개인 정보에 <b>절대</b> 접근하지 않습니다.\n\n원신 레진 위젯은 데이터 절약 모드 비활성화를 권장합니다.</string>
 
@@ -134,7 +136,7 @@
 
     <string name="dialog_hoyolab_account_delete">계정 삭제 확인</string>
     <string name="dialog_msg_hoyolab_account_delete">정말로 %s 계정과의 연동을 해제할거야?</string>
-    <string name="msg_toast_hoyolab_account_deleted">호요랩 계정과의 연동을 해제했어!</string>
+    <string name="msg_toast_hoyolab_account_deleted">계정과의 연동을 해제했어!</string>
 
     <string name="push_default_noti_title">알림</string>
     <string name="push_default_noti_description">설명</string>

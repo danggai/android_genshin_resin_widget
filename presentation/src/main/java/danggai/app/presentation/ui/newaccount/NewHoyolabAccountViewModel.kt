@@ -35,6 +35,7 @@ class NewHoyolabAccountViewModel @Inject constructor(
     val sfNickname = MutableStateFlow("")
     val sfHoyolabCookie = MutableStateFlow("")
     val sfGenshinUid = MutableStateFlow("")
+    val sfNoGenshinAccount = MutableStateFlow(false)
     val sfEnableGenshinAutoCheckIn = MutableStateFlow(false)
     val sfEnableHonkai3rdAutoCheckIn = MutableStateFlow(false)
 
@@ -314,11 +315,6 @@ class NewHoyolabAccountViewModel @Inject constructor(
         sfServer.value = server.pref
     }
 
-    fun onClickGetCookie() {
-        log.e()
-        sendEvent(Event.GetCookie())
-    }
-
     fun makeDailyNotePublic() {
         log.e()
         makeBattleChroniclePublic(
@@ -328,6 +324,21 @@ class NewHoyolabAccountViewModel @Inject constructor(
             cookie = sfHoyolabCookie.value,
             ds = CommonFunction.getGenshinDS()
         )
+    }
+
+    fun onClickGetCookie() {
+        log.e()
+        sendEvent(Event.GetCookie())
+    }
+
+    fun onClickNoGenshinAccount() {
+        if (sfNoGenshinAccount.value) {
+            sfNickname.value = resource.getString(R.string.guest)
+            sfGenshinUid.value = "-1"
+        } else {
+            sfNickname.value = ""
+            sfGenshinUid.value = ""
+        }
     }
 
     fun onClickGetUid() {
@@ -354,21 +365,29 @@ class NewHoyolabAccountViewModel @Inject constructor(
     }
 
     fun onClickSave() {
-        sfGenshinUid.value = sfGenshinUid.value.trim()
-        sfHoyolabCookie.value = sfHoyolabCookie.value.trim()
+        log.e()
 
-        dailyNote(
-            sfGenshinUid.value,
-            when (sfServer.value) {
-                Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
-                Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
-                Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
-                Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
-                else -> Constant.SERVER_OS_ASIA
-            },
-            sfHoyolabCookie.value,
-            CommonFunction.getGenshinDS()
-        )
+        if (sfNoGenshinAccount.value) {
+            insertAccount(
+                Account.GUEST.copy(cookie = sfHoyolabCookie.value)
+            )
+        } else {
+            sfGenshinUid.value = sfGenshinUid.value.trim()
+            sfHoyolabCookie.value = sfHoyolabCookie.value.trim()
+
+            dailyNote(
+                sfGenshinUid.value,
+                when (sfServer.value) {
+                    Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
+                    Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
+                    Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
+                    Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
+                    else -> Constant.SERVER_OS_ASIA
+                },
+                sfHoyolabCookie.value,
+                CommonFunction.getGenshinDS()
+            )
+        }
     }
 
     fun selectAccountByUid(uid: String) {

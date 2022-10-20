@@ -272,12 +272,6 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
     override fun setStringCookie(value: String) =
         setString(context, Constant.PREF_COOKIE, value)
 
-    
-    override fun getDailyNoteData(): DailyNoteData =
-        getT<DailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA)?: DailyNoteData.EMPTY
-    override fun setDailyNote(value: DailyNoteData) =
-        setT(context, Constant.PREF_DAILY_NOTE_DATA, value)
-
 
     override fun getDailyNoteSettings(): DailyNoteSettings =
         getT<DailyNoteSettings>(context, Constant.PREF_WIDGET_SETTINGS)?: DailyNoteSettings.EMPTY
@@ -305,15 +299,20 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         setIntArray(context, Constant.PREF_SELECTED_CHARACTER_ID_LIST, value as ArrayList<Int>)
 
 
-    override fun getStringExpeditionTime(): String =
-        getString(context, Constant.PREF_EXPEDITION_TIME)
-    override fun setStringExpeditionTime(value: String) =
-        setString(context, Constant.PREF_EXPEDITION_TIME, value)
+    override fun getDailyNoteData(uid: String): DailyNoteData =
+        getT<DailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid")?: DailyNoteData.EMPTY
+    override fun setDailyNote(uid: String, value: DailyNoteData) =
+        setT(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid", value)
 
-    override fun getStringRecentSyncTime(): String =
-        getString(context, Constant.PREF_RECENT_SYNC_TIME)
-    override fun setStringRecentSyncTime(value: String) =
-        setString(context, Constant.PREF_RECENT_SYNC_TIME, value)
+    override fun getStringExpeditionTime(uid: String): String =
+        getString(context, Constant.PREF_EXPEDITION_TIME + "_$uid")
+    override fun setStringExpeditionTime(uid: String, value: String) =
+        setString(context, Constant.PREF_EXPEDITION_TIME + "_$uid", value)
+
+    override fun getStringRecentSyncTime(uid: String): String =
+        getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid")
+    override fun setStringRecentSyncTime(uid: String, value: String) =
+        setString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid", value)
 
     override fun getBooleanIsValidUserData(): Boolean =
         getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)

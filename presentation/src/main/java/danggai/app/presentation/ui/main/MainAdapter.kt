@@ -36,7 +36,9 @@ class MainAdapter(
                 holder.binding.item = items[position]
 
                 holder.binding.tvUid.apply {
-                    this.text = items[position].genshin_uid
+                    this.text =
+                        if (items[position].genshin_uid != "-1" ) items[position].genshin_uid
+                        else resources.getString(R.string.guest)
                 }
 
                 holder.binding.tvNickname.apply {

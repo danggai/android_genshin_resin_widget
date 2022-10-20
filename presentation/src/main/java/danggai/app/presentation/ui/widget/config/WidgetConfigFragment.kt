@@ -5,7 +5,6 @@ import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import android.widget.RemoteViews
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.activityViewModels
@@ -14,8 +13,8 @@ import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentWidgetConfigBinding
 import danggai.app.presentation.extension.repeatOnLifeCycleStarted
-import danggai.app.presentation.ui.widget.DetailWidget
 import danggai.app.presentation.util.log
+import danggai.domain.util.Constant
 import kotlinx.coroutines.launch
 
 
@@ -27,8 +26,8 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
         fun newInstance() = WidgetConfigFragment()
     }
 
+    var widgetClassName = ""
     var appWidgetId = 0
-    var widgetTitle: EditText? = null
     var views: RemoteViews? = null
     var appWidgetManager: AppWidgetManager? = null
 
@@ -51,7 +50,9 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
             AppWidgetManager.INVALID_APPWIDGET_ID
         ) ?: AppWidgetManager.INVALID_APPWIDGET_ID
 
-        appWidgetManager = AppWidgetManager.getInstance(context)
+        appWidgetManager = AppWidgetManager.getInstance(context).apply {
+            widgetClassName = getAppWidgetInfo(appWidgetId).provider.className
+        }
 
         views = RemoteViews(context?.packageName, R.layout.widget_detail_fixed)
         appWidgetManager?.updateAppWidget(appWidgetId, views)
@@ -62,21 +63,36 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
     private fun initSf() {
         viewLifecycleOwner.repeatOnLifeCycleStarted {
             launch {
-                context?.let { context ->
+                activity?.let { act ->
                     mVM.sfSelectAccount.collect { account ->
                         log.e()
 
-                        val updateIntent = Intent(context, DetailWidget::class.java).apply {
-                            action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+                        val widgetClass = Class.forName(widgetClassName)
+
+                        val updateIntent = Intent(act.applicationContext, widgetClass).apply {
+                            action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
+                            putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
                             putExtra("uid", account.genshin_uid)
                         }
-                        activity?.sendBroadcast(updateIntent)
+                        act.sendBroadcast(updateIntent)
 
                         val resultValue = Intent().apply {
                             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
                         }
 
-                        activity?.setResult(Activity.RESULT_OK, resultValue)
+                        act.setResult(Activity.RESULT_OK, resultValue)
+                        act.finish()
+                    }
+
+                }
+            }
+            launch {
+                activity?.let { act ->
+                    mVM.sfNoAccount.collect { account ->
+                        log.e()
+                        makeToast(act.applicationContext, getString(R.string.msg_toast_widget_no_account))
+
+                        activity?.setResult(Activity.RESULT_CANCELED)
                         activity?.finish()
                     }
 

@@ -37,16 +37,11 @@ class RefreshWorker @AssistedInject constructor(
     private val preference: PreferenceManagerRepository,
     private val accountDao: AccountDaoUseCase,
     private val dailyNote: DailyNoteUseCase
-    ): Worker(context, workerParams) {
+): Worker(context, workerParams) {
 
     companion object {
         fun startWorkerOneTime(context: Context) {
             log.e()
-
-            if (!PreferenceManager.getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)) {
-                log.e()
-                return
-            }
 
             val workManager = WorkManager.getInstance(context)
             val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
@@ -56,14 +51,12 @@ class RefreshWorker @AssistedInject constructor(
         }
 
         fun startWorkerPeriodic(context: Context) {
+            log.e()
             val period = PreferenceManager.getLong(context, Constant.PREF_AUTO_REFRESH_PERIOD, Constant.PREF_DEFAULT_REFRESH_PERIOD)
 
             val rx: PublishSubject<Boolean> = PublishSubject.create()
 
             rx.observeOn(Schedulers.io())
-                .filter {
-                    !(period == -1L || !PreferenceManager.getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false))
-                }
                 .map {
                     shutdownWorker(context)
                 }.subscribe({
@@ -111,12 +104,11 @@ class RefreshWorker @AssistedInject constructor(
                         when (it.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
                                 log.e()
-                                updateData(it.data.data!!)
+                                updateData(uid, it.data.data!!)
                             }
                             else -> {
                                 log.e()
                                 CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
-                                CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
                             }
                         }
                     }
@@ -136,10 +128,10 @@ class RefreshWorker @AssistedInject constructor(
         }
     }
 
-    private fun updateData(dailyNote: DailyNoteData) {
+    private fun updateData(uid: String, dailyNote: DailyNoteData) {
         log.e()
 
-        val prefDailyNote = preference.getDailyNoteData()
+        val prefDailyNote = preference.getDailyNoteData(uid)
         val settings = preference.getDailyNoteSettings()
 
         val prefResin: Int = prefDailyNote.current_resin
@@ -176,7 +168,7 @@ class RefreshWorker @AssistedInject constructor(
             }
         }
 
-        val prefExpeditionTime: Int = try { preference.getStringExpeditionTime().toInt() } catch (e: Exception) { 0 }
+        val prefExpeditionTime: Int = try { preference.getStringExpeditionTime(uid).toInt() } catch (e: Exception) { 0 }
         val nowExpeditionTime: Int = CommonFunction.getExpeditionTime(dailyNote).toInt()
         if (settings.notiExpedition) {
             if (1 in (nowExpeditionTime)..prefExpeditionTime
@@ -199,12 +191,12 @@ class RefreshWorker @AssistedInject constructor(
         }
 
 
-        preference.setStringRecentSyncTime(TimeFunction.getSyncTimeString())
+        preference.setStringRecentSyncTime(uid, TimeFunction.getSyncTimeString())
 
         val expeditionTime: String = CommonFunction.getExpeditionTime(dailyNote)
-        preference.setStringExpeditionTime(expeditionTime)
+        preference.setStringExpeditionTime(uid, expeditionTime)
 
-        preference.setDailyNote(dailyNote)
+        preference.setDailyNote(uid, dailyNote)
 
         CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
     }
@@ -242,32 +234,40 @@ class RefreshWorker @AssistedInject constructor(
 
     override fun doWork(): Result {
         log.e()
-        if (preference.getDailyNoteData() == DailyNoteData.EMPTY &&
-            preference.getDailyNoteSettings() == DailyNoteSettings.EMPTY &&
+        if (preference.getDailyNoteSettings() == DailyNoteSettings.EMPTY &&
             preference.getCheckInSettings() == CheckInSettings.EMPTY &&
             preference.getResinWidgetDesignSettings() == ResinWidgetDesignSettings.EMPTY &&
             preference.getDetailWidgetDesignSettings() == DetailWidgetDesignSettings.EMPTY
         ) CommonFunction.migrateSettings(applicationContext)
 
         CommonFunction.checkAndMigratePreferenceToDB(accountDao, applicationContext)
-//        delay(300L)
 
-        val server =
-            when (preference.getIntServer()) {
-                Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
-                Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
-                Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
-                Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
-                else -> Constant.SERVER_OS_ASIA
-            }
+        val server = when (preference.getIntServer()) {
+            Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
+            Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
+            Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
+            Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
+            else -> Constant.SERVER_OS_ASIA
+        }
 
         try {
-            refreshDailyNote(
-                preference.getStringUid(),
-                server,
-                preference.getStringCookie(),
-                CommonFunction.getGenshinDS()
-            )
+            CoroutineScope(Dispatchers.IO).launch {
+                delay(300L)     // 마이그레이션 대비용 시간
+                accountDao.selectAllAccount().collect { accountList ->
+                    accountList.forEach { account ->
+                        if (account.genshin_uid != "-1")
+                            refreshDailyNote(
+                                account.genshin_uid,
+                                server,
+                                account.cookie,
+                                CommonFunction.getGenshinDS()
+                            )
+                    }
+                }
+
+                delay(250L)     // 마이그레이션 대비용 시간
+                CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
+            }
 
             log.e()
             return Result.success()

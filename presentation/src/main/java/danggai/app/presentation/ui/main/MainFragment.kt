@@ -119,7 +119,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                             .setCancelable(false)
                             .setPositiveButton(R.string.apply) { dialog, whichButton ->
                                 log.e()
-                                mVM.deleteAccount(account.genshin_uid)
+                                mVM.deleteAccount(account)
                             }
                             .setNegativeButton(R.string.cancel) { dialog, whichButton ->
                                 log.e()

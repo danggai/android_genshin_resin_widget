@@ -11,7 +11,6 @@ import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
-import com.google.android.gms.common.internal.Preconditions.checkArgument
 import com.google.firebase.crashlytics.CustomKeysAndValues
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import danggai.app.presentation.BuildConfig
@@ -26,12 +25,9 @@ import danggai.domain.local.DailyNoteSettings
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
-import danggai.domain.network.dailynote.entity.Transformer
-import danggai.domain.network.dailynote.entity.TransformerTime
 import danggai.domain.util.Constant
 import java.math.BigInteger
 import java.security.MessageDigest
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.streams.asSequence
 
@@ -369,6 +365,28 @@ object CommonFunction {
         view.setFloat(R.id.tv_realm_currency_time_title, "setTextSize", fontSize.toFloat())
     }
 
+    fun isUidValidate(widgetId: Int, context: Context): Boolean {
+        val uid = PreferenceManager.getString(context, Constant.PREF_UID + "_$widgetId")
+
+        return if (uid == "") {
+            if (PreferenceManager.getString(context, Constant.PREF_UID) == "") {
+                log.e("no uid exists")
+                false
+            } else {
+                log.e("uid -> $uid")
+                PreferenceManager.setString(
+                    context,
+                    Constant.PREF_UID + "_$widgetId",
+                    PreferenceManager.getString(context, Constant.PREF_UID)
+                )
+                true
+            }
+        } else {
+            log.e("uid -> $uid")
+            true
+        }
+    }
+
     /*
     * preference 마이그레이션용 임시 함수.
     * 차후 버전(1.1.6~7)에서 삭제 요망
@@ -403,6 +421,7 @@ object CommonFunction {
                 PreferenceManager.getInt(context, Constant.PREF_WIDGET_THEME),
                 PreferenceManager.getInt(context, Constant.PREF_WIDGET_RESIN_TIME_NOTATION),
                 PreferenceManager.getInt(context, Constant.PREF_WIDGET_RESIN_IMAGE_VISIBILITY),
+                false,
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE, Constant.PREF_WIDGET_RESIN_FONT_SIZE),
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
             )
@@ -418,6 +437,7 @@ object CommonFunction {
                 PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_REALM_CURRENCY_DATA_VISIBILITY, true),
                 PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_EXPEDITION_DATA_VISIBILITY, true),
                 true,
+                false,
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE, Constant.PREF_WIDGET_DETAIL_FONT_SIZE),
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
             )

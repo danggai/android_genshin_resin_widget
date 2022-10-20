@@ -152,6 +152,7 @@
 
         <activity android:name="danggai.app.presentation.ui.widget.config.WidgetConfigActivity"
             android:exported="false"
+            android:theme="@style/Theme.WidgetConfigure"
             >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />

@@ -25,8 +25,6 @@ import java.util.*
 
 class DetailWidget() : AppWidgetProvider() {
 
-    var uid = "-1"
-
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
 
@@ -39,7 +37,7 @@ class DetailWidget() : AppWidgetProvider() {
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
             val views: RemoteViews = addViews(context)
-            syncView(views, context)
+            syncView(appWidgetId, views, context)
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
@@ -49,14 +47,22 @@ class DetailWidget() : AppWidgetProvider() {
         super.onReceive(context, intent)
         val action = intent?.action
 
-        intent?.getStringExtra("uid")?.let {
-            log.e("uid -> $it")
-            uid = it
-        }
-
         val thisWidget = ComponentName(context!!, DetailWidget::class.java)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
+
+        val widgetId = intent?.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)?:-1
+        val uid = intent?.getStringExtra("uid")?:""
+
+        if (widgetId != -1 && uid.isNotEmpty()) {
+            context!!.let {
+                PreferenceManager.setString(
+                    context,
+                    Constant.PREF_UID + "_$widgetId",
+                    uid
+                )
+            }
+        }
 
         when (action) {
             Constant.ACTION_RESIN_WIDGET_REFRESH_UI -> {
@@ -74,7 +80,7 @@ class DetailWidget() : AppWidgetProvider() {
             }
             Constant.ACTION_RESIN_WIDGET_REFRESH_DATA,
             Constant.ACTION_ON_BOOT_COMPLETED -> {
-                log.e("REFRESH_DATA > $uid")
+                log.e("REFRESH_DATA")
                 setWidgetRefreshing(context, appWidgetManager, appWidgetIds)
                 context.let { RefreshWorker.startWorkerPeriodic(context) }
             }
@@ -125,32 +131,28 @@ class DetailWidget() : AppWidgetProvider() {
         return views
     }
 
-    private fun syncView(view: RemoteViews, context: Context?) {
+    private fun syncView(widgetId: Int, view: RemoteViews, context: Context?) {
         context?.let { _context ->
             val widgetDesign =
                 PreferenceManager.getT<DetailWidgetDesignSettings>(context, Constant.PREF_DETAIL_WIDGET_DESIGN_SETTINGS)?: DetailWidgetDesignSettings.EMPTY
 
             CommonFunction.applyWidgetTheme(widgetDesign, _context, view)
 
-            if (!PreferenceManager.getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)) {
+            if (CommonFunction.isUidValidate(widgetId, context)) {
+                val uid = PreferenceManager.getString(context, Constant.PREF_UID + "_$widgetId")
                 log.e()
-                view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.ll_body, View.GONE)
-                view.setViewVisibility(R.id.ll_disable, View.VISIBLE)
 
-                if ((widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
-                    view.setTextColor(R.id.tv_disable, getColor(_context, R.color.widget_font_main_dark))
-                } else {
-                    view.setTextColor(R.id.tv_disable, getColor(_context, R.color.widget_font_main_light))
-                }
-
-            } else {
-                log.e()
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.ll_body, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_disable, View.GONE)
+                view.setViewVisibility(R.id.ll_body, View.VISIBLE)
+                view.setViewVisibility(R.id.tv_uid, View.VISIBLE)
 
-                val dailyNote = PreferenceManager.getT<DailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA)?: DailyNoteData.EMPTY
+                val dailyNote = PreferenceManager.getT<DailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid")?: DailyNoteData.EMPTY
+
+                view.setViewVisibility(R.id.tv_uid,
+                    if(widgetDesign.uidVisibility) View.VISIBLE else View.INVISIBLE
+                )
+                view.setTextViewText(R.id.tv_uid, uid)
 
                 view.setTextViewText(R.id.tv_resin_title, _context.getString(R.string.resin))
                 view.setTextViewText(R.id.tv_resin, dailyNote.current_resin.toString()+"/"+dailyNote.max_resin.toString())
@@ -184,7 +186,7 @@ class DetailWidget() : AppWidgetProvider() {
                     }
                 )
 
-                view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME))
+                view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid"))
 
                 when (widgetDesign.timeNotation) {
                     Constant.PREF_TIME_NOTATION_DEFAULT,
@@ -207,7 +209,7 @@ class DetailWidget() : AppWidgetProvider() {
                 view.setTextViewText(R.id.tv_realm_currency_time,
                     TimeFunction.realmCurrencySecondToTime(_context, dailyNote.home_coin_recovery_time, widgetDesign.timeNotation))
                 view.setTextViewText(R.id.tv_expedition_time,
-                    TimeFunction.expeditionSecondToTime(_context, PreferenceManager.getString(context, Constant.PREF_EXPEDITION_TIME), widgetDesign.timeNotation))
+                    TimeFunction.expeditionSecondToTime(_context, PreferenceManager.getString(context, Constant.PREF_EXPEDITION_TIME + "_$uid"), widgetDesign.timeNotation))
                 if (dailyNote.transformer?.recovery_time?.reached == true)
                     view.setTextViewText(R.id.tv_transformer,
                         TimeFunction.transformerToTime(_context, dailyNote.transformer, widgetDesign.timeNotation))
@@ -237,6 +239,18 @@ class DetailWidget() : AppWidgetProvider() {
 
                 view.setViewVisibility(R.id.rl_transformer,
                     if (widgetDesign.transformerDataVisibility) View.VISIBLE else View.GONE)
+            } else {
+                log.e()
+                view.setViewVisibility(R.id.pb_loading, View.GONE)
+                view.setViewVisibility(R.id.ll_body, View.GONE)
+                view.setViewVisibility(R.id.tv_uid, View.GONE)
+                view.setViewVisibility(R.id.ll_disable, View.VISIBLE)
+
+                if ((widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
+                    view.setTextColor(R.id.tv_disable, getColor(_context, R.color.widget_font_main_dark))
+                } else {
+                    view.setTextColor(R.id.tv_disable, getColor(_context, R.color.widget_font_main_light))
+                }
             }
         }
     }
@@ -252,6 +266,7 @@ class DetailWidget() : AppWidgetProvider() {
 
             view.setViewVisibility(R.id.pb_loading, View.VISIBLE)
             view.setViewVisibility(R.id.ll_body, View.INVISIBLE)
+            view.setViewVisibility(R.id.tv_uid, View.INVISIBLE)
             view.setViewVisibility(R.id.ll_disable, View.GONE)
 
             appWidgetManager.updateAppWidget(appWidgetId, view)
