@@ -3,7 +3,6 @@
 
     <string name="genshin_resin_widget" translatable="false">Genshin Resin Widget</string>
 
-    <string name="uid" translatable="false">Uid</string>
     <string name="genshin_uid" translatable="false">Genshin Uid</string>
     <string name="nickname" translatable="false">Nickname</string>
     <string name="cookie" translatable="false">Cookie</string>
@@ -22,6 +21,7 @@
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
 
+    <string name="uid" translatable="false">Uid</string>
     <string name="new_hoyolab_account">New HoYoLab Account</string>
     <string name="hoyolab_checkin">HoYoLab CheckIn</string>
     <string name="widget_customizing">Widget Customizing</string>
@@ -36,7 +36,7 @@
     <string name="no_hoyolab_accounts">No HoYoLab account registered.</string>
     <string name="get_cookie">Click here after Login!</string>
     <string name="get_cookie_btn">Log in to get cookies</string>
-    <string name="get_uid">Get Genshin in-game data</string>
+    <string name="get_uid_btn">Get Genshin in-game data</string>
 
     <string name="asia" translatable="false">Asia</string>
     <string name="america" translatable="false">America</string>
@@ -165,29 +165,33 @@
 
     <string name="push_resin_noti_title">Pure Resin Notification</string>
     <string name="push_resin_noti_description">This is a notification sent to inform travelers of each pure resin!</string>
-    <string name="push_msg_resin_noti_over_40">Traveler! Your resin is over %d!</string>
-    <string name="push_msg_resin_noti_over_120">Traveler! Your resin is over %d!</string>
-    <string name="push_msg_resin_noti_over_160">Traveler! Your resin is over %d!</string>
-    <string name="push_msg_resin_noti_over_200">Traveler! Your resin is over %d!</string>
-    <string name="push_msg_resin_noti_over_140">Traveler! Your resin is over %d!</string>
-    <string name="push_msg_resin_noti_custom">Traveler! Your resin is over %d!</string>
+    <string name="push_msg_resin_noti_over_40">%s! Your resin is over %d!</string>
+    <string name="push_msg_resin_noti_over_120">%s! Your resin is over %d!</string>
+    <string name="push_msg_resin_noti_over_160">%s! Your resin is over %d!</string>
+    <string name="push_msg_resin_noti_over_200">%s! Your resin is over %d!</string>
+    <string name="push_msg_resin_noti_over_140">%s! Your resin is over %d!</string>
+    <string name="push_msg_resin_noti_custom">%s! Your resin is over %d!</string>
 
     <string name="push_genshin_checkin_title">Genshin Impact Check-in Notification</string>
     <string name="push_genshin_checkin_description">This is a notification to inform travelers of the daily check-in result of Genshin Impact!</string>
     <string name="push_honkai_3rd_checkin_title">Honkai Impact 3rd Check-in Notification</string>
     <string name="push_honkai_3rd_checkin_description">This is a notification to inform travelers of the daily check-in result of Honkai Impact 3rd!</string>
-    <string name="push_msg_checkin_success">HoYoLAB check-in successful!</string>
-    <string name="push_msg_checkin_already">Already finished today\'s daily check in!</string>
-    <string name="push_msg_checkin_failed">Failed HoYoLAB check-in. I\'ll try again in 30 minutes!</string>
-    <string name="push_msg_checkin_account_not_found">Can\'t proceed check-in because this HoYoLAB account doesn\'t have a linked in-game account!</string>
+    <string name="push_msg_checkin_success_genshin">%s! checked attendance today!</string>
+    <string name="push_msg_checkin_success_honkai">I completed today\'s check in, %s~</string>
+    <string name="push_msg_checkin_already_genshin">%s, you\'ve already checked in today! I\'ll do it again at 1am tomorrow!</string>
+    <string name="push_msg_checkin_already_honkai">You have already signed in, %s~ I\'ll do it again at 1am tomorrow~</string>
+    <string name="push_msg_checkin_failed_genshin">%s, I failed the attendance check.. I\'ll try again in half an hour!</string>
+    <string name="push_msg_checkin_failed_honkai">%s, I failed the attendance check, but I\'ll try again in 30 minutes~</string>
+    <string name="push_msg_checkin_account_not_found">Attendance check cannot be performed because there is no in-game account linked to this %s account.</string>
+
 
     <string name="push_expedition_title">Expedition Done Notification</string>
     <string name="push_expedition_description">This is a notification sent to travelers when the expedition is complete!</string>
-    <string name="push_msg_expedition_done">Traveler! All the expedition is complete!</string>
+    <string name="push_msg_expedition_done">%s! All the expedition is complete!</string>
 
     <string name="push_realm_currency_title">Realm Currency Notification</string>
     <string name="push_realm_currency_description">This is a notification sent to travelers when the realm currency is full!</string>
-    <string name="push_msg_realm_currency_full">Traveler! Now full of realm currency!</string>
+    <string name="push_msg_realm_currency_full">%s! Now full of realm currency!</string>
 
     <string name="hint_cookie">Enter HoYoLAB\'s cookie!</string>
     <string name="hint_uid">Enter uid!</string>
@@ -195,7 +199,7 @@
 
     <string name="invalid_user_info">You can\'t use it\nwithout user information!</string>
 
-    <string name="guest">Guest</string>
+    <string name="guest">Captain</string>
     <string name="traveler">Traveler</string>
 
     <!-- Character Name -->

@@ -161,7 +161,7 @@
     <TextView
         style="@style/TextView"
         android:id="@+id/tv_uid"
-        android:text="800000000"
+        android:text="830000000"
         android:textSize="10sp"
         android:textColor="@color/widget_font_sub"
         android:singleLine="true"

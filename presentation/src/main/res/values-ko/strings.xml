@@ -20,7 +20,7 @@
     <string name="no_hoyolab_accounts">등록 된 호요랩 계정이 없습니다.</string>
     <string name="get_cookie">로그인 후 여기를 눌러주세요!</string>
     <string name="get_cookie_btn">호요랩에 로그인 해 쿠키 가져오기</string>
-    <string name="get_uid">원신 인게임 정보 가져오기</string>
+    <string name="get_uid_btn">원신 인게임 정보 가져오기</string>
 
     <string name="btn_each_40_resin">40레진 마다</string>
     <string name="btn_140_resin">140레진</string>
@@ -143,29 +143,32 @@
 
     <string name="push_resin_noti_title">퓨어 레진 알림</string>
     <string name="push_resin_noti_description">일정 레진마다 여행자에게 알려주기 위해 발송하는 알림이야!</string>
-    <string name="push_msg_resin_noti_over_40">여행자! 현재 레진이 %d을 넘어섰어!</string>
-    <string name="push_msg_resin_noti_over_120">여행자! 현재 레진이 %d을 넘어섰어! 슬슬 사용하러 가자!</string>
-    <string name="push_msg_resin_noti_over_160">여행자! 현재 레진이 %d을 넘어섰어! 빨리 사용해야 해! 레손실 난다구!</string>
-    <string name="push_msg_resin_noti_over_200">여행자! 현재 레진이 %d을 넘어섰어! 이렇게 많은 레진은 처음 봐!</string>
-    <string name="push_msg_resin_noti_over_140">여행자! 현재 레진이 %d을 넘어섰어! 빨리 사용하러 가자!</string>
-    <string name="push_msg_resin_noti_custom">여행자! 현재 레진이 %d을 넘어섰어! 지금 불러달라고 했었지?</string>
+    <string name="push_msg_resin_noti_over_40">%s! 현재 레진이 %d을 넘어섰어!</string>
+    <string name="push_msg_resin_noti_over_120">%s! 현재 레진이 %d을 넘어섰어! 슬슬 사용하러 가자!</string>
+    <string name="push_msg_resin_noti_over_160">%s! 현재 레진이 %d을 넘어섰어! 빨리 사용해야 해! 레손실 난다구!</string>
+    <string name="push_msg_resin_noti_over_200">%s! 현재 레진이 %d을 넘어섰어! 이렇게 많은 레진은 처음 봐!</string>
+    <string name="push_msg_resin_noti_over_140">%s! 현재 레진이 %d을 넘어섰어! 빨리 사용하러 가자!</string>
+    <string name="push_msg_resin_noti_custom">%s! 현재 레진이 %d을 넘어섰어! 지금 불러달라고 했었지?</string>
 
     <string name="push_genshin_checkin_title">원신 출석 알림</string>
     <string name="push_genshin_checkin_description">원신 출석 결과를 여행자에게 알려주기 위해 발송하는 알림이야!</string>
     <string name="push_honkai_3rd_checkin_title">붕괴3rd 출석 알림</string>
     <string name="push_honkai_3rd_checkin_description">붕괴3rd 출석 결과를 여행자에게 알려주기 위해 발송하는 알림이야!</string>
-    <string name="push_msg_checkin_success">출석 체크 성공!</string>
-    <string name="push_msg_checkin_already">이미 오늘자 출석 체크가 완료됐어! 내일 1시에 다시 알려줄게!</string>
-    <string name="push_msg_checkin_failed">출석 체크에 실패했어.. 30분 후에 다시 시도해볼게!</string>
-    <string name="push_msg_checkin_account_not_found">연동 된 인게임 계정이 없어서 출석체크를 진행할 수 없어!</string>
+    <string name="push_msg_checkin_success_genshin">%s! 오늘 출석체크 해왔어!</string>
+    <string name="push_msg_checkin_success_honkai">오늘 자 출석체크가 완료됐어, %s~</string>
+    <string name="push_msg_checkin_already_genshin">%s, 오늘은 이미 출석 했어! 내일 1시에 다시 할게!</string>
+    <string name="push_msg_checkin_already_honkai">%s, 오늘 출석 체크는 이미 완료됐어. 내일 1시에 다시 알려줄게~</string>
+    <string name="push_msg_checkin_failed_genshin">%s, 출석 체크에 실패했어.. 30분 후에 다시 시도할게!</string>
+    <string name="push_msg_checkin_failed_honkai">%s, 출석 체크에 실패했지만, 30분 후에 다시 시도해볼게~</string>
+    <string name="push_msg_checkin_account_not_found">%s 계정과 연동 된 인게임 계정이 없어서 출석체크를 진행할 수 없습니다.</string>
 
     <string name="push_expedition_title">탐험 완료 알림</string>
     <string name="push_expedition_description">탐험이 완료되었을 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
-    <string name="push_msg_expedition_done">여행자! 모든 탐험이 완료됐어! 모험가 길드에서 확인하자!</string>
+    <string name="push_msg_expedition_done">%s! 모든 탐험이 완료됐어! 모험가 길드에서 확인하자!</string>
 
     <string name="push_realm_currency_title">선계 화페 알림</string>
     <string name="push_realm_currency_description">선계 화폐가 충전 될 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
-    <string name="push_msg_realm_currency_full">여행자! 선계 주화가 가득 찼어! 확인하러 가자!</string>
+    <string name="push_msg_realm_currency_full">%s! 선계 주화가 가득 찼어! 확인하러 가자!</string>
 
     <string name="hint_cookie">HoYoLAB의 쿠키를 입력해 줘!</string>
     <string name="hint_uid">uid를 적어야 하는 장소야!</string>
@@ -173,7 +176,7 @@
 
     <string name="invalid_user_info">유저 정보 없이는\n사용할 수 없어!</string>
 
-    <string name="guest">게스트</string>
+    <string name="guest">함장</string>
     <string name="traveler">여행자</string>
 
     <!-- Character Name -->

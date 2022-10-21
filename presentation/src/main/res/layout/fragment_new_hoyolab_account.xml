@@ -207,8 +207,9 @@
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/get_uid"
+                    android:text="@string/get_uid_btn"
                     android:onClick="@{()->vm.onClickGetUid()}"
+                    android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
                     />
 
             </LinearLayout>

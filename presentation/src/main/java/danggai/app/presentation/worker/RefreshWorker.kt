@@ -11,6 +11,7 @@ import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
+import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
 import danggai.domain.local.CheckInSettings
 import danggai.domain.local.DailyNoteSettings
@@ -82,16 +83,15 @@ class RefreshWorker @AssistedInject constructor(
     }
 
     private fun refreshDailyNote(
-        uid: String,
+        account: Account,
         server: String,
-        cookie: String,
         ds: String,
     ) {
         CoroutineScope(Dispatchers.IO).launch {
             dailyNote(
-                uid,
+                account.genshin_uid,
                 server,
-                cookie,
+                account.cookie,
                 ds,
                 onStart = { log.e() },
                 onComplete = { log.e() }
@@ -104,7 +104,7 @@ class RefreshWorker @AssistedInject constructor(
                         when (it.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
                                 log.e()
-                                updateData(uid, it.data.data!!)
+                                updateData(account, it.data.data!!)
                             }
                             else -> {
                                 log.e()
@@ -128,10 +128,10 @@ class RefreshWorker @AssistedInject constructor(
         }
     }
 
-    private fun updateData(uid: String, dailyNote: DailyNoteData) {
+    private fun updateData(account: Account, dailyNote: DailyNoteData) {
         log.e()
 
-        val prefDailyNote = preference.getDailyNoteData(uid)
+        val prefDailyNote = preference.getDailyNoteData(account.genshin_uid)
         val settings = preference.getDailyNoteSettings()
 
         val prefResin: Int = prefDailyNote.current_resin
@@ -139,43 +139,43 @@ class RefreshWorker @AssistedInject constructor(
         if (settings.notiEach40Resin) {
             if (200 in (prefResin + 1)..nowResin){
                 log.e()
-                sendNoti(Constant.NotiType.RESIN_EACH_40, 200)
+                sendNoti(account, Constant.NotiType.RESIN_EACH_40, 200)
             } else if (160 in (prefResin + 1)..nowResin){
                 log.e()
-                sendNoti(Constant.NotiType.RESIN_EACH_40, 160)
+                sendNoti(account, Constant.NotiType.RESIN_EACH_40, 160)
             } else if (120 in (prefResin + 1)..nowResin){
                 log.e()
-                sendNoti(Constant.NotiType.RESIN_EACH_40, 120)
+                sendNoti(account, Constant.NotiType.RESIN_EACH_40, 120)
             } else if (80 in (prefResin + 1)..nowResin){
                 log.e()
-                sendNoti(Constant.NotiType.RESIN_EACH_40, 80)
+                sendNoti(account, Constant.NotiType.RESIN_EACH_40, 80)
             } else if (40 in (prefResin + 1)..nowResin){
                 log.e()
-                sendNoti(Constant.NotiType.RESIN_EACH_40, 40)
+                sendNoti(account, Constant.NotiType.RESIN_EACH_40, 40)
             }
         }
         if (settings.notiEach40Resin) {
             if (140 in (prefResin + 1)..nowResin){
                 log.e()
-                sendNoti(Constant.NotiType.RESIN_140, 140)
+                sendNoti(account, Constant.NotiType.RESIN_140, 140)
             }
         }
         if (settings.notiCustomResin) {
             val targetResin: Int = settings.customResin
             if (targetResin in (prefResin + 1)..nowResin){
                 log.e()
-                sendNoti(Constant.NotiType.RESIN_CUSTOM, targetResin)
+                sendNoti(account, Constant.NotiType.RESIN_CUSTOM, targetResin)
             }
         }
 
-        val prefExpeditionTime: Int = try { preference.getStringExpeditionTime(uid).toInt() } catch (e: Exception) { 0 }
+        val prefExpeditionTime: Int = try { preference.getStringExpeditionTime(account.genshin_uid).toInt() } catch (e: Exception) { 0 }
         val nowExpeditionTime: Int = CommonFunction.getExpeditionTime(dailyNote).toInt()
         if (settings.notiExpedition) {
             if (1 in (nowExpeditionTime)..prefExpeditionTime
-                && !dailyNote.expeditions.isNullOrEmpty()
+                && dailyNote.expeditions.isNotEmpty()
                 && nowExpeditionTime == 0){
                 log.e()
-                sendNoti(Constant.NotiType.EXPEDITION_DONE, 0)
+                sendNoti(account, Constant.NotiType.EXPEDITION_DONE, 0)
             }
         }
 
@@ -186,22 +186,22 @@ class RefreshWorker @AssistedInject constructor(
                 && dailyNote.max_home_coin != 0
                 && nowHomeCoinRecoveryTime == 0){
                 log.e()
-                sendNoti(Constant.NotiType.REALM_CURRENCY_FULL, 0)
+                sendNoti(account, Constant.NotiType.REALM_CURRENCY_FULL, 0)
             }
         }
 
 
-        preference.setStringRecentSyncTime(uid, TimeFunction.getSyncTimeString())
+        preference.setStringRecentSyncTime(account.genshin_uid, TimeFunction.getSyncTimeString())
 
         val expeditionTime: String = CommonFunction.getExpeditionTime(dailyNote)
-        preference.setStringExpeditionTime(uid, expeditionTime)
+        preference.setStringExpeditionTime(account.genshin_uid, expeditionTime)
 
-        preference.setDailyNote(uid, dailyNote)
+        preference.setDailyNote(account.genshin_uid, dailyNote)
 
         CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
     }
 
-    private fun sendNoti(notiType: Constant.NotiType, target: Int) {
+    private fun sendNoti(account: Account, notiType: Constant.NotiType, target: Int) {
         log.e()
 
         val title = when (notiType) {
@@ -216,16 +216,16 @@ class RefreshWorker @AssistedInject constructor(
         val msg = when (notiType) {
             Constant.NotiType.RESIN_EACH_40 ->
                 when (target) {
-                    200 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_200), target)
-                    160 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_160), target)
-                    120 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_120), target)
-                    80 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_40), target)
-                    else -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_40), target)
+                    200 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_200), account.nickname, target)
+                    160 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_160), account.nickname, target)
+                    120 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_120), account.nickname, target)
+                    80 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_40), account.nickname, target)
+                    else -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_40), account.nickname, target)
                 }
-            Constant.NotiType.RESIN_140 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_140), target)
-            Constant.NotiType.RESIN_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), target)
-            Constant.NotiType.EXPEDITION_DONE -> applicationContext.getString(R.string.push_msg_expedition_done)
-            Constant.NotiType.REALM_CURRENCY_FULL -> applicationContext.getString(R.string.push_msg_realm_currency_full)
+            Constant.NotiType.RESIN_140 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_140), account.nickname, target)
+            Constant.NotiType.RESIN_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), account.nickname, target)
+            Constant.NotiType.EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_expedition_done), account.nickname)
+            Constant.NotiType.REALM_CURRENCY_FULL -> String.format(applicationContext.getString(R.string.push_msg_realm_currency_full), account.nickname)
             else -> ""
         }
 
@@ -257,9 +257,8 @@ class RefreshWorker @AssistedInject constructor(
                     accountList.forEach { account ->
                         if (account.genshin_uid != "-1")
                             refreshDailyNote(
-                                account.genshin_uid,
+                                account,
                                 server,
-                                account.cookie,
                                 CommonFunction.getGenshinDS()
                             )
                     }

@@ -434,7 +434,7 @@
         android:layout_alignRight="@id/ll_root"
         android:layout_alignBottom="@id/ll_root"
         android:singleLine="true"
-        android:text="800000000"
+        android:text="830000000"
         android:textColor="@color/widget_font_sub"
         android:textSize="10sp" />
 

@@ -145,7 +145,7 @@ object CommonFunction {
             Constant.NotiType.EXPEDITION_DONE -> {
                 notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
                 notificationDesc = context.getString(R.string.push_expedition_description)
-                priority = NotificationCompat.PRIORITY_DEFAULT
+                priority = NotificationCompat.PRIORITY_LOW
             }
             Constant.NotiType.REALM_CURRENCY_FULL -> {
                 notificationId = Constant.PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID
@@ -164,25 +164,28 @@ object CommonFunction {
             NotificationManager::class.java
         ) ?: return
 
-        val builder = NotificationCompat.Builder(context, notificationId)
-            .setSmallIcon(R.drawable.resin)
-            .setContentTitle(title)
-            .setContentText(msg)
-            .setAutoCancel(true)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(msg))
-            .setPriority(priority)
+        val builder = NotificationCompat.Builder(context, notificationId).apply {
+            setSmallIcon(R.drawable.resin)
+            setContentTitle(title)
+            setContentText(msg)
+            setAutoCancel(true)
+            setStyle(NotificationCompat.BigTextStyle().bigText(msg))
+            setPriority(priority)
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(
-                NotificationChannel(notificationId,
+                NotificationChannel(
+                    notificationId,
                     title,
-                    NotificationManager.IMPORTANCE_DEFAULT).apply {
+                    NotificationManager.IMPORTANCE_DEFAULT
+                ).apply {
                     description = notificationDesc
                 }
             )
         }
 
-        notificationManager.notify(notiType.ordinal, builder.build())
+        notificationManager.notify((System.currentTimeMillis()).toInt(), builder.build())
     }
 
     fun getTimeLeftUntilChinaTime(isAM: Boolean, hour: Int, startCalendar: Calendar): Long {
@@ -468,7 +471,10 @@ object CommonFunction {
                 PreferenceManager.getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)
             ) {
                 dao.insertAccount(
-                    Account.GUEST.copy(cookie = PreferenceManager.getString(context, Constant.PREF_COOKIE))
+                    Account.GUEST.copy(
+                        nickname = context.getString(R.string.guest),
+                        cookie = PreferenceManager.getString(context, Constant.PREF_COOKIE)
+                    )
                 )
             }
         }

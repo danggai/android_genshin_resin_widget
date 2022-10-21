@@ -61,42 +61,6 @@ class TalentWorker @AssistedInject constructor(
         }
     }
 
-    private fun sendNoti(notiType: Constant.NotiType) {
-        log.e()
-
-        val title = when (notiType) {
-            Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS,
-            Constant.NotiType.CHECK_IN_GENSHIN_ALREADY,
-            Constant.NotiType.CHECK_IN_GENSHIN_FAILED,
-            Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND
-            -> applicationContext.getString(R.string.push_genshin_checkin_title)
-            Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS,
-            Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY,
-            Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED,
-            Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND
-            -> applicationContext.getString(R.string.push_honkai_3rd_checkin_title)
-            else -> ""
-        }
-
-        val msg = when (notiType) {
-            Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS,
-            Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS
-            -> applicationContext.getString(R.string.push_msg_checkin_success)
-            Constant.NotiType.CHECK_IN_GENSHIN_ALREADY,
-            Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY
-            -> applicationContext.getString(R.string.push_msg_checkin_already)
-            Constant.NotiType.CHECK_IN_GENSHIN_FAILED,
-            Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED
-            -> applicationContext.getString(R.string.push_msg_checkin_failed)
-            Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND,
-            Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND
-            -> applicationContext.getString(R.string.push_msg_checkin_account_not_found)
-            else -> ""
-        }
-
-        CommonFunction.sendNotification(notiType, applicationContext, title, msg)
-    }
-
     override suspend fun doWork(): Result {
         return try {
             log.e()

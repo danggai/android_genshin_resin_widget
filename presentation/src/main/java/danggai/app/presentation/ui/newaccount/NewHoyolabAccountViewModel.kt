@@ -369,7 +369,12 @@ class NewHoyolabAccountViewModel @Inject constructor(
 
         if (sfNoGenshinAccount.value) {
             insertAccount(
-                Account.GUEST.copy(cookie = sfHoyolabCookie.value)
+                Account.GUEST.copy(
+                    nickname = resource.getString(R.string.guest),
+                    cookie = sfHoyolabCookie.value,
+                    enable_genshin_checkin = sfEnableGenshinAutoCheckIn.value,
+                    enable_honkai3rd_checkin = sfEnableHonkai3rdAutoCheckIn.value
+                )
             )
         } else {
             sfGenshinUid.value = sfGenshinUid.value.trim()
@@ -391,14 +396,19 @@ class NewHoyolabAccountViewModel @Inject constructor(
     }
 
     fun selectAccountByUid(uid: String) {
+        log.e()
+
         viewModelScope.launch {
             accountDao.selectAccountByUid(uid).collect { account ->
+                log.e(account)
                 sfHoyolabCookie.value = account.cookie
                 sfGenshinUid.value = account.genshin_uid
                 sfNickname.value = account.nickname
                 sfServer.value = account.server
                 sfEnableGenshinAutoCheckIn.value = account.enable_genshin_checkin
                 sfEnableHonkai3rdAutoCheckIn.value = account.enable_honkai3rd_checkin
+
+                if (account.genshin_uid == "-1") sfNoGenshinAccount.value = true
             }
         }
     }
