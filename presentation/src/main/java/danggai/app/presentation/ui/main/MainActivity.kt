@@ -20,17 +20,6 @@ import kotlin.system.exitProcess
 @AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding, MainViewModel>() {
 
-    companion object {
-        const val ARG_PARAM_COOKIE = "ARG_PARAM_COOKIE"
-
-        fun startActivity(act: Activity, cookie: String) {
-            log.e()
-            val itn = Intent(act, MainActivity::class.java)
-            itn.putExtra(ARG_PARAM_COOKIE, cookie)
-            act.startActivity(itn)
-        }
-    }
-
     private val rxBackButtonAction: Subject<Long> = BehaviorSubject.createDefault(0L).toSerialized()
 
     private val mVM: MainViewModel by viewModels()
@@ -46,16 +35,6 @@ class MainActivity : BindingActivity<ActivityMainBinding, MainViewModel>() {
 
         initFragment()
         initRx()
-    }
-
-    override fun onNewIntent(intent: Intent) {
-        log.e()
-        if (intent.hasExtra(ARG_PARAM_COOKIE)) {
-            log.e()
-            val mFragment = supportFragmentManager.fragments[0] as MainFragment
-            mFragment.onNewIntent(intent)
-        }
-        super.onNewIntent(intent)
     }
 
     override fun onBackPressed() {

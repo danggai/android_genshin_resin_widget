@@ -9,12 +9,14 @@
         android:id="@+id/ll_root"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="8dp"
-        android:padding="10dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/rounded_square_5dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
         >
 
         <LinearLayout
@@ -22,62 +24,52 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            >
+            android:paddingBottom="3dp"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/ll_sync"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:paddingLeft="20dp"
                 android:layout_marginBottom="5dp"
-                >
+                android:paddingLeft="20dp">
 
                 <TextView
-                    style="@style/TextView"
                     android:id="@+id/tv_sync_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="MM/dd hh:mm"
-                    android:textSize="10sp"
-                    android:textColor="@color/widget_font_sub"
-                    android:layout_gravity="center"
+                    style="@style/TextView"
                     android:singleLine="true"
-                    />
+                    android:text="MM/dd hh:mm"
+                    android:textColor="@color/widget_font_sub"
+                    android:textSize="10sp" />
 
                 <ImageView
                     android:id="@+id/iv_refersh"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
-                    android:src="@drawable/baseline_sync_24"
                     android:layout_gravity="center_vertical"
-                    />
+                    android:src="@drawable/baseline_sync_24" />
 
             </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_resin"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/iv_resin_icon"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:src="@drawable/icon_resin"
-                    android:scaleType="fitXY"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginRight="2dp"
                     android:layout_centerVertical="true"
-                    />
+                    android:layout_marginRight="2dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_resin" />
 
                 <TextView
                     android:id="@+id/tv_resin_title"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@id/tv_resin"
                     android:layout_toRightOf="@id/iv_resin_icon"
@@ -87,50 +79,41 @@
                     android:textSize="12sp" />
 
                 <TextView
-                    style="@style/TextView"
                     android:id="@+id/tv_resin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="160/160"
-                    android:textSize="12sp"
-                    android:textColor="@color/widget_font_main"
+                    style="@style/TextView"
                     android:layout_alignParentRight="true"
-                    android:singleLine="true"
                     android:layout_centerVertical="true"
-                    />
+                    android:singleLine="true"
+                    android:text="160/160"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_resin_time"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_resin_time_title"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/tv_resin_time"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="18dp"
+                    android:layout_toLeftOf="@id/tv_resin_time"
                     android:singleLine="true"
                     android:text="@string/until_fully_replenished"
                     android:textColor="@color/widget_font_main"
                     android:textSize="12sp" />
 
                 <TextView
-                    style="@style/TextView"
                     android:id="@+id/tv_resin_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0h 0m"
-                    android:textSize="12sp"
-                    android:textColor="@color/widget_font_main"
+                    style="@style/TextView"
                     android:layout_alignParentRight="true"
                     android:singleLine="true"
-                    />
+                    android:text="0h 0m"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
 
             </RelativeLayout>
 
@@ -139,45 +122,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                >
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/iv_daily_commission"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:src="@drawable/icon_daily_commission"
-                    android:scaleType="fitXY"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginRight="2dp"
                     android:layout_centerVertical="true"
-                    />
+                    android:layout_marginRight="2dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_daily_commission" />
 
                 <TextView
                     android:id="@+id/tv_daily_commission_title"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/iv_daily_commission"
                     android:layout_toLeftOf="@id/tv_daily_commission"
+                    android:layout_toRightOf="@id/iv_daily_commission"
                     android:singleLine="true"
                     android:text="@string/daily_commissions"
                     android:textColor="@color/widget_font_main"
                     android:textSize="12sp" />
 
                 <TextView
-                    style="@style/TextView"
                     android:id="@+id/tv_daily_commission"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4/4"
-                    android:textSize="12sp"
-                    android:textColor="@color/widget_font_main"
+                    style="@style/TextView"
                     android:layout_alignParentRight="true"
-                    android:singleLine="true"
                     android:layout_centerVertical="true"
-                    />
+                    android:singleLine="true"
+                    android:text="4/4"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
 
 
             </RelativeLayout>
@@ -185,106 +161,87 @@
             <RelativeLayout
                 android:id="@+id/rl_weekly_boss"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/iv_domain"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:src="@drawable/icon_domain"
-                    android:scaleType="fitXY"
                     android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="2dp"
-                    android:layout_centerVertical="true"
-                    />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_domain" />
 
                 <TextView
-                    style="@style/TextView"
                     android:id="@+id/tv_weekly_boss_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/enemies_of_note"
-                    android:textSize="12sp"
-                    android:textColor="@color/widget_font_main"
-                    android:layout_toRightOf="@id/iv_domain"
-                    android:layout_toLeftOf="@id/tv_weekly_boss"
-                    android:singleLine="true"
+                    style="@style/TextView"
                     android:layout_centerVertical="true"
-                    />
+                    android:layout_toLeftOf="@id/tv_weekly_boss"
+                    android:layout_toRightOf="@id/iv_domain"
+                    android:singleLine="true"
+                    android:text="@string/enemies_of_note"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
 
                 <TextView
-                    style="@style/TextView"
                     android:id="@+id/tv_weekly_boss"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3/3"
-                    android:textSize="12sp"
-                    android:textColor="@color/widget_font_main"
+                    style="@style/TextView"
                     android:layout_alignParentRight="true"
-                    android:singleLine="true"
                     android:layout_centerVertical="true"
-                    />
+                    android:singleLine="true"
+                    android:text="3/3"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_realm_currency"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/iv_serenitea_pot"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:src="@drawable/icon_serenitea_pot"
-                    android:scaleType="fitXY"
                     android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="2dp"
-                    android:layout_centerVertical="true"
-                    />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_serenitea_pot" />
 
                 <TextView
-                    style="@style/TextView"
                     android:id="@+id/tv_realm_currency_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/realm_currency"
-                    android:textSize="12sp"
-                    android:textColor="@color/widget_font_main"
-                    android:layout_toRightOf="@id/iv_serenitea_pot"
-                    android:layout_toLeftOf="@id/tv_realm_currency"
-                    android:singleLine="true"
+                    style="@style/TextView"
                     android:layout_centerVertical="true"
-                    />
+                    android:layout_toLeftOf="@id/tv_realm_currency"
+                    android:layout_toRightOf="@id/iv_serenitea_pot"
+                    android:singleLine="true"
+                    android:text="@string/realm_currency"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
 
                 <TextView
-                    style="@style/TextView"
                     android:id="@+id/tv_realm_currency"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2400/2400"
-                    android:textSize="12sp"
-                    android:textColor="@color/widget_font_main"
+                    style="@style/TextView"
                     android:layout_alignParentRight="true"
-                    android:singleLine="true"
                     android:layout_centerVertical="true"
-                    />
+                    android:singleLine="true"
+                    android:text="2400/2400"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_realm_currency_time"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_realm_currency_time_title"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="18dp"
                     android:layout_toLeftOf="@id/tv_realm_currency_time"
@@ -296,8 +253,6 @@
                 <TextView
                     android:id="@+id/tv_realm_currency_time"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:singleLine="true"
                     android:text="0h 0m"
@@ -309,8 +264,7 @@
             <RelativeLayout
                 android:id="@+id/rl_transformer"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/iv_transformer"
@@ -325,8 +279,6 @@
                 <TextView
                     android:id="@+id/tv_transformer_title"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@id/tv_transformer"
                     android:layout_toRightOf="@id/iv_transformer"
@@ -338,8 +290,6 @@
                 <TextView
                     android:id="@+id/tv_transformer"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:singleLine="true"
@@ -349,44 +299,39 @@
 
             </RelativeLayout>
 
-<!--            <RelativeLayout-->
-<!--                android:id="@+id/rl_transformer_time"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                >-->
+            <!--            <RelativeLayout-->
+            <!--                android:id="@+id/rl_transformer_time"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                >-->
 
-<!--                <TextView-->
-<!--                    android:id="@+id/tv_transformer_time_title"-->
-<!--                    style="@style/TextView"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_alignParentLeft="true"-->
-<!--                    android:layout_marginLeft="18dp"-->
-<!--                    android:layout_toLeftOf="@id/tv_transformer_time"-->
-<!--                    android:singleLine="true"-->
-<!--                    android:text="@string/until_reusable"-->
-<!--                    android:textColor="@color/widget_font_main"-->
-<!--                    android:textSize="12sp" />-->
+            <!--                <TextView-->
+            <!--                    android:id="@+id/tv_transformer_time_title"-->
+            <!--                    style="@style/TextView"-->
+            <!--                    android:layout_alignParentLeft="true"-->
+            <!--                    android:layout_marginLeft="18dp"-->
+            <!--                    android:layout_toLeftOf="@id/tv_transformer_time"-->
+            <!--                    android:singleLine="true"-->
+            <!--                    android:text="@string/until_reusable"-->
+            <!--                    android:textColor="@color/widget_font_main"-->
+            <!--                    android:textSize="12sp" />-->
 
-<!--                <TextView-->
-<!--                    style="@style/TextView"-->
-<!--                    android:id="@+id/tv_transformer_time"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="0d 0h 0m"-->
-<!--                    android:textSize="12sp"-->
-<!--                    android:textColor="@color/widget_font_main"-->
-<!--                    android:layout_alignParentRight="true"-->
-<!--                    android:singleLine="true"-->
-<!--                    />-->
+            <!--                <TextView-->
+            <!--                    style="@style/TextView"-->
+            <!--                    android:id="@+id/tv_transformer_time"-->
+            <!--                    android:text="0d 0h 0m"-->
+            <!--                    android:textSize="12sp"-->
+            <!--                    android:textColor="@color/widget_font_main"-->
+            <!--                    android:layout_alignParentRight="true"-->
+            <!--                    android:singleLine="true"-->
+            <!--                    />-->
 
-<!--            </RelativeLayout>-->
+            <!--            </RelativeLayout>-->
 
             <RelativeLayout
                 android:id="@+id/rl_expedition"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/iv_warp"
@@ -401,8 +346,6 @@
                 <TextView
                     android:id="@+id/tv_expedition_title"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@id/tv_expedition_time"
                     android:layout_toRightOf="@id/iv_warp"
@@ -414,8 +357,6 @@
                 <TextView
                     android:id="@+id/tv_expedition_time"
                     style="@style/TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:singleLine="true"
@@ -425,38 +366,34 @@
 
             </RelativeLayout>
 
-<!--            <RelativeLayout-->
-<!--                android:id="@+id/rl_expedition_time"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                >-->
+            <!--            <RelativeLayout-->
+            <!--                android:id="@+id/rl_expedition_time"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                >-->
 
-<!--                <TextView-->
-<!--                    android:id="@+id/tv_expedition_time_title"-->
-<!--                    style="@style/TextView"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_alignParentLeft="true"-->
-<!--                    android:layout_marginLeft="18dp"-->
-<!--                    android:layout_toLeftOf="@id/tv_expedition_time"-->
-<!--                    android:singleLine="true"-->
-<!--                    android:text="@string/until_all_completed"-->
-<!--                    android:textColor="@color/widget_font_main"-->
-<!--                    android:textSize="12sp" />-->
+            <!--                <TextView-->
+            <!--                    android:id="@+id/tv_expedition_time_title"-->
+            <!--                    style="@style/TextView"-->
+            <!--                    android:layout_alignParentLeft="true"-->
+            <!--                    android:layout_marginLeft="18dp"-->
+            <!--                    android:layout_toLeftOf="@id/tv_expedition_time"-->
+            <!--                    android:singleLine="true"-->
+            <!--                    android:text="@string/until_all_completed"-->
+            <!--                    android:textColor="@color/widget_font_main"-->
+            <!--                    android:textSize="12sp" />-->
 
-<!--                <TextView-->
-<!--                    style="@style/TextView"-->
-<!--                    android:id="@+id/tv_expedition_time"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="0h 0m"-->
-<!--                    android:textSize="12sp"-->
-<!--                    android:textColor="@color/widget_font_main"-->
-<!--                    android:layout_alignParentRight="true"-->
-<!--                    android:singleLine="true"-->
-<!--                    />-->
+            <!--                <TextView-->
+            <!--                    style="@style/TextView"-->
+            <!--                    android:id="@+id/tv_expedition_time"-->
+            <!--                    android:text="0h 0m"-->
+            <!--                    android:textSize="12sp"-->
+            <!--                    android:textColor="@color/widget_font_main"-->
+            <!--                    android:layout_alignParentRight="true"-->
+            <!--                    android:singleLine="true"-->
+            <!--                    />-->
 
-<!--            </RelativeLayout>-->
+            <!--            </RelativeLayout>-->
 
         </LinearLayout>
 
@@ -465,20 +402,16 @@
             android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
             <TextView
-                style="@style/TextView"
                 android:id="@+id/tv_disable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:textColor="@color/widget_font_main"
+                style="@style/TextView"
                 android:gravity="center"
                 android:maxLines="2"
                 android:text="@string/invalid_user_info"
-                />
+                android:textColor="@color/widget_font_main"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -494,5 +427,15 @@
         android:layout_centerInParent="true"
         android:visibility="gone"
         />
+
+    <TextView
+        android:id="@+id/tv_uid"
+        style="@style/TextView"
+        android:layout_alignRight="@id/ll_root"
+        android:layout_alignBottom="@id/ll_root"
+        android:singleLine="true"
+        android:text="830000000"
+        android:textColor="@color/widget_font_sub"
+        android:textSize="10sp" />
 
 </RelativeLayout>

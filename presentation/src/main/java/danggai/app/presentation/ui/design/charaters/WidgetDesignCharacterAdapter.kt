@@ -15,8 +15,9 @@ import danggai.domain.local.LocalCharacter
 import danggai.domain.util.Constant
 import java.util.*
 
-class WidgetDesignCharacterAdapter(val vm: WidgetDesignViewModel) :
-    BaseAdapter() {
+class WidgetDesignCharacterAdapter(
+    val vm: WidgetDesignViewModel
+): BaseAdapter() {
 
     private var items: MutableList<LocalCharacter> = arrayListOf()
 

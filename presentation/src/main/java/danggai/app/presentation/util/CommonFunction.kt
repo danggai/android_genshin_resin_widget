@@ -11,7 +11,6 @@ import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
-import com.google.android.gms.common.internal.Preconditions.checkArgument
 import com.google.firebase.crashlytics.CustomKeysAndValues
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import danggai.app.presentation.BuildConfig
@@ -19,17 +18,20 @@ import danggai.app.presentation.R
 import danggai.app.presentation.ui.widget.DetailWidget
 import danggai.app.presentation.ui.widget.ResinWidget
 import danggai.app.presentation.ui.widget.ResinWidgetResizable
+import danggai.app.presentation.util.PreferenceManager.getT
+import danggai.domain.db.account.entity.Account
+import danggai.domain.db.account.usecase.AccountDaoUseCase
 import danggai.domain.local.CheckInSettings
 import danggai.domain.local.DailyNoteSettings
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
-import danggai.domain.network.dailynote.entity.Transformer
-import danggai.domain.network.dailynote.entity.TransformerTime
 import danggai.domain.util.Constant
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.math.BigInteger
 import java.security.MessageDigest
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.streams.asSequence
 
@@ -147,7 +149,7 @@ object CommonFunction {
             Constant.NotiType.EXPEDITION_DONE -> {
                 notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
                 notificationDesc = context.getString(R.string.push_expedition_description)
-                priority = NotificationCompat.PRIORITY_DEFAULT
+                priority = NotificationCompat.PRIORITY_LOW
             }
             Constant.NotiType.REALM_CURRENCY_FULL -> {
                 notificationId = Constant.PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID
@@ -166,25 +168,28 @@ object CommonFunction {
             NotificationManager::class.java
         ) ?: return
 
-        val builder = NotificationCompat.Builder(context, notificationId)
-            .setSmallIcon(R.drawable.resin)
-            .setContentTitle(title)
-            .setContentText(msg)
-            .setAutoCancel(true)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(msg))
-            .setPriority(priority)
+        val builder = NotificationCompat.Builder(context, notificationId).apply {
+            setSmallIcon(R.drawable.resin)
+            setContentTitle(title)
+            setContentText(msg)
+            setAutoCancel(true)
+            setStyle(NotificationCompat.BigTextStyle().bigText(msg))
+            setPriority(priority)
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(
-                NotificationChannel(notificationId,
+                NotificationChannel(
+                    notificationId,
                     title,
-                    NotificationManager.IMPORTANCE_DEFAULT).apply {
+                    NotificationManager.IMPORTANCE_DEFAULT
+                ).apply {
                     description = notificationDesc
                 }
             )
         }
 
-        notificationManager.notify(notiType.ordinal, builder.build())
+        notificationManager.notify((System.currentTimeMillis()).toInt(), builder.build())
     }
 
     fun getTimeLeftUntilChinaTime(isAM: Boolean, hour: Int, startCalendar: Calendar): Long {
@@ -367,6 +372,28 @@ object CommonFunction {
         view.setFloat(R.id.tv_realm_currency_time_title, "setTextSize", fontSize.toFloat())
     }
 
+    fun isUidValidate(widgetId: Int, context: Context): Boolean {
+        val uid = PreferenceManager.getString(context, Constant.PREF_UID + "_$widgetId")
+
+        return if (uid == "") {
+            if (PreferenceManager.getString(context, Constant.PREF_UID) == "") {
+                log.e("no uid exists")
+                false
+            } else {
+                log.e("uid -> $uid")
+                PreferenceManager.setString(
+                    context,
+                    Constant.PREF_UID + "_$widgetId",
+                    PreferenceManager.getString(context, Constant.PREF_UID)
+                )
+                true
+            }
+        } else {
+            log.e("uid -> $uid")
+            true
+        }
+    }
+
     /*
     * preference 마이그레이션용 임시 함수.
     * 차후 버전(1.1.6~7)에서 삭제 요망
@@ -401,6 +428,7 @@ object CommonFunction {
                 PreferenceManager.getInt(context, Constant.PREF_WIDGET_THEME),
                 PreferenceManager.getInt(context, Constant.PREF_WIDGET_RESIN_TIME_NOTATION),
                 PreferenceManager.getInt(context, Constant.PREF_WIDGET_RESIN_IMAGE_VISIBILITY),
+                false,
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE, Constant.PREF_WIDGET_RESIN_FONT_SIZE),
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
             )
@@ -416,9 +444,57 @@ object CommonFunction {
                 PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_REALM_CURRENCY_DATA_VISIBILITY, true),
                 PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_EXPEDITION_DATA_VISIBILITY, true),
                 true,
+                false,
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE, Constant.PREF_WIDGET_DETAIL_FONT_SIZE),
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
             )
         )
+    }
+
+    fun checkAndMigratePreferenceToDB(dao: AccountDaoUseCase, context: Context) {
+        if (!PreferenceManager.getBoolean(context, Constant.PREF_CHECKED_ROOM_DB_MIGRATION, false)) {
+            PreferenceManager.setBoolean(context, Constant.PREF_CHECKED_ROOM_DB_MIGRATION, true)
+
+            val dailyNoteSettings = getT<DailyNoteSettings>(context, Constant.PREF_WIDGET_SETTINGS)?: DailyNoteSettings.EMPTY
+            val checkInSettings = getT<CheckInSettings>(context, Constant.PREF_CHECK_IN_SETTINGS)?: CheckInSettings.EMPTY
+
+            CoroutineScope(Dispatchers.IO).launch {
+                if (
+                    PreferenceManager.getString(context, Constant.PREF_COOKIE) != "" &&
+                    PreferenceManager.getString(context, Constant.PREF_UID) != "" &&
+                    dailyNoteSettings != DailyNoteSettings.EMPTY
+                ) {
+                    val server = when (dailyNoteSettings.server) {      // 메인에서 서버 설정할 때 asia 안누르면 -1로 저정되는 버그 있었음;
+                        -1, 0 -> Constant.Server.ASIA.pref
+                        else -> dailyNoteSettings.server
+                    }
+
+                    dao.insertAccount(
+                        Account(
+                            context.getString(R.string.traveler),
+                            PreferenceManager.getString(context, Constant.PREF_COOKIE),
+                            PreferenceManager.getString(context, Constant.PREF_UID),
+                            server,
+                            checkInSettings.genshinCheckInEnable,
+                            checkInSettings.honkai3rdCheckInEnable,
+                            false
+                        )
+                    ).collect {
+                        log.e(it)
+                    }
+                } else if (PreferenceManager.getString(context, Constant.PREF_COOKIE) != "" &&
+                    PreferenceManager.getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)
+                ) {
+                    dao.insertAccount(
+                        Account.GUEST.copy(
+                            nickname = context.getString(R.string.guest),
+                            cookie = PreferenceManager.getString(context, Constant.PREF_COOKIE)
+                        )
+                    ).collect {
+                        log.e(it)
+                    }
+                }
+            }
+        }
     }
 }

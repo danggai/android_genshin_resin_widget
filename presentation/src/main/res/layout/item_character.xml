@@ -90,7 +90,6 @@
             android:id="@+id/tv_name"
             style="@style/TextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             app:autoSizeTextType="uniform"
             app:autoSizeMinTextSize="6sp"
             app:autoSizeMaxTextSize="16sp"

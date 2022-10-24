@@ -63,6 +63,11 @@ dependencies {
     // Sandwich - network success/fail Handling
     implementation (Dependencies.Sandwich.sandwich)
 
+    // Room - database
+    implementation(Dependencies.Room.runtime)
+    kapt(Dependencies.Room.compiler)
+    implementation(Dependencies.Room.ktx)
+
     // firebase
     implementation (Dependencies.Firebase.bom)
 

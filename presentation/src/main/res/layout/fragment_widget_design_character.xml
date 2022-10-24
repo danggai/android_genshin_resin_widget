@@ -36,8 +36,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextView"
                 android:id="@+id/tv_empty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/character_list_empty"
                 android:maxLines="3"
@@ -85,15 +83,14 @@
                 android:paddingHorizontal="5dp"
                 >
 
-                <com.google.android.material.button.MaterialButton
-                    style="@style/SmallMaterialButton"
-                    android:text="@string/character_list_possession"
-                    android:onClick="@{() -> vm.refreshCharacterInfo()}" />
+<!--                <com.google.android.material.button.MaterialButton-->
+<!--                    style="@style/SmallMaterialButton"-->
+<!--                    android:text="@string/character_list_possession"-->
+<!--                    android:onClick="@{() -> vm.refreshCharacterInfo()}" />-->
 
-                <androidx.legacy.widget.Space
-                    android:layout_width="15dp"
-                    android:layout_height="0dp" />
-
+<!--                <androidx.legacy.widget.Space-->
+<!--                    android:layout_width="15dp"-->
+<!--                    android:layout_height="0dp" />-->
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/SmallMaterialButton"

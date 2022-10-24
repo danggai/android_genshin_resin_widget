@@ -22,6 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingBottom="3dp"
             >
 
             <ImageView
@@ -49,8 +50,6 @@
                     <TextView
                         android:id="@+id/tv_sync_time"
                         style="@style/TextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:singleLine="true"
                         android:text="MM/dd hh:mm"
@@ -84,8 +83,6 @@
                         <TextView
                             style="@style/TextView"
                             android:id="@+id/tv_resin"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:textSize="30sp"
                             android:textStyle="bold"
                             android:text="160"
@@ -97,8 +94,6 @@
                         <TextView
                             style="@style/TextView"
                             android:id="@+id/tv_resin_max"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="/160"
                             android:textSize="16sp"
                             android:textColor="@color/widget_font_main"
@@ -111,8 +106,6 @@
                     <TextView
                         style="@style/TextView"
                         android:id="@+id/tv_remain_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:text="0h 0m left"
                         android:textSize="10sp"
                         android:textColor="@color/widget_font_main"
@@ -138,8 +131,6 @@
             <TextView
                 style="@style/TextView"
                 android:id="@+id/tv_disable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="@color/widget_font_main"
                 android:gravity="center"
@@ -160,6 +151,17 @@
         android:layout_gravity="center"
         android:layout_centerInParent="true"
         android:visibility="gone"
+        />
+
+    <TextView
+        style="@style/TextView"
+        android:id="@+id/tv_uid"
+        android:text="830000000"
+        android:textSize="10sp"
+        android:textColor="@color/widget_font_sub"
+        android:singleLine="true"
+        android:layout_alignBottom="@id/ll_root"
+        android:layout_alignRight="@id/ll_root"
         />
 
 </RelativeLayout>

@@ -12,6 +12,7 @@ import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentCookieWebviewBinding
 import danggai.app.presentation.ui.main.MainActivity
+import danggai.app.presentation.ui.newaccount.NewHoyolabAccountActivity
 import danggai.app.presentation.util.Event
 import danggai.app.presentation.util.log
 
@@ -104,7 +105,7 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
 
         binding.wvBody.settings.cacheMode = WebSettings.LOAD_NO_CACHE
 
-        binding.wvBody.loadUrl("https://www.hoyolab.com/")
+        binding.wvBody.loadUrl("https://m.hoyolab.com/#/timeline")
 
         makeToastLong(requireContext(), getString(R.string.msg_toast_how_to_get_cookie))
     }
@@ -120,7 +121,7 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
                     log.e(cookie)
 
                     if (cookie.contains("ltuid") && cookie.contains("ltoken")) {
-                        MainActivity.startActivity(requireActivity(), cookie)
+                        NewHoyolabAccountActivity.startActivityWithCookie(requireActivity(), cookie)
                         makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_success))
                     } else {
                         makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_fail))

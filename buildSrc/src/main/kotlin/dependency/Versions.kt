@@ -42,6 +42,9 @@ object Versions {
     const val sandwichVersion        = "1.2.3"
     const val glideVersion           = "4.13.0"
 
+    // room db
+    const val roomVersion           = "2.4.3"
+
     // google ads
     const val googleAdsVersion       = "20.4.0"
 

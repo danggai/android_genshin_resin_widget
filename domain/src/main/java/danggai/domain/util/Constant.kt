@@ -2,6 +2,8 @@ package danggai.domain.util
 
 object Constant {
 
+    const val MAX_RESIN = 160
+
     /* URL */
 
     const val OS_TAKUMI_URL = "https://bbs-api-os.hoyoverse.com"
@@ -97,6 +99,8 @@ object Constant {
 
     const val PREF_CHECKED_STORAGE_PERMISSION = "PREF_FIRST_LAUNCH"
     const val PREF_CHECKED_ANTIDOZE_PERMISSION = "PREF_CHECKED_ANTIDOZE_PERMISSION"
+
+    const val PREF_CHECKED_ROOM_DB_MIGRATION = "PREF_CHECKED_ROOM_DB_MIGRATION"
 
     const val PREF_IS_VALID_USERDATA = "PREF_IS_VALID_USERDATA"
 

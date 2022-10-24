@@ -61,5 +61,4 @@ open class BaseFragment: Fragment() {
             }
         }
     }
-
 }

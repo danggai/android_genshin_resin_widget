@@ -158,6 +158,13 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                     binding.widget.tvResin.textSize = it.toFloat()
                 }
             }
+
+            launch {
+                mVM.sfUidVisibility.collect {
+                    log.e()
+                    binding.widget.tvUid.visibility = if (it) View.VISIBLE else View.GONE
+                }
+            }
         }
     }
 }

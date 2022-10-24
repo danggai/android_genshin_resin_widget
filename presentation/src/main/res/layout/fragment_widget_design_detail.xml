@@ -43,7 +43,7 @@
                 android:paddingHorizontal="20dp"
                 >
 
-                <Space
+                <androidx.legacy.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
@@ -85,7 +85,7 @@
 
                 </RadioGroup>
 
-                <Space
+                <androidx.legacy.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
@@ -129,7 +129,7 @@
 
                 </RadioGroup>
 
-                <Space
+                <androidx.legacy.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
@@ -141,6 +141,18 @@
                     android:textSize="28sp"
                     android:textStyle="bold|italic"
                     />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_uid"
+                        android:checked="@={vm.sfUidVisibility}"
+                        android:text="@string/uid" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -197,7 +209,7 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <Space
+                <androidx.legacy.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
@@ -230,7 +242,8 @@
                         style="@style/SeekBar"
                         android:id="@+id/sb_fontsize"
                         android:progress="@={vm.sfFontSizeDetail}"
-                        android:max="24"
+                        android:min="5"
+                        android:max="30"
                         android:layout_gravity="center_vertical"
                         />
 
@@ -243,7 +256,7 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <Space
+                <androidx.legacy.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 

@@ -43,6 +43,7 @@ class WidgetDesignViewModel @Inject constructor(
     val sfResinFontSize = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE)
 
     val sfDetailTimeNotation = MutableStateFlow(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
+    val sfUidVisibility = MutableStateFlow(false)
     val sfResinDataVisibility = MutableStateFlow(true)
     val sfDailyCommissionDataVisibility = MutableStateFlow(true)
     val sfWeeklyBossDataVisibility = MutableStateFlow(true)
@@ -182,6 +183,7 @@ class WidgetDesignViewModel @Inject constructor(
                 sfWidgetTheme.value,
                 sfResinTimeNotation.value,
                 sfResinImageVisibility.value,
+                sfUidVisibility.value,
                 sfResinFontSize.value,
                 sfTransparency.value
             )
@@ -197,6 +199,7 @@ class WidgetDesignViewModel @Inject constructor(
                 sfRealmCurrencyDataVisibility.value,
                 sfExpeditionDataVisibility.value,
                 sfTransformerDataVisibility.value,
+                sfUidVisibility.value,
                 sfFontSizeDetail.value,
                 sfTransparency.value
             )
@@ -262,7 +265,7 @@ class WidgetDesignViewModel @Inject constructor(
 
         refreshCharacters(
             preference.getStringUid(),
-            when (preference.getIntServer()) {
+            when (preference.getDailyNoteSettings().server) {
                 Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
                 Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
                 Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA

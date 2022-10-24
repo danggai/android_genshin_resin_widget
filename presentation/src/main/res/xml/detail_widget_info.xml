@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="danggai.app.presentation.ui.widget.config.WidgetConfigActivity"
     android:initialKeyguardLayout="@layout/widget_detail_fixed"
     android:initialLayout="@layout/widget_detail_fixed"
     android:minWidth="110dp"
