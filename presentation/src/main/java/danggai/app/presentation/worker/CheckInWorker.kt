@@ -366,7 +366,10 @@ class CheckInWorker @AssistedInject constructor(
             else if (isHonkai) account.copy(enable_honkai3rd_checkin = false)
             else account
 
-        accountDao.insertAccount(_account)
+        CoroutineScope(Dispatchers.IO).launch {
+            accountDao.insertAccount(_account)
+                .collect { log.e(it) }
+        }
     }
 
     override suspend fun doWork(): Result {

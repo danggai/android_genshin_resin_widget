@@ -20,7 +20,7 @@
             android:id="@+id/tl_top"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:backgroundTint="@color/light_blue_200"
+            android:backgroundTint="@color/light_blue_600"
             app:tabTextAppearance="@style/TabText"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/vp_main"

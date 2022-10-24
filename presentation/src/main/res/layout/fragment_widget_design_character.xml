@@ -83,15 +83,14 @@
                 android:paddingHorizontal="5dp"
                 >
 
-                <com.google.android.material.button.MaterialButton
-                    style="@style/SmallMaterialButton"
-                    android:text="@string/character_list_possession"
-                    android:onClick="@{() -> vm.refreshCharacterInfo()}" />
+<!--                <com.google.android.material.button.MaterialButton-->
+<!--                    style="@style/SmallMaterialButton"-->
+<!--                    android:text="@string/character_list_possession"-->
+<!--                    android:onClick="@{() -> vm.refreshCharacterInfo()}" />-->
 
-                <androidx.legacy.widget.Space
-                    android:layout_width="15dp"
-                    android:layout_height="0dp" />
-
+<!--                <androidx.legacy.widget.Space-->
+<!--                    android:layout_width="15dp"-->
+<!--                    android:layout_height="0dp" />-->
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/SmallMaterialButton"

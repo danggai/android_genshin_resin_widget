@@ -27,6 +27,9 @@ import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.util.Constant
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.*
@@ -455,36 +458,42 @@ object CommonFunction {
             val dailyNoteSettings = getT<DailyNoteSettings>(context, Constant.PREF_WIDGET_SETTINGS)?: DailyNoteSettings.EMPTY
             val checkInSettings = getT<CheckInSettings>(context, Constant.PREF_CHECK_IN_SETTINGS)?: CheckInSettings.EMPTY
 
-            if (
-                PreferenceManager.getString(context, Constant.PREF_COOKIE) != "" &&
-                PreferenceManager.getString(context, Constant.PREF_UID) != "" &&
-                dailyNoteSettings != DailyNoteSettings.EMPTY
-            ) {
-                val server = when (dailyNoteSettings.server) {      // 메인에서 서버 설정할 때 asia 안누르면 -1로 저정되는 버그 있었음;
-                    -1, 0 -> Constant.Server.ASIA.pref
-                    else -> dailyNoteSettings.server
-                }
+            CoroutineScope(Dispatchers.IO).launch {
+                if (
+                    PreferenceManager.getString(context, Constant.PREF_COOKIE) != "" &&
+                    PreferenceManager.getString(context, Constant.PREF_UID) != "" &&
+                    dailyNoteSettings != DailyNoteSettings.EMPTY
+                ) {
+                    val server = when (dailyNoteSettings.server) {      // 메인에서 서버 설정할 때 asia 안누르면 -1로 저정되는 버그 있었음;
+                        -1, 0 -> Constant.Server.ASIA.pref
+                        else -> dailyNoteSettings.server
+                    }
 
-                dao.insertAccount(
-                    Account(
-                        context.getString(R.string.traveler),
-                        PreferenceManager.getString(context, Constant.PREF_COOKIE),
-                        PreferenceManager.getString(context, Constant.PREF_UID),
-                        server,
-                        checkInSettings.genshinCheckInEnable,
-                        checkInSettings.honkai3rdCheckInEnable,
-                        false
-                    )
-                )
-            } else if (PreferenceManager.getString(context, Constant.PREF_COOKIE) != "" &&
-                PreferenceManager.getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)
-            ) {
-                dao.insertAccount(
-                    Account.GUEST.copy(
-                        nickname = context.getString(R.string.guest),
-                        cookie = PreferenceManager.getString(context, Constant.PREF_COOKIE)
-                    )
-                )
+                    dao.insertAccount(
+                        Account(
+                            context.getString(R.string.traveler),
+                            PreferenceManager.getString(context, Constant.PREF_COOKIE),
+                            PreferenceManager.getString(context, Constant.PREF_UID),
+                            server,
+                            checkInSettings.genshinCheckInEnable,
+                            checkInSettings.honkai3rdCheckInEnable,
+                            false
+                        )
+                    ).collect {
+                        log.e(it)
+                    }
+                } else if (PreferenceManager.getString(context, Constant.PREF_COOKIE) != "" &&
+                    PreferenceManager.getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)
+                ) {
+                    dao.insertAccount(
+                        Account.GUEST.copy(
+                            nickname = context.getString(R.string.guest),
+                            cookie = PreferenceManager.getString(context, Constant.PREF_COOKIE)
+                        )
+                    ).collect {
+                        log.e(it)
+                    }
+                }
             }
         }
     }
