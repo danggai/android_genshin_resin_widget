@@ -265,7 +265,7 @@ class WidgetDesignViewModel @Inject constructor(
 
         refreshCharacters(
             preference.getStringUid(),
-            when (preference.getIntServer()) {
+            when (preference.getDailyNoteSettings().server) {
                 Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
                 Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
                 Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA

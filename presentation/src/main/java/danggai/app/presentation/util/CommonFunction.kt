@@ -18,6 +18,7 @@ import danggai.app.presentation.R
 import danggai.app.presentation.ui.widget.DetailWidget
 import danggai.app.presentation.ui.widget.ResinWidget
 import danggai.app.presentation.ui.widget.ResinWidgetResizable
+import danggai.app.presentation.util.PreferenceManager.getT
 import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
 import danggai.domain.local.CheckInSettings
@@ -451,19 +452,27 @@ object CommonFunction {
         if (!PreferenceManager.getBoolean(context, Constant.PREF_CHECKED_ROOM_DB_MIGRATION, false)) {
             PreferenceManager.setBoolean(context, Constant.PREF_CHECKED_ROOM_DB_MIGRATION, true)
 
+            val dailyNoteSettings = getT<DailyNoteSettings>(context, Constant.PREF_WIDGET_SETTINGS)?: DailyNoteSettings.EMPTY
+            val checkInSettings = getT<CheckInSettings>(context, Constant.PREF_CHECK_IN_SETTINGS)?: CheckInSettings.EMPTY
+
             if (
                 PreferenceManager.getString(context, Constant.PREF_COOKIE) != "" &&
                 PreferenceManager.getString(context, Constant.PREF_UID) != "" &&
-                PreferenceManager.getInt(context, Constant.PREF_SERVER) != -1
+                dailyNoteSettings != DailyNoteSettings.EMPTY
             ) {
+                val server = when (dailyNoteSettings.server) {      // 메인에서 서버 설정할 때 asia 안누르면 -1로 저정되는 버그 있었음;
+                    -1, 0 -> Constant.Server.ASIA.pref
+                    else -> dailyNoteSettings.server
+                }
+
                 dao.insertAccount(
                     Account(
                         context.getString(R.string.traveler),
                         PreferenceManager.getString(context, Constant.PREF_COOKIE),
                         PreferenceManager.getString(context, Constant.PREF_UID),
-                        PreferenceManager.getInt(context, Constant.PREF_SERVER),
-                        PreferenceManager.getBoolean(context, Constant.PREF_ENABLE_GENSHIN_AUTO_CHECK_IN, false),
-                        PreferenceManager.getBoolean(context, Constant.PREF_ENABLE_HONKAI_3RD_AUTO_CHECK_IN, false),
+                        server,
+                        checkInSettings.genshinCheckInEnable,
+                        checkInSettings.honkai3rdCheckInEnable,
                         false
                     )
                 )
