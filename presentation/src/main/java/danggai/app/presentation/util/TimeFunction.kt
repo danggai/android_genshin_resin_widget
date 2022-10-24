@@ -45,6 +45,10 @@ object TimeFunction {
             Constant.PREF_TIME_NOTATION_DEFAULT,
             Constant.PREF_TIME_NOTATION_REMAIN_TIME -> secondToRemainTime(context, second, timeType = Constant.TIME_TYPE_DONE)
             Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> getSecondsLaterDate(context, second, false, timeType = Constant.TIME_TYPE_DONE)
+            Constant.PREF_TIME_NOTATION_DISABLE -> {
+                if (second == "0") context.getString(R.string.widget_ui_parameter_done)
+                else context.getString(R.string.widget_format_under_expedition)
+            }
             else -> ""
         }
     }
@@ -76,6 +80,16 @@ object TimeFunction {
                 // 1일 이내로 남음
                 else if (transformer != null && transformer.recovery_time.Day == 0)
                     getSecondsLaterDate(context, transformerTimeToSecond(transformer.recovery_time), true, timeType = Constant.TIME_TYPE_DONE)
+
+                // transformer == null
+                else context.getString(R.string.widget_ui_unknown)
+            }
+            Constant.PREF_TIME_NOTATION_DISABLE -> {
+                if (transformer != null && transformer.recovery_time == TransformerTime.REACHED)
+                    context.getString(R.string.widget_ui_transformer_reached)
+
+                else if (transformer != null && transformer.recovery_time != TransformerTime.REACHED)
+                    context.getString(R.string.widget_ui_transformer_not_reached)
 
                 // transformer == null
                 else context.getString(R.string.widget_ui_unknown)

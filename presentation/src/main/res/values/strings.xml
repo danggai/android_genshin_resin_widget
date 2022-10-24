@@ -247,6 +247,7 @@
     <string name="widget_ui_remain_time">%dh %dm left</string>
     <string name="widget_format_max_time">Full at %02d:%02d</string>
     <string name="widget_format_done_time">Done at %02d:%02d</string>
+    <string name="widget_format_under_expedition">Under Expedition</string>
     <string name="widget_ui_today">today, %02d:%02d</string>
     <string name="widget_ui_date">%s, %02d:%02d</string>
     <string name="widget_ui_expect_date">Scheduled on %s</string>

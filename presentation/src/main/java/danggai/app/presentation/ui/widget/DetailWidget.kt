@@ -162,9 +162,7 @@ class DetailWidget() : AppWidgetProvider() {
 
                 view.setTextViewText(R.id.tv_realm_currency_title, _context.getString(R.string.realm_currency))
                 view.setTextViewText(R.id.tv_realm_currency,
-                    if (dailyNote.home_coin_recovery_time != "0")
-                        (dailyNote.current_home_coin).toString()+"/"+(dailyNote.max_home_coin).toString()
-                    else _context.getString(R.string.widget_ui_parameter_max)
+                    (dailyNote.current_home_coin).toString()+"/"+(dailyNote.max_home_coin).toString()
                 )
 
                 view.setTextViewText(R.id.tv_transformer_title, _context.getString(R.string.parametric_transformer))
