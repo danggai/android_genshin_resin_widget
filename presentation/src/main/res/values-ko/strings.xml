@@ -5,6 +5,7 @@
     <string name="hoyolab_checkin">호요랩 출석체크</string>
     <string name="widget_customizing">위젯 커스텀</string>
     <string name="btn_no_genshin_account">원신 계정 없음</string>
+    <string name="guest_account_desc">게스트 계정은 1개만 등록할 수 있습니다.</string>
     <string name="hoyolab_checkin_desc">최초 1회는 \'호요랩 출석체크\'버튼을 눌러 수동으로 진행해야 자동 출석이 정상적으로 진행됩니다.</string>
 
     <string name="apply">확인</string>
@@ -287,5 +288,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 3.2 버전 캐릭터 대응\n- UI 수정\n- 배터리 절약 설정 예외 권한 추가</string>
+    <string name="dialog_msg_patch_note">- UI 간소화\n- 다계정 저장 지원\n- 호요랩 계정 등록 방식 간소화\n- 마이너 버그 수정</string>
 </resources>

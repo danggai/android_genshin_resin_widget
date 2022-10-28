@@ -26,6 +26,7 @@
     <string name="hoyolab_checkin">HoYoLab CheckIn</string>
     <string name="widget_customizing">Widget Customizing</string>
     <string name="btn_no_genshin_account">No Genshin Account</string>
+    <string name="guest_account_desc">Only one guest account can be registered.</string>
     <string name="hoyolab_checkin_desc">For the first time, you must press the \'HoYoLab CheckIn\' button manually to proceed with automatic attendance.</string>
 
     <string name="save_setting">Save Setting</string>
@@ -310,6 +311,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- 3.2 Version Character Compatible.\n- Modify UI\n- Add Exception Permissions for Power saving exclusion</string>
-
+    <string name="dialog_msg_patch_note">- Simplify UI\n- Support for storing multiple accounts\n- Simplified HoYoLab Account Registration\n- Minor bug fixes</string>
 </resources>

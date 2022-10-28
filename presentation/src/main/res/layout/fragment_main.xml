@@ -26,7 +26,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toTopOf="@id/ns_body"
-            android:background="@color/light_blue_200"
+            android:background="@color/light_blue_600"
             >
 
             <ImageView
@@ -45,7 +45,7 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/light_blue_200"
+                android:backgroundTint="@color/light_blue_600"
                 app:tabTextAppearance="@style/TabText"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/vp_main"
