@@ -112,6 +112,7 @@
     <string name="msg_toast_get_uid_error_no_ltuid">쿠키에 ltuid가 없으면 자동으로 uid를 가져올 수 없어! 쿠키를 다시 확인하고 시도해 줘!</string>
     <string name="msg_toast_get_uid_success">성공적으로 인게임 uid를 가져왔어!</string>
     <string name="msg_toast_get_uid_error_invalid_cookie">쿠키가 정상적이지 않아서 인게임 uid를 가져오는데 실패했어..</string>
+    <string name="msg_toast_get_uid_error_genshin_data_not_exists">정상적으로 데이터를 가져왔지만, 원신 계정 정보가 존재하지 않아! 잘못 된 계정이거나 점검 중일 수 있으니 확인해 줘!</string>
     <string name="msg_toast_get_uid_error_card_list_empty">정상적으로 데이터를 가져왔지만, 인게임 정보가 존재하지 않아서 데이터를 가져올 수 없어!</string>
     <string name="msg_toast_get_uid_error_include_error_code">인게임 uid를 가져오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없지만, 오류코드는 %s야! 개발자에게 공유해주면, 문제 해결에 도움이 돼!</string>
     <string name="msg_toast_get_uid_error">인게임 uid를 가져오는데 실패했어.. 예측하지 못한 오류여서 자세한 안내를 해줄 수 없어.. 미안해!</string>

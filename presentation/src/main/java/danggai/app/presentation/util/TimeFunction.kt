@@ -12,39 +12,42 @@ import java.util.*
 object TimeFunction {
     fun resinSecondToTime(
         context: Context,
+        recentSyneTime: Date,
         second: String,
         timeNotation: Int
     ): String {
         return when (timeNotation) {
             Constant.PREF_TIME_NOTATION_DEFAULT,
             Constant.PREF_TIME_NOTATION_REMAIN_TIME, -> secondToRemainTime(context, second, timeType = Constant.TIME_TYPE_MAX)
-            Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> getSecondsLaterDate(context, second, false, timeType = Constant.TIME_TYPE_MAX)
+            Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> getSecondsLaterDate(context, recentSyneTime, second, false, timeType = Constant.TIME_TYPE_MAX)
             else -> ""
         }
     }
 
     fun realmCurrencySecondToTime(
         context: Context,
+        recentSyneTime: Date,
         second: String,
         timeNotation: Int
     ): String {
         return when (timeNotation) {
             Constant.PREF_TIME_NOTATION_DEFAULT,
             Constant.PREF_TIME_NOTATION_REMAIN_TIME -> secondToRemainTime(context, second, timeType = Constant.TIME_TYPE_MAX)
-            Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> getSecondsLaterDate(context, second, true, timeType = Constant.TIME_TYPE_MAX)
+            Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> getSecondsLaterDate(context, recentSyneTime, second, true, timeType = Constant.TIME_TYPE_MAX)
             else -> ""
         }
     }
 
     fun expeditionSecondToTime(
         context: Context,
+        recentSyneTime: Date,
         second: String,
         timeNotation: Int
     ): String {
         return when (timeNotation) {
             Constant.PREF_TIME_NOTATION_DEFAULT,
             Constant.PREF_TIME_NOTATION_REMAIN_TIME -> secondToRemainTime(context, second, timeType = Constant.TIME_TYPE_DONE)
-            Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> getSecondsLaterDate(context, second, false, timeType = Constant.TIME_TYPE_DONE)
+            Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> getSecondsLaterDate(context, recentSyneTime, second, false, timeType = Constant.TIME_TYPE_DONE)
             Constant.PREF_TIME_NOTATION_DISABLE -> {
                 if (second == "0") context.getString(R.string.widget_ui_parameter_done)
                 else context.getString(R.string.widget_format_under_expedition)
@@ -55,6 +58,7 @@ object TimeFunction {
 
     fun transformerToTime(
         context: Context,
+        recentSyneTime: Date,
         transformer: Transformer?,
         timeNotation: Int
     ): String {
@@ -79,7 +83,7 @@ object TimeFunction {
 
                 // 1일 이내로 남음
                 else if (transformer != null && transformer.recovery_time.Day == 0)
-                    getSecondsLaterDate(context, transformerTimeToSecond(transformer.recovery_time), true, timeType = Constant.TIME_TYPE_DONE)
+                    getSecondsLaterDate(context, recentSyneTime, transformerTimeToSecond(transformer.recovery_time), true, timeType = Constant.TIME_TYPE_DONE)
 
                 // transformer == null
                 else context.getString(R.string.widget_ui_unknown)
@@ -125,12 +129,12 @@ object TimeFunction {
 
     fun getSecondsLaterTime(
         context: Context,
+        recentSyneTime: Date,
         second: String,
         timeType: Int = Constant.TIME_TYPE_MAX
     ): String {
         val cal = Calendar.getInstance()
-        val date = Date()
-        cal.time = date
+        cal.time = recentSyneTime
 
         val format = when (timeType) {
             Constant.TIME_TYPE_MAX -> context.getString(R.string.widget_format_max_time)
@@ -163,6 +167,7 @@ object TimeFunction {
 
     fun getSecondsLaterDate(
         context: Context,
+        recentSyneTime: Date,
         second: String,
         includeDate: Boolean,
         timeType: Int = Constant.TIME_TYPE_MAX
@@ -182,7 +187,7 @@ object TimeFunction {
                 return timeOverString
 
             val target: Calendar = Calendar.getInstance().apply {
-                this.time = Date()
+                this.time = recentSyneTime
                 this.add(Calendar.SECOND, second.toInt())
             }
 

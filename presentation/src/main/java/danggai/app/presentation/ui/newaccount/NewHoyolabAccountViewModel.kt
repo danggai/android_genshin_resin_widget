@@ -69,7 +69,7 @@ class NewHoyolabAccountViewModel @Inject constructor(
                     is ApiResult.Success -> {
                         when (it.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
-                                if (it.data.data.list.isNotEmpty()) {
+                                if (it.data.data.list.any { gameRecordCard -> gameRecordCard.game_id == 2 }) {
                                     log.e()
                                     it.data.data.list.forEach { recordCard ->
                                         if (recordCard.game_id == Constant.GAME_ID_GENSHIN_IMPACT) {
@@ -85,6 +85,9 @@ class NewHoyolabAccountViewModel @Inject constructor(
                                         }
                                     }
                                     makeToast(resource.getString(R.string.msg_toast_get_uid_success))
+                                } else if (it.data.data.list.isNotEmpty()) {
+                                    log.e()
+                                    makeToast(resource.getString(R.string.msg_toast_get_uid_error_genshin_data_not_exists))
                                 } else {
                                     log.e()
                                     makeToast(resource.getString(R.string.msg_toast_get_uid_error_card_list_empty))

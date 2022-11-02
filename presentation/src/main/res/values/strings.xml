@@ -134,6 +134,7 @@
     <string name="msg_toast_get_uid_error_no_ltuid">If no ltuid in your cookie, I can\'t automatically get a uid! Please check the cookies again and try!</string>
     <string name="msg_toast_get_uid_success">Successfully get in-game uid!</string>
     <string name="msg_toast_get_uid_error_invalid_cookie">The cookie is invalid, so failed to get in-game uid.</string>
+    <string name="msg_toast_get_uid_error_genshin_data_not_exists">Got data successfully, but genshin account data does not exist! It may be a wrong account or HoYoLab may be maintenance, so please check it!</string>
     <string name="msg_toast_get_uid_error_card_list_empty">Got data successfully, but can\'t get in-game uid because in-game user data doesn\'t exist!</string>
     <string name="msg_toast_get_uid_error_include_error_code">Failed to get in-game uid.. It\'s an unexpected error, so I can\'t give you detailed information, Error code is %s! Please share it with the developer!</string>
     <string name="msg_toast_get_uid_error">Failed to get in-game uid.. It\'s an unexpected error, so I can\'t give you detailed information. sorry!</string>

@@ -23,6 +23,7 @@ import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 @AndroidEntryPoint
 class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBinding, WidgetDesignViewModel>() {
@@ -225,10 +226,10 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                                 }
                             }
 
-                            tvResinTime.text = TimeFunction.resinSecondToTime(_context, fakeResinRemainTime, mVM.sfDetailTimeNotation.value)
-                            tvRealmCurrencyTime.text = TimeFunction.realmCurrencySecondToTime(_context, fakeRealmCurrencyRemainTime, mVM.sfDetailTimeNotation.value)
-                            tvExpeditionTime.text = TimeFunction.expeditionSecondToTime(_context, fakeExpedtionRemainTime, mVM.sfDetailTimeNotation.value)
-                            tvTransformer.text = TimeFunction.transformerToTime(_context, fakeTransformer, mVM.sfDetailTimeNotation.value)
+                            tvResinTime.text = TimeFunction.resinSecondToTime(_context, Date(), fakeResinRemainTime, mVM.sfDetailTimeNotation.value)
+                            tvRealmCurrencyTime.text = TimeFunction.realmCurrencySecondToTime(_context, Date(), fakeRealmCurrencyRemainTime, mVM.sfDetailTimeNotation.value)
+                            tvExpeditionTime.text = TimeFunction.expeditionSecondToTime(_context, Date(), fakeExpedtionRemainTime, mVM.sfDetailTimeNotation.value)
+                            tvTransformer.text = TimeFunction.transformerToTime(_context, Date(), fakeTransformer, mVM.sfDetailTimeNotation.value)
                         }
                     }
                 }

@@ -19,6 +19,8 @@ import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.util.Constant
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ResinWidgetResizable() : AppWidgetProvider() {
@@ -129,6 +131,11 @@ class ResinWidgetResizable() : AppWidgetProvider() {
 
             if (CommonFunction.isUidValidate(widgetId, context)) {
                 val uid = PreferenceManager.getString(context, Constant.PREF_UID + "_$widgetId")
+                val recentSyncTimeString = PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid").ifEmpty {
+                    TimeFunction.getSyncTimeString()
+                }
+                val recentSyncTimeDate = SimpleDateFormat(Constant.DATE_FORMAT_SYNC_TIME).parse(recentSyncTimeString)?: Date()
+
                 log.e()
 
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
@@ -149,12 +156,12 @@ class ResinWidgetResizable() : AppWidgetProvider() {
                     when (widgetDesign.timeNotation) {
                         Constant.PREF_TIME_NOTATION_DEFAULT,
                         Constant.PREF_TIME_NOTATION_REMAIN_TIME -> TimeFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time, timeType = Constant.TIME_TYPE_MAX)
-                        Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> TimeFunction.getSecondsLaterTime(_context, dailyNote.resin_recovery_time, Constant.TIME_TYPE_MAX)
+                        Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> TimeFunction.getSecondsLaterTime(_context, recentSyncTimeDate, dailyNote.resin_recovery_time, Constant.TIME_TYPE_MAX)
                         else -> TimeFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time, timeType = Constant.TIME_TYPE_MAX)
                     }
                 )
 
-                view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid"))
+                view.setTextViewText(R.id.tv_sync_time, recentSyncTimeString)
                 view.setViewVisibility(R.id.iv_resin, if (widgetDesign.resinImageVisibility == Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE) View.GONE else View.VISIBLE)
             } else {
                 log.e()

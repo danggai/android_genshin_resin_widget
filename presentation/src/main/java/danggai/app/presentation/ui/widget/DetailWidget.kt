@@ -20,6 +20,7 @@ import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.util.Constant
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -140,6 +141,11 @@ class DetailWidget() : AppWidgetProvider() {
 
             if (CommonFunction.isUidValidate(widgetId, context)) {
                 val uid = PreferenceManager.getString(context, Constant.PREF_UID + "_$widgetId")
+                val recentSyncTimeString = PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid").ifEmpty {
+                    TimeFunction.getSyncTimeString()
+                }
+                val recentSyncTimeDate = SimpleDateFormat(Constant.DATE_FORMAT_SYNC_TIME).parse(recentSyncTimeString)?:Date()
+
                 log.e()
 
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
@@ -179,12 +185,17 @@ class DetailWidget() : AppWidgetProvider() {
                     when {
                         dailyNote.transformer == null -> _context.getString(R.string.widget_ui_unknown)
                         !dailyNote.transformer!!.obtained -> _context.getString(R.string.widget_ui_transformer_not_obtained)
-                        !dailyNote.transformer!!.recovery_time.reached -> TimeFunction.transformerToTime(_context, dailyNote.transformer, widgetDesign.timeNotation)
+                        !dailyNote.transformer!!.recovery_time.reached -> TimeFunction.transformerToTime(
+                            _context,
+                            recentSyncTimeDate,
+                            dailyNote.transformer,
+                            widgetDesign.timeNotation
+                        )
                         else -> _context.getString(R.string.widget_ui_transformer_reached)
                     }
                 )
 
-                view.setTextViewText(R.id.tv_sync_time, PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid"))
+                view.setTextViewText(R.id.tv_sync_time, recentSyncTimeString)
 
                 when (widgetDesign.timeNotation) {
                     Constant.PREF_TIME_NOTATION_DEFAULT,
@@ -202,38 +213,60 @@ class DetailWidget() : AppWidgetProvider() {
                     }
                 }
 
-                view.setTextViewText(R.id.tv_resin_time,
-                    TimeFunction.resinSecondToTime(_context, dailyNote.resin_recovery_time, widgetDesign.timeNotation))
-                view.setTextViewText(R.id.tv_realm_currency_time,
-                    TimeFunction.realmCurrencySecondToTime(_context, dailyNote.home_coin_recovery_time, widgetDesign.timeNotation))
-                view.setTextViewText(R.id.tv_expedition_time,
-                    TimeFunction.expeditionSecondToTime(_context, PreferenceManager.getString(context, Constant.PREF_EXPEDITION_TIME + "_$uid"), widgetDesign.timeNotation))
-                
+                view.setTextViewText(R.id.tv_resin_time, TimeFunction.resinSecondToTime(
+                    _context,
+                    recentSyncTimeDate,
+                    dailyNote.resin_recovery_time,
+                    widgetDesign.timeNotation
+                ))
+                view.setTextViewText(R.id.tv_realm_currency_time, TimeFunction.realmCurrencySecondToTime(
+                    _context,
+                    recentSyncTimeDate,
+                    dailyNote.home_coin_recovery_time,
+                    widgetDesign.timeNotation
+                ))
+                view.setTextViewText(R.id.tv_expedition_time, TimeFunction.expeditionSecondToTime(
+                    _context,
+                    recentSyncTimeDate,
+                    PreferenceManager.getString(
+                        context,
+                        Constant.PREF_EXPEDITION_TIME + "_$uid"),
+                    widgetDesign.timeNotation
+                ))
+
                 view.setViewVisibility(R.id.rl_resin,
-                    if (widgetDesign.resinDataVisibility) View.VISIBLE else View.GONE)
+                    if (widgetDesign.resinDataVisibility) View.VISIBLE else View.GONE
+                )
                 view.setViewVisibility(R.id.rl_resin_time,
                     if (widgetDesign.resinDataVisibility &&
                         widgetDesign.timeNotation != Constant.PREF_TIME_NOTATION_DISABLE
-                    ) View.VISIBLE else View.GONE)
+                    ) View.VISIBLE else View.GONE
+                )
 
                 view.setViewVisibility(R.id.rl_daily_commission,
-                    if (widgetDesign.dailyCommissinDataVisibility) View.VISIBLE else View.GONE)
+                    if (widgetDesign.dailyCommissinDataVisibility) View.VISIBLE else View.GONE
+                )
                 view.setViewVisibility(R.id.rl_weekly_boss,
-                    if (widgetDesign.weeklyBossDataVisibility) View.VISIBLE else View.GONE)
+                    if (widgetDesign.weeklyBossDataVisibility) View.VISIBLE else View.GONE
+                )
 
                 view.setViewVisibility(R.id.rl_realm_currency,
-                    if (widgetDesign.realmCurrencyDataVisibility) View.VISIBLE else View.GONE)
+                    if (widgetDesign.realmCurrencyDataVisibility) View.VISIBLE else View.GONE
+                )
                 view.setViewVisibility(R.id.rl_realm_currency_time,
                     if (widgetDesign.realmCurrencyDataVisibility &&
                         widgetDesign.timeNotation != Constant.PREF_TIME_NOTATION_DISABLE &&
                         dailyNote.home_coin_recovery_time != "0"
-                    ) View.VISIBLE else View.GONE)
+                    ) View.VISIBLE else View.GONE
+                )
 
                 view.setViewVisibility(R.id.rl_expedition,
-                    if (widgetDesign.expeditionDataVisibility) View.VISIBLE else View.GONE)
+                    if (widgetDesign.expeditionDataVisibility) View.VISIBLE else View.GONE
+                )
 
                 view.setViewVisibility(R.id.rl_transformer,
-                    if (widgetDesign.transformerDataVisibility) View.VISIBLE else View.GONE)
+                    if (widgetDesign.transformerDataVisibility) View.VISIBLE else View.GONE
+                )
             } else {
                 log.e()
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
