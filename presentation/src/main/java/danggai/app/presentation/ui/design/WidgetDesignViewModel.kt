@@ -41,9 +41,9 @@ class WidgetDesignViewModel @Inject constructor(
     val sfResinTimeNotation = MutableStateFlow(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
     val sfResinImageVisibility = MutableStateFlow(Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE)
     val sfResinFontSize = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE)
+    val sfResinUidVisibility = MutableStateFlow(false)
 
     val sfDetailTimeNotation = MutableStateFlow(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
-    val sfUidVisibility = MutableStateFlow(false)
     val sfResinDataVisibility = MutableStateFlow(true)
     val sfDailyCommissionDataVisibility = MutableStateFlow(true)
     val sfWeeklyBossDataVisibility = MutableStateFlow(true)
@@ -51,6 +51,7 @@ class WidgetDesignViewModel @Inject constructor(
     val sfExpeditionDataVisibility = MutableStateFlow(true)
     val sfTransformerDataVisibility = MutableStateFlow(true)
     val sfFontSizeDetail = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
+    val sfDetailUidVisibility = MutableStateFlow(false)
 
     val sfCharacterListRefreshSwitch = MutableStateFlow(false)
 
@@ -73,6 +74,7 @@ class WidgetDesignViewModel @Inject constructor(
             sfResinTimeNotation.value = it.timeNotation
             sfResinFontSize.value = it.fontSize
             sfResinImageVisibility.value = it.resinImageVisibility
+            sfResinUidVisibility.value = it.uidVisibility
         }
 
         preference.getDetailWidgetDesignSettings().let {
@@ -84,6 +86,7 @@ class WidgetDesignViewModel @Inject constructor(
             sfRealmCurrencyDataVisibility.value = it.realmCurrencyDataVisibility
             sfExpeditionDataVisibility.value = it.expeditionDataVisibility
             sfTransformerDataVisibility.value = it.transformerDataVisibility
+            sfDetailUidVisibility.value = it.uidVisibility
         }
 
         preference.getSelectedCharacterIdList().let {
@@ -183,7 +186,7 @@ class WidgetDesignViewModel @Inject constructor(
                 sfWidgetTheme.value,
                 sfResinTimeNotation.value,
                 sfResinImageVisibility.value,
-                sfUidVisibility.value,
+                sfResinUidVisibility.value,
                 sfResinFontSize.value,
                 sfTransparency.value
             )
@@ -199,7 +202,7 @@ class WidgetDesignViewModel @Inject constructor(
                 sfRealmCurrencyDataVisibility.value,
                 sfExpeditionDataVisibility.value,
                 sfTransformerDataVisibility.value,
-                sfUidVisibility.value,
+                sfDetailUidVisibility.value,
                 sfFontSizeDetail.value,
                 sfTransparency.value
             )

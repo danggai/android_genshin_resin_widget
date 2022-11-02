@@ -160,7 +160,7 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
             }
 
             launch {
-                mVM.sfUidVisibility.collect {
+                mVM.sfResinUidVisibility.collect {
                     log.e()
                     binding.widget.tvUid.visibility = if (it) View.VISIBLE else View.GONE
                 }

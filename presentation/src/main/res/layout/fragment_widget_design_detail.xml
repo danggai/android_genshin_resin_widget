@@ -149,7 +149,7 @@
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
                         android:id="@+id/cb_uid"
-                        android:checked="@={vm.sfUidVisibility}"
+                        android:checked="@={vm.sfDetailUidVisibility}"
                         android:text="@string/uid" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>

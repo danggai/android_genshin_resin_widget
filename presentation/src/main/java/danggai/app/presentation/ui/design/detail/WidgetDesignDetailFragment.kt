@@ -280,7 +280,7 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
             }
 
             launch {
-                mVM.sfUidVisibility.collect {
+                mVM.sfDetailUidVisibility.collect {
                     log.e()
                     binding.widget.tvUid.visibility = if (it) View.VISIBLE else View.GONE
                 }
