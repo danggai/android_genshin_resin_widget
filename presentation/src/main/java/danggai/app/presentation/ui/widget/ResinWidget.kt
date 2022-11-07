@@ -170,7 +170,6 @@ class ResinWidget() : AppWidgetProvider() {
                 view.setViewVisibility(R.id.tv_uid, View.GONE)
                 view.setViewVisibility(R.id.ll_disable, View.VISIBLE)
             }
-
         }
     }
 
