@@ -7,8 +7,9 @@
    - 모바일에서는 구글 크롬 사용을 권장 함
 
 
-2. 자바스크립트를 활용해 쿠키 획득하기
+2. 아래 javascript 를 주소창에 붙여넣기
    - javascript:document.write(document.cookie)
+   - 로그인이 완료 된 브라우저에 붙여넣어야 함
    - **주의**: javascript: 이 없는 채로 붙여넣기 될 수 있음!
 
 
