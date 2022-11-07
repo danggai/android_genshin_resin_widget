@@ -33,7 +33,6 @@ class DailyNoteRepositoryImpl @Inject constructor(
             ds
         )
 
-
         response.suspendOnSuccess {
             emit(this.response.body()?.let {
                 ApiResult.Success<DailyNote>(

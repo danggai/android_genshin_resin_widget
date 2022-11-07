@@ -312,5 +312,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Simplify UI\n- Support for storing multiple accounts\n- Simplified HoYoLab Account Registration\n- Minor bug fixes</string>
+    <string name="dialog_msg_patch_note">- Fixed an issue where user data is viewed abnormally except of the asia server</string>
 </resources>

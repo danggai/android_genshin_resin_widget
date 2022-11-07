@@ -242,19 +242,19 @@ class RefreshWorker @AssistedInject constructor(
 
         CommonFunction.checkAndMigratePreferenceToDB(accountDao, applicationContext)
 
-        val server = when (preference.getDailyNoteSettings().server) {
-            Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
-            Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
-            Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
-            Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
-            else -> Constant.SERVER_OS_ASIA
-        }
-
         try {
             CoroutineScope(Dispatchers.IO).launch {
                 delay(300L)     // 마이그레이션 대비용 시간
                 accountDao.selectAllAccount().collect { accountList ->
                     accountList.forEach { account ->
+                        val server = when (account.server) {
+                            Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
+                            Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
+                            Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
+                            Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
+                            else -> Constant.SERVER_OS_ASIA
+                        }
+
                         if (account.genshin_uid != "-1")
                             refreshDailyNote(
                                 account,

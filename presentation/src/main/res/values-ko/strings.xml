@@ -289,5 +289,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- UI 간소화\n- 다계정 저장 지원\n- 호요랩 계정 등록 방식 간소화\n- 마이너 버그 수정</string>
+    <string name="dialog_msg_patch_note">- asia서버 외에서 정보가 비정상적으로 조회되는 문제 수정</string>
 </resources>
