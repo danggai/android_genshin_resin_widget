@@ -54,14 +54,16 @@ class DetailWidget() : AppWidgetProvider() {
 
         val widgetId = intent?.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)?:-1
         val uid = intent?.getStringExtra("uid")?:""
+        val name = intent?.getStringExtra("name")?:""
 
         if (widgetId != -1 && uid.isNotEmpty()) {
             context!!.let {
-                PreferenceManager.setString(
-                    context,
-                    Constant.PREF_UID + "_$widgetId",
-                    uid
-                )
+                PreferenceManager.setString(context, Constant.PREF_UID + "_$widgetId", uid)
+            }
+        }
+        if (widgetId != -1 && name.isNotEmpty()) {
+            context!!.let {
+                PreferenceManager.setString(context, Constant.PREF_NAME + "_$widgetId", name)
             }
         }
 
@@ -141,6 +143,7 @@ class DetailWidget() : AppWidgetProvider() {
 
             if (CommonFunction.isUidValidate(widgetId, context)) {
                 val uid = PreferenceManager.getString(context, Constant.PREF_UID + "_$widgetId")
+                val name = PreferenceManager.getString(context, Constant.PREF_NAME + "_$widgetId")
                 val recentSyncTimeString = PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid").ifEmpty {
                     TimeFunction.getSyncTimeString()
                 }
@@ -151,7 +154,7 @@ class DetailWidget() : AppWidgetProvider() {
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
                 view.setViewVisibility(R.id.ll_disable, View.GONE)
                 view.setViewVisibility(R.id.ll_body, View.VISIBLE)
-                view.setViewVisibility(R.id.tv_uid, View.VISIBLE)
+                view.setViewVisibility(R.id.ll_bottom, View.VISIBLE)
 
                 val dailyNote = PreferenceManager.getT<DailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid")?: DailyNoteData.EMPTY
 
@@ -159,6 +162,11 @@ class DetailWidget() : AppWidgetProvider() {
                     if(widgetDesign.uidVisibility) View.VISIBLE else View.INVISIBLE
                 )
                 view.setTextViewText(R.id.tv_uid, uid)
+
+                view.setViewVisibility(R.id.tv_name,
+                    if(widgetDesign.nameVisibility) View.VISIBLE else View.INVISIBLE
+                )
+                view.setTextViewText(R.id.tv_name, name)
 
                 view.setTextViewText(R.id.tv_resin_title, _context.getString(R.string.resin))
                 view.setTextViewText(R.id.tv_resin, dailyNote.current_resin.toString()+"/"+dailyNote.max_resin.toString())
@@ -271,7 +279,7 @@ class DetailWidget() : AppWidgetProvider() {
                 log.e()
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
                 view.setViewVisibility(R.id.ll_body, View.GONE)
-                view.setViewVisibility(R.id.tv_uid, View.GONE)
+                view.setViewVisibility(R.id.ll_bottom, View.GONE)
                 view.setViewVisibility(R.id.ll_disable, View.VISIBLE)
 
                 if ((widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
@@ -294,7 +302,7 @@ class DetailWidget() : AppWidgetProvider() {
 
             view.setViewVisibility(R.id.pb_loading, View.VISIBLE)
             view.setViewVisibility(R.id.ll_body, View.INVISIBLE)
-            view.setViewVisibility(R.id.tv_uid, View.INVISIBLE)
+            view.setViewVisibility(R.id.ll_bottom, View.INVISIBLE)
             view.setViewVisibility(R.id.ll_disable, View.GONE)
 
             appWidgetManager.updateAppWidget(appWidgetId, view)

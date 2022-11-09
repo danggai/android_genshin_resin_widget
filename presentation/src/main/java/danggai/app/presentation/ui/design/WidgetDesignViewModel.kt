@@ -42,6 +42,7 @@ class WidgetDesignViewModel @Inject constructor(
     val sfResinImageVisibility = MutableStateFlow(Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE)
     val sfResinFontSize = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE)
     val sfResinUidVisibility = MutableStateFlow(false)
+    val sfResinNameVisibility = MutableStateFlow(false)
 
     val sfDetailTimeNotation = MutableStateFlow(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
     val sfResinDataVisibility = MutableStateFlow(true)
@@ -52,6 +53,7 @@ class WidgetDesignViewModel @Inject constructor(
     val sfTransformerDataVisibility = MutableStateFlow(true)
     val sfFontSizeDetail = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
     val sfDetailUidVisibility = MutableStateFlow(false)
+    val sfDetailNameVisibility = MutableStateFlow(false)
 
     val sfCharacterListRefreshSwitch = MutableStateFlow(false)
 
@@ -187,6 +189,7 @@ class WidgetDesignViewModel @Inject constructor(
                 sfResinTimeNotation.value,
                 sfResinImageVisibility.value,
                 sfResinUidVisibility.value,
+                sfResinNameVisibility.value,
                 sfResinFontSize.value,
                 sfTransparency.value
             )
@@ -203,6 +206,7 @@ class WidgetDesignViewModel @Inject constructor(
                 sfExpeditionDataVisibility.value,
                 sfTransformerDataVisibility.value,
                 sfDetailUidVisibility.value,
+                sfDetailNameVisibility.value,
                 sfFontSizeDetail.value,
                 sfTransparency.value
             )

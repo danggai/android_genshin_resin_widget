@@ -152,6 +152,12 @@
                         android:checked="@={vm.sfDetailUidVisibility}"
                         android:text="@string/uid" />
 
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_name"
+                        android:checked="@={vm.sfDetailNameVisibility}"
+                        android:text="@string/nickname_" />
+
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat

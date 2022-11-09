@@ -285,6 +285,13 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                     binding.widget.tvUid.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
+
+            launch {
+                mVM.sfDetailNameVisibility.collect {
+                    log.e()
+                    binding.widget.tvName.visibility = if (it) View.VISIBLE else View.GONE
+                }
+            }
         }
     }
 }

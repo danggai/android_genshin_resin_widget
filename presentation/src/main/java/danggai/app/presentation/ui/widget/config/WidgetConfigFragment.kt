@@ -73,6 +73,7 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
                             action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
                             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
                             putExtra("uid", account.genshin_uid)
+                            putExtra("name", account.nickname)
                         }
                         act.sendBroadcast(updateIntent)
 

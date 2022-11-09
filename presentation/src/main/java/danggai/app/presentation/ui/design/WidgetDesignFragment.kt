@@ -61,11 +61,11 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
     }
 
     private fun initTabLayout() {
-        val pagerAdapter = WidgetDesignAdapter(requireActivity())
-
-        pagerAdapter.addFragment(WidgetDesignResinFragment())
-        pagerAdapter.addFragment(WidgetDesignDetailFragment())
-        pagerAdapter.addFragment(WidgetDesignCharacterFragment())
+        val pagerAdapter = WidgetDesignAdapter(requireActivity()).apply {
+            addFragment(WidgetDesignResinFragment())
+            addFragment(WidgetDesignDetailFragment())
+            addFragment(WidgetDesignCharacterFragment())
+        }
 
         binding.vpMain.adapter = pagerAdapter
 
@@ -73,7 +73,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
             tab.text = when (position) {
                 0 -> "Resin"
                 1 -> "Detail"
-                2 -> "Characters"
+                2 -> "Talent"
                 else -> ""
             }
         }.attach()

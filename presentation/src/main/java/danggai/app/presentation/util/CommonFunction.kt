@@ -429,6 +429,7 @@ object CommonFunction {
                 PreferenceManager.getInt(context, Constant.PREF_WIDGET_RESIN_TIME_NOTATION),
                 PreferenceManager.getInt(context, Constant.PREF_WIDGET_RESIN_IMAGE_VISIBILITY),
                 false,
+                false,
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE, Constant.PREF_WIDGET_RESIN_FONT_SIZE),
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
             )
@@ -444,6 +445,7 @@ object CommonFunction {
                 PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_REALM_CURRENCY_DATA_VISIBILITY, true),
                 PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_EXPEDITION_DATA_VISIBILITY, true),
                 true,
+                false,
                 false,
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE, Constant.PREF_WIDGET_DETAIL_FONT_SIZE),
                 PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)

@@ -165,6 +165,13 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                     binding.widget.tvUid.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
+
+            launch {
+                mVM.sfResinNameVisibility.collect {
+                    log.e()
+                    binding.widget.tvName.visibility = if (it) View.VISIBLE else View.GONE
+                }
+            }
         }
     }
 }

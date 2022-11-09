@@ -22,6 +22,7 @@
     <string name="cancel">Cancel</string>
 
     <string name="uid" translatable="false">Uid</string>
+    <string name="nickname_">Nickname</string>
     <string name="new_hoyolab_account">New HoYoLab Account</string>
     <string name="hoyolab_checkin">HoYoLab CheckIn</string>
     <string name="widget_customizing">Widget Customizing</string>

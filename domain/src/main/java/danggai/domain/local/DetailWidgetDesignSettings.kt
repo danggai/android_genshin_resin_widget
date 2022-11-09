@@ -12,6 +12,7 @@ data class DetailWidgetDesignSettings(
     val expeditionDataVisibility: Boolean,
     val transformerDataVisibility: Boolean = true,
     val uidVisibility: Boolean = false,
+    val nameVisibility: Boolean = false,
     val fontSize: Int,
     val backgroundTransparency: Int
 ) {
@@ -26,6 +27,7 @@ data class DetailWidgetDesignSettings(
             expeditionDataVisibility = true,
             transformerDataVisibility = true,
             uidVisibility = false,
+            nameVisibility = false,
             fontSize = Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE,
             backgroundTransparency = Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY
         )

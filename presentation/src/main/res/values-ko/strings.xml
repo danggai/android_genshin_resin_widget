@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">원신 레진 위젯</string>
 
+    <string name="nickname_">닉네임</string>
     <string name="new_hoyolab_account">새 호요랩 계정</string>
     <string name="hoyolab_checkin">호요랩 출석체크</string>
     <string name="widget_customizing">위젯 커스텀</string>

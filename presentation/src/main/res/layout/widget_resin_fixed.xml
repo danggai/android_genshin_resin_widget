@@ -153,15 +153,31 @@
         android:visibility="gone"
         />
 
-    <TextView
-        style="@style/TextView"
-        android:id="@+id/tv_uid"
-        android:text="830000000"
-        android:textSize="10sp"
-        android:textColor="@color/widget_font_sub"
-        android:singleLine="true"
-        android:layout_alignBottom="@id/ll_root"
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignRight="@id/ll_root"
-        />
+        android:layout_alignBottom="@id/ll_root"
+        android:gravity="right"
+        >
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextView"
+            android:text="여행자"
+            android:textColor="@color/widget_font_sub"
+            android:textSize="10sp"
+            android:layout_marginEnd="3dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_uid"
+            style="@style/TextView"
+            android:text="830000000"
+            android:textColor="@color/widget_font_sub"
+            android:textSize="10sp" />
+
+    </LinearLayout>
 
 </RelativeLayout>
