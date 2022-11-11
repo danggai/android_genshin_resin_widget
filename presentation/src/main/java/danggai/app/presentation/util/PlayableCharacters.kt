@@ -691,7 +691,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
     LocalCharacter(
         Constant.ID_NAHIDA,
         "나히다",
-        "Nanida",
+        "Nahida",
         5,
         Elements.DENDRO,
         Constant.TALENT_AREA_SUMERU,
@@ -708,5 +708,27 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         Constant.TALENT_AREA_SUMERU,
         Constant.TALENT_DATE_TUEFRI,
         R.drawable.icon_layla
+    ),
+
+    LocalCharacter(
+        Constant.ID_WANDERER,
+        "방랑자",
+        "The Wanderer",
+        5,
+        Elements.ANEMO,
+        Constant.TALENT_AREA_SUMERU,
+        Constant.TALENT_DATE_WEDSAT,
+        R.drawable.icon_wanderer
+    ),
+
+    LocalCharacter(
+        Constant.ID_FARUZAN,
+        "파루잔",
+        "Faruzan",
+        4,
+        Elements.ANEMO,
+        Constant.TALENT_AREA_SUMERU,
+        Constant.TALENT_DATE_MONTHU,
+        R.drawable.icon_faruzan
     ),
 )
