@@ -103,7 +103,7 @@
                 <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -119,6 +119,12 @@
                         style="@style/RadioButton"
                         android:onClick="@{() -> vm.onClickSetResinTimeNotation(TimeNotation.FULL_CHARGE_TIME)}"
                         android:text="@string/btn_full_charge_time" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rb_disable_time"
+                        style="@style/RadioButton"
+                        android:onClick="@{() -> vm.onClickSetResinTimeNotation(TimeNotation.DISABLE_TIME)}"
+                        android:text="@string/btn_disable" />
 
                 </RadioGroup>
 

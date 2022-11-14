@@ -159,6 +159,10 @@ class ResinWidget() : AppWidgetProvider() {
                 view.setTextViewText(R.id.tv_resin, dailyNote.current_resin.toString())
                 view.setTextViewText(R.id.tv_resin_max, "/"+ dailyNote.max_resin.toString())
 
+                view.setViewVisibility(R.id.tv_remain_time,
+                    if (widgetDesign.timeNotation == Constant.PREF_TIME_NOTATION_DISABLE) View.GONE
+                    else View.VISIBLE
+                )
                 view.setTextViewText(R.id.tv_remain_time,
                     when (widgetDesign.timeNotation) {
                         Constant.PREF_TIME_NOTATION_DEFAULT,

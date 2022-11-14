@@ -62,6 +62,7 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
             Constant.PREF_TIME_NOTATION_DEFAULT,
             Constant.PREF_TIME_NOTATION_REMAIN_TIME -> binding.rbRemainTime.isChecked = true
             Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked = true
+            Constant.PREF_TIME_NOTATION_DISABLE -> binding.rbDisableTime.isChecked = true
             else -> binding.rbRemainTime.isChecked = true
         }
 
@@ -145,10 +146,18 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                 mVM.sfResinTimeNotation.collect {
                     log.e()
 
-                    if (mVM.sfResinTimeNotation.value == Constant.PREF_TIME_NOTATION_REMAIN_TIME) {
-                        binding.widget.tvRemainTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
-                    } else {
-                        binding.widget.tvRemainTime.text = String.format(getString(R.string.widget_format_max_time), 0, 0)
+                    when (mVM.sfResinTimeNotation.value) {
+                        Constant.PREF_TIME_NOTATION_DEFAULT,
+                        Constant.PREF_TIME_NOTATION_REMAIN_TIME -> {
+                            binding.widget.tvRemainTime.visibility = View.VISIBLE
+                            binding.widget.tvRemainTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
+                        }
+                        Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
+                            binding.widget.tvRemainTime.visibility = View.VISIBLE
+                            binding.widget.tvRemainTime.text = String.format(getString(R.string.widget_format_max_time), 0, 0)
+                        }
+                        Constant.PREF_TIME_NOTATION_DISABLE ->
+                            binding.widget.tvRemainTime.visibility = View.GONE
                     }
                 }
             }
