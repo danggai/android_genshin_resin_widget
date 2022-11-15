@@ -211,6 +211,10 @@ object TimeFunction {
         return SimpleDateFormat(Constant.DATE_FORMAT_SYNC_TIME).format(Date())
     }
 
+    fun getSyncDateTimeString(): String {
+        return SimpleDateFormat(Constant.DATE_FORMAT_SYNC_DATE_TIME).format(Date())
+    }
+
     fun getSyncDayString(): String {
         return SimpleDateFormat(Constant.DATE_FORMAT_SYNC_DAY).format(Date())
     }

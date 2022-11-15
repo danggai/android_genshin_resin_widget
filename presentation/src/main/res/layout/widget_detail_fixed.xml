@@ -10,22 +10,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_margin="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/rounded_square_5dp"
         android:orientation="horizontal"
-        android:padding="10dp"
-        >
+        android:padding="10dp">
 
         <LinearLayout
             android:id="@+id/ll_body"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingBottom="3dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="3dp">
 
             <LinearLayout
                 android:id="@+id/ll_sync"
@@ -434,6 +434,7 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@id/ll_root"
         android:layout_alignBottom="@id/ll_root"
+        android:layout_marginRight="2dp"
         android:gravity="right"
         >
 

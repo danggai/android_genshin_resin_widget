@@ -133,9 +133,9 @@ class ResinWidget() : AppWidgetProvider() {
                 val uid = PreferenceManager.getString(context, Constant.PREF_UID + "_$widgetId")
                 val name = PreferenceManager.getString(context, Constant.PREF_NAME + "_$widgetId")
                 val recentSyncTimeString = PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid").ifEmpty {
-                    TimeFunction.getSyncTimeString()
+                    TimeFunction.getSyncDateTimeString()
                 }
-                val recentSyncTimeDate = SimpleDateFormat(Constant.DATE_FORMAT_SYNC_TIME).parse(recentSyncTimeString)?: Date()
+                val recentSyncTimeDate = SimpleDateFormat(Constant.DATE_FORMAT_SYNC_DATE_TIME).parse(recentSyncTimeString)?: Date()
 
                 log.e()
 
@@ -147,12 +147,12 @@ class ResinWidget() : AppWidgetProvider() {
                 val dailyNote = PreferenceManager.getT<DailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid")?: DailyNoteData.EMPTY
 
                 view.setViewVisibility(R.id.tv_uid,
-                    if(widgetDesign.uidVisibility) View.VISIBLE else View.INVISIBLE
+                    if(widgetDesign.uidVisibility) View.VISIBLE else View.GONE
                 )
                 view.setTextViewText(R.id.tv_uid, uid)
 
                 view.setViewVisibility(R.id.tv_name,
-                    if(widgetDesign.nameVisibility) View.VISIBLE else View.INVISIBLE
+                    if(widgetDesign.nameVisibility) View.VISIBLE else View.GONE
                 )
                 view.setTextViewText(R.id.tv_name, name)
 

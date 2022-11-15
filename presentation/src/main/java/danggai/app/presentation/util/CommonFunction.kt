@@ -16,6 +16,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import danggai.app.presentation.BuildConfig
 import danggai.app.presentation.R
 import danggai.app.presentation.ui.widget.DetailWidget
+import danggai.app.presentation.ui.widget.MiniWidget
 import danggai.app.presentation.ui.widget.ResinWidget
 import danggai.app.presentation.ui.widget.ResinWidgetResizable
 import danggai.app.presentation.util.PreferenceManager.getT
@@ -79,6 +80,8 @@ object CommonFunction {
                 ResinWidgetResizable::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_DATA))
             sendBroadcast(Intent(context,
                 DetailWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_DATA))
+            sendBroadcast(Intent(context,
+                MiniWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_DATA))
         }
     }
 
@@ -92,6 +95,8 @@ object CommonFunction {
                 ResinWidgetResizable::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI))
             sendBroadcast(Intent(context,
                 DetailWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI))
+            sendBroadcast(Intent(context,
+                MiniWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI))
         }
     }
 

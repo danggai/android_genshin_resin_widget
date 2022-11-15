@@ -52,7 +52,11 @@ class WidgetConfigAdapter(
                     this.text = items[position].nickname
                 }
 
-                holder.binding.cb.isEnabled = items[position].genshin_uid != "-1"
+                CoroutineScope(Dispatchers.IO).launch {
+                    vm.sfSelectedAccount.collect {
+                        holder.binding.cb.isChecked = vm.sfSelectedAccount.value == items[position]
+                    }
+                }
             }
         }
     }

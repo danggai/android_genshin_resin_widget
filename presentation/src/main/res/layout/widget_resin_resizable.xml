@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_margin="8dp"
+        android:layout_margin="4dp"
         android:padding="10dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -164,6 +164,7 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@id/ll_root"
         android:layout_alignBottom="@id/ll_root"
+        android:layout_marginRight="2dp"
         android:gravity="right"
         >
 

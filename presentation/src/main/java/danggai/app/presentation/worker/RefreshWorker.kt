@@ -191,7 +191,7 @@ class RefreshWorker @AssistedInject constructor(
         }
 
 
-        preference.setStringRecentSyncTime(account.genshin_uid, TimeFunction.getSyncTimeString())
+        preference.setStringRecentSyncTime(account.genshin_uid, TimeFunction.getSyncDateTimeString())
 
         val expeditionTime: String = CommonFunction.getExpeditionTime(dailyNote)
         preference.setStringExpeditionTime(account.genshin_uid, expeditionTime)

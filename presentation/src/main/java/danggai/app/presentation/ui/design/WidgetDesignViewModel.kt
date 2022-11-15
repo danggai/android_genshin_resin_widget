@@ -77,6 +77,7 @@ class WidgetDesignViewModel @Inject constructor(
             sfResinFontSize.value = it.fontSize
             sfResinImageVisibility.value = it.resinImageVisibility
             sfResinUidVisibility.value = it.uidVisibility
+            sfResinNameVisibility.value = it.nameVisibility
         }
 
         preference.getDetailWidgetDesignSettings().let {
@@ -89,6 +90,7 @@ class WidgetDesignViewModel @Inject constructor(
             sfExpeditionDataVisibility.value = it.expeditionDataVisibility
             sfTransformerDataVisibility.value = it.transformerDataVisibility
             sfDetailUidVisibility.value = it.uidVisibility
+            sfDetailNameVisibility.value = it.nameVisibility
         }
 
         preference.getSelectedCharacterIdList().let {

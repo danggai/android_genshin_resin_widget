@@ -13,6 +13,7 @@ import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentWidgetConfigBinding
 import danggai.app.presentation.extension.repeatOnLifeCycleStarted
+import danggai.app.presentation.ui.widget.MiniWidget
 import danggai.app.presentation.util.log
 import danggai.domain.util.Constant
 import kotlinx.coroutines.launch
@@ -26,10 +27,23 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
         fun newInstance() = WidgetConfigFragment()
     }
 
-    var widgetClassName = ""
-    var appWidgetId = 0
+
+    private val appWidgetId by lazy {
+        getIntent().extras?.getInt(
+            AppWidgetManager.EXTRA_APPWIDGET_ID,
+            AppWidgetManager.INVALID_APPWIDGET_ID
+        ) ?: AppWidgetManager.INVALID_APPWIDGET_ID
+    }
+
+    private val  appWidgetManager: AppWidgetManager by lazy {
+        AppWidgetManager.getInstance(context)
+    }
+
+    private val widgetClassName by lazy {
+        appWidgetManager.getAppWidgetInfo(appWidgetId).provider.className
+    }
+
     var views: RemoteViews? = null
-    var appWidgetManager: AppWidgetManager? = null
 
     private val mVM: WidgetConfigViewModel by activityViewModels()
 
@@ -42,22 +56,26 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
         activity?.setResult(Activity.RESULT_CANCELED)
 
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.vm = mVM
-        binding.vm?.setCommonFun()
-
-        appWidgetId = getIntent().extras?.getInt(
-            AppWidgetManager.EXTRA_APPWIDGET_ID,
-            AppWidgetManager.INVALID_APPWIDGET_ID
-        ) ?: AppWidgetManager.INVALID_APPWIDGET_ID
-
-        appWidgetManager = AppWidgetManager.getInstance(context).apply {
-            widgetClassName = getAppWidgetInfo(appWidgetId).provider.className
+        binding.vm = mVM.apply {
+            setCommonFun()
+            this.widgetClassName =  this@WidgetConfigFragment.widgetClassName
         }
 
         views = RemoteViews(context?.packageName, R.layout.widget_detail_fixed)
-        appWidgetManager?.updateAppWidget(appWidgetId, views)
+        appWidgetManager.updateAppWidget(appWidgetId, views)
 
+        binding.rgMiniWidgetType.setOnCheckedChangeListener { radioGroup, i ->
+            mVM.onClickRoundButton(i)
+        }
+
+        initUi()
         initSf()
+    }
+
+    private fun initUi() {
+        binding.llMiniSetting.visibility =
+            if (widgetClassName == MiniWidget::class.java.name) View.VISIBLE
+            else View.GONE
     }
 
     private fun initSf() {
@@ -74,6 +92,8 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
                             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
                             putExtra("uid", account.genshin_uid)
                             putExtra("name", account.nickname)
+                            if (widgetClassName == MiniWidget::class.java.name)
+                                putExtra("paramType", mVM.miniWidgetType)
                         }
                         act.sendBroadcast(updateIntent)
 
@@ -87,6 +107,7 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
 
                 }
             }
+
             launch {
                 activity?.let { act ->
                     mVM.sfNoAccount.collect { account ->
@@ -96,7 +117,6 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
                         activity?.setResult(Activity.RESULT_CANCELED)
                         activity?.finish()
                     }
-
                 }
             }
         }
