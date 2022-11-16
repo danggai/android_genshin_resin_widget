@@ -11,10 +11,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentCookieWebviewBinding
-import danggai.app.presentation.ui.main.MainActivity
+import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.newaccount.NewHoyolabAccountActivity
 import danggai.app.presentation.util.Event
 import danggai.app.presentation.util.log
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, CookieWebViewViewModel>() {
@@ -38,6 +39,7 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
         binding.vm?.setCommonFun()
 
         initUi()
+        initSf()
     }
 
     override fun onAttach(context: Context) {
@@ -75,7 +77,21 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
                 binding.pgBar.visibility = View.GONE
             }
 
+            override fun shouldInterceptRequest(
+                view: WebView?,
+                request: WebResourceRequest?,
+            ): WebResourceResponse? {
+                val cookie = CookieManager.getInstance().getCookie("https://www.hoyolab.com/")
+
+                if (!cookie.isNullOrEmpty()
+                    && cookie.contains("ltuid")
+                    && cookie.contains("ltoken")
+                ) mVM.autoGetCookieOnlyOnce()
+
+                return super.shouldInterceptRequest(view, request)
+            }
         }
+
         binding.wvBody.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
@@ -88,22 +104,43 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
             }
         }
 
-        binding.wvBody.settings.loadWithOverviewMode =
-            true;  // WebView 화면크기에 맞추도록 설정 - setUseWideViewPort 와 같이 써야함
-        binding.wvBody.settings.useWideViewPort =
-            true;  // wide viewport 설정 - setLoadWithOverviewMode 와 같이 써야함
+        binding.wvBody.settings.apply {
+            loadWithOverviewMode = true  // WebView 화면크기에 맞추도록 설정 - setUseWideViewPort 와 같이 써야함
+            useWideViewPort = true  // wide viewport 설정 - setLoadWithOverviewMode 와 같이 써야함
 
-        binding.wvBody.settings.setSupportZoom(false);  // 줌 설정 여부
-        binding.wvBody.settings.builtInZoomControls = false;  // 줌 확대/축소 버튼 여부
+            setSupportZoom(false)  // 줌 설정 여부
+            builtInZoomControls = false  // 줌 확대/축소 버튼 여부
 
-        binding.wvBody.settings.javaScriptEnabled = true; // 자바스크립트 사용여부
-        binding.wvBody.settings.javaScriptCanOpenWindowsAutomatically =
-            true; // javascript가 window.open()을 사용할 수 있도록 설정
-        binding.wvBody.settings.setSupportMultipleWindows(true); // 멀티 윈도우 사용 여부
+            javaScriptEnabled = true // 자바스크립트 사용여부
+            javaScriptCanOpenWindowsAutomatically = true // javascript가 window.open()을 사용할 수 있도록 설정
+            setSupportMultipleWindows(true) // 멀티 윈도우 사용 여부
 
-        binding.wvBody.settings.domStorageEnabled = true;  // 로컬 스토리지 (localStorage) 사용여부
+            domStorageEnabled = true  // 로컬 스토리지 (localStorage) 사용여부
 
-        binding.wvBody.settings.cacheMode = WebSettings.LOAD_NO_CACHE
+            databaseEnabled = true
+
+            cacheMode = WebSettings.LOAD_NO_CACHE
+
+            loadWithOverviewMode = false
+        }
+
+        binding.wvBody.apply {
+            clearCache(true)
+            clearFormData()
+            clearHistory()
+            clearMatches()
+            clearSslPreferences()
+        }
+
+        CookieManager.getInstance().apply {
+            removeAllCookies(null)
+            flush()
+
+            acceptCookie()
+            setAcceptThirdPartyCookies(binding.wvBody, true)
+        }
+
+        WebStorage.getInstance().deleteAllData()
 
         binding.wvBody.loadUrl("https://m.hoyolab.com/#/timeline")
 
@@ -114,29 +151,23 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
         super.handleEvents(event)
 
         when (event) {
-            is Event.GetCookie -> {
-                try {
-                    val cookieManager = CookieManager.getInstance()
-                    val cookie = cookieManager.getCookie("https://www.hoyolab.com/")
-                    log.e(cookie)
-
-                    if (cookie.contains("ltuid") && cookie.contains("ltoken")) {
-                        NewHoyolabAccountActivity.startActivityWithCookie(requireActivity(), cookie)
-                        makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_success))
-                    } else {
-                        makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_fail))
-                    }
-                } catch (e: NullPointerException) {
-                    log.e(e.message.toString())
-                    makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_null_fail))
-                } catch (e: Exception) {
-                    log.e(e.message.toString())
-                    makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_unknown_fail))
-                }
-            }
             is Event.RefreshWebView -> {
                 log.e()
                 binding.wvBody.reload()
+            }
+        }
+    }
+
+    private fun initSf() {
+        viewLifecycleOwner.repeatOnLifeCycleStarted {
+            launch {
+                mVM.sfGetCookieFlow.collect { cookie ->
+                    cookie?.let {
+                        NewHoyolabAccountActivity.startActivityWithCookie(requireActivity(), cookie)
+                        makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_success))
+                        activity!!.finish()
+                    }
+                }
             }
         }
     }

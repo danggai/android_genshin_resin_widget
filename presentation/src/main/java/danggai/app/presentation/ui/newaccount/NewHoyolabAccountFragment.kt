@@ -1,43 +1,20 @@
 package danggai.app.presentation.ui.newaccount
 
-import android.Manifest
-import android.app.WallpaperManager
-import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
-import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentNewHoyolabAccountBinding
-import danggai.app.presentation.databinding.FragmentWidgetDesignBinding
-import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.cookie.CookieWebViewActivity
-import danggai.app.presentation.ui.design.WidgetDesignActivity
-import danggai.app.presentation.ui.design.charaters.WidgetDesignCharacterFragment
-import danggai.app.presentation.ui.design.charaters.select.WidgetDesignSelectCharacterFragment
-import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
-import danggai.app.presentation.ui.design.resin.WidgetDesignResinFragment
-import danggai.app.presentation.ui.main.MainActivity
-import danggai.app.presentation.ui.widget.TalentWidget
-import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.Event
-import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.log
-import danggai.app.presentation.worker.CheckInWorker
-import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.util.Constant
-import kotlinx.coroutines.launch
-import java.util.*
 
 @AndroidEntryPoint
 class NewHoyolabAccountFragment : BindingFragment<FragmentNewHoyolabAccountBinding, NewHoyolabAccountViewModel>() {

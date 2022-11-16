@@ -38,7 +38,6 @@ import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.util.Constant
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
