@@ -1,5 +1,6 @@
 package danggai.app.presentation.util
 
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -7,10 +8,13 @@ import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
+import android.util.DisplayMetrics
+import android.view.Display
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.hardware.display.DisplayManagerCompat
 import com.google.firebase.crashlytics.CustomKeysAndValues
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import danggai.app.presentation.BuildConfig
@@ -241,6 +245,31 @@ object CommonFunction {
         } catch (e: java.lang.Exception) {
             "0"
         }
+    }
+
+    fun getDisplayMetrics(activity: Activity): DisplayMetrics { // Get the metrics
+        val metrics = DisplayMetrics()
+        DisplayManagerCompat.getInstance(activity).getDisplay(Display.DEFAULT_DISPLAY)
+            ?.getRealMetrics(metrics)
+        val heightPixels = metrics.heightPixels
+        val widthPixels = metrics.widthPixels
+        val densityDpi = metrics.densityDpi
+        val density = metrics.density
+        val scaledDensity = metrics.scaledDensity
+        val xdpi: Float = convertPxToDp(activity, widthPixels)
+        val ydpi: Float = convertPxToDp(activity, heightPixels)
+        log.e("Screen W x H pixels: $widthPixels x $heightPixels")
+        log.e("Screen X(swXXdp) x Y dpi: $xdpi x $ydpi")
+        log.e("density = $density  scaledDensity = $scaledDensity  densityDpi = $densityDpi")
+        return metrics
+    }
+
+    fun convertPxToDp(ctx: Context, px: Int): Float {
+        val display = DisplayManagerCompat.getInstance(ctx).getDisplay(Display.DEFAULT_DISPLAY)
+        val metrics = DisplayMetrics()
+        display?.getRealMetrics(metrics)
+        val logicalDensity = metrics.density
+        return px / logicalDensity
     }
 
     fun applyWidgetTheme(

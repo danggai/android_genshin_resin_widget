@@ -72,7 +72,7 @@
     <string name="dialog_msg_widget_refresh_not_work"><b>절전 모드나 데이터 절약 모드</b>를 사용 중인 경우, 위젯에서 새로고침이 작동하지 않습니다.\n\n설정에서 데이터 절약 모드를 비활성화하거나, 다음 화면에서 원신 레진 위젯을 접근 허용 하는 것으로 우회할 수 있습니다.\n\n해당 권한은 앱이 기기가 수신하는 알림에 접근할 수 있도록 하는 권한이나, 원신 레진 위젯은 알림 수신 서비스를 HoYoLAB 데이터 수신 목적 외에는 이용하지 않으며, 사용자의 개인 정보에 <b>절대</b> 접근하지 않습니다.\n\n원신 레진 위젯은 데이터 절약 모드 비활성화를 권장합니다.</string>
 
     <string name="dialog_native_hoyolab_account">계정 확인</string>
-    <string name="dialog_msg_native_hoyolab_account">HoYoLAB 계정 사용 시 <b>호요랩 계정</b> 버튼을 눌러주세요.\n구글, 애플, 페이스북, 트위터 계정 사용 시 <b>SNS 계정</b> 버튼을 눌러주세요.</string>
+    <string name="dialog_msg_native_hoyolab_account">HoYoLAB, 구글, 애플 계정 사용 시 <b>호요랩 계정</b> 버튼을 눌러주세요.\n페이스북, 트위터 계정 사용 시 <b>SNS 계정</b> 버튼을 눌러 수동으로 쿠키를 획득해야 합니다.</string>
 
     <string name="dialog_restart">앱 재시작</string>
     <string name="dialog_msg_restart">변경 사항을 적용하기 위해 앱을 재시작합니다.</string>
@@ -129,7 +129,7 @@
 
     <string name="msg_toast_data_save_mode">모바일 데이터, 데이터 세이버와 관련 된 메뉴에서 수정 가능하며 기기마다 메뉴의 이름이 다를 수 있습니다.</string>
 
-    <string name="msg_toast_how_to_get_cookie">좌측 상단 슬라임을 누르고 미로그인을 눌러 로그인 후, 상단 탭 제목을 눌러 줘!</string>
+    <string name="msg_toast_how_to_get_cookie">로그인을 눌러 로그인 후, 상단 버튼을 눌러 줘!</string>
     <string name="msg_toast_get_cookie_success">쿠키 획득 성공! 자동으로 입력했어!</string>
     <string name="msg_toast_get_cookie_fail">쿠키 획득에 실패했어.. 로그인 후 다시 시도해줘!</string>
     <string name="msg_toast_get_cookie_null_fail">쿠키가 존재하지 않아서 가져올 수 없어!</string>

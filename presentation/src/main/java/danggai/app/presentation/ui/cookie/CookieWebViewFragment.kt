@@ -1,11 +1,18 @@
 package danggai.app.presentation.ui.cookie
 
+import android.app.Dialog
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Point
 import android.os.Bundle
+import android.os.Message
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.webkit.*
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.LayoutRes
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
@@ -13,9 +20,11 @@ import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentCookieWebviewBinding
 import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.newaccount.NewHoyolabAccountActivity
+import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.Event
 import danggai.app.presentation.util.log
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, CookieWebViewViewModel>() {
@@ -101,6 +110,75 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
                 if (newProgress >= 100) {
                     binding.pgBar.visibility = View.GONE
                 }
+            }
+
+            override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {
+                activity?.let { activity ->
+                    val popUpWebView = WebView(activity).apply {
+                        settings.apply {
+                            javaScriptEnabled = true
+                            domStorageEnabled = true
+                            databaseEnabled = true
+                            setSupportMultipleWindows(true)
+                            javaScriptCanOpenWindowsAutomatically = true
+                            userAgentString = userAgentString.replace("; wv", "")
+                        }
+                    }
+
+                    val dialog = Dialog(activity).apply {
+                        setContentView(popUpWebView)
+                    }.apply {
+                        setOnDismissListener {
+                            popUpWebView.destroy()
+                        }
+                    }
+
+                    dialog.window?.run {
+                        WindowCompat.setDecorFitsSystemWindows(this, true)
+
+                        attributes = attributes?.apply {
+                            width = (CommonFunction.getDisplayMetrics(activity).widthPixels * 0.9).toInt()
+                            height = (CommonFunction.getDisplayMetrics(activity).heightPixels * 0.8).toInt()
+                        }
+                    }
+
+                    popUpWebView.apply {
+                        webChromeClient = object : WebChromeClient() {
+                            override fun onCloseWindow(window: WebView?) {
+                                dialog.dismiss()
+                            }
+                        }
+                        webViewClient = object : WebViewClient() {
+                            override fun onPageStarted(
+                                view: WebView?,
+                                url: String?,
+                                favicon: Bitmap?
+                            ) {
+                                if (listOf(
+                                        "https://m.hoyolab.com/account-system-sea/security.html?origin=hoyolab",
+                                        "about:blank"
+                                    ).contains(url)
+                                ) dialog.dismiss()
+                                else dialog.show()
+
+                                super.onPageStarted(view, url, favicon)
+                            }
+                        }
+                    }
+
+                    CookieManager.getInstance().apply {
+                        acceptCookie()
+                        setAcceptThirdPartyCookies(popUpWebView, true)
+                    }
+
+                    resultMsg?.run {
+                        (this.obj as WebView.WebViewTransport).webView =
+                            popUpWebView
+                        sendToTarget()
+                    }
+                }
+
+                return true
             }
         }
 

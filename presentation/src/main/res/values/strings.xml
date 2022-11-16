@@ -95,7 +95,7 @@
 
 
     <string name="dialog_native_hoyolab_account">Check Your Account</string>
-    <string name="dialog_msg_native_hoyolab_account">When using the HoYoLab account, Press <b>HoYoLab Account</b> button.\nWhen using the Google, Apple, FaceBook, Twitter account, Press <b>SNS Account</b> button.</string>
+    <string name="dialog_msg_native_hoyolab_account">When using the HoYoLab, Google, Apple account, Press <b>HoYoLab Account</b> button.\nWhen using the FaceBook, Twitter account, Press <b>SNS Account</b> button to manually obtain cookies.</string>
 
     <string name="dialog_restart">Restart Application</string>
     <string name="dialog_msg_restart">Restart the app to apply the changes.</string>
@@ -152,7 +152,7 @@
 
     <string name="msg_toast_data_save_mode">It can be modified in the "Mobile data" and "Data saver" menu, and the name of the menu may vary from device to device.</string>
 
-    <string name="msg_toast_how_to_get_cookie">Press the upper left slime to log in, and press title at the top!</string>
+    <string name="msg_toast_how_to_get_cookie">Press Login to log in, and then press the top button!</string>
     <string name="msg_toast_get_cookie_success">Successfully acquired cookie! Typed it automatically!</string>
     <string name="msg_toast_get_cookie_fail">Failed to get cookie.. Please log in and try again!</string>
     <string name="msg_toast_get_cookie_null_fail">Can\'t get cookie because it doesn\'t exist!</string>
