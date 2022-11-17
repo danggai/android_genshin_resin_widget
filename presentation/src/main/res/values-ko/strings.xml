@@ -293,5 +293,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- asia서버 외에서 정보가 비정상적으로 조회되는 문제 수정</string>
+    <string name="dialog_msg_patch_note">- 3.3버전 신규 캐릭터 추가.\n- 구글/애플 계정 SNS 로그인 지원.\n- 위젯에 닉네임 표시 추가. (기존 위젯 제거 후 재 설치 필요)\n- 1x1 크기의 미니 위젯 추가.</string>
 </resources>

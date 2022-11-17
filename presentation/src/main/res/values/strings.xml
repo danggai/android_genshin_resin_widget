@@ -317,5 +317,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Fixed an issue where user data is viewed abnormally except of the asia server</string>
+    <string name="dialog_msg_patch_note">- 3.3 Add new characters.\n- Google/Apple account SNS login support.\n- Add nickname display to widget. (Requires reinstallation after uninstalling existing widget)\n- Add a 1x1 size mini widget.</string>
 </resources>

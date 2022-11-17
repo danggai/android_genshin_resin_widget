@@ -97,7 +97,6 @@ class MiniWidget() : AppWidgetProvider() {
         super.onEnabled(context)
         log.e()
         context?.let {
-            Toast.makeText(context, context.getString(R.string.msg_toast_resizable_widget_enable), Toast.LENGTH_SHORT).show()
             RefreshWorker.startWorkerPeriodic(context)
         }
     }
