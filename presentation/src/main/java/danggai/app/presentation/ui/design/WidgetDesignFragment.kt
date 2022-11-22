@@ -22,6 +22,7 @@ import danggai.app.presentation.ui.design.charaters.select.WidgetDesignSelectCha
 import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
 import danggai.app.presentation.ui.design.resin.WidgetDesignResinFragment
 import danggai.app.presentation.ui.widget.*
+import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.log
 import danggai.domain.util.Constant
@@ -120,22 +121,10 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
                 mVM.sfApplySavedData.collect {
                     context?.let { _context ->
                         log.e()
-                        _context.sendBroadcast(
-                            Intent(_context, ResinWidget::class.java)
-                                .setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI)
-                        )
-                        _context.sendBroadcast(
-                            Intent(_context, ResinWidgetResizable::class.java)
-                                .setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI)
-                        )
-                        _context.sendBroadcast(
-                            Intent(_context, DetailWidget::class.java)
-                                .setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI)
-                        )
-                        _context.sendBroadcast(
-                            Intent(_context, MiniWidget::class.java)
-                                .setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI)
-                        )
+                        CommonFunction.sendBroadcastAppWidgetUpdate<ResinWidget>(_context)
+                        CommonFunction.sendBroadcastAppWidgetUpdate<ResinWidgetResizable>(_context)
+                        CommonFunction.sendBroadcastAppWidgetUpdate<DetailWidget>(_context)
+                        CommonFunction.sendBroadcastAppWidgetUpdate<MiniWidget>(_context)
                         _context.sendBroadcast(
                             Intent(_context, TalentWidget::class.java)
                                 .setAction(Constant.ACTION_TALENT_WIDGET_REFRESH)

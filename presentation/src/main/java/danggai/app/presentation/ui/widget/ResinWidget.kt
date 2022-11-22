@@ -49,30 +49,17 @@ class ResinWidget() : AppWidgetProvider() {
         val name = intent?.getStringExtra("name")?:""
 
         if (widgetId != -1 && uid.isNotEmpty()) {
-            context!!.let {
+            context.let {
                 PreferenceManager.setString(context, Constant.PREF_UID + "_$widgetId", uid)
             }
         }
         if (widgetId != -1 && name.isNotEmpty()) {
-            context!!.let {
+            context.let {
                 PreferenceManager.setString(context, Constant.PREF_NAME + "_$widgetId", name)
             }
         }
 
         when (action) {
-            Constant.ACTION_RESIN_WIDGET_REFRESH_UI -> {
-                log.e("REFRESH_UI")
-
-                context.let { it ->
-                    val _intent = Intent(it, ResinWidget::class.java)
-                    _intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-
-                    val ids = AppWidgetManager.getInstance(it.applicationContext).getAppWidgetIds(ComponentName(it.applicationContext, ResinWidget::class.java))
-
-                    _intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-                    it.sendBroadcast(_intent)
-                }
-            }
             Constant.ACTION_RESIN_WIDGET_REFRESH_DATA,
             Constant.ACTION_ON_BOOT_COMPLETED -> {
                 log.e("REFRESH_DATA")

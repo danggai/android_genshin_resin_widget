@@ -3,6 +3,9 @@ package danggai.app.presentation.util
 import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
@@ -74,34 +77,26 @@ object CommonFunction {
             .lowercase(Locale.getDefault())
     }
 
-    fun sendBroadcastResinWidgetRefreshData(context: Context) {
+    fun sendBroadcastAllWidgetRefreshUI(context: Context) {
         log.e()
 
         context.apply {
-            sendBroadcast(Intent(context,
-                ResinWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_DATA))
-            sendBroadcast(Intent(context,
-                ResinWidgetResizable::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_DATA))
-            sendBroadcast(Intent(context,
-                DetailWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_DATA))
-            sendBroadcast(Intent(context,
-                MiniWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_DATA))
+            sendBroadcastAppWidgetUpdate<ResinWidget>(context)
+            sendBroadcastAppWidgetUpdate<ResinWidgetResizable>(context)
+            sendBroadcastAppWidgetUpdate<DetailWidget>(context)
+            sendBroadcastAppWidgetUpdate<MiniWidget>(context)
         }
     }
 
-    fun sendBroadcastResinWidgetRefreshUI(context: Context) {
-        log.e()
+    inline fun <reified T: AppWidgetProvider> sendBroadcastAppWidgetUpdate(context: Context) {
+        val intent = Intent(context, T::class.java)
+        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 
-        context.apply {
-            sendBroadcast(Intent(context,
-                ResinWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI))
-            sendBroadcast(Intent(context,
-                ResinWidgetResizable::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI))
-            sendBroadcast(Intent(context,
-                DetailWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI))
-            sendBroadcast(Intent(context,
-                MiniWidget::class.java).setAction(Constant.ACTION_RESIN_WIDGET_REFRESH_UI))
-        }
+        val ids = AppWidgetManager.getInstance(context.applicationContext)
+            .getAppWidgetIds(ComponentName(context.applicationContext, T::class.java))
+
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+        context.sendBroadcast(intent)
     }
 
     fun sendCrashlyticsApiLog(apiName: String, metaCode: Int?, retCode: String?) {
@@ -240,7 +235,7 @@ object CommonFunction {
 
     fun getExpeditionTime(dailyNote: DailyNoteData): String {
         return try {
-            if (dailyNote.expeditions.isNullOrEmpty()) "0"
+            if (dailyNote.expeditions.isEmpty()) "0"
             else dailyNote.expeditions.maxOf { it.remained_time }
         } catch (e: java.lang.Exception) {
             "0"
@@ -277,8 +272,6 @@ object CommonFunction {
         context: Context,
         view: RemoteViews,
     ) {
-        log.e()
-
         val bgColor: Int = if (widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_LIGHT) {
             ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.white),
                 widgetDesign.backgroundTransparency)
@@ -366,8 +359,6 @@ object CommonFunction {
         view.setTextColor(R.id.tv_sync_time, subFontColor)
         view.setTextColor(R.id.tv_disable, mainFontColor)
         view.setTextColor(R.id.tv_no_selected_characters, mainFontColor)
-
-        log.e()
 
         val fontSize = widgetDesign.fontSize
 

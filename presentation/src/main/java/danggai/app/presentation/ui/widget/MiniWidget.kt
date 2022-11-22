@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.widget.RemoteViews
-import android.widget.Toast
 import danggai.app.presentation.R
 import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.util.CommonFunction
@@ -20,8 +19,6 @@ import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.network.dailynote.entity.TransformerTime
 import danggai.domain.util.Constant
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class MiniWidget() : AppWidgetProvider() {
@@ -52,35 +49,22 @@ class MiniWidget() : AppWidgetProvider() {
         val paramType = intent?.getStringExtra("paramType")?:""
 
         if (widgetId != -1 && uid.isNotEmpty()) {
-            context!!.let {
+            context.let {
                 PreferenceManager.setString(context, Constant.PREF_UID + "_$widgetId", uid)
             }
         }
         if (widgetId != -1 && name.isNotEmpty()) {
-            context!!.let {
+            context.let {
                 PreferenceManager.setString(context, Constant.PREF_NAME + "_$widgetId", name)
             }
         }
         if (widgetId != -1 && paramType.isNotEmpty()) {
-            context!!.let {
+            context.let {
                 PreferenceManager.setString(context, Constant.PREF_MINI_WIDGET_TYPE + "_$widgetId", paramType)
             }
         }
 
         when (action) {
-            Constant.ACTION_RESIN_WIDGET_REFRESH_UI -> {
-                log.e("REFRESH_UI")
-
-                context.let { it ->
-                    val _intent = Intent(it, MiniWidget::class.java)
-                    _intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-
-                    val ids = AppWidgetManager.getInstance(it.applicationContext).getAppWidgetIds(ComponentName(it.applicationContext, MiniWidget::class.java))
-
-                    _intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-                    it.sendBroadcast(_intent)
-                }
-            }
             Constant.ACTION_RESIN_WIDGET_REFRESH_DATA,
             Constant.ACTION_ON_BOOT_COMPLETED -> {
                 log.e("REFRESH_DATA")
@@ -110,7 +94,6 @@ class MiniWidget() : AppWidgetProvider() {
     }
 
     private fun addViews(context: Context?): RemoteViews {
-        log.e()
         val views = RemoteViews(context!!.packageName, R.layout.widget_mini)
 
         val intentUpdate = Intent(context, MiniWidget::class.java).apply {
@@ -212,7 +195,7 @@ class MiniWidget() : AppWidgetProvider() {
     private fun setWidgetRefreshing(
         context: Context,
         appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray
+        appWidgetIds: IntArray,
     ) {
         appWidgetIds.forEach { appWidgetId ->
             log.e()

@@ -59,6 +59,7 @@ open class BaseFragment: Fragment() {
             is Event.FinishThisActivity -> {
                 activity?.finish()
             }
+            else -> {}
         }
     }
 }

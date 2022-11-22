@@ -79,7 +79,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
     }
 
     private fun initUi() {
-        context?.let { it ->
+        context?.let {
             mVM.initUI()
         }
 
@@ -222,7 +222,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                                     AlertDialog.Builder(requireActivity())
                                         .setMessage(R.string.msg_toast_data_save_mode)
                                         .setCancelable(false)
-                                        .setPositiveButton("OK") { dialog, whichButton ->
+                                        .setPositiveButton("OK") { _dialog, _whichButton ->
                                             startActivity(Intent("android.settings.WIRELESS_SETTINGS"))
                                         }
                                         .show()
@@ -296,7 +296,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                                     .setTitle(R.string.dialog_restart)
                                     .setMessage(R.string.dialog_msg_restart)
                                     .setCancelable(false)
-                                    .setPositiveButton(R.string.apply) { dialog, whichButton ->
+                                    .setPositiveButton(R.string.apply) { _dialog, whichButton ->
                                         log.e()
                                         CommonFunction.restartApp(it.baseContext)
                                     }
@@ -320,6 +320,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                     else CheckInWorker.shutdownWorker(context)
                 }
             }
+            else -> {}
         }
     }
 }

@@ -9,9 +9,9 @@ object Versions {
 
     // gradle plugins
     const val buildGradleVersion     = "7.2.1"
-    const val kotlinGradleVersion    = "1.6.20"
+    const val kotlinGradleVersion    = "1.7.10"
     const val googleServiceVersion   = "4.3.10"
-    const val crashlyticsGradleVersion = "2.7.1"
+    const val crashlyticsGradleVersion = "2.9.2"
     const val gsonVersion            = "2.8.6"
 
     // android support library
@@ -52,9 +52,7 @@ object Versions {
     const val workerVersion          = "2.7.1"
 
     // firebase
-    const val firebaseVersion        = "28.4.1"
-    const val firebaseAnalyticsVersion = "20.1.0"
-    const val firebaseCrashlyticsVersion = "18.2.9"
+    const val firebaseVersion        = "31.1.0"
 
 
     // test

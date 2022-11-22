@@ -23,10 +23,7 @@ import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
@@ -82,12 +79,12 @@ class RefreshWorker @AssistedInject constructor(
         }
     }
 
-    private fun refreshDailyNote(
+    private suspend fun refreshDailyNote(
         account: Account,
         server: String,
         ds: String,
     ) {
-        CoroutineScope(Dispatchers.IO).launch {
+        return CoroutineScope(Dispatchers.IO).async {
             dailyNote(
                 account.genshin_uid,
                 server,
@@ -115,17 +112,17 @@ class RefreshWorker @AssistedInject constructor(
                     is ApiResult.Failure -> {
                         log.e(it.message)
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, null)
-                        CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
+                        CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
                     }
                     is ApiResult.Error,
                     is ApiResult.Null -> {
                         log.e()
                         CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, null, null)
-                        CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
+                        CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
                     }
                 }
             }
-        }
+        }.await()
     }
 
     private fun updateData(account: Account, dailyNote: DailyNoteData) {
@@ -197,8 +194,6 @@ class RefreshWorker @AssistedInject constructor(
         preference.setStringExpeditionTime(account.genshin_uid, expeditionTime)
 
         preference.setDailyNote(account.genshin_uid, dailyNote)
-
-        CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
     }
 
     private fun sendNoti(account: Account, notiType: Constant.NotiType, target: Int) {
@@ -264,8 +259,7 @@ class RefreshWorker @AssistedInject constructor(
                     }
                 }
 
-                delay(250L)     // 마이그레이션 대비용 시간
-                CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
+                CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
             }
 
             log.e()
@@ -278,7 +272,7 @@ class RefreshWorker @AssistedInject constructor(
             }
             log.e(e.message.toString())
 
-            CommonFunction.sendBroadcastResinWidgetRefreshUI(applicationContext)
+            CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
             return Result.failure()
         }
     }

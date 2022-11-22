@@ -68,9 +68,6 @@ dependencies {
     kapt(Dependencies.Room.compiler)
     implementation(Dependencies.Room.ktx)
 
-    // firebase
-    implementation (Dependencies.Firebase.bom)
-
     // unittest
     testImplementation (Dependencies.Junit.junit)
     androidTestImplementation (Dependencies.Junit.ext)

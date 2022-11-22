@@ -233,6 +233,7 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
                 log.e()
                 binding.wvBody.reload()
             }
+            else -> {}
         }
     }
 

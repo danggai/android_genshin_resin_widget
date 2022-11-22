@@ -57,30 +57,17 @@ class DetailWidget() : AppWidgetProvider() {
         val name = intent?.getStringExtra("name")?:""
 
         if (widgetId != -1 && uid.isNotEmpty()) {
-            context!!.let {
+            context.let {
                 PreferenceManager.setString(context, Constant.PREF_UID + "_$widgetId", uid)
             }
         }
         if (widgetId != -1 && name.isNotEmpty()) {
-            context!!.let {
+            context.let {
                 PreferenceManager.setString(context, Constant.PREF_NAME + "_$widgetId", name)
             }
         }
 
         when (action) {
-            Constant.ACTION_RESIN_WIDGET_REFRESH_UI -> {
-                log.e("REFRESH_UI")
-
-                context.let { it ->
-                    val _intent = Intent(it, DetailWidget::class.java)
-                    _intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-
-                    val ids = AppWidgetManager.getInstance(it.applicationContext).getAppWidgetIds(ComponentName(it.applicationContext, DetailWidget::class.java))
-
-                    _intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-                    it.sendBroadcast(_intent)
-                }
-            }
             Constant.ACTION_RESIN_WIDGET_REFRESH_DATA,
             Constant.ACTION_ON_BOOT_COMPLETED -> {
                 log.e("REFRESH_DATA")
@@ -208,13 +195,11 @@ class DetailWidget() : AppWidgetProvider() {
                 when (widgetDesign.timeNotation) {
                     Constant.PREF_TIME_NOTATION_DEFAULT,
                     Constant.PREF_TIME_NOTATION_REMAIN_TIME -> {
-                        log.e()
                         view.setTextViewText(R.id.tv_resin_time_title, _context.getString(R.string.until_fully_replenished))
                         view.setTextViewText(R.id.tv_realm_currency_time_title, _context.getString(R.string.until_fully_replenished))
                         view.setTextViewText(R.id.tv_expedition_title, _context.getString(R.string.until_expeditions_done))
                     }
                     Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
-                        log.e()
                         view.setTextViewText(R.id.tv_resin_time_title, _context.getString(R.string.estimated_replenishment_time))
                         view.setTextViewText(R.id.tv_realm_currency_time_title, _context.getString(R.string.estimated_replenishment_time))
                         view.setTextViewText(R.id.tv_expedition_title, _context.getString(R.string.expeditions_done_at))

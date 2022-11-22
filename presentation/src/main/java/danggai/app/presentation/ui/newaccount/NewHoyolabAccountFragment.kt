@@ -107,6 +107,7 @@ class NewHoyolabAccountFragment : BindingFragment<FragmentNewHoyolabAccountBindi
                         .show()
                 }
             }
+            else -> {}
         }
     }
 }

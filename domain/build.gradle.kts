@@ -15,5 +15,7 @@ dependencies {
 
     implementation (dependency.Dependencies.Coroutine.core)
 
+    implementation(platform(dependency.Dependencies.Firebase.bom))
+
     implementation (dependency.Dependencies.Java.java)
 }

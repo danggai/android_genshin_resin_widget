@@ -194,7 +194,6 @@ object TimeFunction {
             val minute = target.get(Calendar.MINUTE)
 
             return if (includeDate || now.get(Calendar.DATE) != target.get(Calendar.DATE)) {
-                log.e()
                 String.format(context.getString(R.string.widget_ui_date),
                     getDayWithMonthSuffix(context, target.get(Calendar.DATE)),
                     target.get(Calendar.HOUR_OF_DAY),
