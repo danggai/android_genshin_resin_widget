@@ -67,8 +67,14 @@ class ResinWidgetResizable() : AppWidgetProvider() {
                 setWidgetRefreshing(context, appWidgetManager, appWidgetIds)
                 context.let { RefreshWorker.startWorkerPeriodic(context) }
             }
-            Constant.ACTION_APPWIDGET_UPDATE -> {
+            AppWidgetManager.ACTION_APPWIDGET_UPDATE -> {
                 log.e(action.toString())
+                val id = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
+
+                if (id != -1) {
+                    val manager = AppWidgetManager.getInstance(context)
+                    onUpdate(context, manager, intArrayOf(id))
+                }
             }
         }
     }

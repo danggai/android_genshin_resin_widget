@@ -38,6 +38,7 @@ import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.*
@@ -95,8 +96,11 @@ object CommonFunction {
         val ids = AppWidgetManager.getInstance(context.applicationContext)
             .getAppWidgetIds(ComponentName(context.applicationContext, T::class.java))
 
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-        context.sendBroadcast(intent)
+        ids.onEach { id ->
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
+            context.sendBroadcast(intent)
+            Thread.sleep(50)
+        }
     }
 
     fun sendCrashlyticsApiLog(apiName: String, metaCode: Int?, retCode: String?) {

@@ -74,8 +74,14 @@ class DetailWidget() : AppWidgetProvider() {
                 setWidgetRefreshing(context, appWidgetManager, appWidgetIds)
                 context.let { RefreshWorker.startWorkerPeriodic(context) }
             }
-            Constant.ACTION_APPWIDGET_UPDATE -> {
+            AppWidgetManager.ACTION_APPWIDGET_UPDATE -> {
                 log.e(action.toString())
+                val id = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
+
+                if (id != -1) {
+                    val manager = AppWidgetManager.getInstance(context)
+                    onUpdate(context, manager, intArrayOf(id))
+                }
             }
         }
     }
@@ -97,7 +103,6 @@ class DetailWidget() : AppWidgetProvider() {
     }
 
     private fun addViews(context: Context?): RemoteViews {
-        log.e()
         val views = RemoteViews(context!!.packageName, R.layout.widget_detail_fixed)
 
         val intentUpdate = Intent(context, DetailWidget::class.java).apply {

@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/appWidgetBackgroundColor"
@@ -16,71 +17,80 @@
         android:padding="10dp">
 
         <LinearLayout
-            android:id="@+id/ll_sync"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:paddingLeft="20dp">
+            android:id="@+id/ll_body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
 
-            <TextView
-                android:id="@+id/tv_sync_time"
-                style="@style/TextView"
+            <LinearLayout
+                android:id="@+id/ll_sync"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:singleLine="true"
-                android:text="MM/dd (E)"
-                android:textColor="@color/widget_font_sub"
-                android:textSize="10sp" />
+                android:layout_gravity="right"
+                android:paddingLeft="20dp">
 
-            <ImageView
-                android:id="@+id/iv_refersh"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/baseline_sync_24" />
+                <TextView
+                    android:id="@+id/tv_sync_time"
+                    style="@style/TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:singleLine="true"
+                    android:text="MM/dd (E)"
+                    android:textColor="@color/widget_font_sub"
+                    android:textSize="10sp" />
+
+                <ImageView
+                    android:id="@+id/iv_refersh"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/baseline_sync_24" />
+
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/gv_characters"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="3" />
+
+            <TextView
+                style="@style/TextView"
+                android:id="@+id/tv_no_talent_ingredient"
+                android:maxLines="10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/widget_ui_no_talent_ingredient"
+                android:textSize="12sp"
+                />
+
+            <TextView
+                style="@style/TextView"
+                android:id="@+id/tv_no_selected_characters"
+                android:maxLines="10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/widget_ui_no_selected_characters"
+                android:textSize="12sp"
+                />
 
         </LinearLayout>
 
-        <GridView
-            android:id="@+id/gv_characters"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:numColumns="3" />
-
-        <TextView
-            style="@style/TextView"
-            android:id="@+id/tv_no_talent_ingredient"
-            android:maxLines="10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:indeterminateTint="@color/widget_font_sub"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
             android:visibility="gone"
-            android:text="@string/widget_ui_no_talent_ingredient"
-            android:textSize="12sp"
-            />
-
-        <TextView
-            style="@style/TextView"
-            android:id="@+id/tv_no_selected_characters"
-            android:maxLines="10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="@string/widget_ui_no_selected_characters"
-            android:textSize="12sp"
             />
 
     </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/pb_loading"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_weight="1"
-        android:indeterminateTint="@color/widget_font_sub"
-        android:layout_gravity="center"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        />
 
 </RelativeLayout>

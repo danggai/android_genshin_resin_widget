@@ -71,8 +71,14 @@ class MiniWidget() : AppWidgetProvider() {
                 setWidgetRefreshing(context, appWidgetManager, appWidgetIds)
                 context.let { RefreshWorker.startWorkerPeriodic(context) }
             }
-            Constant.ACTION_APPWIDGET_UPDATE -> {
+            AppWidgetManager.ACTION_APPWIDGET_UPDATE -> {
                 log.e(action.toString())
+                val id = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
+
+                if (id != -1) {
+                    val manager = AppWidgetManager.getInstance(context)
+                    onUpdate(context, manager, intArrayOf(id))
+                }
             }
         }
     }
@@ -104,7 +110,7 @@ class MiniWidget() : AppWidgetProvider() {
         val intentMainActivity = Intent(context, MainActivity::class.java)
         views.setOnClickPendingIntent(R.id.iv_resin, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
         views.setOnClickPendingIntent(R.id.iv_transformer, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
-        views.setOnClickPendingIntent(R.id.iv_serenitea_pot, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
+        views.setOnClickPendingIntent(R.id.tv_realm_currency, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
         views.setOnClickPendingIntent(R.id.ll_disable, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)

@@ -67,7 +67,9 @@ class TalentWidget() : AppWidgetProvider() {
                         val _intent = Intent(it, TalentWidget::class.java)
                         _intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 
-                        val ids = AppWidgetManager.getInstance(it.applicationContext).getAppWidgetIds(ComponentName(it.applicationContext, TalentWidget::class.java))
+                        val ids = AppWidgetManager.getInstance(it.applicationContext)
+                            .getAppWidgetIds(ComponentName(it.applicationContext,
+                                TalentWidget::class.java))
 
                         _intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
                         it.sendBroadcast(_intent)
@@ -76,7 +78,7 @@ class TalentWidget() : AppWidgetProvider() {
                     appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.gv_characters)
                 }
             }
-            Constant.ACTION_APPWIDGET_UPDATE -> {
+            AppWidgetManager.ACTION_APPWIDGET_UPDATE -> {
                 log.e(action.toString())
             }
         }
@@ -155,6 +157,7 @@ class TalentWidget() : AppWidgetProvider() {
 
             view.setTextViewText(R.id.tv_sync_time, getSyncDayString())
             view.setViewVisibility(R.id.pb_loading, View.GONE)
+            view.setViewVisibility(R.id.ll_body, View.VISIBLE)
         }
     }
 
@@ -165,10 +168,10 @@ class TalentWidget() : AppWidgetProvider() {
     ) {
         appWidgetIds.forEach { appWidgetId ->
             log.e()
-            val view = RemoteViews(context.packageName, R.layout.widget_resin_fixed)
+            val view = RemoteViews(context.packageName, R.layout.widget_talent)
 
             view.setViewVisibility(R.id.pb_loading, View.VISIBLE)
-            view.setViewVisibility(R.id.ll_root, View.GONE)
+            view.setViewVisibility(R.id.ll_body, View.GONE)
 
             appWidgetManager.updateAppWidget(appWidgetId, view)
         }
