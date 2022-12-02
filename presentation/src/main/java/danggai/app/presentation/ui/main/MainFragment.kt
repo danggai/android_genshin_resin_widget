@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
@@ -83,18 +85,31 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             mVM.initUI()
         }
 
-        WorkManager.getInstance(requireContext()).getWorkInfosByTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH).get().forEach {
-            if (it.state !in listOf(WorkInfo.State.SUCCEEDED, WorkInfo.State.FAILED, WorkInfo.State.CANCELLED))
-                log.e("refresh worker ${it.id} state -> ${it.state}")
-        }
-        WorkManager.getInstance(requireContext()).getWorkInfosByTag(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN).get().forEach {
-            if (it.state !in listOf(WorkInfo.State.SUCCEEDED, WorkInfo.State.FAILED, WorkInfo.State.CANCELLED))
-                log.e("checkin worker ${it.id} state -> ${it.state}")
-        }
-        WorkManager.getInstance(requireContext()).getWorkInfosByTag(Constant.WORKER_UNIQUE_NAME_TALENT_WIDGET_REFRESH).get().forEach {
-            if (it.state !in listOf(WorkInfo.State.SUCCEEDED, WorkInfo.State.FAILED, WorkInfo.State.CANCELLED))
-                log.e("talent worker ${it.id} state -> ${it.state}")
-        }
+        WorkManager.getInstance(requireContext())
+            .getWorkInfosByTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH).get().forEach {
+                if (it.state !in listOf(WorkInfo.State.SUCCEEDED,
+                        WorkInfo.State.FAILED,
+                        WorkInfo.State.CANCELLED
+                    )
+                )
+                    log.e("refresh worker ${it.id} state -> ${it.state}")
+            }
+        WorkManager.getInstance(requireContext())
+            .getWorkInfosByTag(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN).get().forEach {
+                if (it.state !in listOf(WorkInfo.State.SUCCEEDED,
+                        WorkInfo.State.FAILED,
+                        WorkInfo.State.CANCELLED)
+                )
+                    log.e("checkin worker ${it.id} state -> ${it.state}")
+            }
+        WorkManager.getInstance(requireContext())
+            .getWorkInfosByTag(Constant.WORKER_UNIQUE_NAME_TALENT_WIDGET_REFRESH).get().forEach {
+                if (it.state !in listOf(WorkInfo.State.SUCCEEDED,
+                        WorkInfo.State.FAILED,
+                        WorkInfo.State.CANCELLED)
+                )
+                    log.e("talent worker ${it.id} state -> ${it.state}")
+            }
 
         when (mVM.sfAutoRefreshPeriod.value) {
             15L -> binding.rb15m.isChecked = true
@@ -102,6 +117,56 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             60L -> binding.rb1h.isChecked = true
             120L -> binding.rb2h.isChecked = true
             else -> binding.rbDisable.isChecked = true
+        }
+
+        context?.let {
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.week,
+                R.layout.text_spinner
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.spWeeklyYetNotiDay.adapter = adapter
+                binding.spWeeklyYetNotiDay.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long, ) {
+                        mVM.setWeeklyCommissionNotiDay(binding.spWeeklyYetNotiDay.getItemAtPosition(position) as String)
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) { }
+                }
+            }
+
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.time_oclock,
+                R.layout.text_spinner
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.spWeeklyYetNotiTime.adapter = adapter
+                binding.spWeeklyYetNotiTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long, ) {
+                        mVM.setWeeklyCommissionNotiTime((binding.spWeeklyYetNotiTime.getItemAtPosition(position) as String).toInt())
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) { }
+                }
+            }
+
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.time_oclock,
+                R.layout.text_spinner
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.spDailyYetNoti.adapter = adapter
+                binding.spDailyYetNoti.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long, ) {
+                        mVM.setDailyCommissionNotiTime((binding.spDailyYetNoti.getItemAtPosition(position) as String).toInt())
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) { }
+                }
+            }
         }
     }
 

@@ -18,10 +18,7 @@ import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.TalentWorker
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.util.Constant
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 
 class TalentWidget() : AppWidgetProvider() {

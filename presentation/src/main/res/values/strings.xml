@@ -307,6 +307,15 @@
 
     <string name="foreground_genshin_check_in_progress">HoYoLAB Genshin Check-in progressing</string>
 
+    <!-- 시간 및 요일 -->
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thu">Thu</string>
+    <string name="fri">Fri</string>
+    <string name="sat">Sat</string>
+    <string name="sun">Sun</string>
+
     <!-- Google Ads -->
     <string name="google_ads_app_id">ca-app-pub-8407462596213276~4738084181</string>
     <string name="google_ads_banner_id">ca-app-pub-8407462596213276/9798839174</string>
