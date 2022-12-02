@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BaseViewModel
+import danggai.app.presentation.util.DayTimeMapper
 import danggai.app.presentation.util.Event
 import danggai.app.presentation.util.log
 import danggai.domain.db.account.entity.Account
@@ -49,9 +50,9 @@ class MainViewModel @Inject constructor(
     val sfEnableNotiCheckinFailed = MutableStateFlow(false)
     val sfEnableNotiDailyYet = MutableStateFlow(false)
     val sfEnableNotiWeeklyYet = MutableStateFlow(false)
-    var notiDailyYetTime = 21
-    var notiWeeklyYetDay = Calendar.SUNDAY
-    var notiWeeklyYetTime = 21
+    var sfNotiDailyYetTime = MutableStateFlow(21)
+    var sfNotiWeeklyYetDay = MutableStateFlow(Calendar.SUNDAY)
+    var sfNotiWeeklyYetTime = MutableStateFlow(21)
 
     val sfAccountListRefreshSwitch = MutableStateFlow(false)
 
@@ -66,6 +67,11 @@ class MainViewModel @Inject constructor(
             sfCustomNotiResin.value = it.customResin.toString()
             sfEnableNotiExpeditionDone.value = it.notiExpedition
             sfEnableNotiHomeCoinFull.value = it.notiHomeCoin
+            sfEnableNotiDailyYet.value = it.notiDailyYet
+            sfEnableNotiWeeklyYet.value = it.notiWeeklyYet
+            sfNotiDailyYetTime.value = it.notiDailyYetTime
+            sfNotiWeeklyYetTime.value = it.notiWeeklyYetTime
+            sfNotiWeeklyYetDay.value = it.notiWeeklyYetDay
         }
 
         preference.getCheckInSettings().let {
@@ -108,10 +114,10 @@ class MainViewModel @Inject constructor(
                 sfEnableNotiExpeditionDone.value,
                 sfEnableNotiHomeCoinFull.value,
                 sfEnableNotiDailyYet.value,
-                notiDailyYetTime,
+                sfNotiDailyYetTime.value,
                 sfEnableNotiWeeklyYet.value,
-                notiWeeklyYetDay,
-                notiWeeklyYetTime,
+                sfNotiWeeklyYetDay.value,
+                sfNotiWeeklyYetTime.value,
             )
         )
 
@@ -167,30 +173,20 @@ class MainViewModel @Inject constructor(
         sendEvent(Event.ChangeLanguage())
     }
 
-    fun setDailyCommissionNotiTime(time: Int) {
+    fun setDailyCommissionNotiTime(time: String) {
         log.e(time)
-        notiDailyYetTime = time
+        sfNotiDailyYetTime.value = DayTimeMapper.timeStringToInt(resource, time)
     }
 
     fun setWeeklyCommissionNotiDay(day: String) {
         log.e(day)
-        notiWeeklyYetDay = when (day)  {
-            resource.getString(R.string.mon) -> Calendar.MONDAY
-            resource.getString(R.string.tue) -> Calendar.TUESDAY
-            resource.getString(R.string.wed) -> Calendar.WEDNESDAY
-            resource.getString(R.string.thu) -> Calendar.THURSDAY
-            resource.getString(R.string.fri) -> Calendar.FRIDAY
-            resource.getString(R.string.sat) -> Calendar.SATURDAY
-            resource.getString(R.string.sun) -> Calendar.SUNDAY
-            else -> Calendar.SUNDAY
-        }
+        sfNotiWeeklyYetDay.value = DayTimeMapper.weekOfDayStringToInt(resource, day)
     }
 
-    fun setWeeklyCommissionNotiTime(time: Int) {
+    fun setWeeklyCommissionNotiTime(time: String) {
         log.e(time)
-        notiWeeklyYetTime = time
+        sfNotiWeeklyYetTime.value = DayTimeMapper.timeStringToInt(resource, time)
     }
-
 
 
 

@@ -345,6 +345,7 @@
                         android:imeOptions="actionDone"
                         android:layout_marginLeft="8dp"
                         />
+
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.legacy.widget.Space

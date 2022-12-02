@@ -228,6 +228,9 @@ object Constant {
     const val TIME_TYPE_MAX = 0
     const val TIME_TYPE_DONE = 1
 
+    const val DEFAULT_YET_NOTI_TIME = 21
+    const val DEFAULT_YET_NOTI_DAY = 1
+
     enum class ResinImageVisibility(val pref: Int) {
         VISIBLE(PREF_WIDGET_RESIN_IMAGE_VISIBLE),
         INVISIBLE(PREF_WIDGET_RESIN_IMAGE_INVISIBLE)

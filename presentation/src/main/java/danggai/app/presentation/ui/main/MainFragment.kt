@@ -28,10 +28,7 @@ import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.cookie.CookieWebViewActivity
 import danggai.app.presentation.ui.design.WidgetDesignActivity
 import danggai.app.presentation.ui.newaccount.NewHoyolabAccountActivity
-import danggai.app.presentation.util.CommonFunction
-import danggai.app.presentation.util.Event
-import danggai.app.presentation.util.PreferenceManager
-import danggai.app.presentation.util.log
+import danggai.app.presentation.util.*
 import danggai.app.presentation.worker.CheckInWorker
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.CheckInSettings
@@ -58,6 +55,33 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
     private val mVM: MainViewModel by activityViewModels()
     private lateinit var mAdView : AdView
 
+    private val weeklyDaySpinnerAdapter by lazy {
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.week,
+            R.layout.text_spinner
+        ).apply {
+            this.
+            mVM.sfNotiWeeklyYetDay
+        }
+    }
+
+    private val weeklyTimeSpinnerAdapter by lazy {
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.time_oclock,
+            R.layout.text_spinner
+        )
+    }
+
+    private val dailyTimeSpinnerAdapter by lazy {
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.time_oclock,
+            R.layout.text_spinner
+        )
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -70,8 +94,8 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         if (!BuildConfig.DEBUG)
             initAd()
 
-        initUi()
         initSf()
+        initUi()
 
         context?.let { it ->
             antidozePermisisonCheck(it)
@@ -89,8 +113,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             .getWorkInfosByTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH).get().forEach {
                 if (it.state !in listOf(WorkInfo.State.SUCCEEDED,
                         WorkInfo.State.FAILED,
-                        WorkInfo.State.CANCELLED
-                    )
+                        WorkInfo.State.CANCELLED)
                 )
                     log.e("refresh worker ${it.id} state -> ${it.state}")
             }
@@ -120,11 +143,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         }
 
         context?.let {
-            ArrayAdapter.createFromResource(
-                it,
-                R.array.week,
-                R.layout.text_spinner
-            ).also { adapter ->
+            weeklyDaySpinnerAdapter.also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 binding.spWeeklyYetNotiDay.adapter = adapter
                 binding.spWeeklyYetNotiDay.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -136,32 +155,24 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                 }
             }
 
-            ArrayAdapter.createFromResource(
-                it,
-                R.array.time_oclock,
-                R.layout.text_spinner
-            ).also { adapter ->
+            weeklyTimeSpinnerAdapter.also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 binding.spWeeklyYetNotiTime.adapter = adapter
                 binding.spWeeklyYetNotiTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long, ) {
-                        mVM.setWeeklyCommissionNotiTime((binding.spWeeklyYetNotiTime.getItemAtPosition(position) as String).toInt())
+                        mVM.setWeeklyCommissionNotiTime(binding.spWeeklyYetNotiTime.getItemAtPosition(position) as String)
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) { }
                 }
             }
 
-            ArrayAdapter.createFromResource(
-                it,
-                R.array.time_oclock,
-                R.layout.text_spinner
-            ).also { adapter ->
+            dailyTimeSpinnerAdapter.also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 binding.spDailyYetNoti.adapter = adapter
                 binding.spDailyYetNoti.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long, ) {
-                        mVM.setDailyCommissionNotiTime((binding.spDailyYetNoti.getItemAtPosition(position) as String).toInt())
+                        mVM.setDailyCommissionNotiTime(binding.spDailyYetNoti.getItemAtPosition(position) as String)
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) { }
@@ -191,6 +202,37 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                             .create()
                             .show()
                     }
+                }
+            }
+
+            launch {
+                mVM.sfNotiWeeklyYetDay.collect {
+                    binding.spWeeklyYetNotiDay.setSelection(
+                        weeklyDaySpinnerAdapter.getPosition(
+                            DayTimeMapper.timeIntToString(requireContext(), it)
+                        )
+                    )
+                }
+            }
+
+            launch {
+                mVM.sfNotiWeeklyYetTime.collect {
+                    log.e()
+                    binding.spWeeklyYetNotiTime.setSelection(
+                        weeklyTimeSpinnerAdapter.getPosition(
+                            DayTimeMapper.weekOfDayIntToString(requireContext(), it)
+                        )
+                    )
+                }
+            }
+
+            launch {
+                mVM.sfNotiDailyYetTime.collect {
+                    binding.spDailyYetNoti.setSelection(
+                        weeklyDaySpinnerAdapter.getPosition(
+                            DayTimeMapper.timeIntToString(requireContext(), it)
+                        )
+                    )
                 }
             }
         }
