@@ -29,6 +29,8 @@
     <string name="resin">레진</string>
     <string name="btn_expedition_done">탐험 완료</string>
     <string name="btn_home_coin_full">선계 주화 가득 참</string>
+    <string name="btn_daily_commission_yet">일일임무 미완료 시 알림</string>
+    <string name="btn_weekly_boss_yet">주간보스 할인 잔여 시 알림</string>
 
     <string name="btn_remain_time">남은 시간</string>
     <string name="btn_full_charge_time">완충 시각</string>
@@ -142,6 +144,9 @@
     <string name="dialog_hoyolab_account_delete">계정 삭제 확인</string>
     <string name="dialog_msg_hoyolab_account_delete">정말로 %s 계정과의 연동을 해제할거야?</string>
     <string name="msg_toast_hoyolab_account_deleted">계정과의 연동을 해제했어!</string>
+
+    <string name="dialog_daily_weekly_yet_noti">알림 설정 시 주의</string>
+    <string name="dialog_msg_daily_weekly_yet_noti">해당 기능 사용 시, HoYoLAB에서 올바르지 않은 일일의뢰/주간보스 진척도를 제공하는 경우 사용자가 잘못 된 알림을 수신 받을 수 있습니다.\n이 점 유의하시고 해당 기능 사용을 권장합니다.</string>
 
     <string name="push_default_noti_title">알림</string>
     <string name="push_default_noti_description">설명</string>

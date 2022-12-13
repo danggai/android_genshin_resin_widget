@@ -50,6 +50,8 @@
     <string name="resin">Resin</string>
     <string name="btn_expedition_done">Expedition Done</string>
     <string name="btn_home_coin_full">Realm Currency Full</string>
+    <string name="btn_daily_commission_yet">Daily Commission Incomplete Notification</string>
+    <string name="btn_weekly_boss_yet">Weekly Boss Incomplete Notification</string>
 
     <string name="btn_remain_time">Remaining time</string>
     <string name="btn_full_charge_time">When fully charge</string>
@@ -165,6 +167,9 @@
     <string name="dialog_hoyolab_account_delete">Confirm account deletion</string>
     <string name="dialog_msg_hoyolab_account_delete">Are you really going disconnect with %s account?</string>
     <string name="msg_toast_hoyolab_account_deleted">account has been disconnected successfully!</string>
+
+    <string name="dialog_daily_weekly_yet_noti">Caution when setting up notifications</string>
+    <string name="dialog_msg_daily_weekly_yet_noti">When using this feature, if HoYoLAB provides an incorrect daily request/weekly boss progress, the user may receive an incorrect notification.\nPlease note that we recommend you to use this feature.</string>
 
     <string name="push_default_noti_title">Notification</string>
     <string name="push_default_noti_description">Description</string>
@@ -352,4 +357,5 @@
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
     <string name="dialog_msg_patch_note">- 3.3 Add new characters.\n- Google/Apple account SNS login support.\n- Add nickname display to widget. (Requires reinstallation after uninstalling existing widget)\n- Add a 1x1 size mini widget.</string>
+
 </resources>

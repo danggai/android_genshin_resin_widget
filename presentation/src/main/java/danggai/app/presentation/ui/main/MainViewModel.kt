@@ -57,6 +57,7 @@ class MainViewModel @Inject constructor(
     val sfAccountListRefreshSwitch = MutableStateFlow(false)
 
     val sfDeleteAccount = MutableSharedFlow<Account>()
+    val sfShowDialogDailyWeeklyYet = MutableSharedFlow<Boolean>()
 
     fun initUI() {
         preference.getDailyNoteSettings().let {
@@ -188,6 +189,19 @@ class MainViewModel @Inject constructor(
         sfNotiWeeklyYetTime.value = DayTimeMapper.timeStringToInt(resource, time)
     }
 
+    fun onClickDailyCommissionYetNoti() {
+        if (sfEnableNotiDailyYet.value) {
+            log.e()
+            sfShowDialogDailyWeeklyYet.emitInVmScope(true)
+        }
+    }
+
+    fun onClickWeeklyBossYetNoti() {
+        if (sfEnableNotiWeeklyYet.value) {
+            log.e()
+            sfShowDialogDailyWeeklyYet.emitInVmScope(false)
+        }
+    }
 
 
     private fun sendWidgetSyncBroadcast(dailyNote: DailyNoteData) {
