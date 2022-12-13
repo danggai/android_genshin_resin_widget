@@ -253,31 +253,11 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
     /**
      * 커스텀 함수
      */
-    override fun getBooleanFirstLaunch(): Boolean =
-        getBoolean(context, Constant.PREF_CHECKED_STORAGE_PERMISSION, true)
-    override fun setBooleanFirstLaunch(value: Boolean) =
-        setBoolean(context, Constant.PREF_CHECKED_STORAGE_PERMISSION, value)
-
-    override fun getIntServer(): Int =
-        getInt(context, Constant.PREF_SERVER)
-    override fun setIntServer(value: Int) =
-        setInt(context, Constant.PREF_SERVER, value)
-
-    override fun getStringUid(): String =
-        getString(context, Constant.PREF_UID)
-    override fun setStringUid(value: String) =setString(context, Constant.PREF_UID, value)
-
-    override fun getStringCookie(): String =
-        getString(context, Constant.PREF_COOKIE)
-    override fun setStringCookie(value: String) =
-        setString(context, Constant.PREF_COOKIE, value)
-
-
     override fun getDailyNoteSettings(): DailyNoteSettings =
         getT<DailyNoteSettings>(context, Constant.PREF_WIDGET_SETTINGS)?: DailyNoteSettings.EMPTY
     override fun setDailyNoteSettings(value: DailyNoteSettings) =
         setT(context, Constant.PREF_WIDGET_SETTINGS, value)
-    
+
     override fun getCheckInSettings(): CheckInSettings =
         getT<CheckInSettings>(context, Constant.PREF_CHECK_IN_SETTINGS)?: CheckInSettings.EMPTY
     override fun setCheckInSettings(value: CheckInSettings) =
@@ -287,11 +267,12 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         getT<ResinWidgetDesignSettings>(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS)?: ResinWidgetDesignSettings.EMPTY
     override fun setResinWidgetDesignSettings(value: ResinWidgetDesignSettings) =
         setT(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS, value)
-    
+
     override fun getDetailWidgetDesignSettings(): DetailWidgetDesignSettings =
         getT<DetailWidgetDesignSettings>(context, Constant.PREF_DETAIL_WIDGET_DESIGN_SETTINGS)?: DetailWidgetDesignSettings.EMPTY
     override fun setDetailWidgetDesignSettings(value: DetailWidgetDesignSettings) =
         setT(context, Constant.PREF_DETAIL_WIDGET_DESIGN_SETTINGS, value)
+
 
     override fun getSelectedCharacterIdList(): List<Int> =
         getIntArray(context, Constant.PREF_SELECTED_CHARACTER_ID_LIST)
@@ -314,16 +295,6 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
     override fun setStringRecentSyncTime(uid: String, value: String) =
         setString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid", value)
 
-    override fun getBooleanIsValidUserData(): Boolean =
-        getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)
-    override fun setBooleanIsValidUserData(value: Boolean) =
-        setBoolean(context, Constant.PREF_IS_VALID_USERDATA, value)
-
-    override fun setBooleanEnableAutoCheckIn(value: Boolean) =
-        setBoolean(context, Constant.PREF_ENABLE_GENSHIN_AUTO_CHECK_IN, value)
-    override fun setBooleanEnableHonkai3rdAutoCheckIn(value: Boolean) =
-        setBoolean(context, Constant.PREF_ENABLE_HONKAI_3RD_AUTO_CHECK_IN, value)
-
 
     override fun getStringLocale(): String =
         getString(context, Constant.PREF_LOCALE, Locale.getDefault().language)
@@ -331,9 +302,52 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         setString(context, Constant.PREF_LOCALE, value)
 
 
+
+
+    // Deprecated
+
+    @Deprecated("Isolated by Permission Check")
+    override fun getBooleanFirstLaunch(): Boolean =
+        getBoolean(context, Constant.PREF_CHECKED_STORAGE_PERMISSION, true)
+    @Deprecated("Isolated by Permission Check")
+    override fun setBooleanFirstLaunch(value: Boolean) =
+        setBoolean(context, Constant.PREF_CHECKED_STORAGE_PERMISSION, value)
+
+
+    @Deprecated("Room migration")
+    override fun getIntServer(): Int = getInt(context, Constant.PREF_SERVER)
+    @Deprecated("Room migration")
+    override fun setIntServer(value: Int) = setInt(context, Constant.PREF_SERVER, value)
+
+    @Deprecated("Room migration")
+    override fun getStringUid(): String = getString(context, Constant.PREF_UID)
+    @Deprecated("Room migration")
+    override fun setStringUid(value: String) = setString(context, Constant.PREF_UID, value)
+
+    @Deprecated("Room migration")
+    override fun getStringCookie(): String = getString(context, Constant.PREF_COOKIE)
+    @Deprecated("Room migration")
+    override fun setStringCookie(value: String) = setString(context, Constant.PREF_COOKIE, value)
+
+
+    @Deprecated("Room migration")
+    override fun setBooleanEnableAutoCheckIn(value: Boolean) =
+        setBoolean(context, Constant.PREF_ENABLE_GENSHIN_AUTO_CHECK_IN, value)
+    @Deprecated("Room migration")
+    override fun setBooleanEnableHonkai3rdAutoCheckIn(value: Boolean) =
+        setBoolean(context, Constant.PREF_ENABLE_HONKAI_3RD_AUTO_CHECK_IN, value)
+
+    @Deprecated("Room migration")
     override fun getBooleanCheckedUpdateNote(): Boolean =
         getBoolean(context, Constant.PREF_CHECKED_UPDATE_NOTE + BuildConfig.VERSION_NAME, false)
+    @Deprecated("Room migration")
     override fun setBooleanCheckedUpdateNote(value: Boolean) =
         setBoolean(context, Constant.PREF_CHECKED_UPDATE_NOTE + BuildConfig.VERSION_NAME, value)
 
+    @Deprecated("Room migration")
+    override fun getBooleanIsValidUserData(): Boolean =
+        getBoolean(context, Constant.PREF_IS_VALID_USERDATA,false)
+    @Deprecated("Room migration")
+    override fun setBooleanIsValidUserData(value: Boolean) =
+        setBoolean(context, Constant.PREF_IS_VALID_USERDATA, value)
 }
