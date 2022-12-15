@@ -163,6 +163,16 @@ object CommonFunction {
                 notificationDesc = context.getString(R.string.push_realm_currency_description)
                 priority = NotificationCompat.PRIORITY_DEFAULT
             }
+            Constant.NotiType.DAILY_COMMISSION_YET -> {
+                notificationId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
+                notificationDesc = context.getString(R.string.push_daily_commission_description)
+                priority = NotificationCompat.PRIORITY_DEFAULT
+            }
+            Constant.NotiType.WEEKLY_BOSS_YET -> {
+                notificationId = Constant.PUSH_CHANNEL_WEEKLY_BOSS_YET_NOTI_ID
+                notificationDesc = context.getString(R.string.push_weekly_boss_description)
+                priority = NotificationCompat.PRIORITY_DEFAULT
+            }
             else -> {
                 notificationId = Constant.PUSH_CHANNEL_DEFAULT_ID
                 notificationDesc = context.getString(R.string.push_default_noti_description)

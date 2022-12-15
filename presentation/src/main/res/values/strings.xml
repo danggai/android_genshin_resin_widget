@@ -204,6 +204,14 @@
     <string name="push_realm_currency_description">This is a notification sent to travelers when the realm currency is full!</string>
     <string name="push_msg_realm_currency_full">%s! Now full of realm currency!</string>
 
+    <string name="push_daily_commission_title">Daily Commission Notification</string>
+    <string name="push_daily_commission_description">This is a notification sent to travelers when today\'s daily mission is not completed by the set time!</string>
+    <string name="push_msg_daily_commission_yet">%s! Have you completed today\'s request for the Adventurer\'s Guild? Or check it out!</string>
+
+    <string name="push_weekly_boss_title">Weekly Boss Notification</string>
+    <string name="push_weekly_boss_description">This is a notification sent to travelers when they do not use the weekly boss resin discount until the set date!</string>
+    <string name="push_msg_weekly_boss_yet">%s! Have you used up the weekly boss resin discount this week? Or check it out!</string>
+
     <string name="hint_cookie">Enter HoYoLAB\'s cookie!</string>
     <string name="hint_uid">Enter uid!</string>
     <string name="hint_nickname">Enter name of traveler!</string>

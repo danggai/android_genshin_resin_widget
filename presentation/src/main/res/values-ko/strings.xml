@@ -180,6 +180,14 @@
     <string name="push_realm_currency_description">선계 화폐가 충전 될 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
     <string name="push_msg_realm_currency_full">%s! 선계 주화가 가득 찼어! 확인하러 가자!</string>
 
+    <string name="push_daily_commission_title">일일 임무 알림</string>
+    <string name="push_daily_commission_description">설정 한 시간까지 오늘의 일일 임무가 완료되지 않았을 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
+    <string name="push_msg_daily_commission_yet">%s! 모험가 길드의 오늘의 의뢰는 완료 했어? 아니면 한 번 확인해봐!</string>
+
+    <string name="push_weekly_boss_title">주간 보스 토벌 알림</string>
+    <string name="push_weekly_boss_description">설정한 날짜까지 주간 보스 레진 할인 횟수를 사용하지 않았을 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
+    <string name="push_msg_weekly_boss_yet">%s! 이번 주 주간 보스 레진 할인 횟수는 소모 했어? 아니면 한 번 확인해봐!</string>
+
     <string name="hint_cookie">HoYoLAB의 쿠키를 입력해 줘!</string>
     <string name="hint_uid">uid를 적어야 하는 장소야!</string>
     <string name="hint_nickname">여행자의 이름을 적어 줘!</string>
