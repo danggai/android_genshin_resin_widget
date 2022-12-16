@@ -244,7 +244,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.GEO,
         Constant.TALENT_AREA_LIYUE,
-        Constant.TALENT_DATE_TUEFRI,
+        Constant.TALENT_DATE_WEDSAT,
         R.drawable.icon_zhongli
     ),
 
