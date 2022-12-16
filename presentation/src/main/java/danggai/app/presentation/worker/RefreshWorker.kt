@@ -195,23 +195,23 @@ class RefreshWorker @AssistedInject constructor(
         val yymmdd = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE).format(Date())
 
         if (settings.notiDailyYet &&
-            yymmdd != preference.getStringRecentDailyCommissionNotiDate() &&
+            yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.genshin_uid) &&
             calendar.get(Calendar.HOUR) >= settings.notiDailyYetTime &&
             !dailyNote.is_extra_task_reward_received
         ) {
             log.e()
-            preference.setStringRecentDailyCommissionNotiDate(yymmdd)
+            preference.setStringRecentDailyCommissionNotiDate(account.genshin_uid, yymmdd)
             sendNoti(account, Constant.NotiType.DAILY_COMMISSION_YET, 0)
         }
 
         if (settings.notiDailyYet &&
-            yymmdd != preference.getStringRecentWeeklyBossNotiDate() &&
+            yymmdd != preference.getStringRecentWeeklyBossNotiDate(account.genshin_uid) &&
             calendar.get(Calendar.HOUR) >= settings.notiWeeklyYetTime &&
             calendar.get(Calendar.DAY_OF_WEEK) == settings.notiWeeklyYetDay &&
             dailyNote.remain_resin_discount_num != 0
         ) {
             log.e()
-            preference.setStringRecentWeeklyBossNotiDate(yymmdd)
+            preference.setStringRecentWeeklyBossNotiDate(account.genshin_uid, yymmdd)
             sendNoti(account, Constant.NotiType.WEEKLY_BOSS_YET, 0)
         }
 

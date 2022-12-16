@@ -325,15 +325,15 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         setBoolean(context, Constant.PREF_ENABLE_HONKAI_3RD_AUTO_CHECK_IN, value)
 
 
-    override fun getStringRecentDailyCommissionNotiDate(): String =
-        getString(context, Constant.PREF_RECENT_DAILY_COMMISSION_NOTI_DATE)
-    override fun setStringRecentDailyCommissionNotiDate(string: String) =
-        setString(context, Constant.PREF_RECENT_DAILY_COMMISSION_NOTI_DATE, string)
+    override fun getStringRecentDailyCommissionNotiDate(uid: String): String =
+        getString(context, Constant.PREF_RECENT_DAILY_COMMISSION_NOTI_DATE + "_$uid")
+    override fun setStringRecentDailyCommissionNotiDate(uid: String, string: String) =
+        setString(context, Constant.PREF_RECENT_DAILY_COMMISSION_NOTI_DATE + "_$uid", string)
 
-    override fun getStringRecentWeeklyBossNotiDate(): String =
-        getString(context, Constant.PREF_RECENT_WEEKLY_BOSS_NOTI_DATE)
-    override fun setStringRecentWeeklyBossNotiDate(string: String) =
-        setString(context, Constant.PREF_RECENT_WEEKLY_BOSS_NOTI_DATE, string)
+    override fun getStringRecentWeeklyBossNotiDate(uid: String): String =
+        getString(context, Constant.PREF_RECENT_WEEKLY_BOSS_NOTI_DATE + "_$uid")
+    override fun setStringRecentWeeklyBossNotiDate(uid: String, string: String) =
+        setString(context, Constant.PREF_RECENT_WEEKLY_BOSS_NOTI_DATE + "_$uid", string)
 
 
     override fun getStringLocale(): String =

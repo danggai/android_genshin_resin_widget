@@ -53,11 +53,11 @@ interface PreferenceManagerRepository {
     fun setBooleanEnableHonkai3rdAutoCheckIn(value: Boolean)
 
 
-    fun getStringRecentDailyCommissionNotiDate(): String
-    fun setStringRecentDailyCommissionNotiDate(string: String)
+    fun getStringRecentDailyCommissionNotiDate(uid: String): String
+    fun setStringRecentDailyCommissionNotiDate(uid: String, value: String)
 
-    fun getStringRecentWeeklyBossNotiDate(): String
-    fun setStringRecentWeeklyBossNotiDate(string: String)
+    fun getStringRecentWeeklyBossNotiDate(uid: String): String
+    fun setStringRecentWeeklyBossNotiDate(uid: String, value: String)
 
 
     fun getStringLocale(): String
