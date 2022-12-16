@@ -4,17 +4,17 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.GsonBuilder
 import danggai.data.BuildConfig
-import danggai.domain.local.*
+import danggai.domain.local.CheckInSettings
+import danggai.domain.local.DailyNoteSettings
+import danggai.domain.local.DetailWidgetDesignSettings
+import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import org.json.JSONArray
+import org.json.JSONException
 import java.util.*
 import javax.inject.Inject
-import org.json.JSONException
-
-
-
 
 
 class PreferenceManagerRepositoryImpl @Inject constructor(
@@ -249,7 +249,7 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         edit.clear()
         edit.apply()
     }
-    
+
     /**
      * 커스텀 함수
      */
@@ -277,7 +277,7 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         getT<DailyNoteSettings>(context, Constant.PREF_WIDGET_SETTINGS)?: DailyNoteSettings.EMPTY
     override fun setDailyNoteSettings(value: DailyNoteSettings) =
         setT(context, Constant.PREF_WIDGET_SETTINGS, value)
-    
+
     override fun getCheckInSettings(): CheckInSettings =
         getT<CheckInSettings>(context, Constant.PREF_CHECK_IN_SETTINGS)?: CheckInSettings.EMPTY
     override fun setCheckInSettings(value: CheckInSettings) =
@@ -287,7 +287,7 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         getT<ResinWidgetDesignSettings>(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS)?: ResinWidgetDesignSettings.EMPTY
     override fun setResinWidgetDesignSettings(value: ResinWidgetDesignSettings) =
         setT(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS, value)
-    
+
     override fun getDetailWidgetDesignSettings(): DetailWidgetDesignSettings =
         getT<DetailWidgetDesignSettings>(context, Constant.PREF_DETAIL_WIDGET_DESIGN_SETTINGS)?: DetailWidgetDesignSettings.EMPTY
     override fun setDetailWidgetDesignSettings(value: DetailWidgetDesignSettings) =
@@ -323,6 +323,17 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         setBoolean(context, Constant.PREF_ENABLE_GENSHIN_AUTO_CHECK_IN, value)
     override fun setBooleanEnableHonkai3rdAutoCheckIn(value: Boolean) =
         setBoolean(context, Constant.PREF_ENABLE_HONKAI_3RD_AUTO_CHECK_IN, value)
+
+
+    override fun getStringRecentDailyCommissionNotiDate(uid: String): String =
+        getString(context, Constant.PREF_RECENT_DAILY_COMMISSION_NOTI_DATE + "_$uid")
+    override fun setStringRecentDailyCommissionNotiDate(uid: String, string: String) =
+        setString(context, Constant.PREF_RECENT_DAILY_COMMISSION_NOTI_DATE + "_$uid", string)
+
+    override fun getStringRecentWeeklyBossNotiDate(uid: String): String =
+        getString(context, Constant.PREF_RECENT_WEEKLY_BOSS_NOTI_DATE + "_$uid")
+    override fun setStringRecentWeeklyBossNotiDate(uid: String, string: String) =
+        setString(context, Constant.PREF_RECENT_WEEKLY_BOSS_NOTI_DATE + "_$uid", string)
 
 
     override fun getStringLocale(): String =

@@ -35,10 +35,7 @@ import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.util.Constant
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.*
@@ -96,10 +93,12 @@ object CommonFunction {
         val ids = AppWidgetManager.getInstance(context.applicationContext)
             .getAppWidgetIds(ComponentName(context.applicationContext, T::class.java))
 
-        ids.onEach { id ->
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
-            context.sendBroadcast(intent)
-            Thread.sleep(50)
+        CoroutineScope(Dispatchers.Main.immediate).launch {
+            ids.onEach { id ->
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
+                context.sendBroadcast(intent)
+                delay(100L)
+            }
         }
     }
 
@@ -162,6 +161,16 @@ object CommonFunction {
             Constant.NotiType.REALM_CURRENCY_FULL -> {
                 notificationId = Constant.PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID
                 notificationDesc = context.getString(R.string.push_realm_currency_description)
+                priority = NotificationCompat.PRIORITY_DEFAULT
+            }
+            Constant.NotiType.DAILY_COMMISSION_YET -> {
+                notificationId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
+                notificationDesc = context.getString(R.string.push_daily_commission_description)
+                priority = NotificationCompat.PRIORITY_DEFAULT
+            }
+            Constant.NotiType.WEEKLY_BOSS_YET -> {
+                notificationId = Constant.PUSH_CHANNEL_WEEKLY_BOSS_YET_NOTI_ID
+                notificationDesc = context.getString(R.string.push_weekly_boss_description)
                 priority = NotificationCompat.PRIORITY_DEFAULT
             }
             else -> {
@@ -439,7 +448,12 @@ object CommonFunction {
                 PreferenceManager.getBoolean(context, Constant.PREF_NOTI_CUSTOM_RESIN_BOOLEAN, false),
                 PreferenceManager.getInt(context, Constant.PREF_NOTI_CUSTOM_TARGET_RESIN),
                 PreferenceManager.getBoolean(context, Constant.PREF_NOTI_EXPEDITION_DONE, false),
-                PreferenceManager.getBoolean(context, Constant.PREF_NOTI_HOME_COIN_FULL, false)
+                PreferenceManager.getBoolean(context, Constant.PREF_NOTI_HOME_COIN_FULL, false),
+                false,
+                21,
+                false,
+                Calendar.SUNDAY,
+            21
             )
         )
 

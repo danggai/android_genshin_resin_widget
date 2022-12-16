@@ -103,16 +103,13 @@
                     android:visibility="@{vm.sfAccountList.empty ?View.VISIBLE :View.GONE}" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/MaterialButton"
                     android:text="@string/new_hoyolab_account"
                     android:onClick="@{()->vm.onClickNewHoyolabAccount()}"
                     app:icon="@drawable/baseline_person_add_24"
                     app:iconSize="24dp"
                     app:iconTint="@color/white"
-                    android:textSize="18sp"
                     android:textStyle="italic"
-                    android:textAllCaps="false"
                     android:layout_gravity="right"
                     />
 
@@ -121,8 +118,8 @@
                     android:layout_height="15dp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:text="@string/refresh_cycle"
                     android:textColor="@color/black"
                     android:textSize="28sp"
@@ -173,8 +170,8 @@
                     android:layout_height="15dp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:text="@string/notification"
                     android:textColor="@color/black"
                     android:textSize="28sp"
@@ -230,8 +227,7 @@
                             android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/TextView"
                             android:text="@string/resin"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
@@ -275,19 +271,100 @@
                         android:text="@string/btn_check_in_failed" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginEnd="6dp">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_daily_yet_noti"
+                        android:layout_width="32dp"
+                        android:layout_marginEnd="0dp"
+                        android:checked="@={vm.sfEnableNotiDailyYet}"
+                        android:onClick="@{() -> vm.onClickDailyCommissionYetNoti()}"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextView"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/btn_daily_commission_yet"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:maxLines="2"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/sp_daily_yet_noti"
+                        android:background="@drawable/bg_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:layout_marginLeft="8dp"
+                        />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginEnd="6dp">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_weekly_yet_noti"
+                        android:layout_width="32dp"
+                        android:layout_marginEnd="0dp"
+                        android:checked="@={vm.sfEnableNotiWeeklyYet}"
+                        android:onClick="@{() -> vm.onClickWeeklyBossYetNoti()}"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextView"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/btn_weekly_boss_yet"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:maxLines="2"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/sp_weekly_yet_noti_day"
+                        android:background="@drawable/bg_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:layout_marginLeft="8dp"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/sp_weekly_yet_noti_time"
+                        android:background="@drawable/bg_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:layout_marginLeft="8dp"
+                        />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <androidx.legacy.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/MaterialButton"
                     android:text="@string/widget_customizing"
                     android:onClick="@{()->vm.onClickWidgetDesign()}"
                     app:iconSize="26dp"
                     android:textSize="22sp"
-                    android:textStyle="italic"
-                    android:textAllCaps="false" />
+                    android:textStyle="italic" />
 
                 <androidx.legacy.widget.Space
                     android:layout_width="wrap_content"
@@ -313,9 +390,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="5dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextView"
                     android:layout_gravity="center_horizontal"
                     android:foreground="?attr/selectableItemBackground"
                     android:onClick="@{()->vm.onClickWidgetRefreshNotWork()}"
