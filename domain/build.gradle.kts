@@ -1,5 +1,3 @@
-import dependency.Versions
-
 plugins {
     id ("java-library")
     id ("kotlin")

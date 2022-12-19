@@ -261,36 +261,6 @@ class WidgetDesignViewModel @Inject constructor(
         sfResinFontSize.value = Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE
     }
 
-    fun refreshCharacterInfo() {
-        log.e()
-
-        if (preference.getStringCookie() == "") {
-            makeToast(resource.getString(R.string.msg_toast_get_characters_no_cookie))
-            return
-        } else if (preference.getStringUid() == "") {
-            makeToast(resource.getString(R.string.msg_toast_get_characters_no_uid))
-            return
-        }
-
-        refreshCharacters(
-            preference.getStringUid(),
-            when (preference.getDailyNoteSettings().server) {
-                Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
-                Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
-                Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
-                Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
-                else -> Constant.SERVER_OS_ASIA
-            },
-            when (preference.getStringLocale()) {
-                Constant.Locale.ENGLISH.locale -> Constant.Locale.ENGLISH.lang
-                Constant.Locale.KOREAN.locale -> Constant.Locale.KOREAN.lang
-                else -> Constant.Locale.ENGLISH.locale
-            },
-            preference.getStringCookie(),
-            CommonFunction.getGenshinDS()
-        )
-    }
-
     fun onClickCharacterItem(item: LocalCharacter) {
         log.e(item.name_ko)
 

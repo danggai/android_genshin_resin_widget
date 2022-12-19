@@ -4,7 +4,6 @@ import danggai.domain.util.Constant
 import java.util.*
 
 data class DailyNoteSettings(
-    val server: Int,
     val autoRefreshPeriod: Long,
     val notiEach40Resin: Boolean,
     val noti140Resin: Boolean,
@@ -20,7 +19,6 @@ data class DailyNoteSettings(
 ) {
     companion object {
         val EMPTY = DailyNoteSettings (
-            server = 0,
             autoRefreshPeriod = Constant.PREF_DEFAULT_REFRESH_PERIOD,
             notiEach40Resin = false,
             noti140Resin = false,

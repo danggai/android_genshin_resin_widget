@@ -11,7 +11,6 @@ import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
 import danggai.domain.local.CheckInSettings
 import danggai.domain.local.DailyNoteSettings
-import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.resource.repository.ResourceProviderRepository
 import danggai.domain.util.Constant
@@ -27,8 +26,6 @@ class MainViewModel @Inject constructor(
     private val accountDao: AccountDaoUseCase,
     private val preference: PreferenceManagerRepository,
 ): BaseViewModel() {
-    val dao = accountDao
-
     val sfAutoRefreshPeriod = MutableStateFlow(15L)
 
     val sfAccountList: StateFlow<List<Account>> =
@@ -106,7 +103,6 @@ class MainViewModel @Inject constructor(
 
         preference.setDailyNoteSettings(
             DailyNoteSettings(
-                0,      // deprecated
                 sfAutoRefreshPeriod.value,
                 sfEnableNotiEach40Resin.value,
                 sfEnableNoti140Resin.value,
@@ -124,8 +120,6 @@ class MainViewModel @Inject constructor(
 
         preference.setCheckInSettings(
             CheckInSettings(
-                true,     // deprecated
-                true,   // deprecated
                 sfEnableNotiCheckinSuccess.value,
                 sfEnableNotiCheckinFailed.value
             )
@@ -135,7 +129,10 @@ class MainViewModel @Inject constructor(
     }
 
     fun onClickCheckIn() {
-        startCheckIn()
+        log.e()
+        sendEvent(Event.StartShutCheckInWorker(true))
+
+        makeToast(resource.getString(R.string.msg_toast_save_done_check_in))
     }
 
     fun onClickWidgetRefreshNotWork() {
@@ -202,30 +199,4 @@ class MainViewModel @Inject constructor(
             sfShowDialogDailyWeeklyYet.emitInVmScope(false)
         }
     }
-
-
-    private fun sendWidgetSyncBroadcast(dailyNote: DailyNoteData) {
-        log.e()
-
-//        preference.setStringRecentSyncTime(TimeFunction.getSyncTimeString())
-//
-//        val expeditionTime: String = CommonFunction.getExpeditionTime(dailyNote)
-//        preference.setStringExpeditionTime(expeditionTime)
-//
-//        preference.setDailyNote(dailyNote)
-
-        if (sfAutoRefreshPeriod.value == -1L) {
-            sendEvent(Event.StartShutRefreshWorker(false))
-        } else {
-            sendEvent(Event.StartShutRefreshWorker(true))
-        }
-    }
-
-    private fun startCheckIn() {
-        log.e()
-        sendEvent(Event.StartShutCheckInWorker(true))
-
-        makeToast(resource.getString(R.string.msg_toast_save_done_check_in))
-    }
-
 }

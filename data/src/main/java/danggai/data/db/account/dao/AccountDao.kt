@@ -5,8 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import danggai.data.db.account.entity.AccountEntity
-import io.reactivex.Completable
-import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow
 
 @Dao

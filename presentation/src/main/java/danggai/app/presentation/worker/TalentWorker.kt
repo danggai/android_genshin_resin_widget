@@ -6,7 +6,6 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import danggai.app.presentation.R
 import danggai.app.presentation.ui.widget.TalentWidget
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.log

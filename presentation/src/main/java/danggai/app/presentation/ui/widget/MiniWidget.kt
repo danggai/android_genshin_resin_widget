@@ -132,7 +132,7 @@ class MiniWidget() : AppWidgetProvider() {
                 val uid = PreferenceManager.getString(context, Constant.PREF_UID + "_$widgetId")
                 val name = PreferenceManager.getString(context, Constant.PREF_NAME + "_$widgetId")
                 val recentSyncTimeString = PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid").ifEmpty {
-                    TimeFunction.getSyncTimeString()
+                    TimeFunction.getSyncDateTimeString()
                 }.split(" ")[1]
                 val dailyNote = PreferenceManager.getT<DailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid")?: DailyNoteData.EMPTY
                 log.e()
