@@ -42,6 +42,7 @@ class MainViewModel @Inject constructor(
     val sfCustomNotiResin = MutableStateFlow("0")
     val sfEnableNotiExpeditionDone = MutableStateFlow(false)
     val sfEnableNotiHomeCoinFull = MutableStateFlow(false)
+    val sfEnableNotiParamReach = MutableStateFlow(false)
 
     val sfEnableNotiCheckinSuccess = MutableStateFlow(false)
     val sfEnableNotiCheckinFailed = MutableStateFlow(false)
@@ -65,6 +66,7 @@ class MainViewModel @Inject constructor(
             sfCustomNotiResin.value = it.customResin.toString()
             sfEnableNotiExpeditionDone.value = it.notiExpedition
             sfEnableNotiHomeCoinFull.value = it.notiHomeCoin
+            sfEnableNotiParamReach.value = it.notiParamTrans
             sfEnableNotiDailyYet.value = it.notiDailyYet
             sfEnableNotiWeeklyYet.value = it.notiWeeklyYet
             sfNotiDailyYetTime.value = it.notiDailyYetTime
@@ -110,6 +112,7 @@ class MainViewModel @Inject constructor(
                 customNotiResin,
                 sfEnableNotiExpeditionDone.value,
                 sfEnableNotiHomeCoinFull.value,
+                sfEnableNotiParamReach.value,
                 sfEnableNotiDailyYet.value,
                 sfNotiDailyYetTime.value,
                 sfEnableNotiWeeklyYet.value,

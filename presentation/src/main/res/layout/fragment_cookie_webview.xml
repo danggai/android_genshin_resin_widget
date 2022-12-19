@@ -83,7 +83,7 @@
             android:paddingHorizontal="50dp"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:max="100"
-            android:progressTint="@color/light_blue_200"
+            android:progressTint="@color/light_blue_600"
             app:layout_constraintTop_toTopOf="@id/wv_body"
             app:layout_constraintBottom_toBottomOf="@id/wv_body"
             app:layout_constraintRight_toRightOf="@id/wv_body"

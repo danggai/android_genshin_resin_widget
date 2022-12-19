@@ -158,6 +158,11 @@ object CommonFunction {
                 notificationDesc = context.getString(R.string.push_realm_currency_description)
                 priority = NotificationCompat.PRIORITY_DEFAULT
             }
+            Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED -> {
+                notificationId = Constant.PUSH_CHANNEL_PARAMETRIC_TRANSFORMER_NOTI_ID
+                notificationDesc = context.getString(R.string.push_param_trans_description)
+                priority = NotificationCompat.PRIORITY_DEFAULT
+            }
             Constant.NotiType.DAILY_COMMISSION_YET -> {
                 notificationId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
                 notificationDesc = context.getString(R.string.push_daily_commission_description)
