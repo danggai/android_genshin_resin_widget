@@ -131,6 +131,7 @@ class RefreshWorker @AssistedInject constructor(
 
         val prefResin: Int = prefDailyNote.current_resin
         val nowResin: Int = dailyNote.current_resin
+
         if (settings.notiEach40Resin) {
             if (200 in (prefResin + 1)..nowResin){
                 log.e()
@@ -149,12 +150,14 @@ class RefreshWorker @AssistedInject constructor(
                 sendNoti(account, Constant.NotiType.RESIN_EACH_40, 40)
             }
         }
+
         if (settings.notiEach40Resin) {
             if (140 in (prefResin + 1)..nowResin){
                 log.e()
                 sendNoti(account, Constant.NotiType.RESIN_140, 140)
             }
         }
+
         if (settings.notiCustomResin) {
             val targetResin: Int = settings.customResin
             if (targetResin in (prefResin + 1)..nowResin){
@@ -207,7 +210,7 @@ class RefreshWorker @AssistedInject constructor(
             sendNoti(account, Constant.NotiType.DAILY_COMMISSION_YET, 0)
         }
 
-        if (settings.notiDailyYet &&
+        if (settings.notiWeeklyYet &&
             yymmdd != preference.getStringRecentWeeklyBossNotiDate(account.genshin_uid) &&
             calendar.get(Calendar.HOUR) >= settings.notiWeeklyYetTime &&
             calendar.get(Calendar.DAY_OF_WEEK) == settings.notiWeeklyYetDay &&

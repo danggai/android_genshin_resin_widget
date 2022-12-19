@@ -126,16 +126,15 @@
                     android:textStyle="bold|italic" />
 
                 <RadioGroup
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    style="@style/RadioGroup"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/rb_disable"
                         style="@style/RadioButton"
+                        android:id="@+id/rb_disable"
+                        android:layout_weight="1.4"
                         android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(-1L)}"
                         android:text="Disable" />
 
@@ -186,16 +185,12 @@
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
                         android:id="@+id/cb_each_40resin"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:checked="@={vm.sfEnableNotiEach40Resin}"
                         android:text="@string/btn_each_40_resin" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
                         android:id="@+id/cb_140resin"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:checked="@={vm.sfEnableNoti140Resin}"
                         android:text="@string/btn_140_resin"/>
 
@@ -215,7 +210,7 @@
                         android:layout_marginEnd="6dp">
 
                         <com.google.android.material.checkbox.MaterialCheckBox
-                            style="@style/Checkbox"
+                            style="@style/Checkbox.BoxOnly"
                             android:id="@+id/cb_custom_resin"
                             android:layout_width="32dp"
                             android:layout_marginEnd="0dp"
@@ -245,8 +240,6 @@
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:id="@+id/cb_expedition_done"
                         android:checked="@={vm.sfEnableNotiExpeditionDone}"
                         android:text="@string/btn_expedition_done" />
@@ -260,16 +253,12 @@
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:id="@+id/cb_home_coin_full"
                         android:checked="@={vm.sfEnableNotiHomeCoinFull}"
                         android:text="@string/btn_home_coin_full" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:id="@+id/cb_param_reached"
                         android:checked="@={vm.sfEnableNotiParamReach}"
                         android:text="@string/btn_param_reached" />
@@ -293,8 +282,6 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextView"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:text="@string/btn_daily_commission_yet"
                         android:textColor="@color/black"
                         android:textSize="14sp"
@@ -320,7 +307,7 @@
                     android:layout_marginEnd="6dp">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.BoxOnly"
                         android:id="@+id/cb_weekly_yet_noti"
                         android:layout_width="32dp"
                         android:layout_marginEnd="0dp"
@@ -367,16 +354,12 @@
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
                         android:id="@+id/cb_check_in_success"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:checked="@={vm.sfEnableNotiCheckinSuccess}"
                         android:text="@string/btn_check_in_success" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
                         android:id="@+id/cb_check_in_fail"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:checked="@={vm.sfEnableNotiCheckinFailed}"
                         android:text="@string/btn_check_in_failed" />
 

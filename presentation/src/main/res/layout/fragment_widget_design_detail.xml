@@ -57,9 +57,7 @@
                     />
 
                 <RadioGroup
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    style="@style/RadioGroup"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -98,10 +96,8 @@
                     android:textStyle="bold|italic" />
 
                 <RadioGroup
+                    style="@style/RadioGroup"
                     android:id="@+id/rg_time_notation_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -144,7 +140,9 @@
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    >
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
@@ -162,7 +160,9 @@
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    >
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
@@ -180,7 +180,9 @@
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    >
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
@@ -199,7 +201,9 @@
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    >
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"

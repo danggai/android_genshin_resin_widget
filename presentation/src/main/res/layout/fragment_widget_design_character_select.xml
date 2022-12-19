@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:background="@color/light_blue_200"
+            android:background="@color/light_blue_600"
             android:gravity="center_vertical|right"
             >
 
