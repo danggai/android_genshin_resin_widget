@@ -3,12 +3,9 @@ package danggai.app.presentation.ui.cookie
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Point
 import android.os.Bundle
 import android.os.Message
 import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
 import android.webkit.*
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.LayoutRes

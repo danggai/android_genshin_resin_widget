@@ -9,12 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingActivity
 import danggai.app.presentation.databinding.ActivityNewHoyolabAccountBinding
-import danggai.app.presentation.databinding.ActivityWidgetDesignBinding
-import danggai.app.presentation.ui.design.charaters.select.WidgetDesignSelectCharacterFragment
-import danggai.app.presentation.ui.main.MainActivity
-import danggai.app.presentation.ui.main.MainFragment
 import danggai.app.presentation.util.log
-import danggai.domain.db.account.entity.Account
 
 @AndroidEntryPoint
 class NewHoyolabAccountActivity : BindingActivity<ActivityNewHoyolabAccountBinding, NewHoyolabAccountViewModel>() {

@@ -26,19 +26,10 @@ import danggai.app.presentation.ui.widget.DetailWidget
 import danggai.app.presentation.ui.widget.MiniWidget
 import danggai.app.presentation.ui.widget.ResinWidget
 import danggai.app.presentation.ui.widget.ResinWidgetResizable
-import danggai.app.presentation.util.PreferenceManager.getT
-import danggai.domain.db.account.entity.Account
-import danggai.domain.db.account.usecase.AccountDaoUseCase
-import danggai.domain.local.CheckInSettings
-import danggai.domain.local.DailyNoteSettings
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.util.Constant
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.*
@@ -420,112 +411,6 @@ object CommonFunction {
         } else {
             log.e("uid -> $uid")
             true
-        }
-    }
-
-    /*
-    * preference 마이그레이션용 임시 함수.
-    * 차후 버전(1.1.6~7)에서 삭제 요망
-    * */
-    fun migrateSettings(context: Context) {
-        log.e()
-
-        PreferenceManager.setT(context, Constant.PREF_WIDGET_SETTINGS,
-            DailyNoteSettings(
-                PreferenceManager.getInt(context, Constant.PREF_SERVER),
-                PreferenceManager.getLong(context, Constant.PREF_AUTO_REFRESH_PERIOD, Constant.PREF_DEFAULT_REFRESH_PERIOD),
-                PreferenceManager.getBoolean(context, Constant.PREF_NOTI_EACH_40_RESIN, false),
-                PreferenceManager.getBoolean(context, Constant.PREF_NOTI_140_RESIN, false),
-                PreferenceManager.getBoolean(context, Constant.PREF_NOTI_CUSTOM_RESIN_BOOLEAN, false),
-                PreferenceManager.getInt(context, Constant.PREF_NOTI_CUSTOM_TARGET_RESIN),
-                PreferenceManager.getBoolean(context, Constant.PREF_NOTI_EXPEDITION_DONE, false),
-                PreferenceManager.getBoolean(context, Constant.PREF_NOTI_HOME_COIN_FULL, false)
-            )
-        )
-
-        PreferenceManager.setT(context, Constant.PREF_CHECK_IN_SETTINGS,
-            CheckInSettings(
-                PreferenceManager.getBoolean(context, Constant.PREF_ENABLE_GENSHIN_AUTO_CHECK_IN, false),
-                PreferenceManager.getBoolean(context, Constant.PREF_ENABLE_HONKAI_3RD_AUTO_CHECK_IN, false),
-                PreferenceManager.getBoolean(context, Constant.PREF_NOTI_CHECK_IN_SUCCESS, true),
-                PreferenceManager.getBoolean(context, Constant.PREF_NOTI_CHECK_IN_FAILED, false)
-            )
-        )
-
-        PreferenceManager.setT(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS,
-            ResinWidgetDesignSettings(
-                PreferenceManager.getInt(context, Constant.PREF_WIDGET_THEME),
-                PreferenceManager.getInt(context, Constant.PREF_WIDGET_RESIN_TIME_NOTATION),
-                PreferenceManager.getInt(context, Constant.PREF_WIDGET_RESIN_IMAGE_VISIBILITY),
-                false,
-                false,
-                PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE, Constant.PREF_WIDGET_RESIN_FONT_SIZE),
-                PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
-            )
-        )
-
-        PreferenceManager.setT(context, Constant.PREF_DETAIL_WIDGET_DESIGN_SETTINGS,
-            DetailWidgetDesignSettings(
-                PreferenceManager.getInt(context, Constant.PREF_WIDGET_THEME),
-                PreferenceManager.getInt(context, Constant.PREF_WIDGET_DETAIL_TIME_NOTATION),
-                PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_RESIN_DATA_VISIBILITY, true),
-                PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_DAILY_COMMISSION_DATA_VISIBILITY, true),
-                PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_WEEKLY_BOSS_DATA_VISIBILITY, true),
-                PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_REALM_CURRENCY_DATA_VISIBILITY, true),
-                PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_EXPEDITION_DATA_VISIBILITY, true),
-                true,
-                false,
-                false,
-                PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE, Constant.PREF_WIDGET_DETAIL_FONT_SIZE),
-                PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
-            )
-        )
-    }
-
-    fun checkAndMigratePreferenceToDB(dao: AccountDaoUseCase, context: Context) {
-        if (!PreferenceManager.getBoolean(context, Constant.PREF_CHECKED_ROOM_DB_MIGRATION, false)) {
-            PreferenceManager.setBoolean(context, Constant.PREF_CHECKED_ROOM_DB_MIGRATION, true)
-
-            val dailyNoteSettings = getT<DailyNoteSettings>(context, Constant.PREF_WIDGET_SETTINGS)?: DailyNoteSettings.EMPTY
-            val checkInSettings = getT<CheckInSettings>(context, Constant.PREF_CHECK_IN_SETTINGS)?: CheckInSettings.EMPTY
-
-            CoroutineScope(Dispatchers.IO).launch {
-                if (
-                    PreferenceManager.getString(context, Constant.PREF_COOKIE) != "" &&
-                    PreferenceManager.getString(context, Constant.PREF_UID) != "" &&
-                    dailyNoteSettings != DailyNoteSettings.EMPTY
-                ) {
-                    val server = when (dailyNoteSettings.server) {      // 메인에서 서버 설정할 때 asia 안누르면 -1로 저정되는 버그 있었음;
-                        -1, 0 -> Constant.Server.ASIA.pref
-                        else -> dailyNoteSettings.server
-                    }
-
-                    dao.insertAccount(
-                        Account(
-                            context.getString(R.string.traveler),
-                            PreferenceManager.getString(context, Constant.PREF_COOKIE),
-                            PreferenceManager.getString(context, Constant.PREF_UID),
-                            server,
-                            checkInSettings.genshinCheckInEnable,
-                            checkInSettings.honkai3rdCheckInEnable,
-                            false
-                        )
-                    ).collect {
-                        log.e(it)
-                    }
-                } else if (PreferenceManager.getString(context, Constant.PREF_COOKIE) != "" &&
-                    PreferenceManager.getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)
-                ) {
-                    dao.insertAccount(
-                        Account.GUEST.copy(
-                            nickname = context.getString(R.string.guest),
-                            cookie = PreferenceManager.getString(context, Constant.PREF_COOKIE)
-                        )
-                    ).collect {
-                        log.e(it)
-                    }
-                }
-            }
         }
     }
 }

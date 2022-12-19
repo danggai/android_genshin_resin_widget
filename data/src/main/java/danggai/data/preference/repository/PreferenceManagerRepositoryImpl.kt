@@ -4,17 +4,17 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.GsonBuilder
 import danggai.data.BuildConfig
-import danggai.domain.local.*
+import danggai.domain.local.CheckInSettings
+import danggai.domain.local.DailyNoteSettings
+import danggai.domain.local.DetailWidgetDesignSettings
+import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import org.json.JSONArray
+import org.json.JSONException
 import java.util.*
 import javax.inject.Inject
-import org.json.JSONException
-
-
-
 
 
 class PreferenceManagerRepositoryImpl @Inject constructor(
@@ -304,7 +304,7 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
 
 
 
-    // Deprecated
+    /* Deprecated */
 
     @Deprecated("Isolated by Permission Check")
     override fun getBooleanFirstLaunch(): Boolean =

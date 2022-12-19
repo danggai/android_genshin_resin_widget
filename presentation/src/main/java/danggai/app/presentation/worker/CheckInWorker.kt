@@ -21,12 +21,7 @@ import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
-import danggai.domain.local.CheckInSettings
-import danggai.domain.local.DailyNoteSettings
-import danggai.domain.local.DetailWidgetDesignSettings
-import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.checkin.usecase.CheckInUseCase
-import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import kotlinx.coroutines.*
@@ -375,14 +370,6 @@ class CheckInWorker @AssistedInject constructor(
     override suspend fun doWork(): Result {
         return try {
             log.e()
-            if (preference.getDailyNoteSettings() == DailyNoteSettings.EMPTY &&
-                preference.getCheckInSettings() == CheckInSettings.EMPTY &&
-                preference.getResinWidgetDesignSettings() == ResinWidgetDesignSettings.EMPTY &&
-                preference.getDetailWidgetDesignSettings() == DetailWidgetDesignSettings.EMPTY
-            ) CommonFunction.migrateSettings(applicationContext)
-
-            CommonFunction.checkAndMigratePreferenceToDB(accountDao, applicationContext)
-            delay(300L)
 
             val lang = when (preference.getStringLocale()) {
                 Constant.Locale.ENGLISH.locale -> Constant.Locale.ENGLISH.lang

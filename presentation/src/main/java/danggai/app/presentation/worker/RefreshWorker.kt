@@ -13,10 +13,6 @@ import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
-import danggai.domain.local.CheckInSettings
-import danggai.domain.local.DailyNoteSettings
-import danggai.domain.local.DetailWidgetDesignSettings
-import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.network.dailynote.usecase.DailyNoteUseCase
 import danggai.domain.preference.repository.PreferenceManagerRepository
@@ -229,13 +225,6 @@ class RefreshWorker @AssistedInject constructor(
 
     override fun doWork(): Result {
         log.e()
-        if (preference.getDailyNoteSettings() == DailyNoteSettings.EMPTY &&
-            preference.getCheckInSettings() == CheckInSettings.EMPTY &&
-            preference.getResinWidgetDesignSettings() == ResinWidgetDesignSettings.EMPTY &&
-            preference.getDetailWidgetDesignSettings() == DetailWidgetDesignSettings.EMPTY
-        ) CommonFunction.migrateSettings(applicationContext)
-
-        CommonFunction.checkAndMigratePreferenceToDB(accountDao, applicationContext)
 
         try {
             CoroutineScope(Dispatchers.IO).launch {

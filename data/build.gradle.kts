@@ -1,5 +1,5 @@
-import dependency.Versions
 import dependency.Dependencies
+import dependency.Versions
 
 plugins {
     id ("com.android.library")
