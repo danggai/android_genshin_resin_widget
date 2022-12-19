@@ -179,17 +179,23 @@
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    >
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
                         android:id="@+id/cb_each_40resin"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:checked="@={vm.sfEnableNotiEach40Resin}"
                         android:text="@string/btn_each_40_resin" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
                         android:id="@+id/cb_140resin"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:checked="@={vm.sfEnableNoti140Resin}"
                         android:text="@string/btn_140_resin"/>
 
@@ -197,11 +203,14 @@
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    >
 
                     <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:layout_marginEnd="6dp">
 
@@ -216,7 +225,7 @@
                             android:id="@+id/et_custom_resin"
                             style="@style/EditTextStyle"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="40dp"
                             android:hint="160"
                             android:imeOptions="actionDone"
                             android:inputType="number"
@@ -236,6 +245,8 @@
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:id="@+id/cb_expedition_done"
                         android:checked="@={vm.sfEnableNotiExpeditionDone}"
                         android:text="@string/btn_expedition_done" />
@@ -244,31 +255,24 @@
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:id="@+id/cb_home_coin_full"
                         android:checked="@={vm.sfEnableNotiHomeCoinFull}"
                         android:text="@string/btn_home_coin_full" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
-                        android:id="@+id/cb_check_in_success"
-                        android:checked="@={vm.sfEnableNotiCheckinSuccess}"
-                        android:text="@string/btn_check_in_success" />
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
-                        android:id="@+id/cb_check_in_fail"
-                        android:checked="@={vm.sfEnableNotiCheckinFailed}"
-                        android:text="@string/btn_check_in_failed" />
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:id="@+id/cb_param_reached"
+                        android:checked="@={vm.sfEnableNotiParamReach}"
+                        android:text="@string/btn_param_reached" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -351,6 +355,30 @@
                         android:imeOptions="actionDone"
                         android:layout_marginLeft="8dp"
                         />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    >
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_check_in_success"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:checked="@={vm.sfEnableNotiCheckinSuccess}"
+                        android:text="@string/btn_check_in_success" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_check_in_fail"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:checked="@={vm.sfEnableNotiCheckinFailed}"
+                        android:text="@string/btn_check_in_failed" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -29,6 +29,7 @@
     <string name="resin">레진</string>
     <string name="btn_expedition_done">탐험 완료</string>
     <string name="btn_home_coin_full">선계 주화 가득 참</string>
+    <string name="btn_param_reached">매개 변수 변환기 준비 됨</string>
     <string name="btn_daily_commission_yet">일일임무 미완료 시 알림</string>
     <string name="btn_weekly_boss_yet">주간보스 할인 잔여 시 알림</string>
 
@@ -178,7 +179,11 @@
 
     <string name="push_realm_currency_title">선계 화페 알림</string>
     <string name="push_realm_currency_description">선계 화폐가 충전 될 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
-    <string name="push_msg_realm_currency_full">%s! 선계 주화가 가득 찼어! 확인하러 가자!</string>
+    <string name="push_msg_realm_currency_full">%s! 선계 주화가 가득 찼어! 포롱이에게 가보자!</string>
+
+    <string name="push_param_trans_title">매개 변수 변환기 알림</string>
+    <string name="push_param_trans_description">매개 변수 변환기가 준비 될 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
+    <string name="push_msg_param_trans_full">%s! 매개 변수 변환기가 준비되었어! 오늘은 뭐가 나올까?</string>
 
     <string name="push_daily_commission_title">일일 임무 알림</string>
     <string name="push_daily_commission_description">설정 한 시간까지 오늘의 일일 임무가 완료되지 않았을 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>

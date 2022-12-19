@@ -50,6 +50,7 @@
     <string name="resin">Resin</string>
     <string name="btn_expedition_done">Expedition Done</string>
     <string name="btn_home_coin_full">Realm Currency Full</string>
+    <string name="btn_param_reached">Parametric Transformer Reached</string>
     <string name="btn_daily_commission_yet">Daily Commission Incomplete Notification</string>
     <string name="btn_weekly_boss_yet">Weekly Boss Incomplete Notification</string>
 
@@ -203,6 +204,10 @@
     <string name="push_realm_currency_title">Realm Currency Notification</string>
     <string name="push_realm_currency_description">This is a notification sent to travelers when the realm currency is full!</string>
     <string name="push_msg_realm_currency_full">%s! Now full of realm currency!</string>
+
+    <string name="push_param_trans_title">Parametric Transformer Notification</string>
+    <string name="push_param_trans_description">This is a notification sent to travelers when the parametric transformer reached!</string>
+    <string name="push_msg_param_trans_full">%s! Now parametric transformer is reached!</string>
 
     <string name="push_daily_commission_title">Daily Commission Notification</string>
     <string name="push_daily_commission_description">This is a notification sent to travelers when today\'s daily mission is not completed by the set time!</string>
