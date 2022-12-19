@@ -1,5 +1,6 @@
 package danggai.app.presentation.ui.cookie
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
@@ -156,7 +157,9 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
                                         "about:blank"
                                     ).contains(url)
                                 ) dialog.dismiss()
-                                else dialog.show()
+                                else {
+                                    if(!(context as Activity).isFinishing) dialog.show()
+                                }
 
                                 super.onPageStarted(view, url, favicon)
                             }

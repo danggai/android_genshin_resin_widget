@@ -249,7 +249,7 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         edit.clear()
         edit.apply()
     }
-    
+
     /**
      * 커스텀 함수
      */
@@ -294,6 +294,17 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid")
     override fun setStringRecentSyncTime(uid: String, value: String) =
         setString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid", value)
+
+
+    override fun getStringRecentDailyCommissionNotiDate(uid: String): String =
+        getString(context, Constant.PREF_RECENT_DAILY_COMMISSION_NOTI_DATE + "_$uid")
+    override fun setStringRecentDailyCommissionNotiDate(uid: String, string: String) =
+        setString(context, Constant.PREF_RECENT_DAILY_COMMISSION_NOTI_DATE + "_$uid", string)
+
+    override fun getStringRecentWeeklyBossNotiDate(uid: String): String =
+        getString(context, Constant.PREF_RECENT_WEEKLY_BOSS_NOTI_DATE + "_$uid")
+    override fun setStringRecentWeeklyBossNotiDate(uid: String, string: String) =
+        setString(context, Constant.PREF_RECENT_WEEKLY_BOSS_NOTI_DATE + "_$uid", string)
 
 
     override fun getStringLocale(): String =

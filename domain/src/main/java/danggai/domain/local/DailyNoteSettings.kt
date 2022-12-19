@@ -1,6 +1,7 @@
 package danggai.domain.local
 
 import danggai.domain.util.Constant
+import java.util.*
 
 data class DailyNoteSettings(
     val autoRefreshPeriod: Long,
@@ -9,7 +10,12 @@ data class DailyNoteSettings(
     val notiCustomResin: Boolean,
     val customResin: Int,
     val notiExpedition: Boolean,
-    val notiHomeCoin: Boolean
+    val notiHomeCoin: Boolean,
+    val notiDailyYet: Boolean,
+    val notiDailyYetTime: Int,
+    val notiWeeklyYet: Boolean,
+    val notiWeeklyYetDay: Int,
+    val notiWeeklyYetTime: Int,
 ) {
     companion object {
         val EMPTY = DailyNoteSettings (
@@ -19,7 +25,12 @@ data class DailyNoteSettings(
             notiCustomResin = false,
             customResin = 0,
             notiExpedition = false,
-            notiHomeCoin = false
+            notiHomeCoin = false,
+            notiDailyYet = false,
+            notiDailyYetTime = 21,
+            notiWeeklyYet = false,
+            notiWeeklyYetDay = Calendar.SUNDAY,
+            notiWeeklyYetTime = 21
         )
     }
 }

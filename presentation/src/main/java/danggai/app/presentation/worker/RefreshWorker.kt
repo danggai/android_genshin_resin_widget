@@ -22,7 +22,11 @@ import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.*
 import java.net.ConnectException
 import java.net.UnknownHostException
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.hours
 
 @HiltWorker
 class RefreshWorker @AssistedInject constructor(
@@ -183,6 +187,29 @@ class RefreshWorker @AssistedInject constructor(
             }
         }
 
+        val calendar = Calendar.getInstance()
+        val yymmdd = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE).format(Date())
+
+        if (settings.notiDailyYet &&
+            yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.genshin_uid) &&
+            calendar.get(Calendar.HOUR) >= settings.notiDailyYetTime &&
+            !dailyNote.is_extra_task_reward_received
+        ) {
+            log.e()
+            preference.setStringRecentDailyCommissionNotiDate(account.genshin_uid, yymmdd)
+            sendNoti(account, Constant.NotiType.DAILY_COMMISSION_YET, 0)
+        }
+
+        if (settings.notiDailyYet &&
+            yymmdd != preference.getStringRecentWeeklyBossNotiDate(account.genshin_uid) &&
+            calendar.get(Calendar.HOUR) >= settings.notiWeeklyYetTime &&
+            calendar.get(Calendar.DAY_OF_WEEK) == settings.notiWeeklyYetDay &&
+            dailyNote.remain_resin_discount_num != 0
+        ) {
+            log.e()
+            preference.setStringRecentWeeklyBossNotiDate(account.genshin_uid, yymmdd)
+            sendNoti(account, Constant.NotiType.WEEKLY_BOSS_YET, 0)
+        }
 
         preference.setStringRecentSyncTime(account.genshin_uid, TimeFunction.getSyncDateTimeString())
 
@@ -201,6 +228,8 @@ class RefreshWorker @AssistedInject constructor(
             Constant.NotiType.RESIN_CUSTOM,-> applicationContext.getString(R.string.push_resin_noti_title)
             Constant.NotiType.EXPEDITION_DONE -> applicationContext.getString(R.string.push_expedition_title)
             Constant.NotiType.REALM_CURRENCY_FULL -> applicationContext.getString(R.string.push_realm_currency_title)
+            Constant.NotiType.DAILY_COMMISSION_YET -> applicationContext.getString(R.string.push_daily_commission_title)
+            Constant.NotiType.WEEKLY_BOSS_YET -> applicationContext.getString(R.string.push_weekly_boss_title)
             else -> ""
         }
 
@@ -217,6 +246,8 @@ class RefreshWorker @AssistedInject constructor(
             Constant.NotiType.RESIN_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), account.nickname, target)
             Constant.NotiType.EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_expedition_done), account.nickname)
             Constant.NotiType.REALM_CURRENCY_FULL -> String.format(applicationContext.getString(R.string.push_msg_realm_currency_full), account.nickname)
+            Constant.NotiType.DAILY_COMMISSION_YET -> String.format(applicationContext.getString(R.string.push_msg_daily_commission_yet), account.nickname)
+            Constant.NotiType.WEEKLY_BOSS_YET -> String.format(applicationContext.getString(R.string.push_msg_weekly_boss_yet), account.nickname)
             else -> ""
         }
 
