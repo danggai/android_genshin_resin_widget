@@ -82,14 +82,14 @@ object CommonFunction {
     }
 
     inline fun <reified T: AppWidgetProvider> sendBroadcastAppWidgetUpdate(context: Context) {
-        val intent = Intent(context, T::class.java)
-        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-
         val ids = AppWidgetManager.getInstance(context.applicationContext)
             .getAppWidgetIds(ComponentName(context.applicationContext, T::class.java))
 
         CoroutineScope(Dispatchers.Main.immediate).launch {
             ids.onEach { id ->
+                val intent = Intent(context, T::class.java)
+                intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+
                 intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
                 context.sendBroadcast(intent)
                 delay(100L)

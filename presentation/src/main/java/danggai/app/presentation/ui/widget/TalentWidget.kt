@@ -24,23 +24,20 @@ import kotlinx.coroutines.*
 class TalentWidget() : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds)
+
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
-            val views: RemoteViews = addViews(context)
+            val serviceIntent = Intent(context, TalentWidgetItemService::class.java)
+            val widget = setRemoteViews(context)
+            widget.setRemoteAdapter(R.id.gv_characters, serviceIntent)
 
-            CoroutineScope(Dispatchers.IO).launch {
-                syncView(views, context)
+            CoroutineScope(Dispatchers.Main.immediate).launch {
+                syncView(widget, context)
 
-                appWidgetManager.updateAppWidget(appWidgetId, views)
+                appWidgetManager.updateAppWidget(appWidgetId, widget)
             }
         }
-
-        val serviceIntent = Intent(context, TalentWidgetItemService::class.java)
-        val widget = RemoteViews(context.packageName, R.layout.widget_talent)
-        widget.setRemoteAdapter(R.id.gv_characters, serviceIntent)
-        appWidgetManager.updateAppWidget(appWidgetIds, widget)
-
-        super.onUpdate(context, appWidgetManager, appWidgetIds)
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -57,7 +54,7 @@ class TalentWidget() : AppWidgetProvider() {
                 log.e("REFRESH_UI")
                 setWidgetRefreshing(context, appWidgetManager, appWidgetIds)
 
-                CoroutineScope(Dispatchers.IO).launch {
+                CoroutineScope(Dispatchers.Main.immediate).launch {
                     delay(500L)
 
                     context.let {
@@ -97,21 +94,20 @@ class TalentWidget() : AppWidgetProvider() {
         }
     }
 
-    private fun addViews(context: Context?): RemoteViews {
-        log.e()
-        val views = RemoteViews(context!!.packageName, R.layout.widget_talent)
+    private fun setRemoteViews(context: Context?): RemoteViews {
+        val remoteViews = RemoteViews(context!!.packageName, R.layout.widget_talent)
 
         val intentUpdate = Intent(context, TalentWidget::class.java).apply {
             action = Constant.ACTION_TALENT_WIDGET_REFRESH
         }
-        views.setOnClickPendingIntent(R.id.ll_sync, PendingIntent.getBroadcast(context, 0, intentUpdate, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT))
+        remoteViews.setOnClickPendingIntent(R.id.ll_sync, PendingIntent.getBroadcast(context, 0, intentUpdate, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT))
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
         val awId = manager.getAppWidgetIds(ComponentName(context.applicationContext, TalentWidget::class.java))
 
-        manager.updateAppWidget(awId, views)
+        manager.updateAppWidget(awId, remoteViews)
 
-        return views
+        return remoteViews
     }
 
     private fun syncView(view: RemoteViews, context: Context?) {
@@ -153,6 +149,7 @@ class TalentWidget() : AppWidgetProvider() {
             }
 
             view.setTextViewText(R.id.tv_sync_time, getSyncDayString())
+
             view.setViewVisibility(R.id.pb_loading, View.GONE)
             view.setViewVisibility(R.id.ll_body, View.VISIBLE)
         }
