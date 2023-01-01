@@ -29,10 +29,10 @@ class ResinWidget() : AppWidgetProvider() {
 
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
-            val views: RemoteViews = addViews(context)
-            syncView(appWidgetId, views, context)
+            val remoteView: RemoteViews = makeRemoteViews(context)
+            syncView(appWidgetId, remoteView, context)
 
-            appWidgetManager.updateAppWidget(appWidgetId, views)
+            appWidgetManager.updateAppWidget(appWidgetId, remoteView)
         }
     }
 
@@ -68,12 +68,6 @@ class ResinWidget() : AppWidgetProvider() {
             }
             AppWidgetManager.ACTION_APPWIDGET_UPDATE -> {
                 log.e(action.toString())
-                val id = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
-
-                if (id != -1) {
-                    val manager = AppWidgetManager.getInstance(context)
-                    onUpdate(context, manager, intArrayOf(id))
-                }
             }
         }
     }
@@ -94,7 +88,7 @@ class ResinWidget() : AppWidgetProvider() {
         }
     }
 
-    private fun addViews(context: Context?): RemoteViews {
+    private fun makeRemoteViews(context: Context?): RemoteViews {
         log.e()
         val views = RemoteViews(context!!.packageName, R.layout.widget_resin_fixed)
 

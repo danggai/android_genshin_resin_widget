@@ -29,13 +29,12 @@ class TalentWidget() : AppWidgetProvider() {
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
             val serviceIntent = Intent(context, TalentWidgetItemService::class.java)
-            val widget = setRemoteViews(context)
-            widget.setRemoteAdapter(R.id.gv_characters, serviceIntent)
+            val remoteView = makeRemoteViews(context)
+            remoteView.setRemoteAdapter(R.id.gv_characters, serviceIntent)
 
             CoroutineScope(Dispatchers.Main.immediate).launch {
-                syncView(widget, context)
-
-                appWidgetManager.updateAppWidget(appWidgetId, widget)
+                syncView(remoteView, context)
+                appWidgetManager.updateAppWidget(appWidgetId, remoteView)
             }
         }
     }
@@ -94,7 +93,7 @@ class TalentWidget() : AppWidgetProvider() {
         }
     }
 
-    private fun setRemoteViews(context: Context?): RemoteViews {
+    private fun makeRemoteViews(context: Context?): RemoteViews {
         val remoteViews = RemoteViews(context!!.packageName, R.layout.widget_talent)
 
         val intentUpdate = Intent(context, TalentWidget::class.java).apply {

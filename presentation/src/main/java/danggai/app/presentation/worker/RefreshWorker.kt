@@ -95,7 +95,6 @@ class RefreshWorker @AssistedInject constructor(
 
                 when (it) {
                     is ApiResult.Success -> {
-                        log.e()
                         when (it.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
                                 log.e()

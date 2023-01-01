@@ -86,14 +86,19 @@ object CommonFunction {
             .getAppWidgetIds(ComponentName(context.applicationContext, T::class.java))
 
         CoroutineScope(Dispatchers.Main.immediate).launch {
-            ids.onEach { id ->
+//            ids.onEach { id ->
+//                val intent = Intent(context, T::class.java)
+//                intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+//
+//                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
+//                context.sendBroadcast(intent)
+//                delay(100L)
+//            }
                 val intent = Intent(context, T::class.java)
                 intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 
-                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
                 context.sendBroadcast(intent)
-                delay(100L)
-            }
         }
     }
 
@@ -415,7 +420,6 @@ object CommonFunction {
 
         return if (uid == "") {
             if (PreferenceManager.getString(context, Constant.PREF_UID) == "") {
-                log.e("no uid exists")
                 false
             } else {
                 log.e("uid -> $uid")
@@ -427,7 +431,7 @@ object CommonFunction {
                 true
             }
         } else {
-            log.e("uid -> $uid")
+            log.e("$widgetId uid -> $uid")
             true
         }
     }
