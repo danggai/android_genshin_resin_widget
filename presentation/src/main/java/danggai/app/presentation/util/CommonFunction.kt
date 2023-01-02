@@ -3,6 +3,7 @@ package danggai.app.presentation.util
 import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -30,7 +31,9 @@ import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.util.Constant
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.*
@@ -82,8 +85,8 @@ object CommonFunction {
     }
 
     inline fun <reified T: AppWidgetProvider> sendBroadcastAppWidgetUpdate(context: Context) {
-        val ids = AppWidgetManager.getInstance(context.applicationContext)
-            .getAppWidgetIds(ComponentName(context.applicationContext, T::class.java))
+        val ids = AppWidgetManager.getInstance(context)
+            .getAppWidgetIds(ComponentName(context, T::class.java))
 
         CoroutineScope(Dispatchers.Main.immediate).launch {
 //            ids.onEach { id ->
@@ -94,11 +97,11 @@ object CommonFunction {
 //                context.sendBroadcast(intent)
 //                delay(100L)
 //            }
-                val intent = Intent(context, T::class.java)
-                intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+            val intent = Intent(context, T::class.java)
+            intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 
-                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-                context.sendBroadcast(intent)
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+            context.sendBroadcast(intent)
         }
     }
 
@@ -415,13 +418,20 @@ object CommonFunction {
         view.setFloat(R.id.tv_realm_currency_time_title, "setTextSize", fontSize.toFloat())
     }
 
+    private const val widgetHasNoUid = "nouid"
     fun isUidValidate(widgetId: Int, context: Context): Boolean {
         val uid = PreferenceManager.getString(context, Constant.PREF_UID + "_$widgetId")
 
-        return if (uid == "") {
+        return if (uid == "") { // uid 없이 처음 인입되는 경우
             if (PreferenceManager.getString(context, Constant.PREF_UID) == "") {
+                log.e()
+                PreferenceManager.setString(
+                    context,
+                    Constant.PREF_UID + "_$widgetId",
+                    widgetHasNoUid
+                )
                 false
-            } else {
+            } else {    // 마이그레이션용
                 log.e("uid -> $uid")
                 PreferenceManager.setString(
                     context,
@@ -430,8 +440,17 @@ object CommonFunction {
                 )
                 true
             }
-        } else {
-            log.e("$widgetId uid -> $uid")
+        } else if (uid == widgetHasNoUid) { // 반복적으로 uid 없이 인입되는 경우
+            log.e("widget($widgetId) deleted")
+            try {
+                val a = AppWidgetHost(context, 0)
+                a.deleteAppWidgetId(widgetId)
+            } catch (e: Exception) {
+                log.e()
+            }
+            false
+        } else { // 정상
+            log.e("widget($widgetId) uid -> $uid")
             true
         }
     }

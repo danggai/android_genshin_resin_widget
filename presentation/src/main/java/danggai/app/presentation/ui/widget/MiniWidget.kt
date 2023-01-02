@@ -31,7 +31,6 @@ class MiniWidget() : AppWidgetProvider() {
             val remoteView: RemoteViews = makeRemoteViews(context)
             syncView(appWidgetId, remoteView, context)
 
-
             appWidgetManager.updateAppWidget(appWidgetId, remoteView)
         }
     }

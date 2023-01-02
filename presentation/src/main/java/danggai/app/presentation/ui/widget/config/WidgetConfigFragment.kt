@@ -14,6 +14,7 @@ import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentWidgetConfigBinding
 import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.widget.MiniWidget
+import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.log
 import danggai.domain.util.Constant
 import kotlinx.coroutines.launch
@@ -59,6 +60,11 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
         binding.vm = mVM.apply {
             setCommonFun()
             this.widgetClassName =  this@WidgetConfigFragment.widgetClassName
+        }
+
+        // appwidgetid 없는 widget 삭제 지연을 위해
+        context?.let {
+            PreferenceManager.setString(it, Constant.PREF_UID + "_$appWidgetId", "")
         }
 
         views = RemoteViews(context?.packageName, R.layout.widget_detail_fixed)
