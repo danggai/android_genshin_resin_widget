@@ -231,7 +231,6 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
 
             launch {
                 mVM.sfNotiWeeklyYetDay.collect {
-                    log.e(it)
                     binding.spWeeklyYetNotiDay.setSelection(
                         weeklyDaySpinnerAdapter.getPosition(
                             DayTimeMapper.timeIntToString(requireContext(), it)
@@ -242,7 +241,6 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
 
             launch {
                 mVM.sfNotiWeeklyYetTime.collect {
-                    log.e(it)
                     binding.spWeeklyYetNotiTime.setSelection(
                         weeklyTimeSpinnerAdapter.getPosition(
                             DayTimeMapper.weekOfDayIntToString(requireContext(), it)
@@ -253,7 +251,6 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
 
             launch {
                 mVM.sfNotiDailyYetTime.collect {
-                    log.e(it)
                     binding.spDailyYetNoti.setSelection(
                         weeklyDaySpinnerAdapter.getPosition(
                             DayTimeMapper.timeIntToString(requireContext(), it)
