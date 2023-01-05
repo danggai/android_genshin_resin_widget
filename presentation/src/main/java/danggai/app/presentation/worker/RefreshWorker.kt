@@ -13,10 +13,6 @@ import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
-import danggai.domain.local.CheckInSettings
-import danggai.domain.local.DailyNoteSettings
-import danggai.domain.local.DetailWidgetDesignSettings
-import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.network.dailynote.usecase.DailyNoteUseCase
 import danggai.domain.preference.repository.PreferenceManagerRepository
@@ -26,6 +22,8 @@ import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.*
 import java.net.ConnectException
 import java.net.UnknownHostException
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 @HiltWorker
@@ -97,7 +95,6 @@ class RefreshWorker @AssistedInject constructor(
 
                 when (it) {
                     is ApiResult.Success -> {
-                        log.e()
                         when (it.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
                                 log.e()
@@ -133,6 +130,7 @@ class RefreshWorker @AssistedInject constructor(
 
         val prefResin: Int = prefDailyNote.current_resin
         val nowResin: Int = dailyNote.current_resin
+
         if (settings.notiEach40Resin) {
             if (200 in (prefResin + 1)..nowResin){
                 log.e()
@@ -151,12 +149,14 @@ class RefreshWorker @AssistedInject constructor(
                 sendNoti(account, Constant.NotiType.RESIN_EACH_40, 40)
             }
         }
+
         if (settings.notiEach40Resin) {
             if (140 in (prefResin + 1)..nowResin){
                 log.e()
                 sendNoti(account, Constant.NotiType.RESIN_140, 140)
             }
         }
+
         if (settings.notiCustomResin) {
             val targetResin: Int = settings.customResin
             if (targetResin in (prefResin + 1)..nowResin){
@@ -187,6 +187,38 @@ class RefreshWorker @AssistedInject constructor(
             }
         }
 
+        val prefParamTransState: Boolean = try { prefDailyNote.transformer!!.recovery_time.reached } catch (e: Exception) { false }
+        val nowParamTransState: Boolean = try { dailyNote.transformer!!.recovery_time.reached } catch (e: Exception) { false }
+        if (settings.notiParamTrans) {
+            if (!prefParamTransState && nowParamTransState){
+                log.e()
+                sendNoti(account, Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED, 0)
+            }
+        }
+
+        val calendar = Calendar.getInstance()
+        val yymmdd = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE).format(Date())
+
+        if (settings.notiDailyYet &&
+            yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.genshin_uid) &&
+            calendar.get(Calendar.HOUR) >= settings.notiDailyYetTime &&
+            !dailyNote.is_extra_task_reward_received
+        ) {
+            log.e()
+            preference.setStringRecentDailyCommissionNotiDate(account.genshin_uid, yymmdd)
+            sendNoti(account, Constant.NotiType.DAILY_COMMISSION_YET, 0)
+        }
+
+        if (settings.notiWeeklyYet &&
+            yymmdd != preference.getStringRecentWeeklyBossNotiDate(account.genshin_uid) &&
+            calendar.get(Calendar.HOUR) >= settings.notiWeeklyYetTime &&
+            calendar.get(Calendar.DAY_OF_WEEK) == settings.notiWeeklyYetDay &&
+            dailyNote.remain_resin_discount_num != 0
+        ) {
+            log.e()
+            preference.setStringRecentWeeklyBossNotiDate(account.genshin_uid, yymmdd)
+            sendNoti(account, Constant.NotiType.WEEKLY_BOSS_YET, 0)
+        }
 
         preference.setStringRecentSyncTime(account.genshin_uid, TimeFunction.getSyncDateTimeString())
 
@@ -205,6 +237,9 @@ class RefreshWorker @AssistedInject constructor(
             Constant.NotiType.RESIN_CUSTOM,-> applicationContext.getString(R.string.push_resin_noti_title)
             Constant.NotiType.EXPEDITION_DONE -> applicationContext.getString(R.string.push_expedition_title)
             Constant.NotiType.REALM_CURRENCY_FULL -> applicationContext.getString(R.string.push_realm_currency_title)
+            Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED -> applicationContext.getString(R.string.push_param_trans_title)
+            Constant.NotiType.DAILY_COMMISSION_YET -> applicationContext.getString(R.string.push_daily_commission_title)
+            Constant.NotiType.WEEKLY_BOSS_YET -> applicationContext.getString(R.string.push_weekly_boss_title)
             else -> ""
         }
 
@@ -221,6 +256,9 @@ class RefreshWorker @AssistedInject constructor(
             Constant.NotiType.RESIN_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), account.nickname, target)
             Constant.NotiType.EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_expedition_done), account.nickname)
             Constant.NotiType.REALM_CURRENCY_FULL -> String.format(applicationContext.getString(R.string.push_msg_realm_currency_full), account.nickname)
+            Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED -> String.format(applicationContext.getString(R.string.push_msg_param_trans_full), account.nickname)
+            Constant.NotiType.DAILY_COMMISSION_YET -> String.format(applicationContext.getString(R.string.push_msg_daily_commission_yet), account.nickname)
+            Constant.NotiType.WEEKLY_BOSS_YET -> String.format(applicationContext.getString(R.string.push_msg_weekly_boss_yet), account.nickname)
             else -> ""
         }
 
@@ -229,13 +267,6 @@ class RefreshWorker @AssistedInject constructor(
 
     override fun doWork(): Result {
         log.e()
-        if (preference.getDailyNoteSettings() == DailyNoteSettings.EMPTY &&
-            preference.getCheckInSettings() == CheckInSettings.EMPTY &&
-            preference.getResinWidgetDesignSettings() == ResinWidgetDesignSettings.EMPTY &&
-            preference.getDetailWidgetDesignSettings() == DetailWidgetDesignSettings.EMPTY
-        ) CommonFunction.migrateSettings(applicationContext)
-
-        CommonFunction.checkAndMigratePreferenceToDB(accountDao, applicationContext)
 
         try {
             CoroutineScope(Dispatchers.IO).launch {

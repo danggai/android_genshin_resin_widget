@@ -29,18 +29,14 @@ class DetailWidget() : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
 
-        val sLocale = Locale(PreferenceManager.getString(context, Constant.PREF_LOCALE, Locale.getDefault().language))
-
-        val res = context.resources
-        val config = res.configuration
-        config.setLocale(sLocale)
+        setLocale(context)
 
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
-            val views: RemoteViews = addViews(context)
-            syncView(appWidgetId, views, context)
+            val remoteView: RemoteViews = makeRemoteViews(context)
 
-            appWidgetManager.updateAppWidget(appWidgetId, views)
+            syncView(appWidgetId, remoteView, context)
+            appWidgetManager.updateAppWidget(appWidgetId, remoteView)
         }
     }
 
@@ -75,13 +71,8 @@ class DetailWidget() : AppWidgetProvider() {
                 context.let { RefreshWorker.startWorkerPeriodic(context) }
             }
             AppWidgetManager.ACTION_APPWIDGET_UPDATE -> {
+                /* 별도 핸들링 없어도 onUpdate 호출 후 여기로 옴 */
                 log.e(action.toString())
-                val id = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
-
-                if (id != -1) {
-                    val manager = AppWidgetManager.getInstance(context)
-                    onUpdate(context, manager, intArrayOf(id))
-                }
             }
         }
     }
@@ -102,7 +93,14 @@ class DetailWidget() : AppWidgetProvider() {
         }
     }
 
-    private fun addViews(context: Context?): RemoteViews {
+    private fun setLocale(context: Context) {
+        val sLocale = Locale(PreferenceManager.getString(context, Constant.PREF_LOCALE, Locale.getDefault().language))
+        val res = context.resources
+        val config = res.configuration
+        config.setLocale(sLocale)
+    }
+
+    private fun makeRemoteViews(context: Context?): RemoteViews {
         val views = RemoteViews(context!!.packageName, R.layout.widget_detail_fixed)
 
         val intentUpdate = Intent(context, DetailWidget::class.java).apply {
@@ -266,7 +264,6 @@ class DetailWidget() : AppWidgetProvider() {
                     if (widgetDesign.transformerDataVisibility) View.VISIBLE else View.GONE
                 )
             } else {
-                log.e()
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
                 view.setViewVisibility(R.id.ll_body, View.GONE)
                 view.setViewVisibility(R.id.ll_bottom, View.GONE)

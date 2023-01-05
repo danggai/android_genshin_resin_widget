@@ -4,20 +4,19 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BaseViewModel
-import danggai.app.presentation.util.CommonFunction
+import danggai.app.presentation.util.DayTimeMapper
 import danggai.app.presentation.util.Event
-import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.log
 import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
 import danggai.domain.local.CheckInSettings
 import danggai.domain.local.DailyNoteSettings
-import danggai.domain.network.dailynote.entity.DailyNoteData
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.resource.repository.ResourceProviderRepository
 import danggai.domain.util.Constant
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 
@@ -27,8 +26,6 @@ class MainViewModel @Inject constructor(
     private val accountDao: AccountDaoUseCase,
     private val preference: PreferenceManagerRepository,
 ): BaseViewModel() {
-    val dao = accountDao
-
     val sfAutoRefreshPeriod = MutableStateFlow(15L)
 
     val sfAccountList: StateFlow<List<Account>> =
@@ -45,13 +42,20 @@ class MainViewModel @Inject constructor(
     val sfCustomNotiResin = MutableStateFlow("0")
     val sfEnableNotiExpeditionDone = MutableStateFlow(false)
     val sfEnableNotiHomeCoinFull = MutableStateFlow(false)
+    val sfEnableNotiParamReach = MutableStateFlow(false)
 
     val sfEnableNotiCheckinSuccess = MutableStateFlow(false)
     val sfEnableNotiCheckinFailed = MutableStateFlow(false)
+    val sfEnableNotiDailyYet = MutableStateFlow(false)
+    val sfEnableNotiWeeklyYet = MutableStateFlow(false)
+    var sfNotiDailyYetTime = MutableStateFlow(21)
+    var sfNotiWeeklyYetDay = MutableStateFlow(Calendar.SUNDAY)
+    var sfNotiWeeklyYetTime = MutableStateFlow(21)
 
     val sfAccountListRefreshSwitch = MutableStateFlow(false)
 
     val sfDeleteAccount = MutableSharedFlow<Account>()
+    val sfShowDialogDailyWeeklyYet = MutableSharedFlow<Boolean>()
 
     fun initUI() {
         preference.getDailyNoteSettings().let {
@@ -62,6 +66,12 @@ class MainViewModel @Inject constructor(
             sfCustomNotiResin.value = it.customResin.toString()
             sfEnableNotiExpeditionDone.value = it.notiExpedition
             sfEnableNotiHomeCoinFull.value = it.notiHomeCoin
+            sfEnableNotiParamReach.value = it.notiParamTrans
+            sfEnableNotiDailyYet.value = it.notiDailyYet
+            sfEnableNotiWeeklyYet.value = it.notiWeeklyYet
+            sfNotiDailyYetTime.value = it.notiDailyYetTime
+            sfNotiWeeklyYetTime.value = it.notiWeeklyYetTime
+            sfNotiWeeklyYetDay.value = it.notiWeeklyYetDay
         }
 
         preference.getCheckInSettings().let {
@@ -95,21 +105,24 @@ class MainViewModel @Inject constructor(
 
         preference.setDailyNoteSettings(
             DailyNoteSettings(
-                0,      // deprecated
                 sfAutoRefreshPeriod.value,
                 sfEnableNotiEach40Resin.value,
                 sfEnableNoti140Resin.value,
                 sfEnableNotiCustomResin.value,
                 customNotiResin,
                 sfEnableNotiExpeditionDone.value,
-                sfEnableNotiHomeCoinFull.value
+                sfEnableNotiHomeCoinFull.value,
+                sfEnableNotiParamReach.value,
+                sfEnableNotiDailyYet.value,
+                sfNotiDailyYetTime.value,
+                sfEnableNotiWeeklyYet.value,
+                sfNotiWeeklyYetDay.value,
+                sfNotiWeeklyYetTime.value,
             )
         )
 
         preference.setCheckInSettings(
             CheckInSettings(
-                true,     // deprecated
-                true,   // deprecated
                 sfEnableNotiCheckinSuccess.value,
                 sfEnableNotiCheckinFailed.value
             )
@@ -119,7 +132,10 @@ class MainViewModel @Inject constructor(
     }
 
     fun onClickCheckIn() {
-        startCheckIn()
+        log.e()
+        sendEvent(Event.StartShutCheckInWorker(true))
+
+        makeToast(resource.getString(R.string.msg_toast_save_done_check_in))
     }
 
     fun onClickWidgetRefreshNotWork() {
@@ -158,34 +174,32 @@ class MainViewModel @Inject constructor(
         sendEvent(Event.ChangeLanguage())
     }
 
+    fun setDailyCommissionNotiTime(time: String) {
+        log.e(time)
+        sfNotiDailyYetTime.value = DayTimeMapper.timeStringToInt(resource, time)
+    }
 
+    fun setWeeklyCommissionNotiDay(day: String) {
+        log.e(day)
+        sfNotiWeeklyYetDay.value = DayTimeMapper.weekOfDayStringToInt(resource, day)
+    }
 
+    fun setWeeklyCommissionNotiTime(time: String) {
+        log.e(time)
+        sfNotiWeeklyYetTime.value = DayTimeMapper.timeStringToInt(resource, time)
+    }
 
-
-
-
-    private fun sendWidgetSyncBroadcast(dailyNote: DailyNoteData) {
-        log.e()
-
-//        preference.setStringRecentSyncTime(TimeFunction.getSyncTimeString())
-//
-//        val expeditionTime: String = CommonFunction.getExpeditionTime(dailyNote)
-//        preference.setStringExpeditionTime(expeditionTime)
-//
-//        preference.setDailyNote(dailyNote)
-
-        if (sfAutoRefreshPeriod.value == -1L) {
-            sendEvent(Event.StartShutRefreshWorker(false))
-        } else {
-            sendEvent(Event.StartShutRefreshWorker(true))
+    fun onClickDailyCommissionYetNoti() {
+        if (sfEnableNotiDailyYet.value) {
+            log.e()
+            sfShowDialogDailyWeeklyYet.emitInVmScope(true)
         }
     }
 
-    private fun startCheckIn() {
-        log.e()
-        sendEvent(Event.StartShutCheckInWorker(true))
-
-        makeToast(resource.getString(R.string.msg_toast_save_done_check_in))
+    fun onClickWeeklyBossYetNoti() {
+        if (sfEnableNotiWeeklyYet.value) {
+            log.e()
+            sfShowDialogDailyWeeklyYet.emitInVmScope(false)
+        }
     }
-
 }

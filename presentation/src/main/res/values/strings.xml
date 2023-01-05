@@ -50,6 +50,9 @@
     <string name="resin">Resin</string>
     <string name="btn_expedition_done">Expedition Done</string>
     <string name="btn_home_coin_full">Realm Currency Full</string>
+    <string name="btn_param_reached">Parametric Transformer Reached</string>
+    <string name="btn_daily_commission_yet">Daily Commission Incomplete Notification</string>
+    <string name="btn_weekly_boss_yet">Weekly Boss Incomplete Notification</string>
 
     <string name="btn_remain_time">Remaining time</string>
     <string name="btn_full_charge_time">When fully charge</string>
@@ -166,6 +169,9 @@
     <string name="dialog_msg_hoyolab_account_delete">Are you really going disconnect with %s account?</string>
     <string name="msg_toast_hoyolab_account_deleted">account has been disconnected successfully!</string>
 
+    <string name="dialog_daily_weekly_yet_noti">Caution when setting up notifications</string>
+    <string name="dialog_msg_daily_weekly_yet_noti">When using this feature, if HoYoLAB provides an incorrect daily request/weekly boss progress, the user may receive an incorrect notification.\nPlease note that we recommend you to use this feature.</string>
+
     <string name="push_default_noti_title">Notification</string>
     <string name="push_default_noti_description">Description</string>
 
@@ -198,6 +204,18 @@
     <string name="push_realm_currency_title">Realm Currency Notification</string>
     <string name="push_realm_currency_description">This is a notification sent to travelers when the realm currency is full!</string>
     <string name="push_msg_realm_currency_full">%s! Now full of realm currency!</string>
+
+    <string name="push_param_trans_title">Parametric Transformer Notification</string>
+    <string name="push_param_trans_description">This is a notification sent to travelers when the parametric transformer reached!</string>
+    <string name="push_msg_param_trans_full">%s! Now parametric transformer is reached!</string>
+
+    <string name="push_daily_commission_title">Daily Commission Notification</string>
+    <string name="push_daily_commission_description">This is a notification sent to travelers when today\'s daily mission is not completed by the set time!</string>
+    <string name="push_msg_daily_commission_yet">%s! Have you completed today\'s request for the Adventurer\'s Guild? Or check it out!</string>
+
+    <string name="push_weekly_boss_title">Weekly Boss Notification</string>
+    <string name="push_weekly_boss_description">This is a notification sent to travelers when they do not use the weekly boss resin discount until the set date!</string>
+    <string name="push_msg_weekly_boss_yet">%s! Have you used up the weekly boss resin discount this week? Or check it out!</string>
 
     <string name="hint_cookie">Enter HoYoLAB\'s cookie!</string>
     <string name="hint_uid">Enter uid!</string>
@@ -307,6 +325,40 @@
 
     <string name="foreground_genshin_check_in_progress">HoYoLAB Genshin Check-in progressing</string>
 
+    <!-- 시간 및 요일 -->
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thu">Thu</string>
+    <string name="fri">Fri</string>
+    <string name="sat">Sat</string>
+    <string name="sun">Sun</string>
+
+    <string name="clock_1">1:00</string>
+    <string name="clock_2">2:00</string>
+    <string name="clock_3">3:00</string>
+    <string name="clock_4">4:00</string>
+    <string name="clock_5">5:00</string>
+    <string name="clock_6">6:00</string>
+    <string name="clock_7">7:00</string>
+    <string name="clock_8">8:00</string>
+    <string name="clock_9">9:00</string>
+    <string name="clock_10">10:00</string>
+    <string name="clock_11">11:00</string>
+    <string name="clock_12">12:00</string>
+    <string name="clock_13">13:00</string>
+    <string name="clock_14">14:00</string>
+    <string name="clock_15">15:00</string>
+    <string name="clock_16">16:00</string>
+    <string name="clock_17">17:00</string>
+    <string name="clock_18">18:00</string>
+    <string name="clock_19">19:00</string>
+    <string name="clock_20">20:00</string>
+    <string name="clock_21">21:00</string>
+    <string name="clock_22">22:00</string>
+    <string name="clock_23">23:00</string>
+    <string name="clock_24">24:00</string>
+
     <!-- Google Ads -->
     <string name="google_ads_app_id">ca-app-pub-8407462596213276~4738084181</string>
     <string name="google_ads_banner_id">ca-app-pub-8407462596213276/9798839174</string>
@@ -317,5 +369,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- 3.3 Add new characters.\n- Google/Apple account SNS login support.\n- Add nickname display to widget. (Requires reinstallation after uninstalling existing widget)\n- Add a 1x1 size mini widget.</string>
+    <string name="dialog_msg_patch_note">- Added new characters in 3.4.\n- Daily Commission/Weekly Boss incomplete notification is available.\n- Parameter converter charging notification is available.\n- Minor bug fixed.</string>
 </resources>

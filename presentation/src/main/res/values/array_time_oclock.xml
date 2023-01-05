@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="time_oclock">
+        <item>@string/clock_4</item>
+        <item>@string/clock_3</item>
+        <item>@string/clock_2</item>
+        <item>@string/clock_1</item>
+        <item>@string/clock_24</item>
+        <item>@string/clock_23</item>
+        <item>@string/clock_22</item>
+        <item>@string/clock_21</item>
+        <item>@string/clock_20</item>
+        <item>@string/clock_19</item>
+        <item>@string/clock_18</item>
+        <item>@string/clock_17</item>
+        <item>@string/clock_16</item>
+        <item>@string/clock_15</item>
+        <item>@string/clock_14</item>
+        <item>@string/clock_13</item>
+        <item>@string/clock_12</item>
+        <item>@string/clock_11</item>
+        <item>@string/clock_10</item>
+        <item>@string/clock_9</item>
+        <item>@string/clock_8</item>
+        <item>@string/clock_7</item>
+        <item>@string/clock_6</item>
+        <item>@string/clock_5</item>
+    </string-array>
+</resources>

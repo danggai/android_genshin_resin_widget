@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="RadioButton">
-        <item name="android:layout_width">wrap_content</item>
+    <style name="RadioGroup">
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="RadioButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:textSize">14sp</item>
         <item name="android:paddingTop">-8dp</item>
         <item name="android:paddingBottom">-8dp</item>
@@ -12,12 +20,19 @@
     </style>
 
     <style name="Checkbox">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">-0.04</item>
         <item name="android:layout_marginEnd">6dp</item>
         <item name="android:layout_marginTop">@dimen/button_vertical_minus_margin</item>
         <item name="android:layout_marginBottom">@dimen/button_vertical_minus_margin</item>
+    </style>
+
+    <style name="Checkbox.BoxOnly" parent="Checkbox">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_weight">0</item>
     </style>
 
     <style name="SeekBar">

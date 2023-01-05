@@ -29,6 +29,9 @@
     <string name="resin">레진</string>
     <string name="btn_expedition_done">탐험 완료</string>
     <string name="btn_home_coin_full">선계 주화 가득 참</string>
+    <string name="btn_param_reached">매개 변수 변환기 준비 됨</string>
+    <string name="btn_daily_commission_yet">일일임무 미완료 시 알림</string>
+    <string name="btn_weekly_boss_yet">주간보스 할인 잔여 시 알림</string>
 
     <string name="btn_remain_time">남은 시간</string>
     <string name="btn_full_charge_time">완충 시각</string>
@@ -143,6 +146,9 @@
     <string name="dialog_msg_hoyolab_account_delete">정말로 %s 계정과의 연동을 해제할거야?</string>
     <string name="msg_toast_hoyolab_account_deleted">계정과의 연동을 해제했어!</string>
 
+    <string name="dialog_daily_weekly_yet_noti">알림 설정 시 주의</string>
+    <string name="dialog_msg_daily_weekly_yet_noti">해당 기능 사용 시, HoYoLAB에서 올바르지 않은 일일의뢰/주간보스 진척도를 제공하는 경우 사용자가 잘못 된 알림을 수신 받을 수 있습니다.\n이 점 유의하시고 해당 기능 사용을 권장합니다.</string>
+
     <string name="push_default_noti_title">알림</string>
     <string name="push_default_noti_description">설명</string>
 
@@ -173,7 +179,19 @@
 
     <string name="push_realm_currency_title">선계 화페 알림</string>
     <string name="push_realm_currency_description">선계 화폐가 충전 될 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
-    <string name="push_msg_realm_currency_full">%s! 선계 주화가 가득 찼어! 확인하러 가자!</string>
+    <string name="push_msg_realm_currency_full">%s! 선계 주화가 가득 찼어! 포롱이에게 가보자!</string>
+
+    <string name="push_param_trans_title">매개 변수 변환기 알림</string>
+    <string name="push_param_trans_description">매개 변수 변환기가 준비 될 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
+    <string name="push_msg_param_trans_full">%s! 매개 변수 변환기가 준비되었어! 오늘은 뭐가 나올까?</string>
+
+    <string name="push_daily_commission_title">일일 임무 알림</string>
+    <string name="push_daily_commission_description">설정 한 시간까지 오늘의 일일 임무가 완료되지 않았을 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
+    <string name="push_msg_daily_commission_yet">%s! 모험가 길드의 오늘의 의뢰는 완료 했어? 아니면 한 번 확인해봐!</string>
+
+    <string name="push_weekly_boss_title">주간 보스 토벌 알림</string>
+    <string name="push_weekly_boss_description">설정한 날짜까지 주간 보스 레진 할인 횟수를 사용하지 않았을 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
+    <string name="push_msg_weekly_boss_yet">%s! 이번 주 주간 보스 레진 할인 횟수는 소모 했어? 아니면 한 번 확인해봐!</string>
 
     <string name="hint_cookie">HoYoLAB의 쿠키를 입력해 줘!</string>
     <string name="hint_uid">uid를 적어야 하는 장소야!</string>
@@ -283,6 +301,40 @@
 
     <string name="foreground_genshin_check_in_progress">호요랩 원신 출석체크 진행 중</string>
 
+    <!-- 시간 및 요일 -->
+    <string name="mon">월</string>
+    <string name="tue">화</string>
+    <string name="wed">수</string>
+    <string name="thu">목</string>
+    <string name="fri">금</string>
+    <string name="sat">토</string>
+    <string name="sun">일</string>
+
+    <string name="clock_1">1시</string>
+    <string name="clock_2">2시</string>
+    <string name="clock_3">3시</string>
+    <string name="clock_4">4시</string>
+    <string name="clock_5">5시</string>
+    <string name="clock_6">6시</string>
+    <string name="clock_7">7시</string>
+    <string name="clock_8">8시</string>
+    <string name="clock_9">9시</string>
+    <string name="clock_10">10시</string>
+    <string name="clock_11">11시</string>
+    <string name="clock_12">12시</string>
+    <string name="clock_13">13시</string>
+    <string name="clock_14">14시</string>
+    <string name="clock_15">15시</string>
+    <string name="clock_16">16시</string>
+    <string name="clock_17">17시</string>
+    <string name="clock_18">18시</string>
+    <string name="clock_19">19시</string>
+    <string name="clock_20">20시</string>
+    <string name="clock_21">21시</string>
+    <string name="clock_22">22시</string>
+    <string name="clock_23">23시</string>
+    <string name="clock_24">24시</string>
+
     <!-- Google Ads -->
     <string name="google_ads_app_id">ca-app-pub-8407462596213276~4738084181</string>
     <string name="google_ads_banner_id">ca-app-pub-8407462596213276/9798839174</string>
@@ -293,5 +345,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 3.3버전 신규 캐릭터 추가.\n- 구글/애플 계정 SNS 로그인 지원.\n- 위젯에 닉네임 표시 추가. (기존 위젯 제거 후 재 설치 필요)\n- 1x1 크기의 미니 위젯 추가.</string>
+    <string name="dialog_msg_patch_note">- 3.4 버전 신규 캐릭터가 추가되었습니다.\n- 일일임무/주간보스 미완료 알림이 사용 가능합니다.\n- 매개 변수 변환기 충전 알림이 사용 가능합니다.\n- 사소한 버그가 수정되었습니다.</string>
 </resources>

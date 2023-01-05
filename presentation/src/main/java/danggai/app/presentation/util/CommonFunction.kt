@@ -3,6 +3,7 @@ package danggai.app.presentation.util
 import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -26,11 +27,6 @@ import danggai.app.presentation.ui.widget.DetailWidget
 import danggai.app.presentation.ui.widget.MiniWidget
 import danggai.app.presentation.ui.widget.ResinWidget
 import danggai.app.presentation.ui.widget.ResinWidgetResizable
-import danggai.app.presentation.util.PreferenceManager.getT
-import danggai.domain.db.account.entity.Account
-import danggai.domain.db.account.usecase.AccountDaoUseCase
-import danggai.domain.local.CheckInSettings
-import danggai.domain.local.DailyNoteSettings
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.DailyNoteData
@@ -38,7 +34,6 @@ import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.*
@@ -90,16 +85,23 @@ object CommonFunction {
     }
 
     inline fun <reified T: AppWidgetProvider> sendBroadcastAppWidgetUpdate(context: Context) {
-        val intent = Intent(context, T::class.java)
-        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+        val ids = AppWidgetManager.getInstance(context)
+            .getAppWidgetIds(ComponentName(context, T::class.java))
 
-        val ids = AppWidgetManager.getInstance(context.applicationContext)
-            .getAppWidgetIds(ComponentName(context.applicationContext, T::class.java))
+        CoroutineScope(Dispatchers.Main.immediate).launch {
+//            ids.onEach { id ->
+//                val intent = Intent(context, T::class.java)
+//                intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+//
+//                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
+//                context.sendBroadcast(intent)
+//                delay(100L)
+//            }
+            val intent = Intent(context, T::class.java)
+            intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 
-        ids.onEach { id ->
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
             context.sendBroadcast(intent)
-            Thread.sleep(50)
         }
     }
 
@@ -162,6 +164,21 @@ object CommonFunction {
             Constant.NotiType.REALM_CURRENCY_FULL -> {
                 notificationId = Constant.PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID
                 notificationDesc = context.getString(R.string.push_realm_currency_description)
+                priority = NotificationCompat.PRIORITY_DEFAULT
+            }
+            Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED -> {
+                notificationId = Constant.PUSH_CHANNEL_PARAMETRIC_TRANSFORMER_NOTI_ID
+                notificationDesc = context.getString(R.string.push_param_trans_description)
+                priority = NotificationCompat.PRIORITY_DEFAULT
+            }
+            Constant.NotiType.DAILY_COMMISSION_YET -> {
+                notificationId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
+                notificationDesc = context.getString(R.string.push_daily_commission_description)
+                priority = NotificationCompat.PRIORITY_DEFAULT
+            }
+            Constant.NotiType.WEEKLY_BOSS_YET -> {
+                notificationId = Constant.PUSH_CHANNEL_WEEKLY_BOSS_YET_NOTI_ID
+                notificationDesc = context.getString(R.string.push_weekly_boss_description)
                 priority = NotificationCompat.PRIORITY_DEFAULT
             }
             else -> {
@@ -401,14 +418,20 @@ object CommonFunction {
         view.setFloat(R.id.tv_realm_currency_time_title, "setTextSize", fontSize.toFloat())
     }
 
+    private const val widgetHasNoUid = "nouid"
     fun isUidValidate(widgetId: Int, context: Context): Boolean {
         val uid = PreferenceManager.getString(context, Constant.PREF_UID + "_$widgetId")
 
-        return if (uid == "") {
+        return if (uid == "") { // uid 없이 처음 인입되는 경우
             if (PreferenceManager.getString(context, Constant.PREF_UID) == "") {
-                log.e("no uid exists")
+                log.e()
+                PreferenceManager.setString(
+                    context,
+                    Constant.PREF_UID + "_$widgetId",
+                    widgetHasNoUid
+                )
                 false
-            } else {
+            } else {    // 마이그레이션용
                 log.e("uid -> $uid")
                 PreferenceManager.setString(
                     context,
@@ -417,115 +440,18 @@ object CommonFunction {
                 )
                 true
             }
-        } else {
-            log.e("uid -> $uid")
-            true
-        }
-    }
-
-    /*
-    * preference 마이그레이션용 임시 함수.
-    * 차후 버전(1.1.6~7)에서 삭제 요망
-    * */
-    fun migrateSettings(context: Context) {
-        log.e()
-
-        PreferenceManager.setT(context, Constant.PREF_WIDGET_SETTINGS,
-            DailyNoteSettings(
-                PreferenceManager.getInt(context, Constant.PREF_SERVER),
-                PreferenceManager.getLong(context, Constant.PREF_AUTO_REFRESH_PERIOD, Constant.PREF_DEFAULT_REFRESH_PERIOD),
-                PreferenceManager.getBoolean(context, Constant.PREF_NOTI_EACH_40_RESIN, false),
-                PreferenceManager.getBoolean(context, Constant.PREF_NOTI_140_RESIN, false),
-                PreferenceManager.getBoolean(context, Constant.PREF_NOTI_CUSTOM_RESIN_BOOLEAN, false),
-                PreferenceManager.getInt(context, Constant.PREF_NOTI_CUSTOM_TARGET_RESIN),
-                PreferenceManager.getBoolean(context, Constant.PREF_NOTI_EXPEDITION_DONE, false),
-                PreferenceManager.getBoolean(context, Constant.PREF_NOTI_HOME_COIN_FULL, false)
-            )
-        )
-
-        PreferenceManager.setT(context, Constant.PREF_CHECK_IN_SETTINGS,
-            CheckInSettings(
-                PreferenceManager.getBoolean(context, Constant.PREF_ENABLE_GENSHIN_AUTO_CHECK_IN, false),
-                PreferenceManager.getBoolean(context, Constant.PREF_ENABLE_HONKAI_3RD_AUTO_CHECK_IN, false),
-                PreferenceManager.getBoolean(context, Constant.PREF_NOTI_CHECK_IN_SUCCESS, true),
-                PreferenceManager.getBoolean(context, Constant.PREF_NOTI_CHECK_IN_FAILED, false)
-            )
-        )
-
-        PreferenceManager.setT(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS,
-            ResinWidgetDesignSettings(
-                PreferenceManager.getInt(context, Constant.PREF_WIDGET_THEME),
-                PreferenceManager.getInt(context, Constant.PREF_WIDGET_RESIN_TIME_NOTATION),
-                PreferenceManager.getInt(context, Constant.PREF_WIDGET_RESIN_IMAGE_VISIBILITY),
-                false,
-                false,
-                PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE, Constant.PREF_WIDGET_RESIN_FONT_SIZE),
-                PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
-            )
-        )
-
-        PreferenceManager.setT(context, Constant.PREF_DETAIL_WIDGET_DESIGN_SETTINGS,
-            DetailWidgetDesignSettings(
-                PreferenceManager.getInt(context, Constant.PREF_WIDGET_THEME),
-                PreferenceManager.getInt(context, Constant.PREF_WIDGET_DETAIL_TIME_NOTATION),
-                PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_RESIN_DATA_VISIBILITY, true),
-                PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_DAILY_COMMISSION_DATA_VISIBILITY, true),
-                PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_WEEKLY_BOSS_DATA_VISIBILITY, true),
-                PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_REALM_CURRENCY_DATA_VISIBILITY, true),
-                PreferenceManager.getBoolean(context, Constant.PREF_WIDGET_EXPEDITION_DATA_VISIBILITY, true),
-                true,
-                false,
-                false,
-                PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE, Constant.PREF_WIDGET_DETAIL_FONT_SIZE),
-                PreferenceManager.getIntDefault(context, Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY, Constant.PREF_WIDGET_BACKGROUND_TRANSPARENCY)
-            )
-        )
-    }
-
-    fun checkAndMigratePreferenceToDB(dao: AccountDaoUseCase, context: Context) {
-        if (!PreferenceManager.getBoolean(context, Constant.PREF_CHECKED_ROOM_DB_MIGRATION, false)) {
-            PreferenceManager.setBoolean(context, Constant.PREF_CHECKED_ROOM_DB_MIGRATION, true)
-
-            val dailyNoteSettings = getT<DailyNoteSettings>(context, Constant.PREF_WIDGET_SETTINGS)?: DailyNoteSettings.EMPTY
-            val checkInSettings = getT<CheckInSettings>(context, Constant.PREF_CHECK_IN_SETTINGS)?: CheckInSettings.EMPTY
-
-            CoroutineScope(Dispatchers.IO).launch {
-                if (
-                    PreferenceManager.getString(context, Constant.PREF_COOKIE) != "" &&
-                    PreferenceManager.getString(context, Constant.PREF_UID) != "" &&
-                    dailyNoteSettings != DailyNoteSettings.EMPTY
-                ) {
-                    val server = when (dailyNoteSettings.server) {      // 메인에서 서버 설정할 때 asia 안누르면 -1로 저정되는 버그 있었음;
-                        -1, 0 -> Constant.Server.ASIA.pref
-                        else -> dailyNoteSettings.server
-                    }
-
-                    dao.insertAccount(
-                        Account(
-                            context.getString(R.string.traveler),
-                            PreferenceManager.getString(context, Constant.PREF_COOKIE),
-                            PreferenceManager.getString(context, Constant.PREF_UID),
-                            server,
-                            checkInSettings.genshinCheckInEnable,
-                            checkInSettings.honkai3rdCheckInEnable,
-                            false
-                        )
-                    ).collect {
-                        log.e(it)
-                    }
-                } else if (PreferenceManager.getString(context, Constant.PREF_COOKIE) != "" &&
-                    PreferenceManager.getBoolean(context, Constant.PREF_IS_VALID_USERDATA, false)
-                ) {
-                    dao.insertAccount(
-                        Account.GUEST.copy(
-                            nickname = context.getString(R.string.guest),
-                            cookie = PreferenceManager.getString(context, Constant.PREF_COOKIE)
-                        )
-                    ).collect {
-                        log.e(it)
-                    }
-                }
+        } else if (uid == widgetHasNoUid) { // 반복적으로 uid 없이 인입되는 경우
+            log.e("widget($widgetId) deleted")
+            try {
+                val a = AppWidgetHost(context, 0)
+                a.deleteAppWidgetId(widgetId)
+            } catch (e: Exception) {
+                log.e()
             }
+            false
+        } else { // 정상
+            log.e("widget($widgetId) uid -> $uid")
+            true
         }
     }
 }
