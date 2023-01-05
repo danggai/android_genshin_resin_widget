@@ -288,8 +288,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
 
     private fun updateNoteCheck() {
         context?.let { it ->
-
-            if (!PreferenceManager.getBoolean(it, Constant.PREF_CHECKED_UPDATE_NOTE + BuildConfig.VERSION_NAME, false)) {
+            if (PreferenceManager.getString(it, Constant.PREF_CHECKED_UPDATE_NOTE) != BuildConfig.VERSION_NAME) {
                 if (!PreferenceManager.getBoolean(it, Constant.PREF_CHECKED_STORAGE_PERMISSION, true)) {
                     AlertDialog.Builder(requireActivity())
                         .setTitle(String.format(getString(R.string.dialog_patch_note), BuildConfig.VERSION_NAME))
@@ -301,7 +300,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                         .show()
                 }
 
-                PreferenceManager.setBoolean(it, Constant.PREF_CHECKED_UPDATE_NOTE + BuildConfig.VERSION_NAME, true)
+                PreferenceManager.setString(it, Constant.PREF_CHECKED_UPDATE_NOTE, BuildConfig.VERSION_NAME)
             }
         }
     }
