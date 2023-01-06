@@ -58,7 +58,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         ).apply {
             this.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spWeeklyYetNotiDay.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long, ) {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long, ) {
                     mVM.setWeeklyCommissionNotiDay(binding.spWeeklyYetNotiDay.getItemAtPosition(position) as String)
                 }
 
@@ -75,7 +75,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         ).apply {
             this.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spWeeklyYetNotiTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long, ) {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long, ) {
                     mVM.setWeeklyCommissionNotiTime(binding.spWeeklyYetNotiTime.getItemAtPosition(position) as String)
                 }
 
@@ -92,7 +92,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         ).apply {
             this.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spDailyYetNoti.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long, ) {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long, ) {
                     mVM.setDailyCommissionNotiTime(binding.spDailyYetNoti.getItemAtPosition(position) as String)
                 }
 
