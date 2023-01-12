@@ -2,7 +2,6 @@ package danggai.app.presentation.ui.widget.config
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import danggai.app.presentation.util.log
 import danggai.domain.db.account.entity.Account
 
@@ -29,11 +28,5 @@ object WidgetConfigBindingAdapter {
                 this.setItemList(item)
             }
         }
-    }
-
-    @BindingAdapter("isRefreshing")
-    @JvmStatic
-    fun SwipeRefreshLayout.refreshing(visible: Boolean) {
-        isRefreshing = visible
     }
 }
