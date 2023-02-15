@@ -369,5 +369,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Added new characters in 3.4.\n- Daily Commission/Weekly Boss incomplete notification is available.\n- Parameter converter charging notification is available.\n- Minor bug fixed.</string>
+    <string name="dialog_msg_patch_note">- Added new characters in 3.5.\n- Fixed an issue where the Talent Level-Up Materials widget often stops.\n- Minor bug fixed.</string>
 </resources>

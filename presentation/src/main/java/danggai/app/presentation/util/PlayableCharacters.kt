@@ -769,7 +769,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         Constant.ID_MIKA,
         "미카",
         "Mika",
-        5,
+        4,
         Elements.CYRO,
         Constant.TALENT_AREA_MONDSTADT,
         Constant.TALENT_DATE_WEDSAT,
