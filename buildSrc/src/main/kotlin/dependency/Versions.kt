@@ -4,8 +4,8 @@ object Versions {
     const val minSdk                 = 23
     const val compileSdk             = 32
 
-    const val versionCode            = 41
-    const val versionName            = "3.4.0"
+    const val versionCode            = 42
+    const val versionName            = "3.5.0"
 
     // gradle plugins
     const val buildGradleVersion     = "7.2.1"
@@ -46,7 +46,7 @@ object Versions {
     const val roomVersion           = "2.4.3"
 
     // google ads
-    const val googleAdsVersion       = "20.4.0"
+    const val googleAdsVersion       = "21.4.0"
 
     // worker
     const val workerVersion          = "2.7.1"

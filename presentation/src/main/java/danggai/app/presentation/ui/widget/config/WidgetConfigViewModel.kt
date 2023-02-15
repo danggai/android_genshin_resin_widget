@@ -50,7 +50,6 @@ class WidgetConfigViewModel @Inject constructor(
     }
 
     fun onClickCb(account: Account) {
-        log.e()
         log.e(account)
 
         if (sfSelectedAccount.value != account) sfSelectedAccount.value = account

@@ -345,5 +345,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 3.4 버전 신규 캐릭터가 추가되었습니다.\n- 일일임무/주간보스 미완료 알림이 사용 가능합니다.\n- 매개 변수 변환기 충전 알림이 사용 가능합니다.\n- 사소한 버그가 수정되었습니다.</string>
+    <string name="dialog_msg_patch_note">- 3.5 버전 신규 캐릭터가 추가되었습니다.\n- 특성 소재 위젯이 종종 멈추는 문제가 수정되었습니다.\n- 사소한 버그가 수정되었습니다.</string>
 </resources>

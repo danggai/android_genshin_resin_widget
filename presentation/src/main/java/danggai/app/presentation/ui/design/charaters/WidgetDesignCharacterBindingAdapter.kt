@@ -2,7 +2,6 @@ package danggai.app.presentation.ui.design.charaters
 
 import android.widget.GridView
 import androidx.databinding.BindingAdapter
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import danggai.app.presentation.ui.design.WidgetDesignViewModel
 import danggai.app.presentation.util.log
 import danggai.domain.local.LocalCharacter
@@ -32,11 +31,5 @@ object WidgetDesignCharacterBindingAdapter {
                 this.setItemList(item)
             }
         }
-    }
-
-    @BindingAdapter("isRefreshing")
-    @JvmStatic
-    fun SwipeRefreshLayout.refreshing(visible: Boolean) {
-        isRefreshing = visible
     }
 }

@@ -77,7 +77,7 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp">
 
-                <androidx.legacy.widget.Space
+                <android.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
@@ -113,7 +113,7 @@
                     android:layout_gravity="right"
                     />
 
-                <androidx.legacy.widget.Space
+                <android.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
@@ -164,7 +164,7 @@
 
                 </RadioGroup>
 
-                <androidx.legacy.widget.Space
+                <android.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
@@ -365,7 +365,7 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.legacy.widget.Space
+                <android.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
@@ -377,7 +377,7 @@
                     android:textSize="22sp"
                     android:textStyle="italic" />
 
-                <androidx.legacy.widget.Space
+                <android.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
@@ -387,7 +387,7 @@
                     android:onClick="@{()->vm.onClickSave()}"
                     />
 
-                <androidx.legacy.widget.Space
+                <android.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="5dp" />
 
@@ -397,7 +397,7 @@
                     android:onClick="@{()->vm.onClickCheckIn()}"
                     />
 
-                <androidx.legacy.widget.Space
+                <android.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="5dp" />
 
