@@ -58,7 +58,6 @@ class ResinWidget() : AppWidgetProvider() {
                 PreferenceManager.setString(context, Constant.PREF_NAME + "_$widgetId", name)
             }
         }
-
         when (action) {
             Constant.ACTION_RESIN_WIDGET_REFRESH_DATA,
             Constant.ACTION_ON_BOOT_COMPLETED -> {

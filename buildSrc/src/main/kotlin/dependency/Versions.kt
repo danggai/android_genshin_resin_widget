@@ -46,7 +46,7 @@ object Versions {
     const val roomVersion           = "2.4.3"
 
     // google ads
-    const val googleAdsVersion       = "20.4.0"
+    const val googleAdsVersion       = "21.4.0"
 
     // worker
     const val workerVersion          = "2.7.1"

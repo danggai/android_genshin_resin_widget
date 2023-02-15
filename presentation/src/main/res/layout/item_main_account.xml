@@ -37,7 +37,7 @@
                 android:textSize="18sp"
                 />
 
-            <androidx.legacy.widget.Space
+            <android.widget.Space
                 android:layout_width="5dp"
                 android:layout_height="0dp"
                 />
@@ -61,7 +61,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             />
 
-        <androidx.legacy.widget.Space
+        <android.widget.Space
             android:layout_width="7dp"
             android:layout_height="0dp"
             />

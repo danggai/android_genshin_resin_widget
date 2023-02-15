@@ -30,10 +30,11 @@ class WidgetDesignCharacterAdapter(
                 sortBy { -it.id }
                 sortBy { -it.rarity }
 
-                while (this.size >= 1 && this[0].rarity >= 100) {
-                    add(this[0])
-                    removeFirst()
+                if (this.isNotEmpty() && this[0].rarity >= 105) {  // 콜라보캐릭 맨뒤로
+                    this.add(this[0])
+                    this.removeFirst()
                 }
+                
                 items.addAll(this)
             }
         }

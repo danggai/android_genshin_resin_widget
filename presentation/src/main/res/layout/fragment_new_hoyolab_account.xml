@@ -44,7 +44,7 @@
                     android:orientation="vertical"
                     >
 
-                    <androidx.legacy.widget.Space
+                    <android.widget.Space
                         android:layout_width="wrap_content"
                         android:layout_height="15dp" />
 
@@ -85,7 +85,7 @@
                     android:visibility="@{vm.sfHoyolabCookie.empty ?View.GONE :View.VISIBLE}"
                     >
 
-                    <androidx.legacy.widget.Space
+                    <android.widget.Space
                         android:layout_width="wrap_content"
                         android:layout_height="15dp" />
 
@@ -144,7 +144,7 @@
 
                     </RadioGroup>
 
-                    <androidx.legacy.widget.Space
+                    <android.widget.Space
                         android:layout_width="wrap_content"
                         android:layout_height="15dp" />
 
@@ -168,7 +168,7 @@
                         android:textSize="16sp"
                         />
 
-                    <androidx.legacy.widget.Space
+                    <android.widget.Space
                         android:layout_width="wrap_content"
                         android:layout_height="15dp" />
 
@@ -194,7 +194,7 @@
                         android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
                         />
 
-                    <androidx.legacy.widget.Space
+                    <android.widget.Space
                         android:layout_width="wrap_content"
                         android:layout_height="15dp" />
 
@@ -218,7 +218,7 @@
                         android:visibility="@{vm.sfNoGenshinAccount ?View.VISIBLE :View.GONE}"
                         />
 
-                    <androidx.legacy.widget.Space
+                    <android.widget.Space
                         android:layout_width="wrap_content"
                         android:layout_height="15dp" />
 
@@ -240,7 +240,7 @@
                     android:visibility="@{vm.sfGenshinUid.empty ?View.GONE :View.VISIBLE}"
                     >
 
-                    <androidx.legacy.widget.Space
+                    <android.widget.Space
                         android:layout_width="wrap_content"
                         android:layout_height="15dp" />
 
@@ -281,7 +281,7 @@
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <androidx.legacy.widget.Space
+                    <android.widget.Space
                         android:layout_width="wrap_content"
                         android:layout_height="15dp" />
 

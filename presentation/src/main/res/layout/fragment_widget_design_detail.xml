@@ -43,7 +43,7 @@
                 android:paddingHorizontal="20dp"
                 >
 
-                <androidx.legacy.widget.Space
+                <android.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
@@ -83,7 +83,7 @@
 
                 </RadioGroup>
 
-                <androidx.legacy.widget.Space
+                <android.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
@@ -125,7 +125,7 @@
 
                 </RadioGroup>
 
-                <androidx.legacy.widget.Space
+                <android.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
@@ -219,7 +219,7 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.legacy.widget.Space
+                <android.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
@@ -266,7 +266,7 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.legacy.widget.Space
+                <android.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
