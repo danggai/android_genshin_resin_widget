@@ -345,5 +345,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 3.5 버전 신규 캐릭터가 추가되었습니다.\n- 특성 소재 위젯이 종종 멈추는 문제가 수정되었습니다.\n- 사소한 버그가 수정되었습니다.</string>
+    <string name="dialog_msg_patch_note">- 3.6 버전 신규 캐릭터가 추가되었습니다.\n- 일부 소셜 계정의 로그인이 비정상적인 문제가 수정되었습니다.</string>
 </resources>
