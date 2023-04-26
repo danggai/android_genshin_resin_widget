@@ -375,5 +375,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Added new characters in 3.6\n- Some social accounts have fixed abnormal login issues.</string>
+    <string name="dialog_msg_patch_note">- Added new characters in 3.6\n- Some social accounts have fixed abnormal login issues.\n- Honkai: Star Rail Auto Checkin included.</string>
 </resources>
