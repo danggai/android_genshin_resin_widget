@@ -8,10 +8,7 @@ import danggai.domain.core.ApiResult
 import danggai.domain.network.checkin.entity.CheckIn
 import danggai.domain.network.checkin.repository.CheckInRepository
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class CheckInRepositoryImpl @Inject constructor(
@@ -58,6 +55,38 @@ class CheckInRepositoryImpl @Inject constructor(
         onComplete: () -> Unit
     ) = flow<ApiResult<CheckIn>> {
         val response = checkInApi.honkai3rd(
+            lang,
+            actId,
+            cookie
+        )
+
+        response.suspendOnSuccess {
+            emit( this.response.body()?.let {
+                ApiResult.Success<CheckIn>(
+                    this.response.code(),
+                    it
+                )
+            } ?: ApiResult.Null())
+        }.suspendOnError {
+            emit(ApiResult.Failure(
+                this.response.code(),
+                this.response.message()
+            ))
+        }.suspendOnException {
+            emit(ApiResult.Error(
+                this.exception
+            ))
+        }
+    }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+
+    override suspend fun honkaiSR(
+        lang: String,
+        actId: String,
+        cookie: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit
+    ) = flow<ApiResult<CheckIn>> {
+        val response = checkInApi.honkaiSR(
             lang,
             actId,
             cookie

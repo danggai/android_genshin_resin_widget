@@ -21,4 +21,12 @@ interface CheckInRepository: Repository {
         onStart: () -> Unit,
         onComplete: () -> Unit
     ): Flow<ApiResult<CheckIn>>
+
+    suspend fun honkaiSR(
+        lang: String,
+        actId: String,
+        cookie: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit
+    ): Flow<ApiResult<CheckIn>>
 }

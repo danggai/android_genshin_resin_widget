@@ -20,6 +20,9 @@ object Constant {
     const val OS_HONKAI_3RD_CHECK_IN_URL = "https://sg-public-api.hoyolab.com/event/mani/sign"
     const val OS_HONKAI_3RD_ACT_ID = "e202110291205111"
 
+    const val OS_HONKAI_SR_CHECK_IN_URL = "https://sg-public-api.hoyolab.com/event/luna/os/sign"
+    const val OS_HONKAI_SR_ACT_ID = "e202303301540311"
+
     const val HOW_CAN_I_GET_COOKIE_URL = "https://github.com/danggai/android_genshin_resin_widget/blob/master/how_to_get_hoyolab_cookie.md"
 
     const val SERVER_CN_GF_01 = "cn_gf01"
@@ -262,16 +265,15 @@ object Constant {
         CHECK_IN_HONKAI_3RD_ALREADY,
         CHECK_IN_HONKAI_3RD_FAILED,
         CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND,
+        CHECK_IN_HONKAI_SR_SUCCESS,
+        CHECK_IN_HONKAI_SR_ALREADY,
+        CHECK_IN_HONKAI_SR_FAILED,
+        CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND,
         EXPEDITION_DONE,
         REALM_CURRENCY_FULL,
         PARAMETRIC_TRANSFORMER_REACHED,
         DAILY_COMMISSION_YET,
         WEEKLY_BOSS_YET
-    }
-
-    enum class WorkDataType(val key: String) {
-        GENSHIN_CHECK_IN_RET_CODE("genshinCheckIn"),
-        HONKAI_3RD_CHECK_IN_RET_CODE("honkai3rdCheckIn"),
     }
 
 
@@ -281,6 +283,7 @@ object Constant {
     const val PUSH_CHANNEL_RESIN_NOTI_ID = "RESIN_NOTIFICATION"
     const val PUSH_CHANNEL_GENSHIN_CHECK_IN_NOTI_ID = "PUSH_CHANNEL_GENSHIN_CHECK_IN_NOTI_ID"
     const val PUSH_CHANNEL_HONKAI_3RD_CHECK_IN_NOTI_ID = "PUSH_CHANNEL_HONKAI_3RD_CHECK_IN_NOTI_ID"
+    const val PUSH_CHANNEL_HONKAI_SR_CHECK_IN_NOTI_ID = "PUSH_CHANNEL_HONKAI_SR_CHECK_IN_NOTI_ID"
     const val PUSH_CHANNEL_EXPEDITION_NOTI_ID = "EXPEDITION_NOTIFICATION"
     const val PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID = "REALM_CURRENCY_NOTIFICATION"
     const val PUSH_CHANNEL_PARAMETRIC_TRANSFORMER_NOTI_ID = "PARAMETRIC_TRANSFORMER_NOTIFICATION"

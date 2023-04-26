@@ -38,4 +38,19 @@ class CheckInUseCase @Inject constructor(
             onStart = onStart,
             onComplete = onComplete
         )
+
+    suspend fun honkaiSR(
+        lang: String,
+        actId: String,
+        cookie: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit
+    ): Flow<ApiResult<CheckIn>> =
+        checkInRepository.honkaiSR(
+            lang = lang,
+            actId = actId,
+            cookie = cookie,
+            onStart = onStart,
+            onComplete = onComplete
+        )
 }

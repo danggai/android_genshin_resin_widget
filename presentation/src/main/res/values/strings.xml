@@ -67,6 +67,7 @@
 
     <string name="btn_auto_check_in_enable">Genshin Impact</string>
     <string name="btn_auto_check_in_enable_honkai_3rd">Honkai Impact 3rd</string>
+    <string name="btn_auto_check_in_enable_honkai_sr">Honkai: Star Rail</string>
     <string name="btn_check_in_success">Checkin Succeed</string>
     <string name="btn_check_in_failed">Checkin Failed</string>
 
@@ -188,12 +189,17 @@
     <string name="push_genshin_checkin_description">This is a notification to inform travelers of the daily check-in result of Genshin Impact!</string>
     <string name="push_honkai_3rd_checkin_title">Honkai Impact 3rd Check-in Notification</string>
     <string name="push_honkai_3rd_checkin_description">This is a notification to inform travelers of the daily check-in result of Honkai Impact 3rd!</string>
+    <string name="push_honkai_sr_checkin_title">Honkai Impact: Star Rail Check-in Notification</string>
+    <string name="push_honkai_sr_checkin_description">This is a notification to inform travelers of the daily check-in result of Honkai Impact: Star Rail!</string>
     <string name="push_msg_checkin_success_genshin">%s! checked attendance today!</string>
     <string name="push_msg_checkin_success_honkai">I completed today\'s check in, %s~</string>
+    <string name="push_msg_checkin_success_honkai_sr">I completed today\'s check in, %s~</string>
     <string name="push_msg_checkin_already_genshin">%s, you\'ve already checked in today! I\'ll do it again at 1am tomorrow!</string>
     <string name="push_msg_checkin_already_honkai">You have already signed in, %s~ I\'ll do it again at 1am tomorrow~</string>
+    <string name="push_msg_checkin_already_honkai_sr">You have already signed in, %s~ I\'ll do it again at 1am tomorrow~</string>
     <string name="push_msg_checkin_failed_genshin">%s, I failed the attendance check.. I\'ll try again in half an hour!</string>
     <string name="push_msg_checkin_failed_honkai">%s, I failed the attendance check, but I\'ll try again in 30 minutes~</string>
+    <string name="push_msg_checkin_failed_honkai_sr">%s, I failed the attendance check, but I\'ll try again in 30 minutes~</string>
     <string name="push_msg_checkin_account_not_found">Attendance check cannot be performed because there is no in-game account linked to this %s account.</string>
 
 
@@ -223,7 +229,7 @@
 
     <string name="invalid_user_info">You can\'t use it\nwithout user information!</string>
 
-    <string name="guest">Captain</string>
+    <string name="guest">Pioneer</string>
     <string name="traveler">Traveler</string>
 
     <!-- Character Name -->

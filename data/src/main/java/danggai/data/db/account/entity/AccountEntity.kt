@@ -20,6 +20,8 @@ data class AccountEntity(
     val enableGenshinCheckin: Boolean,
     @SerializedName("enableHonkai3rdCheckin")
     val enableHonkai3rdCheckin: Boolean,
+    @SerializedName("enableHonkaiSRCheckin")
+    val enableHonkaiSRCheckin: Boolean,
     @SerializedName("enableTotCheckin")
     val enableTotCheckin: Boolean,
 )

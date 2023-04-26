@@ -38,6 +38,7 @@ class NewHoyolabAccountViewModel @Inject constructor(
     val sfNoGenshinAccount = MutableStateFlow(false)
     val sfEnableGenshinAutoCheckIn = MutableStateFlow(false)
     val sfEnableHonkai3rdAutoCheckIn = MutableStateFlow(false)
+    val sfEnableHonkaiSRAutoCheckIn = MutableStateFlow(false)
 
     private var _dailyNotePrivateErrorCount = 0
     val dailyNotePrivateErrorCount
@@ -218,6 +219,7 @@ class NewHoyolabAccountViewModel @Inject constructor(
                                     sfServer.value,
                                     sfEnableGenshinAutoCheckIn.value,
                                     sfEnableHonkai3rdAutoCheckIn.value,
+                                    sfEnableHonkaiSRAutoCheckIn.value,
                                     false
                                 )
 
@@ -376,7 +378,8 @@ class NewHoyolabAccountViewModel @Inject constructor(
                     nickname = resource.getString(R.string.guest),
                     cookie = sfHoyolabCookie.value,
                     enable_genshin_checkin = sfEnableGenshinAutoCheckIn.value,
-                    enable_honkai3rd_checkin = sfEnableHonkai3rdAutoCheckIn.value
+                    enable_honkai3rd_checkin = sfEnableHonkai3rdAutoCheckIn.value,
+                    enable_honkai_sr_checkin = sfEnableHonkaiSRAutoCheckIn.value
                 )
             )
         } else {
@@ -410,6 +413,7 @@ class NewHoyolabAccountViewModel @Inject constructor(
                 sfServer.value = account.server
                 sfEnableGenshinAutoCheckIn.value = account.enable_genshin_checkin
                 sfEnableHonkai3rdAutoCheckIn.value = account.enable_honkai3rd_checkin
+                sfEnableHonkaiSRAutoCheckIn.value = account.enable_honkai_sr_checkin
 
                 if (account.genshin_uid == "-1") sfNoGenshinAccount.value = true
             }

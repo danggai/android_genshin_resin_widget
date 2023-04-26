@@ -281,6 +281,24 @@
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            style="@style/Checkbox"
+                            android:id="@+id/cb_enable_honkai_sr_auto_check_in"
+                            android:checked="@={vm.sfEnableHonkaiSRAutoCheckIn}"
+                            android:text="@string/btn_auto_check_in_enable_honkai_sr" />
+
+<!--                        <com.google.android.material.checkbox.MaterialCheckBox-->
+<!--                            style="@style/Checkbox"-->
+<!--                            android:id="@+id/cb_enable_honkai_3rd_auto_check_in"-->
+<!--                            android:checked="@={vm.sfEnableHonkai3rdAutoCheckIn}"-->
+<!--                            android:text="@string/btn_auto_check_in_enable_honkai_3rd" />-->
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
                     <android.widget.Space
                         android:layout_width="wrap_content"
                         android:layout_height="15dp" />

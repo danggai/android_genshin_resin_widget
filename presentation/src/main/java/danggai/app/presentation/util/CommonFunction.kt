@@ -156,6 +156,15 @@ object CommonFunction {
                 notificationDesc = context.getString(R.string.push_honkai_3rd_checkin_description)
                 priority = NotificationCompat.PRIORITY_LOW
             }
+            Constant.NotiType.CHECK_IN_HONKAI_SR_SUCCESS,
+            Constant.NotiType.CHECK_IN_HONKAI_SR_FAILED,
+            Constant.NotiType.CHECK_IN_HONKAI_SR_ALREADY,
+            Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND
+            -> {
+                notificationId = Constant.PUSH_CHANNEL_HONKAI_SR_CHECK_IN_NOTI_ID
+                notificationDesc = context.getString(R.string.push_honkai_sr_checkin_description)
+                priority = NotificationCompat.PRIORITY_LOW
+            }
             Constant.NotiType.EXPEDITION_DONE -> {
                 notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
                 notificationDesc = context.getString(R.string.push_expedition_description)
