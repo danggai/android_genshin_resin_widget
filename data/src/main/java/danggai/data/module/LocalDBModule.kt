@@ -3,6 +3,8 @@ package danggai.data.module;
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,6 +26,7 @@ object LocalDBModule {
                         context,
                         AccountDatabase::class.java, "account.db"
                 )
+                        .addMigrations(MIGRATION_1_2)
                         .allowMainThreadQueries()
                         .build()
         }
@@ -39,4 +42,12 @@ object LocalDBModule {
         fun provideAccountRepository(
                 repositoryImpl: AccountRepositoryImpl
         ): AccountRepository = repositoryImpl
+}
+
+
+
+val MIGRATION_1_2 = object : Migration(1, 2) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE account ADD enableHonkaiSRCheckin INT NOT NULL DEFAULT 0")
+        }
 }

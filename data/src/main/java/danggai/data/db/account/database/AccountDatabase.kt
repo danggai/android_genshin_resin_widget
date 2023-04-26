@@ -5,7 +5,8 @@ import androidx.room.RoomDatabase
 import danggai.data.db.account.dao.AccountDao
 import danggai.data.db.account.entity.AccountEntity
 
-@Database(entities = [AccountEntity::class], version = 1, exportSchema = false)
+@Database(entities = [AccountEntity::class], version = 2, exportSchema = false)
+
 abstract class AccountDatabase : RoomDatabase() {
     abstract fun accountDao(): AccountDao
 }
