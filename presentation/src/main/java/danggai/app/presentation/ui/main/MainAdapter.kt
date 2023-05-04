@@ -37,8 +37,8 @@ class MainAdapter(
 
                 holder.binding.tvUid.apply {
                     this.text =
-                        if (items[position].genshin_uid != "-1" ) items[position].genshin_uid
-                        else "Guest"
+                        if (!items[position].genshin_uid.contains("-") ) items[position].genshin_uid
+                        else "Auto Check In Only"
                 }
 
                 holder.binding.tvNickname.apply {

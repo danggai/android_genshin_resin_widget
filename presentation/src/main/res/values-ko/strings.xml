@@ -5,9 +5,10 @@
     <string name="new_hoyolab_account">새 호요랩 계정</string>
     <string name="hoyolab_checkin">호요랩 출석체크</string>
     <string name="widget_customizing">위젯 커스텀</string>
-    <string name="btn_no_genshin_account">원신 계정 없음</string>
+    <string name="btn_no_genshin_account">원신 위젯 기능 사용 안함</string>
     <string name="guest_account_desc">게스트 계정은 1개만 등록할 수 있습니다.</string>
-    <string name="hoyolab_checkin_desc">최초 1회는 \'호요랩 출석체크\'버튼을 눌러 수동으로 진행해야 자동 출석이 정상적으로 진행됩니다.</string>
+    <string name="hoyolab_checkin_desc">최초 1회는 <b>\'호요랩 출석체크\'</b> 버튼을 눌러 수동으로 진행해야\n자동 출석이 정상적으로 진행됩니다.</string>
+    <string name="hoyolab_checkin_desc_2">호요랩 내의 내 정보 > 나의 캐릭터 탭에 있는 계정을\n기준으로 자동 출석체크를 진행합니다.</string>
 
     <string name="apply">확인</string>
     <string name="cancel">취소</string>
@@ -177,7 +178,7 @@
     <string name="push_msg_checkin_failed_genshin">%s, 출석 체크에 실패했어.. 30분 후에 다시 시도할게!</string>
     <string name="push_msg_checkin_failed_honkai">%s, 출석 체크에 실패했지만, 30분 후에 다시 시도해볼게~</string>
     <string name="push_msg_checkin_failed_honkai_sr">%s, 출석 체크에 실패했지만, 30분 후에 다시 시도해볼게~</string>
-    <string name="push_msg_checkin_account_not_found">%s 계정과 연동 된 인게임 계정이 없어서 출석체크를 진행할 수 없습니다.</string>
+    <string name="push_msg_checkin_account_not_found">%s 계정과 연동 된 인게임 계정이 없어서 출석체크를 진행할 수 없습니다. 자동 출석체크를 비활성화하였습니다.</string>
 
     <string name="push_expedition_title">탐험 완료 알림</string>
     <string name="push_expedition_description">탐험이 완료되었을 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
@@ -205,7 +206,8 @@
 
     <string name="invalid_user_info">유저 정보 없이는\n사용할 수 없어!</string>
 
-    <string name="guest">개척자</string>
+    <string name="pioneer">개척자</string>
+    <string name="captain">함장</string>
     <string name="traveler">여행자</string>
 
     <!-- Character Name -->
@@ -351,5 +353,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 3.6 버전 신규 캐릭터가 추가되었습니다.\n- 일부 소셜 계정의 로그인이 비정상적인 문제가 수정되었습니다.\n-붕괴: 스타레일 자동 출석체크가 연동되었습니다.</string>
+    <string name="dialog_msg_patch_note">- 이제 원신 캐릭터가 없는 계정도 여러 개 등록할 수 있습니다.</string>
 </resources>

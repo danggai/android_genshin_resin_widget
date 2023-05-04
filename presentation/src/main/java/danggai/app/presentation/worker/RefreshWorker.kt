@@ -281,7 +281,7 @@ class RefreshWorker @AssistedInject constructor(
                             else -> Constant.SERVER_OS_ASIA
                         }
 
-                        if (account.genshin_uid != "-1")
+                        if (!account.genshin_uid.contains("-"))
                             refreshDailyNote(
                                 account,
                                 server,

@@ -26,9 +26,10 @@
     <string name="new_hoyolab_account">New HoYoLab Account</string>
     <string name="hoyolab_checkin">HoYoLab CheckIn</string>
     <string name="widget_customizing">Widget Customizing</string>
-    <string name="btn_no_genshin_account">No Genshin Account</string>
+    <string name="btn_no_genshin_account">Don\'t use genshin widget.</string>
     <string name="guest_account_desc">Only one guest account can be registered.</string>
     <string name="hoyolab_checkin_desc">For the first time, you must press the \'HoYoLab CheckIn\' button manually to proceed with automatic attendance.</string>
+    <string name="hoyolab_checkin_desc_2">Automatic attendance is performed based on Within HoYoLab, My Information > My Character.</string>
 
     <string name="save_setting">Save Setting</string>
     <string name="save">Save</string>
@@ -229,7 +230,8 @@
 
     <string name="invalid_user_info">You can\'t use it\nwithout user information!</string>
 
-    <string name="guest">Pioneer</string>
+    <string name="pioneer">Pioneer</string>
+    <string name="captain">Captain</string>
     <string name="traveler">Traveler</string>
 
     <!-- Character Name -->
@@ -375,5 +377,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Added new characters in 3.6\n- Some social accounts have fixed abnormal login issues.\n- Honkai: Star Rail Auto Checkin included.</string>
+    <string name="dialog_msg_patch_note">- Now can register multiple HoYoLAB accounts without Genshin Impact Account.</string>
 </resources>

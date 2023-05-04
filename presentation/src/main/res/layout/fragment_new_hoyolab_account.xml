@@ -203,19 +203,7 @@
                         android:id="@+id/cb_no_genshin_account"
                         android:checked="@={vm.sfNoGenshinAccount}"
                         android:text="@string/btn_no_genshin_account"
-                        android:onClick="@{() -> vm.onClickNoGenshinAccount()}"
-                        />
-
-                    <TextView
-                        style="@style/TextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:text="@string/guest_account_desc"
-                        android:textColor="@color/gray"
-                        android:textSize="14sp"
-                        android:maxLines="3"
-                        android:visibility="@{vm.sfNoGenshinAccount ?View.VISIBLE :View.GONE}"
+                        android:onClick="@{() -> vm.onClickDisableGenshinWidget()}"
                         />
 
                     <android.widget.Space
@@ -237,7 +225,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="@{vm.sfGenshinUid.empty ?View.GONE :View.VISIBLE}"
+                    android:visibility="@{vm.sfHoyolabCookie.empty || vm.sfGenshinUid.empty ?View.GONE :View.VISIBLE}"
                     >
 
                     <android.widget.Space
@@ -261,6 +249,28 @@
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:maxLines="3"
+                        />
+
+                    <android.widget.Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="5dp" />
+
+                    <TextView
+                        style="@style/TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:text="@string/hoyolab_checkin_desc_2"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        android:maxLines="3"
+                        android:visibility="gone"
+                        />
+
+                    <android.widget.Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="5dp"
+                        android:visibility="gone"
                         />
 
                     <androidx.appcompat.widget.LinearLayoutCompat

@@ -21,12 +21,13 @@ class WidgetConfigAdapter(
 
     fun setItemList(_itemList: List<Account>) {
         log.e(_itemList.size)
+        if (_itemList.size == 1 && _itemList[0] == Account.GUEST) return
         items.clear()
 
-        if (_itemList.isNotEmpty()) {
-            _itemList.apply {
-                items.addAll(this)
-            }
+        val validAccountList = _itemList.filter {!it.genshin_uid.contains("-")}
+
+        if (validAccountList.isNotEmpty()) {
+            items.addAll(validAccountList)
         } else {
             CoroutineScope(Dispatchers.IO).launch {
                 vm.sfNoAccount.emit (true)
@@ -42,15 +43,8 @@ class WidgetConfigAdapter(
                 holder.binding.vm = vm
                 holder.binding.item = items[position]
 
-                holder.binding.tvUid.apply {
-                    this.text =
-                        if (items[position].genshin_uid != "-1" ) items[position].genshin_uid
-                        else "Guest"
-                }
-
-                holder.binding.tvNickname.apply {
-                    this.text = items[position].nickname
-                }
+                holder.binding.tvUid.apply { this.text = items[position].genshin_uid }
+                holder.binding.tvNickname.apply { this.text = items[position].nickname }
 
                 CoroutineScope(Dispatchers.IO).launch {
                     vm.sfSelectedAccount.collect {

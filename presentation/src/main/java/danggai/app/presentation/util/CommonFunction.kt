@@ -73,6 +73,11 @@ object CommonFunction {
             .lowercase(Locale.getDefault())
     }
 
+    fun getRandomNumber(min: Int, max: Int): Int {
+        val random = Random()
+        return random.nextInt(max) + min
+    }
+
     fun sendBroadcastAllWidgetRefreshUI(context: Context) {
         log.e()
 
