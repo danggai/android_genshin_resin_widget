@@ -363,6 +363,7 @@ object Constant {
     const val ID_YAE = 10000058
     const val ID_HEIZOU = 10000059
     const val ID_YERAN = 10000060
+    const val ID_KIRARA = 10000061
     const val ID_ALOY = 10000062
     const val ID_SHENHE = 10000063
     const val ID_YUNJIN = 10000064

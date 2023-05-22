@@ -353,5 +353,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 이제 원신 캐릭터가 없는 계정도 여러 개 등록할 수 있습니다.</string>
+    <string name="dialog_msg_patch_note">- 키라라 캐틱터 정보 추가</string>
 </resources>

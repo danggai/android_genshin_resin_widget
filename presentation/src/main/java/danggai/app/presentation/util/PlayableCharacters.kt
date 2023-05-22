@@ -798,4 +798,15 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         R.drawable.icon_baizhuer
     ),
 
+    LocalCharacter(
+        Constant.ID_KIRARA,
+        "키라라",
+        "Kirara",
+        4,
+        Elements.DENDRO,
+        Constant.TALENT_AREA_INAZUMA,
+        Constant.TALENT_DATE_MONTHU,
+        R.drawable.icon_kirara
+    ),
+
 )
