@@ -7,14 +7,14 @@
     <string name="nickname" translatable="false">Nickname</string>
     <string name="cookie" translatable="false">Cookie</string>
     <string name="server" translatable="false">Server</string>
-    <string name="refresh_cycle" translatable="false">Refresh Cycle</string>
+    <string name="refresh_cycle" translatable="false">Data Update Cycle</string>
     <string name="notification" translatable="false">Notification</string>
     <string name="auto_check_in" translatable="false">Auto Check In</string>
     <string name="time_notation" translatable="false">Time Notation</string>
     <string name="widget_theme" translatable="false">Widget Theme</string>
     <string name="background_transparency" translatable="false">Background Transparency</string>
     <string name="font_size" translatable="false">Font Size</string>
-    <string name="resin_image" translatable="false">Resin Image</string>
+    <string name="resin_image" translatable="false">Image</string>
     <string name="visible_data" translatable="false">Visible Data</string>
     <string name="select_character" translatable="false">Select Character</string>
     <string name="select_character_title">Characters display in widget</string>
@@ -27,7 +27,7 @@
     <string name="hoyolab_checkin">HoYoLab CheckIn</string>
     <string name="widget_customizing">Widget Customizing</string>
     <string name="btn_no_genshin_account">Don\'t use genshin widget.</string>
-    <string name="guest_account_desc">Only one guest account can be registered.</string>
+    <string name="btn_no_honkai_sr_account">Don\'t use Honkai: Star Rail widget.</string>
     <string name="hoyolab_checkin_desc">For the first time, you must press the \'HoYoLab CheckIn\' button manually to proceed with automatic attendance.</string>
     <string name="hoyolab_checkin_desc_2">Automatic attendance is performed based on Within HoYoLab, My Information > My Character.</string>
 
@@ -39,7 +39,7 @@
     <string name="no_hoyolab_accounts">No HoYoLab account registered.</string>
     <string name="get_cookie">Click here after Login!</string>
     <string name="get_cookie_btn">Log in to get cookies</string>
-    <string name="get_uid_btn">Get Genshin in-game data</string>
+    <string name="get_uid_btn">Automatically get In-game data</string>
 
     <string name="asia" translatable="false">Asia</string>
     <string name="america" translatable="false">America</string>
@@ -54,6 +54,8 @@
     <string name="btn_param_reached">Parametric Transformer Reached</string>
     <string name="btn_daily_commission_yet">Daily Commission Incomplete Notification</string>
     <string name="btn_weekly_boss_yet">Weekly Boss Incomplete Notification</string>
+
+    <string name="trailblaze_power">Trailblaze Power</string>
 
     <string name="btn_remain_time">Remaining time</string>
     <string name="btn_full_charge_time">When fully charge</string>
@@ -226,7 +228,8 @@
 
     <string name="hint_cookie">Enter HoYoLAB\'s cookie!</string>
     <string name="hint_uid">Enter uid!</string>
-    <string name="hint_nickname">Enter name of traveler!</string>
+    <string name="hint_nickname_genshin">Enter name of traveler!</string>
+    <string name="hint_nickname_honkai_sr">Enter name of pioneer!</string>
 
     <string name="invalid_user_info">You can\'t use it\nwithout user information!</string>
 

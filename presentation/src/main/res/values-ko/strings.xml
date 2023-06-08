@@ -6,7 +6,7 @@
     <string name="hoyolab_checkin">호요랩 출석체크</string>
     <string name="widget_customizing">위젯 커스텀</string>
     <string name="btn_no_genshin_account">원신 위젯 기능 사용 안함</string>
-    <string name="guest_account_desc">게스트 계정은 1개만 등록할 수 있습니다.</string>
+    <string name="btn_no_honkai_sr_account">붕괴: 스타레일 위젯 기능 사용 안함</string>
     <string name="hoyolab_checkin_desc">최초 1회는 <b>\'호요랩 출석체크\'</b> 버튼을 눌러 수동으로 진행해야\n자동 출석이 정상적으로 진행됩니다.</string>
     <string name="hoyolab_checkin_desc_2">호요랩 내의 내 정보 > 나의 캐릭터 탭에 있는 계정을\n기준으로 자동 출석체크를 진행합니다.</string>
 
@@ -23,7 +23,7 @@
     <string name="no_hoyolab_accounts">등록 된 호요랩 계정이 없습니다.</string>
     <string name="get_cookie">로그인 후 여기를 눌러주세요!</string>
     <string name="get_cookie_btn">호요랩에 로그인 해 쿠키 가져오기</string>
-    <string name="get_uid_btn">원신 인게임 정보 가져오기</string>
+    <string name="get_uid_btn">자동으로 인게임 정보 가져오기</string>
 
     <string name="btn_each_40_resin">40레진 마다</string>
     <string name="btn_140_resin">140레진</string>
@@ -33,6 +33,8 @@
     <string name="btn_param_reached">매개 변수 변환기 준비 됨</string>
     <string name="btn_daily_commission_yet">일일임무 미완료 시 알림</string>
     <string name="btn_weekly_boss_yet">주간보스 할인 잔여 시 알림</string>
+
+    <string name="trailblaze_power">개척력</string>
 
     <string name="btn_remain_time">남은 시간</string>
     <string name="btn_full_charge_time">완충 시각</string>
@@ -202,7 +204,8 @@
 
     <string name="hint_cookie">HoYoLAB의 쿠키를 입력해 줘!</string>
     <string name="hint_uid">uid를 적어야 하는 장소야!</string>
-    <string name="hint_nickname">여행자의 이름을 적어 줘!</string>
+    <string name="hint_nickname_genshin">여행자의 이름을 적어 줘!</string>
+    <string name="hint_nickname_honkai_sr">개척자의 이름을 적어 줘!</string>
 
     <string name="invalid_user_info">유저 정보 없이는\n사용할 수 없어!</string>
 

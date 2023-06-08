@@ -32,11 +32,17 @@ object Constant {
     const val SERVER_OS_ASIA = "os_asia"
     const val SERVER_OS_CHT = "os_cht"
 
+    const val SERVER_PO_USA = "prod_official_usa"
+    const val SERVER_PO_EURO = "prod_official_eur"
+    const val SERVER_PO_ASIA = "prod_official_asia"
+    const val SERVER_PO_CHT = "prod_official_cht"
+
     const val LANG_KO_KR = "ko-kr"
     const val LANG_EN_US = "en-us"
 
     const val GAME_ID_HONKAI_3RD = 1
     const val GAME_ID_GENSHIN_IMPACT = 2
+    const val GAME_ID_HONKAI_SR = 6
 
     /* HTTP STATUS CODE */
 
