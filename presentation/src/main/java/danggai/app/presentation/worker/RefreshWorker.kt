@@ -13,7 +13,8 @@ import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
-import danggai.domain.network.dailynote.entity.DailyNoteData
+import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
+import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
 import danggai.domain.network.dailynote.usecase.DailyNoteUseCase
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
@@ -77,13 +78,13 @@ class RefreshWorker @AssistedInject constructor(
         }
     }
 
-    private suspend fun refreshDailyNote(
+    private suspend fun refreshGenshinDailyNote(
         account: Account,
         server: String,
         ds: String,
     ) {
         return CoroutineScope(Dispatchers.IO).async {
-            dailyNote(
+            dailyNote.genshin(
                 account.genshin_uid,
                 server,
                 account.cookie,
@@ -122,10 +123,55 @@ class RefreshWorker @AssistedInject constructor(
         }.await()
     }
 
-    private fun updateData(account: Account, dailyNote: DailyNoteData) {
+    private suspend fun refreshHonkaiSrDailyNote(
+        account: Account,
+        server: String,
+        ds: String,
+    ) {
+        return CoroutineScope(Dispatchers.IO).async {
+            dailyNote.honkaiSr(
+                account.honkai_sr_uid,
+                server,
+                account.cookie,
+                ds,
+                onStart = { log.e() },
+                onComplete = { log.e() }
+            ).collect {
+                log.e(it)
+
+                when (it) {
+                    is ApiResult.Success -> {
+                        when (it.data.retcode.toString()) {
+                            Constant.RETCODE_SUCCESS -> {
+                                log.e()
+                                updateData(account, it.data.data)
+                            }
+                            else -> {
+                                log.e()
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode.toString())
+                            }
+                        }
+                    }
+                    is ApiResult.Failure -> {
+                        log.e(it.message)
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, null)
+                        CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
+                    }
+                    is ApiResult.Error,
+                    is ApiResult.Null -> {
+                        log.e()
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, null, null)
+                        CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
+                    }
+                }
+            }
+        }.await()
+    }
+
+    private fun updateData(account: Account, dailyNote: GenshinDailyNoteData) {
         log.e()
 
-        val prefDailyNote = preference.getDailyNoteData(account.genshin_uid)
+        val prefDailyNote = preference.getGenshinDailyNote(account.genshin_uid)
         val settings = preference.getDailyNoteSettings()
 
         val prefResin: Int = prefDailyNote.current_resin
@@ -150,7 +196,7 @@ class RefreshWorker @AssistedInject constructor(
             }
         }
 
-        if (settings.notiEach40Resin) {
+        if (settings.noti140Resin) {
             if (140 in (prefResin + 1)..nowResin){
                 log.e()
                 sendNoti(account, Constant.NotiType.RESIN_140, 140)
@@ -225,7 +271,69 @@ class RefreshWorker @AssistedInject constructor(
         val expeditionTime: String = CommonFunction.getExpeditionTime(dailyNote)
         preference.setStringExpeditionTime(account.genshin_uid, expeditionTime)
 
-        preference.setDailyNote(account.genshin_uid, dailyNote)
+        preference.setGenshinDailyNote(account.genshin_uid, dailyNote)
+    }
+
+    private fun updateData(account: Account, dailyNote: HonkaiSrDailyNoteData) {
+        log.e()
+
+        val prefDailyNote = preference.getHonkaiSrDailyNote(account.honkai_sr_uid)
+        val settings = preference.getDailyNoteSettings()
+
+        val prefStamina: Int = prefDailyNote.current_stamina
+        val nowStamina: Int = dailyNote.current_stamina
+
+        if (settings.notiEach40TrailPower) {
+            if (180 in (prefStamina + 1)..nowStamina){
+                log.e()
+                sendNoti(account, Constant.NotiType.TRAIL_POWER_EACH_40, 180)
+            } else if (160 in (prefStamina + 1)..nowStamina){
+                log.e()
+                sendNoti(account, Constant.NotiType.TRAIL_POWER_EACH_40, 160)
+            } else if (120 in (prefStamina + 1)..nowStamina){
+                log.e()
+                sendNoti(account, Constant.NotiType.TRAIL_POWER_EACH_40, 120)
+            } else if (80 in (prefStamina + 1)..nowStamina){
+                log.e()
+                sendNoti(account, Constant.NotiType.TRAIL_POWER_EACH_40, 80)
+            } else if (40 in (prefStamina + 1)..nowStamina){
+                log.e()
+                sendNoti(account, Constant.NotiType.TRAIL_POWER_EACH_40, 40)
+            }
+        }
+
+        if (settings.noti170TrailPower) {
+            if (170 in (prefStamina + 1)..nowStamina){
+                log.e()
+                sendNoti(account, Constant.NotiType.TRAIL_POWER_170, 170)
+            }
+        }
+
+        if (settings.notiCustomTrailPower) {
+            val targetTrailPower: Int = settings.customTrailPower
+            if (targetTrailPower in (prefStamina + 1)..nowStamina){
+                log.e()
+                sendNoti(account, Constant.NotiType.TRAIL_POWER_CUSTOM, targetTrailPower)
+            }
+        }
+
+        val prefExpeditionTime: Int = try { preference.getStringHonkaiSrExpeditionTime(account.honkai_sr_uid).toInt() } catch (e: Exception) { 0 }
+        val nowExpeditionTime: Int = CommonFunction.getExpeditionTime(dailyNote).toInt()
+        if (settings.notiExpedition) {
+            if (1 in (nowExpeditionTime)..prefExpeditionTime
+                && dailyNote.expeditions.isNotEmpty()
+                && nowExpeditionTime == 0) {
+                log.e()
+                sendNoti(account, Constant.NotiType.HONKAI_SR_EXPEDITION_DONE, 0)
+            }
+        }
+
+        preference.setStringRecentSyncTime(account.honkai_sr_uid, TimeFunction.getSyncDateTimeString())
+
+        val expeditionTime: String = CommonFunction.getExpeditionTime(dailyNote)
+        preference.setStringHonkaiSrExpeditionTime(account.honkai_sr_uid, expeditionTime)
+
+        preference.setHonkaiSrDailyNote(account.honkai_sr_uid, dailyNote)
     }
 
     private fun sendNoti(account: Account, notiType: Constant.NotiType, target: Int) {
@@ -240,6 +348,10 @@ class RefreshWorker @AssistedInject constructor(
             Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED -> applicationContext.getString(R.string.push_param_trans_title)
             Constant.NotiType.DAILY_COMMISSION_YET -> applicationContext.getString(R.string.push_daily_commission_title)
             Constant.NotiType.WEEKLY_BOSS_YET -> applicationContext.getString(R.string.push_weekly_boss_title)
+            Constant.NotiType.TRAIL_POWER_EACH_40,
+            Constant.NotiType.TRAIL_POWER_170,
+            Constant.NotiType.TRAIL_POWER_CUSTOM, -> applicationContext.getString(R.string.push_trail_power_noti_title)
+            Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> applicationContext.getString(R.string.push_expedition_title)
             else -> ""
         }
 
@@ -252,13 +364,25 @@ class RefreshWorker @AssistedInject constructor(
                     80 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_40), account.nickname, target)
                     else -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_40), account.nickname, target)
                 }
+            Constant.NotiType.TRAIL_POWER_EACH_40 ->
+                when (target) {
+                    180 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_180), account.nickname, target)
+                    160 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_160), account.nickname, target)
+                    120 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.nickname, target)
+                    80 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.nickname, target)
+                    else -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.nickname, target)
+                }
             Constant.NotiType.RESIN_140 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_140), account.nickname, target)
             Constant.NotiType.RESIN_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), account.nickname, target)
-            Constant.NotiType.EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_expedition_done), account.nickname)
+            Constant.NotiType.EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_expedition_done_genshin), account.nickname)
             Constant.NotiType.REALM_CURRENCY_FULL -> String.format(applicationContext.getString(R.string.push_msg_realm_currency_full), account.nickname)
             Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED -> String.format(applicationContext.getString(R.string.push_msg_param_trans_full), account.nickname)
             Constant.NotiType.DAILY_COMMISSION_YET -> String.format(applicationContext.getString(R.string.push_msg_daily_commission_yet), account.nickname)
             Constant.NotiType.WEEKLY_BOSS_YET -> String.format(applicationContext.getString(R.string.push_msg_weekly_boss_yet), account.nickname)
+
+            Constant.NotiType.TRAIL_POWER_170 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_170), account.nickname, target)
+            Constant.NotiType.TRAIL_POWER_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), account.nickname, target)
+            Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_expedition_done_honkai_sr), account.nickname)
             else -> ""
         }
 
@@ -273,20 +397,38 @@ class RefreshWorker @AssistedInject constructor(
                 delay(300L)     // 마이그레이션 대비용 시간
                 accountDao.selectAllAccount().collect { accountList ->
                     accountList.forEach { account ->
-                        val server = when (account.server) {
-                            Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
-                            Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
-                            Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
-                            Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
-                            else -> Constant.SERVER_OS_ASIA
-                        }
 
-                        if (!account.genshin_uid.contains("-"))
-                            refreshDailyNote(
+                        if (!account.genshin_uid.contains("-")) {
+                            val server = when (account.server) {
+                                Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
+                                Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
+                                Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
+                                Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
+                                else -> Constant.SERVER_OS_ASIA
+                            }
+
+                            refreshGenshinDailyNote(
                                 account,
                                 server,
                                 CommonFunction.getGenshinDS()
                             )
+                        }
+
+                        if (account.honkai_sr_uid.isNotBlank()) {
+                            val server = when (account.server) {
+                                Constant.PREF_SERVER_ASIA -> Constant.SERVER_PO_ASIA
+                                Constant.PREF_SERVER_EUROPE -> Constant.SERVER_PO_EURO
+                                Constant.PREF_SERVER_USA -> Constant.SERVER_PO_USA
+                                Constant.PREF_SERVER_CHT -> Constant.SERVER_PO_CHT
+                                else -> Constant.SERVER_PO_ASIA
+                            }
+
+                            refreshHonkaiSrDailyNote(
+                                account,
+                                server,
+                                CommonFunction.getGenshinDS()
+                            )
+                        }
                     }
                 }
 

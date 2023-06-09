@@ -36,7 +36,7 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
         ) ?: AppWidgetManager.INVALID_APPWIDGET_ID
     }
 
-    private val  appWidgetManager: AppWidgetManager by lazy {
+    private val appWidgetManager: AppWidgetManager by lazy {
         AppWidgetManager.getInstance(context)
     }
 
@@ -96,8 +96,8 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
                         val updateIntent = Intent(act.applicationContext, widgetClass).apply {
                             action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
                             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-                            putExtra("uid", account.genshin_uid)
-                            putExtra("name", account.nickname)
+                            putExtra("uid", mVM.getUid(account))
+                            putExtra("name", mVM.getNickname(account))
                             if (widgetClassName == MiniWidget::class.java.name)
                                 putExtra("paramType", mVM.miniWidgetType)
                         }

@@ -16,7 +16,7 @@ import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.ResinWidgetDesignSettings
-import danggai.domain.network.dailynote.entity.DailyNoteData
+import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
 import danggai.domain.util.Constant
 import java.text.SimpleDateFormat
 import java.util.*
@@ -89,7 +89,7 @@ class TrailPowerWidget() : AppWidgetProvider() {
 
     private fun makeRemoteViews(context: Context?): RemoteViews {
         log.e()
-        val views = RemoteViews(context!!.packageName, R.layout.widget_resin_fixed)
+        val views = RemoteViews(context!!.packageName, R.layout.widget_trailblaze_power)
 
         val intentUpdate = Intent(context, TrailPowerWidget::class.java).apply {
             action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
@@ -97,7 +97,7 @@ class TrailPowerWidget() : AppWidgetProvider() {
         views.setOnClickPendingIntent(R.id.ll_sync, PendingIntent.getBroadcast(context, 0, intentUpdate, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT))
 
         val intentMainActivity = Intent(context, MainActivity::class.java)
-        views.setOnClickPendingIntent(R.id.iv_resin, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE or  PendingIntent.FLAG_UPDATE_CURRENT))
+        views.setOnClickPendingIntent(R.id.iv_trail_power, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE or  PendingIntent.FLAG_UPDATE_CURRENT))
         views.setOnClickPendingIntent(R.id.ll_disable, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT))
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
@@ -126,11 +126,11 @@ class TrailPowerWidget() : AppWidgetProvider() {
                 log.e()
 
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.ll_resin, View.VISIBLE)
+                view.setViewVisibility(R.id.ll_trail_power, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_bottom, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_disable, View.GONE)
 
-                val dailyNote = PreferenceManager.getT<DailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid")?: DailyNoteData.EMPTY
+                val dailyNote = PreferenceManager.getT<HonkaiSrDailyNoteData>(context, Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid")?: HonkaiSrDailyNoteData.EMPTY
 
                 view.setViewVisibility(R.id.tv_uid,
                     if(widgetDesign.uidVisibility) View.VISIBLE else View.GONE
@@ -142,8 +142,8 @@ class TrailPowerWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(R.id.tv_name, name)
 
-                view.setTextViewText(R.id.tv_resin, dailyNote.current_resin.toString())
-                view.setTextViewText(R.id.tv_resin_max, "/"+ dailyNote.max_resin.toString())
+                view.setTextViewText(R.id.tv_trail_power, dailyNote.current_stamina .toString())
+                view.setTextViewText(R.id.tv_trail_power_max, "/"+ dailyNote.max_stamina.toString())
 
                 view.setViewVisibility(R.id.tv_remain_time,
                     if (widgetDesign.timeNotation == Constant.PREF_TIME_NOTATION_DISABLE) View.GONE
@@ -152,19 +152,19 @@ class TrailPowerWidget() : AppWidgetProvider() {
                 view.setTextViewText(R.id.tv_remain_time,
                     when (widgetDesign.timeNotation) {
                         Constant.PREF_TIME_NOTATION_DEFAULT,
-                        Constant.PREF_TIME_NOTATION_REMAIN_TIME -> TimeFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time, timeType = Constant.TIME_TYPE_MAX)
-                        Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> TimeFunction.getSecondsLaterTime(_context, recentSyncTimeDate, dailyNote.resin_recovery_time, Constant.TIME_TYPE_MAX)
-                        else -> TimeFunction.secondToRemainTime(_context, dailyNote.resin_recovery_time, timeType = Constant.TIME_TYPE_MAX)
+                        Constant.PREF_TIME_NOTATION_REMAIN_TIME -> TimeFunction.secondToRemainTime(_context, dailyNote.stamina_recover_time, timeType = Constant.TIME_TYPE_MAX)
+                        Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> TimeFunction.getSecondsLaterTime(_context, recentSyncTimeDate, dailyNote.stamina_recover_time, Constant.TIME_TYPE_MAX)
+                        else -> TimeFunction.secondToRemainTime(_context, dailyNote.stamina_recover_time, timeType = Constant.TIME_TYPE_MAX)
                     }
                 )
 
                 view.setTextViewText(R.id.tv_sync_time, recentSyncTimeString)
-                view.setViewVisibility(R.id.iv_resin, if (widgetDesign.resinImageVisibility == Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE) View.GONE else View.VISIBLE)
+                view.setViewVisibility(R.id.iv_trail_power, if (widgetDesign.resinImageVisibility == Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE) View.GONE else View.VISIBLE)
             } else {
                 log.e()
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.iv_resin, View.GONE)
-                view.setViewVisibility(R.id.ll_resin, View.GONE)
+                view.setViewVisibility(R.id.iv_trail_power, View.GONE)
+                view.setViewVisibility(R.id.ll_trail_power, View.GONE)
                 view.setViewVisibility(R.id.ll_bottom, View.GONE)
                 view.setViewVisibility(R.id.ll_disable, View.VISIBLE)
             }
@@ -178,11 +178,11 @@ class TrailPowerWidget() : AppWidgetProvider() {
     ) {
         appWidgetIds.forEach { appWidgetId ->
             log.e()
-            val view = RemoteViews(context.packageName, R.layout.widget_resin_fixed)
+            val view = RemoteViews(context.packageName, R.layout.widget_trailblaze_power)
 
             view.setViewVisibility(R.id.pb_loading, View.VISIBLE)
-            view.setViewVisibility(R.id.iv_resin, View.INVISIBLE)
-            view.setViewVisibility(R.id.ll_resin, View.INVISIBLE)
+            view.setViewVisibility(R.id.iv_trail_power, View.INVISIBLE)
+            view.setViewVisibility(R.id.ll_trail_power, View.INVISIBLE)
             view.setViewVisibility(R.id.ll_bottom, View.INVISIBLE)
             view.setViewVisibility(R.id.ll_disable, View.GONE)
 

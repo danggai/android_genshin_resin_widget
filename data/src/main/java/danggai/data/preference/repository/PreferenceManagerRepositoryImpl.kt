@@ -8,7 +8,8 @@ import danggai.domain.local.CheckInSettings
 import danggai.domain.local.DailyNoteSettings
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
-import danggai.domain.network.dailynote.entity.DailyNoteData
+import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
+import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import org.json.JSONArray
@@ -280,15 +281,25 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         setIntArray(context, Constant.PREF_SELECTED_CHARACTER_ID_LIST, value as ArrayList<Int>)
 
 
-    override fun getDailyNoteData(uid: String): DailyNoteData =
-        getT<DailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid")?: DailyNoteData.EMPTY
-    override fun setDailyNote(uid: String, value: DailyNoteData) =
+    override fun getGenshinDailyNote(uid: String): GenshinDailyNoteData =
+        getT<GenshinDailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid")?: GenshinDailyNoteData.EMPTY
+    override fun setGenshinDailyNote(uid: String, value: GenshinDailyNoteData) =
         setT(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid", value)
+
+    override fun getHonkaiSrDailyNote(uid: String): HonkaiSrDailyNoteData =
+        getT<HonkaiSrDailyNoteData>(context, Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid")?: HonkaiSrDailyNoteData.EMPTY
+    override fun setHonkaiSrDailyNote(uid: String, value: HonkaiSrDailyNoteData) =
+        setT(context, Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid", value)
 
     override fun getStringExpeditionTime(uid: String): String =
         getString(context, Constant.PREF_EXPEDITION_TIME + "_$uid")
     override fun setStringExpeditionTime(uid: String, value: String) =
         setString(context, Constant.PREF_EXPEDITION_TIME + "_$uid", value)
+
+    override fun getStringHonkaiSrExpeditionTime(uid: String): String =
+        getString(context, Constant.PREF_HONKAI_SR_EXPEDITION_TIME + "_$uid")
+    override fun setStringHonkaiSrExpeditionTime(uid: String, value: String) =
+        setString(context, Constant.PREF_HONKAI_SR_EXPEDITION_TIME + "_$uid", value)
 
     override fun getStringRecentSyncTime(uid: String): String =
         getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid")

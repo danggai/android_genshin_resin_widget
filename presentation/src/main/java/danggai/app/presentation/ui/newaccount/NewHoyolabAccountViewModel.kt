@@ -249,7 +249,7 @@ class NewHoyolabAccountViewModel @Inject constructor(
         ds: String
     ) {
         viewModelScope.launch {
-            dailyNote(
+            dailyNote.genshin(
                 uid = uid,
                 server = server,
                 cookie = cookie,
@@ -416,13 +416,8 @@ class NewHoyolabAccountViewModel @Inject constructor(
     }
 
     fun initHonkaiSrDataInputField() {
-        if (sfNoHonkaiSrAccount.value) {
-            sfHonkaiSrNickname.value = randomGuestName()
-            sfHonkaiSrUid.value = "-" + (mCookieData["ltuid"]?:CommonFunction.getRandomNumber(10000000, 99999999))
-        } else {
-            sfHonkaiSrNickname.value = ""
-            sfHonkaiSrUid.value = ""
-        }
+        sfHonkaiSrNickname.value = ""
+        sfHonkaiSrUid.value = ""
     }
 
     fun onClickGetUid() {
@@ -491,7 +486,7 @@ class NewHoyolabAccountViewModel @Inject constructor(
                 sfHonkaiSrUid.value = account.honkai_sr_uid
                 sfHonkaiSrNickname.value = account.honkai_sr_nickname
                 sfHonkaiSrServer.value = account.honkai_sr_server
-                sfNoHonkaiSrAccount.value = account.honkai_sr_uid.contains("-")
+                sfNoHonkaiSrAccount.value = account.honkai_sr_uid.isEmpty()
 
                 sfEnableGenshinAutoCheckIn.value = account.enable_genshin_checkin
                 sfEnableHonkai3rdAutoCheckIn.value = account.enable_honkai3rd_checkin

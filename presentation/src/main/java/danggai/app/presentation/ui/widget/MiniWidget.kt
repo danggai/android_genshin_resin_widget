@@ -16,7 +16,7 @@ import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.ResinWidgetDesignSettings
-import danggai.domain.network.dailynote.entity.DailyNoteData
+import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.TransformerTime
 import danggai.domain.util.Constant
 
@@ -128,7 +128,7 @@ class MiniWidget() : AppWidgetProvider() {
                 val recentSyncTimeString = PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid").ifEmpty {
                     TimeFunction.getSyncDateTimeString()
                 }.split(" ")[1]
-                val dailyNote = PreferenceManager.getT<DailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid")?: DailyNoteData.EMPTY
+                val dailyNote = PreferenceManager.getT<GenshinDailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid")?: GenshinDailyNoteData.EMPTY
                 log.e()
 
                 view.setViewVisibility(R.id.pb_loading, View.GONE)

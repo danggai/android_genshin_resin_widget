@@ -18,7 +18,7 @@ import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.DetailWidgetDesignSettings
-import danggai.domain.network.dailynote.entity.DailyNoteData
+import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.util.Constant
 import java.text.SimpleDateFormat
 import java.util.*
@@ -146,7 +146,7 @@ class DetailWidget() : AppWidgetProvider() {
                 view.setViewVisibility(R.id.ll_body, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_bottom, View.VISIBLE)
 
-                val dailyNote = PreferenceManager.getT<DailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid")?: DailyNoteData.EMPTY
+                val dailyNote = PreferenceManager.getT<GenshinDailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid")?: GenshinDailyNoteData.EMPTY
 
                 view.setViewVisibility(R.id.tv_uid,
                     if(widgetDesign.uidVisibility) View.VISIBLE else View.GONE

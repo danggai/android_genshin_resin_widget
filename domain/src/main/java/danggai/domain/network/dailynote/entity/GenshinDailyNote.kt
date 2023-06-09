@@ -1,6 +1,20 @@
 package danggai.domain.network.dailynote.entity
 
-data class DailyNoteData(
+data class GenshinDailyNote (
+    val retcode: String,
+    val message: String,
+    val data: GenshinDailyNoteData?
+) {
+    companion object {
+        val EMPTY = GenshinDailyNote(
+            retcode = "",
+            message = "",
+            GenshinDailyNoteData.EMPTY
+        )
+    }
+}
+
+data class GenshinDailyNoteData(
     val current_resin: Int,
     val max_resin: Int,
     val resin_recovery_time: String = "-1",
@@ -18,11 +32,11 @@ data class DailyNoteData(
 
     val current_expedition_num: Int,
     val max_expedition_num: Int,
-    val expeditions: List<GameRoleExpedition> = listOf(),
+    val expeditions: List<GenshinExpedition> = listOf(),
     val transformer: Transformer? = Transformer.EMPTY
 ) {
     companion object {
-        val EMPTY = DailyNoteData(
+        val EMPTY = GenshinDailyNoteData(
             current_resin = -1,
             max_resin = -1,
             resin_recovery_time = "-1",
@@ -41,3 +55,9 @@ data class DailyNoteData(
         )
     }
 }
+
+data class GenshinExpedition (
+    val avatar_side_icon: String,
+    val status: String,
+    val remained_time: String
+)

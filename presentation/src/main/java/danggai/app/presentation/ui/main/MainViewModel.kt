@@ -39,7 +39,7 @@ class MainViewModel @Inject constructor(
     val sfEnableNotiEach40Resin = MutableStateFlow(false)
     val sfEnableNoti140Resin = MutableStateFlow(false)
     val sfEnableNotiCustomResin = MutableStateFlow(false)
-    val sfCustomNotiResin = MutableStateFlow("0")
+    val sfCustomNotiResin = MutableStateFlow("")
     val sfEnableNotiExpeditionDone = MutableStateFlow(false)
     val sfEnableNotiHomeCoinFull = MutableStateFlow(false)
     val sfEnableNotiParamReach = MutableStateFlow(false)
@@ -52,6 +52,12 @@ class MainViewModel @Inject constructor(
     var sfNotiWeeklyYetDay = MutableStateFlow(Calendar.SUNDAY)
     var sfNotiWeeklyYetTime = MutableStateFlow(21)
 
+    val sfEnableNotiEach40TrailPower = MutableStateFlow(false)
+    val sfEnableNoti170TrailPower = MutableStateFlow(false)
+    val sfEnableNotiCustomTrailPower = MutableStateFlow(false)
+    val sfCustomNotiTrailPower = MutableStateFlow("")
+    val sfEnableNotiHonkaiSrExpeditionDone = MutableStateFlow(false)
+
     val sfAccountListRefreshSwitch = MutableStateFlow(false)
 
     val sfDeleteAccount = MutableSharedFlow<Account>()
@@ -63,7 +69,7 @@ class MainViewModel @Inject constructor(
             sfEnableNotiEach40Resin.value = it.notiEach40Resin
             sfEnableNoti140Resin.value = it.noti140Resin
             sfEnableNotiCustomResin.value = it.notiCustomResin
-            sfCustomNotiResin.value = it.customResin.toString()
+            sfCustomNotiResin.value = if (it.customResin != 0) it.customResin.toString() else ""
             sfEnableNotiExpeditionDone.value = it.notiExpedition
             sfEnableNotiHomeCoinFull.value = it.notiHomeCoin
             sfEnableNotiParamReach.value = it.notiParamTrans
@@ -72,6 +78,12 @@ class MainViewModel @Inject constructor(
             sfNotiDailyYetTime.value = it.notiDailyYetTime
             sfNotiWeeklyYetTime.value = it.notiWeeklyYetTime
             sfNotiWeeklyYetDay.value = it.notiWeeklyYetDay
+
+            sfEnableNotiEach40TrailPower.value = it.notiEach40TrailPower
+            sfEnableNoti170TrailPower.value = it.noti170TrailPower
+            sfEnableNotiCustomTrailPower.value = it.notiCustomTrailPower
+            sfCustomNotiTrailPower.value = if (it.customTrailPower != 0) it.customTrailPower.toString() else ""
+            sfEnableNotiHonkaiSrExpeditionDone.value = it.notiExpeditionHonkaiSr
         }
 
         preference.getCheckInSettings().let {
@@ -103,6 +115,17 @@ class MainViewModel @Inject constructor(
             0
         }
 
+        val customNotiTrailPower: Int = try {
+            if (sfCustomNotiTrailPower.value.isEmpty()
+                || sfCustomNotiTrailPower.value.toInt() < 0) 0
+            else if (sfCustomNotiTrailPower.value.toInt() > Constant.MAX_TRAILBLAZE_POWER) {
+                sfCustomNotiTrailPower.value = Constant.MAX_TRAILBLAZE_POWER.toString()
+                Constant.MAX_TRAILBLAZE_POWER
+            } else sfCustomNotiTrailPower.value.toInt()
+        } catch (e:java.lang.Exception) {
+            0
+        }
+
         preference.setDailyNoteSettings(
             DailyNoteSettings(
                 sfAutoRefreshPeriod.value,
@@ -118,6 +141,11 @@ class MainViewModel @Inject constructor(
                 sfEnableNotiWeeklyYet.value,
                 sfNotiWeeklyYetDay.value,
                 sfNotiWeeklyYetTime.value,
+                sfEnableNotiEach40TrailPower.value,
+                sfEnableNoti170TrailPower.value,
+                sfEnableNotiCustomTrailPower.value,
+                customNotiTrailPower,
+                sfEnableNotiHonkaiSrExpeditionDone.value,
             )
         )
 

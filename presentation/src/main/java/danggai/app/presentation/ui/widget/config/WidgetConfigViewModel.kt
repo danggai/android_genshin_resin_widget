@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BaseViewModel
 import danggai.app.presentation.ui.widget.MiniWidget
+import danggai.app.presentation.ui.widget.TrailPowerWidget
 import danggai.app.presentation.util.log
 import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
@@ -58,6 +59,16 @@ class WidgetConfigViewModel @Inject constructor(
 
     fun onClickConfirm() {
         if (confirmEnable()) sfSelectAccount.emitInVmScope(sfSelectedAccount.value)
+    }
+
+    fun getUid(account: Account): String =
+        if (isHonkaiSrWidget()) account.honkai_sr_uid else account.genshin_uid
+
+    fun getNickname(account: Account): String =
+        if (isHonkaiSrWidget()) account.honkai_sr_nickname else account.nickname
+
+    fun isHonkaiSrWidget(): Boolean {
+        return widgetClassName == TrailPowerWidget::class.java.name
     }
 
     private fun confirmEnable(): Boolean {

@@ -136,6 +136,27 @@
 
         </receiver>
 
+        <receiver
+            android:name="danggai.app.presentation.ui.widget.TrailPowerWidget"
+            android:label="@string/widget_label_trailblaze_power"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="danggai.app.resinwidget.refresh.resin.ui" />
+                <action android:name="danggai.app.resinwidget.refresh.resin.data" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/trailblaze_power_widget_info" />
+
+        </receiver>
+
         <service android:name="danggai.app.presentation.service.TalentWidgetItemService"
             android:enabled="true"
             android:exported="true"
