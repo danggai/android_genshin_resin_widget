@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Genshin Resin Widget</string>
+    <string name="app_name">Genshin&amp;StarRail Widget</string>
 
-    <string name="genshin_resin_widget" translatable="false">Genshin Resin Widget</string>
+    <string name="genshin_resin_widget" translatable="false">Genshin&amp;StarRail Widget</string>
 
     <string name="genshin">Genshin\u00A0</string>
     <string name="honkai_sr">Honkai: Star Rail\u00A0</string>
@@ -104,7 +104,7 @@
     <string name="msg_toast_widget_no_account_select">Select the HoYoLAB account to display in the widget!</string>
     <string name="msg_toast_miniwidget_no_type">Select 1 data to display in the mini widget!</string>
     <string name="dialog_widget_refresh_not_work">Refresh doesn\'t work on the Widget?</string>
-    <string name="dialog_msg_widget_refresh_not_work">If device using <b>power saving mode or data saving mode.</b>, widget doesn\'t refresh.\n\You can disable data saving mode in setting, or detour to allow access to the genshin resin widget on the next screen.\n\nThis permission allows the app to access the notifications the device receives, but the genshin resin widget does not use the notification reception service other than for HoYoLAB data reception purposes, and <b>never</b> accesses the user\'s personal information.\n\nGenshin resin widget recommends data saving mode deactivation.</string>
+    <string name="dialog_msg_widget_refresh_not_work">If device using <b>power saving mode or data saving mode.</b>, widget doesn\'t refresh.\n\You can disable data saving mode in setting, or detour to allow access to the Genshin StarRail Widget on the next screen.\n\nThis permission allows the app to access the notifications the device receives, but the Genshin StarRail Widget does not use the notification reception service other than for HoYoLAB data reception purposes, and <b>never</b> accesses the user\'s personal information.\n\nGenshin StarRail Widget recommends data saving mode deactivation.</string>
 
 
     <string name="dialog_native_hoyolab_account">Check Your Account</string>
