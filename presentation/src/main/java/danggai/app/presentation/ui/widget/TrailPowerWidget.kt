@@ -142,7 +142,7 @@ class TrailPowerWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(R.id.tv_name, name)
 
-                view.setTextViewText(R.id.tv_trail_power, dailyNote.current_stamina .toString())
+                view.setTextViewText(R.id.tv_trail_power, dailyNote.current_stamina.toString())
                 view.setTextViewText(R.id.tv_trail_power_max, "/"+ dailyNote.max_stamina.toString())
 
                 view.setViewVisibility(R.id.tv_remain_time,

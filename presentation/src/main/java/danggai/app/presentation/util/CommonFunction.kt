@@ -382,13 +382,19 @@ object CommonFunction {
         view.setTextColor(R.id.tv_no_talent_ingredient, mainFontColor)
         view.setTextColor(R.id.tv_no_selected_characters, mainFontColor)
 
-        if (view.layoutId == R.layout.widget_resin_fixed) {
-            val fontSize = widgetDesign.fontSize
-            view.setFloat(R.id.tv_resin, "setTextSize", fontSize.toFloat())
+        when (view.layoutId) {
+            R.layout.widget_resin_fixed,
+            R.layout.widget_trailblaze_power -> {
+                val fontSize = widgetDesign.fontSize
+                view.setFloat(R.id.tv_resin, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_trail_power, "setTextSize", fontSize.toFloat())
+            }
         }
 
         view.setTextColor(R.id.tv_resin, mainFontColor)
         view.setTextColor(R.id.tv_resin_max, mainFontColor)
+        view.setTextColor(R.id.tv_trail_power, mainFontColor)
+        view.setTextColor(R.id.tv_trail_power_max, mainFontColor)
         view.setTextColor(R.id.tv_remain_time, mainFontColor)
     }
 
