@@ -52,6 +52,28 @@
 
         </LinearLayout>
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_resin"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/resin"
+            android:padding="2dp"
+            android:tintMode="multiply"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_trail_power"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/trailblaze_power"
+            android:tintMode="multiply"
+            />
+
+        <android.widget.Space
+            android:layout_width="10dp"
+            android:layout_height="0dp"
+            />
+
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"

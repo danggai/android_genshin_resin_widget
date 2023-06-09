@@ -373,5 +373,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 키라라 캐틱터 정보 추가</string>
+    <string name="dialog_msg_patch_note">- 붕괴: 스타레일 관련 계정 연동 추가\n- 붕괴: 스타레일 개척력 위젯/관련 알림 추가</string>
 </resources>
