@@ -364,14 +364,6 @@ class RefreshWorker @AssistedInject constructor(
                     80 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_40), account.nickname, target)
                     else -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_40), account.nickname, target)
                 }
-            Constant.NotiType.TRAIL_POWER_EACH_40 ->
-                when (target) {
-                    180 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_180), account.nickname, target)
-                    160 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_160), account.nickname, target)
-                    120 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.nickname, target)
-                    80 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.nickname, target)
-                    else -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.nickname, target)
-                }
             Constant.NotiType.RESIN_140 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_140), account.nickname, target)
             Constant.NotiType.RESIN_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), account.nickname, target)
             Constant.NotiType.EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_expedition_done_genshin), account.nickname)
@@ -380,9 +372,17 @@ class RefreshWorker @AssistedInject constructor(
             Constant.NotiType.DAILY_COMMISSION_YET -> String.format(applicationContext.getString(R.string.push_msg_daily_commission_yet), account.nickname)
             Constant.NotiType.WEEKLY_BOSS_YET -> String.format(applicationContext.getString(R.string.push_msg_weekly_boss_yet), account.nickname)
 
-            Constant.NotiType.TRAIL_POWER_170 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_170), account.nickname, target)
-            Constant.NotiType.TRAIL_POWER_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), account.nickname, target)
-            Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_expedition_done_honkai_sr), account.nickname)
+            Constant.NotiType.TRAIL_POWER_EACH_40 ->
+                when (target) {
+                    180 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_180), account.honkai_sr_nickname, target)
+                    160 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_160), account.honkai_sr_nickname, target)
+                    120 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.honkai_sr_nickname, target)
+                    80 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.honkai_sr_nickname, target)
+                    else -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.honkai_sr_nickname, target)
+                }
+            Constant.NotiType.TRAIL_POWER_170 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_170), account.honkai_sr_nickname, target)
+            Constant.NotiType.TRAIL_POWER_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), account.honkai_sr_nickname, target)
+            Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_expedition_done_honkai_sr), account.honkai_sr_nickname)
             else -> ""
         }
 
