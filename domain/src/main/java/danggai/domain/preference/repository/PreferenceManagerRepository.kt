@@ -4,7 +4,8 @@ import danggai.domain.local.CheckInSettings
 import danggai.domain.local.DailyNoteSettings
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
-import danggai.domain.network.dailynote.entity.DailyNoteData
+import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
+import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
 
 
 interface PreferenceManagerRepository {
@@ -40,14 +41,20 @@ interface PreferenceManagerRepository {
     fun setSelectedCharacterIdList(value: List<Int>)
 
 
-    fun getDailyNoteData(uid: String): DailyNoteData
-    fun setDailyNote(uid: String, value: DailyNoteData)
+    fun getGenshinDailyNote(uid: String): GenshinDailyNoteData
+    fun setGenshinDailyNote(uid: String, value: GenshinDailyNoteData)
+
+    fun getHonkaiSrDailyNote(uid: String): HonkaiSrDailyNoteData
+    fun setHonkaiSrDailyNote(uid: String, value: HonkaiSrDailyNoteData)
 
     fun getStringRecentSyncTime(uid: String): String
     fun setStringRecentSyncTime(uid: String, value: String)
 
     fun getStringExpeditionTime(uid: String): String
     fun setStringExpeditionTime(uid: String, value: String)
+
+    fun getStringHonkaiSrExpeditionTime(uid: String): String
+    fun setStringHonkaiSrExpeditionTime(uid: String, value: String)
 
     fun setBooleanEnableAutoCheckIn(value: Boolean)
     fun setBooleanEnableHonkai3rdAutoCheckIn(value: Boolean)

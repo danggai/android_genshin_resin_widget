@@ -5,6 +5,7 @@ import java.util.*
 
 data class DailyNoteSettings(
     val autoRefreshPeriod: Long,
+
     val notiEach40Resin: Boolean,
     val noti140Resin: Boolean,
     val notiCustomResin: Boolean,
@@ -17,6 +18,12 @@ data class DailyNoteSettings(
     val notiWeeklyYet: Boolean,
     val notiWeeklyYetDay: Int,
     val notiWeeklyYetTime: Int,
+
+    val notiEach40TrailPower: Boolean,
+    val noti170TrailPower: Boolean,
+    val notiCustomTrailPower: Boolean,
+    val customTrailPower: Int,
+    val notiExpeditionHonkaiSr: Boolean,
 ) {
     companion object {
         val EMPTY = DailyNoteSettings (
@@ -32,7 +39,13 @@ data class DailyNoteSettings(
             notiDailyYetTime = 21,
             notiWeeklyYet = false,
             notiWeeklyYetDay = Calendar.SUNDAY,
-            notiWeeklyYetTime = 21
+            notiWeeklyYetTime = 21,
+
+            notiEach40TrailPower = false,
+            noti170TrailPower = false,
+            notiCustomTrailPower = false,
+            customTrailPower = 0,
+            notiExpeditionHonkaiSr = false,
         )
     }
 }

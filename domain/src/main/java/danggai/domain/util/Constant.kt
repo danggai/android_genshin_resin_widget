@@ -3,6 +3,7 @@ package danggai.domain.util
 object Constant {
 
     const val MAX_RESIN = 160
+    const val MAX_TRAILBLAZE_POWER = 180
 
     /* URL */
 
@@ -20,6 +21,9 @@ object Constant {
     const val OS_HONKAI_3RD_CHECK_IN_URL = "https://sg-public-api.hoyolab.com/event/mani/sign"
     const val OS_HONKAI_3RD_ACT_ID = "e202110291205111"
 
+    const val OS_HONKAI_SR_CHECK_IN_URL = "https://sg-public-api.hoyolab.com/event/luna/os/sign"
+    const val OS_HONKAI_SR_ACT_ID = "e202303301540311"
+
     const val HOW_CAN_I_GET_COOKIE_URL = "https://github.com/danggai/android_genshin_resin_widget/blob/master/how_to_get_hoyolab_cookie.md"
 
     const val SERVER_CN_GF_01 = "cn_gf01"
@@ -29,11 +33,17 @@ object Constant {
     const val SERVER_OS_ASIA = "os_asia"
     const val SERVER_OS_CHT = "os_cht"
 
+    const val SERVER_PO_USA = "prod_official_usa"
+    const val SERVER_PO_EURO = "prod_official_eur"
+    const val SERVER_PO_ASIA = "prod_official_asia"
+    const val SERVER_PO_CHT = "prod_official_cht"
+
     const val LANG_KO_KR = "ko-kr"
     const val LANG_EN_US = "en-us"
 
     const val GAME_ID_HONKAI_3RD = 1
     const val GAME_ID_GENSHIN_IMPACT = 2
+    const val GAME_ID_HONKAI_SR = 6
 
     /* HTTP STATUS CODE */
 
@@ -113,6 +123,7 @@ object Constant {
     const val PREF_DETAIL_WIDGET_DESIGN_SETTINGS = "PREF_DETAIL_WIDGET_DESIGN_SETTINGS"
     const val PREF_SELECTED_CHARACTER_ID_LIST = "PREF_SELECTED_CHARACTER_ID_LIST"
     const val PREF_DAILY_NOTE_DATA = "PREF_DAILY_NOTE_DATA"
+    const val PREF_HONKAI_SR_DAILY_NOTE_DATA = "PREF_HONKAI_SR_DAILY_NOTE_DATA"
 
     /*daily/weekly noti date*/
     const val PREF_RECENT_DAILY_COMMISSION_NOTI_DATE = "PREF_RECENT_DAILY_COMMISSION_NOTI_DATE"
@@ -178,6 +189,7 @@ object Constant {
     const val PREF_CURRENT_EXPEDITION = "PREF_CURRENT_EXPEDITION"
     const val PREF_MAX_EXPEDITION = "PREF_MAX_EXPEDITION"
     const val PREF_EXPEDITION_TIME = "PREF_EXPEDITION_TIME"
+    const val PREF_HONKAI_SR_EXPEDITION_TIME = "PREF_HONKAI_SR_EXPEDITION_TIME"
 
     const val PREF_RECENT_SYNC_TIME = "PREF_RECENT_SYNC_TIME"
 
@@ -262,16 +274,20 @@ object Constant {
         CHECK_IN_HONKAI_3RD_ALREADY,
         CHECK_IN_HONKAI_3RD_FAILED,
         CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND,
+        CHECK_IN_HONKAI_SR_SUCCESS,
+        CHECK_IN_HONKAI_SR_ALREADY,
+        CHECK_IN_HONKAI_SR_FAILED,
+        CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND,
         EXPEDITION_DONE,
         REALM_CURRENCY_FULL,
         PARAMETRIC_TRANSFORMER_REACHED,
         DAILY_COMMISSION_YET,
-        WEEKLY_BOSS_YET
-    }
+        WEEKLY_BOSS_YET,
 
-    enum class WorkDataType(val key: String) {
-        GENSHIN_CHECK_IN_RET_CODE("genshinCheckIn"),
-        HONKAI_3RD_CHECK_IN_RET_CODE("honkai3rdCheckIn"),
+        TRAIL_POWER_EACH_40,
+        TRAIL_POWER_170,
+        TRAIL_POWER_CUSTOM,
+        HONKAI_SR_EXPEDITION_DONE,
     }
 
 
@@ -279,8 +295,10 @@ object Constant {
 
     const val PUSH_CHANNEL_DEFAULT_ID = "DEFAULT"
     const val PUSH_CHANNEL_RESIN_NOTI_ID = "RESIN_NOTIFICATION"
+    const val PUSH_CHANNEL_TRAIL_POWER_NOTI_ID = "TRAILBLAZE_POWER_NOTIFICATION"
     const val PUSH_CHANNEL_GENSHIN_CHECK_IN_NOTI_ID = "PUSH_CHANNEL_GENSHIN_CHECK_IN_NOTI_ID"
     const val PUSH_CHANNEL_HONKAI_3RD_CHECK_IN_NOTI_ID = "PUSH_CHANNEL_HONKAI_3RD_CHECK_IN_NOTI_ID"
+    const val PUSH_CHANNEL_HONKAI_SR_CHECK_IN_NOTI_ID = "PUSH_CHANNEL_HONKAI_SR_CHECK_IN_NOTI_ID"
     const val PUSH_CHANNEL_EXPEDITION_NOTI_ID = "EXPEDITION_NOTIFICATION"
     const val PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID = "REALM_CURRENCY_NOTIFICATION"
     const val PUSH_CHANNEL_PARAMETRIC_TRANSFORMER_NOTI_ID = "PARAMETRIC_TRANSFORMER_NOTIFICATION"
@@ -360,6 +378,7 @@ object Constant {
     const val ID_YAE = 10000058
     const val ID_HEIZOU = 10000059
     const val ID_YERAN = 10000060
+    const val ID_KIRARA = 10000061
     const val ID_ALOY = 10000062
     const val ID_SHENHE = 10000063
     const val ID_YUNJIN = 10000064
@@ -379,4 +398,6 @@ object Constant {
     const val ID_ALHAITHAM = 10000078
     const val ID_DEHYA = 10000079
     const val ID_MIKA = 10000080
+    const val ID_KAVEH = 10000081
+    const val ID_BAIZHUER = 10000082
 }

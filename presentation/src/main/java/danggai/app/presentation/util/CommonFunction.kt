@@ -23,13 +23,11 @@ import com.google.firebase.crashlytics.CustomKeysAndValues
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import danggai.app.presentation.BuildConfig
 import danggai.app.presentation.R
-import danggai.app.presentation.ui.widget.DetailWidget
-import danggai.app.presentation.ui.widget.MiniWidget
-import danggai.app.presentation.ui.widget.ResinWidget
-import danggai.app.presentation.ui.widget.ResinWidgetResizable
+import danggai.app.presentation.ui.widget.*
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
-import danggai.domain.network.dailynote.entity.DailyNoteData
+import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
+import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -73,6 +71,11 @@ object CommonFunction {
             .lowercase(Locale.getDefault())
     }
 
+    fun getRandomNumber(min: Int, max: Int): Int {
+        val random = Random()
+        return random.nextInt(max) + min
+    }
+
     fun sendBroadcastAllWidgetRefreshUI(context: Context) {
         log.e()
 
@@ -81,6 +84,7 @@ object CommonFunction {
             sendBroadcastAppWidgetUpdate<ResinWidgetResizable>(context)
             sendBroadcastAppWidgetUpdate<DetailWidget>(context)
             sendBroadcastAppWidgetUpdate<MiniWidget>(context)
+            sendBroadcastAppWidgetUpdate<TrailPowerWidget>(context)
         }
     }
 
@@ -138,6 +142,14 @@ object CommonFunction {
                 notificationDesc = context.getString(R.string.push_resin_noti_description)
                 priority = NotificationCompat.PRIORITY_DEFAULT
             }
+            Constant.NotiType.TRAIL_POWER_EACH_40,
+            Constant.NotiType.TRAIL_POWER_170,
+            Constant.NotiType.TRAIL_POWER_CUSTOM
+            -> {
+                notificationId = Constant.PUSH_CHANNEL_TRAIL_POWER_NOTI_ID
+                notificationDesc = context.getString(R.string.push_trail_power_noti_description)
+                priority = NotificationCompat.PRIORITY_DEFAULT
+            }
             Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS,
             Constant.NotiType.CHECK_IN_GENSHIN_FAILED,
             Constant.NotiType.CHECK_IN_GENSHIN_ALREADY,
@@ -156,9 +168,23 @@ object CommonFunction {
                 notificationDesc = context.getString(R.string.push_honkai_3rd_checkin_description)
                 priority = NotificationCompat.PRIORITY_LOW
             }
+            Constant.NotiType.CHECK_IN_HONKAI_SR_SUCCESS,
+            Constant.NotiType.CHECK_IN_HONKAI_SR_FAILED,
+            Constant.NotiType.CHECK_IN_HONKAI_SR_ALREADY,
+            Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND
+            -> {
+                notificationId = Constant.PUSH_CHANNEL_HONKAI_SR_CHECK_IN_NOTI_ID
+                notificationDesc = context.getString(R.string.push_honkai_sr_checkin_description)
+                priority = NotificationCompat.PRIORITY_LOW
+            }
             Constant.NotiType.EXPEDITION_DONE -> {
                 notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
-                notificationDesc = context.getString(R.string.push_expedition_description)
+                notificationDesc = context.getString(R.string.push_expedition_description_genshin)
+                priority = NotificationCompat.PRIORITY_LOW
+            }
+            Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> {
+                notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
+                notificationDesc = context.getString(R.string.push_expedition_description_honkai_sr)
                 priority = NotificationCompat.PRIORITY_LOW
             }
             Constant.NotiType.REALM_CURRENCY_FULL -> {
@@ -188,13 +214,29 @@ object CommonFunction {
             }
         }
 
+        val icon = when (notiType) {
+//            Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS,
+//            Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED,
+//            Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY,
+//            Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND -> R.d
+            Constant.NotiType.CHECK_IN_HONKAI_SR_SUCCESS,
+            Constant.NotiType.CHECK_IN_HONKAI_SR_FAILED,
+            Constant.NotiType.CHECK_IN_HONKAI_SR_ALREADY,
+            Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND,
+            Constant.NotiType.TRAIL_POWER_EACH_40,
+            Constant.NotiType.TRAIL_POWER_170,
+            Constant.NotiType.TRAIL_POWER_CUSTOM,
+            Constant.NotiType.HONKAI_SR_EXPEDITION_DONE, -> R.drawable.trailblaze_power
+            else -> R.drawable.resin
+        }
+
         val notificationManager: NotificationManager = ContextCompat.getSystemService(
             context,
             NotificationManager::class.java
         ) ?: return
 
         val builder = NotificationCompat.Builder(context, notificationId).apply {
-            setSmallIcon(R.drawable.resin)
+            setSmallIcon(icon)
             setContentTitle(title)
             setContentText(msg)
             setAutoCancel(true)
@@ -254,10 +296,19 @@ object CommonFunction {
         return resources.configuration.uiMode and UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
     }
 
-    fun getExpeditionTime(dailyNote: DailyNoteData): String {
+    fun getExpeditionTime(dailyNote: GenshinDailyNoteData): String {
         return try {
             if (dailyNote.expeditions.isEmpty()) "0"
             else dailyNote.expeditions.maxOf { it.remained_time }
+        } catch (e: java.lang.Exception) {
+            "0"
+        }
+    }
+
+    fun getExpeditionTime(dailyNote: HonkaiSrDailyNoteData): String {
+        return try {
+            if (dailyNote.expeditions.isEmpty()) "0"
+            else dailyNote.expeditions.maxOf { it.remaining_time.toString() }
         } catch (e: java.lang.Exception) {
             "0"
         }

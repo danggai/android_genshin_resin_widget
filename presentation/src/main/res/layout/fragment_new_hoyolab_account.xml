@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingHorizontal="20dp"
+                android:animateLayoutChanges="true"
                 >
 
                 <LinearLayout
@@ -42,6 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:paddingHorizontal="10dp"
                     >
 
                     <android.widget.Space
@@ -75,148 +76,374 @@
                         android:onClick="@{()->vm.onClickGetCookie()}"
                         />
 
+                    <android.widget.Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="8dp" />
+
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/ll_ingame_data"
+                <FrameLayout
+                    android:id="@+id/ll_genshin_ingame_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="@{vm.sfHoyolabCookie.empty ?View.GONE :View.VISIBLE}"
+                    android:background="#f5f5f5"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:maxHeight="0dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/logo_genshin"
+                        android:tint="#f5f5f5"
+                        android:tintMode="screen"
+                        />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="10dp" >
+
+                        <android.widget.Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="8dp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/server"
+                            android:textColor="@color/black"
+                            android:textSize="28sp"
+                            android:textStyle="bold|italic"/>
+
+                        <RadioGroup
+                            style="@style/RadioGroup"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/rb_genshin_asia"
+                                style="@style/RadioButton"
+                                android:layout_marginEnd="5dp"
+                                android:checked="@{vm.sfGenshinServer == Server.ASIA.pref}"
+                                android:onClick="@{() -> vm.onClickSetGenshinServer(Server.ASIA)}"
+                                android:text="@string/asia"
+                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
+                                />
+
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/rb_genshin_usa"
+                                style="@style/RadioButton"
+                                android:layout_marginEnd="5dp"
+                                android:checked="@{vm.sfGenshinServer == Server.USA.pref}"
+                                android:onClick="@{() -> vm.onClickSetGenshinServer(Server.USA)}"
+                                android:text="@string/america"
+                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
+                                />
+
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/rb_genshin_euro"
+                                style="@style/RadioButton"
+                                android:layout_marginEnd="5dp"
+                                android:checked="@{vm.sfGenshinServer == Server.EUROPE.pref}"
+                                android:onClick="@{() -> vm.onClickSetGenshinServer(Server.EUROPE)}"
+                                android:text="@string/europe"
+                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
+                                />
+
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/rb_genshin_cht"
+                                style="@style/RadioButton"
+                                android:checked="@{vm.sfGenshinServer == Server.CHT.pref}"
+                                android:onClick="@{() -> vm.onClickSetGenshinServer(Server.CHT)}"
+                                android:text="@string/cht"
+                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
+                                />
+
+                        </RadioGroup>
+
+                        <android.widget.Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="15dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical" >
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/nickname"
+                                    android:textColor="@color/black"
+                                    android:textSize="28sp"
+                                    android:textStyle="bold|italic" />
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:id="@+id/et_genshin_nickname"
+                                    style="@style/EditTextStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/hint_nickname_genshin"
+                                    android:singleLine="true"
+                                    android:text="@={vm.sfGenshinNickname}"
+                                    android:textColorHint="@color/gray"
+                                    android:textSize="16sp"
+                                    />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical" >
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:text="@string/uid"
+                                    android:textColor="@color/black"
+                                    android:textSize="28sp"
+                                    android:textStyle="bold|italic" />
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:id="@+id/et_genshin_uid"
+                                    style="@style/EditTextStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/hint_uid"
+                                    android:singleLine="true"
+                                    android:text="@={vm.sfGenshinUid}"
+                                    android:textColorHint="@color/gray"
+                                    android:textSize="16sp"
+                                    android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
+                                    />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        </LinearLayout>
+
+                        <android.widget.Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="15dp" />
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            style="@style/Checkbox.BoxOnly"
+                            android:id="@+id/cb_no_genshin_account"
+                            android:checked="@={vm.sfNoGenshinAccount}"
+                            android:text="@string/btn_no_genshin_account"
+                            android:onClick="@{() -> vm.initGenshinDataInputField()}"
+                            />
+
+                        <android.widget.Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="8dp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/ll_honkai_sr_ingame_data"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:visibility="@{vm.sfHoyolabCookie.empty ?View.GONE :View.VISIBLE}"
                     >
 
-                    <android.widget.Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="15dp" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/server"
-                        android:textColor="@color/black"
-                        android:textSize="28sp"
-                        android:textStyle="bold|italic"/>
-
-                    <RadioGroup
-                        style="@style/RadioGroup"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/rb_asia"
-                            style="@style/RadioButton"
-                            android:layout_marginEnd="5dp"
-                            android:checked="@{vm.sfServer == Server.ASIA.pref}"
-                            android:onClick="@{() -> vm.onClickSetServer(Server.ASIA)}"
-                            android:text="@string/asia"
-                            android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
-                            />
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/rb_usa"
-                            style="@style/RadioButton"
-                            android:layout_marginEnd="5dp"
-                            android:checked="@{vm.sfServer == Server.USA.pref}"
-                            android:onClick="@{() -> vm.onClickSetServer(Server.USA)}"
-                            android:text="@string/america"
-                            android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
-                            />
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/rb_euro"
-                            style="@style/RadioButton"
-                            android:layout_marginEnd="5dp"
-                            android:checked="@{vm.sfServer == Server.EUROPE.pref}"
-                            android:onClick="@{() -> vm.onClickSetServer(Server.EUROPE)}"
-                            android:text="@string/europe"
-                            android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
-                            />
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/rb_cht"
-                            style="@style/RadioButton"
-                            android:checked="@{vm.sfServer == Server.CHT.pref}"
-                            android:onClick="@{() -> vm.onClickSetServer(Server.CHT)}"
-                            android:text="@string/cht"
-                            android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
-                            />
-
-                    </RadioGroup>
-
-                    <android.widget.Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="15dp" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/nickname"
-                        android:textColor="@color/black"
-                        android:textSize="28sp"
-                        android:textStyle="bold|italic" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_nickname"
-                        style="@style/EditTextStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_nickname"
-                        android:singleLine="true"
-                        android:text="@={vm.sfNickname}"
-                        android:textColorHint="@color/gray"
-                        android:textSize="16sp"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:maxHeight="0dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/logo_honkai_sr"
+                        android:tint="#eeeeee"
                         />
 
-                    <android.widget.Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="15dp" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:text="@string/genshin_uid"
-                        android:textColor="@color/black"
-                        android:textSize="28sp"
-                        android:textStyle="bold|italic" />
+                        android:orientation="vertical"
+                        android:paddingHorizontal="10dp"
+                        android:animateLayoutChanges="true"
+                        >
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_uid"
-                        style="@style/EditTextStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_uid"
-                        android:singleLine="true"
-                        android:text="@={vm.sfGenshinUid}"
-                        android:textColorHint="@color/gray"
-                        android:textSize="16sp"
-                        android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
-                        />
+                        <android.widget.Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="8dp" />
 
-                    <android.widget.Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="15dp" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox.BoxOnly"
-                        android:id="@+id/cb_no_genshin_account"
-                        android:checked="@={vm.sfNoGenshinAccount}"
-                        android:text="@string/btn_no_genshin_account"
-                        android:onClick="@{() -> vm.onClickNoGenshinAccount()}"
-                        />
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="@{vm.sfNoHonkaiSrAccount ?View.GONE :View.VISIBLE}"
+                            >
 
-                    <TextView
-                        style="@style/TextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:text="@string/guest_account_desc"
-                        android:textColor="@color/gray"
-                        android:textSize="14sp"
-                        android:maxLines="3"
-                        android:visibility="@{vm.sfNoGenshinAccount ?View.VISIBLE :View.GONE}"
-                        />
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/server"
+                                android:textColor="@color/black"
+                                android:textSize="28sp"
+                                android:textStyle="bold|italic"/>
+
+                            <RadioGroup
+                                style="@style/RadioGroup"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                    android:id="@+id/rb_honkai_sr_asia"
+                                    style="@style/RadioButton"
+                                    android:layout_marginEnd="5dp"
+                                    android:checked="@{vm.sfHonkaiSrServer == Server.ASIA.pref}"
+                                    android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.ASIA)}"
+                                    android:text="@string/asia"
+                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}"
+                                    />
+
+                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                    android:id="@+id/rb_honkai_sr_usa"
+                                    style="@style/RadioButton"
+                                    android:layout_marginEnd="5dp"
+                                    android:checked="@{vm.sfHonkaiSrServer == Server.USA.pref}"
+                                    android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.USA)}"
+                                    android:text="@string/america"
+                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}"
+                                    />
+
+                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                    android:id="@+id/rb_honkai_sr_euro"
+                                    style="@style/RadioButton"
+                                    android:layout_marginEnd="5dp"
+                                    android:checked="@{vm.sfHonkaiSrServer == Server.EUROPE.pref}"
+                                    android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.EUROPE)}"
+                                    android:text="@string/europe"
+                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}"
+                                    />
+
+                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                    android:id="@+id/rb_honkai_sr_cht"
+                                    style="@style/RadioButton"
+                                    android:checked="@{vm.sfHonkaiSrServer == Server.CHT.pref}"
+                                    android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.CHT)}"
+                                    android:text="@string/cht"
+                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}"
+                                    />
+
+                            </RadioGroup>
+
+                            <android.widget.Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="15dp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical" >
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/nickname"
+                                        android:textColor="@color/black"
+                                        android:textSize="28sp"
+                                        android:textStyle="bold|italic" />
+
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:id="@+id/et_honkai_sr_nickname"
+                                        style="@style/EditTextStyle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:hint="@string/hint_nickname_honkai_sr"
+                                        android:singleLine="true"
+                                        android:text="@={vm.sfHonkaiSrNickname}"
+                                        android:textColorHint="@color/gray"
+                                        android:textSize="16sp"
+                                        android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}"
+                                        />
+
+                                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical" >
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:singleLine="true"
+                                        android:text="@string/uid"
+                                        android:textColor="@color/black"
+                                        android:textSize="28sp"
+                                        android:textStyle="bold|italic" />
+
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:id="@+id/et_honkai_sr_uid"
+                                        style="@style/EditTextStyle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:hint="@string/hint_uid"
+                                        android:singleLine="true"
+                                        android:text="@={vm.sfHonkaiSrUid}"
+                                        android:textColorHint="@color/gray"
+                                        android:textSize="16sp"
+                                        android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}"
+                                        />
+
+                                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            </LinearLayout>
+
+                            <android.widget.Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="15dp" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            style="@style/Checkbox.BoxOnly"
+                            android:id="@+id/cb_no_honkai_sr_account"
+                            android:checked="@={vm.sfNoHonkaiSrAccount}"
+                            android:text="@string/btn_no_honkai_sr_account"
+                            android:onClick="@{() -> vm.initHonkaiSrDataInputField()}"
+                            />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </FrameLayout>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="10dp"
+                    android:visibility="@{vm.sfHoyolabCookie.empty ?View.GONE :View.VISIBLE}"
+                    >
 
                     <android.widget.Space
                         android:layout_width="wrap_content"
@@ -227,22 +454,27 @@
                         android:layout_height="wrap_content"
                         android:text="@string/get_uid_btn"
                         android:onClick="@{()->vm.onClickGetUid()}"
-                        android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
                         />
 
-                </LinearLayout>
+                    <android.widget.Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="8dp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <LinearLayout
                     android:id="@+id/ll_checkin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="@{vm.sfGenshinUid.empty ?View.GONE :View.VISIBLE}"
+                    android:background="#f3f3f3"
+                    android:paddingHorizontal="10dp"
+                    android:visibility="@{vm.sfHoyolabCookie.empty || vm.sfGenshinUid.empty ?View.GONE :View.VISIBLE}"
                     >
 
                     <android.widget.Space
                         android:layout_width="wrap_content"
-                        android:layout_height="15dp" />
+                        android:layout_height="8dp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
@@ -263,6 +495,28 @@
                         android:maxLines="3"
                         />
 
+                    <android.widget.Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="5dp" />
+
+                    <TextView
+                        style="@style/TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:text="@string/hoyolab_checkin_desc_2"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        android:maxLines="3"
+                        android:visibility="gone"
+                        />
+
+                    <android.widget.Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="5dp"
+                        android:visibility="gone"
+                        />
+
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -281,6 +535,24 @@
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            style="@style/Checkbox"
+                            android:id="@+id/cb_enable_honkai_sr_auto_check_in"
+                            android:checked="@={vm.sfEnableHonkaiSrAutoCheckIn}"
+                            android:text="@string/btn_auto_check_in_enable_honkai_sr" />
+
+                        <!--                        <com.google.android.material.checkbox.MaterialCheckBox-->
+                        <!--                            style="@style/Checkbox"-->
+                        <!--                            android:id="@+id/cb_enable_honkai_3rd_auto_check_in"-->
+                        <!--                            android:checked="@={vm.sfEnableHonkai3rdAutoCheckIn}"-->
+                        <!--                            android:text="@string/btn_auto_check_in_enable_honkai_3rd" />-->
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
                     <android.widget.Space
                         android:layout_width="wrap_content"
                         android:layout_height="15dp" />
@@ -291,6 +563,10 @@
                         android:text="@string/save"
                         android:onClick="@{()->vm.onClickSave()}"
                         />
+
+                    <android.widget.Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="8dp" />
 
                 </LinearLayout>
 

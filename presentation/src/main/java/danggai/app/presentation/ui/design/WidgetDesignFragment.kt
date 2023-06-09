@@ -69,9 +69,9 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
 
         TabLayoutMediator(binding.tlTop, binding.vpMain) { tab, position ->
             tab.text = when (position) {
-                0 -> "Resin"
-                1 -> "Detail"
-                2 -> "Talent"
+                0 -> "Stamina\u00A0"
+                1 -> "Detail\u00A0"
+                2 -> "Talent\u00A0"
                 else -> ""
             }
         }.attach()
@@ -125,6 +125,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
                         CommonFunction.sendBroadcastAppWidgetUpdate<ResinWidgetResizable>(_context)
                         CommonFunction.sendBroadcastAppWidgetUpdate<DetailWidget>(_context)
                         CommonFunction.sendBroadcastAppWidgetUpdate<MiniWidget>(_context)
+                        CommonFunction.sendBroadcastAppWidgetUpdate<TrailPowerWidget>(_context)
                         _context.sendBroadcast(
                             Intent(_context, TalentWidget::class.java)
                                 .setAction(Constant.ACTION_TALENT_WIDGET_REFRESH)

@@ -16,12 +16,13 @@ import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.ResinWidgetDesignSettings
-import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
-import danggai.domain.network.dailynote.entity.TransformerTime
+import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
 import danggai.domain.util.Constant
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-class MiniWidget() : AppWidgetProvider() {
+class TrailPowerWidget() : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
@@ -39,14 +40,13 @@ class MiniWidget() : AppWidgetProvider() {
         super.onReceive(context, intent)
         val action = intent?.action
 
-        val thisWidget = ComponentName(context!!, MiniWidget::class.java)
+        val thisWidget = ComponentName(context!!, TrailPowerWidget::class.java)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
         val widgetId = intent?.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)?:-1
         val uid = intent?.getStringExtra("uid")?:""
         val name = intent?.getStringExtra("name")?:""
-        val paramType = intent?.getStringExtra("paramType")?:""
 
         if (widgetId != -1 && uid.isNotEmpty()) {
             context.let {
@@ -58,12 +58,6 @@ class MiniWidget() : AppWidgetProvider() {
                 PreferenceManager.setString(context, Constant.PREF_NAME + "_$widgetId", name)
             }
         }
-        if (widgetId != -1 && paramType.isNotEmpty()) {
-            context.let {
-                PreferenceManager.setString(context, Constant.PREF_MINI_WIDGET_TYPE + "_$widgetId", paramType)
-            }
-        }
-
         when (action) {
             Constant.ACTION_RESIN_WIDGET_REFRESH_DATA,
             Constant.ACTION_ON_BOOT_COMPLETED -> {
@@ -94,21 +88,20 @@ class MiniWidget() : AppWidgetProvider() {
     }
 
     private fun makeRemoteViews(context: Context?): RemoteViews {
-        val views = RemoteViews(context!!.packageName, R.layout.widget_mini)
+        log.e()
+        val views = RemoteViews(context!!.packageName, R.layout.widget_trailblaze_power)
 
-        val intentUpdate = Intent(context, MiniWidget::class.java).apply {
+        val intentUpdate = Intent(context, TrailPowerWidget::class.java).apply {
             action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
         }
         views.setOnClickPendingIntent(R.id.ll_sync, PendingIntent.getBroadcast(context, 0, intentUpdate, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT))
 
         val intentMainActivity = Intent(context, MainActivity::class.java)
-        views.setOnClickPendingIntent(R.id.iv_resin, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
-        views.setOnClickPendingIntent(R.id.iv_transformer, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
-        views.setOnClickPendingIntent(R.id.tv_realm_currency, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
-        views.setOnClickPendingIntent(R.id.ll_disable, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
+        views.setOnClickPendingIntent(R.id.iv_trail_power, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE or  PendingIntent.FLAG_UPDATE_CURRENT))
+        views.setOnClickPendingIntent(R.id.ll_disable, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT))
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
-        val awId = manager.getAppWidgetIds(ComponentName(context.applicationContext, MiniWidget::class.java))
+        val awId = manager.getAppWidgetIds(ComponentName(context.applicationContext, TrailPowerWidget::class.java))
 
         manager.updateAppWidget(awId, views)
 
@@ -116,58 +109,28 @@ class MiniWidget() : AppWidgetProvider() {
     }
 
     private fun syncView(widgetId: Int, view: RemoteViews, context: Context?) {
-        context?.let {
+        context?.let { _context ->
             val widgetDesign =
                 PreferenceManager.getT<ResinWidgetDesignSettings>(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS)?: ResinWidgetDesignSettings.EMPTY
 
-            CommonFunction.applyWidgetTheme(widgetDesign, context, view)
+            CommonFunction.applyWidgetTheme(widgetDesign, _context, view)
 
             if (CommonFunction.isUidValidate(widgetId, context)) {
                 val uid = PreferenceManager.getString(context, Constant.PREF_UID + "_$widgetId")
                 val name = PreferenceManager.getString(context, Constant.PREF_NAME + "_$widgetId")
                 val recentSyncTimeString = PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid").ifEmpty {
                     TimeFunction.getSyncDateTimeString()
-                }.split(" ")[1]
-                val dailyNote = PreferenceManager.getT<GenshinDailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid")?: GenshinDailyNoteData.EMPTY
+                }
+                val recentSyncTimeDate = SimpleDateFormat(Constant.DATE_FORMAT_SYNC_DATE_TIME).parse(recentSyncTimeString)?: Date()
+
                 log.e()
 
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
+                view.setViewVisibility(R.id.ll_trail_power, View.VISIBLE)
+                view.setViewVisibility(R.id.ll_bottom, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_disable, View.GONE)
-                view.setViewVisibility(R.id.ll_resin, View.GONE)
-                view.setViewVisibility(R.id.ll_realm_currency, View.GONE)
-                view.setViewVisibility(R.id.ll_transformer, View.GONE)
 
-                when (PreferenceManager.getString(context, Constant.PREF_MINI_WIDGET_TYPE + "_$widgetId")) {
-                    Constant.PREF_MINI_WIDGET_RESIN -> {
-                        view.setViewVisibility(R.id.ll_resin, View.VISIBLE)
-                        view.setTextViewText(R.id.tv_resin, dailyNote.current_resin.toString())
-                        view.setTextViewText(R.id.tv_resin_max, "/"+ dailyNote.max_resin.toString())
-                    }
-                    Constant.PREF_MINI_WIDGET_REALM_CURRENCY -> {
-                        view.setViewVisibility(R.id.ll_realm_currency, View.VISIBLE)
-                        view.setTextViewText(R.id.tv_realm_currency, dailyNote.current_home_coin.toString())
-                        view.setTextViewText(R.id.tv_realm_currency_max, "/"+ dailyNote.max_home_coin.toString())
-                    }
-                    Constant.PREF_MINI_WIDGET_PARAMETRIC_TRANSFORMER -> {
-                        view.setViewVisibility(R.id.ll_transformer, View.VISIBLE)
-                        view.setTextViewText(R.id.tv_transformer,
-                            when {
-                                dailyNote.transformer == null -> context.getString(R.string.widget_ui_unknown)
-                                !dailyNote.transformer!!.obtained -> context.getString(R.string.widget_ui_transformer_not_obtained)
-                                !dailyNote.transformer!!.recovery_time.reached -> {
-                                    if (dailyNote.transformer != null && dailyNote.transformer!!.recovery_time == TransformerTime.REACHED)
-                                        context.getString(R.string.widget_ui_transformer_reached)
-
-                                    else if (dailyNote.transformer != null && dailyNote.transformer!!.recovery_time != TransformerTime.REACHED)
-                                        context.getString(R.string.widget_ui_transformer_not_reached)
-
-                                    else context.getString(R.string.widget_ui_unknown)
-                                }
-                                else -> context.getString(R.string.widget_ui_transformer_reached)
-                            }
-                        )
-                    }
-                }
+                val dailyNote = PreferenceManager.getT<HonkaiSrDailyNoteData>(context, Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid")?: HonkaiSrDailyNoteData.EMPTY
 
                 view.setViewVisibility(R.id.tv_uid,
                     if(widgetDesign.uidVisibility) View.VISIBLE else View.GONE
@@ -179,11 +142,29 @@ class MiniWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(R.id.tv_name, name)
 
+                view.setTextViewText(R.id.tv_trail_power, dailyNote.current_stamina .toString())
+                view.setTextViewText(R.id.tv_trail_power_max, "/"+ dailyNote.max_stamina.toString())
+
+                view.setViewVisibility(R.id.tv_remain_time,
+                    if (widgetDesign.timeNotation == Constant.PREF_TIME_NOTATION_DISABLE) View.GONE
+                    else View.VISIBLE
+                )
+                view.setTextViewText(R.id.tv_remain_time,
+                    when (widgetDesign.timeNotation) {
+                        Constant.PREF_TIME_NOTATION_DEFAULT,
+                        Constant.PREF_TIME_NOTATION_REMAIN_TIME -> TimeFunction.secondToRemainTime(_context, dailyNote.stamina_recover_time, timeType = Constant.TIME_TYPE_MAX)
+                        Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> TimeFunction.getSecondsLaterTime(_context, recentSyncTimeDate, dailyNote.stamina_recover_time, Constant.TIME_TYPE_MAX)
+                        else -> TimeFunction.secondToRemainTime(_context, dailyNote.stamina_recover_time, timeType = Constant.TIME_TYPE_MAX)
+                    }
+                )
+
                 view.setTextViewText(R.id.tv_sync_time, recentSyncTimeString)
+                view.setViewVisibility(R.id.iv_trail_power, if (widgetDesign.resinImageVisibility == Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE) View.GONE else View.VISIBLE)
             } else {
+                log.e()
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.iv_resin, View.GONE)
-                view.setViewVisibility(R.id.ll_resin, View.GONE)
+                view.setViewVisibility(R.id.iv_trail_power, View.GONE)
+                view.setViewVisibility(R.id.ll_trail_power, View.GONE)
                 view.setViewVisibility(R.id.ll_bottom, View.GONE)
                 view.setViewVisibility(R.id.ll_disable, View.VISIBLE)
             }
@@ -193,15 +174,15 @@ class MiniWidget() : AppWidgetProvider() {
     private fun setWidgetRefreshing(
         context: Context,
         appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray,
+        appWidgetIds: IntArray
     ) {
         appWidgetIds.forEach { appWidgetId ->
             log.e()
-            val view = RemoteViews(context.packageName, R.layout.widget_resin_resizable)
+            val view = RemoteViews(context.packageName, R.layout.widget_trailblaze_power)
 
             view.setViewVisibility(R.id.pb_loading, View.VISIBLE)
-            view.setViewVisibility(R.id.iv_resin, View.INVISIBLE)
-            view.setViewVisibility(R.id.ll_resin, View.INVISIBLE)
+            view.setViewVisibility(R.id.iv_trail_power, View.INVISIBLE)
+            view.setViewVisibility(R.id.ll_trail_power, View.INVISIBLE)
             view.setViewVisibility(R.id.ll_bottom, View.INVISIBLE)
             view.setViewVisibility(R.id.ll_disable, View.GONE)
 

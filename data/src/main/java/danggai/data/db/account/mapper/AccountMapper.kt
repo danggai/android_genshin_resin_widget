@@ -9,8 +9,12 @@ fun mapToAccount(account: AccountEntity): Account {
         account.cookie,
         account.genshinUid,
         account.server,
+        account.honkaiSrNickName,
+        account.honkaiSrUid,
+        account.honkaiSrServer,
         account.enableGenshinCheckin,
         account.enableHonkai3rdCheckin,
+        account.enableHonkaiSRCheckin,
         account.enableTotCheckin
     )
 }
@@ -21,8 +25,12 @@ fun mapToAccountEntity(account: Account): AccountEntity {
         account.cookie,
         account.genshin_uid,
         account.server,
+        account.honkai_sr_nickname,
+        account.honkai_sr_uid,
+        account.honkai_sr_server,
         account.enable_genshin_checkin,
         account.enable_honkai3rd_checkin,
+        account.enable_honkai_sr_checkin,
         account.enable_tot_checkin,
     )
 }

@@ -25,8 +25,17 @@
             layout="@layout/widget_resin_fixed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="50dp"
+            />
 
-            android:layout_marginVertical="30dp"
+        <include
+            android:id="@+id/widget_honkai_sr"
+            layout="@layout/widget_trailblaze_power"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
             android:layout_marginHorizontal="50dp"
             />
 

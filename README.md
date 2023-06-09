@@ -1,4 +1,4 @@
-# 원신 레진 위젯 / Genshin Resin Widget
+# 원신&붕스타 위젯 / Genshin&StarRail Widget
 
 <img src="./assets/icon.jpg?raw=true" width="200" height="200">
 

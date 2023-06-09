@@ -1,12 +1,16 @@
 package danggai.domain.db.account.entity
 
-data class Account (
+data class Account(
     val nickname: String,
     val cookie: String,
     val genshin_uid: String,
     val server: Int,
+    val honkai_sr_nickname: String,
+    val honkai_sr_uid: String,
+    val honkai_sr_server: Int,
     val enable_genshin_checkin: Boolean,    // 원신
     val enable_honkai3rd_checkin: Boolean,  // 붕괴3rd
+    val enable_honkai_sr_checkin: Boolean,  // 붕괴: 스타레일
     val enable_tot_checkin: Boolean,        // 미해결사건부
 ) {
     companion object {
@@ -15,8 +19,12 @@ data class Account (
             cookie = "",
             genshin_uid = "",
             server = 0,
+            honkai_sr_nickname = "",
+            honkai_sr_uid = "",
+            honkai_sr_server = 0,
             enable_genshin_checkin = false,
             enable_honkai3rd_checkin = false,
+            enable_honkai_sr_checkin = false,
             enable_tot_checkin = false
         )
 
@@ -25,8 +33,12 @@ data class Account (
             cookie = "",
             genshin_uid = "-1",
             server = -1,
+            honkai_sr_nickname = "",
+            honkai_sr_uid = "",
+            honkai_sr_server = 0,
             enable_genshin_checkin = false,
-            enable_honkai3rd_checkin = true,
+            enable_honkai3rd_checkin = false,
+            enable_honkai_sr_checkin = true,
             enable_tot_checkin = false
         )
     }

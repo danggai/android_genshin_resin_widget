@@ -1,7 +1,11 @@
 package danggai.app.presentation.ui.main
 
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.ColorSpace
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.widget.ImageViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
@@ -32,17 +36,29 @@ class MainAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         when (holder.binding) {
             is ItemMainAccountBinding -> {
+                val item = items[position]
+
                 holder.binding.vm = vm
-                holder.binding.item = items[position]
+                holder.binding.item = item
 
                 holder.binding.tvUid.apply {
                     this.text =
-                        if (items[position].genshin_uid != "-1" ) items[position].genshin_uid
-                        else "Guest"
+                        if (!item.genshin_uid.contains("-") ) item.genshin_uid
+                        else "Auto Check In Only"
+                }
+
+                holder.binding.ivResin.apply {
+                    if (item.genshin_uid.contains("-"))
+                        ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(Color.argb(55,99,99,99)))
+                }
+
+                holder.binding.ivTrailPower.apply {
+                    if (item.honkai_sr_uid.isEmpty())
+                    ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(Color.argb(55,99,99,99)))
                 }
 
                 holder.binding.tvNickname.apply {
-                    this.text = items[position].nickname
+                    this.text = item.nickname
                 }
             }
         }

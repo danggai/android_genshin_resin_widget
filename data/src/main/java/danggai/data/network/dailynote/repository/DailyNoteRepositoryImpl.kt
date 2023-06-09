@@ -5,7 +5,8 @@ import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import danggai.data.network.dailynote.remote.api.DailyNoteApi
 import danggai.domain.core.ApiResult
-import danggai.domain.network.dailynote.entity.DailyNote
+import danggai.domain.network.dailynote.entity.GenshinDailyNote
+import danggai.domain.network.dailynote.entity.HonkaiSrDailyNote
 import danggai.domain.network.dailynote.repository.DailyNoteRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
@@ -25,7 +26,7 @@ class DailyNoteRepositoryImpl @Inject constructor(
         ds: String,
         onStart: () -> Unit,
         onComplete: () -> Unit
-    ) = flow<ApiResult<DailyNote>> {
+    ) = flow<ApiResult<GenshinDailyNote>> {
         val response = dailyNoteApi.dailyNote(
             uid,
             server,
@@ -35,7 +36,41 @@ class DailyNoteRepositoryImpl @Inject constructor(
 
         response.suspendOnSuccess {
             emit(this.response.body()?.let {
-                ApiResult.Success<DailyNote>(
+                ApiResult.Success<GenshinDailyNote>(
+                    this.response.code(),
+                    it
+                )
+            } ?:ApiResult.Null() )
+        }.suspendOnError {
+            emit(ApiResult.Failure(
+                this.response.code(),
+                this.response.message()
+            ))
+        }.suspendOnException {
+            emit(ApiResult.Error(
+                this.exception
+            ))
+        }
+    }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+
+    override suspend fun dailyNoteHonkaiSr(
+        uid: String,
+        server: String,
+        cookie: String,
+        ds: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit
+    ) = flow<ApiResult<HonkaiSrDailyNote>> {
+        val response = dailyNoteApi.dailyNoteHonkaiSr(
+            uid,
+            server,
+            cookie,
+            ds
+        )
+
+        response.suspendOnSuccess {
+            emit(this.response.body()?.let {
+                ApiResult.Success<HonkaiSrDailyNote>(
                     this.response.code(),
                     it
                 )

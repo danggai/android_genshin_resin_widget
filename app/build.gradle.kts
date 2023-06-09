@@ -32,7 +32,7 @@ android {
             buildConfigField("String","VERSION_NAME","\"${Versions.versionName}\"")
         }
         getByName("debug") {
-//            applicationIdSuffix ".debug"
+//            applicationIdSuffix = ".debug"
             isDebuggable = true
             buildConfigField("long", "VERSION_CODE", "${Versions.versionCode}")
             buildConfigField("String","VERSION_NAME","\"${Versions.versionName}\"")

@@ -75,132 +75,10 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
     }
 
     private fun initUi() {
+        fun getReplaceUserAgent(defaultAgent: String): String {
+            return defaultAgent.replace("; wv", "")
+        }
         log.e()
-
-        binding.wvBody.webViewClient = object : WebViewClient() {
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-                log.e(url?:"")
-                binding.pgBar.visibility = View.GONE
-            }
-
-            override fun shouldInterceptRequest(
-                view: WebView?,
-                request: WebResourceRequest?,
-            ): WebResourceResponse? {
-                val cookie = CookieManager.getInstance().getCookie("https://www.hoyolab.com/")
-
-                if (!cookie.isNullOrEmpty()
-                    && cookie.contains("ltuid")
-                    && cookie.contains("ltoken")
-                ) mVM.autoGetCookieOnlyOnce()
-
-                return super.shouldInterceptRequest(view, request)
-            }
-        }
-
-        binding.wvBody.webChromeClient = object : WebChromeClient() {
-            override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                super.onProgressChanged(view, newProgress)
-                binding.pgBar.visibility = View.VISIBLE
-                binding.pgBar.progress = newProgress
-
-                if (newProgress >= 100) {
-                    binding.pgBar.visibility = View.GONE
-                }
-            }
-
-            override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {
-                activity?.let { activity ->
-                    val popUpWebView = WebView(activity).apply {
-                        settings.apply {
-                            javaScriptEnabled = true
-                            domStorageEnabled = true
-                            databaseEnabled = true
-                            setSupportMultipleWindows(true)
-                            javaScriptCanOpenWindowsAutomatically = true
-                            userAgentString = userAgentString.replace("; wv", "")
-                        }
-                    }
-
-                    val dialog = Dialog(activity).apply {
-                        setContentView(popUpWebView)
-                    }.apply {
-                        setOnDismissListener {
-                            popUpWebView.destroy()
-                        }
-                    }
-
-                    dialog.window?.run {
-                        WindowCompat.setDecorFitsSystemWindows(this, true)
-
-                        attributes = attributes?.apply {
-                            width = (CommonFunction.getDisplayMetrics(activity).widthPixels * 0.9).toInt()
-                            height = (CommonFunction.getDisplayMetrics(activity).heightPixels * 0.8).toInt()
-                        }
-                    }
-
-                    popUpWebView.apply {
-                        webChromeClient = object : WebChromeClient() {
-                            override fun onCloseWindow(window: WebView?) {
-                                dialog.dismiss()
-                            }
-                        }
-                        webViewClient = object : WebViewClient() {
-                            override fun onPageStarted(
-                                view: WebView?,
-                                url: String?,
-                                favicon: Bitmap?
-                            ) {
-                                if (listOf(
-                                        "https://m.hoyolab.com/account-system-sea/security.html?origin=hoyolab",
-                                        "about:blank"
-                                    ).contains(url)
-                                ) dialog.dismiss()
-                                else {
-                                    if(!(context as Activity).isFinishing) dialog.show()
-                                }
-
-                                super.onPageStarted(view, url, favicon)
-                            }
-                        }
-                    }
-
-                    CookieManager.getInstance().apply {
-                        acceptCookie()
-                        setAcceptThirdPartyCookies(popUpWebView, true)
-                    }
-
-                    resultMsg?.run {
-                        (this.obj as WebView.WebViewTransport).webView =
-                            popUpWebView
-                        sendToTarget()
-                    }
-                }
-
-                return true
-            }
-        }
-
-        binding.wvBody.settings.apply {
-            loadWithOverviewMode = true  // WebView 화면크기에 맞추도록 설정 - setUseWideViewPort 와 같이 써야함
-            useWideViewPort = true  // wide viewport 설정 - setLoadWithOverviewMode 와 같이 써야함
-
-            setSupportZoom(false)  // 줌 설정 여부
-            builtInZoomControls = false  // 줌 확대/축소 버튼 여부
-
-            javaScriptEnabled = true // 자바스크립트 사용여부
-            javaScriptCanOpenWindowsAutomatically = true // javascript가 window.open()을 사용할 수 있도록 설정
-            setSupportMultipleWindows(true) // 멀티 윈도우 사용 여부
-
-            domStorageEnabled = true  // 로컬 스토리지 (localStorage) 사용여부
-
-            databaseEnabled = true
-
-            cacheMode = WebSettings.LOAD_NO_CACHE
-
-            loadWithOverviewMode = false
-        }
 
         binding.wvBody.apply {
             clearCache(true)
@@ -208,6 +86,141 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
             clearHistory()
             clearMatches()
             clearSslPreferences()
+
+            settings.apply {
+                loadWithOverviewMode = true  // WebView 화면크기에 맞추도록 설정 - setUseWideViewPort 와 같이 써야함
+                useWideViewPort = true  // wide viewport 설정 - setLoadWithOverviewMode 와 같이 써야함
+
+                setSupportZoom(false)  // 줌 설정 여부
+                builtInZoomControls = false  // 줌 확대/축소 버튼 여부
+
+                javaScriptEnabled = true // 자바스크립트 사용여부
+                javaScriptCanOpenWindowsAutomatically = true // javascript가 window.open()을 사용할 수 있도록 설정
+                setSupportMultipleWindows(true) // 멀티 윈도우 사용 여부
+
+                domStorageEnabled = true  // 로컬 스토리지 (localStorage) 사용여부
+
+                databaseEnabled = true
+
+                cacheMode = WebSettings.LOAD_NO_CACHE
+
+                loadWithOverviewMode = false
+
+                userAgentString = getReplaceUserAgent(userAgentString)
+            }
+
+            webViewClient = object : WebViewClient() {
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    super.onPageFinished(view, url)
+                    log.e(url?:"")
+                    binding.pgBar.visibility = View.GONE
+                }
+
+                override fun shouldInterceptRequest(
+                    view: WebView?,
+                    request: WebResourceRequest?,
+                ): WebResourceResponse? {
+                    val cookie = CookieManager.getInstance().getCookie("https://www.hoyolab.com/")
+
+                    if (!cookie.isNullOrEmpty()
+                        && cookie.contains("ltuid")
+                        && cookie.contains("ltoken")
+                    ) mVM.autoGetCookieOnlyOnce()
+
+                    return super.shouldInterceptRequest(view, request)
+                }
+            }
+
+            webChromeClient = object : WebChromeClient() {
+                override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                    super.onProgressChanged(view, newProgress)
+                    binding.pgBar.visibility = View.VISIBLE
+                    binding.pgBar.progress = newProgress
+
+                    if (newProgress >= 100) {
+                        binding.pgBar.visibility = View.GONE
+                    }
+                }
+
+                override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {
+                    activity?.let { activity ->
+                        val popUpWebView = WebView(activity).apply {
+                            settings.apply {
+                                javaScriptEnabled = true
+                                domStorageEnabled = true
+                                databaseEnabled = true
+                                setSupportMultipleWindows(true)
+                                javaScriptCanOpenWindowsAutomatically = true
+                                userAgentString = getReplaceUserAgent(userAgentString)
+                            }
+                        }
+
+                        CookieManager.getInstance().apply {
+                            acceptCookie()
+                            setAcceptThirdPartyCookies(popUpWebView, true)
+                        }
+
+                        val dialog = Dialog(activity).apply {
+                            setContentView(popUpWebView)
+                        }.apply {
+                            setOnDismissListener {
+                                mVM.autoGetCookieOnlyOnce()
+                                popUpWebView.destroy()
+                            }
+
+                            window?.run {
+                                WindowCompat.setDecorFitsSystemWindows(this, true)
+
+                                attributes = attributes?.apply {
+                                    width = (CommonFunction.getDisplayMetrics(activity).widthPixels * 0.9).toInt()
+                                    height = (CommonFunction.getDisplayMetrics(activity).heightPixels * 0.8).toInt()
+                                }
+                            }
+                        }
+
+                        popUpWebView.apply {
+                            webChromeClient = object : WebChromeClient() {
+                                override fun onCloseWindow(window: WebView?) {
+                                    dialog.dismiss()
+                                }
+                            }
+                            webViewClient = object : WebViewClient() {
+                                override fun onPageStarted(
+                                    view: WebView?,
+                                    url: String?,
+                                    favicon: Bitmap?
+                                ) {
+                                    if (listOf(
+                                            "https://account.hoyolab.com/security.html?origin=hoyolab",
+                                            "https://m.hoyolab.com/account-system-sea/security.html?origin=hoyolab",
+                                            "about:blank"
+                                        ).contains(url)
+                                    ) dialog.dismiss()
+                                    else {
+                                        if(!(context as Activity).isFinishing) dialog.show()
+                                    }
+
+                                    super.onPageStarted(view, url, favicon)
+                                }
+                            }
+                        }
+
+                        log.e(resultMsg?.arg1.toString())
+                        log.e(resultMsg?.arg2.toString())
+                        log.e(resultMsg?.obj.toString())
+                        log.e(resultMsg?.replyTo.toString())
+                        log.e(resultMsg?.sendingUid.toString())
+                        log.e(resultMsg?.what.toString())
+
+                        resultMsg?.run {
+                            (this.obj as WebView.WebViewTransport).webView =
+                                popUpWebView
+                            sendToTarget()
+                        }
+                    }
+                    return true
+                }
+            }
         }
 
         CookieManager.getInstance().apply {

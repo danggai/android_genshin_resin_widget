@@ -34,4 +34,17 @@ interface CheckInApi {
         @Query("act_id") actId: String,
         @Header("Cookie") cookie: String,
     ): ApiResponse<CheckIn>
+
+    @Headers(
+        "Accept: application/json, text/plain, */*",
+        "Content-Type: application/json;charset=UTF-8",
+        "Referer: https://webstatic-sea.hoyolab.com/",
+        "sec-ch-ua-mobile: ?1"
+    )
+    @POST(Constant.OS_HONKAI_SR_CHECK_IN_URL)
+    suspend fun honkaiSR(
+        @Query("lang") lang: String,
+        @Query("act_id") actId: String,
+        @Header("Cookie") cookie: String,
+    ): ApiResponse<CheckIn>
 }
