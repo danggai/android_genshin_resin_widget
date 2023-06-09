@@ -2,7 +2,8 @@ package danggai.domain.network.dailynote.repository
 
 import danggai.domain.core.ApiResult
 import danggai.domain.core.Repository
-import danggai.domain.network.dailynote.entity.DailyNote
+import danggai.domain.network.dailynote.entity.GenshinDailyNote
+import danggai.domain.network.dailynote.entity.HonkaiSrDailyNote
 import kotlinx.coroutines.flow.Flow
 
 interface DailyNoteRepository: Repository {
@@ -13,5 +14,14 @@ interface DailyNoteRepository: Repository {
         ds: String,
         onStart: () -> Unit,
         onComplete: () -> Unit
-    ): Flow<ApiResult<DailyNote>>
+    ): Flow<ApiResult<GenshinDailyNote>>
+
+    suspend fun dailyNoteHonkaiSr(
+        uid: String,
+        server: String,
+        cookie: String,
+        ds: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit
+    ): Flow<ApiResult<HonkaiSrDailyNote>>
 }

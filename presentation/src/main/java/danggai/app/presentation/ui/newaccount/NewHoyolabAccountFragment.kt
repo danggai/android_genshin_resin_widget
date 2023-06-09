@@ -47,6 +47,7 @@ class NewHoyolabAccountFragment : BindingFragment<FragmentNewHoyolabAccountBindi
                 log.e()
                 val cookie = it.getStringExtra(NewHoyolabAccountActivity.ARG_PARAM_COOKIE)!!
                 mVM.sfHoyolabCookie.value = cookie
+                mVM.onClickGetUid()
             } catch (e: Exception) {
                 log.e(e.toString())
             }

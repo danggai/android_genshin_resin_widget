@@ -182,6 +182,39 @@
                     android:gravity="center"
                     >
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextView"
+                        android:layout_width="wrap_content"
+                        android:text="@string/genshin"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic"
+                        android:gravity="right"
+                    />
+
+                    <Space
+                        android:layout_width="5dp"
+                        android:layout_height="0dp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:background="#444444"
+                        />
+
+                    <Space
+                        android:layout_width="10dp"
+                        android:layout_height="0dp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    >
+
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
                         android:id="@+id/cb_each_40resin"
@@ -342,6 +375,150 @@
                         android:imeOptions="actionDone"
                         android:layout_marginLeft="8dp"
                         />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <android.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextView"
+                        android:layout_width="wrap_content"
+                        android:text="@string/honkai_sr"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic"
+                        android:gravity="right"
+                        />
+
+                    <Space
+                        android:layout_width="5dp"
+                        android:layout_height="0dp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:background="#444444"
+                        />
+
+                    <Space
+                        android:layout_width="10dp"
+                        android:layout_height="0dp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    >
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_each_40_trail_power"
+                        android:checked="@={vm.sfEnableNotiEach40TrailPower}"
+                        android:text="@string/btn_each_40_trailblaze_power" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_170_trail_power"
+                        android:checked="@={vm.sfEnableNoti170TrailPower}"
+                        android:text="@string/btn_170_trailblaze_power"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    >
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:layout_marginEnd="6dp">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            style="@style/Checkbox.BoxOnly"
+                            android:id="@+id/cb_custom_trail_power"
+                            android:layout_width="32dp"
+                            android:layout_marginEnd="0dp"
+                            android:checked="@={vm.sfEnableNotiCustomTrailPower}" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_custom_trail_power"
+                            style="@style/EditTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:hint="180"
+                            android:imeOptions="actionDone"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:paddingHorizontal="8dp"
+                            android:singleLine="true"
+                            android:text="@={vm.sfCustomNotiTrailPower}"
+                            android:textSize="14sp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextView"
+                            android:text="@string/trailblaze_power"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_honkai_sr_expedition_done"
+                        android:checked="@={vm.sfEnableNotiHonkaiSrExpeditionDone}"
+                        android:text="@string/btn_expedition_done" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <android.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextView"
+                        android:layout_width="wrap_content"
+                        android:text="@string/common"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic"
+                        android:gravity="right"
+                        />
+
+                    <Space
+                        android:layout_width="5dp"
+                        android:layout_height="0dp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:background="#444444"
+                        />
+
+                    <Space
+                        android:layout_width="10dp"
+                        android:layout_height="0dp" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

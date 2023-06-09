@@ -3,18 +3,22 @@
 
     <string name="genshin_resin_widget" translatable="false">Genshin Resin Widget</string>
 
+    <string name="genshin">Genshin\u00A0</string>
+    <string name="honkai_sr">Honkai: Star Rail\u00A0</string>
+    <string name="common">Common\u00A0</string>
+
     <string name="genshin_uid" translatable="false">Genshin Uid</string>
     <string name="nickname" translatable="false">Nickname</string>
     <string name="cookie" translatable="false">Cookie</string>
     <string name="server" translatable="false">Server</string>
-    <string name="refresh_cycle" translatable="false">Refresh Cycle</string>
+    <string name="refresh_cycle" translatable="false">Data Update Cycle</string>
     <string name="notification" translatable="false">Notification</string>
     <string name="auto_check_in" translatable="false">Auto Check In</string>
     <string name="time_notation" translatable="false">Time Notation</string>
     <string name="widget_theme" translatable="false">Widget Theme</string>
     <string name="background_transparency" translatable="false">Background Transparency</string>
     <string name="font_size" translatable="false">Font Size</string>
-    <string name="resin_image" translatable="false">Resin Image</string>
+    <string name="resin_image" translatable="false">Image</string>
     <string name="visible_data" translatable="false">Visible Data</string>
     <string name="select_character" translatable="false">Select Character</string>
     <string name="select_character_title">Characters display in widget</string>
@@ -25,9 +29,9 @@
     <string name="nickname_">Nickname</string>
     <string name="new_hoyolab_account">New HoYoLab Account</string>
     <string name="hoyolab_checkin">HoYoLab CheckIn</string>
-    <string name="widget_customizing">Widget Customizing</string>
+    <string name="widget_customizing">Widget Design Customizing</string>
     <string name="btn_no_genshin_account">Don\'t use genshin widget.</string>
-    <string name="guest_account_desc">Only one guest account can be registered.</string>
+    <string name="btn_no_honkai_sr_account">Don\'t use Honkai: Star Rail widget.</string>
     <string name="hoyolab_checkin_desc">For the first time, you must press the \'HoYoLab CheckIn\' button manually to proceed with automatic attendance.</string>
     <string name="hoyolab_checkin_desc_2">Automatic attendance is performed based on Within HoYoLab, My Information > My Character.</string>
 
@@ -39,7 +43,7 @@
     <string name="no_hoyolab_accounts">No HoYoLab account registered.</string>
     <string name="get_cookie">Click here after Login!</string>
     <string name="get_cookie_btn">Log in to get cookies</string>
-    <string name="get_uid_btn">Get Genshin in-game data</string>
+    <string name="get_uid_btn">Automatically get In-game data</string>
 
     <string name="asia" translatable="false">Asia</string>
     <string name="america" translatable="false">America</string>
@@ -54,6 +58,10 @@
     <string name="btn_param_reached">Parametric Transformer Reached</string>
     <string name="btn_daily_commission_yet">Daily Commission Incomplete Notification</string>
     <string name="btn_weekly_boss_yet">Weekly Boss Incomplete Notification</string>
+
+    <string name="trailblaze_power">Trailblaze Power</string>
+    <string name="btn_each_40_trailblaze_power">Each 40 Trailblaze Power</string>
+    <string name="btn_170_trailblaze_power">170 Trailblaze Power</string>
 
     <string name="btn_remain_time">Remaining time</string>
     <string name="btn_full_charge_time">When fully charge</string>
@@ -186,6 +194,14 @@
     <string name="push_msg_resin_noti_over_140">%s! Your resin is over %d!</string>
     <string name="push_msg_resin_noti_custom">%s! Your resin is over %d!</string>
 
+    <string name="push_trail_power_noti_title">Trainblaze Power Notification</string>
+    <string name="push_trail_power_noti_description">This is a notification sent to inform pioneers of each trainblaze power!</string>
+    <string name="push_msg_trail_power_noti_over_40">Hello, %s! Your Trainblaze Power is over %d!</string>
+    <string name="push_msg_trail_power_noti_over_160">Hello, %s! Your Trainblaze Power is over %d!</string>
+    <string name="push_msg_trail_power_noti_over_170">Hello, %s! Your Trainblaze Power is over %d!</string>
+    <string name="push_msg_trail_power_noti_over_180">Hello, %s! Your Trainblaze Power is over %d!</string>
+    <string name="push_msg_trail_power_noti_custom">Hello, %s! Your Trainblaze Power is over %d!</string>
+
     <string name="push_genshin_checkin_title">Genshin Impact Check-in Notification</string>
     <string name="push_genshin_checkin_description">This is a notification to inform travelers of the daily check-in result of Genshin Impact!</string>
     <string name="push_honkai_3rd_checkin_title">Honkai Impact 3rd Check-in Notification</string>
@@ -205,8 +221,10 @@
 
 
     <string name="push_expedition_title">Expedition Done Notification</string>
-    <string name="push_expedition_description">This is a notification sent to travelers when the expedition is complete!</string>
-    <string name="push_msg_expedition_done">%s! All the expedition is complete!</string>
+    <string name="push_expedition_description_genshin">This is a notification sent to travelers when the expedition is complete!</string>
+    <string name="push_expedition_description_honkai_sr">This is a notification sent to pioneers when the expedition is complete!</string>
+    <string name="push_msg_expedition_done_genshin">%s! All the expedition is complete! (Genshin)</string>
+    <string name="push_msg_expedition_done_honkai_sr">%s! All the expedition is complete! (Honkai: Star Rail)</string>
 
     <string name="push_realm_currency_title">Realm Currency Notification</string>
     <string name="push_realm_currency_description">This is a notification sent to travelers when the realm currency is full!</string>
@@ -226,7 +244,8 @@
 
     <string name="hint_cookie">Enter HoYoLAB\'s cookie!</string>
     <string name="hint_uid">Enter uid!</string>
-    <string name="hint_nickname">Enter name of traveler!</string>
+    <string name="hint_nickname_genshin">Enter name of traveler!</string>
+    <string name="hint_nickname_honkai_sr">Enter name of pioneer!</string>
 
     <string name="invalid_user_info">You can\'t use it\nwithout user information!</string>
 
@@ -298,6 +317,7 @@
     <string name="widget_label_resin_fixed">Fixed Sized Resin Widget</string>
     <string name="widget_label_talent">Talent Materials Widget</string>
     <string name="widget_label_mini">Mini Widget</string>
+    <string name="widget_label_trailblaze_power">Trailblaze Power Widget</string>
 
     <string name="widget_ui_simple_time">%dh %dm</string>
     <string name="widget_ui_remain_time">%dh %dm left</string>

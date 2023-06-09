@@ -31,14 +31,20 @@ class NewHoyolabAccountViewModel @Inject constructor(
 ) : BaseViewModel() {
     val sfProgress = MutableStateFlow(false)
 
-    val sfServer = MutableStateFlow(0)
-    val sfNickname = MutableStateFlow("")
-    val sfHoyolabCookie = MutableStateFlow("")
+    val sfGenshinServer = MutableStateFlow(0)
+    val sfGenshinNickname = MutableStateFlow("")
     val sfGenshinUid = MutableStateFlow("")
     val sfNoGenshinAccount = MutableStateFlow(false)
+
+    val sfHonkaiSrServer = MutableStateFlow(0)
+    val sfHonkaiSrNickname = MutableStateFlow("")
+    val sfHonkaiSrUid = MutableStateFlow("")
+    val sfNoHonkaiSrAccount = MutableStateFlow(false)
+
+    val sfHoyolabCookie = MutableStateFlow("")
     val sfEnableGenshinAutoCheckIn = MutableStateFlow(false)
     val sfEnableHonkai3rdAutoCheckIn = MutableStateFlow(false)
-    val sfEnableHonkaiSRAutoCheckIn = MutableStateFlow(false)
+    val sfEnableHonkaiSrAutoCheckIn = MutableStateFlow(false)
 
     private var _dailyNotePrivateErrorCount = 0
     val dailyNotePrivateErrorCount
@@ -89,21 +95,47 @@ class NewHoyolabAccountViewModel @Inject constructor(
                     is ApiResult.Success -> {
                         when (it.data.retcode) {
                             Constant.RETCODE_SUCCESS -> {
+                                sfEnableGenshinAutoCheckIn.value = false
+                                sfEnableHonkaiSrAutoCheckIn.value = false
+                                sfEnableHonkai3rdAutoCheckIn.value = false
+
+                                sfNoGenshinAccount.value =
+                                    !it.data.data.list.any { recordCard -> recordCard.game_id == Constant.GAME_ID_GENSHIN_IMPACT }
+                                sfNoHonkaiSrAccount.value =
+                                    !it.data.data.list.any { recordCard -> recordCard.game_id == Constant.GAME_ID_HONKAI_SR }
+
+                                initGenshinDataInputField()
+                                initHonkaiSrDataInputField()
 
                                 it.data.data.list.forEach { recordCard ->
                                     when (recordCard.game_id) {
                                         Constant.GAME_ID_GENSHIN_IMPACT -> {
                                             log.e()
                                             sfGenshinUid.value = recordCard.game_role_id
-                                            sfNickname.value = recordCard.nickname
-                                            sfEnableGenshinAutoCheckIn.value = true
+                                            sfGenshinNickname.value = recordCard.nickname
 
                                             when (recordCard.region) {
-                                                Constant.SERVER_OS_ASIA -> sfServer.value = Constant.Server.ASIA.pref
-                                                Constant.SERVER_OS_USA -> sfServer.value = Constant.Server.USA.pref
-                                                Constant.SERVER_OS_EURO -> sfServer.value = Constant.Server.EUROPE.pref
-                                                Constant.SERVER_OS_CHT -> sfServer.value = Constant.Server.CHT.pref
+                                                Constant.SERVER_OS_ASIA -> sfGenshinServer.value = Constant.Server.ASIA.pref
+                                                Constant.SERVER_OS_USA -> sfGenshinServer.value = Constant.Server.USA.pref
+                                                Constant.SERVER_OS_EURO -> sfGenshinServer.value = Constant.Server.EUROPE.pref
+                                                Constant.SERVER_OS_CHT -> sfGenshinServer.value = Constant.Server.CHT.pref
                                             }
+
+                                            sfEnableGenshinAutoCheckIn.value = true
+                                        }
+                                        Constant.GAME_ID_HONKAI_SR -> {
+                                            log.e()
+                                            sfHonkaiSrUid.value = recordCard.game_role_id
+                                            sfHonkaiSrNickname.value = recordCard.nickname
+
+                                            when (recordCard.region) {
+                                                Constant.SERVER_PO_ASIA -> sfHonkaiSrServer.value = Constant.Server.ASIA.pref
+                                                Constant.SERVER_PO_USA -> sfHonkaiSrServer.value = Constant.Server.USA.pref
+                                                Constant.SERVER_PO_EURO -> sfHonkaiSrServer.value = Constant.Server.EUROPE.pref
+                                                Constant.SERVER_PO_CHT -> sfHonkaiSrServer.value = Constant.Server.CHT.pref
+                                            }
+
+                                            sfEnableHonkaiSrAutoCheckIn.value = true
                                         }
                                         Constant.GAME_ID_HONKAI_3RD -> {
                                             log.e()
@@ -116,7 +148,7 @@ class NewHoyolabAccountViewModel @Inject constructor(
                                 if (it.data.data.list.any { gameRecordCard -> gameRecordCard.game_id == 2 })
                                     makeToast(resource.getString(R.string.msg_toast_get_uid_success))
                                 else if (it.data.data.list.isNotEmpty()) {
-                                    onClickDisableGenshinWidget()
+                                    initGenshinDataInputField()
                                     makeToast(resource.getString(R.string.msg_toast_get_uid_error_genshin_data_not_exists))
                                 }
                                 else
@@ -217,7 +249,7 @@ class NewHoyolabAccountViewModel @Inject constructor(
         ds: String
     ) {
         viewModelScope.launch {
-            dailyNote(
+            dailyNote.genshin(
                 uid = uid,
                 server = server,
                 cookie = cookie,
@@ -242,13 +274,16 @@ class NewHoyolabAccountViewModel @Inject constructor(
                                 makeToast(resource.getString(R.string.msg_toast_dailynote_success))
 
                                 val account = Account(
-                                    sfNickname.value,
+                                    sfGenshinNickname.value,
                                     sfHoyolabCookie.value,
                                     sfGenshinUid.value,
-                                    sfServer.value,
+                                    sfGenshinServer.value,
+                                    sfHonkaiSrNickname.value,
+                                    sfHonkaiSrUid.value,
+                                    sfHonkaiSrServer.value,
                                     sfEnableGenshinAutoCheckIn.value,
                                     sfEnableHonkai3rdAutoCheckIn.value,
-                                    sfEnableHonkaiSRAutoCheckIn.value,
+                                    sfEnableHonkaiSrAutoCheckIn.value,
                                     false
                                 )
 
@@ -344,9 +379,14 @@ class NewHoyolabAccountViewModel @Inject constructor(
         }
     }
 
-    fun onClickSetServer(server: Constant.Server) {
+    fun onClickSetGenshinServer(server: Constant.Server) {
         log.e("server -> $server")
-        sfServer.value = server.pref
+        sfGenshinServer.value = server.pref
+    }
+
+    fun onClickSetHonkaiSrServer(server: Constant.Server) {
+        log.e("server -> $server")
+        sfHonkaiSrServer.value = server.pref
     }
 
     fun makeDailyNotePublic() {
@@ -365,15 +405,19 @@ class NewHoyolabAccountViewModel @Inject constructor(
         sendEvent(Event.GetCookie())
     }
 
-    fun onClickDisableGenshinWidget() {
-
+    fun initGenshinDataInputField() {
         if (sfNoGenshinAccount.value) {
-            sfNickname.value = randomGuestName()
+            sfGenshinNickname.value = randomGuestName()
             sfGenshinUid.value = "-" + (mCookieData["ltuid"]?:CommonFunction.getRandomNumber(1000000, 9999999))
         } else {
-            sfNickname.value = ""
+            sfGenshinNickname.value = ""
             sfGenshinUid.value = ""
         }
+    }
+
+    fun initHonkaiSrDataInputField() {
+        sfHonkaiSrNickname.value = ""
+        sfHonkaiSrUid.value = ""
     }
 
     fun onClickGetUid() {
@@ -396,21 +440,25 @@ class NewHoyolabAccountViewModel @Inject constructor(
         if (sfNoGenshinAccount.value) {
             insertAccount(
                 Account.GUEST.copy(
-                    nickname = sfNickname.value,
+                    nickname = sfGenshinNickname.value,
                     cookie = sfHoyolabCookie.value,
                     genshin_uid = sfGenshinUid.value,
+                    honkai_sr_nickname = sfHonkaiSrNickname.value,
+                    honkai_sr_uid = sfHonkaiSrUid.value,
+                    honkai_sr_server = sfHonkaiSrServer.value,
                     enable_genshin_checkin = sfEnableGenshinAutoCheckIn.value,
                     enable_honkai3rd_checkin = sfEnableHonkai3rdAutoCheckIn.value,
-                    enable_honkai_sr_checkin = sfEnableHonkaiSRAutoCheckIn.value
+                    enable_honkai_sr_checkin = sfEnableHonkaiSrAutoCheckIn.value
                 )
             )
         } else {
             sfGenshinUid.value = sfGenshinUid.value.trim()
+            sfHonkaiSrUid.value = sfHonkaiSrUid.value.trim()
             sfHoyolabCookie.value = sfHoyolabCookie.value.trim()
 
             dailyNote(
                 sfGenshinUid.value,
-                when (sfServer.value) {
+                when (sfGenshinServer.value) {
                     Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
                     Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
                     Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
@@ -431,11 +479,18 @@ class NewHoyolabAccountViewModel @Inject constructor(
                 log.e(account)
                 sfHoyolabCookie.value = account.cookie
                 sfGenshinUid.value = account.genshin_uid
-                sfNickname.value = account.nickname
-                sfServer.value = account.server
+                sfGenshinNickname.value = account.nickname
+                sfGenshinServer.value = account.server
+                sfNoGenshinAccount.value = account.genshin_uid.contains("-")
+
+                sfHonkaiSrUid.value = account.honkai_sr_uid
+                sfHonkaiSrNickname.value = account.honkai_sr_nickname
+                sfHonkaiSrServer.value = account.honkai_sr_server
+                sfNoHonkaiSrAccount.value = account.honkai_sr_uid.isEmpty()
+
                 sfEnableGenshinAutoCheckIn.value = account.enable_genshin_checkin
                 sfEnableHonkai3rdAutoCheckIn.value = account.enable_honkai3rd_checkin
-                sfEnableHonkaiSRAutoCheckIn.value = account.enable_honkai_sr_checkin
+                sfEnableHonkaiSrAutoCheckIn.value = account.enable_honkai_sr_checkin
 
                 if (account.genshin_uid.contains("-")) sfNoGenshinAccount.value = true
             }

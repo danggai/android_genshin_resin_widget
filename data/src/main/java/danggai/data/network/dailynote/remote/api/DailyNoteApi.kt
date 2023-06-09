@@ -1,7 +1,8 @@
 package danggai.data.network.dailynote.remote.api
 
 import com.skydoves.sandwich.ApiResponse
-import danggai.domain.network.dailynote.entity.DailyNote
+import danggai.domain.network.dailynote.entity.GenshinDailyNote
+import danggai.domain.network.dailynote.entity.HonkaiSrDailyNote
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
@@ -23,5 +24,25 @@ interface DailyNoteApi {
         @Query("server") server: String,
         @Header("Cookie") cookie: String,
         @Header("DS") ds: String
-    ): ApiResponse<DailyNote>
+    ): ApiResponse<GenshinDailyNote>
+
+    //    bbs-api-os.hoyolab.com/game_record/hkrpg/api/index?server=prod_official_asia&role_id=800000000
+    // ↑ 보유중 캐릭터, 업적 등 나옴
+    //    bbs-api-os.hoyolab.com/game_record/hkrpg/api/note?server=prod_official_asia&role_id=800000000
+    @Headers(
+        "Accept: application/json, text/plain, */*",
+        "Content-Type: application/json;charset=UTF-8",
+        "Referer: https://webstatic-sea.hoyolab.com/",
+        "sec-ch-ua-mobile: ?1",
+        "x-rpc-client_type: 4",
+        "x-rpc-app_version: 1.5.0",
+        "x-rpc-language: ko-kr",
+    )
+    @GET("/game_record/hkrpg/api/note")
+    suspend fun dailyNoteHonkaiSr(
+        @Query("role_id") uid: String,
+        @Query("server") server: String,
+        @Header("Cookie") cookie: String,
+        @Header("DS") ds: String
+    ): ApiResponse<HonkaiSrDailyNote>
 }

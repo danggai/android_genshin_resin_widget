@@ -51,6 +51,12 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
             it.llResin.visibility = View.VISIBLE
             it.llDisable.visibility = View.GONE
         }
+        binding.widgetHonkaiSr.let {
+            it.pbLoading.visibility = View.GONE
+            it.ivTrailPower.visibility = View.VISIBLE
+            it.ivTrailPower.visibility = View.VISIBLE
+            it.llDisable.visibility = View.GONE
+        }
 
         when(mVM.sfResinImageVisibility.value) {
             Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE -> binding.rbResinImageVisible.isChecked = true
@@ -90,6 +96,12 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                             binding.widget.tvRemainTime.setTextColor(getColor(_context, R.color.widget_font_main_light))
                             binding.widget.ivRefersh.setColorFilter(getColor(_context, R.color.widget_font_sub_light))
                             binding.widget.tvSyncTime.setTextColor(getColor(_context, R.color.widget_font_sub_light))
+
+                            binding.widgetHonkaiSr.tvTrailPower.setTextColor(getColor(_context, R.color.widget_font_main_light))
+                            binding.widgetHonkaiSr.tvTrailPowerMax.setTextColor(getColor(_context, R.color.widget_font_main_light))
+                            binding.widgetHonkaiSr.tvRemainTime.setTextColor(getColor(_context, R.color.widget_font_main_light))
+                            binding.widgetHonkaiSr.ivRefersh.setColorFilter(getColor(_context, R.color.widget_font_sub_light))
+                            binding.widgetHonkaiSr.tvSyncTime.setTextColor(getColor(_context, R.color.widget_font_sub_light))
                         } else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
                             DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(getColor(_context, R.color.black), mVM.sfTransparency.value))
                             binding.widget.tvResin.setTextColor(getColor(_context, R.color.widget_font_main_dark))
@@ -97,6 +109,12 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                             binding.widget.tvRemainTime.setTextColor(getColor(_context, R.color.widget_font_main_dark))
                             binding.widget.ivRefersh.setColorFilter(getColor(_context, R.color.widget_font_sub_dark))
                             binding.widget.tvSyncTime.setTextColor(getColor(_context, R.color.widget_font_sub_dark))
+
+                            binding.widgetHonkaiSr.tvTrailPower.setTextColor(getColor(_context, R.color.widget_font_main_dark))
+                            binding.widgetHonkaiSr.tvTrailPowerMax.setTextColor(getColor(_context, R.color.widget_font_main_dark))
+                            binding.widgetHonkaiSr.tvRemainTime.setTextColor(getColor(_context, R.color.widget_font_main_dark))
+                            binding.widgetHonkaiSr.ivRefersh.setColorFilter(getColor(_context, R.color.widget_font_sub_dark))
+                            binding.widgetHonkaiSr.tvSyncTime.setTextColor(getColor(_context, R.color.widget_font_sub_dark))
                         } else {
                             DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(getColor(_context, R.color.white), mVM.sfTransparency.value))
                             binding.widget.tvResin.setTextColor(getColor(_context, R.color.widget_font_main_light))
@@ -104,8 +122,15 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                             binding.widget.tvRemainTime.setTextColor(getColor(_context, R.color.widget_font_main_light))
                             binding.widget.ivRefersh.setColorFilter(getColor(_context, R.color.widget_font_sub_light))
                             binding.widget.tvSyncTime.setTextColor(getColor(_context, R.color.widget_font_sub_light))
+
+                            binding.widgetHonkaiSr.tvTrailPower.setTextColor(getColor(_context, R.color.widget_font_main_light))
+                            binding.widgetHonkaiSr.tvTrailPowerMax.setTextColor(getColor(_context, R.color.widget_font_main_light))
+                            binding.widgetHonkaiSr.tvRemainTime.setTextColor(getColor(_context, R.color.widget_font_main_light))
+                            binding.widgetHonkaiSr.ivRefersh.setColorFilter(getColor(_context, R.color.widget_font_sub_light))
+                            binding.widgetHonkaiSr.tvSyncTime.setTextColor(getColor(_context, R.color.widget_font_sub_light))
                         }
                         binding.widget.llRoot.background = wrappedDrawable
+                        binding.widgetHonkaiSr.llRoot.background = wrappedDrawable
                     }
                 }
             }
@@ -126,6 +151,7 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                         DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(color, mVM.sfTransparency.value))
 
                         binding.widget.llRoot.background = wrappedDrawable
+                        binding.widgetHonkaiSr.llRoot.background = wrappedDrawable
                     }
                 }
             }
@@ -136,8 +162,10 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
 
                     if (mVM.sfResinImageVisibility.value == Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE) {
                         binding.widget.ivResin.visibility = View.GONE
+                        binding.widgetHonkaiSr.ivTrailPower.visibility = View.GONE
                     } else {
                         binding.widget.ivResin.visibility = View.VISIBLE
+                        binding.widgetHonkaiSr.ivTrailPower.visibility = View.VISIBLE
                     }
                 }
             }
@@ -151,13 +179,19 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                         Constant.PREF_TIME_NOTATION_REMAIN_TIME -> {
                             binding.widget.tvRemainTime.visibility = View.VISIBLE
                             binding.widget.tvRemainTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
+                            binding.widgetHonkaiSr.tvRemainTime.visibility = View.VISIBLE
+                            binding.widgetHonkaiSr.tvRemainTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
                         }
                         Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
                             binding.widget.tvRemainTime.visibility = View.VISIBLE
                             binding.widget.tvRemainTime.text = String.format(getString(R.string.widget_format_max_time), 0, 0)
+                            binding.widgetHonkaiSr.tvRemainTime.visibility = View.VISIBLE
+                            binding.widgetHonkaiSr.tvRemainTime.text = String.format(getString(R.string.widget_format_max_time), 0, 0)
                         }
-                        Constant.PREF_TIME_NOTATION_DISABLE ->
+                        Constant.PREF_TIME_NOTATION_DISABLE -> {
                             binding.widget.tvRemainTime.visibility = View.GONE
+                            binding.widgetHonkaiSr.tvRemainTime.visibility = View.GONE
+                        }
                     }
                 }
             }
@@ -165,6 +199,7 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
             launch {
                 mVM.sfResinFontSize.collect {
                     binding.widget.tvResin.textSize = it.toFloat()
+                    binding.widgetHonkaiSr.tvTrailPower.textSize = it.toFloat()
                 }
             }
 
@@ -172,6 +207,7 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                 mVM.sfResinUidVisibility.collect {
                     log.e()
                     binding.widget.tvUid.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widgetHonkaiSr.tvUid.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
 
@@ -179,6 +215,7 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                 mVM.sfResinNameVisibility.collect {
                     log.e()
                     binding.widget.tvName.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widgetHonkaiSr.tvName.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
         }
