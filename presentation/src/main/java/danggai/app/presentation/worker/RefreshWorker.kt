@@ -319,7 +319,7 @@ class RefreshWorker @AssistedInject constructor(
 
         val prefExpeditionTime: Int = try { preference.getStringHonkaiSrExpeditionTime(account.honkai_sr_uid).toInt() } catch (e: Exception) { 0 }
         val nowExpeditionTime: Int = CommonFunction.getExpeditionTime(dailyNote).toInt()
-        if (settings.notiExpedition) {
+        if (settings.notiExpeditionHonkaiSr) {
             if (1 in (nowExpeditionTime)..prefExpeditionTime
                 && dailyNote.expeditions.isNotEmpty()
                 && nowExpeditionTime == 0) {

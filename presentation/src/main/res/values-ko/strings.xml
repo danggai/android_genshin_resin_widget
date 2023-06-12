@@ -33,6 +33,7 @@
     <string name="btn_140_resin">140레진</string>
     <string name="resin">레진</string>
     <string name="btn_expedition_done">탐험 완료</string>
+    <string name="btn_assignment_done">의뢰 완료</string>
     <string name="btn_home_coin_full">선계 주화 가득 참</string>
     <string name="btn_param_reached">매개 변수 변환기 준비 됨</string>
     <string name="btn_daily_commission_yet">일일임무 미완료 시 알림</string>

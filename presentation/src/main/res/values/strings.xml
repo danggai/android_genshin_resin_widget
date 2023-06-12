@@ -54,6 +54,7 @@
     <string name="btn_140_resin">140 Resins</string>
     <string name="resin">Resin</string>
     <string name="btn_expedition_done">Expedition Done</string>
+    <string name="btn_assignment_done">Assignment Done</string>
     <string name="btn_home_coin_full">Realm Currency Full</string>
     <string name="btn_param_reached">Parametric Transformer Reached</string>
     <string name="btn_daily_commission_yet">Daily Commission Incomplete Notification</string>
