@@ -205,9 +205,9 @@
     <string name="push_genshin_checkin_title">Genshin Impact Check-in Notification</string>
     <string name="push_genshin_checkin_description">This is a notification to inform travelers of the daily check-in result of Genshin Impact!</string>
     <string name="push_honkai_3rd_checkin_title">Honkai Impact 3rd Check-in Notification</string>
-    <string name="push_honkai_3rd_checkin_description">This is a notification to inform travelers of the daily check-in result of Honkai Impact 3rd!</string>
+    <string name="push_honkai_3rd_checkin_description">This is a notification to inform captains of the daily check-in result of Honkai Impact 3rd!</string>
     <string name="push_honkai_sr_checkin_title">Honkai Impact: Star Rail Check-in Notification</string>
-    <string name="push_honkai_sr_checkin_description">This is a notification to inform travelers of the daily check-in result of Honkai Impact: Star Rail!</string>
+    <string name="push_honkai_sr_checkin_description">This is a notification to inform pioneers of the daily check-in result of Honkai Impact: Star Rail!</string>
     <string name="push_msg_checkin_success_genshin">%s! checked attendance today!</string>
     <string name="push_msg_checkin_success_honkai">I completed today\'s check in, %s~</string>
     <string name="push_msg_checkin_success_honkai_sr">I completed today\'s check in, %s~</string>
