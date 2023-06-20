@@ -401,5 +401,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Honkai: Star Rail account linkage implemented.\n- Trailblaze Power Widget, related notifications implemented.</string>
+    <string name="dialog_msg_patch_note">- Genshin Impact attendance check > Alarm branch implementation in case of attendance failure due to captcha.</string>
 </resources>
