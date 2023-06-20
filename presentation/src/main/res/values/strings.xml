@@ -219,6 +219,7 @@
     <string name="push_msg_checkin_failed_honkai">%s, I failed the attendance check, but I\'ll try again in 30 minutes~</string>
     <string name="push_msg_checkin_failed_honkai_sr">%s, I failed the attendance check, but I\'ll try again in 30 minutes~</string>
     <string name="push_msg_checkin_account_not_found">Attendance check cannot be performed because there is no in-game account linked to this %s account.</string>
+    <string name="push_msg_checkin_success_genshin_captcha">%s! I can\'t check-in automatically because of the verification process!\nPlease manually attend at HoYoLab today! (press to start)</string>
 
 
     <string name="push_expedition_title">Expedition Done Notification</string>
