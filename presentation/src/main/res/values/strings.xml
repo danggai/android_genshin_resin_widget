@@ -222,10 +222,12 @@
 
 
     <string name="push_expedition_title">Expedition Done Notification</string>
-    <string name="push_expedition_description_genshin">This is a notification sent to travelers when the expedition is complete!</string>
-    <string name="push_expedition_description_honkai_sr">This is a notification sent to pioneers when the expedition is complete!</string>
-    <string name="push_msg_expedition_done_genshin">%s! All the expedition is complete! (Genshin)</string>
-    <string name="push_msg_expedition_done_honkai_sr">%s! All the expedition is complete! (Honkai: Star Rail)</string>
+    <string name="push_expedition_description">This is a notification sent to travelers when the expedition is complete!</string>
+    <string name="push_msg_expedition_done">%s! All the expedition is complete!</string>
+
+    <string name="push_assignment_title">Assignment Done Notification</string>
+    <string name="push_assignment_description">This is a notification sent to pioneers when the assignment is complete!</string>
+    <string name="push_msg_assignment_done">%s! All the assignment is complete!</string>
 
     <string name="push_realm_currency_title">Realm Currency Notification</string>
     <string name="push_realm_currency_description">This is a notification sent to travelers when the realm currency is full!</string>

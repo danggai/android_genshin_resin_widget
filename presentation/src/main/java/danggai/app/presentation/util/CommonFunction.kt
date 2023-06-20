@@ -179,12 +179,12 @@ object CommonFunction {
             }
             Constant.NotiType.EXPEDITION_DONE -> {
                 notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
-                notificationDesc = context.getString(R.string.push_expedition_description_genshin)
+                notificationDesc = context.getString(R.string.push_expedition_description)
                 priority = NotificationCompat.PRIORITY_LOW
             }
             Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> {
                 notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
-                notificationDesc = context.getString(R.string.push_expedition_description_honkai_sr)
+                notificationDesc = context.getString(R.string.push_assignment_description)
                 priority = NotificationCompat.PRIORITY_LOW
             }
             Constant.NotiType.REALM_CURRENCY_FULL -> {
