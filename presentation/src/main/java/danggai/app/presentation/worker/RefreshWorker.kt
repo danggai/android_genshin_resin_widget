@@ -13,6 +13,7 @@ import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
+import danggai.domain.network.checkin.entity.CheckIn
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
 import danggai.domain.network.dailynote.usecase.DailyNoteUseCase
@@ -319,7 +320,7 @@ class RefreshWorker @AssistedInject constructor(
 
         val prefExpeditionTime: Int = try { preference.getStringHonkaiSrExpeditionTime(account.honkai_sr_uid).toInt() } catch (e: Exception) { 0 }
         val nowExpeditionTime: Int = CommonFunction.getExpeditionTime(dailyNote).toInt()
-        if (settings.notiExpedition) {
+        if (settings.notiExpeditionHonkaiSr) {
             if (1 in (nowExpeditionTime)..prefExpeditionTime
                 && dailyNote.expeditions.isNotEmpty()
                 && nowExpeditionTime == 0) {
@@ -351,7 +352,7 @@ class RefreshWorker @AssistedInject constructor(
             Constant.NotiType.TRAIL_POWER_EACH_40,
             Constant.NotiType.TRAIL_POWER_170,
             Constant.NotiType.TRAIL_POWER_CUSTOM, -> applicationContext.getString(R.string.push_trail_power_noti_title)
-            Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> applicationContext.getString(R.string.push_expedition_title)
+            Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> applicationContext.getString(R.string.push_assignment_title)
             else -> ""
         }
 
@@ -366,7 +367,7 @@ class RefreshWorker @AssistedInject constructor(
                 }
             Constant.NotiType.RESIN_140 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_140), account.nickname, target)
             Constant.NotiType.RESIN_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), account.nickname, target)
-            Constant.NotiType.EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_expedition_done_genshin), account.nickname)
+            Constant.NotiType.EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_expedition_done), account.nickname)
             Constant.NotiType.REALM_CURRENCY_FULL -> String.format(applicationContext.getString(R.string.push_msg_realm_currency_full), account.nickname)
             Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED -> String.format(applicationContext.getString(R.string.push_msg_param_trans_full), account.nickname)
             Constant.NotiType.DAILY_COMMISSION_YET -> String.format(applicationContext.getString(R.string.push_msg_daily_commission_yet), account.nickname)
@@ -382,7 +383,7 @@ class RefreshWorker @AssistedInject constructor(
                 }
             Constant.NotiType.TRAIL_POWER_170 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_170), account.honkai_sr_nickname, target)
             Constant.NotiType.TRAIL_POWER_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), account.honkai_sr_nickname, target)
-            Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_expedition_done_honkai_sr), account.honkai_sr_nickname)
+            Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_assignment_done), account.honkai_sr_nickname)
             else -> ""
         }
 

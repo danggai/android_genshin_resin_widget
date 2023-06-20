@@ -4,7 +4,7 @@ object Versions {
     const val minSdk                 = 23
     const val compileSdk             = 32
 
-    const val versionCode            = 51
+    const val versionCode            = 53
     const val versionName            = "3.7.1"
 
     // gradle plugins

@@ -3,10 +3,15 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
       <module name="android_genshin_resin_widget.buildSrc" target="11" />
+      <module name="android_genshin_resin_widget.buildSrc.main" target="11" />
+      <module name="android_genshin_resin_widget.buildSrc.test" target="11" />
       <module name="genshin_resin_widget.app" target="11" />
       <module name="genshin_resin_widget.buildSrc" target="11" />
+      <module name="genshin_resin_widget.BuildSrc" target="11" />
+      <module name="genshin_resin_widget.BuildSrc.main" target="11" />
       <module name="genshin_resin_widget.buildSrc.main" target="11" />
       <module name="genshin_resin_widget.buildSrc.test" target="11" />
+      <module name="genshin_resin_widget.BuildSrc.test" target="11" />
       <module name="genshin_resin_widget.presentation" target="11" />
     </bytecodeTargetLevel>
   </component>
