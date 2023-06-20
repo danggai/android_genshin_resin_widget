@@ -13,7 +13,7 @@ object Constant {
     const val OS_SALT = "6cqshh5dhw73bzxn20oexa9k516chk7s"
     const val CN_SALT = "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs"
 
-    const val OS_GENSHIN_CHECK_IN_URL = "https://hk4e-api-os.hoyoverse.com/event/sol/sign"
+    const val OS_GENSHIN_CHECK_IN_URL = "https://sg-hk4e-api.hoyolab.com/event/sol/sign"
     const val OS_GENSHIN_ACT_ID = "e202102251931481"
     const val CN_GENSHIN_CHECK_IN_URL = "https://api-takumi.hoyoverse.com/event/bbs_sign_reward/"
     const val CN_GENSHIN_ACT_ID = "e202009291139501"
@@ -270,6 +270,7 @@ object Constant {
         CHECK_IN_GENSHIN_ALREADY,
         CHECK_IN_GENSHIN_FAILED,
         CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND,
+        CHECK_IN_GENSHIN_CAPTCHA,
         CHECK_IN_HONKAI_3RD_SUCCESS,
         CHECK_IN_HONKAI_3RD_ALREADY,
         CHECK_IN_HONKAI_3RD_FAILED,

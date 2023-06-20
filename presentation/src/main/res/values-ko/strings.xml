@@ -195,6 +195,7 @@
     <string name="push_msg_checkin_failed_honkai">%s, 출석 체크에 실패했지만, 30분 후에 다시 시도해볼게~</string>
     <string name="push_msg_checkin_failed_honkai_sr">%s, 출석 체크에 실패했지만, 30분 후에 다시 시도해볼게~</string>
     <string name="push_msg_checkin_account_not_found">%s 계정과 연동 된 인게임 계정이 없어서 출석체크를 진행할 수 없습니다. 자동 출석체크를 비활성화하였습니다.</string>
+    <string name="push_msg_checkin_success_genshin_captcha">%s! 인증절차가 발생해서 자동으로 출석 할 수 없어!\n오늘은 호요랩에서 직접 출석해줘!</string>
 
     <string name="push_expedition_title">탐험 완료 알림</string>
     <string name="push_expedition_description_genshin">탐험이 완료되었을 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>

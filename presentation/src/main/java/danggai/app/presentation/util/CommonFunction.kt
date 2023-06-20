@@ -153,7 +153,8 @@ object CommonFunction {
             Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS,
             Constant.NotiType.CHECK_IN_GENSHIN_FAILED,
             Constant.NotiType.CHECK_IN_GENSHIN_ALREADY,
-            Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND
+            Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND,
+            Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA
             -> {
                 notificationId = Constant.PUSH_CHANNEL_GENSHIN_CHECK_IN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_genshin_checkin_description)

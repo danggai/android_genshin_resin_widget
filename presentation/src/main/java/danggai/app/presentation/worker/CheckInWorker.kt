@@ -114,7 +114,13 @@ class CheckInWorker @AssistedInject constructor(
                                 log.e()
 
                                 when (it.data.retcode) {
-                                    Constant.RETCODE_SUCCESS -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS)
+                                    Constant.RETCODE_SUCCESS ->  {
+                                        when (it.data.data?.gt_result?.is_risk) {
+                                            false -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS)
+                                            true -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA)
+                                            else -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_ALREADY)
+                                        }
+                                    }
                                     Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
                                     Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
                                     -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_ALREADY)
@@ -361,7 +367,8 @@ class CheckInWorker @AssistedInject constructor(
             Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS,
             Constant.NotiType.CHECK_IN_GENSHIN_ALREADY,
             Constant.NotiType.CHECK_IN_GENSHIN_FAILED,
-            Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND
+            Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND,
+            Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA
             -> applicationContext.getString(R.string.push_genshin_checkin_title)
             Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS,
             Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY,
@@ -399,6 +406,8 @@ class CheckInWorker @AssistedInject constructor(
             Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND,
             Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND
             -> String.format(applicationContext.getString(R.string.push_msg_checkin_account_not_found), account.nickname)
+            Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA
+            -> String.format(applicationContext.getString(R.string.push_msg_checkin_success_genshin_captcha), account.nickname)
             else -> ""
         }
 
