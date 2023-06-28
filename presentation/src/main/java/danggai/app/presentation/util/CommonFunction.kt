@@ -135,6 +135,14 @@ object CommonFunction {
         val notificationDesc: String
         val priority: Int
 
+        val priorityLow =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) NotificationManager.IMPORTANCE_LOW
+            else NotificationCompat.PRIORITY_LOW
+
+        val priorityDefault =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) NotificationManager.IMPORTANCE_DEFAULT
+            else NotificationCompat.PRIORITY_DEFAULT
+
         when (notiType) {
             Constant.NotiType.RESIN_EACH_40,
             Constant.NotiType.RESIN_140,
@@ -142,7 +150,7 @@ object CommonFunction {
             -> {
                 notificationId = Constant.PUSH_CHANNEL_RESIN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_resin_noti_description)
-                priority = NotificationCompat.PRIORITY_DEFAULT
+                priority = priorityDefault
             }
             Constant.NotiType.TRAIL_POWER_EACH_40,
             Constant.NotiType.TRAIL_POWER_170,
@@ -150,7 +158,7 @@ object CommonFunction {
             -> {
                 notificationId = Constant.PUSH_CHANNEL_TRAIL_POWER_NOTI_ID
                 notificationDesc = context.getString(R.string.push_trail_power_noti_description)
-                priority = NotificationCompat.PRIORITY_DEFAULT
+                priority = priorityDefault
             }
             Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS,
             Constant.NotiType.CHECK_IN_GENSHIN_FAILED,
@@ -160,7 +168,7 @@ object CommonFunction {
             -> {
                 notificationId = Constant.PUSH_CHANNEL_GENSHIN_CHECK_IN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_genshin_checkin_description)
-                priority = NotificationCompat.PRIORITY_LOW
+                priority = priorityLow
             }
             Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS,
             Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED,
@@ -169,7 +177,7 @@ object CommonFunction {
             -> {
                 notificationId = Constant.PUSH_CHANNEL_HONKAI_3RD_CHECK_IN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_honkai_3rd_checkin_description)
-                priority = NotificationCompat.PRIORITY_LOW
+                priority = priorityLow
             }
             Constant.NotiType.CHECK_IN_HONKAI_SR_SUCCESS,
             Constant.NotiType.CHECK_IN_HONKAI_SR_FAILED,
@@ -178,42 +186,42 @@ object CommonFunction {
             -> {
                 notificationId = Constant.PUSH_CHANNEL_HONKAI_SR_CHECK_IN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_honkai_sr_checkin_description)
-                priority = NotificationCompat.PRIORITY_LOW
+                priority = priorityLow
             }
             Constant.NotiType.EXPEDITION_DONE -> {
                 notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
                 notificationDesc = context.getString(R.string.push_expedition_description)
-                priority = NotificationCompat.PRIORITY_LOW
+                priority = priorityLow
             }
             Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> {
                 notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
                 notificationDesc = context.getString(R.string.push_assignment_description)
-                priority = NotificationCompat.PRIORITY_LOW
+                priority = priorityLow
             }
             Constant.NotiType.REALM_CURRENCY_FULL -> {
                 notificationId = Constant.PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID
                 notificationDesc = context.getString(R.string.push_realm_currency_description)
-                priority = NotificationCompat.PRIORITY_DEFAULT
+                priority = priorityDefault
             }
             Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED -> {
                 notificationId = Constant.PUSH_CHANNEL_PARAMETRIC_TRANSFORMER_NOTI_ID
                 notificationDesc = context.getString(R.string.push_param_trans_description)
-                priority = NotificationCompat.PRIORITY_DEFAULT
+                priority = priorityDefault
             }
             Constant.NotiType.DAILY_COMMISSION_YET -> {
                 notificationId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
                 notificationDesc = context.getString(R.string.push_daily_commission_description)
-                priority = NotificationCompat.PRIORITY_DEFAULT
+                priority = priorityDefault
             }
             Constant.NotiType.WEEKLY_BOSS_YET -> {
                 notificationId = Constant.PUSH_CHANNEL_WEEKLY_BOSS_YET_NOTI_ID
                 notificationDesc = context.getString(R.string.push_weekly_boss_description)
-                priority = NotificationCompat.PRIORITY_DEFAULT
+                priority = priorityDefault
             }
             else -> {
                 notificationId = Constant.PUSH_CHANNEL_DEFAULT_ID
                 notificationDesc = context.getString(R.string.push_default_noti_description)
-                priority = NotificationCompat.PRIORITY_DEFAULT
+                priority = priorityDefault
             }
         }
 
