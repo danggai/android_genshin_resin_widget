@@ -382,19 +382,19 @@ class CheckInWorker @AssistedInject constructor(
             Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS
             -> String.format(applicationContext.getString(R.string.push_msg_checkin_success_honkai), account.nickname)
             Constant.NotiType.CHECK_IN_HONKAI_SR_SUCCESS
-            -> String.format(applicationContext.getString(R.string.push_msg_checkin_success_honkai_sr), account.nickname)
+            -> String.format(applicationContext.getString(R.string.push_msg_checkin_success_honkai_sr), account.honkai_sr_nickname)
             Constant.NotiType.CHECK_IN_GENSHIN_ALREADY
             -> String.format(applicationContext.getString(R.string.push_msg_checkin_already_genshin), account.nickname)
             Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY
             -> String.format(applicationContext.getString(R.string.push_msg_checkin_already_honkai), account.nickname)
             Constant.NotiType.CHECK_IN_HONKAI_SR_ALREADY
-            -> String.format(applicationContext.getString(R.string.push_msg_checkin_already_honkai_sr), account.nickname)
+            -> String.format(applicationContext.getString(R.string.push_msg_checkin_already_honkai_sr), account.honkai_sr_nickname)
             Constant.NotiType.CHECK_IN_GENSHIN_FAILED
             -> String.format(applicationContext.getString(R.string.push_msg_checkin_failed_genshin), account.nickname)
             Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED
             -> String.format(applicationContext.getString(R.string.push_msg_checkin_failed_honkai), account.nickname)
             Constant.NotiType.CHECK_IN_HONKAI_SR_FAILED
-            -> String.format(applicationContext.getString(R.string.push_msg_checkin_failed_honkai_sr), account.nickname)
+            -> String.format(applicationContext.getString(R.string.push_msg_checkin_failed_honkai_sr), account.honkai_sr_nickname)
             Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND,
             Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND,
             Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND

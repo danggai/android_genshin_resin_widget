@@ -182,9 +182,9 @@
     <string name="push_genshin_checkin_title">원신 출석 알림</string>
     <string name="push_genshin_checkin_description">원신 출석 결과를 여행자에게 알려주기 위해 발송하는 알림이야!</string>
     <string name="push_honkai_3rd_checkin_title">붕괴3rd 출석 알림</string>
-    <string name="push_honkai_3rd_checkin_description">붕괴3rd 출석 결과를 여행자에게 알려주기 위해 발송하는 알림이야!</string>
+    <string name="push_honkai_3rd_checkin_description">붕괴3rd 출석 결과를 함장에게 알려주기 위해 발송하는 알림이야!</string>
     <string name="push_honkai_sr_checkin_title">붕괴: 스타레일 출석 알림</string>
-    <string name="push_honkai_sr_checkin_description">붕괴: 스타레일 출석 결과를 여행자에게 알려주기 위해 발송하는 알림이야!</string>
+    <string name="push_honkai_sr_checkin_description">붕괴: 스타레일 출석 결과를 개척자에게 알려주기 위해 발송하는 알림이야!</string>
     <string name="push_msg_checkin_success_genshin">%s! 오늘 출석체크 해왔어!</string>
     <string name="push_msg_checkin_success_honkai">오늘 자 출석체크가 완료됐어, %s~</string>
     <string name="push_msg_checkin_success_honkai_sr">오늘 자 출석체크가 완료됐어, %s~</string>

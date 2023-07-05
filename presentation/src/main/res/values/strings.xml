@@ -195,7 +195,7 @@
     <string name="push_msg_resin_noti_custom">%s! Your resin is over %d!</string>
 
     <string name="push_trail_power_noti_title">Trainblaze Power Notification</string>
-    <string name="push_trail_power_noti_description">This is a notification sent to inform pioneers of each trainblaze power!</string>
+    <string name="push_trail_power_noti_description">This is a notification sent to inform trailblazers of each trainblaze power!</string>
     <string name="push_msg_trail_power_noti_over_40">Hello, %s! Your Trainblaze Power is over %d!</string>
     <string name="push_msg_trail_power_noti_over_160">Hello, %s! Your Trainblaze Power is over %d!</string>
     <string name="push_msg_trail_power_noti_over_170">Hello, %s! Your Trainblaze Power is over %d!</string>
@@ -205,9 +205,9 @@
     <string name="push_genshin_checkin_title">Genshin Impact Check-in Notification</string>
     <string name="push_genshin_checkin_description">This is a notification to inform travelers of the daily check-in result of Genshin Impact!</string>
     <string name="push_honkai_3rd_checkin_title">Honkai Impact 3rd Check-in Notification</string>
-    <string name="push_honkai_3rd_checkin_description">This is a notification to inform travelers of the daily check-in result of Honkai Impact 3rd!</string>
+    <string name="push_honkai_3rd_checkin_description">This is a notification to inform captains of the daily check-in result of Honkai Impact 3rd!</string>
     <string name="push_honkai_sr_checkin_title">Honkai Impact: Star Rail Check-in Notification</string>
-    <string name="push_honkai_sr_checkin_description">This is a notification to inform travelers of the daily check-in result of Honkai Impact: Star Rail!</string>
+    <string name="push_honkai_sr_checkin_description">This is a notification to inform trailblazers of the daily check-in result of Honkai Impact: Star Rail!</string>
     <string name="push_msg_checkin_success_genshin">%s! checked attendance today!</string>
     <string name="push_msg_checkin_success_honkai">I completed today\'s check in, %s~</string>
     <string name="push_msg_checkin_success_honkai_sr">I completed today\'s check in, %s~</string>
@@ -222,7 +222,7 @@
 
     <string name="push_expedition_title">Expedition Done Notification</string>
     <string name="push_expedition_description_genshin">This is a notification sent to travelers when the expedition is complete!</string>
-    <string name="push_expedition_description_honkai_sr">This is a notification sent to pioneers when the expedition is complete!</string>
+    <string name="push_expedition_description_honkai_sr">This is a notification sent to trailblazers when the expedition is complete!</string>
     <string name="push_msg_expedition_done_genshin">%s! All the expedition is complete! (Genshin)</string>
     <string name="push_msg_expedition_done_honkai_sr">%s! All the expedition is complete! (Honkai: Star Rail)</string>
 
@@ -245,11 +245,11 @@
     <string name="hint_cookie">Enter HoYoLAB\'s cookie!</string>
     <string name="hint_uid">Enter uid!</string>
     <string name="hint_nickname_genshin">Enter name of traveler!</string>
-    <string name="hint_nickname_honkai_sr">Enter name of pioneer!</string>
+    <string name="hint_nickname_honkai_sr">Enter name of trailblazer!</string>
 
     <string name="invalid_user_info">You can\'t use it\nwithout user information!</string>
 
-    <string name="pioneer">Pioneer</string>
+    <string name="pioneer">Trailblazer</string>
     <string name="captain">Captain</string>
     <string name="traveler">Traveler</string>
 
