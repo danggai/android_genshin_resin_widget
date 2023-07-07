@@ -400,5 +400,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Genshin Impact attendance check > Alarm branch implementation in case of attendance failure due to captcha.</string>
+    <string name="dialog_msg_patch_note">- Genshin Impact attendance check > check in failure due to captcha occurrence > bypass logic applied</string>
 </resources>
