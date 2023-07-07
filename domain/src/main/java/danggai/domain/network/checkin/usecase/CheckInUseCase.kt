@@ -24,6 +24,23 @@ class CheckInUseCase @Inject constructor(
             onComplete = onComplete
         )
 
+    suspend fun genshinImpactRetry(
+        lang: String,
+        actId: String,
+        cookie: String,
+        challenge: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit
+    ): Flow<ApiResult<CheckIn>> =
+        checkInRepository.genshinImpactRetry(
+            lang = lang,
+            actId = actId,
+            cookie = cookie,
+            onStart = onStart,
+            challenge = challenge,
+            onComplete = onComplete
+        )
+
     suspend fun honkai3rd(
         lang: String,
         actId: String,
