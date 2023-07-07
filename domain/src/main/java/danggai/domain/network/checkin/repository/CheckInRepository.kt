@@ -14,6 +14,15 @@ interface CheckInRepository: Repository {
         onComplete: () -> Unit
     ): Flow<ApiResult<CheckIn>>
 
+    suspend fun genshinImpactRetry(
+        lang: String,
+        actId: String,
+        cookie: String,
+        challenge: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit
+    ): Flow<ApiResult<CheckIn>>
+
     suspend fun honkai3rd(
         lang: String,
         actId: String,

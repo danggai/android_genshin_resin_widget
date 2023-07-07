@@ -47,6 +47,40 @@ class CheckInRepositoryImpl @Inject constructor(
         }
     }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 
+    override suspend fun genshinImpactRetry(
+        lang: String,
+        actId: String,
+        cookie: String,
+        challenge: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit
+    ) = flow<ApiResult<CheckIn>> {
+        val response = checkInApi.genshinImpactRetry(
+            lang,
+            actId,
+            cookie,
+            challenge
+        )
+
+        response.suspendOnSuccess {
+            emit( this.response.body()?.let {
+                ApiResult.Success<CheckIn>(
+                    this.response.code(),
+                    it
+                )
+            } ?: ApiResult.Null())
+        }.suspendOnError {
+            emit(ApiResult.Failure(
+                this.response.code(),
+                this.response.message()
+            ))
+        }.suspendOnException {
+            emit(ApiResult.Error(
+                this.exception
+            ))
+        }
+    }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+
     override suspend fun honkai3rd(
         lang: String,
         actId: String,

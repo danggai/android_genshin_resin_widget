@@ -117,6 +117,109 @@ class CheckInWorker @AssistedInject constructor(
                                     Constant.RETCODE_SUCCESS ->  {
                                         when (it.data.data?.gt_result?.is_risk) {
                                             false -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS)
+                                            true -> checkInGenshinRetry(
+                                                account,
+                                                lang,
+                                                actId,
+                                                cookie,
+                                                it.data.data!!.gt_result!!.challenge
+                                            )
+                                            else -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_ALREADY)
+                                        }
+                                    }
+                                    Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
+                                    Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
+                                    -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_ALREADY)
+                                }
+                            }
+                        }
+                        Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
+                            log.e()
+                            if (settings.notiCheckInFailed) {
+                                log.e()
+                                sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND)
+                            }
+                            disableCheckIn(account, CHECKIN_TYPE_GENSHIN)
+                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                                it.code,
+                                it.data.retcode
+                            )
+                        }
+                        else -> {
+                            log.e()
+                            if (settings.notiCheckInFailed) {
+                                log.e()
+                                sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_FAILED)
+                            }
+                            startWorkerOneTimeRetry(applicationContext)
+                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                                it.code,
+                                it.data.retcode
+                            )
+                        }
+                    }
+                }
+                is ApiResult.Failure -> {
+                    it.message.let { msg ->
+                        log.e(msg)
+                        if (settings.notiCheckInFailed) {
+                            log.e()
+                            sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_FAILED)
+                        }
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                            it.code,
+                            null)
+                        startWorkerOneTimeRetry(applicationContext)
+                    }
+                }
+                is ApiResult.Error,
+                is ApiResult.Null,
+                -> {
+                    log.e()
+                    if (settings.notiCheckInFailed) {
+                        log.e()
+                        sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_FAILED)
+                    }
+                    CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, null, null)
+                    startWorkerOneTimeRetry(applicationContext)
+                }
+            }
+            it
+        }.stateIn(CoroutineScope(Dispatchers.IO))
+    }
+
+    private suspend fun checkInGenshinRetry(
+        account: Account,
+        lang: String,
+        actId: String,
+        cookie: String,
+        challenge: String,
+    ) = withContext(Dispatchers.IO) {
+        checkIn.genshinImpactRetry(
+            lang,
+            actId,
+            cookie,
+            challenge,
+            onStart = { log.e() },
+            onComplete = { log.e() }
+        ).map {
+            val settings = preference.getCheckInSettings()
+
+            when (it) {
+                is ApiResult.Success -> {
+                    when (it.data.retcode) {
+                        Constant.RETCODE_SUCCESS,
+                        Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
+                        Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
+                        -> {
+                            log.e()
+                            if (settings.notiCheckInSuccess) {
+                                log.e()
+
+                                when (it.data.retcode) {
+                                    Constant.RETCODE_SUCCESS ->  {
+                                        when (it.data.data?.gt_result?.is_risk) {
+                                            false -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS)
                                             true -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA)
                                             else -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_ALREADY)
                                         }
