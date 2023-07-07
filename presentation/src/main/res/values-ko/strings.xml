@@ -33,6 +33,7 @@
     <string name="btn_140_resin">140레진</string>
     <string name="resin">레진</string>
     <string name="btn_expedition_done">탐험 완료</string>
+    <string name="btn_assignment_done">의뢰 완료</string>
     <string name="btn_home_coin_full">선계 주화 가득 참</string>
     <string name="btn_param_reached">매개 변수 변환기 준비 됨</string>
     <string name="btn_daily_commission_yet">일일임무 미완료 시 알림</string>
@@ -195,12 +196,15 @@
     <string name="push_msg_checkin_failed_honkai">%s, 출석 체크에 실패했지만, 30분 후에 다시 시도해볼게~</string>
     <string name="push_msg_checkin_failed_honkai_sr">%s, 출석 체크에 실패했지만, 30분 후에 다시 시도해볼게~</string>
     <string name="push_msg_checkin_account_not_found">%s 계정과 연동 된 인게임 계정이 없어서 출석체크를 진행할 수 없습니다. 자동 출석체크를 비활성화하였습니다.</string>
+    <string name="push_msg_checkin_success_genshin_captcha">%s! 인증절차가 발생해서 자동으로 출석 할 수 없어!\n오늘은 호요랩에서 직접 출석해줘! (누르면 출석 페이지로 이동)</string>
 
     <string name="push_expedition_title">탐험 완료 알림</string>
-    <string name="push_expedition_description_genshin">탐험이 완료되었을 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
-    <string name="push_expedition_description_honkai_sr">탐험이 완료되었을 때 개척자에게 알려주기 위해 발송하는 알림이야!</string>
-    <string name="push_msg_expedition_done_genshin">%s! 모든 탐험이 완료됐어! 모험가 길드에서 확인하자!</string>
-    <string name="push_msg_expedition_done_honkai_sr">%s! 모든 탐험이 완료됐어! 핸드폰의 의뢰 탭에서 확인해 줘!</string>
+    <string name="push_expedition_description">탐험이 완료되었을 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
+    <string name="push_msg_expedition_done">%s! 모든 탐험이 완료됐어! 모험가 길드에서 확인하자!</string>
+
+    <string name="push_assignment_title">의뢰 완료 알림</string>
+    <string name="push_assignment_description">의뢰가 완료되었을 때 개척자에게 알려주기 위해 발송하는 알림이야!</string>
+    <string name="push_msg_assignment_done">%s! 모든 의뢰가 완료됐어! 핸드폰의 의뢰 탭에서 확인해 줘!</string>
 
     <string name="push_realm_currency_title">선계 화페 알림</string>
     <string name="push_realm_currency_description">선계 화폐가 충전 될 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
@@ -373,5 +377,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 붕괴: 스타레일 관련 계정 연동 추가\n- 붕괴: 스타레일 개척력 위젯/관련 알림 추가</string>
+    <string name="dialog_msg_patch_note">- 원신 출석 체크 > 캡차로 인한 출석 실패 시 알람 분기 구현</string>
 </resources>

@@ -3,6 +3,7 @@ package danggai.app.presentation.util
 import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -11,6 +12,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.net.Uri
 import android.os.Build
 import android.util.DisplayMetrics
 import android.view.Display
@@ -126,91 +128,100 @@ object CommonFunction {
         notiType: Constant.NotiType,
         context: Context,
         title: String,
-        msg: String
+        msg: String,
     ) {
         log.e()
         val notificationId: String
         val notificationDesc: String
         val priority: Int
 
+        val priorityLow =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) NotificationManager.IMPORTANCE_LOW
+            else NotificationCompat.PRIORITY_LOW
+
+        val priorityDefault =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) NotificationManager.IMPORTANCE_DEFAULT
+            else NotificationCompat.PRIORITY_DEFAULT
+
         when (notiType) {
             Constant.NotiType.RESIN_EACH_40,
             Constant.NotiType.RESIN_140,
-            Constant.NotiType.RESIN_CUSTOM
+            Constant.NotiType.RESIN_CUSTOM,
             -> {
                 notificationId = Constant.PUSH_CHANNEL_RESIN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_resin_noti_description)
-                priority = NotificationCompat.PRIORITY_DEFAULT
+                priority = priorityDefault
             }
             Constant.NotiType.TRAIL_POWER_EACH_40,
             Constant.NotiType.TRAIL_POWER_170,
-            Constant.NotiType.TRAIL_POWER_CUSTOM
+            Constant.NotiType.TRAIL_POWER_CUSTOM,
             -> {
                 notificationId = Constant.PUSH_CHANNEL_TRAIL_POWER_NOTI_ID
                 notificationDesc = context.getString(R.string.push_trail_power_noti_description)
-                priority = NotificationCompat.PRIORITY_DEFAULT
+                priority = priorityDefault
             }
             Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS,
             Constant.NotiType.CHECK_IN_GENSHIN_FAILED,
             Constant.NotiType.CHECK_IN_GENSHIN_ALREADY,
-            Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND
+            Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND,
+            Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA,
             -> {
                 notificationId = Constant.PUSH_CHANNEL_GENSHIN_CHECK_IN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_genshin_checkin_description)
-                priority = NotificationCompat.PRIORITY_LOW
+                priority = priorityLow
             }
             Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS,
             Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED,
             Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY,
-            Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND
+            Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND,
             -> {
                 notificationId = Constant.PUSH_CHANNEL_HONKAI_3RD_CHECK_IN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_honkai_3rd_checkin_description)
-                priority = NotificationCompat.PRIORITY_LOW
+                priority = priorityLow
             }
             Constant.NotiType.CHECK_IN_HONKAI_SR_SUCCESS,
             Constant.NotiType.CHECK_IN_HONKAI_SR_FAILED,
             Constant.NotiType.CHECK_IN_HONKAI_SR_ALREADY,
-            Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND
+            Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND,
             -> {
                 notificationId = Constant.PUSH_CHANNEL_HONKAI_SR_CHECK_IN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_honkai_sr_checkin_description)
-                priority = NotificationCompat.PRIORITY_LOW
+                priority = priorityLow
             }
             Constant.NotiType.EXPEDITION_DONE -> {
                 notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
-                notificationDesc = context.getString(R.string.push_expedition_description_genshin)
-                priority = NotificationCompat.PRIORITY_LOW
+                notificationDesc = context.getString(R.string.push_expedition_description)
+                priority = priorityLow
             }
             Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> {
                 notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
-                notificationDesc = context.getString(R.string.push_expedition_description_honkai_sr)
-                priority = NotificationCompat.PRIORITY_LOW
+                notificationDesc = context.getString(R.string.push_assignment_description)
+                priority = priorityLow
             }
             Constant.NotiType.REALM_CURRENCY_FULL -> {
                 notificationId = Constant.PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID
                 notificationDesc = context.getString(R.string.push_realm_currency_description)
-                priority = NotificationCompat.PRIORITY_DEFAULT
+                priority = priorityDefault
             }
             Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED -> {
                 notificationId = Constant.PUSH_CHANNEL_PARAMETRIC_TRANSFORMER_NOTI_ID
                 notificationDesc = context.getString(R.string.push_param_trans_description)
-                priority = NotificationCompat.PRIORITY_DEFAULT
+                priority = priorityDefault
             }
             Constant.NotiType.DAILY_COMMISSION_YET -> {
                 notificationId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
                 notificationDesc = context.getString(R.string.push_daily_commission_description)
-                priority = NotificationCompat.PRIORITY_DEFAULT
+                priority = priorityDefault
             }
             Constant.NotiType.WEEKLY_BOSS_YET -> {
                 notificationId = Constant.PUSH_CHANNEL_WEEKLY_BOSS_YET_NOTI_ID
                 notificationDesc = context.getString(R.string.push_weekly_boss_description)
-                priority = NotificationCompat.PRIORITY_DEFAULT
+                priority = priorityDefault
             }
             else -> {
                 notificationId = Constant.PUSH_CHANNEL_DEFAULT_ID
                 notificationDesc = context.getString(R.string.push_default_noti_description)
-                priority = NotificationCompat.PRIORITY_DEFAULT
+                priority = priorityDefault
             }
         }
 
@@ -226,7 +237,8 @@ object CommonFunction {
             Constant.NotiType.TRAIL_POWER_EACH_40,
             Constant.NotiType.TRAIL_POWER_170,
             Constant.NotiType.TRAIL_POWER_CUSTOM,
-            Constant.NotiType.HONKAI_SR_EXPEDITION_DONE, -> R.drawable.trailblaze_power
+            Constant.NotiType.HONKAI_SR_EXPEDITION_DONE,
+            -> R.drawable.trailblaze_power
             else -> R.drawable.resin
         }
 
@@ -242,6 +254,16 @@ object CommonFunction {
             setAutoCancel(true)
             setStyle(NotificationCompat.BigTextStyle().bigText(msg))
             setPriority(priority)
+
+            if (notiType == Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://act.hoyolab.com/ys/event/signin-sea-v3/index.html?act_id=e202102251931481&lang=ko-kr"))
+                val pendingIntent =
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                        PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+                    else PendingIntent.getActivity(context, 0, intent, 0);
+
+                setContentIntent(pendingIntent)
+            }
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -382,13 +404,19 @@ object CommonFunction {
         view.setTextColor(R.id.tv_no_talent_ingredient, mainFontColor)
         view.setTextColor(R.id.tv_no_selected_characters, mainFontColor)
 
-        if (view.layoutId == R.layout.widget_resin_fixed) {
-            val fontSize = widgetDesign.fontSize
-            view.setFloat(R.id.tv_resin, "setTextSize", fontSize.toFloat())
+        when (view.layoutId) {
+            R.layout.widget_resin_fixed,
+            R.layout.widget_trailblaze_power -> {
+                val fontSize = widgetDesign.fontSize
+                view.setFloat(R.id.tv_resin, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_trail_power, "setTextSize", fontSize.toFloat())
+            }
         }
 
         view.setTextColor(R.id.tv_resin, mainFontColor)
         view.setTextColor(R.id.tv_resin_max, mainFontColor)
+        view.setTextColor(R.id.tv_trail_power, mainFontColor)
+        view.setTextColor(R.id.tv_trail_power_max, mainFontColor)
         view.setTextColor(R.id.tv_remain_time, mainFontColor)
     }
 

@@ -54,6 +54,7 @@
     <string name="btn_140_resin">140 Resins</string>
     <string name="resin">Resin</string>
     <string name="btn_expedition_done">Expedition Done</string>
+    <string name="btn_assignment_done">Assignment Done</string>
     <string name="btn_home_coin_full">Realm Currency Full</string>
     <string name="btn_param_reached">Parametric Transformer Reached</string>
     <string name="btn_daily_commission_yet">Daily Commission Incomplete Notification</string>
@@ -218,13 +219,15 @@
     <string name="push_msg_checkin_failed_honkai">%s, I failed the attendance check, but I\'ll try again in 30 minutes~</string>
     <string name="push_msg_checkin_failed_honkai_sr">%s, I failed the attendance check, but I\'ll try again in 30 minutes~</string>
     <string name="push_msg_checkin_account_not_found">Attendance check cannot be performed because there is no in-game account linked to this %s account.</string>
-
+    <string name="push_msg_checkin_success_genshin_captcha">%s! I can\'t check-in automatically because of the verification process!\nPlease manually attend at HoYoLab today! (press to start)</string>
 
     <string name="push_expedition_title">Expedition Done Notification</string>
-    <string name="push_expedition_description_genshin">This is a notification sent to travelers when the expedition is complete!</string>
-    <string name="push_expedition_description_honkai_sr">This is a notification sent to trailblazers when the expedition is complete!</string>
-    <string name="push_msg_expedition_done_genshin">%s! All the expedition is complete! (Genshin)</string>
-    <string name="push_msg_expedition_done_honkai_sr">%s! All the expedition is complete! (Honkai: Star Rail)</string>
+    <string name="push_expedition_description">This is a notification sent to travelers when the expedition is complete!</string>
+    <string name="push_msg_expedition_done">%s! All the expedition is complete!</string>
+
+    <string name="push_assignment_title">Assignment Done Notification</string>
+    <string name="push_assignment_description">This is a notification sent to trailblazers when the assignment is complete!</string>
+    <string name="push_msg_assignment_done">%s! All the assignment is complete!</string>
 
     <string name="push_realm_currency_title">Realm Currency Notification</string>
     <string name="push_realm_currency_description">This is a notification sent to travelers when the realm currency is full!</string>
@@ -397,5 +400,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Honkai: Star Rail account linkage implemented.\n- Trailblaze Power Widget, related notifications implemented.</string>
+    <string name="dialog_msg_patch_note">- Genshin Impact attendance check > Alarm branch implementation in case of attendance failure due to captcha.</string>
 </resources>

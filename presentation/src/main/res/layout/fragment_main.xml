@@ -481,7 +481,7 @@
                         style="@style/Checkbox"
                         android:id="@+id/cb_honkai_sr_expedition_done"
                         android:checked="@={vm.sfEnableNotiHonkaiSrExpeditionDone}"
-                        android:text="@string/btn_expedition_done" />
+                        android:text="@string/btn_assignment_done" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
