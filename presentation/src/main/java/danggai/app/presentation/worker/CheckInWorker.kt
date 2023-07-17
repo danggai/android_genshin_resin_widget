@@ -117,13 +117,18 @@ class CheckInWorker @AssistedInject constructor(
                                     Constant.RETCODE_SUCCESS ->  {
                                         when (it.data.data?.gt_result?.is_risk) {
                                             false -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS)
-                                            true -> checkInGenshinRetry(
-                                                account,
-                                                lang,
-                                                actId,
-                                                cookie,
-                                                it.data.data!!.gt_result!!.challenge
-                                            )
+                                            true -> {
+                                                if (it.data.data?.gt_result?.challenge != null)
+                                                    checkInGenshinRetry(
+                                                        account,
+                                                        lang,
+                                                        actId,
+                                                        cookie,
+                                                        it.data.data!!.gt_result!!.challenge
+                                                    )
+                                                else 
+                                                    sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA)
+                                            }
                                             else -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_ALREADY)
                                         }
                                     }
