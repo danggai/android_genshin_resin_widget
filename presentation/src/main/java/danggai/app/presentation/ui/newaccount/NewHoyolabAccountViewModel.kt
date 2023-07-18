@@ -422,16 +422,17 @@ class NewHoyolabAccountViewModel @Inject constructor(
 
     fun onClickGetUid() {
         log.e()
-        if (!sfHoyolabCookie.value.contains(("ltuid="))) {
-            makeToast(resource.getString(R.string.msg_toast_get_uid_error_no_ltuid))
-            return
-        }
+        val hoyolabUid = mCookieData["ltuid"]?:mCookieData["ltuid_v2"]?:mCookieData["account_id_v2"]?:""
 
-        getUid(
-            mCookieData["ltuid"]?:"",
-            sfHoyolabCookie.value,
-            CommonFunction.getGenshinDS()
-        )
+        if (hoyolabUid == "") {
+            makeToast(resource.getString(R.string.msg_toast_get_uid_error_no_ltuid))
+        } else {
+            getUid(
+                hoyolabUid,
+                sfHoyolabCookie.value,
+                CommonFunction.getGenshinDS()
+            )
+        }
     }
 
     fun onClickSave() {
