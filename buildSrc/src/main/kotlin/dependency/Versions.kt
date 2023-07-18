@@ -4,13 +4,13 @@ object Versions {
     const val minSdk                 = 23
     const val compileSdk             = 32
 
-    const val versionCode            = 55
-    const val versionName            = "3.8.0"
+    const val versionCode            = 56
+    const val versionName            = "3.8.1"
 
     // gradle plugins
     const val buildGradleVersion     = "7.2.1"
     const val kotlinGradleVersion    = "1.7.10"
-    const val googleServiceVersion   = "4.3.10"
+    const val googleServiceVersion   = "4.3.14"
     const val crashlyticsGradleVersion = "2.9.2"
     const val gsonVersion            = "2.8.6"
 
