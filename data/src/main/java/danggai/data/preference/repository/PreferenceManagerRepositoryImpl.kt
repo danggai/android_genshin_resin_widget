@@ -297,9 +297,9 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         setString(context, Constant.PREF_EXPEDITION_TIME + "_$uid", value)
 
     override fun getStringHonkaiSrExpeditionTime(uid: String): String =
-        getString(context, Constant.PREF_HONKAI_SR_EXPEDITION_TIME + "_$uid")
+        getString(context, Constant.PREF_ASSIGNMENT_TIME + "_$uid")
     override fun setStringHonkaiSrExpeditionTime(uid: String, value: String) =
-        setString(context, Constant.PREF_HONKAI_SR_EXPEDITION_TIME + "_$uid", value)
+        setString(context, Constant.PREF_ASSIGNMENT_TIME + "_$uid", value)
 
     override fun getStringRecentSyncTime(uid: String): String =
         getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid")

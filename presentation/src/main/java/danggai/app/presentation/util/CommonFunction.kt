@@ -87,6 +87,7 @@ object CommonFunction {
             sendBroadcastAppWidgetUpdate<DetailWidget>(context)
             sendBroadcastAppWidgetUpdate<MiniWidget>(context)
             sendBroadcastAppWidgetUpdate<TrailPowerWidget>(context)
+            sendBroadcastAppWidgetUpdate<HKSRDetailWidget>(context)
         }
     }
 

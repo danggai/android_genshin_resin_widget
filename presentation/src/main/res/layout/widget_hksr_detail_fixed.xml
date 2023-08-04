@@ -1,0 +1,496 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/appWidgetBackgroundColor"
+    android:padding="@dimen/widget_margin"
+    android:theme="@style/ThemeOverlay.Genshin_resin_widget.AppWidgetContainer">
+
+    <LinearLayout
+        android:id="@+id/ll_root"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/rounded_square_5dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:id="@+id/ll_body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingBottom="3dp">
+
+            <LinearLayout
+                android:id="@+id/ll_sync"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="20dp">
+
+                <TextView
+                    android:id="@+id/tv_sync_time"
+                    style="@style/TextView"
+                    android:singleLine="true"
+                    android:text="MM/dd hh:mm"
+                    android:textColor="@color/widget_font_sub"
+                    android:textSize="10sp" />
+
+                <ImageView
+                    android:id="@+id/iv_refersh"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/baseline_sync_24" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_trailblaze_power"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_trailblaze_power"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="2dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/trailblaze_power" />
+
+                <TextView
+                    android:id="@+id/tv_trailblaze_power_title"
+                    style="@style/TextView"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_trailblaze_power"
+                    android:layout_toRightOf="@id/iv_trailblaze_power"
+                    android:singleLine="true"
+                    android:text="@string/trailblaze_power"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_trailblaze_power"
+                    style="@style/TextView"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
+                    android:text="180/180"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_trailblaze_power_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_trailblaze_power_time_title"
+                    style="@style/TextView"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="18dp"
+                    android:layout_toLeftOf="@id/tv_trailblaze_power_time"
+                    android:singleLine="true"
+                    android:text="@string/until_fully_replenished"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_trailblaze_power_time"
+                    style="@style/TextView"
+                    android:layout_alignParentRight="true"
+                    android:singleLine="true"
+                    android:text="0h 0m"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_daily_training"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/iv_daily_training"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="2dp"
+                    android:src="@drawable/icon_activity" />
+
+                <TextView
+                    android:id="@+id/tv_daily_training_title"
+                    style="@style/TextView"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_daily_training"
+                    android:layout_toRightOf="@id/iv_daily_training"
+                    android:singleLine="true"
+                    android:text="@string/daily_training"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_daily_training"
+                    style="@style/TextView"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
+                    android:text="500/500"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_echo_of_war"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_echo_of_war"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="2dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_echo_of_war" />
+
+                <TextView
+                    android:id="@+id/tv_echo_of_war_title"
+                    style="@style/TextView"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_echo_of_war"
+                    android:layout_toRightOf="@id/iv_echo_of_war"
+                    android:singleLine="true"
+                    android:text="@string/echo_of_war"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_echo_of_war"
+                    style="@style/TextView"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
+                    android:text="3/3"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_simulated_universe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_simulated_universe"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="2dp"
+                    android:src="@drawable/icon_simulated_universe" />
+
+                <TextView
+                    android:id="@+id/tv_simulated_universe_title"
+                    style="@style/TextView"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_simulated_universe"
+                    android:layout_toRightOf="@id/iv_simulated_universe"
+                    android:singleLine="true"
+                    android:text="@string/simulated_universe"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_simulated_universe"
+                    style="@style/TextView"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
+                    android:text="15000/15000"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="11sp" />
+
+            </RelativeLayout>
+
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/rl_realm_currency"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/iv_serenitea_pot"-->
+<!--                    android:layout_width="16dp"-->
+<!--                    android:layout_height="16dp"-->
+<!--                    android:layout_alignParentLeft="true"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_marginRight="2dp"-->
+<!--                    android:scaleType="fitXY"-->
+<!--                    android:src="@drawable/icon_serenitea_pot" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_realm_currency_title"-->
+<!--                    style="@style/TextView"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_toLeftOf="@id/tv_realm_currency"-->
+<!--                    android:layout_toRightOf="@id/iv_serenitea_pot"-->
+<!--                    android:singleLine="true"-->
+<!--                    android:text="@string/realm_currency"-->
+<!--                    android:textColor="@color/widget_font_main"-->
+<!--                    android:textSize="12sp" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_realm_currency"-->
+<!--                    style="@style/TextView"-->
+<!--                    android:layout_alignParentRight="true"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:singleLine="true"-->
+<!--                    android:text="2400/2400"-->
+<!--                    android:textColor="@color/widget_font_main"-->
+<!--                    android:textSize="12sp" />-->
+
+<!--            </RelativeLayout>-->
+
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/rl_realm_currency_time"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_realm_currency_time_title"-->
+<!--                    style="@style/TextView"-->
+<!--                    android:layout_alignParentLeft="true"-->
+<!--                    android:layout_marginLeft="18dp"-->
+<!--                    android:layout_toLeftOf="@id/tv_realm_currency_time"-->
+<!--                    android:singleLine="true"-->
+<!--                    android:text="@string/until_fully_replenished"-->
+<!--                    android:textColor="@color/widget_font_main"-->
+<!--                    android:textSize="12sp" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_realm_currency_time"-->
+<!--                    style="@style/TextView"-->
+<!--                    android:layout_alignParentRight="true"-->
+<!--                    android:singleLine="true"-->
+<!--                    android:text="0h 0m"-->
+<!--                    android:textColor="@color/widget_font_main"-->
+<!--                    android:textSize="12sp" />-->
+
+<!--            </RelativeLayout>-->
+
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/rl_transformer"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/iv_transformer"-->
+<!--                    android:layout_width="16dp"-->
+<!--                    android:layout_height="16dp"-->
+<!--                    android:layout_alignParentLeft="true"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_marginRight="2dp"-->
+<!--                    android:scaleType="fitXY"-->
+<!--                    android:src="@drawable/icon_parametric_transformer" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_transformer_title"-->
+<!--                    style="@style/TextView"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_toLeftOf="@id/tv_transformer"-->
+<!--                    android:layout_toRightOf="@id/iv_transformer"-->
+<!--                    android:singleLine="true"-->
+<!--                    android:text="@string/parametric_transformer"-->
+<!--                    android:textColor="@color/widget_font_main"-->
+<!--                    android:textSize="12sp" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_transformer"-->
+<!--                    style="@style/TextView"-->
+<!--                    android:layout_alignParentRight="true"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:singleLine="true"-->
+<!--                    android:text="@string/widget_ui_transformer_not_reached"-->
+<!--                    android:textColor="@color/widget_font_main"-->
+<!--                    android:textSize="12sp" />-->
+
+<!--            </RelativeLayout>-->
+
+            <!--            <RelativeLayout-->
+            <!--                android:id="@+id/rl_transformer_time"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                >-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/tv_transformer_time_title"-->
+            <!--                    style="@style/TextView"-->
+            <!--                    android:layout_alignParentLeft="true"-->
+            <!--                    android:layout_marginLeft="18dp"-->
+            <!--                    android:layout_toLeftOf="@id/tv_transformer_time"-->
+            <!--                    android:singleLine="true"-->
+            <!--                    android:text="@string/until_reusable"-->
+            <!--                    android:textColor="@color/widget_font_main"-->
+            <!--                    android:textSize="12sp" />-->
+
+            <!--                <TextView-->
+            <!--                    style="@style/TextView"-->
+            <!--                    android:id="@+id/tv_transformer_time"-->
+            <!--                    android:text="0d 0h 0m"-->
+            <!--                    android:textSize="12sp"-->
+            <!--                    android:textColor="@color/widget_font_main"-->
+            <!--                    android:layout_alignParentRight="true"-->
+            <!--                    android:singleLine="true"-->
+            <!--                    />-->
+
+            <!--            </RelativeLayout>-->
+
+            <RelativeLayout
+                android:id="@+id/rl_assignment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_credit"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="2dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_credit" />
+
+                <TextView
+                    android:id="@+id/tv_assignment_title"
+                    style="@style/TextView"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_assignment_time"
+                    android:layout_toRightOf="@id/iv_credit"
+                    android:singleLine="true"
+                    android:text="@string/until_assignment_done"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_assignment_time"
+                    style="@style/TextView"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
+                    android:text="0h 0m"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <!--            <RelativeLayout-->
+            <!--                android:id="@+id/rl_exploration_time"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                >-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/tv_exploration_time_title"-->
+            <!--                    style="@style/TextView"-->
+            <!--                    android:layout_alignParentLeft="true"-->
+            <!--                    android:layout_marginLeft="18dp"-->
+            <!--                    android:layout_toLeftOf="@id/tv_exploration_time"-->
+            <!--                    android:singleLine="true"-->
+            <!--                    android:text="@string/until_all_completed"-->
+            <!--                    android:textColor="@color/widget_font_main"-->
+            <!--                    android:textSize="12sp" />-->
+
+            <!--                <TextView-->
+            <!--                    style="@style/TextView"-->
+            <!--                    android:id="@+id/tv_exploration_time"-->
+            <!--                    android:text="0h 0m"-->
+            <!--                    android:textSize="12sp"-->
+            <!--                    android:textColor="@color/widget_font_main"-->
+            <!--                    android:layout_alignParentRight="true"-->
+            <!--                    android:singleLine="true"-->
+            <!--                    />-->
+
+            <!--            </RelativeLayout>-->
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_disable"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_disable"
+                style="@style/TextView"
+                android:gravity="center"
+                android:maxLines="2"
+                android:text="@string/invalid_user_info"
+                android:textColor="@color/widget_font_main"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:indeterminateTint="@color/widget_font_sub"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/ll_root"
+        android:layout_alignBottom="@id/ll_root"
+        android:layout_marginRight="2dp"
+        android:gravity="right"
+        >
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextView"
+            android:text="개척자"
+            android:textColor="@color/widget_font_sub"
+            android:textSize="10sp"
+            android:layout_marginEnd="3dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_uid"
+            style="@style/TextView"
+            android:text="830000000"
+            android:textColor="@color/widget_font_sub"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>
