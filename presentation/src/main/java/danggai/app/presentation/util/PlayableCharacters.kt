@@ -809,4 +809,37 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         R.drawable.icon_kirara
     ),
 
+    LocalCharacter(
+        Constant.ID_LYNETTE,
+        "리넷",
+        "Lynette",
+        4,
+        Elements.ANEMO,
+        Constant.TALENT_AREA_FONTAINE,
+        Constant.TALENT_DATE_WEDSAT,
+        R.drawable.icon_lynette
+    ),
+
+    LocalCharacter(
+        Constant.ID_LYNEY,
+        "리니",
+        "Lyney",
+        5,
+        Elements.PYRO,
+        Constant.TALENT_AREA_FONTAINE,
+        Constant.TALENT_DATE_MONTHU,
+        R.drawable.icon_lyney
+    ),
+
+    LocalCharacter(
+        Constant.ID_FREMINET,
+        "프리미네",
+        "Freminet",
+        4,
+        Elements.CYRO,
+        Constant.TALENT_AREA_FONTAINE,
+        Constant.TALENT_DATE_TUEFRI,
+        R.drawable.icon_freminet
+    ),
+
 )

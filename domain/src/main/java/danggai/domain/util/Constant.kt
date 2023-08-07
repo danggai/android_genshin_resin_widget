@@ -236,6 +236,7 @@ object Constant {
     const val TALENT_AREA_LIYUE = 1
     const val TALENT_AREA_INAZUMA = 2
     const val TALENT_AREA_SUMERU = 3
+    const val TALENT_AREA_FONTAINE = 4
 
     const val TALENT_DATE_MONTHU = 0
     const val TALENT_DATE_TUEFRI = 1
@@ -401,4 +402,7 @@ object Constant {
     const val ID_MIKA = 10000080
     const val ID_KAVEH = 10000081
     const val ID_BAIZHUER = 10000082
+    const val ID_LYNETTE = 10000083
+    const val ID_LYNEY = 10000084
+    const val ID_FREMINET = 10000085
 }
