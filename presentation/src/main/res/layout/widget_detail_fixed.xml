@@ -191,7 +191,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:singleLine="true"
-                    android:text="3/3"
+                    android:text="3 times"
                     android:textColor="@color/widget_font_main"
                     android:textSize="12sp" />
 

@@ -170,9 +170,8 @@ class HKSRDetailWidget() : AppWidgetProvider() {
 
                 view.setTextViewText(R.id.tv_echo_of_war_title, _context.getString(R.string.echo_of_war))
                 view.setTextViewText(R.id.tv_echo_of_war,
-                    if (dailyNote.weekly_cocoon_cnt == dailyNote.weekly_cocoon_limit) { context.getString(R.string.done) }
-                    else { dailyNote.weekly_cocoon_cnt.toString()+"/"+dailyNote.weekly_cocoon_limit.toString() }
-                )
+                    if (dailyNote.weekly_cocoon_cnt == 0) { context.getString(R.string.done) }
+                    else { CommonFunction.convertIntToTimes(dailyNote.weekly_cocoon_cnt, _context) })
 
                 view.setTextViewText(R.id.tv_simulated_universe_title, _context.getString(R.string.simulated_universe))
                 view.setTextViewText(R.id.tv_simulated_universe,
@@ -190,7 +189,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                     }
                     Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
                         view.setTextViewText(R.id.tv_trailblaze_power_time_title, _context.getString(R.string.estimated_replenishment_time))
-                        view.setTextViewText(R.id.tv_expedition_title, _context.getString(R.string.assignment_done_at))
+                        view.setTextViewText(R.id.tv_assignment_title, _context.getString(R.string.assignment_done_at))
                     }
                 }
 
@@ -210,25 +209,25 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 ))
 
                 view.setViewVisibility(R.id.rl_trailblaze_power,
-                    if (widgetDesign.resinDataVisibility) View.VISIBLE else View.GONE
+                    if (widgetDesign.trailBlazepowerDataVisibility) View.VISIBLE else View.GONE
                 )
                 view.setViewVisibility(R.id.rl_trailblaze_power_time,
-                    if (widgetDesign.resinDataVisibility &&
+                    if (widgetDesign.trailBlazepowerDataVisibility &&
                         widgetDesign.timeNotation != Constant.PREF_TIME_NOTATION_DISABLE
                     ) View.VISIBLE else View.GONE
                 )
 
                 view.setViewVisibility(R.id.rl_daily_training,
-                    if (widgetDesign.dailyCommissinDataVisibility) View.VISIBLE else View.GONE
+                    if (widgetDesign.dailyTrainingDataVisibility) View.VISIBLE else View.GONE
                 )
                 view.setViewVisibility(R.id.rl_echo_of_war,
-                    if (widgetDesign.weeklyBossDataVisibility) View.VISIBLE else View.GONE
+                    if (widgetDesign.echoOfWarDataVisibility) View.VISIBLE else View.GONE
                 )
                 view.setViewVisibility(R.id.rl_simulated_universe,
-                    if (widgetDesign.weeklyBossDataVisibility) View.VISIBLE else View.GONE
+                    if (widgetDesign.simulatedUniverseDataVisibility) View.VISIBLE else View.GONE
                 )
                 view.setViewVisibility(R.id.rl_assignment,
-                    if (widgetDesign.expeditionDataVisibility) View.VISIBLE else View.GONE
+                    if (widgetDesign.assignmentTimeDataVisibility) View.VISIBLE else View.GONE
                 )
 
             } else {

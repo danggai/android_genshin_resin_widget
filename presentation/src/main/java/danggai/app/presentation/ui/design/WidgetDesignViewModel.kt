@@ -51,6 +51,13 @@ class WidgetDesignViewModel @Inject constructor(
     val sfRealmCurrencyDataVisibility = MutableStateFlow(true)
     val sfExpeditionDataVisibility = MutableStateFlow(true)
     val sfTransformerDataVisibility = MutableStateFlow(true)
+
+    val sfTrailBlazepowerDataVisibility = MutableStateFlow(true)
+    val sfDailyTrainingDataVisibility = MutableStateFlow(true)
+    val sfEchoOfWarDataVisibility = MutableStateFlow(true)
+    val sfSimulatedUniverseDataVisibility = MutableStateFlow(true)
+    val sfAssignmentTimeDataVisibility = MutableStateFlow(true)
+
     val sfFontSizeDetail = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
     val sfDetailUidVisibility = MutableStateFlow(false)
     val sfDetailNameVisibility = MutableStateFlow(false)
@@ -59,7 +66,7 @@ class WidgetDesignViewModel @Inject constructor(
 
     private var _sfCharacterList: MutableStateFlow<MutableList<LocalCharacter>> = MutableStateFlow(mutableListOf())
     val sfCharacterList: MutableStateFlow<MutableList<LocalCharacter>>
-       get() = _sfCharacterList
+        get() = _sfCharacterList
 
     private var _sfSelectedCharacterList: MutableStateFlow<MutableList<LocalCharacter>> = MutableStateFlow(mutableListOf())
     val sfSelectedCharacterList: MutableStateFlow<MutableList<LocalCharacter>>
@@ -89,8 +96,16 @@ class WidgetDesignViewModel @Inject constructor(
             sfRealmCurrencyDataVisibility.value = it.realmCurrencyDataVisibility
             sfExpeditionDataVisibility.value = it.expeditionDataVisibility
             sfTransformerDataVisibility.value = it.transformerDataVisibility
+
+            sfTrailBlazepowerDataVisibility.value = it.trailBlazepowerDataVisibility
+            sfDailyTrainingDataVisibility.value = it.dailyTrainingDataVisibility
+            sfEchoOfWarDataVisibility.value = it.echoOfWarDataVisibility
+            sfSimulatedUniverseDataVisibility.value = it.simulatedUniverseDataVisibility
+            sfAssignmentTimeDataVisibility.value = it.assignmentTimeDataVisibility
+
             sfDetailUidVisibility.value = it.uidVisibility
             sfDetailNameVisibility.value = it.nameVisibility
+
         }
 
         preference.getSelectedCharacterIdList().let {
@@ -201,12 +216,20 @@ class WidgetDesignViewModel @Inject constructor(
             DetailWidgetDesignSettings(
                 sfWidgetTheme.value,
                 sfDetailTimeNotation.value,
+
                 sfResinDataVisibility.value,
                 sfDailyCommissionDataVisibility.value,
                 sfWeeklyBossDataVisibility.value,
                 sfRealmCurrencyDataVisibility.value,
                 sfExpeditionDataVisibility.value,
                 sfTransformerDataVisibility.value,
+
+                sfTrailBlazepowerDataVisibility.value,
+                sfDailyTrainingDataVisibility.value,
+                sfEchoOfWarDataVisibility.value,
+                sfSimulatedUniverseDataVisibility.value,
+                sfAssignmentTimeDataVisibility.value,
+
                 sfDetailUidVisibility.value,
                 sfDetailNameVisibility.value,
                 sfFontSizeDetail.value,
@@ -220,7 +243,7 @@ class WidgetDesignViewModel @Inject constructor(
 
         sendEvent(Event.FinishThisActivity())
     }
-    
+
     fun onClickSave() {
         log.e()
         saveData()

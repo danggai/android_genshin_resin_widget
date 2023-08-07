@@ -24,6 +24,8 @@
     <string name="select_character_title">Characters display in widget</string>
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
+    <string name="time">\u0020time</string>
+    <string name="times">\u0020times</string>
 
     <string name="uid" translatable="false">Uid</string>
     <string name="nickname_">Nickname</string>

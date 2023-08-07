@@ -16,6 +16,8 @@
 
     <string name="apply">확인</string>
     <string name="cancel">취소</string>
+    <string name="time">회</string>
+    <string name="times">회</string>
 
     <string name="select_character_title">위젯에 표시할 캐릭터</string>
 

@@ -170,7 +170,7 @@ class DetailWidget() : AppWidgetProvider() {
                 view.setTextViewText(R.id.tv_weekly_boss_title, _context.getString(R.string.enemies_of_note))
                 view.setTextViewText(R.id.tv_weekly_boss,
                     if (dailyNote.remain_resin_discount_num == 0) { context.getString(R.string.done) }
-                    else { dailyNote.remain_resin_discount_num.toString()+"/"+dailyNote.resin_discount_num_limit.toString() }
+                    else { CommonFunction.convertIntToTimes(dailyNote.remain_resin_discount_num, _context) }
                 )
 
                 view.setTextViewText(R.id.tv_realm_currency_title, _context.getString(R.string.realm_currency))

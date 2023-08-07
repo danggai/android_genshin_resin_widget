@@ -126,6 +126,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
                         CommonFunction.sendBroadcastAppWidgetUpdate<DetailWidget>(_context)
                         CommonFunction.sendBroadcastAppWidgetUpdate<MiniWidget>(_context)
                         CommonFunction.sendBroadcastAppWidgetUpdate<TrailPowerWidget>(_context)
+                        CommonFunction.sendBroadcastAppWidgetUpdate<HKSRDetailWidget>(_context)
                         _context.sendBroadcast(
                             Intent(_context, TalentWidget::class.java)
                                 .setAction(Constant.ACTION_TALENT_WIDGET_REFRESH)
