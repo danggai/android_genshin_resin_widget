@@ -388,5 +388,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 원신 출석 체크 > 캡차 발생으로 인한 출석 실패 > 우회 로직 적용</string>
+    <string name="dialog_msg_patch_note">- 원신 4.0.0 신규 캐릭터 추가\n-붕괴: 스타레일 상세 위젯 및 디자인 추가</string>
 </resources>
