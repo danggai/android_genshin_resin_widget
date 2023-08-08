@@ -16,6 +16,8 @@
 
     <string name="apply">확인</string>
     <string name="cancel">취소</string>
+    <string name="time">회</string>
+    <string name="times">회</string>
 
     <string name="select_character_title">위젯에 표시할 캐릭터</string>
 
@@ -292,12 +294,13 @@
 
 
     <!-- Widget UI -->
-    <string name="widget_label_detail_fixed">상세 위젯 (크기 고정)</string>
+    <string name="widget_label_genshin_detail">원신 상세 위젯</string>
     <string name="widget_label_resin_resizable">레진 위젯 (크기 조절 가능)</string>
     <string name="widget_label_resin_fixed">레진 위젯 (크기 고정)</string>
     <string name="widget_label_talent">특성 소재 위젯</string>
     <string name="widget_label_mini">미니 위젯</string>
     <string name="widget_label_trailblaze_power">개척력 위젯</string>
+    <string name="widget_label_hksr_detail">붕괴: 스타레일 상세 위젯</string>
 
     <string name="widget_ui_simple_time">%d시간 %d분</string>
     <string name="widget_ui_remain_time">%d시간 %d분 남음</string>
@@ -319,11 +322,19 @@
 
     <string name="daily_commissions">남은 일일 의뢰</string>
     <string name="enemies_of_note">주간 보스 할인</string>
-    <string name="until_expeditions_done">모든 탐사 완료까지</string>
+    <string name="until_expeditions_done">모든 탐험 완료까지</string>
     <string name="expeditions_done_at">모든 탐사 완료 시각</string>
     <string name="parametric_transformer">매개변수 변환기</string>
     <string name="realm_currency">선계 주화</string>
     <string name="expedition_time">탐험 시간</string>
+
+    <string name="daily_training">일일 훈련</string>
+    <string name="echo_of_war">전쟁의 여운</string>
+    <string name="simulated_universe">시뮬레이션 우주</string>
+    <string name="until_assignment_done">모든 의뢰 완료까지</string>
+    <string name="assignment_time">의뢰 시간</string>
+    <string name="assignment_done_at">모든 의뢰 완료 시각</string>
+
     <string name="until_fully_replenished">전부 충전까지</string>
     <string name="estimated_replenishment_time">완충 예정 시각</string>
     <string name="until_all_completed">모두 완료까지</string>
@@ -331,7 +342,7 @@
     <string name="until_reusable">재사용 가능까지</string>
     <string name="estimated_reusable_time">재사용 예정 시각</string>
 
-    <string name="foreground_genshin_check_in_progress">호요랩 원신 출석체크 진행 중</string>
+    <string name="foreground_check_in_inprogress">호요랩 출석체크 진행 중</string>
 
     <!-- 시간 및 요일 -->
     <string name="mon">월</string>

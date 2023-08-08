@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:name="danggai.app.resinwidget.App"
@@ -76,7 +77,7 @@
 
         <receiver
             android:name="danggai.app.presentation.ui.widget.DetailWidget"
-            android:label="@string/widget_label_detail_fixed"
+            android:label="@string/widget_label_genshin_detail"
             android:exported="true">
 
             <intent-filter>
@@ -154,6 +155,27 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/trailblaze_power_widget_info" />
+
+        </receiver>
+
+        <receiver
+            android:name="danggai.app.presentation.ui.widget.HKSRDetailWidget"
+            android:label="@string/widget_label_hksr_detail"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="danggai.app.resinwidget.refresh.resin.ui" />
+                <action android:name="danggai.app.resinwidget.refresh.resin.data" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/hksr_detail_widget_info" />
 
         </receiver>
 

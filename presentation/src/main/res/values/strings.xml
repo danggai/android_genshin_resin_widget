@@ -24,6 +24,8 @@
     <string name="select_character_title">Characters display in widget</string>
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
+    <string name="time">\u0020time</string>
+    <string name="times">\u0020times</string>
 
     <string name="uid" translatable="false">Uid</string>
     <string name="nickname_">Nickname</string>
@@ -315,12 +317,13 @@
 
 
     <!-- Widget UI -->
-    <string name="widget_label_detail_fixed">Fixed Sized Detail Widget</string>
+    <string name="widget_label_genshin_detail">Genshin Detail Widget</string>
     <string name="widget_label_resin_resizable">Resizable Resin Widget</string>
     <string name="widget_label_resin_fixed">Fixed Sized Resin Widget</string>
     <string name="widget_label_talent">Talent Materials Widget</string>
     <string name="widget_label_mini">Mini Widget</string>
     <string name="widget_label_trailblaze_power">Trailblaze Power Widget</string>
+    <string name="widget_label_hksr_detail">Honkai: Starrail Detail Widget</string>
 
     <string name="widget_ui_simple_time">%dh %dm</string>
     <string name="widget_ui_remain_time">%dh %dm left</string>
@@ -347,6 +350,14 @@
     <string name="parametric_transformer">Parametric Transformer</string>
     <string name="realm_currency">Realm Currency</string>
     <string name="expedition_time">Expedition Time</string>
+
+    <string name="daily_training">Daily Training</string>
+    <string name="echo_of_war">Echo of War</string>
+    <string name="simulated_universe">Simulated Universe</string>
+    <string name="until_assignment_done">Until Assignment Done</string>
+    <string name="assignment_time">Assignment Time</string>
+    <string name="assignment_done_at">Assignment Done At</string>
+
     <string name="until_fully_replenished">Until Replenished</string>
     <string name="estimated_replenishment_time">ETC</string>
     <string name="until_all_completed">Until All Completed</string>
@@ -354,7 +365,7 @@
     <string name="until_reusable">Until Reusable</string>
     <string name="estimated_reusable_time">ETC</string>
 
-    <string name="foreground_genshin_check_in_progress">HoYoLAB Genshin Check-in progressing</string>
+    <string name="foreground_check_in_inprogress">HoYoLAB Check-in in-progressing</string>
 
     <!-- 시간 및 요일 -->
     <string name="mon">Mon</string>

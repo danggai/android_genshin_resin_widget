@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BaseViewModel
+import danggai.app.presentation.ui.widget.HKSRDetailWidget
 import danggai.app.presentation.ui.widget.MiniWidget
 import danggai.app.presentation.ui.widget.TrailPowerWidget
 import danggai.app.presentation.util.log
@@ -68,7 +69,10 @@ class WidgetConfigViewModel @Inject constructor(
         if (isHonkaiSrWidget()) account.honkai_sr_nickname else account.nickname
 
     fun isHonkaiSrWidget(): Boolean {
-        return widgetClassName == TrailPowerWidget::class.java.name
+        return widgetClassName in listOf(
+            TrailPowerWidget::class.java.name,
+            HKSRDetailWidget::class.java.name
+        )
     }
 
     private fun confirmEnable(): Boolean {

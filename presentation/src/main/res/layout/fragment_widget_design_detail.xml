@@ -24,8 +24,17 @@
             layout="@layout/widget_detail_fixed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="50dp"
+            />
 
-            android:layout_marginVertical="30dp"
+        <include
+            android:id="@+id/widget_hksr"
+            layout="@layout/widget_hksr_detail_fixed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
             android:layout_marginHorizontal="50dp"
             />
 
@@ -158,6 +167,10 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="10dp" />
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -229,7 +242,6 @@
                         android:checked="@={vm.sfRealmCurrencyDataVisibility}"
                         android:text="@string/realm_currency" />
 
-
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -249,6 +261,71 @@
                         android:id="@+id/cb_parametric_transformer"
                         android:checked="@={vm.sfTransformerDataVisibility}"
                         android:text="@string/parametric_transformer" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="10dp" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    >
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_trailblaze_power"
+                        android:checked="@={vm.sfTrailBlazepowerDataVisibility}"
+                        android:text="@string/trailblaze_power" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_daily_training"
+                        android:checked="@={vm.sfDailyTrainingDataVisibility}"
+                        android:text="@string/daily_training" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    >
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_echo_of_war"
+                        android:checked="@={vm.sfEchoOfWarDataVisibility}"
+                        android:text="@string/echo_of_war" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_simulated_universe"
+                        android:checked="@={vm.sfSimulatedUniverseDataVisibility}"
+                        android:text="@string/simulated_universe" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    >
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_assignment"
+                        android:checked="@={vm.sfAssignmentTimeDataVisibility}"
+                        android:text="@string/assignment_time" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_empty"
+                        android:checked="@={vm.sfAssignmentTimeDataVisibility}"
+                        android:text="@string/assignment_time"
+                        android:visibility="gone"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

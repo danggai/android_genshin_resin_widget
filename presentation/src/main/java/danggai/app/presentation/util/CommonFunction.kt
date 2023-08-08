@@ -87,6 +87,7 @@ object CommonFunction {
             sendBroadcastAppWidgetUpdate<DetailWidget>(context)
             sendBroadcastAppWidgetUpdate<MiniWidget>(context)
             sendBroadcastAppWidgetUpdate<TrailPowerWidget>(context)
+            sendBroadcastAppWidgetUpdate<HKSRDetailWidget>(context)
         }
     }
 
@@ -361,6 +362,18 @@ object CommonFunction {
         return px / logicalDensity
     }
 
+    /**
+     * 1 -> 1 time
+     *
+     * etc. -> 2 times
+     **/
+    fun convertIntToTimes(int: Int, context: Context): String {
+        return when (int) {
+            1 -> int.toString() + context.getString(R.string.time)
+            else -> int.toString() + context.getString(R.string.times)
+        }
+    }
+
     fun applyWidgetTheme(
         widgetDesign: ResinWidgetDesignSettings,
         context: Context,
@@ -478,6 +491,18 @@ object CommonFunction {
         view.setTextColor(R.id.tv_realm_currency_title, mainFontColor)
         view.setTextColor(R.id.tv_realm_currency_time, mainFontColor)
         view.setTextColor(R.id.tv_realm_currency_time_title, mainFontColor)
+        view.setTextColor(R.id.tv_trail_power, mainFontColor)
+        view.setTextColor(R.id.tv_trailblaze_power_title, mainFontColor)
+        view.setTextColor(R.id.tv_trailblaze_power_time, mainFontColor)
+        view.setTextColor(R.id.tv_trailblaze_power_time_title, mainFontColor)
+        view.setTextColor(R.id.tv_daily_training, mainFontColor)
+        view.setTextColor(R.id.tv_daily_training_title, mainFontColor)
+        view.setTextColor(R.id.tv_echo_of_war, mainFontColor)
+        view.setTextColor(R.id.tv_echo_of_war_title, mainFontColor)
+        view.setTextColor(R.id.tv_assignment_time, mainFontColor)
+        view.setTextColor(R.id.tv_assignment_title, mainFontColor)
+        view.setTextColor(R.id.tv_simulated_universe, mainFontColor)
+        view.setTextColor(R.id.tv_simulated_universe_title, mainFontColor)
 
         view.setFloat(R.id.tv_resin, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_resin_title, "setTextSize", fontSize.toFloat())
@@ -495,6 +520,18 @@ object CommonFunction {
         view.setFloat(R.id.tv_realm_currency_title, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_realm_currency_time, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_realm_currency_time_title, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_trail_power, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_trailblaze_power_title, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_trailblaze_power_time, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_trailblaze_power_time_title, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_daily_training, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_daily_training_title, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_echo_of_war, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_echo_of_war_title, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_assignment_time, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_assignment_title, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_simulated_universe, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_simulated_universe_title, "setTextSize", fontSize.toFloat())
     }
 
     private const val widgetHasNoUid = "nouid"

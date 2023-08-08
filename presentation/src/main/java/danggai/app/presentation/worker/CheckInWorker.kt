@@ -553,8 +553,8 @@ class CheckInWorker @AssistedInject constructor(
 
         val notification = NotificationCompat.Builder(applicationContext,
             Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID)
-            .setContentTitle(applicationContext.getString(R.string.foreground_genshin_check_in_progress))
-            .setTicker(applicationContext.getString(R.string.foreground_genshin_check_in_progress))
+            .setContentTitle(applicationContext.getString(R.string.foreground_check_in_inprogress))
+            .setTicker(applicationContext.getString(R.string.foreground_check_in_inprogress))
             .setSmallIcon(R.drawable.resin)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setWhen(0)

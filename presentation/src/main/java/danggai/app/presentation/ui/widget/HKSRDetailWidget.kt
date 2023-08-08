@@ -19,12 +19,13 @@ import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
+import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
 import danggai.domain.util.Constant
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class DetailWidget() : AppWidgetProvider() {
+class HKSRDetailWidget() : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
@@ -44,7 +45,7 @@ class DetailWidget() : AppWidgetProvider() {
         super.onReceive(context, intent)
         val action = intent?.action
 
-        val thisWidget = ComponentName(context!!, DetailWidget::class.java)
+        val thisWidget = ComponentName(context!!, HKSRDetailWidget::class.java)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
@@ -101,23 +102,23 @@ class DetailWidget() : AppWidgetProvider() {
     }
 
     private fun makeRemoteViews(context: Context?): RemoteViews {
-        val views = RemoteViews(context!!.packageName, R.layout.widget_detail_fixed)
+        val views = RemoteViews(context!!.packageName, R.layout.widget_hksr_detail_fixed)
 
-        val intentUpdate = Intent(context, DetailWidget::class.java).apply {
+        val intentUpdate = Intent(context, HKSRDetailWidget::class.java).apply {
             action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
         }
         views.setOnClickPendingIntent(R.id.ll_sync, PendingIntent.getBroadcast(context, 0, intentUpdate, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT))
 
         val intentMainActivity = Intent(context, MainActivity::class.java)
-        views.setOnClickPendingIntent(R.id.iv_resin, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
-        views.setOnClickPendingIntent(R.id.iv_daily_commission, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
-        views.setOnClickPendingIntent(R.id.iv_domain, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
-        views.setOnClickPendingIntent(R.id.iv_serenitea_pot, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
-        views.setOnClickPendingIntent(R.id.iv_warp, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
+        views.setOnClickPendingIntent(R.id.iv_trailblaze_power, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
+        views.setOnClickPendingIntent(R.id.iv_daily_training, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
+        views.setOnClickPendingIntent(R.id.iv_echo_of_war, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
+        views.setOnClickPendingIntent(R.id.iv_simulated_universe, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
+        views.setOnClickPendingIntent(R.id.iv_credit, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
         views.setOnClickPendingIntent(R.id.ll_disable, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
-        val awId = manager.getAppWidgetIds(ComponentName(context.applicationContext, DetailWidget::class.java))
+        val awId = manager.getAppWidgetIds(ComponentName(context.applicationContext, HKSRDetailWidget::class.java))
 
         manager.updateAppWidget(awId, views)
 
@@ -146,7 +147,7 @@ class DetailWidget() : AppWidgetProvider() {
                 view.setViewVisibility(R.id.ll_body, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_bottom, View.VISIBLE)
 
-                val dailyNote = PreferenceManager.getT<GenshinDailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid")?: GenshinDailyNoteData.EMPTY
+                val dailyNote = PreferenceManager.getT<HonkaiSrDailyNoteData>(context, Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid")?: HonkaiSrDailyNoteData.EMPTY
 
                 view.setViewVisibility(R.id.tv_uid,
                     if(widgetDesign.uidVisibility) View.VISIBLE else View.GONE
@@ -158,39 +159,24 @@ class DetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(R.id.tv_name, name)
 
-                view.setTextViewText(R.id.tv_resin_title, _context.getString(R.string.resin))
-                view.setTextViewText(R.id.tv_resin, dailyNote.current_resin.toString()+"/"+dailyNote.max_resin.toString())
+                view.setTextViewText(R.id.tv_trailblaze_power_title, _context.getString(R.string.trailblaze_power))
+                view.setTextViewText(R.id.tv_trailblaze_power, dailyNote.current_stamina.toString()+"/"+dailyNote.max_stamina.toString())
 
-                view.setTextViewText(R.id.tv_daily_commission_title, _context.getString(R.string.daily_commissions))
-                view.setTextViewText(R.id.tv_daily_commission,
-                    if (dailyNote.is_extra_task_reward_received) { _context.getString(R.string.done) }
-                    else { (dailyNote.total_task_num - dailyNote.finished_task_num).toString()+"/"+dailyNote.total_task_num.toString() }
+                view.setTextViewText(R.id.tv_daily_training_title, _context.getString(R.string.daily_training))
+                view.setTextViewText(R.id.tv_daily_training,
+                    if (dailyNote.current_train_score == dailyNote.max_train_score) { _context.getString(R.string.done) }
+                    else { dailyNote.current_train_score.toString()+"/"+dailyNote.max_train_score.toString() }
                 )
 
-                view.setTextViewText(R.id.tv_weekly_boss_title, _context.getString(R.string.enemies_of_note))
-                view.setTextViewText(R.id.tv_weekly_boss,
-                    if (dailyNote.remain_resin_discount_num == 0) { context.getString(R.string.done) }
-                    else { CommonFunction.convertIntToTimes(dailyNote.remain_resin_discount_num, _context) }
-                )
+                view.setTextViewText(R.id.tv_echo_of_war_title, _context.getString(R.string.echo_of_war))
+                view.setTextViewText(R.id.tv_echo_of_war,
+                    if (dailyNote.weekly_cocoon_cnt == 0) { context.getString(R.string.done) }
+                    else { CommonFunction.convertIntToTimes(dailyNote.weekly_cocoon_cnt, _context) })
 
-                view.setTextViewText(R.id.tv_realm_currency_title, _context.getString(R.string.realm_currency))
-                view.setTextViewText(R.id.tv_realm_currency,
-                    (dailyNote.current_home_coin).toString()+"/"+(dailyNote.max_home_coin).toString()
-                )
-
-                view.setTextViewText(R.id.tv_transformer_title, _context.getString(R.string.parametric_transformer))
-                view.setTextViewText(R.id.tv_transformer,
-                    when {
-                        dailyNote.transformer == null -> _context.getString(R.string.widget_ui_unknown)
-                        !dailyNote.transformer!!.obtained -> _context.getString(R.string.widget_ui_transformer_not_obtained)
-                        !dailyNote.transformer!!.recovery_time.reached -> TimeFunction.transformerToTime(
-                            _context,
-                            recentSyncTimeDate,
-                            dailyNote.transformer,
-                            widgetDesign.timeNotation
-                        )
-                        else -> _context.getString(R.string.widget_ui_transformer_reached)
-                    }
+                view.setTextViewText(R.id.tv_simulated_universe_title, _context.getString(R.string.simulated_universe))
+                view.setTextViewText(R.id.tv_simulated_universe,
+                    if (dailyNote.current_rogue_score == dailyNote.max_rogue_score) { context.getString(R.string.done) }
+                    else { dailyNote.current_rogue_score.toString()+"/"+dailyNote.max_rogue_score.toString() }
                 )
 
                 view.setTextViewText(R.id.tv_sync_time, recentSyncTimeString)
@@ -198,71 +184,52 @@ class DetailWidget() : AppWidgetProvider() {
                 when (widgetDesign.timeNotation) {
                     Constant.PREF_TIME_NOTATION_DEFAULT,
                     Constant.PREF_TIME_NOTATION_REMAIN_TIME -> {
-                        view.setTextViewText(R.id.tv_resin_time_title, _context.getString(R.string.until_fully_replenished))
-                        view.setTextViewText(R.id.tv_realm_currency_time_title, _context.getString(R.string.until_fully_replenished))
-                        view.setTextViewText(R.id.tv_expedition_title, _context.getString(R.string.until_expeditions_done))
+                        view.setTextViewText(R.id.tv_trailblaze_power_time_title, _context.getString(R.string.until_fully_replenished))
+                        view.setTextViewText(R.id.tv_assignment_title, _context.getString(R.string.until_assignment_done))
                     }
                     Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
-                        view.setTextViewText(R.id.tv_resin_time_title, _context.getString(R.string.estimated_replenishment_time))
-                        view.setTextViewText(R.id.tv_realm_currency_time_title, _context.getString(R.string.estimated_replenishment_time))
-                        view.setTextViewText(R.id.tv_expedition_title, _context.getString(R.string.expeditions_done_at))
+                        view.setTextViewText(R.id.tv_trailblaze_power_time_title, _context.getString(R.string.estimated_replenishment_time))
+                        view.setTextViewText(R.id.tv_assignment_title, _context.getString(R.string.assignment_done_at))
                     }
                 }
 
-                view.setTextViewText(R.id.tv_resin_time, TimeFunction.resinSecondToTime(
+                view.setTextViewText(R.id.tv_trailblaze_power_time, TimeFunction.resinSecondToTime(
                     _context,
                     recentSyncTimeDate,
-                    dailyNote.resin_recovery_time,
+                    dailyNote.stamina_recover_time,
                     widgetDesign.timeNotation
                 ))
-                view.setTextViewText(R.id.tv_realm_currency_time, TimeFunction.realmCurrencySecondToTime(
-                    _context,
-                    recentSyncTimeDate,
-                    dailyNote.home_coin_recovery_time,
-                    widgetDesign.timeNotation
-                ))
-                view.setTextViewText(R.id.tv_expedition_time, TimeFunction.expeditionSecondToTime(
+                view.setTextViewText(R.id.tv_assignment_time, TimeFunction.expeditionSecondToTime(
                     _context,
                     recentSyncTimeDate,
                     PreferenceManager.getString(
                         context,
-                        Constant.PREF_EXPEDITION_TIME + "_$uid"),
+                        Constant.PREF_ASSIGNMENT_TIME + "_$uid"),
                     widgetDesign.timeNotation
                 ))
 
-                view.setViewVisibility(R.id.rl_resin,
-                    if (widgetDesign.resinDataVisibility) View.VISIBLE else View.GONE
+                view.setViewVisibility(R.id.rl_trailblaze_power,
+                    if (widgetDesign.trailBlazepowerDataVisibility) View.VISIBLE else View.GONE
                 )
-                view.setViewVisibility(R.id.rl_resin_time,
-                    if (widgetDesign.resinDataVisibility &&
+                view.setViewVisibility(R.id.rl_trailblaze_power_time,
+                    if (widgetDesign.trailBlazepowerDataVisibility &&
                         widgetDesign.timeNotation != Constant.PREF_TIME_NOTATION_DISABLE
                     ) View.VISIBLE else View.GONE
                 )
 
-                view.setViewVisibility(R.id.rl_daily_commission,
-                    if (widgetDesign.dailyCommissinDataVisibility) View.VISIBLE else View.GONE
+                view.setViewVisibility(R.id.rl_daily_training,
+                    if (widgetDesign.dailyTrainingDataVisibility) View.VISIBLE else View.GONE
                 )
-                view.setViewVisibility(R.id.rl_weekly_boss,
-                    if (widgetDesign.weeklyBossDataVisibility) View.VISIBLE else View.GONE
+                view.setViewVisibility(R.id.rl_echo_of_war,
+                    if (widgetDesign.echoOfWarDataVisibility) View.VISIBLE else View.GONE
                 )
-
-                view.setViewVisibility(R.id.rl_realm_currency,
-                    if (widgetDesign.realmCurrencyDataVisibility) View.VISIBLE else View.GONE
+                view.setViewVisibility(R.id.rl_simulated_universe,
+                    if (widgetDesign.simulatedUniverseDataVisibility) View.VISIBLE else View.GONE
                 )
-                view.setViewVisibility(R.id.rl_realm_currency_time,
-                    if (widgetDesign.realmCurrencyDataVisibility &&
-                        widgetDesign.timeNotation != Constant.PREF_TIME_NOTATION_DISABLE &&
-                        dailyNote.home_coin_recovery_time != "0"
-                    ) View.VISIBLE else View.GONE
+                view.setViewVisibility(R.id.rl_assignment,
+                    if (widgetDesign.assignmentTimeDataVisibility) View.VISIBLE else View.GONE
                 )
 
-                view.setViewVisibility(R.id.rl_expedition,
-                    if (widgetDesign.expeditionDataVisibility) View.VISIBLE else View.GONE
-                )
-
-                view.setViewVisibility(R.id.rl_transformer,
-                    if (widgetDesign.transformerDataVisibility) View.VISIBLE else View.GONE
-                )
             } else {
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
                 view.setViewVisibility(R.id.ll_body, View.GONE)
@@ -285,7 +252,7 @@ class DetailWidget() : AppWidgetProvider() {
     ) {
         appWidgetIds.forEach { appWidgetId ->
             log.e()
-            val view = RemoteViews(context.packageName, R.layout.widget_detail_fixed)
+            val view = RemoteViews(context.packageName, R.layout.widget_hksr_detail_fixed)
 
             view.setViewVisibility(R.id.pb_loading, View.VISIBLE)
             view.setViewVisibility(R.id.ll_body, View.INVISIBLE)

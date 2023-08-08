@@ -14,6 +14,7 @@ import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentWidgetDesignDetailBinding
 import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.design.WidgetDesignViewModel
+import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.CommonFunction.isDarkMode
 import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.log
@@ -53,6 +54,9 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
             it.pbLoading.visibility = View.GONE
             it.llDisable.visibility = View.GONE
         }
+
+        binding.widget.tvWeeklyBoss.text = context?.let { CommonFunction.convertIntToTimes(3, it) }
+        binding.widgetHksr.tvEchoOfWar.text = context?.let { CommonFunction.convertIntToTimes(3, it) }
 
         when(mVM.sfDetailTimeNotation.value) {
             Constant.PREF_TIME_NOTATION_DEFAULT,
@@ -135,6 +139,29 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
 
                             llRoot.background = wrappedDrawable
                         }
+
+                        binding.widgetHksr.apply {
+                            llRoot.setBackgroundColor(bgColor)
+
+                            ivRefersh.setColorFilter(subFontColor)
+                            tvSyncTime.setTextColor(subFontColor)
+                            tvDisable.setTextColor(subFontColor)
+
+                            tvTrailblazePower.setTextColor(mainFontColor)
+                            tvTrailblazePowerTitle.setTextColor(mainFontColor)
+                            tvTrailblazePowerTime.setTextColor(mainFontColor)
+                            tvTrailblazePowerTimeTitle.setTextColor(mainFontColor)
+                            tvDailyTraining.setTextColor(mainFontColor)
+                            tvDailyTrainingTitle.setTextColor(mainFontColor)
+                            tvEchoOfWar.setTextColor(mainFontColor)
+                            tvEchoOfWarTitle.setTextColor(mainFontColor)
+                            tvSimulatedUniverse.setTextColor(mainFontColor)
+                            tvSimulatedUniverseTitle.setTextColor(mainFontColor)
+                            tvAssignmentTime.setTextColor(mainFontColor)
+                            tvAssignmentTitle.setTextColor(mainFontColor)
+
+                            llRoot.background = wrappedDrawable
+                        }
                     }
                 }
             }
@@ -154,6 +181,7 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                         DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(color, mVM.sfTransparency.value))
 
                         binding.widget.llRoot.background = wrappedDrawable
+                        binding.widgetHksr  .llRoot.background = wrappedDrawable
                     }
                 }
             }
@@ -180,6 +208,23 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                             tvExpeditionTime.textSize = it
                             tvTransformer.textSize = it
                             tvTransformerTitle.textSize = it
+                        }
+                    }
+
+                    binding.widgetHksr.apply {
+                        it.toFloat().let {
+                            tvTrailblazePower.textSize = it
+                            tvTrailblazePowerTitle.textSize = it
+                            tvTrailblazePowerTime.textSize = it
+                            tvTrailblazePowerTimeTitle.textSize = it
+                            tvDailyTraining.textSize = it
+                            tvDailyTrainingTitle.textSize = it
+                            tvEchoOfWar.textSize = it
+                            tvEchoOfWarTitle.textSize = it
+                            tvSimulatedUniverse.textSize = it
+                            tvSimulatedUniverseTitle.textSize = it
+                            tvAssignmentTime.textSize = it
+                            tvAssignmentTitle.textSize = it
                         }
                     }
                 }
@@ -230,6 +275,35 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                             tvRealmCurrencyTime.text = TimeFunction.realmCurrencySecondToTime(_context, Date(), fakeRealmCurrencyRemainTime, mVM.sfDetailTimeNotation.value)
                             tvExpeditionTime.text = TimeFunction.expeditionSecondToTime(_context, Date(), fakeExpedtionRemainTime, mVM.sfDetailTimeNotation.value)
                             tvTransformer.text = TimeFunction.transformerToTime(_context, Date(), fakeTransformer, mVM.sfDetailTimeNotation.value)
+                        }
+
+                        binding.widgetHksr.apply {
+                            when (mVM.sfDetailTimeNotation.value) {
+                                Constant.PREF_TIME_NOTATION_DEFAULT,
+                                Constant.PREF_TIME_NOTATION_REMAIN_TIME,
+                                -> {
+                                    rlTrailblazePowerTime.visibility =
+                                        if (mVM.sfTrailBlazepowerDataVisibility.value) View.VISIBLE else View.GONE
+
+                                    tvTrailblazePowerTimeTitle.text =
+                                        _context.getString(R.string.until_fully_replenished)
+                                    tvAssignmentTitle.text =
+                                        _context.getString(R.string.until_assignment_done)
+                                }
+                                Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME ->  {
+                                    rlTrailblazePowerTime.visibility =
+                                        if (mVM.sfTrailBlazepowerDataVisibility.value) View.VISIBLE else View.GONE
+
+                                    tvTrailblazePowerTimeTitle.text = _context.getString(R.string.estimated_replenishment_time)
+                                    tvAssignmentTitle.text = _context.getString(R.string.assignment_done_at)
+                                }
+                                Constant.PREF_TIME_NOTATION_DISABLE ->  {
+                                    rlTrailblazePowerTime.visibility = View.GONE
+                                }
+                            }
+
+                            tvTrailblazePowerTime.text = TimeFunction.resinSecondToTime(_context, Date(), fakeResinRemainTime, mVM.sfDetailTimeNotation.value)
+                            tvAssignmentTime.text = TimeFunction.expeditionSecondToTime(_context, Date(), fakeExpedtionRemainTime, mVM.sfDetailTimeNotation.value)
                         }
                     }
                 }
@@ -290,6 +364,42 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                 mVM.sfDetailNameVisibility.collect {
                     log.e()
                     binding.widget.tvName.visibility = if (it) View.VISIBLE else View.GONE
+                }
+            }
+
+            launch {
+                mVM.sfTrailBlazepowerDataVisibility.collect {
+                    log.e()
+                    binding.widgetHksr.rlTrailblazePower.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widgetHksr.rlTrailblazePowerTime.visibility = if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
+                }
+            }
+
+            launch {
+                mVM.sfDailyTrainingDataVisibility.collect {
+                    log.e()
+                    binding.widgetHksr.rlDailyTraining.visibility = if (it) View.VISIBLE else View.GONE
+                }
+            }
+
+            launch {
+                mVM.sfEchoOfWarDataVisibility.collect {
+                    log.e()
+                    binding.widgetHksr.rlEchoOfWar.visibility = if (it) View.VISIBLE else View.GONE
+                }
+            }
+
+            launch {
+                mVM.sfSimulatedUniverseDataVisibility.collect {
+                    log.e()
+                    binding.widgetHksr.rlSimulatedUniverse.visibility = if (it) View.VISIBLE else View.GONE
+                }
+            }
+
+            launch {
+                mVM.sfAssignmentTimeDataVisibility.collect {
+                    log.e()
+                    binding.widgetHksr.rlAssignment.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
         }
