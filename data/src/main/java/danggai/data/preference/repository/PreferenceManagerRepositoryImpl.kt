@@ -10,6 +10,7 @@ import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
+import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import org.json.JSONArray
@@ -286,9 +287,9 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
     override fun setGenshinDailyNote(uid: String, value: GenshinDailyNoteData) =
         setT(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid", value)
 
-    override fun getHonkaiSrDailyNote(uid: String): HonkaiSrDailyNoteData =
-        getT<HonkaiSrDailyNoteData>(context, Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid")?: HonkaiSrDailyNoteData.EMPTY
-    override fun setHonkaiSrDailyNote(uid: String, value: HonkaiSrDailyNoteData) =
+    override fun getHonkaiSrDailyNote(uid: String): HonkaiSrDataLocal =
+        getT<HonkaiSrDataLocal>(context, Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid")?: HonkaiSrDataLocal.EMPTY
+    override fun setHonkaiSrDailyNote(uid: String, value: HonkaiSrDataLocal) =
         setT(context, Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid", value)
 
     override fun getStringExpeditionTime(uid: String): String =

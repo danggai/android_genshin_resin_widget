@@ -30,6 +30,7 @@ import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
+import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -328,7 +329,7 @@ object CommonFunction {
         }
     }
 
-    fun getExpeditionTime(dailyNote: HonkaiSrDailyNoteData): String {
+    fun getExpeditionTime(dailyNote: HonkaiSrDataLocal): String {
         return try {
             if (dailyNote.expeditions.isEmpty()) "0"
             else dailyNote.expeditions.maxOf { it.remaining_time.toString() }

@@ -7,6 +7,7 @@ import danggai.data.network.dailynote.remote.api.DailyNoteApi
 import danggai.domain.core.ApiResult
 import danggai.domain.network.dailynote.entity.GenshinDailyNote
 import danggai.domain.network.dailynote.entity.HonkaiSrDailyNote
+import danggai.domain.network.dailynote.entity.HonkaiSrRogue
 import danggai.domain.network.dailynote.repository.DailyNoteRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
@@ -71,6 +72,42 @@ class DailyNoteRepositoryImpl @Inject constructor(
         response.suspendOnSuccess {
             emit(this.response.body()?.let {
                 ApiResult.Success<HonkaiSrDailyNote>(
+                    this.response.code(),
+                    it
+                )
+            } ?:ApiResult.Null() )
+        }.suspendOnError {
+            emit(ApiResult.Failure(
+                this.response.code(),
+                this.response.message()
+            ))
+        }.suspendOnException {
+            emit(ApiResult.Error(
+                this.exception
+            ))
+        }
+    }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+
+    override suspend fun rogueHonkaiSr(
+        uid: String,
+        server: String,
+        cookie: String,
+        ds: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit
+    ) = flow<ApiResult<HonkaiSrRogue>> {
+        val response = dailyNoteApi.rogueHonkaiSr(
+            uid,
+            server,
+            schedule_type = 3,
+            need_detail = false,
+            cookie,
+            ds
+        )
+
+        response.suspendOnSuccess {
+            emit(this.response.body()?.let {
+                ApiResult.Success<HonkaiSrRogue>(
                     this.response.code(),
                     it
                 )
