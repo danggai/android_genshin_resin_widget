@@ -504,6 +504,8 @@ object CommonFunction {
         view.setTextColor(R.id.tv_assignment_title, mainFontColor)
         view.setTextColor(R.id.tv_simulated_universe, mainFontColor)
         view.setTextColor(R.id.tv_simulated_universe_title, mainFontColor)
+        view.setTextColor(R.id.tv_simulated_universe_cleared, mainFontColor)
+        view.setTextColor(R.id.tv_simulated_universe_title_cleared, mainFontColor)
 
         view.setFloat(R.id.tv_resin, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_resin_title, "setTextSize", fontSize.toFloat())
@@ -521,7 +523,7 @@ object CommonFunction {
         view.setFloat(R.id.tv_realm_currency_title, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_realm_currency_time, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_realm_currency_time_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_trail_power, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_trailblaze_power, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_trailblaze_power_title, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_trailblaze_power_time, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_trailblaze_power_time_title, "setTextSize", fontSize.toFloat())
@@ -533,6 +535,8 @@ object CommonFunction {
         view.setFloat(R.id.tv_assignment_title, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_simulated_universe, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_simulated_universe_title, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_simulated_universe_cleared, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_simulated_universe_title_cleared, "setTextSize", fontSize.toFloat())
     }
 
     private const val widgetHasNoUid = "nouid"

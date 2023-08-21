@@ -56,6 +56,7 @@ class WidgetDesignViewModel @Inject constructor(
     val sfDailyTrainingDataVisibility = MutableStateFlow(true)
     val sfEchoOfWarDataVisibility = MutableStateFlow(true)
     val sfSimulatedUniverseDataVisibility = MutableStateFlow(true)
+    val sfSimulatedUniverseClearTimeVisibility = MutableStateFlow(true)
     val sfAssignmentTimeDataVisibility = MutableStateFlow(true)
 
     val sfFontSizeDetail = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
@@ -101,6 +102,7 @@ class WidgetDesignViewModel @Inject constructor(
             sfDailyTrainingDataVisibility.value = it.dailyTrainingDataVisibility
             sfEchoOfWarDataVisibility.value = it.echoOfWarDataVisibility
             sfSimulatedUniverseDataVisibility.value = it.simulatedUniverseDataVisibility
+            sfSimulatedUniverseClearTimeVisibility.value = it.simulatedUniverseClearTimeVisibility
             sfAssignmentTimeDataVisibility.value = it.assignmentTimeDataVisibility
 
             sfDetailUidVisibility.value = it.uidVisibility
@@ -228,6 +230,7 @@ class WidgetDesignViewModel @Inject constructor(
                 sfDailyTrainingDataVisibility.value,
                 sfEchoOfWarDataVisibility.value,
                 sfSimulatedUniverseDataVisibility.value,
+                sfSimulatedUniverseClearTimeVisibility.value,
                 sfAssignmentTimeDataVisibility.value,
 
                 sfDetailUidVisibility.value,

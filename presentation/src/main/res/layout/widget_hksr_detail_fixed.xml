@@ -233,6 +233,45 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/rl_simulated_universe_cleared"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_simulated_universe_cleared"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="2dp"
+                    android:src="@drawable/icon_simulated_universe"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/tv_simulated_universe_title_cleared"
+                    style="@style/TextView"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_simulated_universe_cleared"
+                    android:layout_toRightOf="@id/iv_simulated_universe_cleared"
+                    android:singleLine="true"
+                    android:text="@string/clear_count"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+
+                <TextView
+                    android:id="@+id/tv_simulated_universe_cleared"
+                    style="@style/TextView"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
+                    android:text="1 time"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="11sp" />
+
+            </RelativeLayout>
+
 <!--            <RelativeLayout-->
 <!--                android:id="@+id/rl_realm_currency"-->
 <!--                android:layout_width="wrap_content"-->

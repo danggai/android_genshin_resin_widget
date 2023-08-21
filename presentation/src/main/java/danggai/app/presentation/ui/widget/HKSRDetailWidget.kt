@@ -18,8 +18,7 @@ import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.DetailWidgetDesignSettings
-import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
-import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
+import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.util.Constant
 import java.text.SimpleDateFormat
 import java.util.*
@@ -147,7 +146,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 view.setViewVisibility(R.id.ll_body, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_bottom, View.VISIBLE)
 
-                val dailyNote = PreferenceManager.getT<HonkaiSrDailyNoteData>(context, Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid")?: HonkaiSrDailyNoteData.EMPTY
+                val dailyNote = PreferenceManager.getT<HonkaiSrDataLocal>(context, Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid")?: HonkaiSrDataLocal.EMPTY
 
                 view.setViewVisibility(R.id.tv_uid,
                     if(widgetDesign.uidVisibility) View.VISIBLE else View.GONE
@@ -178,6 +177,11 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                     if (dailyNote.current_rogue_score == dailyNote.max_rogue_score) { context.getString(R.string.done) }
                     else { dailyNote.current_rogue_score.toString()+"/"+dailyNote.max_rogue_score.toString() }
                 )
+
+                view.setTextViewText(R.id.tv_simulated_universe_title_cleared, _context.getString(R.string.clear_count))
+                view.setTextViewText(R.id.tv_simulated_universe_cleared,
+                    if (dailyNote.weekly_cocoon_cnt == 0) { context.getString(R.string.done) }
+                    else { CommonFunction.convertIntToTimes(dailyNote.rogue_clear_count, _context) })
 
                 view.setTextViewText(R.id.tv_sync_time, recentSyncTimeString)
 
@@ -225,6 +229,10 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 )
                 view.setViewVisibility(R.id.rl_simulated_universe,
                     if (widgetDesign.simulatedUniverseDataVisibility) View.VISIBLE else View.GONE
+                )
+                view.setViewVisibility(R.id.rl_simulated_universe_cleared,
+                    if (widgetDesign.simulatedUniverseDataVisibility &&
+                        widgetDesign.simulatedUniverseClearTimeVisibility) View.VISIBLE else View.GONE
                 )
                 view.setViewVisibility(R.id.rl_assignment,
                     if (widgetDesign.assignmentTimeDataVisibility) View.VISIBLE else View.GONE
