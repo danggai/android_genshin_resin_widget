@@ -330,6 +330,7 @@
     <string name="daily_training">일일 훈련</string>
     <string name="echo_of_war">전쟁의 여운</string>
     <string name="simulated_universe">시뮬레이션 우주</string>
+    <string name="clear_count">완료 수</string>
     <string name="until_assignment_done">모든 의뢰 완료까지</string>
     <string name="assignment_time">의뢰 시간</string>
     <string name="assignment_done_at">모든 의뢰 완료 시각</string>

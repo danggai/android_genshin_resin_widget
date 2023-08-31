@@ -353,6 +353,7 @@
     <string name="daily_training">Daily Training</string>
     <string name="echo_of_war">Echo of War</string>
     <string name="simulated_universe">Simulated Universe</string>
+    <string name="clear_count">Clear Count</string>
     <string name="until_assignment_done">Until Assignment Done</string>
     <string name="assignment_time">Assignment Time</string>
     <string name="assignment_done_at">Assignment Done At</string>

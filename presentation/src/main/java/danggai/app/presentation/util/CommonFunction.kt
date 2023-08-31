@@ -31,6 +31,7 @@ import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
+import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -344,7 +345,7 @@ object CommonFunction {
         }
     }
 
-    fun getExpeditionTime(dailyNote: HonkaiSrDailyNoteData): String {
+    fun getExpeditionTime(dailyNote: HonkaiSrDataLocal): String {
         return try {
             if (dailyNote.expeditions.isEmpty()) "0"
             else dailyNote.expeditions.maxOf { it.remaining_time.toString() }
@@ -519,6 +520,8 @@ object CommonFunction {
         view.setTextColor(R.id.tv_assignment_title, mainFontColor)
         view.setTextColor(R.id.tv_simulated_universe, mainFontColor)
         view.setTextColor(R.id.tv_simulated_universe_title, mainFontColor)
+        view.setTextColor(R.id.tv_simulated_universe_cleared, mainFontColor)
+        view.setTextColor(R.id.tv_simulated_universe_title_cleared, mainFontColor)
 
         view.setFloat(R.id.tv_resin, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_resin_title, "setTextSize", fontSize.toFloat())
@@ -536,7 +539,7 @@ object CommonFunction {
         view.setFloat(R.id.tv_realm_currency_title, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_realm_currency_time, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_realm_currency_time_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_trail_power, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_trailblaze_power, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_trailblaze_power_title, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_trailblaze_power_time, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_trailblaze_power_time_title, "setTextSize", fontSize.toFloat())
@@ -548,6 +551,8 @@ object CommonFunction {
         view.setFloat(R.id.tv_assignment_title, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_simulated_universe, "setTextSize", fontSize.toFloat())
         view.setFloat(R.id.tv_simulated_universe_title, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_simulated_universe_cleared, "setTextSize", fontSize.toFloat())
+        view.setFloat(R.id.tv_simulated_universe_title_cleared, "setTextSize", fontSize.toFloat())
     }
 
     private const val widgetHasNoUid = "nouid"

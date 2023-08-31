@@ -18,6 +18,7 @@ data class DetailWidgetDesignSettings(
     val dailyTrainingDataVisibility: Boolean,
     val echoOfWarDataVisibility: Boolean,
     val simulatedUniverseDataVisibility: Boolean,
+    val simulatedUniverseClearTimeVisibility: Boolean,
     val assignmentTimeDataVisibility: Boolean,
 
     val uidVisibility: Boolean = false,
@@ -41,6 +42,7 @@ data class DetailWidgetDesignSettings(
             dailyTrainingDataVisibility = true,
             echoOfWarDataVisibility = true,
             simulatedUniverseDataVisibility = true,
+            simulatedUniverseClearTimeVisibility = true,
             assignmentTimeDataVisibility = true,
 
             uidVisibility = false,

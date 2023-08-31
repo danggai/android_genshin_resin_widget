@@ -57,6 +57,7 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
 
         binding.widget.tvWeeklyBoss.text = context?.let { CommonFunction.convertIntToTimes(3, it) }
         binding.widgetHksr.tvEchoOfWar.text = context?.let { CommonFunction.convertIntToTimes(3, it) }
+        binding.widgetHksr.tvSimulatedUniverseCleared.text = context?.let { CommonFunction.convertIntToTimes(0, it) }
 
         when(mVM.sfDetailTimeNotation.value) {
             Constant.PREF_TIME_NOTATION_DEFAULT,
@@ -157,6 +158,8 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                             tvEchoOfWarTitle.setTextColor(mainFontColor)
                             tvSimulatedUniverse.setTextColor(mainFontColor)
                             tvSimulatedUniverseTitle.setTextColor(mainFontColor)
+                            tvSimulatedUniverseCleared.setTextColor(mainFontColor)
+                            tvSimulatedUniverseTitleCleared.setTextColor(mainFontColor)
                             tvAssignmentTime.setTextColor(mainFontColor)
                             tvAssignmentTitle.setTextColor(mainFontColor)
 
@@ -223,6 +226,8 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                             tvEchoOfWarTitle.textSize = it
                             tvSimulatedUniverse.textSize = it
                             tvSimulatedUniverseTitle.textSize = it
+                            tvSimulatedUniverseCleared.textSize = it
+                            tvSimulatedUniverseTitleCleared.textSize = it
                             tvAssignmentTime.textSize = it
                             tvAssignmentTitle.textSize = it
                         }
@@ -395,6 +400,14 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                 mVM.sfSimulatedUniverseDataVisibility.collect {
                     log.e()
                     binding.widgetHksr.rlSimulatedUniverse.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widgetHksr.rlSimulatedUniverseCleared.visibility = if (it && mVM.sfSimulatedUniverseClearTimeVisibility.value) View.VISIBLE else View.GONE
+                }
+            }
+
+            launch {
+                mVM.sfSimulatedUniverseClearTimeVisibility.collect {
+                    log.e()
+                    binding.widgetHksr.rlSimulatedUniverseCleared.visibility = if (mVM.sfSimulatedUniverseDataVisibility.value && it) View.VISIBLE else View.GONE
                 }
             }
 

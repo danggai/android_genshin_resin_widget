@@ -13,9 +13,8 @@ import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
-import danggai.domain.network.checkin.entity.CheckIn
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
-import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
+import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.network.dailynote.usecase.DailyNoteUseCase
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
@@ -124,6 +123,9 @@ class RefreshWorker @AssistedInject constructor(
         }.await()
     }
 
+
+    var honkaiSrData = HonkaiSrDataLocal.EMPTY
+
     private suspend fun refreshHonkaiSrDailyNote(
         account: Account,
         server: String,
@@ -145,7 +147,68 @@ class RefreshWorker @AssistedInject constructor(
                         when (it.data.retcode.toString()) {
                             Constant.RETCODE_SUCCESS -> {
                                 log.e()
-                                updateData(account, it.data.data)
+                                honkaiSrData = honkaiSrData.copy(
+                                    accepted_epedition_num = it.data.data.accepted_epedition_num,
+                                    current_stamina = it.data.data.current_stamina,
+                                    expeditions = it.data.data.expeditions,
+                                    max_stamina = it.data.data.max_stamina,
+                                    stamina_recover_time = it.data.data.stamina_recover_time,
+                                    total_expedition_num = it.data.data.total_expedition_num,
+                                    current_train_score = it.data.data.current_train_score,
+                                    max_train_score = it.data.data.max_train_score,
+                                    current_rogue_score = it.data.data.current_rogue_score,
+                                    max_rogue_score = it.data.data.max_rogue_score,
+                                    weekly_cocoon_cnt = it.data.data.weekly_cocoon_cnt,
+                                    weekly_cocoon_limit = it.data.data.weekly_cocoon_limit,
+                                )
+                            }
+                            else -> {
+                                log.e()
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode.toString())
+                            }
+                        }
+                    }
+                    is ApiResult.Failure -> {
+                        log.e(it.message)
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, null)
+                        CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
+                    }
+                    is ApiResult.Error,
+                    is ApiResult.Null -> {
+                        log.e()
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, null, null)
+                        CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
+                    }
+                }
+            }
+        }.await()
+    }
+
+    private suspend fun refreshHonkaiSrRogue(
+        account: Account,
+        server: String,
+        ds: String,
+    ) {
+        return CoroutineScope(Dispatchers.IO).async {
+            dailyNote.rogueHonkaiSr(
+                account.honkai_sr_uid,
+                server,
+                account.cookie,
+                ds,
+                onStart = { log.e() },
+                onComplete = { log.e() }
+            ).collect {
+                log.e(it)
+
+                when (it) {
+                    is ApiResult.Success -> {
+                        when (it.data.retcode.toString()) {
+                            Constant.RETCODE_SUCCESS -> {
+                                log.e()
+                                val currentRecord = it.data.data.current_record
+                                honkaiSrData = honkaiSrData.copy(
+                                    rogue_clear_count = if (currentRecord.has_data) currentRecord.basic.finish_cnt else 0
+                                )
                             }
                             else -> {
                                 log.e()
@@ -275,7 +338,7 @@ class RefreshWorker @AssistedInject constructor(
         preference.setGenshinDailyNote(account.genshin_uid, dailyNote)
     }
 
-    private fun updateData(account: Account, dailyNote: HonkaiSrDailyNoteData) {
+    private fun updateData(account: Account, dailyNote: HonkaiSrDataLocal) {
         log.e()
 
         val prefDailyNote = preference.getHonkaiSrDailyNote(account.honkai_sr_uid)
@@ -422,11 +485,21 @@ class RefreshWorker @AssistedInject constructor(
                                 else -> Constant.SERVER_PO_ASIA
                             }
 
-                            refreshHonkaiSrDailyNote(
+
+                            val firstDeferred = async { refreshHonkaiSrDailyNote(
                                 account,
                                 server,
                                 CommonFunction.getGenshinDS()
-                            )
+                            ) }
+
+                            val secondDeferred = async { refreshHonkaiSrRogue(
+                                account,
+                                server,
+                                CommonFunction.getGenshinDS()
+                            ) }
+
+                            awaitAll(firstDeferred, secondDeferred)
+                            updateData(account, honkaiSrData)
                         }
                     }
                 }

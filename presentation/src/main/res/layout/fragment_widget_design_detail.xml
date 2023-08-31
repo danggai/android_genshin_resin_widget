@@ -271,6 +271,39 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextView"
+                        android:layout_width="wrap_content"
+                        android:text="@string/honkai_sr"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic"
+                        android:gravity="right"
+                        />
+
+                    <Space
+                        android:layout_width="5dp"
+                        android:layout_height="0dp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:background="#444444"
+                        />
+
+                    <Space
+                        android:layout_width="10dp"
+                        android:layout_height="0dp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     >
 
@@ -302,9 +335,9 @@
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
-                        android:id="@+id/cb_simulated_universe"
-                        android:checked="@={vm.sfSimulatedUniverseDataVisibility}"
-                        android:text="@string/simulated_universe" />
+                        android:id="@+id/cb_assignment"
+                        android:checked="@={vm.sfAssignmentTimeDataVisibility}"
+                        android:text="@string/assignment_time" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -316,16 +349,16 @@
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
-                        android:id="@+id/cb_assignment"
-                        android:checked="@={vm.sfAssignmentTimeDataVisibility}"
-                        android:text="@string/assignment_time" />
+                        android:id="@+id/cb_simulated_universe"
+                        android:checked="@={vm.sfSimulatedUniverseDataVisibility}"
+                        android:text="@string/simulated_universe" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
                         android:id="@+id/cb_empty"
-                        android:checked="@={vm.sfAssignmentTimeDataVisibility}"
-                        android:text="@string/assignment_time"
-                        android:visibility="gone"/>
+                        android:checked="@={vm.sfSimulatedUniverseClearTimeVisibility}"
+                        android:enabled="@{vm.sfSimulatedUniverseDataVisibility}"
+                        android:text="@string/clear_count" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
