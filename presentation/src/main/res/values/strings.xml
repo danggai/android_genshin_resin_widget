@@ -411,5 +411,6 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Genshin Impact 4.0.0 new characters added\n- Honkai: Starrail detail widget and design added</string>
+    <string name="dialog_msg_patch_note">- Apply changes to Honkai: Starrail Trailblazer Power\n- Modify only one last Resin/Trailblazer Power/Check In notification remains\n- Other bug fixes and UI fixes</string>
+
 </resources>
