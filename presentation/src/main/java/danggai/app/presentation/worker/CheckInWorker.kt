@@ -519,7 +519,7 @@ class CheckInWorker @AssistedInject constructor(
             else -> ""
         }
 
-        CommonFunction.sendNotification(notiType, applicationContext, title, msg)
+        CommonFunction.sendNotification(notiType, applicationContext, account, title, msg)
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo {

@@ -2,7 +2,7 @@ package dependency
 
 object Versions {
     const val minSdk                 = 23
-    const val compileSdk             = 32
+    const val compileSdk             = 33
 
     const val versionCode            = 57
     const val versionName            = "4.0.0"
@@ -50,6 +50,9 @@ object Versions {
 
     // worker
     const val workerVersion          = "2.7.1"
+
+    // Ted Permission
+    const val tedPermissionVersion   = "3.3.0"
 
     // firebase
     const val firebaseVersion        = "31.1.0"

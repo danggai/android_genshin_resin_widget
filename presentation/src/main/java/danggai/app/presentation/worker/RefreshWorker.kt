@@ -304,9 +304,9 @@ class RefreshWorker @AssistedInject constructor(
         }
 
         if (settings.noti170TrailPower) {
-            if (170 in (prefStamina + 1)..nowStamina){
+            if (230 in (prefStamina + 1)..nowStamina){
                 log.e()
-                sendNoti(account, Constant.NotiType.TRAIL_POWER_170, 170)
+                sendNoti(account, Constant.NotiType.TRAIL_POWER_230, 230)
             }
         }
 
@@ -350,7 +350,7 @@ class RefreshWorker @AssistedInject constructor(
             Constant.NotiType.DAILY_COMMISSION_YET -> applicationContext.getString(R.string.push_daily_commission_title)
             Constant.NotiType.WEEKLY_BOSS_YET -> applicationContext.getString(R.string.push_weekly_boss_title)
             Constant.NotiType.TRAIL_POWER_EACH_40,
-            Constant.NotiType.TRAIL_POWER_170,
+            Constant.NotiType.TRAIL_POWER_230,
             Constant.NotiType.TRAIL_POWER_CUSTOM, -> applicationContext.getString(R.string.push_trail_power_noti_title)
             Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> applicationContext.getString(R.string.push_assignment_title)
             else -> ""
@@ -375,19 +375,17 @@ class RefreshWorker @AssistedInject constructor(
 
             Constant.NotiType.TRAIL_POWER_EACH_40 ->
                 when (target) {
-                    180 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_180), account.honkai_sr_nickname, target)
-                    160 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_160), account.honkai_sr_nickname, target)
-                    120 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.honkai_sr_nickname, target)
-                    80 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.honkai_sr_nickname, target)
+                    240 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_240), account.honkai_sr_nickname, target)
+                    40, 80, 120, 160, 200 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.honkai_sr_nickname, target)
                     else -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.honkai_sr_nickname, target)
                 }
-            Constant.NotiType.TRAIL_POWER_170 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_170), account.honkai_sr_nickname, target)
+            Constant.NotiType.TRAIL_POWER_230 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_230), account.honkai_sr_nickname, target)
             Constant.NotiType.TRAIL_POWER_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), account.honkai_sr_nickname, target)
             Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_assignment_done), account.honkai_sr_nickname)
             else -> ""
         }
 
-        CommonFunction.sendNotification(notiType, applicationContext, title, msg)
+        CommonFunction.sendNotification(notiType, applicationContext, account, title, msg)
     }
 
     override fun doWork(): Result {

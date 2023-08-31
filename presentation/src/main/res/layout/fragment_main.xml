@@ -429,9 +429,9 @@
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
-                        android:id="@+id/cb_170_trail_power"
-                        android:checked="@={vm.sfEnableNoti170TrailPower}"
-                        android:text="@string/btn_170_trailblaze_power"/>
+                        android:id="@+id/cb_230_trail_power"
+                        android:checked="@={vm.sfEnableNoti230TrailPower}"
+                        android:text="@string/btn_230_trailblaze_power"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -460,7 +460,7 @@
                             style="@style/EditTextStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
-                            android:hint="180"
+                            android:hint="220"
                             android:imeOptions="actionDone"
                             android:inputType="number"
                             android:maxLength="4"

@@ -357,6 +357,7 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                 mVM.sfDetailUidVisibility.collect {
                     log.e()
                     binding.widget.tvUid.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widgetHksr.tvUid.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
 
@@ -364,6 +365,7 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                 mVM.sfDetailNameVisibility.collect {
                     log.e()
                     binding.widget.tvName.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widgetHksr.tvName.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
 

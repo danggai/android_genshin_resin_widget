@@ -1,5 +1,6 @@
 package danggai.app.presentation.ui.main
 
+import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -11,6 +12,7 @@ import android.provider.Settings
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
@@ -19,6 +21,8 @@ import androidx.work.WorkManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.normal.TedPermission
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.BuildConfig
 import danggai.app.presentation.R
@@ -114,9 +118,8 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         initSf()
         initUi()
 
-        context?.let { it ->
-            antidozePermisisonCheck(it)
-        }
+        notificationPermisisonCheck(view.context)
+        antidozePermisisonCheck(view.context)
 
         updateNoteCheck()
     }
@@ -283,6 +286,24 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                 }
                 .create()
                 .show()
+        }
+    }
+
+    private fun notificationPermisisonCheck(context: Context) {
+        log.e()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+            && PreferenceManager.getBoolean(context, Constant.PREF_CHECKED_NOTIFICATION_PERMISSION, true)
+        ) {
+            log.e()
+            PreferenceManager.setBoolean(context, Constant.PREF_CHECKED_NOTIFICATION_PERMISSION, false)
+
+            TedPermission.create()
+                .setPermissionListener(object: PermissionListener {
+                    override fun onPermissionGranted() { log.e() }
+                    override fun onPermissionDenied(deniedPermissions: MutableList<String>?) { log.e() }
+                })
+                .setPermissions(Manifest.permission.POST_NOTIFICATIONS)
+                .check()
         }
     }
 

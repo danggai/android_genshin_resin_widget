@@ -26,6 +26,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import danggai.app.presentation.BuildConfig
 import danggai.app.presentation.R
 import danggai.app.presentation.ui.widget.*
+import danggai.domain.db.account.entity.Account
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
@@ -37,6 +38,7 @@ import kotlinx.coroutines.launch
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.*
+import kotlin.math.abs
 import kotlin.streams.asSequence
 
 
@@ -128,10 +130,12 @@ object CommonFunction {
     fun sendNotification(
         notiType: Constant.NotiType,
         context: Context,
+        account: Account,
         title: String,
         msg: String,
     ) {
         log.e()
+        val notiId: Int
         val notificationId: String
         val notificationDesc: String
         val priority: Int
@@ -149,14 +153,16 @@ object CommonFunction {
             Constant.NotiType.RESIN_140,
             Constant.NotiType.RESIN_CUSTOM,
             -> {
+                notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_STAMINA
                 notificationId = Constant.PUSH_CHANNEL_RESIN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_resin_noti_description)
                 priority = priorityDefault
             }
             Constant.NotiType.TRAIL_POWER_EACH_40,
-            Constant.NotiType.TRAIL_POWER_170,
+            Constant.NotiType.TRAIL_POWER_230,
             Constant.NotiType.TRAIL_POWER_CUSTOM,
             -> {
+                notiId = abs(account.honkai_sr_uid.toInt()) + Constant.PREFIX_NOTI_ID_STAMINA
                 notificationId = Constant.PUSH_CHANNEL_TRAIL_POWER_NOTI_ID
                 notificationDesc = context.getString(R.string.push_trail_power_noti_description)
                 priority = priorityDefault
@@ -167,6 +173,7 @@ object CommonFunction {
             Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND,
             Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA,
             -> {
+                notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN
                 notificationId = Constant.PUSH_CHANNEL_GENSHIN_CHECK_IN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_genshin_checkin_description)
                 priority = priorityLow
@@ -176,6 +183,7 @@ object CommonFunction {
             Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY,
             Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND,
             -> {
+                notiId = abs(account.honkai_sr_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN_HK3RD
                 notificationId = Constant.PUSH_CHANNEL_HONKAI_3RD_CHECK_IN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_honkai_3rd_checkin_description)
                 priority = priorityLow
@@ -185,41 +193,49 @@ object CommonFunction {
             Constant.NotiType.CHECK_IN_HONKAI_SR_ALREADY,
             Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND,
             -> {
+                notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN
                 notificationId = Constant.PUSH_CHANNEL_HONKAI_SR_CHECK_IN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_honkai_sr_checkin_description)
                 priority = priorityLow
             }
             Constant.NotiType.EXPEDITION_DONE -> {
+                notiId = System.currentTimeMillis().toInt()
                 notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
                 notificationDesc = context.getString(R.string.push_expedition_description)
                 priority = priorityLow
             }
             Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> {
+                notiId = System.currentTimeMillis().toInt()
                 notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
                 notificationDesc = context.getString(R.string.push_assignment_description)
                 priority = priorityLow
             }
             Constant.NotiType.REALM_CURRENCY_FULL -> {
+                notiId = System.currentTimeMillis().toInt()
                 notificationId = Constant.PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID
                 notificationDesc = context.getString(R.string.push_realm_currency_description)
                 priority = priorityDefault
             }
             Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED -> {
+                notiId = System.currentTimeMillis().toInt()
                 notificationId = Constant.PUSH_CHANNEL_PARAMETRIC_TRANSFORMER_NOTI_ID
                 notificationDesc = context.getString(R.string.push_param_trans_description)
                 priority = priorityDefault
             }
             Constant.NotiType.DAILY_COMMISSION_YET -> {
+                notiId = System.currentTimeMillis().toInt()
                 notificationId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
                 notificationDesc = context.getString(R.string.push_daily_commission_description)
                 priority = priorityDefault
             }
             Constant.NotiType.WEEKLY_BOSS_YET -> {
+                notiId = System.currentTimeMillis().toInt()
                 notificationId = Constant.PUSH_CHANNEL_WEEKLY_BOSS_YET_NOTI_ID
                 notificationDesc = context.getString(R.string.push_weekly_boss_description)
                 priority = priorityDefault
             }
             else -> {
+                notiId = System.currentTimeMillis().toInt()
                 notificationId = Constant.PUSH_CHANNEL_DEFAULT_ID
                 notificationDesc = context.getString(R.string.push_default_noti_description)
                 priority = priorityDefault
@@ -236,7 +252,7 @@ object CommonFunction {
             Constant.NotiType.CHECK_IN_HONKAI_SR_ALREADY,
             Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND,
             Constant.NotiType.TRAIL_POWER_EACH_40,
-            Constant.NotiType.TRAIL_POWER_170,
+            Constant.NotiType.TRAIL_POWER_230,
             Constant.NotiType.TRAIL_POWER_CUSTOM,
             Constant.NotiType.HONKAI_SR_EXPEDITION_DONE,
             -> R.drawable.trailblaze_power
@@ -279,7 +295,7 @@ object CommonFunction {
             )
         }
 
-        notificationManager.notify((System.currentTimeMillis()).toInt(), builder.build())
+        notificationManager.notify(notiId, builder.build())
     }
 
     fun getTimeLeftUntilChinaTime(isAM: Boolean, hour: Int, startCalendar: Calendar): Long {

@@ -43,7 +43,7 @@
 
     <string name="trailblaze_power">개척력</string>
     <string name="btn_each_40_trailblaze_power">40개척력 마다</string>
-    <string name="btn_170_trailblaze_power">170개척력</string>
+    <string name="btn_230_trailblaze_power">230개척력</string>
 
     <string name="btn_remain_time">남은 시간</string>
     <string name="btn_full_charge_time">완충 시각</string>
@@ -177,9 +177,8 @@
     <string name="push_trail_power_noti_title">개척력 알림</string>
     <string name="push_trail_power_noti_description">일정 개척력마다 개척자에게 알려주기 위해 발송하는 알림이야!</string>
     <string name="push_msg_trail_power_noti_over_40">안녕, %s! 현재 개척력이 %d을 넘어섰어!</string>
-    <string name="push_msg_trail_power_noti_over_160">안녕, %s! 현재 개척력이 %d을 넘어섰어! 앞으로 두 시간이면 가득 찰거야!</string>
-    <string name="push_msg_trail_power_noti_over_170">안녕, %s! 현재 개척력이 %d을 넘어섰어! 앞으로 한 시간이면 가득 찰거야!</string>
-    <string name="push_msg_trail_power_noti_over_180">%s! 현재 개척력이 %d을 넘어섰어! 빨리 사용해야 해!</string>
+    <string name="push_msg_trail_power_noti_over_230">안녕, %s! 현재 개척력이 %d을 넘어섰어! 앞으로 한 시간이면 가득 찰거야!</string>
+    <string name="push_msg_trail_power_noti_over_240">%s! 현재 개척력이 %d을 넘어섰어! 빨리 사용해야 해!</string>
     <string name="push_msg_trail_power_noti_custom">안녕, %s! 현재 개척력이 %d을 넘어섰어! 지금 불러달라고 했었지?</string>
 
     <string name="push_genshin_checkin_title">원신 출석 알림</string>

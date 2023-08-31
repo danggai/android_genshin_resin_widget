@@ -20,7 +20,7 @@ data class DailyNoteSettings(
     val notiWeeklyYetTime: Int,
 
     val notiEach40TrailPower: Boolean,
-    val noti170TrailPower: Boolean,
+    val noti170TrailPower: Boolean, // 230으로 변경하여 적용함
     val notiCustomTrailPower: Boolean,
     val customTrailPower: Int,
     val notiExpeditionHonkaiSr: Boolean,

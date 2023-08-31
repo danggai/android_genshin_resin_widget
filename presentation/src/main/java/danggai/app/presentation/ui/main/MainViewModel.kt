@@ -53,7 +53,7 @@ class MainViewModel @Inject constructor(
     var sfNotiWeeklyYetTime = MutableStateFlow(21)
 
     val sfEnableNotiEach40TrailPower = MutableStateFlow(false)
-    val sfEnableNoti170TrailPower = MutableStateFlow(false)
+    val sfEnableNoti230TrailPower = MutableStateFlow(false)
     val sfEnableNotiCustomTrailPower = MutableStateFlow(false)
     val sfCustomNotiTrailPower = MutableStateFlow("")
     val sfEnableNotiHonkaiSrExpeditionDone = MutableStateFlow(false)
@@ -80,7 +80,7 @@ class MainViewModel @Inject constructor(
             sfNotiWeeklyYetDay.value = it.notiWeeklyYetDay
 
             sfEnableNotiEach40TrailPower.value = it.notiEach40TrailPower
-            sfEnableNoti170TrailPower.value = it.noti170TrailPower
+            sfEnableNoti230TrailPower.value = it.noti170TrailPower
             sfEnableNotiCustomTrailPower.value = it.notiCustomTrailPower
             sfCustomNotiTrailPower.value = if (it.customTrailPower != 0) it.customTrailPower.toString() else ""
             sfEnableNotiHonkaiSrExpeditionDone.value = it.notiExpeditionHonkaiSr
@@ -142,7 +142,7 @@ class MainViewModel @Inject constructor(
                 sfNotiWeeklyYetDay.value,
                 sfNotiWeeklyYetTime.value,
                 sfEnableNotiEach40TrailPower.value,
-                sfEnableNoti170TrailPower.value,
+                sfEnableNoti230TrailPower.value,
                 sfEnableNotiCustomTrailPower.value,
                 customNotiTrailPower,
                 sfEnableNotiHonkaiSrExpeditionDone.value,

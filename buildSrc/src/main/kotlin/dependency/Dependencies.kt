@@ -89,6 +89,11 @@ object Dependencies {
         const val runtime = "androidx.work:work-runtime-ktx:${Versions.workerVersion}"
     }
 
+    object TedPermission {
+        const val normal = "io.github.ParkSangGwon:tedpermission-normal:${Versions.tedPermissionVersion}"
+        const val coroutine = "io.github.ParkSangGwon:tedpermission-coroutine:${Versions.tedPermissionVersion}"
+    }
+
     object Junit {
         const val junit = "junit:junit:${Versions.junitVersion}"
         const val ext = "androidx.test.ext:junit:${Versions.junitExtVersion}"

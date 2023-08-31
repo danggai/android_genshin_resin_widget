@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Genshin&amp;StarRail Widget</string>
+    <string name="app_name">Genshin &amp; Star Rail Widget</string>
 
-    <string name="genshin_resin_widget" translatable="false">Genshin&amp;StarRail Widget</string>
+    <string name="genshin_resin_widget" translatable="false">Genshin &amp; Star Rail Widget</string>
 
     <string name="genshin">Genshin\u00A0</string>
     <string name="honkai_sr">Honkai: Star Rail\u00A0</string>
@@ -64,7 +64,7 @@
 
     <string name="trailblaze_power">Trailblaze Power</string>
     <string name="btn_each_40_trailblaze_power">Each 40 Trailblaze Power</string>
-    <string name="btn_170_trailblaze_power">170 Trailblaze Power</string>
+    <string name="btn_230_trailblaze_power">230 Trailblaze Power</string>
 
     <string name="btn_remain_time">Remaining time</string>
     <string name="btn_full_charge_time">When fully charge</string>
@@ -200,9 +200,8 @@
     <string name="push_trail_power_noti_title">Trainblaze Power Notification</string>
     <string name="push_trail_power_noti_description">This is a notification sent to inform trailblazers of each trainblaze power!</string>
     <string name="push_msg_trail_power_noti_over_40">Hello, %s! Your Trainblaze Power is over %d!</string>
-    <string name="push_msg_trail_power_noti_over_160">Hello, %s! Your Trainblaze Power is over %d!</string>
-    <string name="push_msg_trail_power_noti_over_170">Hello, %s! Your Trainblaze Power is over %d!</string>
-    <string name="push_msg_trail_power_noti_over_180">Hello, %s! Your Trainblaze Power is over %d!</string>
+    <string name="push_msg_trail_power_noti_over_230">Hello, %s! Your Trainblaze Power is over %d!</string>
+    <string name="push_msg_trail_power_noti_over_240">Hello, %s! Your Trainblaze Power is over %d!</string>
     <string name="push_msg_trail_power_noti_custom">Hello, %s! Your Trainblaze Power is over %d!</string>
 
     <string name="push_genshin_checkin_title">Genshin Impact Check-in Notification</string>

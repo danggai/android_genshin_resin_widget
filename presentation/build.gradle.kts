@@ -92,6 +92,10 @@ dependencies {
     // worker - Background Action
     implementation (Dependencies.Work.runtime)
 
+    // TedPermission - Permission Check
+    implementation (Dependencies.TedPermission.normal)
+    implementation (Dependencies.TedPermission.coroutine)
+
     // unittest
     testImplementation (Dependencies.Junit.junit)
     androidTestImplementation (Dependencies.Junit.ext)
