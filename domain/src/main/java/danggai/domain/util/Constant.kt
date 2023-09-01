@@ -3,7 +3,7 @@ package danggai.domain.util
 object Constant {
 
     const val MAX_RESIN = 160
-    const val MAX_TRAILBLAZE_POWER = 180
+    const val MAX_TRAILBLAZE_POWER = 240
 
     /* URL */
 

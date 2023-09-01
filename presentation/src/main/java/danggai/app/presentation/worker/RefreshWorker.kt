@@ -242,28 +242,21 @@ class RefreshWorker @AssistedInject constructor(
         val nowResin: Int = dailyNote.current_resin
 
         if (settings.notiEach40Resin) {
-            if (200 in (prefResin + 1)..nowResin){
-                log.e()
-                sendNoti(account, Constant.NotiType.RESIN_EACH_40, 200)
-            } else if (160 in (prefResin + 1)..nowResin){
-                log.e()
-                sendNoti(account, Constant.NotiType.RESIN_EACH_40, 160)
-            } else if (120 in (prefResin + 1)..nowResin){
-                log.e()
-                sendNoti(account, Constant.NotiType.RESIN_EACH_40, 120)
-            } else if (80 in (prefResin + 1)..nowResin){
-                log.e()
-                sendNoti(account, Constant.NotiType.RESIN_EACH_40, 80)
-            } else if (40 in (prefResin + 1)..nowResin){
-                log.e()
-                sendNoti(account, Constant.NotiType.RESIN_EACH_40, 40)
+            val resinLevels = (40 until Constant.MAX_RESIN + 40 step 40).toList()
+
+            for (resinLevel in resinLevels) {
+                if (resinLevel in (prefResin + 1)..nowResin) {
+                    log.e()
+                    sendNoti(account, Constant.NotiType.RESIN_EACH_40, resinLevel)
+                    break
+                }
             }
         }
 
         if (settings.noti140Resin) {
-            if (140 in (prefResin + 1)..nowResin){
+            if (Constant.MAX_RESIN - 20 in (prefResin + 1)..nowResin){
                 log.e()
-                sendNoti(account, Constant.NotiType.RESIN_140, 140)
+                sendNoti(account, Constant.NotiType.RESIN_140, Constant.MAX_RESIN - 20)
             }
         }
 
@@ -348,28 +341,21 @@ class RefreshWorker @AssistedInject constructor(
         val nowStamina: Int = dailyNote.current_stamina
 
         if (settings.notiEach40TrailPower) {
-            if (180 in (prefStamina + 1)..nowStamina){
-                log.e()
-                sendNoti(account, Constant.NotiType.TRAIL_POWER_EACH_40, 180)
-            } else if (160 in (prefStamina + 1)..nowStamina){
-                log.e()
-                sendNoti(account, Constant.NotiType.TRAIL_POWER_EACH_40, 160)
-            } else if (120 in (prefStamina + 1)..nowStamina){
-                log.e()
-                sendNoti(account, Constant.NotiType.TRAIL_POWER_EACH_40, 120)
-            } else if (80 in (prefStamina + 1)..nowStamina){
-                log.e()
-                sendNoti(account, Constant.NotiType.TRAIL_POWER_EACH_40, 80)
-            } else if (40 in (prefStamina + 1)..nowStamina){
-                log.e()
-                sendNoti(account, Constant.NotiType.TRAIL_POWER_EACH_40, 40)
+            val staminaLevels = (40 until Constant.MAX_TRAILBLAZE_POWER step 40).toList()
+
+            for (staminaLevel in staminaLevels) {
+                if (staminaLevel in (prefStamina + 1)..nowStamina) {
+                    log.e()
+                    sendNoti(account, Constant.NotiType.TRAIL_POWER_EACH_40, staminaLevel)
+                    break
+                }
             }
         }
 
         if (settings.noti170TrailPower) {
-            if (230 in (prefStamina + 1)..nowStamina){
+            if (Constant.MAX_TRAILBLAZE_POWER - 10 in (prefStamina + 1)..nowStamina){
                 log.e()
-                sendNoti(account, Constant.NotiType.TRAIL_POWER_230, 230)
+                sendNoti(account, Constant.NotiType.TRAIL_POWER_230, Constant.MAX_TRAILBLAZE_POWER - 10)
             }
         }
 
@@ -422,10 +408,9 @@ class RefreshWorker @AssistedInject constructor(
         val msg = when (notiType) {
             Constant.NotiType.RESIN_EACH_40 ->
                 when (target) {
-                    200 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_200), account.nickname, target)
-                    160 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_160), account.nickname, target)
-                    120 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_120), account.nickname, target)
-                    80 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_40), account.nickname, target)
+                    Constant.MAX_RESIN + 40 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_200), account.nickname, target)
+                    Constant.MAX_RESIN -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_160), account.nickname, target)
+                    Constant.MAX_RESIN - 40 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_120), account.nickname, target)
                     else -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_40), account.nickname, target)
                 }
             Constant.NotiType.RESIN_140 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_140), account.nickname, target)
@@ -438,8 +423,7 @@ class RefreshWorker @AssistedInject constructor(
 
             Constant.NotiType.TRAIL_POWER_EACH_40 ->
                 when (target) {
-                    240 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_240), account.honkai_sr_nickname, target)
-                    40, 80, 120, 160, 200 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.honkai_sr_nickname, target)
+                    Constant.MAX_TRAILBLAZE_POWER -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_240), account.honkai_sr_nickname, target)
                     else -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.honkai_sr_nickname, target)
                 }
             Constant.NotiType.TRAIL_POWER_230 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_230), account.honkai_sr_nickname, target)
