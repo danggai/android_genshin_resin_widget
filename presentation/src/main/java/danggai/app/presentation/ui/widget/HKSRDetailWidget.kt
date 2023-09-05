@@ -179,9 +179,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 )
 
                 view.setTextViewText(R.id.tv_simulated_universe_title_cleared, _context.getString(R.string.clear_count))
-                view.setTextViewText(R.id.tv_simulated_universe_cleared,
-                    if (dailyNote.weekly_cocoon_cnt == 0) { context.getString(R.string.done) }
-                    else { CommonFunction.convertIntToTimes(dailyNote.rogue_clear_count, _context) })
+                view.setTextViewText(R.id.tv_simulated_universe_cleared, CommonFunction.convertIntToTimes(dailyNote.rogue_clear_count, _context))
 
                 view.setTextViewText(R.id.tv_sync_time, recentSyncTimeString)
 

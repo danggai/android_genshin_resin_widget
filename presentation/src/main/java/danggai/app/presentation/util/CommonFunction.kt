@@ -184,7 +184,7 @@ object CommonFunction {
             Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY,
             Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND,
             -> {
-                notiId = abs(account.honkai_sr_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN_HK3RD
+                notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN_HK3RD
                 notificationId = Constant.PUSH_CHANNEL_HONKAI_3RD_CHECK_IN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_honkai_3rd_checkin_description)
                 priority = priorityLow
@@ -508,7 +508,7 @@ object CommonFunction {
         view.setTextColor(R.id.tv_realm_currency_title, mainFontColor)
         view.setTextColor(R.id.tv_realm_currency_time, mainFontColor)
         view.setTextColor(R.id.tv_realm_currency_time_title, mainFontColor)
-        view.setTextColor(R.id.tv_trail_power, mainFontColor)
+        view.setTextColor(R.id.tv_trailblaze_power, mainFontColor)
         view.setTextColor(R.id.tv_trailblaze_power_title, mainFontColor)
         view.setTextColor(R.id.tv_trailblaze_power_time, mainFontColor)
         view.setTextColor(R.id.tv_trailblaze_power_time_title, mainFontColor)
