@@ -261,7 +261,7 @@ class RefreshWorker @AssistedInject constructor(
         }
 
         if (settings.notiCustomResin) {
-            val targetResin: Int = settings.customResin
+            val targetResin: Int = settings.customResin.takeUnless { it == 0 } ?: Constant.MAX_RESIN
             if (targetResin in (prefResin + 1)..nowResin){
                 log.e()
                 sendNoti(account, Constant.NotiType.RESIN_CUSTOM, targetResin)
@@ -340,6 +340,9 @@ class RefreshWorker @AssistedInject constructor(
         val prefStamina: Int = prefDailyNote.current_stamina
         val nowStamina: Int = dailyNote.current_stamina
 
+        log.e("prefStamina = $prefStamina")
+        log.e("nowStamina = $nowStamina")
+
         if (settings.notiEach40TrailPower) {
             val staminaLevels = (40 until Constant.MAX_TRAILBLAZE_POWER step 40).toList()
 
@@ -360,7 +363,8 @@ class RefreshWorker @AssistedInject constructor(
         }
 
         if (settings.notiCustomTrailPower) {
-            val targetTrailPower: Int = settings.customTrailPower
+            val targetTrailPower: Int = settings.customTrailPower.takeUnless { it == 0 }
+                ?: (Constant.MAX_TRAILBLAZE_POWER - 20)
             if (targetTrailPower in (prefStamina + 1)..nowStamina){
                 log.e()
                 sendNoti(account, Constant.NotiType.TRAIL_POWER_CUSTOM, targetTrailPower)
@@ -427,10 +431,14 @@ class RefreshWorker @AssistedInject constructor(
                     else -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.honkai_sr_nickname, target)
                 }
             Constant.NotiType.TRAIL_POWER_230 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_230), account.honkai_sr_nickname, target)
-            Constant.NotiType.TRAIL_POWER_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), account.honkai_sr_nickname, target)
+            Constant.NotiType.TRAIL_POWER_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_custom), account.honkai_sr_nickname, target)
             Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_assignment_done), account.honkai_sr_nickname)
             else -> ""
         }
+
+        log.e(notiType)
+        log.e(title)
+        log.e(msg)
 
         CommonFunction.sendNotification(notiType, applicationContext, account, title, msg)
     }
