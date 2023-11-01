@@ -388,5 +388,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 원신 4.1 버전 신규 캐릭터 추가 \n- 기타 버그 수정 및 UI 수정</string>
+    <string name="dialog_msg_patch_note">- 원신 4.2 버전 신규 캐릭터 추가</string>
 </resources>
