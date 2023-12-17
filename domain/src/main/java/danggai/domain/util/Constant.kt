@@ -414,4 +414,6 @@ object Constant {
     const val ID_NEUVILLETTE = 10000087
     const val ID_CHARLOTTE = 10000088
     const val ID_FURINA = 10000089
+    const val ID_CHEVREUSE = 10000090
+    const val ID_NAVIA = 10000091
 }
