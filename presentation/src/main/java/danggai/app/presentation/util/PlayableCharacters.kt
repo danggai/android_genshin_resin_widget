@@ -258,7 +258,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         Constant.TALENT_DATE_WEDSAT,
         R.drawable.icon_fischl
     ),
-    
+
     LocalCharacter(
         Constant.ID_BENNETT,
         "베넷",
@@ -269,7 +269,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         Constant.TALENT_DATE_TUEFRI,
         R.drawable.icon_bennett
     ),
-    
+
     LocalCharacter(
         Constant.ID_CHILDE,
         "타르탈리아",
@@ -280,7 +280,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         Constant.TALENT_DATE_MONTHU,
         R.drawable.icon_childe
     ),
-    
+
     LocalCharacter(
         Constant.ID_NOELLE,
         "노엘",
@@ -291,7 +291,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         Constant.TALENT_DATE_TUEFRI,
         R.drawable.icon_noelle
     ),
-    
+
     LocalCharacter(
         Constant.ID_QIQI,
         "치치",
@@ -302,7 +302,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         Constant.TALENT_DATE_MONTHU,
         R.drawable.icon_qiqi
     ),
-    
+
     LocalCharacter(
         Constant.ID_CHONGYUN,
         "중운",
@@ -313,7 +313,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         Constant.TALENT_DATE_TUEFRI,
         R.drawable.icon_chongyun
     ),
-    
+
     LocalCharacter(
         Constant.ID_GANYU,
         "감우",
@@ -324,7 +324,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         Constant.TALENT_DATE_TUEFRI,
         R.drawable.icon_ganyu
     ),
-    
+
     LocalCharacter(
         Constant.ID_ALBEDO,
         "알베도",
@@ -764,7 +764,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         Constant.TALENT_DATE_WEDSAT,
         R.drawable.icon_dehya
     ),
-    
+
     LocalCharacter(
         Constant.ID_MIKA,
         "미카",
@@ -906,5 +906,82 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         Constant.TALENT_AREA_FONTAINE,
         Constant.TALENT_DATE_MONTHU,
         R.drawable.icon_navia
+    ),
+
+    LocalCharacter(
+        Constant.ID_GAMING,
+        "가명",
+        "Gaming",
+        4,
+        Elements.GEO,
+        Constant.TALENT_AREA_LIYUE,
+        Constant.TALENT_DATE_MONTHU,
+        R.drawable.icon_gaming
+    ),
+
+    LocalCharacter(
+        Constant.ID_XIANYUN,
+        "한운",
+        "Xianyun",
+        5,
+        Elements.PYRO,
+        Constant.TALENT_AREA_LIYUE,
+        Constant.TALENT_DATE_WEDSAT,
+        R.drawable.icon_xianyun
+    ),
+
+    LocalCharacter(
+        Constant.ID_CHIORI,
+        "치오리",
+        "Chiori",
+        5,
+        Elements.GEO,
+        Constant.TALENT_AREA_INAZUMA,
+        Constant.TALENT_DATE_WEDSAT,
+        R.drawable.icon_chiori
+    ),
+
+    LocalCharacter(
+        Constant.ID_SIGEWINNE,
+        "시그윈",
+        "Sigewinne",
+        5,
+        Elements.HYDRO,
+        Constant.TALENT_AREA_FONTAINE,
+        Constant.TALENT_DATE_MONTHU,
+        R.drawable.icon_sigewinne
+    ),
+
+    LocalCharacter(
+        Constant.ID_ARLECCHINO,
+        "아를레키노",
+        "Arlecchino",
+        5,
+        Elements.PYRO,
+        Constant.TALENT_AREA_FONTAINE,
+        Constant.TALENT_DATE_WEDSAT,
+        R.drawable.icon_arlecchino
+    ),
+
+    LocalCharacter(
+        Constant.ID_SETHOS,
+        "세토스",
+        "Sethos",
+        4,
+        Elements.ELECTRO,
+        Constant.TALENT_AREA_SUMERU,
+        Constant.TALENT_DATE_WEDSAT,
+        R.drawable.icon_sethos
+    ),
+
+    LocalCharacter(
+        Constant.ID_CLORINDE,
+        "클로린드",
+        "Clorinde",
+        5,
+        Elements.ELECTRO,
+        Constant.TALENT_AREA_FONTAINE,
+        Constant.TALENT_DATE_TUEFRI,
+        R.drawable.icon_clorinde
     )
 )

@@ -24,7 +24,8 @@ object Constant {
     const val OS_HONKAI_SR_CHECK_IN_URL = "https://sg-public-api.hoyolab.com/event/luna/os/sign"
     const val OS_HONKAI_SR_ACT_ID = "e202303301540311"
 
-    const val HOW_CAN_I_GET_COOKIE_URL = "https://github.com/danggai/android_genshin_resin_widget/blob/master/how_to_get_hoyolab_cookie.md"
+    const val HOW_CAN_I_GET_COOKIE_URL =
+        "https://github.com/danggai/android_genshin_resin_widget/blob/master/how_to_get_hoyolab_cookie.md"
 
     const val SERVER_CN_GF_01 = "cn_gf01"
     const val SERVER_CN_QD_01 = "cn_qd01"
@@ -83,13 +84,11 @@ object Constant {
     const val API_NAME_CHECK_IN = "Check In"
 
 
-
     /* WORKER */
 
     const val WORKER_UNIQUE_NAME_AUTO_REFRESH = "AutoRefreshWork"
     const val WORKER_UNIQUE_NAME_AUTO_CHECK_IN = "AutoCheckInWork"
     const val WORKER_UNIQUE_NAME_TALENT_WIDGET_REFRESH = "TalentWidgetRefreshWork"
-
 
 
     /* FORMAT, REGEX */
@@ -105,7 +104,6 @@ object Constant {
     const val PREFIX_NOTI_ID_STAMINA = 1
     const val PREFIX_NOTI_ID_CHECKIN = 2
     const val PREFIX_NOTI_ID_CHECKIN_HK3RD = 3
-
 
 
     /* PREFERENCE */
@@ -169,9 +167,11 @@ object Constant {
     /*위젯 테마*/
     const val PREF_WIDGET_DETAIL_TIME_NOTATION = "PREF_DETAIL_TIME_NOTATION"
     const val PREF_WIDGET_RESIN_DATA_VISIBILITY = "PREF_WIDGET_RESIN_DATA_VISIBILITY"
-    const val PREF_WIDGET_DAILY_COMMISSION_DATA_VISIBILITY = "PREF_WIDGET_DAILY_COMMISSION_DATA_VISIBILITY"
+    const val PREF_WIDGET_DAILY_COMMISSION_DATA_VISIBILITY =
+        "PREF_WIDGET_DAILY_COMMISSION_DATA_VISIBILITY"
     const val PREF_WIDGET_WEEKLY_BOSS_DATA_VISIBILITY = "PREF_WIDGET_WEEKLY_BOSS_DATA_VISIBILITY"
-    const val PREF_WIDGET_REALM_CURRENCY_DATA_VISIBILITY = "PREF_WIDGET_REALM_CURRENCY_DATA_VISIBILITY"
+    const val PREF_WIDGET_REALM_CURRENCY_DATA_VISIBILITY =
+        "PREF_WIDGET_REALM_CURRENCY_DATA_VISIBILITY"
     const val PREF_WIDGET_EXPEDITION_DATA_VISIBILITY = "PREF_WIDGET_EXPEDITION_DATA_VISIBILITY"
     const val PREF_WIDGET_DETAIL_FONT_SIZE = "PREF_WIDGET_DETAIL_FONT_SIZE"
     /*bg trans*/
@@ -213,6 +213,7 @@ object Constant {
         EUROPE(PREF_SERVER_EUROPE),
         CHT(PREF_SERVER_CHT),
     }
+
     const val PREF_SERVER_ASIA = 0
     const val PREF_SERVER_USA = 1
     const val PREF_SERVER_EUROPE = 2
@@ -223,6 +224,7 @@ object Constant {
         FULL_CHARGE_TIME(PREF_TIME_NOTATION_FULL_CHARGE_TIME),
         DISABLE_TIME(PREF_TIME_NOTATION_DISABLE)
     }
+
     const val PREF_TIME_NOTATION_DEFAULT = -1
     const val PREF_TIME_NOTATION_REMAIN_TIME = 0
     const val PREF_TIME_NOTATION_FULL_CHARGE_TIME = 1
@@ -233,6 +235,7 @@ object Constant {
         LIGHT(PREF_WIDGET_THEME_LIGHT),
         DARK(PREF_WIDGET_THEME_DARK)
     }
+
     const val PREF_WIDGET_THEME_AUTOMATIC = 0
     const val PREF_WIDGET_THEME_LIGHT = 1
     const val PREF_WIDGET_THEME_DARK = 2
@@ -258,6 +261,7 @@ object Constant {
         VISIBLE(PREF_WIDGET_RESIN_IMAGE_VISIBLE),
         INVISIBLE(PREF_WIDGET_RESIN_IMAGE_INVISIBLE)
     }
+
     const val PREF_WIDGET_RESIN_IMAGE_VISIBLE = 0
     const val PREF_WIDGET_RESIN_IMAGE_INVISIBLE = 1
 
@@ -265,6 +269,7 @@ object Constant {
         ENGLISH(PREF_LANG_ENG, "en", "en-us"),
         KOREAN(PREF_LANG_KOR, "ko", "ko-kr")
     }
+
     const val PREF_LANG_ENG = 0
     const val PREF_LANG_KOR = 1
 
@@ -316,12 +321,10 @@ object Constant {
     const val PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_NAME = "AUTO CHECK IN NOTIFICATION"
 
 
-
     /* TIMEZONE */
 
     const val CHINA_TIMEZONE = "Asia/Shanghai"
     const val KOREA_TIMEZONE = "Asia/Seoul"
-
 
 
     /* ACTION */
@@ -416,4 +419,11 @@ object Constant {
     const val ID_FURINA = 10000089
     const val ID_CHEVREUSE = 10000090
     const val ID_NAVIA = 10000091
+    const val ID_GAMING = 10000092
+    const val ID_XIANYUN = 10000093
+    const val ID_CHIORI = 10000094
+    const val ID_SIGEWINNE = 10000095
+    const val ID_ARLECCHINO = 10000096
+    const val ID_SETHOS = 10000097
+    const val ID_CLORINDE = 10000098
 }
