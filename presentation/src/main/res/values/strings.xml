@@ -411,6 +411,6 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Add Genshin Impact 4.2v new characters</string>
+    <string name="dialog_msg_patch_note">- Add Genshin Impact 4.4v new characters</string>
 
 </resources>

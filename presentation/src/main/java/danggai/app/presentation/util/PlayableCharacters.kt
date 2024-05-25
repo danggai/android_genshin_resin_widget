@@ -913,7 +913,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "가명",
         "Gaming",
         4,
-        Elements.GEO,
+        Elements.PYRO,
         Constant.TALENT_AREA_LIYUE,
         Constant.TALENT_DATE_MONTHU,
         R.drawable.icon_gaming
@@ -924,7 +924,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "한운",
         "Xianyun",
         5,
-        Elements.PYRO,
+        Elements.ANEMO,
         Constant.TALENT_AREA_LIYUE,
         Constant.TALENT_DATE_WEDSAT,
         R.drawable.icon_xianyun
