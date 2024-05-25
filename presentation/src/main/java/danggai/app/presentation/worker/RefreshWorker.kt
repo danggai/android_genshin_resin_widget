@@ -242,7 +242,7 @@ class RefreshWorker @AssistedInject constructor(
         val nowResin: Int = dailyNote.current_resin
 
         if (settings.notiEach40Resin) {
-            val resinLevels = (40 until Constant.MAX_RESIN + 40 step 40).toList()
+            val resinLevels = (40 until Constant.MAX_RESIN + 40 step 40).toList().reversed()
 
             for (resinLevel in resinLevels) {
                 if (resinLevel in (prefResin + 1)..nowResin) {
@@ -344,7 +344,7 @@ class RefreshWorker @AssistedInject constructor(
         log.e("nowStamina = $nowStamina")
 
         if (settings.notiEach40TrailPower) {
-            val staminaLevels = (40 until Constant.MAX_TRAILBLAZE_POWER step 40).toList()
+            val staminaLevels = (40 until Constant.MAX_TRAILBLAZE_POWER step 40).toList().reversed()
 
             for (staminaLevel in staminaLevels) {
                 if (staminaLevel in (prefStamina + 1)..nowStamina) {
