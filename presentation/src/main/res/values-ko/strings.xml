@@ -168,10 +168,10 @@
     <string name="push_resin_noti_title">퓨어 레진 알림</string>
     <string name="push_resin_noti_description">일정 레진마다 여행자에게 알려주기 위해 발송하는 알림이야!</string>
     <string name="push_msg_resin_noti_over_40">%s! 현재 레진이 %d을 넘어섰어!</string>
-    <string name="push_msg_resin_noti_over_120">%s! 현재 레진이 %d을 넘어섰어! 슬슬 사용하러 가자!</string>
-    <string name="push_msg_resin_noti_over_160">%s! 현재 레진이 %d을 넘어섰어! 빨리 사용해야 해! 레손실 난다구!</string>
-    <string name="push_msg_resin_noti_over_200">%s! 현재 레진이 %d을 넘어섰어! 이렇게 많은 레진은 처음 봐!</string>
-    <string name="push_msg_resin_noti_over_140">%s! 현재 레진이 %d을 넘어섰어! 빨리 사용하러 가자!</string>
+    <string name="push_msg_resin_noti_over_160">%s! 현재 레진이 %d을 넘어섰어! 슬슬 사용하러 가자!</string>
+    <string name="push_msg_resin_noti_over_200">%s! 현재 레진이 %d을 넘어섰어! 빨리 사용해야 해! 레손실 난다구!</string>
+    <string name="push_msg_resin_noti_over_240">%s! 현재 레진이 %d을 넘어섰어! 이렇게 많은 레진은 처음 봐!</string>
+    <string name="push_msg_resin_noti_over_180">%s! 현재 레진이 %d을 넘어섰어! 빨리 사용하러 가자!</string>
     <string name="push_msg_resin_noti_custom">%s! 현재 레진이 %d을 넘어섰어! 지금 불러달라고 했었지?</string>
 
     <string name="push_trail_power_noti_title">개척력 알림</string>

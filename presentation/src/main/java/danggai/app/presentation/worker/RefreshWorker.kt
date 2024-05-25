@@ -412,12 +412,12 @@ class RefreshWorker @AssistedInject constructor(
         val msg = when (notiType) {
             Constant.NotiType.RESIN_EACH_40 ->
                 when (target) {
-                    Constant.MAX_RESIN + 40 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_200), account.nickname, target)
-                    Constant.MAX_RESIN -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_160), account.nickname, target)
-                    Constant.MAX_RESIN - 40 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_120), account.nickname, target)
+                    Constant.MAX_RESIN + 40 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_240), account.nickname, target)
+                    Constant.MAX_RESIN -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_200), account.nickname, target)
+                    Constant.MAX_RESIN - 40 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_160), account.nickname, target)
                     else -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_40), account.nickname, target)
                 }
-            Constant.NotiType.RESIN_140 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_140), account.nickname, target)
+            Constant.NotiType.RESIN_140 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_180), account.nickname, target)
             Constant.NotiType.RESIN_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), account.nickname, target)
             Constant.NotiType.EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_expedition_done), account.nickname)
             Constant.NotiType.REALM_CURRENCY_FULL -> String.format(applicationContext.getString(R.string.push_msg_realm_currency_full), account.nickname)

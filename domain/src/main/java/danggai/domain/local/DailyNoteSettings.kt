@@ -7,7 +7,7 @@ data class DailyNoteSettings(
     val autoRefreshPeriod: Long,
 
     val notiEach40Resin: Boolean,
-    val noti140Resin: Boolean,
+    val noti140Resin: Boolean, // 180으로 변경하여 적용함
     val notiCustomResin: Boolean,
     val customResin: Int,
     val notiExpedition: Boolean,

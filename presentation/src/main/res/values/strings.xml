@@ -191,10 +191,10 @@
     <string name="push_resin_noti_title">Pure Resin Notification</string>
     <string name="push_resin_noti_description">This is a notification sent to inform travelers of each pure resin!</string>
     <string name="push_msg_resin_noti_over_40">%s! Your resin is over %d!</string>
-    <string name="push_msg_resin_noti_over_120">%s! Your resin is over %d!</string>
     <string name="push_msg_resin_noti_over_160">%s! Your resin is over %d!</string>
     <string name="push_msg_resin_noti_over_200">%s! Your resin is over %d!</string>
-    <string name="push_msg_resin_noti_over_140">%s! Your resin is over %d!</string>
+    <string name="push_msg_resin_noti_over_240">%s! Your resin is over %d!</string>
+    <string name="push_msg_resin_noti_over_180">%s! Your resin is over %d!</string>
     <string name="push_msg_resin_noti_custom">%s! Your resin is over %d!</string>
 
     <string name="push_trail_power_noti_title">Trainblaze Power Notification</string>
