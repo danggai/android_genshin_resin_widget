@@ -53,7 +53,7 @@
     <string name="cht" translatable="false">TK, HT, MO</string>
 
     <string name="btn_each_40_resin">Each 40 Resins</string>
-    <string name="btn_140_resin">140 Resins</string>
+    <string name="btn_180_resin">180 Resins</string>
     <string name="resin">Resin</string>
     <string name="btn_expedition_done">Expedition Done</string>
     <string name="btn_assignment_done">Assignment Done</string>

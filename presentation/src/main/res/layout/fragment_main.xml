@@ -4,19 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
             name="vm"
-            type="danggai.app.presentation.ui.main.MainViewModel"
-            />
+            type="danggai.app.presentation.ui.main.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/ll_top"
@@ -26,8 +25,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toTopOf="@id/ns_body"
-            android:background="@color/light_blue_600"
-            >
+            android:background="@color/light_blue_600">
 
             <ImageView
                 android:id="@+id/iv_language"
@@ -37,8 +35,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_margin="10dp"
                 android:onClick="@{()-> vm.onClickChangeLanguage()}"
-                app:tint="@color/white"
-                />
+                app:tint="@color/white" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tl_top"
@@ -54,8 +51,7 @@
                 app:tabTextColor="@color/light_gray"
                 app:tabSelectedTextColor="@color/white"
                 app:tabIndicatorColor="@color/white"
-                app:tabIndicatorHeight="5dp"
-                />
+                app:tabIndicatorHeight="5dp" />
 
         </LinearLayout>
 
@@ -90,8 +86,7 @@
                     item="@{vm.sfAccountList}"
                     refreshSwitch="@{vm.sfAccountListRefreshSwitch}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:visibility="@{vm.sfAccountList.empty ?View.GONE :View.VISIBLE}"
-                    />
+                    android:visibility="@{vm.sfAccountList.empty ?View.GONE :View.VISIBLE}" />
 
                 <TextView
                     style="@style/TextView"
@@ -110,8 +105,7 @@
                     app:iconSize="24dp"
                     app:iconTint="@color/white"
                     android:textStyle="italic"
-                    android:layout_gravity="right"
-                    />
+                    android:layout_gravity="right" />
 
                 <android.widget.Space
                     android:layout_width="wrap_content"
@@ -179,8 +173,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    >
+                    android:gravity="center">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextView"
@@ -189,8 +182,7 @@
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold|italic"
-                        android:gravity="right"
-                    />
+                        android:gravity="right" />
 
                     <Space
                         android:layout_width="5dp"
@@ -200,8 +192,7 @@
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:layout_weight="1"
-                        android:background="#444444"
-                        />
+                        android:background="#444444" />
 
                     <Space
                         android:layout_width="10dp"
@@ -212,8 +203,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    >
+                    android:gravity="center">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
@@ -225,15 +215,14 @@
                         style="@style/Checkbox"
                         android:id="@+id/cb_140resin"
                         android:checked="@={vm.sfEnableNoti140Resin}"
-                        android:text="@string/btn_140_resin"/>
+                        android:text="@string/btn_180_resin" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    >
+                    android:gravity="center">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="0dp"
@@ -254,7 +243,7 @@
                             style="@style/EditTextStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
-                            android:hint="160"
+                            android:hint="200"
                             android:imeOptions="actionDone"
                             android:inputType="number"
                             android:maxLength="4"
@@ -310,16 +299,14 @@
                         android:layout_width="32dp"
                         android:layout_marginEnd="0dp"
                         android:checked="@={vm.sfEnableNotiDailyYet}"
-                        android:onClick="@{() -> vm.onClickDailyCommissionYetNoti()}"
-                        />
+                        android:onClick="@{() -> vm.onClickDailyCommissionYetNoti()}" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextView"
                         android:text="@string/btn_daily_commission_yet"
                         android:textColor="@color/black"
                         android:textSize="14sp"
-                        android:maxLines="2"
-                        />
+                        android:maxLines="2" />
 
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/sp_daily_yet_noti"
@@ -327,8 +314,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
-                        android:layout_marginLeft="8dp"
-                        />
+                        android:layout_marginLeft="8dp" />
 
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -345,8 +331,7 @@
                         android:layout_width="32dp"
                         android:layout_marginEnd="0dp"
                         android:checked="@={vm.sfEnableNotiWeeklyYet}"
-                        android:onClick="@{() -> vm.onClickWeeklyBossYetNoti()}"
-                        />
+                        android:onClick="@{() -> vm.onClickWeeklyBossYetNoti()}" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextView"
@@ -355,8 +340,7 @@
                         android:text="@string/btn_weekly_boss_yet"
                         android:textColor="@color/black"
                         android:textSize="14sp"
-                        android:maxLines="2"
-                        />
+                        android:maxLines="2" />
 
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/sp_weekly_yet_noti_day"
@@ -364,8 +348,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
-                        android:layout_marginLeft="8dp"
-                        />
+                        android:layout_marginLeft="8dp" />
 
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/sp_weekly_yet_noti_time"
@@ -373,8 +356,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
-                        android:layout_marginLeft="8dp"
-                        />
+                        android:layout_marginLeft="8dp" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -385,8 +367,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    >
+                    android:gravity="center">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextView"
@@ -395,8 +376,7 @@
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold|italic"
-                        android:gravity="right"
-                        />
+                        android:gravity="right" />
 
                     <Space
                         android:layout_width="5dp"
@@ -406,8 +386,7 @@
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:layout_weight="1"
-                        android:background="#444444"
-                        />
+                        android:background="#444444" />
 
                     <Space
                         android:layout_width="10dp"
@@ -418,8 +397,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    >
+                    android:gravity="center">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
@@ -431,15 +409,14 @@
                         style="@style/Checkbox"
                         android:id="@+id/cb_230_trail_power"
                         android:checked="@={vm.sfEnableNoti230TrailPower}"
-                        android:text="@string/btn_230_trailblaze_power"/>
+                        android:text="@string/btn_230_trailblaze_power" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    >
+                    android:gravity="center">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="0dp"
@@ -492,8 +469,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    >
+                    android:gravity="center">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextView"
@@ -502,8 +478,7 @@
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold|italic"
-                        android:gravity="right"
-                        />
+                        android:gravity="right" />
 
                     <Space
                         android:layout_width="5dp"
@@ -513,8 +488,7 @@
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:layout_weight="1"
-                        android:background="#444444"
-                        />
+                        android:background="#444444" />
 
                     <Space
                         android:layout_width="10dp"
@@ -525,8 +499,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    >
+                    android:gravity="center">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
@@ -561,8 +534,7 @@
                 <com.google.android.material.button.MaterialButton
                     style="@style/MaterialButton"
                     android:text="@string/save_setting"
-                    android:onClick="@{()->vm.onClickSave()}"
-                    />
+                    android:onClick="@{()->vm.onClickSave()}" />
 
                 <android.widget.Space
                     android:layout_width="wrap_content"
@@ -571,8 +543,7 @@
                 <com.google.android.material.button.MaterialButton
                     style="@style/MaterialButton"
                     android:text="@string/hoyolab_checkin"
-                    android:onClick="@{()->vm.onClickCheckIn()}"
-                    />
+                    android:onClick="@{()->vm.onClickCheckIn()}" />
 
                 <android.widget.Space
                     android:layout_width="wrap_content"
@@ -586,15 +557,13 @@
                     android:text="@string/dialog_widget_refresh_not_work"
                     android:textColor="@color/light_blue_600"
                     android:textSize="15sp"
-                    android:textStyle="bold|italic"
-                    />
+                    android:textStyle="bold|italic" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.core.widget.NestedScrollView>
 
-        <com.google.android.gms.ads.AdView
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
+        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/ad_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -605,8 +574,7 @@
             ads:layout_constraintLeft_toLeftOf="parent"
             ads:layout_constraintRight_toRightOf="parent"
             ads:adSize="BANNER"
-            ads:adUnitId="@string/google_ads_banner_id"
-            />
+            ads:adUnitId="@string/google_ads_banner_id" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -15,31 +15,27 @@
         android:padding="10dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/rounded_square_5dp"
-        >
+        android:background="@drawable/rounded_square_5dp">
 
         <LinearLayout
             android:id="@+id/ll_resin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingBottom="3dp"
-            >
+            android:paddingBottom="3dp">
 
             <ImageView
                 android:id="@+id/iv_resin"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/resin"
-                android:layout_marginRight="7dp"
-                />
+                android:layout_marginRight="7dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/ll_sync"
@@ -71,36 +67,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_gravity="center_horizontal"
-                    >
+                    android:layout_gravity="center_horizontal">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_gravity="center"
-                        >
+                        android:layout_gravity="center">
 
                         <TextView
                             style="@style/TextView"
                             android:id="@+id/tv_resin"
                             android:textSize="30sp"
                             android:textStyle="bold"
-                            android:text="160"
+                            android:text="200"
                             android:textColor="@color/widget_font_main"
                             android:layout_gravity="left"
-                            android:singleLine="true"
-                            />
+                            android:singleLine="true" />
 
                         <TextView
                             style="@style/TextView"
                             android:id="@+id/tv_resin_max"
-                            android:text="/160"
+                            android:text="/200"
                             android:textSize="16sp"
                             android:textColor="@color/widget_font_main"
                             android:layout_gravity="left|bottom"
-                            android:singleLine="true"
-                            />
+                            android:singleLine="true" />
 
                     </LinearLayout>
 
@@ -112,8 +104,7 @@
                         android:textColor="@color/widget_font_main"
                         android:layout_gravity="center"
                         android:paddingTop="2dp"
-                        android:singleLine="true"
-                        />
+                        android:singleLine="true" />
 
                 </LinearLayout>
 
@@ -126,8 +117,7 @@
             android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
             <TextView
                 style="@style/TextView"
@@ -136,8 +126,7 @@
                 android:textColor="@color/widget_font_main"
                 android:gravity="center"
                 android:maxLines="2"
-                android:text="@string/invalid_user_info"
-                />
+                android:text="@string/invalid_user_info" />
 
         </LinearLayout>
 
@@ -151,8 +140,7 @@
         android:indeterminateTint="@color/widget_font_sub"
         android:layout_gravity="center"
         android:layout_centerInParent="true"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll_bottom"
@@ -161,8 +149,7 @@
         android:layout_alignRight="@id/ll_root"
         android:layout_alignBottom="@id/ll_root"
         android:layout_marginRight="2dp"
-        android:gravity="right"
-        >
+        android:gravity="right">
 
         <TextView
             android:id="@+id/tv_name"
@@ -170,8 +157,7 @@
             android:text="여행자"
             android:textColor="@color/widget_font_sub"
             android:textSize="10sp"
-            android:layout_marginEnd="3dp"
-            />
+            android:layout_marginEnd="3dp" />
 
         <TextView
             android:id="@+id/tv_uid"

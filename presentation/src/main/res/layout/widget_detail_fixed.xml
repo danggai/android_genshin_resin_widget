@@ -85,7 +85,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:singleLine="true"
-                    android:text="160/160"
+                    android:text="200/200"
                     android:textColor="@color/widget_font_main"
                     android:textSize="12sp" />
 
@@ -426,8 +426,7 @@
         android:indeterminateTint="@color/widget_font_sub"
         android:layout_gravity="center"
         android:layout_centerInParent="true"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll_bottom"
@@ -436,8 +435,7 @@
         android:layout_alignRight="@id/ll_root"
         android:layout_alignBottom="@id/ll_root"
         android:layout_marginRight="2dp"
-        android:gravity="right"
-        >
+        android:gravity="right">
 
         <TextView
             android:id="@+id/tv_name"
@@ -445,8 +443,7 @@
             android:text="여행자"
             android:textColor="@color/widget_font_sub"
             android:textSize="10sp"
-            android:layout_marginEnd="3dp"
-            />
+            android:layout_marginEnd="3dp" />
 
         <TextView
             android:id="@+id/tv_uid"
