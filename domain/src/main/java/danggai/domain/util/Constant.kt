@@ -108,6 +108,8 @@ object Constant {
     const val PREFIX_NOTI_ID_STAMINA = 1
     const val PREFIX_NOTI_ID_CHECKIN = 2
     const val PREFIX_NOTI_ID_CHECKIN_HK3RD = 3
+    const val PREFIX_NOTI_ID_CHECKIN_HKSR = 4
+    const val PREFIX_NOTI_ID_CHECKIN_ZZZ = 5
 
 
     /* PREFERENCE */

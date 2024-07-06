@@ -205,7 +205,7 @@ object CommonFunction {
             Constant.NotiType.CHECK_IN_HONKAI_SR_ALREADY,
             Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND,
             -> {
-                notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN
+                notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN_HKSR
                 notificationId = Constant.PUSH_CHANNEL_HONKAI_SR_CHECK_IN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_honkai_sr_checkin_description)
                 priority = priorityLow
@@ -216,7 +216,7 @@ object CommonFunction {
             Constant.NotiType.CHECK_IN_ZZZ_FAILED,
             Constant.NotiType.CHECK_IN_ZZZ_ACCOUNT_NOT_FOUND,
             -> {
-                notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN
+                notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN_ZZZ
                 notificationId = Constant.PUSH_CHANNEL_HONKAI_ZZZ_CHECK_IN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_zzz_checkin_description)
                 priority = priorityLow
