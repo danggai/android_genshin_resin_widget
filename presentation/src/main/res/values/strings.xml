@@ -427,6 +427,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Add Genshin Impact 4.5~4.7v new characters\n- Resin Maximum 200 Reflected amendments</string>
-
+    <string name="dialog_msg_patch_note">- Add Genshin Impact 4.8v new characters\n- Add auto check in to Zenless Zone Zero (Import account data again from account management)\n\n- If the Starrail widget operating abnormally, please proceed with the captcha in the HoYoLab, Starrail.</string>
 </resources>
