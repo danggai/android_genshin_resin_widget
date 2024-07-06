@@ -2,8 +2,12 @@ package danggai.data.network.checkin.remote.api
 
 import com.skydoves.sandwich.ApiResponse
 import danggai.domain.network.checkin.entity.CheckIn
+import danggai.domain.network.checkin.entity.CheckInZZZ
 import danggai.domain.util.Constant
-import retrofit2.http.*
+import retrofit2.http.Header
+import retrofit2.http.Headers
+import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface CheckInApi {
     @Headers(
@@ -72,4 +76,18 @@ interface CheckInApi {
         @Query("act_id") actId: String,
         @Header("Cookie") cookie: String,
     ): ApiResponse<CheckIn>
+
+
+    @Headers(
+        "Accept: application/json, text/plain, */*",
+        "Content-Type: application/json;charset=UTF-8",
+        "Referer: https://webstatic-sea.hoyolab.com/",
+        "sec-ch-ua-mobile: ?1"
+    )
+    @POST(Constant.OS_ZZZ_CHECK_IN_URL)
+    suspend fun zenlessZoneZero(
+        @Query("lang") lang: String,
+        @Query("act_id") actId: String,
+        @Header("Cookie") cookie: String,
+    ): ApiResponse<CheckInZZZ>
 }

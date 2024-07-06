@@ -8,9 +8,13 @@ data class Account(
     val honkai_sr_nickname: String,
     val honkai_sr_uid: String,
     val honkai_sr_server: Int,
+    val zzz_nickname: String,
+    val zzz_uid: String,
+    val zzz_server: Int,
     val enable_genshin_checkin: Boolean,    // 원신
     val enable_honkai3rd_checkin: Boolean,  // 붕괴3rd
     val enable_honkai_sr_checkin: Boolean,  // 붕괴: 스타레일
+    val enable_zzz_checkin: Boolean,                // 젠레스 존 제로
     val enable_tot_checkin: Boolean,        // 미해결사건부
 ) {
     companion object {
@@ -22,9 +26,13 @@ data class Account(
             honkai_sr_nickname = "",
             honkai_sr_uid = "",
             honkai_sr_server = 0,
+            zzz_nickname = "",
+            zzz_uid = "",
+            zzz_server = 0,
             enable_genshin_checkin = false,
             enable_honkai3rd_checkin = false,
             enable_honkai_sr_checkin = false,
+            enable_zzz_checkin = false,
             enable_tot_checkin = false
         )
 
@@ -36,9 +44,13 @@ data class Account(
             honkai_sr_nickname = "",
             honkai_sr_uid = "",
             honkai_sr_server = 0,
+            zzz_nickname = "",
+            zzz_uid = "",
+            zzz_server = 0,
             enable_genshin_checkin = false,
             enable_honkai3rd_checkin = false,
             enable_honkai_sr_checkin = true,
+            enable_zzz_checkin = true,
             enable_tot_checkin = false
         )
     }

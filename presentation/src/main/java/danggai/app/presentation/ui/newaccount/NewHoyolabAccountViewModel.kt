@@ -41,10 +41,16 @@ class NewHoyolabAccountViewModel @Inject constructor(
     val sfHonkaiSrUid = MutableStateFlow("")
     val sfNoHonkaiSrAccount = MutableStateFlow(false)
 
+    val sfZZZServer = MutableStateFlow(0)
+    val sfZZZNickname = MutableStateFlow("")
+    val sfZZZUid = MutableStateFlow("")
+    val sfNoZZZAccount = MutableStateFlow(false)
+
     val sfHoyolabCookie = MutableStateFlow("")
     val sfEnableGenshinAutoCheckIn = MutableStateFlow(false)
     val sfEnableHonkai3rdAutoCheckIn = MutableStateFlow(false)
     val sfEnableHonkaiSrAutoCheckIn = MutableStateFlow(false)
+    val sfEnableZZZAutoCheckIn = MutableStateFlow(false)
 
     private var _dailyNotePrivateErrorCount = 0
     val dailyNotePrivateErrorCount
@@ -98,11 +104,14 @@ class NewHoyolabAccountViewModel @Inject constructor(
                                 sfEnableGenshinAutoCheckIn.value = false
                                 sfEnableHonkaiSrAutoCheckIn.value = false
                                 sfEnableHonkai3rdAutoCheckIn.value = false
+                                sfEnableZZZAutoCheckIn.value = false
 
                                 sfNoGenshinAccount.value =
                                     !it.data.data.list.any { recordCard -> recordCard.game_id == Constant.GAME_ID_GENSHIN_IMPACT }
                                 sfNoHonkaiSrAccount.value =
                                     !it.data.data.list.any { recordCard -> recordCard.game_id == Constant.GAME_ID_HONKAI_SR }
+                                sfNoZZZAccount.value =
+                                    !it.data.data.list.any { recordCard -> recordCard.game_id == Constant.GAME_ID_ZZZ }
 
                                 initGenshinDataInputField()
                                 initHonkaiSrDataInputField()
@@ -115,33 +124,72 @@ class NewHoyolabAccountViewModel @Inject constructor(
                                             sfGenshinNickname.value = recordCard.nickname
 
                                             when (recordCard.region) {
-                                                Constant.SERVER_OS_ASIA -> sfGenshinServer.value = Constant.Server.ASIA.pref
-                                                Constant.SERVER_OS_USA -> sfGenshinServer.value = Constant.Server.USA.pref
-                                                Constant.SERVER_OS_EURO -> sfGenshinServer.value = Constant.Server.EUROPE.pref
-                                                Constant.SERVER_OS_CHT -> sfGenshinServer.value = Constant.Server.CHT.pref
+                                                Constant.SERVER_OS_ASIA -> sfGenshinServer.value =
+                                                    Constant.Server.ASIA.pref
+
+                                                Constant.SERVER_OS_USA -> sfGenshinServer.value =
+                                                    Constant.Server.USA.pref
+
+                                                Constant.SERVER_OS_EURO -> sfGenshinServer.value =
+                                                    Constant.Server.EUROPE.pref
+
+                                                Constant.SERVER_OS_CHT -> sfGenshinServer.value =
+                                                    Constant.Server.CHT.pref
                                             }
 
                                             sfEnableGenshinAutoCheckIn.value = true
                                         }
+
                                         Constant.GAME_ID_HONKAI_SR -> {
                                             log.e()
                                             sfHonkaiSrUid.value = recordCard.game_role_id
                                             sfHonkaiSrNickname.value = recordCard.nickname
 
                                             when (recordCard.region) {
-                                                Constant.SERVER_PO_ASIA -> sfHonkaiSrServer.value = Constant.Server.ASIA.pref
-                                                Constant.SERVER_PO_USA -> sfHonkaiSrServer.value = Constant.Server.USA.pref
-                                                Constant.SERVER_PO_EURO -> sfHonkaiSrServer.value = Constant.Server.EUROPE.pref
-                                                Constant.SERVER_PO_CHT -> sfHonkaiSrServer.value = Constant.Server.CHT.pref
+                                                Constant.SERVER_PO_ASIA -> sfHonkaiSrServer.value =
+                                                    Constant.Server.ASIA.pref
+
+                                                Constant.SERVER_PO_USA -> sfHonkaiSrServer.value =
+                                                    Constant.Server.USA.pref
+
+                                                Constant.SERVER_PO_EURO -> sfHonkaiSrServer.value =
+                                                    Constant.Server.EUROPE.pref
+
+                                                Constant.SERVER_PO_CHT -> sfHonkaiSrServer.value =
+                                                    Constant.Server.CHT.pref
                                             }
 
                                             sfEnableHonkaiSrAutoCheckIn.value = true
                                         }
+
+                                        Constant.GAME_ID_ZZZ -> {
+                                            log.e()
+                                            sfZZZUid.value = recordCard.game_role_id
+                                            sfZZZNickname.value = recordCard.nickname
+
+                                            when (recordCard.region) {
+                                                Constant.SERVER_PO_ASIA -> sfZZZServer.value =
+                                                    Constant.Server.ASIA.pref
+
+                                                Constant.SERVER_PO_USA -> sfZZZServer.value =
+                                                    Constant.Server.USA.pref
+
+                                                Constant.SERVER_PO_EURO -> sfZZZServer.value =
+                                                    Constant.Server.EUROPE.pref
+
+                                                Constant.SERVER_PO_CHT -> sfZZZServer.value =
+                                                    Constant.Server.CHT.pref
+                                            }
+
+                                            sfEnableZZZAutoCheckIn.value = true
+                                        }
+
                                         Constant.GAME_ID_HONKAI_3RD -> {
                                             log.e()
                                             sfEnableHonkai3rdAutoCheckIn.value = true
                                         }
-                                        else -> { }
+
+                                        else -> {}
                                     }
                                 }
 
@@ -150,31 +198,55 @@ class NewHoyolabAccountViewModel @Inject constructor(
                                 else if (it.data.data.list.isNotEmpty()) {
                                     initGenshinDataInputField()
                                     makeToast(resource.getString(R.string.msg_toast_get_uid_error_genshin_data_not_exists))
-                                }
-                                else
+                                } else
                                     makeToast(resource.getString(R.string.msg_toast_get_uid_error_card_list_empty))
 
                             }
+
                             else -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_GET_GAME_RECORD_CARD, it.code, it.data.retcode)
-                                makeToast(String.format(resource.getString(R.string.msg_toast_get_uid_error_include_error_code), it.data.retcode))
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_GET_GAME_RECORD_CARD,
+                                    it.code,
+                                    it.data.retcode
+                                )
+                                makeToast(
+                                    String.format(
+                                        resource.getString(R.string.msg_toast_get_uid_error_include_error_code),
+                                        it.data.retcode
+                                    )
+                                )
                             }
                         }
                     }
+
                     is ApiResult.Failure -> {
                         it.message.let { msg ->
                             log.e(msg)
-                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_GET_GAME_RECORD_CARD, it.code, null)
+                            CommonFunction.sendCrashlyticsApiLog(
+                                Constant.API_NAME_GET_GAME_RECORD_CARD,
+                                it.code,
+                                null
+                            )
                             makeToast(resource.getString(R.string.msg_toast_common_network_error))
                         }
                     }
+
                     is ApiResult.Error -> {
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_GET_GAME_RECORD_CARD, null, null)
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_GET_GAME_RECORD_CARD,
+                            null,
+                            null
+                        )
                         makeToast(resource.getString(R.string.msg_toast_get_uid_error))
                     }
+
                     is ApiResult.Null -> {
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_GET_GAME_RECORD_CARD, null, null)
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_GET_GAME_RECORD_CARD,
+                            null,
+                            null
+                        )
                         makeToast(resource.getString(R.string.msg_toast_common_body_null_error))
                     }
                 }
@@ -215,26 +287,51 @@ class NewHoyolabAccountViewModel @Inject constructor(
                                 log.e()
                                 makeToast(resource.getString(R.string.msg_toast_change_data_switch_success))
                             }
+
                             else -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHANGE_DATA_SWITCH, it.code, it.data.retcode)
-                                makeToast(String.format(resource.getString(R.string.msg_toast_change_data_switch_error_include_error_code), it.data.retcode))
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_CHANGE_DATA_SWITCH,
+                                    it.code,
+                                    it.data.retcode
+                                )
+                                makeToast(
+                                    String.format(
+                                        resource.getString(R.string.msg_toast_change_data_switch_error_include_error_code),
+                                        it.data.retcode
+                                    )
+                                )
                             }
                         }
                     }
+
                     is ApiResult.Failure -> {
                         it.message.let { msg ->
                             log.e(msg)
-                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHANGE_DATA_SWITCH, it.code, null)
+                            CommonFunction.sendCrashlyticsApiLog(
+                                Constant.API_NAME_CHANGE_DATA_SWITCH,
+                                it.code,
+                                null
+                            )
                             makeToast(resource.getString(R.string.msg_toast_common_network_error))
                         }
                     }
+
                     is ApiResult.Error -> {
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHANGE_DATA_SWITCH, null, null)
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_CHANGE_DATA_SWITCH,
+                            null,
+                            null
+                        )
                         makeToast(resource.getString(R.string.msg_toast_change_data_switch_error))
                     }
+
                     is ApiResult.Null -> {
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHANGE_DATA_SWITCH, null, null)
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_CHANGE_DATA_SWITCH,
+                            null,
+                            null
+                        )
                         makeToast(resource.getString(R.string.msg_toast_common_body_null_error))
                     }
                 }
@@ -281,86 +378,165 @@ class NewHoyolabAccountViewModel @Inject constructor(
                                     sfHonkaiSrNickname.value,
                                     sfHonkaiSrUid.value,
                                     sfHonkaiSrServer.value,
+                                    sfZZZNickname.value,
+                                    sfZZZUid.value,
+                                    sfZZZServer.value,
                                     sfEnableGenshinAutoCheckIn.value,
                                     sfEnableHonkai3rdAutoCheckIn.value,
                                     sfEnableHonkaiSrAutoCheckIn.value,
+                                    sfEnableZZZAutoCheckIn.value,
                                     false
                                 )
 
                                 insertAccount(account)
                             }
+
                             Constant.RETCODE_ERROR_CHARACTOR_INFO -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_DAILY_NOTE,
+                                    it.code,
+                                    it.data.retcode
+                                )
                                 makeToast(resource.getString(R.string.msg_toast_dailynote_error_charactor_info))
                             }
+
                             Constant.RETCODE_ERROR_INTERNAL_DATABASE_ERROR -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_DAILY_NOTE,
+                                    it.code,
+                                    it.data.retcode
+                                )
                                 makeToast(resource.getString(R.string.msg_toast_dailynote_error_internal_database_error))
                             }
+
                             Constant.RETCODE_ERROR_TOO_MANY_REQUESTS -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_DAILY_NOTE,
+                                    it.code,
+                                    it.data.retcode
+                                )
                                 makeToast(resource.getString(R.string.msg_toast_dailynote_error_too_many_requests))
                             }
+
                             Constant.RETCODE_ERROR_NOT_LOGGED_IN,
-                            Constant.RETCODE_ERROR_NOT_LOGGED_IN_2-> {
+                            Constant.RETCODE_ERROR_NOT_LOGGED_IN_2 -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_DAILY_NOTE,
+                                    it.code,
+                                    it.data.retcode
+                                )
                                 makeToast(resource.getString(R.string.msg_toast_dailynote_error_not_logged_in))
                             }
+
                             Constant.RETCODE_ERROR_NOT_LOGGED_IN_3 -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_DAILY_NOTE,
+                                    it.code,
+                                    it.data.retcode
+                                )
                                 makeToast(resource.getString(R.string.msg_toast_dailynote_error_not_logged_in_3))
                             }
+
                             Constant.RETCODE_ERROR_WRONG_ACCOUNT -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_DAILY_NOTE,
+                                    it.code,
+                                    it.data.retcode
+                                )
                                 makeToast(resource.getString(R.string.msg_toast_dailynote_error_wrong_account))
                             }
+
                             Constant.RETCODE_ERROR_DATA_NOT_PUBLIC -> {
                                 log.e()
                                 _dailyNotePrivateErrorCount += 1
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_DAILY_NOTE,
+                                    it.code,
+                                    it.data.retcode
+                                )
                                 sendEvent(Event.WhenDailyNoteIsPrivate())
                             }
+
                             Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_DAILY_NOTE,
+                                    it.code,
+                                    it.data.retcode
+                                )
                                 makeToast(resource.getString(R.string.msg_toast_dailynote_error_account_not_found))
                             }
+
                             Constant.RETCODE_ERROR_INVALID_LANGUAGE -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_DAILY_NOTE,
+                                    it.code,
+                                    it.data.retcode
+                                )
                                 makeToast(resource.getString(R.string.msg_toast_dailynote_error_invalid_language))
                             }
+
                             Constant.RETCODE_ERROR_INVALID_INPUT_FORMAT -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_DAILY_NOTE,
+                                    it.code,
+                                    it.data.retcode
+                                )
                                 makeToast(resource.getString(R.string.msg_toast_dailynote_error_invalid_input))
                             }
+
                             else -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
-                                makeToast(String.format(resource.getString(R.string.msg_toast_dailynote_error_include_error_code), it.data.retcode))
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_DAILY_NOTE,
+                                    it.code,
+                                    it.data.retcode
+                                )
+                                makeToast(
+                                    String.format(
+                                        resource.getString(R.string.msg_toast_dailynote_error_include_error_code),
+                                        it.data.retcode
+                                    )
+                                )
                             }
                         }
                     }
+
                     is ApiResult.Failure -> {
                         it.message.let { msg ->
                             log.e(msg)
-                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, null)
+                            CommonFunction.sendCrashlyticsApiLog(
+                                Constant.API_NAME_DAILY_NOTE,
+                                it.code,
+                                null
+                            )
                             makeToast(resource.getString(R.string.msg_toast_common_network_error))
                         }
                     }
+
                     is ApiResult.Error -> {
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, null, null)
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_DAILY_NOTE,
+                            null,
+                            null
+                        )
                         makeToast(resource.getString(R.string.msg_toast_dailynote_error))
                     }
+
                     is ApiResult.Null -> {
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, null,null)
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_DAILY_NOTE,
+                            null,
+                            null
+                        )
                         makeToast(resource.getString(R.string.msg_toast_common_body_null_error))
                     }
                 }
@@ -389,6 +565,11 @@ class NewHoyolabAccountViewModel @Inject constructor(
         sfHonkaiSrServer.value = server.pref
     }
 
+    fun onClickSetZZZServer(server: Constant.Server) {
+        log.e("server -> $server")
+        sfZZZServer.value = server.pref
+    }
+
     fun makeDailyNotePublic() {
         log.e()
         makeBattleChroniclePublic(
@@ -408,7 +589,8 @@ class NewHoyolabAccountViewModel @Inject constructor(
     fun initGenshinDataInputField() {
         if (sfNoGenshinAccount.value) {
             sfGenshinNickname.value = randomGuestName()
-            sfGenshinUid.value = "-" + (mCookieData["ltuid"]?:CommonFunction.getRandomNumber(1000000, 9999999))
+            sfGenshinUid.value =
+                "-" + (mCookieData["ltuid"] ?: CommonFunction.getRandomNumber(1000000, 9999999))
         } else {
             sfGenshinNickname.value = ""
             sfGenshinUid.value = ""
@@ -420,9 +602,15 @@ class NewHoyolabAccountViewModel @Inject constructor(
         sfHonkaiSrUid.value = ""
     }
 
+    fun initZZZDataInputField() {
+        sfZZZNickname.value = ""
+        sfZZZUid.value = ""
+    }
+
     fun onClickGetUid() {
         log.e()
-        val hoyolabUid = mCookieData["ltuid"]?:mCookieData["ltuid_v2"]?:mCookieData["account_id_v2"]?:""
+        val hoyolabUid =
+            mCookieData["ltuid"] ?: mCookieData["ltuid_v2"] ?: mCookieData["account_id_v2"] ?: ""
 
         if (hoyolabUid == "") {
             makeToast(resource.getString(R.string.msg_toast_get_uid_error_no_ltuid))
@@ -447,14 +635,19 @@ class NewHoyolabAccountViewModel @Inject constructor(
                     honkai_sr_nickname = sfHonkaiSrNickname.value,
                     honkai_sr_uid = sfHonkaiSrUid.value,
                     honkai_sr_server = sfHonkaiSrServer.value,
+                    zzz_nickname = sfZZZNickname.value,
+                    zzz_uid = sfZZZUid.value,
+                    zzz_server = sfZZZServer.value,
                     enable_genshin_checkin = sfEnableGenshinAutoCheckIn.value,
                     enable_honkai3rd_checkin = sfEnableHonkai3rdAutoCheckIn.value,
-                    enable_honkai_sr_checkin = sfEnableHonkaiSrAutoCheckIn.value
+                    enable_honkai_sr_checkin = sfEnableHonkaiSrAutoCheckIn.value,
+                    enable_zzz_checkin = sfEnableZZZAutoCheckIn.value
                 )
             )
         } else {
             sfGenshinUid.value = sfGenshinUid.value.trim()
             sfHonkaiSrUid.value = sfHonkaiSrUid.value.trim()
+            sfZZZUid.value = sfZZZUid.value.trim()
             sfHoyolabCookie.value = sfHoyolabCookie.value.trim()
 
             dailyNote(
@@ -489,9 +682,15 @@ class NewHoyolabAccountViewModel @Inject constructor(
                 sfHonkaiSrServer.value = account.honkai_sr_server
                 sfNoHonkaiSrAccount.value = account.honkai_sr_uid.isEmpty()
 
+                sfZZZUid.value = account.zzz_uid
+                sfZZZNickname.value = account.zzz_nickname
+                sfZZZServer.value = account.zzz_server
+                sfNoZZZAccount.value = account.zzz_uid.isEmpty()
+
                 sfEnableGenshinAutoCheckIn.value = account.enable_genshin_checkin
                 sfEnableHonkai3rdAutoCheckIn.value = account.enable_honkai3rd_checkin
                 sfEnableHonkaiSrAutoCheckIn.value = account.enable_honkai_sr_checkin
+                sfEnableZZZAutoCheckIn.value = account.enable_zzz_checkin
 
                 if (account.genshin_uid.contains("-")) sfNoGenshinAccount.value = true
             }

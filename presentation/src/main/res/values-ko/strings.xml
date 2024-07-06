@@ -11,6 +11,7 @@
     <string name="widget_customizing">위젯 디자인 설정</string>
     <string name="btn_no_genshin_account">원신 위젯 기능 사용 안함</string>
     <string name="btn_no_honkai_sr_account">붕괴: 스타레일 위젯 기능 사용 안함</string>
+    <string name="btn_no_zzz_account">젠레스 존 제로 위젯 기능 사용 안함</string>
     <string name="hoyolab_checkin_desc">최초 1회는 <b>\'호요랩 출석체크\'</b> 버튼을 눌러 수동으로 진행해야\n자동 출석이 정상적으로 진행됩니다.</string>
     <string name="hoyolab_checkin_desc_2">호요랩 내의 내 정보 > 나의 캐릭터 탭에 있는 계정을\n기준으로 자동 출석체크를 진행합니다.</string>
 
@@ -59,6 +60,7 @@
     <string name="btn_auto_check_in_enable">원신</string>
     <string name="btn_auto_check_in_enable_honkai_3rd">붕괴 3rd</string>
     <string name="btn_auto_check_in_enable_honkai_sr">붕괴: 스타레일</string>
+    <string name="btn_auto_check_in_enable_zzz">젠레스 존 제로</string>
     <string name="btn_check_in_success">출석 성공 시</string>
     <string name="btn_check_in_failed">출석 실패 시</string>
 
@@ -183,19 +185,29 @@
 
     <string name="push_genshin_checkin_title">원신 출석 알림</string>
     <string name="push_genshin_checkin_description">원신 출석 결과를 여행자에게 알려주기 위해 발송하는 알림이야!</string>
+    <string name="push_msg_checkin_success_genshin">%s! 오늘 출석체크 해왔어!</string>
+    <string name="push_msg_checkin_already_genshin">%s, 오늘은 이미 출석 했어! 내일 1시에 다시 할게!</string>
+    <string name="push_msg_checkin_failed_genshin">%s, 출석 체크에 실패했어.. 30분 후에 다시 시도할게!</string>
+
     <string name="push_honkai_3rd_checkin_title">붕괴3rd 출석 알림</string>
     <string name="push_honkai_3rd_checkin_description">붕괴3rd 출석 결과를 함장에게 알려주기 위해 발송하는 알림이야!</string>
+    string>
+    <string name="push_msg_checkin_success_honkai">오늘 자 출석체크가 완료됐어, %s~</string>
+    <string name="push_msg_checkin_already_honkai">%s, 오늘 출석 체크는 이미 완료됐어. 내일 1시에 다시 알려줄게~</string>
+    <string name="push_msg_checkin_failed_honkai">%s, 출석 체크에 실패했지만, 30분 후에 다시 시도해볼게~</string>
+
     <string name="push_honkai_sr_checkin_title">붕괴: 스타레일 출석 알림</string>
     <string name="push_honkai_sr_checkin_description">붕괴: 스타레일 출석 결과를 개척자에게 알려주기 위해 발송하는 알림이야!</string>
-    <string name="push_msg_checkin_success_genshin">%s! 오늘 출석체크 해왔어!</string>
-    <string name="push_msg_checkin_success_honkai">오늘 자 출석체크가 완료됐어, %s~</string>
     <string name="push_msg_checkin_success_honkai_sr">오늘 자 출석체크가 완료됐어, %s~</string>
-    <string name="push_msg_checkin_already_genshin">%s, 오늘은 이미 출석 했어! 내일 1시에 다시 할게!</string>
-    <string name="push_msg_checkin_already_honkai">%s, 오늘 출석 체크는 이미 완료됐어. 내일 1시에 다시 알려줄게~</string>
     <string name="push_msg_checkin_already_honkai_sr">%s, 오늘 출석 체크는 이미 완료됐어. 내일 1시에 다시 알려줄게~</string>
-    <string name="push_msg_checkin_failed_genshin">%s, 출석 체크에 실패했어.. 30분 후에 다시 시도할게!</string>
-    <string name="push_msg_checkin_failed_honkai">%s, 출석 체크에 실패했지만, 30분 후에 다시 시도해볼게~</string>
     <string name="push_msg_checkin_failed_honkai_sr">%s, 출석 체크에 실패했지만, 30분 후에 다시 시도해볼게~</string>
+
+    <string name="push_zzz_checkin_title">젠레스 존 제로 출석 알림</string>
+    <string name="push_zzz_checkin_description">젠레스 존 제로 출석 결과를 로프꾼에게 알려주기 위해 발송하는 알림이야!</string>
+    <string name="push_msg_checkin_success_zzz">%s! 오늘 출석체크 해왔어!</string>
+    <string name="push_msg_checkin_already_zzz">%s, 오늘은 이미 출석 했어! 내일 1시에 다시 할게!</string>
+    <string name="push_msg_checkin_failed_zzz">%s, 출석 체크에 실패했어.. 30분 후에 다시 시도할게!</string>
+
     <string name="push_msg_checkin_account_not_found">%s 계정과 연동 된 인게임 계정이 없어서 출석체크를 진행할 수 없습니다. 자동 출석체크를 비활성화하였습니다.</string>
     <string name="push_msg_checkin_success_genshin_captcha">%s! 인증절차가 발생해서 자동으로 출석 할 수 없어!\n오늘은 호요랩에서 직접 출석해줘! (누르면 출석 페이지로 이동)</string>
 
@@ -223,16 +235,19 @@
     <string name="push_weekly_boss_description">설정한 날짜까지 주간 보스 레진 할인 횟수를 사용하지 않았을 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
     <string name="push_msg_weekly_boss_yet">%s! 이번 주 주간 보스 레진 할인 횟수는 소모 했어? 아니면 한 번 확인해봐!</string>
 
+
     <string name="hint_cookie">HoYoLAB의 쿠키를 입력해 줘!</string>
     <string name="hint_uid">uid를 적어야 하는 장소야!</string>
     <string name="hint_nickname_genshin">여행자의 이름을 적어 줘!</string>
     <string name="hint_nickname_honkai_sr">개척자의 이름을 적어 줘!</string>
+    <string name="hint_nickname_zzz">로프꾼의 이름을 적어 줘!</string>
 
     <string name="invalid_user_info">유저 정보 없이는\n사용할 수 없어!</string>
 
     <string name="pioneer">개척자</string>
     <string name="captain">함장</string>
     <string name="traveler">여행자</string>
+    <string name="proxy">로프꾼</string>
 
     <!-- Character Name -->
     <string name="kate">케이트</string>

@@ -6,9 +6,13 @@ import com.skydoves.sandwich.suspendOnSuccess
 import danggai.data.network.checkin.remote.api.CheckInApi
 import danggai.domain.core.ApiResult
 import danggai.domain.network.checkin.entity.CheckIn
+import danggai.domain.network.checkin.entity.CheckInZZZ
 import danggai.domain.network.checkin.repository.CheckInRepository
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 class CheckInRepositoryImpl @Inject constructor(
@@ -29,23 +33,27 @@ class CheckInRepositoryImpl @Inject constructor(
         )
 
         response.suspendOnSuccess {
-            emit( this.response.body()?.let {
+            emit(this.response.body()?.let {
                 ApiResult.Success<CheckIn>(
                     this.response.code(),
                     it
                 )
             } ?: ApiResult.Null())
         }.suspendOnError {
-            emit(ApiResult.Failure(
-                this.response.code(),
-                this.response.message()
-            ))
+            emit(
+                ApiResult.Failure(
+                    this.response.code(),
+                    this.response.message()
+                )
+            )
         }.suspendOnException {
-            emit(ApiResult.Error(
-                this.exception
-            ))
+            emit(
+                ApiResult.Error(
+                    this.exception
+                )
+            )
         }
-    }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 
     override suspend fun genshinImpactRetry(
         lang: String,
@@ -63,23 +71,27 @@ class CheckInRepositoryImpl @Inject constructor(
         )
 
         response.suspendOnSuccess {
-            emit( this.response.body()?.let {
+            emit(this.response.body()?.let {
                 ApiResult.Success<CheckIn>(
                     this.response.code(),
                     it
                 )
             } ?: ApiResult.Null())
         }.suspendOnError {
-            emit(ApiResult.Failure(
-                this.response.code(),
-                this.response.message()
-            ))
+            emit(
+                ApiResult.Failure(
+                    this.response.code(),
+                    this.response.message()
+                )
+            )
         }.suspendOnException {
-            emit(ApiResult.Error(
-                this.exception
-            ))
+            emit(
+                ApiResult.Error(
+                    this.exception
+                )
+            )
         }
-    }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 
     override suspend fun honkai3rd(
         lang: String,
@@ -95,23 +107,27 @@ class CheckInRepositoryImpl @Inject constructor(
         )
 
         response.suspendOnSuccess {
-            emit( this.response.body()?.let {
+            emit(this.response.body()?.let {
                 ApiResult.Success<CheckIn>(
                     this.response.code(),
                     it
                 )
             } ?: ApiResult.Null())
         }.suspendOnError {
-            emit(ApiResult.Failure(
-                this.response.code(),
-                this.response.message()
-            ))
+            emit(
+                ApiResult.Failure(
+                    this.response.code(),
+                    this.response.message()
+                )
+            )
         }.suspendOnException {
-            emit(ApiResult.Error(
-                this.exception
-            ))
+            emit(
+                ApiResult.Error(
+                    this.exception
+                )
+            )
         }
-    }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 
     override suspend fun honkaiSR(
         lang: String,
@@ -127,21 +143,61 @@ class CheckInRepositoryImpl @Inject constructor(
         )
 
         response.suspendOnSuccess {
-            emit( this.response.body()?.let {
+            emit(this.response.body()?.let {
                 ApiResult.Success<CheckIn>(
                     this.response.code(),
                     it
                 )
             } ?: ApiResult.Null())
         }.suspendOnError {
-            emit(ApiResult.Failure(
-                this.response.code(),
-                this.response.message()
-            ))
+            emit(
+                ApiResult.Failure(
+                    this.response.code(),
+                    this.response.message()
+                )
+            )
         }.suspendOnException {
-            emit(ApiResult.Error(
-                this.exception
-            ))
+            emit(
+                ApiResult.Error(
+                    this.exception
+                )
+            )
         }
-    }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+
+    override suspend fun zenlessZoneZero(
+        lang: String,
+        actId: String,
+        cookie: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit
+    ) = flow<ApiResult<CheckInZZZ>> {
+        val response = checkInApi.zenlessZoneZero(
+            lang,
+            actId,
+            cookie
+        )
+
+        response.suspendOnSuccess {
+            emit(this.response.body()?.let {
+                ApiResult.Success<CheckInZZZ>(
+                    this.response.code(),
+                    it
+                )
+            } ?: ApiResult.Null())
+        }.suspendOnError {
+            emit(
+                ApiResult.Failure(
+                    this.response.code(),
+                    this.response.message()
+                )
+            )
+        }.suspendOnException {
+            emit(
+                ApiResult.Error(
+                    this.exception
+                )
+            )
+        }
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 }

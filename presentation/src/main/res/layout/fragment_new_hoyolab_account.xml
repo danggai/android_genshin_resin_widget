@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <import type="android.view.View" />
+
         <import type="danggai.domain.util.Constant.Server" />
 
         <variable
             name="vm"
-            type="danggai.app.presentation.ui.newaccount.NewHoyolabAccountViewModel"
-            />
+            type="danggai.app.presentation.ui.newaccount.NewHoyolabAccountViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,8 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -26,24 +26,21 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            >
+            app:layout_constraintEnd_toEndOf="parent">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/ll_main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:animateLayoutChanges="true"
-                >
+                android:animateLayoutChanges="true">
 
                 <LinearLayout
                     android:id="@+id/ll_cookie"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingHorizontal="10dp"
-                    >
+                    android:paddingHorizontal="10dp">
 
                     <android.widget.Space
                         android:layout_width="wrap_content"
@@ -73,8 +70,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/get_cookie_btn"
-                        android:onClick="@{()->vm.onClickGetCookie()}"
-                        />
+                        android:onClick="@{()->vm.onClickGetCookie()}" />
 
                     <android.widget.Space
                         android:layout_width="wrap_content"
@@ -88,8 +84,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:visibility="@{vm.sfHoyolabCookie.empty ?View.GONE :View.VISIBLE}"
-                    android:background="#f5f5f5"
-                    >
+                    android:background="#f5f5f5">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="match_parent"
@@ -99,14 +94,13 @@
                         android:scaleType="centerInside"
                         android:src="@drawable/logo_genshin"
                         android:tint="#f5f5f5"
-                        android:tintMode="screen"
-                        />
+                        android:tintMode="screen" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:paddingHorizontal="10dp" >
+                        android:paddingHorizontal="10dp">
 
                         <android.widget.Space
                             android:layout_width="wrap_content"
@@ -118,7 +112,7 @@
                             android:text="@string/server"
                             android:textColor="@color/black"
                             android:textSize="28sp"
-                            android:textStyle="bold|italic"/>
+                            android:textStyle="bold|italic" />
 
                         <RadioGroup
                             style="@style/RadioGroup"
@@ -133,8 +127,7 @@
                                 android:checked="@{vm.sfGenshinServer == Server.ASIA.pref}"
                                 android:onClick="@{() -> vm.onClickSetGenshinServer(Server.ASIA)}"
                                 android:text="@string/asia"
-                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
-                                />
+                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}" />
 
                             <com.google.android.material.radiobutton.MaterialRadioButton
                                 android:id="@+id/rb_genshin_usa"
@@ -143,8 +136,7 @@
                                 android:checked="@{vm.sfGenshinServer == Server.USA.pref}"
                                 android:onClick="@{() -> vm.onClickSetGenshinServer(Server.USA)}"
                                 android:text="@string/america"
-                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
-                                />
+                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}" />
 
                             <com.google.android.material.radiobutton.MaterialRadioButton
                                 android:id="@+id/rb_genshin_euro"
@@ -153,8 +145,7 @@
                                 android:checked="@{vm.sfGenshinServer == Server.EUROPE.pref}"
                                 android:onClick="@{() -> vm.onClickSetGenshinServer(Server.EUROPE)}"
                                 android:text="@string/europe"
-                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
-                                />
+                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}" />
 
                             <com.google.android.material.radiobutton.MaterialRadioButton
                                 android:id="@+id/rb_genshin_cht"
@@ -162,8 +153,7 @@
                                 android:checked="@{vm.sfGenshinServer == Server.CHT.pref}"
                                 android:onClick="@{() -> vm.onClickSetGenshinServer(Server.CHT)}"
                                 android:text="@string/cht"
-                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
-                                />
+                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}" />
 
                         </RadioGroup>
 
@@ -179,7 +169,7 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical" >
+                                android:orientation="vertical">
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:layout_width="match_parent"
@@ -198,8 +188,7 @@
                                     android:singleLine="true"
                                     android:text="@={vm.sfGenshinNickname}"
                                     android:textColorHint="@color/gray"
-                                    android:textSize="16sp"
-                                    />
+                                    android:textSize="16sp" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -208,7 +197,7 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical" >
+                                android:orientation="vertical">
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:layout_width="match_parent"
@@ -229,8 +218,7 @@
                                     android:text="@={vm.sfGenshinUid}"
                                     android:textColorHint="@color/gray"
                                     android:textSize="16sp"
-                                    android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
-                                    />
+                                    android:enabled="@{vm.sfNoGenshinAccount ?false :true}" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -245,8 +233,7 @@
                             android:id="@+id/cb_no_genshin_account"
                             android:checked="@={vm.sfNoGenshinAccount}"
                             android:text="@string/btn_no_genshin_account"
-                            android:onClick="@{() -> vm.initGenshinDataInputField()}"
-                            />
+                            android:onClick="@{() -> vm.initGenshinDataInputField()}" />
 
                         <android.widget.Space
                             android:layout_width="wrap_content"
@@ -261,8 +248,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="@{vm.sfHoyolabCookie.empty ?View.GONE :View.VISIBLE}"
-                    >
+                    android:visibility="@{vm.sfHoyolabCookie.empty ?View.GONE :View.VISIBLE}">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="match_parent"
@@ -271,16 +257,14 @@
                         android:maxHeight="0dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/logo_honkai_sr"
-                        android:tint="#eeeeee"
-                        />
+                        android:tint="#eeeeee" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:paddingHorizontal="10dp"
-                        android:animateLayoutChanges="true"
-                        >
+                        android:animateLayoutChanges="true">
 
                         <android.widget.Space
                             android:layout_width="wrap_content"
@@ -291,8 +275,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:visibility="@{vm.sfNoHonkaiSrAccount ?View.GONE :View.VISIBLE}"
-                            >
+                            android:visibility="@{vm.sfNoHonkaiSrAccount ?View.GONE :View.VISIBLE}">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="match_parent"
@@ -300,7 +283,7 @@
                                 android:text="@string/server"
                                 android:textColor="@color/black"
                                 android:textSize="28sp"
-                                android:textStyle="bold|italic"/>
+                                android:textStyle="bold|italic" />
 
                             <RadioGroup
                                 style="@style/RadioGroup"
@@ -315,8 +298,7 @@
                                     android:checked="@{vm.sfHonkaiSrServer == Server.ASIA.pref}"
                                     android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.ASIA)}"
                                     android:text="@string/asia"
-                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}"
-                                    />
+                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}" />
 
                                 <com.google.android.material.radiobutton.MaterialRadioButton
                                     android:id="@+id/rb_honkai_sr_usa"
@@ -325,8 +307,7 @@
                                     android:checked="@{vm.sfHonkaiSrServer == Server.USA.pref}"
                                     android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.USA)}"
                                     android:text="@string/america"
-                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}"
-                                    />
+                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}" />
 
                                 <com.google.android.material.radiobutton.MaterialRadioButton
                                     android:id="@+id/rb_honkai_sr_euro"
@@ -335,8 +316,7 @@
                                     android:checked="@{vm.sfHonkaiSrServer == Server.EUROPE.pref}"
                                     android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.EUROPE)}"
                                     android:text="@string/europe"
-                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}"
-                                    />
+                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}" />
 
                                 <com.google.android.material.radiobutton.MaterialRadioButton
                                     android:id="@+id/rb_honkai_sr_cht"
@@ -344,8 +324,7 @@
                                     android:checked="@{vm.sfHonkaiSrServer == Server.CHT.pref}"
                                     android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.CHT)}"
                                     android:text="@string/cht"
-                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}"
-                                    />
+                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}" />
 
                             </RadioGroup>
 
@@ -361,7 +340,7 @@
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
-                                    android:orientation="vertical" >
+                                    android:orientation="vertical">
 
                                     <androidx.appcompat.widget.AppCompatTextView
                                         android:layout_width="match_parent"
@@ -381,8 +360,7 @@
                                         android:text="@={vm.sfHonkaiSrNickname}"
                                         android:textColorHint="@color/gray"
                                         android:textSize="16sp"
-                                        android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}"
-                                        />
+                                        android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}" />
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -391,7 +369,7 @@
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
-                                    android:orientation="vertical" >
+                                    android:orientation="vertical">
 
                                     <androidx.appcompat.widget.AppCompatTextView
                                         android:layout_width="match_parent"
@@ -412,8 +390,7 @@
                                         android:text="@={vm.sfHonkaiSrUid}"
                                         android:textColorHint="@color/gray"
                                         android:textSize="16sp"
-                                        android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}"
-                                        />
+                                        android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}" />
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -430,8 +407,193 @@
                             android:id="@+id/cb_no_honkai_sr_account"
                             android:checked="@={vm.sfNoHonkaiSrAccount}"
                             android:text="@string/btn_no_honkai_sr_account"
-                            android:onClick="@{() -> vm.initHonkaiSrDataInputField()}"
-                            />
+                            android:onClick="@{() -> vm.initHonkaiSrDataInputField()}" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/ll_zzz_ingame_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#f5f5f5"
+                    android:visibility="@{vm.sfHoyolabCookie.empty ?View.GONE :View.VISIBLE}">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:maxHeight="0dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/logo_zzz"
+                        android:tint="#f5f5f5"
+                        android:tintMode="screen" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="10dp"
+                        android:animateLayoutChanges="true">
+
+                        <android.widget.Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="8dp" />
+
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="@{vm.sfNoZZZAccount ?View.GONE :View.VISIBLE}">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/server"
+                                android:textColor="@color/black"
+                                android:textSize="28sp"
+                                android:textStyle="bold|italic" />
+
+                            <RadioGroup
+                                style="@style/RadioGroup"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                    android:id="@+id/rb_zzz_asia"
+                                    style="@style/RadioButton"
+                                    android:layout_marginEnd="5dp"
+                                    android:checked="@{vm.sfZZZServer == Server.ASIA.pref}"
+                                    android:onClick="@{() -> vm.onClickSetZZZServer(Server.ASIA)}"
+                                    android:text="@string/asia"
+                                    android:enabled="@{vm.sfNoZZZAccount ?false :true}" />
+
+                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                    android:id="@+id/rb_zzz_usa"
+                                    style="@style/RadioButton"
+                                    android:layout_marginEnd="5dp"
+                                    android:checked="@{vm.sfZZZServer == Server.USA.pref}"
+                                    android:onClick="@{() -> vm.onClickSetZZZServer(Server.USA)}"
+                                    android:text="@string/america"
+                                    android:enabled="@{vm.sfNoZZZAccount ?false :true}" />
+
+                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                    android:id="@+id/rb_zzz_euro"
+                                    style="@style/RadioButton"
+                                    android:layout_marginEnd="5dp"
+                                    android:checked="@{vm.sfZZZServer == Server.EUROPE.pref}"
+                                    android:onClick="@{() -> vm.onClickSetZZZServer(Server.EUROPE)}"
+                                    android:text="@string/europe"
+                                    android:enabled="@{vm.sfNoZZZAccount ?false :true}" />
+
+                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                    android:id="@+id/rb_zzz_cht"
+                                    style="@style/RadioButton"
+                                    android:checked="@{vm.sfZZZServer == Server.CHT.pref}"
+                                    android:onClick="@{() -> vm.onClickSetZZZServer(Server.CHT)}"
+                                    android:text="@string/cht"
+                                    android:enabled="@{vm.sfNoZZZAccount ?false :true}" />
+
+                            </RadioGroup>
+
+                            <android.widget.Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="15dp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/nickname"
+                                        android:textColor="@color/black"
+                                        android:textSize="28sp"
+                                        android:textStyle="bold|italic" />
+
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:id="@+id/et_zzz_nickname"
+                                        style="@style/EditTextStyle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:hint="@string/hint_nickname_honkai_sr"
+                                        android:singleLine="true"
+                                        android:text="@={vm.sfZZZNickname}"
+                                        android:textColorHint="@color/gray"
+                                        android:textSize="16sp"
+                                        android:enabled="@{vm.sfNoZZZAccount ?false :true}" />
+
+                                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:singleLine="true"
+                                        android:text="@string/uid"
+                                        android:textColor="@color/black"
+                                        android:textSize="28sp"
+                                        android:textStyle="bold|italic" />
+
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:id="@+id/et_zzz_uid"
+                                        style="@style/EditTextStyle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:hint="@string/hint_uid"
+                                        android:singleLine="true"
+                                        android:text="@={vm.sfZZZUid}"
+                                        android:textColorHint="@color/gray"
+                                        android:textSize="16sp"
+                                        android:enabled="@{vm.sfNoZZZAccount ?false :true}" />
+
+                                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            </LinearLayout>
+
+                            <android.widget.Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="15dp" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            style="@style/Checkbox.BoxOnly"
+                            android:id="@+id/cb_no_zzz_account"
+                            android:checked="@={vm.sfNoZZZAccount}"
+                            android:text="@string/btn_no_zzz_account"
+                            android:onClick="@{() -> vm.initZZZDataInputField()}" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="젠레스 존 제로 위젯은 아직 지원하지 않습니다." />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Zenless Zone Zero widget is not yet supported." />
+
+                        <android.widget.Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="15dp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -442,8 +604,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingHorizontal="10dp"
-                    android:visibility="@{vm.sfHoyolabCookie.empty ?View.GONE :View.VISIBLE}"
-                    >
+                    android:visibility="@{vm.sfHoyolabCookie.empty ?View.GONE :View.VISIBLE}">
 
                     <android.widget.Space
                         android:layout_width="wrap_content"
@@ -453,8 +614,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/get_uid_btn"
-                        android:onClick="@{()->vm.onClickGetUid()}"
-                        />
+                        android:onClick="@{()->vm.onClickGetUid()}" />
 
                     <android.widget.Space
                         android:layout_width="wrap_content"
@@ -467,10 +627,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="#f3f3f3"
+                    android:background="#f5f5f5"
                     android:paddingHorizontal="10dp"
-                    android:visibility="@{vm.sfHoyolabCookie.empty || vm.sfGenshinUid.empty ?View.GONE :View.VISIBLE}"
-                    >
+                    android:visibility="@{vm.sfHoyolabCookie.empty || vm.sfGenshinUid.empty ?View.GONE :View.VISIBLE}">
 
                     <android.widget.Space
                         android:layout_width="wrap_content"
@@ -492,8 +651,7 @@
                         android:text="@string/hoyolab_checkin_desc"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
-                        android:maxLines="3"
-                        />
+                        android:maxLines="3" />
 
                     <android.widget.Space
                         android:layout_width="wrap_content"
@@ -508,14 +666,12 @@
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:maxLines="3"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
 
                     <android.widget.Space
                         android:layout_width="wrap_content"
                         android:layout_height="5dp"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
@@ -545,11 +701,11 @@
                             android:checked="@={vm.sfEnableHonkaiSrAutoCheckIn}"
                             android:text="@string/btn_auto_check_in_enable_honkai_sr" />
 
-                        <!--                        <com.google.android.material.checkbox.MaterialCheckBox-->
-                        <!--                            style="@style/Checkbox"-->
-                        <!--                            android:id="@+id/cb_enable_honkai_3rd_auto_check_in"-->
-                        <!--                            android:checked="@={vm.sfEnableHonkai3rdAutoCheckIn}"-->
-                        <!--                            android:text="@string/btn_auto_check_in_enable_honkai_3rd" />-->
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            style="@style/Checkbox"
+                            android:id="@+id/cb_enable_zzz_auto_check_in"
+                            android:checked="@={vm.sfEnableZZZAutoCheckIn}"
+                            android:text="@string/btn_auto_check_in_enable_zzz" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -561,8 +717,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/save"
-                        android:onClick="@{()->vm.onClickSave()}"
-                        />
+                        android:onClick="@{()->vm.onClickSave()}" />
 
                     <android.widget.Space
                         android:layout_width="wrap_content"

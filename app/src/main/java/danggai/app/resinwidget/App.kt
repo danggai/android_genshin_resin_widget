@@ -16,9 +16,10 @@ import java.net.SocketException
 import javax.inject.Inject
 
 @HiltAndroidApp
-class App: Application(), Configuration.Provider {
+class App : Application(), Configuration.Provider {
 
-    @Inject lateinit var workerFactory: HiltWorkerFactory
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
 
     override fun getWorkManagerConfiguration() =
         Configuration.Builder()
@@ -33,16 +34,18 @@ class App: Application(), Configuration.Provider {
 
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
 
-
         RxJavaPlugins.setErrorHandler { e ->
             if (e is UndeliverableException) {
-                log.e("undeliverable exception: ${e.cause?.message?:"unknown"}")
+                log.e("undeliverable exception: ${e.cause?.message ?: "unknown"}")
             }
             if (e is IOException || e is SocketException || e is InterruptedException) {
                 return@setErrorHandler
             }
             if (e is NullPointerException || e is IllegalArgumentException || e is IllegalStateException) {
-                Thread.currentThread().uncaughtExceptionHandler?.uncaughtException(Thread.currentThread(), e)
+                Thread.currentThread().uncaughtExceptionHandler?.uncaughtException(
+                    Thread.currentThread(),
+                    e
+                )
                 return@setErrorHandler
             }
         }

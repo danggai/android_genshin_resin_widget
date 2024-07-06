@@ -25,12 +25,21 @@ data class AccountEntity(
     @ColumnInfo(name = "honkaiSrServer", defaultValue = "0")
     val honkaiSrServer: Int,
 
+    @ColumnInfo(name = "zzzNickname", defaultValue = "")
+    val zzzNickName: String,
+    @ColumnInfo(name = "zzzUid", defaultValue = "")
+    val zzzUid: String,
+    @ColumnInfo(name = "zzzServer", defaultValue = "0")
+    val zzzServer: Int,
+
     @SerializedName("enableGenshinCheckin")
     val enableGenshinCheckin: Boolean,
     @SerializedName("enableHonkai3rdCheckin")
     val enableHonkai3rdCheckin: Boolean,
     @SerializedName("enableHonkaiSRCheckin")
     val enableHonkaiSRCheckin: Boolean,
+    @SerializedName("enableZZZCheckin")
+    val enableZZZCheckin: Boolean,
     @SerializedName("enableTotCheckin")
     val enableTotCheckin: Boolean,
 )

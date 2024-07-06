@@ -19,44 +19,53 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object LocalDBModule {
-        @Provides
-        @Singleton
-        fun provideDatabase(@ApplicationContext context: Context): AccountDatabase {
-                return Room.databaseBuilder(
-                        context,
-                        AccountDatabase::class.java, "account.db"
-                )
-                        .addMigrations(MIGRATION_1_2)
-                        .addMigrations(MIGRATION_2_3)
-                        .allowMainThreadQueries()
-                        .build()
-        }
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): AccountDatabase {
+        return Room.databaseBuilder(
+            context,
+            AccountDatabase::class.java, "account.db"
+        )
+            .addMigrations(MIGRATION_1_2)
+            .addMigrations(MIGRATION_2_3)
+            .addMigrations(MIGRATION_3_4)
+            .allowMainThreadQueries()
+            .build()
+    }
 
-        @Provides
-        @Singleton
-        fun provideAccountDao(accountDatabase: AccountDatabase): AccountDao {
-                return accountDatabase.accountDao()
-        }
+    @Provides
+    @Singleton
+    fun provideAccountDao(accountDatabase: AccountDatabase): AccountDao {
+        return accountDatabase.accountDao()
+    }
 
-        @Singleton
-        @Provides
-        fun provideAccountRepository(
-                repositoryImpl: AccountRepositoryImpl
-        ): AccountRepository = repositoryImpl
+    @Singleton
+    @Provides
+    fun provideAccountRepository(
+        repositoryImpl: AccountRepositoryImpl
+    ): AccountRepository = repositoryImpl
 }
-
 
 
 val MIGRATION_1_2 = object : Migration(1, 2) {
-        override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE account ADD enableHonkaiSRCheckin INT NOT NULL DEFAULT 0")
-        }
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE account ADD enableHonkaiSRCheckin INT NOT NULL DEFAULT 0")
+    }
 }
 
 val MIGRATION_2_3 = object : Migration(2, 3) {
-        override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE account ADD honkaiSrNickname TEXT NOT NULL DEFAULT ''")
-                database.execSQL("ALTER TABLE account ADD honkaiSrUid TEXT NOT NULL DEFAULT ''")
-                database.execSQL("ALTER TABLE account ADD honkaiSrServer INTEGER NOT NULL DEFAULT 0")
-        }
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE account ADD honkaiSrNickname TEXT NOT NULL DEFAULT ''")
+        database.execSQL("ALTER TABLE account ADD honkaiSrUid TEXT NOT NULL DEFAULT ''")
+        database.execSQL("ALTER TABLE account ADD honkaiSrServer INTEGER NOT NULL DEFAULT 0")
+    }
+}
+
+val MIGRATION_3_4 = object : Migration(3, 4) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE account ADD COLUMN zzzNickname TEXT NOT NULL DEFAULT ''")
+        database.execSQL("ALTER TABLE account ADD COLUMN zzzUid TEXT NOT NULL DEFAULT ''")
+        database.execSQL("ALTER TABLE account ADD COLUMN zzzServer INTEGER NOT NULL DEFAULT 0")
+        database.execSQL("ALTER TABLE account ADD COLUMN enableZZZCheckin INTEGER NOT NULL DEFAULT 0")
+    }
 }

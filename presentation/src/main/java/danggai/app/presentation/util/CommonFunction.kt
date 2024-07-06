@@ -25,12 +25,16 @@ import com.google.firebase.crashlytics.CustomKeysAndValues
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import danggai.app.presentation.BuildConfig
 import danggai.app.presentation.R
-import danggai.app.presentation.ui.widget.*
+import danggai.app.presentation.ui.widget.DetailWidget
+import danggai.app.presentation.ui.widget.HKSRDetailWidget
+import danggai.app.presentation.ui.widget.MiniWidget
+import danggai.app.presentation.ui.widget.ResinWidget
+import danggai.app.presentation.ui.widget.ResinWidgetResizable
+import danggai.app.presentation.ui.widget.TrailPowerWidget
 import danggai.domain.db.account.entity.Account
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
-import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
@@ -38,7 +42,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.math.BigInteger
 import java.security.MessageDigest
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
+import java.util.Random
+import java.util.TimeZone
 import kotlin.math.abs
 import kotlin.streams.asSequence
 
@@ -94,7 +101,7 @@ object CommonFunction {
         }
     }
 
-    inline fun <reified T: AppWidgetProvider> sendBroadcastAppWidgetUpdate(context: Context) {
+    inline fun <reified T : AppWidgetProvider> sendBroadcastAppWidgetUpdate(context: Context) {
         val ids = AppWidgetManager.getInstance(context)
             .getAppWidgetIds(ComponentName(context, T::class.java))
 
@@ -159,6 +166,7 @@ object CommonFunction {
                 notificationDesc = context.getString(R.string.push_resin_noti_description)
                 priority = priorityDefault
             }
+
             Constant.NotiType.TRAIL_POWER_EACH_40,
             Constant.NotiType.TRAIL_POWER_230,
             Constant.NotiType.TRAIL_POWER_CUSTOM,
@@ -168,6 +176,7 @@ object CommonFunction {
                 notificationDesc = context.getString(R.string.push_trail_power_noti_description)
                 priority = priorityDefault
             }
+
             Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS,
             Constant.NotiType.CHECK_IN_GENSHIN_FAILED,
             Constant.NotiType.CHECK_IN_GENSHIN_ALREADY,
@@ -179,6 +188,7 @@ object CommonFunction {
                 notificationDesc = context.getString(R.string.push_genshin_checkin_description)
                 priority = priorityLow
             }
+
             Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS,
             Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED,
             Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY,
@@ -189,6 +199,7 @@ object CommonFunction {
                 notificationDesc = context.getString(R.string.push_honkai_3rd_checkin_description)
                 priority = priorityLow
             }
+
             Constant.NotiType.CHECK_IN_HONKAI_SR_SUCCESS,
             Constant.NotiType.CHECK_IN_HONKAI_SR_FAILED,
             Constant.NotiType.CHECK_IN_HONKAI_SR_ALREADY,
@@ -199,42 +210,60 @@ object CommonFunction {
                 notificationDesc = context.getString(R.string.push_honkai_sr_checkin_description)
                 priority = priorityLow
             }
+
+            Constant.NotiType.CHECK_IN_ZZZ_SUCCESS,
+            Constant.NotiType.CHECK_IN_ZZZ_ALREADY,
+            Constant.NotiType.CHECK_IN_ZZZ_FAILED,
+            Constant.NotiType.CHECK_IN_ZZZ_ACCOUNT_NOT_FOUND,
+            -> {
+                notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN
+                notificationId = Constant.PUSH_CHANNEL_HONKAI_ZZZ_CHECK_IN_NOTI_ID
+                notificationDesc = context.getString(R.string.push_zzz_checkin_description)
+                priority = priorityLow
+            }
+
             Constant.NotiType.EXPEDITION_DONE -> {
                 notiId = System.currentTimeMillis().toInt()
                 notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
                 notificationDesc = context.getString(R.string.push_expedition_description)
                 priority = priorityLow
             }
+
             Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> {
                 notiId = System.currentTimeMillis().toInt()
                 notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
                 notificationDesc = context.getString(R.string.push_assignment_description)
                 priority = priorityLow
             }
+
             Constant.NotiType.REALM_CURRENCY_FULL -> {
                 notiId = System.currentTimeMillis().toInt()
                 notificationId = Constant.PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID
                 notificationDesc = context.getString(R.string.push_realm_currency_description)
                 priority = priorityDefault
             }
+
             Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED -> {
                 notiId = System.currentTimeMillis().toInt()
                 notificationId = Constant.PUSH_CHANNEL_PARAMETRIC_TRANSFORMER_NOTI_ID
                 notificationDesc = context.getString(R.string.push_param_trans_description)
                 priority = priorityDefault
             }
+
             Constant.NotiType.DAILY_COMMISSION_YET -> {
                 notiId = System.currentTimeMillis().toInt()
                 notificationId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
                 notificationDesc = context.getString(R.string.push_daily_commission_description)
                 priority = priorityDefault
             }
+
             Constant.NotiType.WEEKLY_BOSS_YET -> {
                 notiId = System.currentTimeMillis().toInt()
                 notificationId = Constant.PUSH_CHANNEL_WEEKLY_BOSS_YET_NOTI_ID
                 notificationDesc = context.getString(R.string.push_weekly_boss_description)
                 priority = priorityDefault
             }
+
             else -> {
                 notiId = System.currentTimeMillis().toInt()
                 notificationId = Constant.PUSH_CHANNEL_DEFAULT_ID
@@ -257,6 +286,13 @@ object CommonFunction {
             Constant.NotiType.TRAIL_POWER_CUSTOM,
             Constant.NotiType.HONKAI_SR_EXPEDITION_DONE,
             -> R.drawable.trailblaze_power
+
+            Constant.NotiType.CHECK_IN_ZZZ_SUCCESS,
+            Constant.NotiType.CHECK_IN_ZZZ_ALREADY,
+            Constant.NotiType.CHECK_IN_ZZZ_FAILED,
+            Constant.NotiType.CHECK_IN_ZZZ_ACCOUNT_NOT_FOUND
+            -> R.drawable.battery
+
             else -> R.drawable.resin
         }
 
@@ -274,7 +310,10 @@ object CommonFunction {
             setPriority(priority)
 
             if (notiType == Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://act.hoyolab.com/ys/event/signin-sea-v3/index.html?act_id=e202102251931481&lang=ko-kr"))
+                val intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://act.hoyolab.com/ys/event/signin-sea-v3/index.html?act_id=e202102251931481&lang=ko-kr")
+                )
                 val pendingIntent =
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
                         PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
@@ -306,8 +345,10 @@ object CommonFunction {
         targetCalendar.set(Calendar.HOUR, hour)
         targetCalendar.set(Calendar.AM_PM, if (isAM) Calendar.AM else Calendar.PM)
 
-        if (startCalendar.get(Calendar.HOUR_OF_DAY) >= 1) targetCalendar.add(Calendar.DAY_OF_YEAR,
-            1)
+        if (startCalendar.get(Calendar.HOUR_OF_DAY) >= 1) targetCalendar.add(
+            Calendar.DAY_OF_YEAR,
+            1
+        )
 
         val delay = (targetCalendar.time.time - startCalendar.time.time) / 60000
 
@@ -397,14 +438,20 @@ object CommonFunction {
         view: RemoteViews,
     ) {
         val bgColor: Int = if (widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_LIGHT) {
-            ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.white),
-                widgetDesign.backgroundTransparency)
+            ColorUtils.setAlphaComponent(
+                ContextCompat.getColor(context, R.color.white),
+                widgetDesign.backgroundTransparency
+            )
         } else if ((widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
-            ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.black),
-                widgetDesign.backgroundTransparency)
+            ColorUtils.setAlphaComponent(
+                ContextCompat.getColor(context, R.color.black),
+                widgetDesign.backgroundTransparency
+            )
         } else {
-            ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.white),
-                widgetDesign.backgroundTransparency)
+            ColorUtils.setAlphaComponent(
+                ContextCompat.getColor(context, R.color.white),
+                widgetDesign.backgroundTransparency
+            )
         }
 
         val mainFontColor: Int =
@@ -456,14 +503,20 @@ object CommonFunction {
         view: RemoteViews,
     ) {
         val bgColor: Int = if (widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_LIGHT) {
-            ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.white),
-                widgetDesign.backgroundTransparency)
+            ColorUtils.setAlphaComponent(
+                ContextCompat.getColor(context, R.color.white),
+                widgetDesign.backgroundTransparency
+            )
         } else if ((widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
-            ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.black),
-                widgetDesign.backgroundTransparency)
+            ColorUtils.setAlphaComponent(
+                ContextCompat.getColor(context, R.color.black),
+                widgetDesign.backgroundTransparency
+            )
         } else {
-            ColorUtils.setAlphaComponent(ContextCompat.getColor(context, R.color.white),
-                widgetDesign.backgroundTransparency)
+            ColorUtils.setAlphaComponent(
+                ContextCompat.getColor(context, R.color.white),
+                widgetDesign.backgroundTransparency
+            )
         }
 
         val mainFontColor: Int =

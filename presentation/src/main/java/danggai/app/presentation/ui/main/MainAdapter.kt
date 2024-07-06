@@ -2,7 +2,6 @@ package danggai.app.presentation.ui.main
 
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.ColorSpace
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.widget.ImageViewCompat
@@ -16,7 +15,7 @@ import danggai.domain.db.account.entity.Account
 
 class MainAdapter(
     val vm: MainViewModel
-): RecyclerView.Adapter<MainAdapter.ItemViewHolder>() {
+) : RecyclerView.Adapter<MainAdapter.ItemViewHolder>() {
 
     private var items: MutableList<Account> = arrayListOf()
 
@@ -43,18 +42,35 @@ class MainAdapter(
 
                 holder.binding.tvUid.apply {
                     this.text =
-                        if (!item.genshin_uid.contains("-") ) item.genshin_uid
+                        if (!item.genshin_uid.contains("-")) item.genshin_uid
                         else "Auto Check In Only"
                 }
 
                 holder.binding.ivResin.apply {
                     if (item.genshin_uid.contains("-"))
-                        ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(Color.argb(55,99,99,99)))
+                        ImageViewCompat.setImageTintList(
+                            this,
+                            ColorStateList.valueOf(Color.argb(55, 99, 99, 99))
+                        )
+                    else ImageViewCompat.setImageTintList(this, null)
                 }
 
                 holder.binding.ivTrailPower.apply {
                     if (item.honkai_sr_uid.isEmpty())
-                    ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(Color.argb(55,99,99,99)))
+                        ImageViewCompat.setImageTintList(
+                            this,
+                            ColorStateList.valueOf(Color.argb(55, 99, 99, 99))
+                        )
+                    else ImageViewCompat.setImageTintList(this, null)
+                }
+
+                holder.binding.ivBattery.apply {
+                    if (item.zzz_uid.isEmpty())
+                        ImageViewCompat.setImageTintList(
+                            this,
+                            ColorStateList.valueOf(Color.argb(55, 99, 99, 99))
+                        )
+                    else ImageViewCompat.setImageTintList(this, null)
                 }
 
                 holder.binding.tvNickname.apply {

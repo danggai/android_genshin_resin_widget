@@ -34,6 +34,7 @@
     <string name="widget_customizing">Widget Design Customizing</string>
     <string name="btn_no_genshin_account">Don\'t use genshin widget.</string>
     <string name="btn_no_honkai_sr_account">Don\'t use Honkai: Star Rail widget.</string>
+    <string name="btn_no_zzz_account">Don\'t use Zenless Zone Zero Rail widget.</string>
     <string name="hoyolab_checkin_desc">For the first time, you must press the \'HoYoLab CheckIn\' button manually to proceed with automatic attendance.</string>
     <string name="hoyolab_checkin_desc_2">Automatic attendance is performed based on Within HoYoLab, My Information > My Character.</string>
 
@@ -80,6 +81,7 @@
     <string name="btn_auto_check_in_enable">Genshin Impact</string>
     <string name="btn_auto_check_in_enable_honkai_3rd">Honkai Impact 3rd</string>
     <string name="btn_auto_check_in_enable_honkai_sr">Honkai: Star Rail</string>
+    <string name="btn_auto_check_in_enable_zzz">Zenless Zone Zero</string>
     <string name="btn_check_in_success">Checkin Succeed</string>
     <string name="btn_check_in_failed">Checkin Failed</string>
 
@@ -185,6 +187,8 @@
     <string name="dialog_daily_weekly_yet_noti">Caution when setting up notifications</string>
     <string name="dialog_msg_daily_weekly_yet_noti">When using this feature, if HoYoLAB provides an incorrect daily request/weekly boss progress, the user may receive an incorrect notification.\nPlease note that we recommend you to use this feature.</string>
 
+    <!-- 푸시 알림  -->
+
     <string name="push_default_noti_title">Notification</string>
     <string name="push_default_noti_description">Description</string>
 
@@ -206,19 +210,28 @@
 
     <string name="push_genshin_checkin_title">Genshin Impact Check-in Notification</string>
     <string name="push_genshin_checkin_description">This is a notification to inform travelers of the daily check-in result of Genshin Impact!</string>
+    <string name="push_msg_checkin_success_genshin">%s! checked attendance today!</string>
+    <string name="push_msg_checkin_already_genshin">%s, you\'ve already checked in today! I\'ll do it again at 1am tomorrow!</string>
+    <string name="push_msg_checkin_failed_genshin">%s, I failed the attendance check.. I\'ll try again in half an hour!</string>
+
     <string name="push_honkai_3rd_checkin_title">Honkai Impact 3rd Check-in Notification</string>
     <string name="push_honkai_3rd_checkin_description">This is a notification to inform captains of the daily check-in result of Honkai Impact 3rd!</string>
+    <string name="push_msg_checkin_success_honkai">I completed today\'s check in, %s~</string>
+    <string name="push_msg_checkin_already_honkai">You have already signed in, %s~ I\'ll do it again at 1am tomorrow~</string>
+    <string name="push_msg_checkin_failed_honkai">%s, I failed the attendance check, but I\'ll try again in 30 minutes~</string>
+
     <string name="push_honkai_sr_checkin_title">Honkai Impact: Star Rail Check-in Notification</string>
     <string name="push_honkai_sr_checkin_description">This is a notification to inform trailblazers of the daily check-in result of Honkai Impact: Star Rail!</string>
-    <string name="push_msg_checkin_success_genshin">%s! checked attendance today!</string>
-    <string name="push_msg_checkin_success_honkai">I completed today\'s check in, %s~</string>
     <string name="push_msg_checkin_success_honkai_sr">I completed today\'s check in, %s~</string>
-    <string name="push_msg_checkin_already_genshin">%s, you\'ve already checked in today! I\'ll do it again at 1am tomorrow!</string>
-    <string name="push_msg_checkin_already_honkai">You have already signed in, %s~ I\'ll do it again at 1am tomorrow~</string>
     <string name="push_msg_checkin_already_honkai_sr">You have already signed in, %s~ I\'ll do it again at 1am tomorrow~</string>
-    <string name="push_msg_checkin_failed_genshin">%s, I failed the attendance check.. I\'ll try again in half an hour!</string>
-    <string name="push_msg_checkin_failed_honkai">%s, I failed the attendance check, but I\'ll try again in 30 minutes~</string>
     <string name="push_msg_checkin_failed_honkai_sr">%s, I failed the attendance check, but I\'ll try again in 30 minutes~</string>
+
+    <string name="push_zzz_checkin_title">Zenless Zone Zero Check-in Notification</string>
+    <string name="push_zzz_checkin_description">This is a notification to inform proxies of the daily check-in result of Zenless Zone Zero!</string>
+    <string name="push_msg_checkin_success_zzz">%s! checked attendance today!</string>
+    <string name="push_msg_checkin_already_zzz">%s, you\'ve already checked in today! I\'ll do it again at 1am tomorrow!</string>
+    <string name="push_msg_checkin_failed_zzz">%s, I failed the attendance check.. I\'ll try again in half an hour!</string>
+
     <string name="push_msg_checkin_account_not_found">Attendance check cannot be performed because there is no in-game account linked to this %s account.</string>
     <string name="push_msg_checkin_success_genshin_captcha">%s! I can\'t check-in automatically because of the verification process!\nPlease manually attend at HoYoLab today! (press to start)</string>
 
@@ -246,16 +259,19 @@
     <string name="push_weekly_boss_description">This is a notification sent to travelers when they do not use the weekly boss resin discount until the set date!</string>
     <string name="push_msg_weekly_boss_yet">%s! Have you used up the weekly boss resin discount this week? Or check it out!</string>
 
+
     <string name="hint_cookie">Enter HoYoLAB\'s cookie!</string>
     <string name="hint_uid">Enter uid!</string>
     <string name="hint_nickname_genshin">Enter name of traveler!</string>
     <string name="hint_nickname_honkai_sr">Enter name of trailblazer!</string>
+    <string name="hint_nickname_zzz">Enter name of proxy!</string>
 
     <string name="invalid_user_info">You can\'t use it\nwithout user information!</string>
 
     <string name="pioneer">Trailblazer</string>
     <string name="captain">Captain</string>
     <string name="traveler">Traveler</string>
+    <string name="proxy">Proxy</string>
 
     <!-- Character Name -->
     <string name="kate">Kate</string>

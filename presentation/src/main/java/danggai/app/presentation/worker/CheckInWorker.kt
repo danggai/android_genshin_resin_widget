@@ -11,7 +11,12 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
-import androidx.work.*
+import androidx.work.CoroutineWorker
+import androidx.work.ExistingWorkPolicy
+import androidx.work.ForegroundInfo
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import danggai.app.presentation.R
@@ -24,12 +29,16 @@ import danggai.domain.db.account.usecase.AccountDaoUseCase
 import danggai.domain.network.checkin.usecase.CheckInUseCase
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.net.ConnectException
 import java.net.UnknownHostException
-import java.util.*
+import java.util.Calendar
 import java.util.concurrent.CancellationException
 import java.util.concurrent.TimeUnit
 
@@ -40,7 +49,7 @@ class CheckInWorker @AssistedInject constructor(
     private val preference: PreferenceManagerRepository,
     private val accountDao: AccountDaoUseCase,
     private val checkIn: CheckInUseCase
-): CoroutineWorker(context, workerParams) {
+) : CoroutineWorker(context, workerParams) {
 
     companion object {
 
@@ -74,9 +83,11 @@ class CheckInWorker @AssistedInject constructor(
                 .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN)
                 .build()
 
-            workManager.enqueueUniqueWork(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN,
+            workManager.enqueueUniqueWork(
+                Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN,
                 ExistingWorkPolicy.REPLACE,
-                workRequest)
+                workRequest
+            )
         }
 
         fun shutdownWorker(context: Context) {
@@ -114,9 +125,13 @@ class CheckInWorker @AssistedInject constructor(
                                 log.e()
 
                                 when (it.data.retcode) {
-                                    Constant.RETCODE_SUCCESS ->  {
+                                    Constant.RETCODE_SUCCESS -> {
                                         when (it.data.data?.gt_result?.is_risk) {
-                                            false -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS)
+                                            false -> sendNoti(
+                                                account,
+                                                Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS
+                                            )
+
                                             true -> {
                                                 if (it.data.data?.gt_result?.challenge != null)
                                                     checkInGenshinRetry(
@@ -126,30 +141,44 @@ class CheckInWorker @AssistedInject constructor(
                                                         cookie,
                                                         it.data.data!!.gt_result!!.challenge
                                                     )
-                                                else 
-                                                    sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA)
+                                                else
+                                                    sendNoti(
+                                                        account,
+                                                        Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA
+                                                    )
                                             }
-                                            else -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_ALREADY)
+
+                                            else -> sendNoti(
+                                                account,
+                                                Constant.NotiType.CHECK_IN_GENSHIN_ALREADY
+                                            )
                                         }
                                     }
+
                                     Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
                                     Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
                                     -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_ALREADY)
                                 }
                             }
                         }
+
                         Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
                             log.e()
                             if (settings.notiCheckInFailed) {
                                 log.e()
-                                sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND)
+                                sendNoti(
+                                    account,
+                                    Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND
+                                )
                             }
                             disableCheckIn(account, CHECKIN_TYPE_GENSHIN)
-                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                            CommonFunction.sendCrashlyticsApiLog(
+                                Constant.API_NAME_CHECK_IN,
                                 it.code,
                                 it.data.retcode
                             )
                         }
+
                         else -> {
                             log.e()
                             if (settings.notiCheckInFailed) {
@@ -157,13 +186,15 @@ class CheckInWorker @AssistedInject constructor(
                                 sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_FAILED)
                             }
                             startWorkerOneTimeRetry(applicationContext)
-                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                            CommonFunction.sendCrashlyticsApiLog(
+                                Constant.API_NAME_CHECK_IN,
                                 it.code,
                                 it.data.retcode
                             )
                         }
                     }
                 }
+
                 is ApiResult.Failure -> {
                     it.message.let { msg ->
                         log.e(msg)
@@ -171,12 +202,15 @@ class CheckInWorker @AssistedInject constructor(
                             log.e()
                             sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_FAILED)
                         }
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_CHECK_IN,
                             it.code,
-                            null)
+                            null
+                        )
                         startWorkerOneTimeRetry(applicationContext)
                     }
                 }
+
                 is ApiResult.Error,
                 is ApiResult.Null,
                 -> {
@@ -222,31 +256,49 @@ class CheckInWorker @AssistedInject constructor(
                                 log.e()
 
                                 when (it.data.retcode) {
-                                    Constant.RETCODE_SUCCESS ->  {
+                                    Constant.RETCODE_SUCCESS -> {
                                         when (it.data.data?.gt_result?.is_risk) {
-                                            false -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS)
-                                            true -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA)
-                                            else -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_ALREADY)
+                                            false -> sendNoti(
+                                                account,
+                                                Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS
+                                            )
+
+                                            true -> sendNoti(
+                                                account,
+                                                Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA
+                                            )
+
+                                            else -> sendNoti(
+                                                account,
+                                                Constant.NotiType.CHECK_IN_GENSHIN_ALREADY
+                                            )
                                         }
                                     }
+
                                     Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
                                     Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
                                     -> sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_ALREADY)
                                 }
                             }
                         }
+
                         Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
                             log.e()
                             if (settings.notiCheckInFailed) {
                                 log.e()
-                                sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND)
+                                sendNoti(
+                                    account,
+                                    Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND
+                                )
                             }
                             disableCheckIn(account, CHECKIN_TYPE_GENSHIN)
-                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                            CommonFunction.sendCrashlyticsApiLog(
+                                Constant.API_NAME_CHECK_IN,
                                 it.code,
                                 it.data.retcode
                             )
                         }
+
                         else -> {
                             log.e()
                             if (settings.notiCheckInFailed) {
@@ -254,13 +306,15 @@ class CheckInWorker @AssistedInject constructor(
                                 sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_FAILED)
                             }
                             startWorkerOneTimeRetry(applicationContext)
-                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                            CommonFunction.sendCrashlyticsApiLog(
+                                Constant.API_NAME_CHECK_IN,
                                 it.code,
                                 it.data.retcode
                             )
                         }
                     }
                 }
+
                 is ApiResult.Failure -> {
                     it.message.let { msg ->
                         log.e(msg)
@@ -268,12 +322,15 @@ class CheckInWorker @AssistedInject constructor(
                             log.e()
                             sendNoti(account, Constant.NotiType.CHECK_IN_GENSHIN_FAILED)
                         }
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_CHECK_IN,
                             it.code,
-                            null)
+                            null
+                        )
                         startWorkerOneTimeRetry(applicationContext)
                     }
                 }
+
                 is ApiResult.Error,
                 is ApiResult.Null,
                 -> {
@@ -317,39 +374,56 @@ class CheckInWorker @AssistedInject constructor(
                                 log.e()
 
                                 when (it.data.retcode) {
-                                    Constant.RETCODE_SUCCESS -> sendNoti(account, Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS)
+                                    Constant.RETCODE_SUCCESS -> sendNoti(
+                                        account,
+                                        Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS
+                                    )
+
                                     Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
                                     Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
-                                    -> sendNoti(account, Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY)
+                                    -> sendNoti(
+                                        account,
+                                        Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY
+                                    )
                                 }
                             }
 
                             log.e()
                         }
+
                         Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
                             log.e()
                             if (settings.notiCheckInFailed) {
                                 log.e()
-                                sendNoti(account, Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND)
+                                sendNoti(
+                                    account,
+                                    Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND
+                                )
                             }
                             disableCheckIn(account, CHECKIN_TYPE_HONKAI_3RD)
-                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                            CommonFunction.sendCrashlyticsApiLog(
+                                Constant.API_NAME_CHECK_IN,
                                 it.code,
-                                it.data.retcode)
+                                it.data.retcode
+                            )
                         }
+
                         else -> {
                             log.e()
                             if (settings.notiCheckInFailed) {
                                 log.e()
                                 sendNoti(account, Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED)
                             }
-                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                            CommonFunction.sendCrashlyticsApiLog(
+                                Constant.API_NAME_CHECK_IN,
                                 it.code,
-                                it.data.retcode)
+                                it.data.retcode
+                            )
                             startWorkerOneTimeRetry(applicationContext)
                         }
                     }
                 }
+
                 is ApiResult.Failure -> {
                     it.message.let { msg ->
                         log.e(msg)
@@ -357,12 +431,15 @@ class CheckInWorker @AssistedInject constructor(
                             log.e()
                             sendNoti(account, Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED)
                         }
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_CHECK_IN,
                             it.code,
-                            null)
+                            null
+                        )
                         startWorkerOneTimeRetry(applicationContext)
                     }
                 }
+
                 is ApiResult.Error,
                 is ApiResult.Null,
                 -> {
@@ -406,39 +483,56 @@ class CheckInWorker @AssistedInject constructor(
                                 log.e()
 
                                 when (it.data.retcode) {
-                                    Constant.RETCODE_SUCCESS -> sendNoti(account, Constant.NotiType.CHECK_IN_HONKAI_SR_SUCCESS)
+                                    Constant.RETCODE_SUCCESS -> sendNoti(
+                                        account,
+                                        Constant.NotiType.CHECK_IN_HONKAI_SR_SUCCESS
+                                    )
+
                                     Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
                                     Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
-                                    -> sendNoti(account, Constant.NotiType.CHECK_IN_HONKAI_SR_ALREADY)
+                                    -> sendNoti(
+                                        account,
+                                        Constant.NotiType.CHECK_IN_HONKAI_SR_ALREADY
+                                    )
                                 }
                             }
 
                             log.e()
                         }
+
                         Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
                             log.e()
                             if (settings.notiCheckInFailed) {
                                 log.e()
-                                sendNoti(account, Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND)
+                                sendNoti(
+                                    account,
+                                    Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND
+                                )
                             }
                             disableCheckIn(account, CHECKIN_TYPE_HONKAI_SR)
-                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                            CommonFunction.sendCrashlyticsApiLog(
+                                Constant.API_NAME_CHECK_IN,
                                 it.code,
-                                it.data.retcode)
+                                it.data.retcode
+                            )
                         }
+
                         else -> {
                             log.e()
                             if (settings.notiCheckInFailed) {
                                 log.e()
                                 sendNoti(account, Constant.NotiType.CHECK_IN_HONKAI_SR_FAILED)
                             }
-                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                            CommonFunction.sendCrashlyticsApiLog(
+                                Constant.API_NAME_CHECK_IN,
                                 it.code,
-                                it.data.retcode)
+                                it.data.retcode
+                            )
                             startWorkerOneTimeRetry(applicationContext)
                         }
                     }
                 }
+
                 is ApiResult.Failure -> {
                     it.message.let { msg ->
                         log.e(msg)
@@ -446,12 +540,15 @@ class CheckInWorker @AssistedInject constructor(
                             log.e()
                             sendNoti(account, Constant.NotiType.CHECK_IN_HONKAI_SR_FAILED)
                         }
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN,
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_CHECK_IN,
                             it.code,
-                            null)
+                            null
+                        )
                         startWorkerOneTimeRetry(applicationContext)
                     }
                 }
+
                 is ApiResult.Error,
                 is ApiResult.Null,
                 -> {
@@ -459,6 +556,115 @@ class CheckInWorker @AssistedInject constructor(
                     if (settings.notiCheckInFailed) {
                         log.e()
                         sendNoti(account, Constant.NotiType.CHECK_IN_HONKAI_SR_FAILED)
+                    }
+                    CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, null, null)
+                    startWorkerOneTimeRetry(applicationContext)
+                }
+            }
+            it
+        }.stateIn(CoroutineScope(Dispatchers.IO))
+    }
+
+    private suspend fun checkInZZZ(
+        account: Account,
+        lang: String,
+        actId: String,
+        cookie: String
+    ) = withContext(Dispatchers.IO) {
+        checkIn.zenlessZoneZero(
+            lang,
+            actId,
+            cookie,
+            onStart = { log.e() },
+            onComplete = { log.e() }
+        ).map {
+            val settings = preference.getCheckInSettings()
+
+            when (it) {
+                is ApiResult.Success -> {
+                    when (it.data.retcode) {
+                        Constant.RETCODE_SUCCESS,
+                        Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
+                        Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
+                        -> {
+                            log.e()
+                            if (settings.notiCheckInSuccess) {
+                                log.e()
+
+                                when (it.data.retcode) {
+                                    Constant.RETCODE_SUCCESS -> sendNoti(
+                                        account,
+                                        Constant.NotiType.CHECK_IN_ZZZ_SUCCESS
+                                    )
+
+                                    Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
+                                    Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
+                                    -> sendNoti(
+                                        account,
+                                        Constant.NotiType.CHECK_IN_ZZZ_ALREADY
+                                    )
+                                }
+                            }
+
+                            log.e()
+                        }
+
+                        Constant.RETCODE_ERROR_ACCOUNT_NOT_FOUND -> {
+                            log.e()
+                            if (settings.notiCheckInFailed) {
+                                log.e()
+                                sendNoti(
+                                    account,
+                                    Constant.NotiType.CHECK_IN_ZZZ_ACCOUNT_NOT_FOUND
+                                )
+                            }
+                            disableCheckIn(account, CHECKIN_TYPE_ZZZ)
+                            CommonFunction.sendCrashlyticsApiLog(
+                                Constant.API_NAME_CHECK_IN,
+                                it.code,
+                                it.data.retcode
+                            )
+                        }
+
+                        else -> {
+                            log.e()
+                            if (settings.notiCheckInFailed) {
+                                log.e()
+                                sendNoti(account, Constant.NotiType.CHECK_IN_ZZZ_FAILED)
+                            }
+                            CommonFunction.sendCrashlyticsApiLog(
+                                Constant.API_NAME_CHECK_IN,
+                                it.code,
+                                it.data.retcode
+                            )
+                            startWorkerOneTimeRetry(applicationContext)
+                        }
+                    }
+                }
+
+                is ApiResult.Failure -> {
+                    it.message.let { msg ->
+                        log.e(msg)
+                        if (settings.notiCheckInFailed) {
+                            log.e()
+                            sendNoti(account, Constant.NotiType.CHECK_IN_ZZZ_FAILED)
+                        }
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_CHECK_IN,
+                            it.code,
+                            null
+                        )
+                        startWorkerOneTimeRetry(applicationContext)
+                    }
+                }
+
+                is ApiResult.Error,
+                is ApiResult.Null,
+                -> {
+                    log.e()
+                    if (settings.notiCheckInFailed) {
+                        log.e()
+                        sendNoti(account, Constant.NotiType.CHECK_IN_ZZZ_FAILED)
                     }
                     CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, null, null)
                     startWorkerOneTimeRetry(applicationContext)
@@ -478,44 +684,116 @@ class CheckInWorker @AssistedInject constructor(
             Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND,
             Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA
             -> applicationContext.getString(R.string.push_genshin_checkin_title)
+
             Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS,
             Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY,
             Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED,
             Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND
             -> applicationContext.getString(R.string.push_honkai_3rd_checkin_title)
+
             Constant.NotiType.CHECK_IN_HONKAI_SR_SUCCESS,
             Constant.NotiType.CHECK_IN_HONKAI_SR_ALREADY,
             Constant.NotiType.CHECK_IN_HONKAI_SR_FAILED,
             Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND
             -> applicationContext.getString(R.string.push_honkai_sr_checkin_title)
+
+            Constant.NotiType.CHECK_IN_ZZZ_SUCCESS,
+            Constant.NotiType.CHECK_IN_ZZZ_ALREADY,
+            Constant.NotiType.CHECK_IN_ZZZ_FAILED,
+            Constant.NotiType.CHECK_IN_ZZZ_ACCOUNT_NOT_FOUND
+            -> applicationContext.getString(R.string.push_zzz_checkin_title)
+
             else -> ""
         }
 
         val msg = when (notiType) {
             Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS
-            -> String.format(applicationContext.getString(R.string.push_msg_checkin_success_genshin), account.nickname)
-            Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS
-            -> String.format(applicationContext.getString(R.string.push_msg_checkin_success_honkai), account.nickname)
-            Constant.NotiType.CHECK_IN_HONKAI_SR_SUCCESS
-            -> String.format(applicationContext.getString(R.string.push_msg_checkin_success_honkai_sr), account.honkai_sr_nickname)
+            -> String.format(
+                applicationContext.getString(R.string.push_msg_checkin_success_genshin),
+                account.nickname
+            )
+
             Constant.NotiType.CHECK_IN_GENSHIN_ALREADY
-            -> String.format(applicationContext.getString(R.string.push_msg_checkin_already_genshin), account.nickname)
-            Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY
-            -> String.format(applicationContext.getString(R.string.push_msg_checkin_already_honkai), account.nickname)
-            Constant.NotiType.CHECK_IN_HONKAI_SR_ALREADY
-            -> String.format(applicationContext.getString(R.string.push_msg_checkin_already_honkai_sr), account.honkai_sr_nickname)
+            -> String.format(
+                applicationContext.getString(R.string.push_msg_checkin_already_genshin),
+                account.nickname
+            )
+
             Constant.NotiType.CHECK_IN_GENSHIN_FAILED
-            -> String.format(applicationContext.getString(R.string.push_msg_checkin_failed_genshin), account.nickname)
+            -> String.format(
+                applicationContext.getString(R.string.push_msg_checkin_failed_genshin),
+                account.nickname
+            )
+
+            Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS
+            -> String.format(
+                applicationContext.getString(R.string.push_msg_checkin_success_honkai),
+                account.nickname
+            )
+
+            Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY
+            -> String.format(
+                applicationContext.getString(R.string.push_msg_checkin_already_honkai),
+                account.nickname
+            )
+
             Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED
-            -> String.format(applicationContext.getString(R.string.push_msg_checkin_failed_honkai), account.nickname)
+            -> String.format(
+                applicationContext.getString(R.string.push_msg_checkin_failed_honkai),
+                account.nickname
+            )
+
+            Constant.NotiType.CHECK_IN_HONKAI_SR_SUCCESS
+            -> String.format(
+                applicationContext.getString(R.string.push_msg_checkin_success_honkai_sr),
+                account.honkai_sr_nickname
+            )
+
+            Constant.NotiType.CHECK_IN_HONKAI_SR_ALREADY
+            -> String.format(
+                applicationContext.getString(R.string.push_msg_checkin_already_honkai_sr),
+                account.honkai_sr_nickname
+            )
+
             Constant.NotiType.CHECK_IN_HONKAI_SR_FAILED
-            -> String.format(applicationContext.getString(R.string.push_msg_checkin_failed_honkai_sr), account.honkai_sr_nickname)
+            -> String.format(
+                applicationContext.getString(R.string.push_msg_checkin_failed_honkai_sr),
+                account.honkai_sr_nickname
+            )
+
+            Constant.NotiType.CHECK_IN_ZZZ_SUCCESS
+            -> String.format(
+                applicationContext.getString(R.string.push_msg_checkin_success_zzz),
+                account.zzz_nickname
+            )
+
+            Constant.NotiType.CHECK_IN_ZZZ_ALREADY
+            -> String.format(
+                applicationContext.getString(R.string.push_msg_checkin_already_zzz),
+                account.zzz_nickname
+            )
+
+            Constant.NotiType.CHECK_IN_ZZZ_FAILED
+            -> String.format(
+                applicationContext.getString(R.string.push_msg_checkin_failed_zzz),
+                account.zzz_nickname
+            )
+
             Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND,
             Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND,
-            Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND
-            -> String.format(applicationContext.getString(R.string.push_msg_checkin_account_not_found), account.nickname)
+            Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND,
+            Constant.NotiType.CHECK_IN_ZZZ_ACCOUNT_NOT_FOUND,
+            -> String.format(
+                applicationContext.getString(R.string.push_msg_checkin_account_not_found),
+                account.nickname
+            )
+
             Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA
-            -> String.format(applicationContext.getString(R.string.push_msg_checkin_success_genshin_captcha), account.nickname)
+            -> String.format(
+                applicationContext.getString(R.string.push_msg_checkin_success_genshin_captcha),
+                account.nickname
+            )
+
             else -> ""
         }
 
@@ -529,10 +807,12 @@ class CheckInWorker @AssistedInject constructor(
         val mNotificationId = 123
 
         val intentMainLanding = Intent(applicationContext, MainActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(applicationContext,
+        val pendingIntent = PendingIntent.getActivity(
+            applicationContext,
             0,
             intentMainLanding,
-            PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.FLAG_IMMUTABLE
+        )
         val iconNotification: Bitmap? =
             BitmapFactory.decodeResource(applicationContext.resources, R.mipmap.ic_launcher)
 
@@ -543,16 +823,20 @@ class CheckInWorker @AssistedInject constructor(
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel =
-                NotificationChannel(Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID,
+                NotificationChannel(
+                    Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID,
                     Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_NAME,
-                    NotificationManager.IMPORTANCE_MIN)
+                    NotificationManager.IMPORTANCE_MIN
+                )
             notificationChannel.enableLights(false)
             notificationChannel.lockscreenVisibility = Notification.VISIBILITY_SECRET
             mNotificationManager.createNotificationChannel(notificationChannel)
         }
 
-        val notification = NotificationCompat.Builder(applicationContext,
-            Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID)
+        val notification = NotificationCompat.Builder(
+            applicationContext,
+            Constant.PUSH_CHANNEL_CHECK_IN_PROGRESS_NOTI_ID
+        )
             .setContentTitle(applicationContext.getString(R.string.foreground_check_in_inprogress))
             .setTicker(applicationContext.getString(R.string.foreground_check_in_inprogress))
             .setSmallIcon(R.drawable.resin)
@@ -576,6 +860,7 @@ class CheckInWorker @AssistedInject constructor(
     val CHECKIN_TYPE_GENSHIN = "GENSHIN"
     val CHECKIN_TYPE_HONKAI_3RD = "HONKAI_3RD"
     val CHECKIN_TYPE_HONKAI_SR = "HONKAI_SR"
+    val CHECKIN_TYPE_ZZZ = "ZZZ"
     private fun disableCheckIn(account: Account, gameType: String) {
         log.e()
         val _account =
@@ -583,12 +868,19 @@ class CheckInWorker @AssistedInject constructor(
                 CHECKIN_TYPE_GENSHIN -> {
                     account.copy(enable_genshin_checkin = false)
                 }
+
                 CHECKIN_TYPE_HONKAI_3RD -> {
                     account.copy(enable_honkai3rd_checkin = false)
                 }
+
                 CHECKIN_TYPE_HONKAI_SR -> {
                     account.copy(enable_honkai_sr_checkin = false)
                 }
+
+                CHECKIN_TYPE_ZZZ -> {
+                    account.copy(enable_zzz_checkin = false)
+                }
+
                 else -> account
             }
 
@@ -629,6 +921,13 @@ class CheckInWorker @AssistedInject constructor(
                             account = account,
                             lang = lang,
                             actId = Constant.OS_HONKAI_SR_ACT_ID,
+                            cookie = account.cookie
+                        )
+                    if (account.enable_zzz_checkin)
+                        checkInZZZ(
+                            account = account,
+                            lang = lang,
+                            actId = Constant.OS_ZZZ_ACT_ID,
                             cookie = account.cookie
                         )
                 }

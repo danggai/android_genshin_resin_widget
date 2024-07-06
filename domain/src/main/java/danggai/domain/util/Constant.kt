@@ -24,6 +24,9 @@ object Constant {
     const val OS_HONKAI_SR_CHECK_IN_URL = "https://sg-public-api.hoyolab.com/event/luna/os/sign"
     const val OS_HONKAI_SR_ACT_ID = "e202303301540311"
 
+    const val OS_ZZZ_CHECK_IN_URL = "https://sg-act-nap-api.hoyolab.com/event/luna/zzz/os/sign"
+    const val OS_ZZZ_ACT_ID = "e202406031448091"
+
     const val HOW_CAN_I_GET_COOKIE_URL =
         "https://github.com/danggai/android_genshin_resin_widget/blob/master/how_to_get_hoyolab_cookie.md"
 
@@ -45,6 +48,7 @@ object Constant {
     const val GAME_ID_HONKAI_3RD = 1
     const val GAME_ID_GENSHIN_IMPACT = 2
     const val GAME_ID_HONKAI_SR = 6
+    const val GAME_ID_ZZZ = 8
 
     /* HTTP STATUS CODE */
 
@@ -277,6 +281,7 @@ object Constant {
         RESIN_EACH_40,
         RESIN_140,
         RESIN_CUSTOM,
+
         CHECK_IN_GENSHIN_SUCCESS,
         CHECK_IN_GENSHIN_ALREADY,
         CHECK_IN_GENSHIN_FAILED,
@@ -290,6 +295,11 @@ object Constant {
         CHECK_IN_HONKAI_SR_ALREADY,
         CHECK_IN_HONKAI_SR_FAILED,
         CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND,
+        CHECK_IN_ZZZ_SUCCESS,
+        CHECK_IN_ZZZ_ALREADY,
+        CHECK_IN_ZZZ_FAILED,
+        CHECK_IN_ZZZ_ACCOUNT_NOT_FOUND,
+
         EXPEDITION_DONE,
         REALM_CURRENCY_FULL,
         PARAMETRIC_TRANSFORMER_REACHED,
@@ -311,6 +321,7 @@ object Constant {
     const val PUSH_CHANNEL_GENSHIN_CHECK_IN_NOTI_ID = "PUSH_CHANNEL_GENSHIN_CHECK_IN_NOTI_ID"
     const val PUSH_CHANNEL_HONKAI_3RD_CHECK_IN_NOTI_ID = "PUSH_CHANNEL_HONKAI_3RD_CHECK_IN_NOTI_ID"
     const val PUSH_CHANNEL_HONKAI_SR_CHECK_IN_NOTI_ID = "PUSH_CHANNEL_HONKAI_SR_CHECK_IN_NOTI_ID"
+    const val PUSH_CHANNEL_HONKAI_ZZZ_CHECK_IN_NOTI_ID = "PUSH_CHANNEL_HONKAI_ZZZ_CHECK_IN_NOTI_ID"
     const val PUSH_CHANNEL_EXPEDITION_NOTI_ID = "EXPEDITION_NOTIFICATION"
     const val PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID = "REALM_CURRENCY_NOTIFICATION"
     const val PUSH_CHANNEL_PARAMETRIC_TRANSFORMER_NOTI_ID = "PARAMETRIC_TRANSFORMER_NOTIFICATION"
