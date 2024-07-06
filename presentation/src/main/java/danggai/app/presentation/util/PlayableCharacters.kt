@@ -983,5 +983,16 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         Constant.TALENT_AREA_FONTAINE,
         Constant.TALENT_DATE_TUEFRI,
         R.drawable.icon_clorinde
+    ),
+
+    LocalCharacter(
+        Constant.ID_EMILIE,
+        "에밀리",
+        "Emilie",
+        5,
+        Elements.DENDRO,
+        Constant.TALENT_AREA_FONTAINE,
+        Constant.TALENT_DATE_WEDSAT,
+        R.drawable.icon_emilie
     )
 )
