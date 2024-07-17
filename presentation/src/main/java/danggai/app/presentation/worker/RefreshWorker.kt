@@ -568,7 +568,19 @@ class RefreshWorker @AssistedInject constructor(
 
         val maxEnergy = dailyNote.energy.progress.max
 
-        // each 40 할까말까 흠
+        if (settings.notiEach40Battery) {
+            val gap = 40
+            val batteryLevels = (gap until maxEnergy + gap step gap).toList().reversed()
+
+            for (batteryLevel in batteryLevels) {
+                if (batteryLevel in (prefBattery + 1)..currentBattery) {
+                    log.e()
+                    sendNoti(account, NotiType.ZZZ.StaminaEach60, batteryLevel)
+                    break
+                }
+            }
+        }
+
         if (settings.notiEach60Battery) {
             val gap = 60
             val batteryLevels = (gap until maxEnergy + gap step gap).toList().reversed()
@@ -576,6 +588,7 @@ class RefreshWorker @AssistedInject constructor(
             for (batteryLevel in batteryLevels) {
                 if (batteryLevel in (prefBattery + 1)..currentBattery) {
                     log.e()
+                    if (batteryLevel % 120 == 0 && settings.notiEach40Battery) continue
                     sendNoti(account, NotiType.ZZZ.StaminaEach60, batteryLevel)
                     break
                 }

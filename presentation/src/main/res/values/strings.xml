@@ -5,6 +5,7 @@
 
     <string name="genshin">Genshin\u00A0</string>
     <string name="honkai_sr">Honkai: Star Rail\u00A0</string>
+    <string name="zzz">Zenless Zone Zero\u00A0</string>
     <string name="common">Common\u00A0</string>
 
     <string name="genshin_uid" translatable="false">Genshin Uid</string>

@@ -33,11 +33,11 @@ import danggai.app.presentation.ui.widget.ResinWidgetResizable
 import danggai.app.presentation.ui.widget.TrailPowerWidget
 import danggai.domain.db.account.entity.Account
 import danggai.domain.local.DetailWidgetDesignSettings
+import danggai.domain.local.NotiType
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.util.Constant
-import danggai.domain.local.NotiType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -47,7 +47,6 @@ import java.util.Calendar
 import java.util.Locale
 import java.util.Random
 import java.util.TimeZone
-import kotlin.math.abs
 import kotlin.streams.asSequence
 
 
@@ -144,136 +143,8 @@ object CommonFunction {
         msg: String,
     ) {
         log.e()
-        val notiId: Int
-        val notificationId: String
-        val notificationDesc: String
-        val priority: Int
 
-        val priorityLow =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) NotificationManager.IMPORTANCE_LOW
-            else NotificationCompat.PRIORITY_LOW
-
-        val priorityDefault =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) NotificationManager.IMPORTANCE_DEFAULT
-            else NotificationCompat.PRIORITY_DEFAULT
-
-        when (notiType) {
-            NotiType.Genshin.StaminaEach40,
-            NotiType.Genshin.Stamina180,
-            NotiType.Genshin.StaminaCustom,
-            -> {
-                notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_STAMINA
-                notificationId = Constant.PUSH_CHANNEL_RESIN_NOTI_ID
-                notificationDesc = context.getString(R.string.push_resin_noti_description)
-                priority = priorityDefault
-            }
-
-            NotiType.Genshin.ExpeditionDone -> {
-                notiId = System.currentTimeMillis().toInt()
-                notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
-                notificationDesc = context.getString(R.string.push_expedition_description)
-                priority = priorityLow
-            }
-
-            NotiType.Genshin.RealmCurrencyFull -> {
-                notiId = System.currentTimeMillis().toInt()
-                notificationId = Constant.PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID
-                notificationDesc = context.getString(R.string.push_realm_currency_description)
-                priority = priorityDefault
-            }
-
-            NotiType.Genshin.ParametricTransformerReached -> {
-                notiId = System.currentTimeMillis().toInt()
-                notificationId = Constant.PUSH_CHANNEL_PARAMETRIC_TRANSFORMER_NOTI_ID
-                notificationDesc = context.getString(R.string.push_param_trans_description)
-                priority = priorityDefault
-            }
-
-            NotiType.Genshin.DailyCommissionNotDone -> {
-                notiId = System.currentTimeMillis().toInt()
-                notificationId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
-                notificationDesc = context.getString(R.string.push_daily_commission_description)
-                priority = priorityDefault
-            }
-
-            NotiType.Genshin.WeeklyBossNotDone -> {
-                notiId = System.currentTimeMillis().toInt()
-                notificationId = Constant.PUSH_CHANNEL_WEEKLY_BOSS_YET_NOTI_ID
-                notificationDesc = context.getString(R.string.push_weekly_boss_description)
-                priority = priorityDefault
-            }
-
-            NotiType.StarRail.StaminaEach40,
-            NotiType.StarRail.Stamina230,
-            NotiType.StarRail.StaminaCustom,
-            -> {
-                notiId = abs(account.honkai_sr_uid.toInt()) + Constant.PREFIX_NOTI_ID_STAMINA
-                notificationId = Constant.PUSH_CHANNEL_TRAIL_POWER_NOTI_ID
-                notificationDesc = context.getString(R.string.push_trail_power_noti_description)
-                priority = priorityDefault
-            }
-            NotiType.StarRail.ExpeditionDone -> {
-                notiId = System.currentTimeMillis().toInt()
-                notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
-                notificationDesc = context.getString(R.string.push_assignment_description)
-                priority = priorityLow
-            }
-
-            NotiType.ZZZ.StaminaEach40,
-            NotiType.ZZZ.StaminaEach60,
-            NotiType.ZZZ.Stamina230,
-            NotiType.ZZZ.StaminaCustom,
-            -> {
-                notiId = abs(account.zzz_uid.toInt()) + Constant.PREFIX_NOTI_ID_STAMINA
-                notificationId = Constant.PUSH_CHANNEL_ZZZ_CHECK_IN_NOTI_ID
-                notificationDesc = context.getString(R.string.push_battery_noti_description)
-                priority = priorityDefault
-            }
-
-            is NotiType.CheckIn._Genshin,
-            NotiType.CheckIn.NotFound.AccountGenshin,
-            -> {
-                notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN
-                notificationId = Constant.PUSH_CHANNEL_GENSHIN_CHECK_IN_NOTI_ID
-                notificationDesc = context.getString(R.string.push_genshin_checkin_description)
-                priority = priorityLow
-            }
-
-            is NotiType.CheckIn._Honkai3rd,
-            NotiType.CheckIn.NotFound.AccountHonkai3rd,
-            -> {
-                notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN_HK3RD
-                notificationId = Constant.PUSH_CHANNEL_HONKAI_3RD_CHECK_IN_NOTI_ID
-                notificationDesc = context.getString(R.string.push_honkai_3rd_checkin_description)
-                priority = priorityLow
-            }
-
-            is NotiType.CheckIn._StarRail,
-            NotiType.CheckIn.NotFound.AccountStarRail,
-            -> {
-                notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN_HKSR
-                notificationId = Constant.PUSH_CHANNEL_HONKAI_SR_CHECK_IN_NOTI_ID
-                notificationDesc = context.getString(R.string.push_honkai_sr_checkin_description)
-                priority = priorityLow
-            }
-
-            is NotiType.CheckIn._ZZZ,
-            NotiType.CheckIn.NotFound.AccountZZZ,
-            -> {
-                notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN_ZZZ
-                notificationId = Constant.PUSH_CHANNEL_ZZZ_CHECK_IN_NOTI_ID
-                notificationDesc = context.getString(R.string.push_zzz_checkin_description)
-                priority = priorityLow
-            }
-
-//            else -> {
-//                notiId = System.currentTimeMillis().toInt()
-//                notificationId = Constant.PUSH_CHANNEL_DEFAULT_ID
-//                notificationDesc = context.getString(R.string.push_default_noti_description)
-//                priority = priorityDefault
-//            }
-        }
-
+        val notificationParams = NotificationMapper.getNotiParams(context, notiType, account)
         val icon = NotificationMapper.getNotiIcon(notiType)
 
         val notificationManager: NotificationManager = ContextCompat.getSystemService(
@@ -281,13 +152,13 @@ object CommonFunction {
             NotificationManager::class.java
         ) ?: return
 
-        val builder = NotificationCompat.Builder(context, notificationId).apply {
+        val builder = NotificationCompat.Builder(context, notificationParams.channelId).apply {
             setSmallIcon(icon)
             setContentTitle(title)
             setContentText(msg)
             setAutoCancel(true)
             setStyle(NotificationCompat.BigTextStyle().bigText(msg))
-            setPriority(priority)
+            setPriority(notificationParams.priority)
 
             if (notiType == NotiType.CheckIn._Genshin.CaptchaOccured) {
                 val intent = Intent(
@@ -306,16 +177,16 @@ object CommonFunction {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(
                 NotificationChannel(
-                    notificationId,
+                    notificationParams.channelId,
                     title,
                     NotificationManager.IMPORTANCE_DEFAULT
                 ).apply {
-                    description = notificationDesc
+                    description = notificationParams.channelDesc
                 }
             )
         }
 
-        notificationManager.notify(notiId, builder.build())
+        notificationManager.notify(notificationParams.notificationId, builder.build())
     }
 
     fun getTimeLeftUntilChinaTime(isAM: Boolean, hour: Int, startCalendar: Calendar): Long {
@@ -523,69 +394,53 @@ object CommonFunction {
         view.setTextColor(R.id.tv_disable, mainFontColor)
         view.setTextColor(R.id.tv_no_selected_characters, mainFontColor)
 
-        val fontSize = widgetDesign.fontSize
+        val mainFontViews = listOf(
+            R.id.tv_disable,
+            R.id.tv_no_selected_characters,
 
-        view.setTextColor(R.id.tv_resin, mainFontColor)
-        view.setTextColor(R.id.tv_resin_title, mainFontColor)
-        view.setTextColor(R.id.tv_resin_time, mainFontColor)
-        view.setTextColor(R.id.tv_resin_time_title, mainFontColor)
-        view.setTextColor(R.id.tv_daily_commission, mainFontColor)
-        view.setTextColor(R.id.tv_daily_commission_title, mainFontColor)
-        view.setTextColor(R.id.tv_weekly_boss, mainFontColor)
-        view.setTextColor(R.id.tv_weekly_boss_title, mainFontColor)
-        view.setTextColor(R.id.tv_expedition_title, mainFontColor)
-        view.setTextColor(R.id.tv_expedition_time, mainFontColor)
-        view.setTextColor(R.id.tv_transformer_title, mainFontColor)
-        view.setTextColor(R.id.tv_transformer, mainFontColor)
-        view.setTextColor(R.id.tv_realm_currency, mainFontColor)
-        view.setTextColor(R.id.tv_realm_currency_title, mainFontColor)
-        view.setTextColor(R.id.tv_realm_currency_time, mainFontColor)
-        view.setTextColor(R.id.tv_realm_currency_time_title, mainFontColor)
-        view.setTextColor(R.id.tv_trailblaze_power, mainFontColor)
-        view.setTextColor(R.id.tv_trailblaze_power_title, mainFontColor)
-        view.setTextColor(R.id.tv_trailblaze_power_time, mainFontColor)
-        view.setTextColor(R.id.tv_trailblaze_power_time_title, mainFontColor)
-        view.setTextColor(R.id.tv_daily_training, mainFontColor)
-        view.setTextColor(R.id.tv_daily_training_title, mainFontColor)
-        view.setTextColor(R.id.tv_echo_of_war, mainFontColor)
-        view.setTextColor(R.id.tv_echo_of_war_title, mainFontColor)
-        view.setTextColor(R.id.tv_assignment_time, mainFontColor)
-        view.setTextColor(R.id.tv_assignment_title, mainFontColor)
-        view.setTextColor(R.id.tv_simulated_universe, mainFontColor)
-        view.setTextColor(R.id.tv_simulated_universe_title, mainFontColor)
-        view.setTextColor(R.id.tv_simulated_universe_cleared, mainFontColor)
-        view.setTextColor(R.id.tv_simulated_universe_title_cleared, mainFontColor)
+            R.id.tv_resin,
+            R.id.tv_resin_title,
+            R.id.tv_resin_time,
+            R.id.tv_resin_time_title,
+            R.id.tv_daily_commission,
+            R.id.tv_daily_commission_title,
+            R.id.tv_weekly_boss,
+            R.id.tv_weekly_boss_title,
+            R.id.tv_expedition_title,
+            R.id.tv_expedition_time,
+            R.id.tv_transformer_title,
+            R.id.tv_transformer,
+            R.id.tv_realm_currency,
+            R.id.tv_realm_currency_title,
+            R.id.tv_realm_currency_time,
+            R.id.tv_realm_currency_time_title,
 
-        view.setFloat(R.id.tv_resin, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_resin_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_resin_time, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_resin_time_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_daily_commission, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_daily_commission_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_weekly_boss, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_weekly_boss_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_expedition_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_expedition_time, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_transformer_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_transformer, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_realm_currency, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_realm_currency_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_realm_currency_time, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_realm_currency_time_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_trailblaze_power, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_trailblaze_power_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_trailblaze_power_time, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_trailblaze_power_time_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_daily_training, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_daily_training_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_echo_of_war, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_echo_of_war_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_assignment_time, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_assignment_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_simulated_universe, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_simulated_universe_title, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_simulated_universe_cleared, "setTextSize", fontSize.toFloat())
-        view.setFloat(R.id.tv_simulated_universe_title_cleared, "setTextSize", fontSize.toFloat())
+            R.id.tv_trailblaze_power,
+            R.id.tv_trailblaze_power_title,
+            R.id.tv_trailblaze_power_time,
+            R.id.tv_trailblaze_power_time_title,
+            R.id.tv_daily_training,
+            R.id.tv_daily_training_title,
+            R.id.tv_echo_of_war,
+            R.id.tv_echo_of_war_title,
+            R.id.tv_assignment_time,
+            R.id.tv_assignment_title,
+            R.id.tv_simulated_universe,
+            R.id.tv_simulated_universe_title,
+            R.id.tv_simulated_universe_cleared,
+            R.id.tv_simulated_universe_title_cleared
+        )
+
+        fun setFontColorAndSize(view: RemoteViews, id: Int, color: Int, size: Float) {
+            view.setTextColor(id, color)
+            view.setFloat(id, "setTextSize", size)
+        }
+
+        val fontSize = widgetDesign.fontSize.toFloat()
+
+        mainFontViews.forEach { id ->
+            setFontColorAndSize(view, id, mainFontColor, fontSize)
+        }
     }
 
     private const val widgetHasNoUid = "nouid"
