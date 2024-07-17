@@ -37,6 +37,7 @@ import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.util.Constant
+import danggai.domain.local.NotiType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -136,7 +137,7 @@ object CommonFunction {
     }
 
     fun sendNotification(
-        notiType: Constant.NotiType,
+        notiType: NotiType,
         context: Context,
         account: Account,
         title: String,
@@ -157,9 +158,9 @@ object CommonFunction {
             else NotificationCompat.PRIORITY_DEFAULT
 
         when (notiType) {
-            Constant.NotiType.RESIN_EACH_40,
-            Constant.NotiType.RESIN_140,
-            Constant.NotiType.RESIN_CUSTOM,
+            NotiType.Genshin.StaminaEach40,
+            NotiType.Genshin.Stamina180,
+            NotiType.Genshin.StaminaCustom,
             -> {
                 notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_STAMINA
                 notificationId = Constant.PUSH_CHANNEL_RESIN_NOTI_ID
@@ -167,21 +168,70 @@ object CommonFunction {
                 priority = priorityDefault
             }
 
-            Constant.NotiType.TRAIL_POWER_EACH_40,
-            Constant.NotiType.TRAIL_POWER_230,
-            Constant.NotiType.TRAIL_POWER_CUSTOM,
+            NotiType.Genshin.ExpeditionDone -> {
+                notiId = System.currentTimeMillis().toInt()
+                notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
+                notificationDesc = context.getString(R.string.push_expedition_description)
+                priority = priorityLow
+            }
+
+            NotiType.Genshin.RealmCurrencyFull -> {
+                notiId = System.currentTimeMillis().toInt()
+                notificationId = Constant.PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID
+                notificationDesc = context.getString(R.string.push_realm_currency_description)
+                priority = priorityDefault
+            }
+
+            NotiType.Genshin.ParametricTransformerReached -> {
+                notiId = System.currentTimeMillis().toInt()
+                notificationId = Constant.PUSH_CHANNEL_PARAMETRIC_TRANSFORMER_NOTI_ID
+                notificationDesc = context.getString(R.string.push_param_trans_description)
+                priority = priorityDefault
+            }
+
+            NotiType.Genshin.DailyCommissionNotDone -> {
+                notiId = System.currentTimeMillis().toInt()
+                notificationId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
+                notificationDesc = context.getString(R.string.push_daily_commission_description)
+                priority = priorityDefault
+            }
+
+            NotiType.Genshin.WeeklyBossNotDone -> {
+                notiId = System.currentTimeMillis().toInt()
+                notificationId = Constant.PUSH_CHANNEL_WEEKLY_BOSS_YET_NOTI_ID
+                notificationDesc = context.getString(R.string.push_weekly_boss_description)
+                priority = priorityDefault
+            }
+
+            NotiType.StarRail.StaminaEach40,
+            NotiType.StarRail.Stamina230,
+            NotiType.StarRail.StaminaCustom,
             -> {
                 notiId = abs(account.honkai_sr_uid.toInt()) + Constant.PREFIX_NOTI_ID_STAMINA
                 notificationId = Constant.PUSH_CHANNEL_TRAIL_POWER_NOTI_ID
                 notificationDesc = context.getString(R.string.push_trail_power_noti_description)
                 priority = priorityDefault
             }
+            NotiType.StarRail.ExpeditionDone -> {
+                notiId = System.currentTimeMillis().toInt()
+                notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
+                notificationDesc = context.getString(R.string.push_assignment_description)
+                priority = priorityLow
+            }
 
-            Constant.NotiType.CHECK_IN_GENSHIN_SUCCESS,
-            Constant.NotiType.CHECK_IN_GENSHIN_FAILED,
-            Constant.NotiType.CHECK_IN_GENSHIN_ALREADY,
-            Constant.NotiType.CHECK_IN_GENSHIN_ACCOUNT_NOT_FOUND,
-            Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA,
+            NotiType.ZZZ.StaminaEach40,
+            NotiType.ZZZ.StaminaEach60,
+            NotiType.ZZZ.Stamina230,
+            NotiType.ZZZ.StaminaCustom,
+            -> {
+                notiId = abs(account.zzz_uid.toInt()) + Constant.PREFIX_NOTI_ID_STAMINA
+                notificationId = Constant.PUSH_CHANNEL_ZZZ_CHECK_IN_NOTI_ID
+                notificationDesc = context.getString(R.string.push_battery_noti_description)
+                priority = priorityDefault
+            }
+
+            is NotiType.CheckIn._Genshin,
+            NotiType.CheckIn.NotFound.AccountGenshin,
             -> {
                 notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN
                 notificationId = Constant.PUSH_CHANNEL_GENSHIN_CHECK_IN_NOTI_ID
@@ -189,10 +239,8 @@ object CommonFunction {
                 priority = priorityLow
             }
 
-            Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS,
-            Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED,
-            Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY,
-            Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND,
+            is NotiType.CheckIn._Honkai3rd,
+            NotiType.CheckIn.NotFound.AccountHonkai3rd,
             -> {
                 notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN_HK3RD
                 notificationId = Constant.PUSH_CHANNEL_HONKAI_3RD_CHECK_IN_NOTI_ID
@@ -200,10 +248,8 @@ object CommonFunction {
                 priority = priorityLow
             }
 
-            Constant.NotiType.CHECK_IN_HONKAI_SR_SUCCESS,
-            Constant.NotiType.CHECK_IN_HONKAI_SR_FAILED,
-            Constant.NotiType.CHECK_IN_HONKAI_SR_ALREADY,
-            Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND,
+            is NotiType.CheckIn._StarRail,
+            NotiType.CheckIn.NotFound.AccountStarRail,
             -> {
                 notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN_HKSR
                 notificationId = Constant.PUSH_CHANNEL_HONKAI_SR_CHECK_IN_NOTI_ID
@@ -211,90 +257,24 @@ object CommonFunction {
                 priority = priorityLow
             }
 
-            Constant.NotiType.CHECK_IN_ZZZ_SUCCESS,
-            Constant.NotiType.CHECK_IN_ZZZ_ALREADY,
-            Constant.NotiType.CHECK_IN_ZZZ_FAILED,
-            Constant.NotiType.CHECK_IN_ZZZ_ACCOUNT_NOT_FOUND,
+            is NotiType.CheckIn._ZZZ,
+            NotiType.CheckIn.NotFound.AccountZZZ,
             -> {
                 notiId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN_ZZZ
-                notificationId = Constant.PUSH_CHANNEL_HONKAI_ZZZ_CHECK_IN_NOTI_ID
+                notificationId = Constant.PUSH_CHANNEL_ZZZ_CHECK_IN_NOTI_ID
                 notificationDesc = context.getString(R.string.push_zzz_checkin_description)
                 priority = priorityLow
             }
 
-            Constant.NotiType.EXPEDITION_DONE -> {
-                notiId = System.currentTimeMillis().toInt()
-                notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
-                notificationDesc = context.getString(R.string.push_expedition_description)
-                priority = priorityLow
-            }
-
-            Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> {
-                notiId = System.currentTimeMillis().toInt()
-                notificationId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
-                notificationDesc = context.getString(R.string.push_assignment_description)
-                priority = priorityLow
-            }
-
-            Constant.NotiType.REALM_CURRENCY_FULL -> {
-                notiId = System.currentTimeMillis().toInt()
-                notificationId = Constant.PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID
-                notificationDesc = context.getString(R.string.push_realm_currency_description)
-                priority = priorityDefault
-            }
-
-            Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED -> {
-                notiId = System.currentTimeMillis().toInt()
-                notificationId = Constant.PUSH_CHANNEL_PARAMETRIC_TRANSFORMER_NOTI_ID
-                notificationDesc = context.getString(R.string.push_param_trans_description)
-                priority = priorityDefault
-            }
-
-            Constant.NotiType.DAILY_COMMISSION_YET -> {
-                notiId = System.currentTimeMillis().toInt()
-                notificationId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
-                notificationDesc = context.getString(R.string.push_daily_commission_description)
-                priority = priorityDefault
-            }
-
-            Constant.NotiType.WEEKLY_BOSS_YET -> {
-                notiId = System.currentTimeMillis().toInt()
-                notificationId = Constant.PUSH_CHANNEL_WEEKLY_BOSS_YET_NOTI_ID
-                notificationDesc = context.getString(R.string.push_weekly_boss_description)
-                priority = priorityDefault
-            }
-
-            else -> {
-                notiId = System.currentTimeMillis().toInt()
-                notificationId = Constant.PUSH_CHANNEL_DEFAULT_ID
-                notificationDesc = context.getString(R.string.push_default_noti_description)
-                priority = priorityDefault
-            }
+//            else -> {
+//                notiId = System.currentTimeMillis().toInt()
+//                notificationId = Constant.PUSH_CHANNEL_DEFAULT_ID
+//                notificationDesc = context.getString(R.string.push_default_noti_description)
+//                priority = priorityDefault
+//            }
         }
 
-        val icon = when (notiType) {
-//            Constant.NotiType.CHECK_IN_HONKAI_3RD_SUCCESS,
-//            Constant.NotiType.CHECK_IN_HONKAI_3RD_FAILED,
-//            Constant.NotiType.CHECK_IN_HONKAI_3RD_ALREADY,
-//            Constant.NotiType.CHECK_IN_HONKAI_3RD_ACCOUNT_NOT_FOUND -> R.d
-            Constant.NotiType.CHECK_IN_HONKAI_SR_SUCCESS,
-            Constant.NotiType.CHECK_IN_HONKAI_SR_FAILED,
-            Constant.NotiType.CHECK_IN_HONKAI_SR_ALREADY,
-            Constant.NotiType.CHECK_IN_HONKAI_SR_ACCOUNT_NOT_FOUND,
-            Constant.NotiType.TRAIL_POWER_EACH_40,
-            Constant.NotiType.TRAIL_POWER_230,
-            Constant.NotiType.TRAIL_POWER_CUSTOM,
-            Constant.NotiType.HONKAI_SR_EXPEDITION_DONE,
-            -> R.drawable.trailblaze_power
-
-            Constant.NotiType.CHECK_IN_ZZZ_SUCCESS,
-            Constant.NotiType.CHECK_IN_ZZZ_ALREADY,
-            Constant.NotiType.CHECK_IN_ZZZ_FAILED,
-            Constant.NotiType.CHECK_IN_ZZZ_ACCOUNT_NOT_FOUND
-            -> R.drawable.battery
-
-            else -> R.drawable.resin
-        }
+        val icon = NotificationMapper.getNotiIcon(notiType)
 
         val notificationManager: NotificationManager = ContextCompat.getSystemService(
             context,
@@ -309,7 +289,7 @@ object CommonFunction {
             setStyle(NotificationCompat.BigTextStyle().bigText(msg))
             setPriority(priority)
 
-            if (notiType == Constant.NotiType.CHECK_IN_GENSHIN_CAPTCHA) {
+            if (notiType == NotiType.CheckIn._Genshin.CaptchaOccured) {
                 val intent = Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse("https://act.hoyolab.com/ys/event/signin-sea-v3/index.html?act_id=e202102251931481&lang=ko-kr")

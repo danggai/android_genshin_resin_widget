@@ -2,17 +2,24 @@ package danggai.app.presentation.worker
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
-import androidx.work.*
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.Worker
+import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import danggai.app.presentation.R
 import danggai.app.presentation.util.CommonFunction
+import danggai.app.presentation.util.NotificationMapper
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
+import danggai.domain.local.NotiType
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.network.dailynote.entity.ZZZDailyNoteData
@@ -21,11 +28,17 @@ import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 import java.util.concurrent.TimeUnit
 
 @HiltWorker
@@ -35,7 +48,7 @@ class RefreshWorker @AssistedInject constructor(
     private val preference: PreferenceManagerRepository,
     private val accountDao: AccountDaoUseCase,
     private val dailyNote: DailyNoteUseCase
-): Worker(context, workerParams) {
+) : Worker(context, workerParams) {
 
     companion object {
         fun startWorkerOneTime(context: Context) {
@@ -45,12 +58,20 @@ class RefreshWorker @AssistedInject constructor(
             val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
                 .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
                 .build()
-            workManager.enqueueUniqueWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingWorkPolicy.REPLACE, workRequest)
+            workManager.enqueueUniqueWork(
+                Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH,
+                ExistingWorkPolicy.REPLACE,
+                workRequest
+            )
         }
 
         fun startWorkerPeriodic(context: Context) {
             log.e()
-            val period = PreferenceManager.getLong(context, Constant.PREF_AUTO_REFRESH_PERIOD, Constant.PREF_DEFAULT_REFRESH_PERIOD)
+            val period = PreferenceManager.getLong(
+                context,
+                Constant.PREF_AUTO_REFRESH_PERIOD,
+                Constant.PREF_DEFAULT_REFRESH_PERIOD
+            )
 
             val rx: PublishSubject<Boolean> = PublishSubject.create()
 
@@ -61,12 +82,17 @@ class RefreshWorker @AssistedInject constructor(
                     log.e("period -> $period")
 
                     val workManager = WorkManager.getInstance(context)
-                    val workRequest = PeriodicWorkRequestBuilder<RefreshWorker>(period, TimeUnit.MINUTES)
-                        .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
-                        .build()
+                    val workRequest =
+                        PeriodicWorkRequestBuilder<RefreshWorker>(period, TimeUnit.MINUTES)
+                            .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
+                            .build()
 
-                    workManager.enqueueUniquePeriodicWork(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH, ExistingPeriodicWorkPolicy.REPLACE, workRequest)
-                },{},{}).isDisposed
+                    workManager.enqueueUniquePeriodicWork(
+                        Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH,
+                        ExistingPeriodicWorkPolicy.REPLACE,
+                        workRequest
+                    )
+                }, {}, {}).isDisposed
 
             rx.onNext(true)
         }
@@ -102,21 +128,36 @@ class RefreshWorker @AssistedInject constructor(
                                 log.e()
                                 updateData(account, it.data.data!!)
                             }
+
                             else -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode)
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_DAILY_NOTE,
+                                    it.code,
+                                    it.data.retcode
+                                )
                             }
                         }
                     }
+
                     is ApiResult.Failure -> {
                         log.e(it.message)
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, null)
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_DAILY_NOTE,
+                            it.code,
+                            null
+                        )
                         CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
                     }
+
                     is ApiResult.Error,
                     is ApiResult.Null -> {
                         log.e()
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, null, null)
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_DAILY_NOTE,
+                            null,
+                            null
+                        )
                         CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
                     }
                 }
@@ -167,21 +208,36 @@ class RefreshWorker @AssistedInject constructor(
                                     weekly_cocoon_limit = it.data.data.weekly_cocoon_limit,
                                 )
                             }
+
                             else -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode.toString())
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_DAILY_NOTE,
+                                    it.code,
+                                    it.data.retcode.toString()
+                                )
                             }
                         }
                     }
+
                     is ApiResult.Failure -> {
                         log.e(it.message)
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, null)
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_DAILY_NOTE,
+                            it.code,
+                            null
+                        )
                         CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
                     }
+
                     is ApiResult.Error,
                     is ApiResult.Null -> {
                         log.e()
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, null, null)
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_DAILY_NOTE,
+                            null,
+                            null
+                        )
                         CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
                     }
                 }
@@ -215,21 +271,36 @@ class RefreshWorker @AssistedInject constructor(
                                     rogue_clear_count = if (currentRecord.has_data) currentRecord.basic.finish_cnt else 0
                                 )
                             }
+
                             else -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode.toString())
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_DAILY_NOTE,
+                                    it.code,
+                                    it.data.retcode.toString()
+                                )
                             }
                         }
                     }
+
                     is ApiResult.Failure -> {
                         log.e(it.message)
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, null)
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_DAILY_NOTE,
+                            it.code,
+                            null
+                        )
                         CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
                     }
+
                     is ApiResult.Error,
                     is ApiResult.Null -> {
                         log.e()
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, null, null)
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_DAILY_NOTE,
+                            null,
+                            null
+                        )
                         CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
                     }
                 }
@@ -258,21 +329,36 @@ class RefreshWorker @AssistedInject constructor(
                                 log.e()
                                 updateData(account, it.data.data)
                             }
+
                             else -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode.toString())
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_DAILY_NOTE,
+                                    it.code,
+                                    it.data.retcode.toString()
+                                )
                             }
                         }
                     }
+
                     is ApiResult.Failure -> {
                         log.e(it.message)
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, null)
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_DAILY_NOTE,
+                            it.code,
+                            null
+                        )
                         CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
                     }
+
                     is ApiResult.Error,
                     is ApiResult.Null -> {
                         log.e()
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, null, null)
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_DAILY_NOTE,
+                            null,
+                            null
+                        )
                         CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
                     }
                 }
@@ -295,55 +381,77 @@ class RefreshWorker @AssistedInject constructor(
             for (resinLevel in resinLevels) {
                 if (resinLevel in (prefResin + 1)..nowResin) {
                     log.e()
-                    sendNoti(account, Constant.NotiType.RESIN_EACH_40, resinLevel)
+                    sendNoti(account, NotiType.Genshin.StaminaEach40, resinLevel)
                     break
                 }
             }
         }
 
         if (settings.noti140Resin) {
-            if (Constant.MAX_RESIN - 20 in (prefResin + 1)..nowResin){
+            if (Constant.MAX_RESIN - 20 in (prefResin + 1)..nowResin) {
                 log.e()
-                sendNoti(account, Constant.NotiType.RESIN_140, Constant.MAX_RESIN - 20)
+                sendNoti(account, NotiType.Genshin.Stamina180, Constant.MAX_RESIN - 20)
             }
         }
 
         if (settings.notiCustomResin) {
             val targetResin: Int = settings.customResin.takeUnless { it == 0 } ?: Constant.MAX_RESIN
-            if (targetResin in (prefResin + 1)..nowResin){
+            if (targetResin in (prefResin + 1)..nowResin) {
                 log.e()
-                sendNoti(account, Constant.NotiType.RESIN_CUSTOM, targetResin)
+                sendNoti(account, NotiType.Genshin.StaminaCustom, targetResin)
             }
         }
 
-        val prefExpeditionTime: Int = try { preference.getStringExpeditionTime(account.genshin_uid).toInt() } catch (e: Exception) { 0 }
+        val prefExpeditionTime: Int = try {
+            preference.getStringExpeditionTime(account.genshin_uid).toInt()
+        } catch (e: Exception) {
+            0
+        }
         val nowExpeditionTime: Int = CommonFunction.getExpeditionTime(dailyNote).toInt()
         if (settings.notiExpedition) {
             if (1 in (nowExpeditionTime)..prefExpeditionTime
                 && dailyNote.expeditions.isNotEmpty()
-                && nowExpeditionTime == 0){
+                && nowExpeditionTime == 0
+            ) {
                 log.e()
-                sendNoti(account, Constant.NotiType.EXPEDITION_DONE, 0)
+                sendNoti(account, NotiType.Genshin.ExpeditionDone, null)
             }
         }
 
-        val prefHomeCoinRecoveryTime: Int = try { prefDailyNote.home_coin_recovery_time.toInt() } catch (e: Exception) { 0 }
-        val nowHomeCoinRecoveryTime: Int = try { (dailyNote.home_coin_recovery_time).toInt() } catch (e: Exception) { 0 }
+        val prefHomeCoinRecoveryTime: Int = try {
+            prefDailyNote.home_coin_recovery_time.toInt()
+        } catch (e: Exception) {
+            0
+        }
+        val nowHomeCoinRecoveryTime: Int = try {
+            (dailyNote.home_coin_recovery_time).toInt()
+        } catch (e: Exception) {
+            0
+        }
         if (settings.notiHomeCoin) {
             if (1 in (nowHomeCoinRecoveryTime)..prefHomeCoinRecoveryTime
                 && dailyNote.max_home_coin != 0
-                && nowHomeCoinRecoveryTime == 0){
+                && nowHomeCoinRecoveryTime == 0
+            ) {
                 log.e()
-                sendNoti(account, Constant.NotiType.REALM_CURRENCY_FULL, 0)
+                sendNoti(account, NotiType.Genshin.RealmCurrencyFull, null)
             }
         }
 
-        val prefParamTransState: Boolean = try { prefDailyNote.transformer!!.recovery_time.reached } catch (e: Exception) { false }
-        val nowParamTransState: Boolean = try { dailyNote.transformer!!.recovery_time.reached } catch (e: Exception) { false }
+        val prefParamTransState: Boolean = try {
+            prefDailyNote.transformer!!.recovery_time.reached
+        } catch (e: Exception) {
+            false
+        }
+        val nowParamTransState: Boolean = try {
+            dailyNote.transformer!!.recovery_time.reached
+        } catch (e: Exception) {
+            false
+        }
         if (settings.notiParamTrans) {
-            if (!prefParamTransState && nowParamTransState){
+            if (!prefParamTransState && nowParamTransState) {
                 log.e()
-                sendNoti(account, Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED, 0)
+                sendNoti(account, NotiType.Genshin.ParametricTransformerReached, null)
             }
         }
 
@@ -357,7 +465,7 @@ class RefreshWorker @AssistedInject constructor(
         ) {
             log.e()
             preference.setStringRecentDailyCommissionNotiDate(account.genshin_uid, yymmdd)
-            sendNoti(account, Constant.NotiType.DAILY_COMMISSION_YET, 0)
+            sendNoti(account, NotiType.Genshin.DailyCommissionNotDone, null)
         }
 
         if (settings.notiWeeklyYet &&
@@ -368,10 +476,13 @@ class RefreshWorker @AssistedInject constructor(
         ) {
             log.e()
             preference.setStringRecentWeeklyBossNotiDate(account.genshin_uid, yymmdd)
-            sendNoti(account, Constant.NotiType.WEEKLY_BOSS_YET, 0)
+            sendNoti(account, NotiType.Genshin.WeeklyBossNotDone, null)
         }
 
-        preference.setStringRecentSyncTime(account.genshin_uid, TimeFunction.getSyncDateTimeString())
+        preference.setStringRecentSyncTime(
+            account.genshin_uid,
+            TimeFunction.getSyncDateTimeString()
+        )
 
         val expeditionTime: String = CommonFunction.getExpeditionTime(dailyNote)
         preference.setStringExpeditionTime(account.genshin_uid, expeditionTime)
@@ -397,40 +508,48 @@ class RefreshWorker @AssistedInject constructor(
             for (staminaLevel in staminaLevels) {
                 if (staminaLevel in (prefStamina + 1)..nowStamina) {
                     log.e()
-                    sendNoti(account, Constant.NotiType.TRAIL_POWER_EACH_40, staminaLevel)
+                    sendNoti(account, NotiType.StarRail.StaminaEach40, staminaLevel)
                     break
                 }
             }
         }
 
         if (settings.noti170TrailPower) {
-            if (Constant.MAX_TRAILBLAZE_POWER - 10 in (prefStamina + 1)..nowStamina){
+            if (Constant.MAX_TRAILBLAZE_POWER - 10 in (prefStamina + 1)..nowStamina) {
                 log.e()
-                sendNoti(account, Constant.NotiType.TRAIL_POWER_230, Constant.MAX_TRAILBLAZE_POWER - 10)
+                sendNoti(account, NotiType.StarRail.Stamina230, Constant.MAX_TRAILBLAZE_POWER - 10)
             }
         }
 
         if (settings.notiCustomTrailPower) {
             val targetTrailPower: Int = settings.customTrailPower.takeUnless { it == 0 }
                 ?: (Constant.MAX_TRAILBLAZE_POWER - 20)
-            if (targetTrailPower in (prefStamina + 1)..nowStamina){
+            if (targetTrailPower in (prefStamina + 1)..nowStamina) {
                 log.e()
-                sendNoti(account, Constant.NotiType.TRAIL_POWER_CUSTOM, targetTrailPower)
+                sendNoti(account, NotiType.StarRail.StaminaCustom, targetTrailPower)
             }
         }
 
-        val prefExpeditionTime: Int = try { preference.getStringHonkaiSrExpeditionTime(account.honkai_sr_uid).toInt() } catch (e: Exception) { 0 }
+        val prefExpeditionTime: Int = try {
+            preference.getStringHonkaiSrExpeditionTime(account.honkai_sr_uid).toInt()
+        } catch (e: Exception) {
+            0
+        }
         val nowExpeditionTime: Int = CommonFunction.getExpeditionTime(dailyNote).toInt()
         if (settings.notiExpeditionHonkaiSr) {
             if (1 in (nowExpeditionTime)..prefExpeditionTime
                 && dailyNote.expeditions.isNotEmpty()
-                && nowExpeditionTime == 0) {
+                && nowExpeditionTime == 0
+            ) {
                 log.e()
-                sendNoti(account, Constant.NotiType.HONKAI_SR_EXPEDITION_DONE, 0)
+                sendNoti(account, NotiType.StarRail.ExpeditionDone, null)
             }
         }
 
-        preference.setStringRecentSyncTime(account.honkai_sr_uid, TimeFunction.getSyncDateTimeString())
+        preference.setStringRecentSyncTime(
+            account.honkai_sr_uid,
+            TimeFunction.getSyncDateTimeString()
+        )
 
         val expeditionTime: String = CommonFunction.getExpeditionTime(dailyNote)
         preference.setStringHonkaiSrExpeditionTime(account.honkai_sr_uid, expeditionTime)
@@ -457,24 +576,24 @@ class RefreshWorker @AssistedInject constructor(
             for (batteryLevel in batteryLevels) {
                 if (batteryLevel in (prefBattery + 1)..currentBattery) {
                     log.e()
-                    sendNoti(account, Constant.NotiType.BATTERY_EACH_60, batteryLevel)
+                    sendNoti(account, NotiType.ZZZ.StaminaEach60, batteryLevel)
                     break
                 }
             }
         }
 
         if (settings.noti230Battery) {
-            if (maxEnergy - 20 in (prefBattery + 1)..currentBattery){
+            if (maxEnergy - 20 in (prefBattery + 1)..currentBattery) {
                 log.e()
-                sendNoti(account, Constant.NotiType.BATTERY_230, maxEnergy - 20)
+                sendNoti(account, NotiType.ZZZ.Stamina230, maxEnergy - 20)
             }
         }
 
         if (settings.notiCustomBattery) {
             val targetBattery: Int = settings.customBattery.takeUnless { it == 0 } ?: maxEnergy
-            if (targetBattery in (prefBattery + 1)..currentBattery){
+            if (targetBattery in (prefBattery + 1)..currentBattery) {
                 log.e()
-                sendNoti(account, Constant.NotiType.BATTERY_CUSTOM, targetBattery)
+                sendNoti(account, NotiType.ZZZ.StaminaCustom, targetBattery)
             }
         }
 
@@ -497,66 +616,13 @@ class RefreshWorker @AssistedInject constructor(
         preference.setZZZDailyNote(account.zzz_uid, dailyNote)
     }
 
-    private fun sendNoti(account: Account, notiType: Constant.NotiType, target: Int) {
+    private fun sendNoti(account: Account, notiType: NotiType, target: Int?) {
         log.e()
+        val context = applicationContext
 
-        val title = when (notiType) {
-            Constant.NotiType.RESIN_EACH_40,
-            Constant.NotiType.RESIN_140,
-            Constant.NotiType.RESIN_CUSTOM,-> applicationContext.getString(R.string.push_resin_noti_title)
-            Constant.NotiType.EXPEDITION_DONE -> applicationContext.getString(R.string.push_expedition_title)
-            Constant.NotiType.REALM_CURRENCY_FULL -> applicationContext.getString(R.string.push_realm_currency_title)
-            Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED -> applicationContext.getString(R.string.push_param_trans_title)
-            Constant.NotiType.DAILY_COMMISSION_YET -> applicationContext.getString(R.string.push_daily_commission_title)
-            Constant.NotiType.WEEKLY_BOSS_YET -> applicationContext.getString(R.string.push_weekly_boss_title)
-
-            Constant.NotiType.TRAIL_POWER_EACH_40,
-            Constant.NotiType.TRAIL_POWER_230,
-            Constant.NotiType.TRAIL_POWER_CUSTOM, -> applicationContext.getString(R.string.push_trail_power_noti_title)
-            Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> applicationContext.getString(R.string.push_assignment_title)
-
-            Constant.NotiType.BATTERY_EACH_40,
-            Constant.NotiType.BATTERY_EACH_60,
-            Constant.NotiType.BATTERY_230,
-            Constant.NotiType.BATTERY_CUSTOM, -> applicationContext.getString(R.string.push_battery_noti_title)
-            else -> ""
-        }
-
-        val msg = when (notiType) {
-            Constant.NotiType.RESIN_EACH_40 ->
-                when (target) {
-                    Constant.MAX_RESIN + 40 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_240), account.nickname, target)
-                    Constant.MAX_RESIN -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_200), account.nickname, target)
-                    Constant.MAX_RESIN - 40 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_160), account.nickname, target)
-                    else -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_40), account.nickname, target)
-                }
-            Constant.NotiType.RESIN_140 -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_over_180), account.nickname, target)
-            Constant.NotiType.RESIN_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_resin_noti_custom), account.nickname, target)
-            Constant.NotiType.EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_expedition_done), account.nickname)
-            Constant.NotiType.REALM_CURRENCY_FULL -> String.format(applicationContext.getString(R.string.push_msg_realm_currency_full), account.nickname)
-            Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED -> String.format(applicationContext.getString(R.string.push_msg_param_trans_full), account.nickname)
-            Constant.NotiType.DAILY_COMMISSION_YET -> String.format(applicationContext.getString(R.string.push_msg_daily_commission_yet), account.nickname)
-            Constant.NotiType.WEEKLY_BOSS_YET -> String.format(applicationContext.getString(R.string.push_msg_weekly_boss_yet), account.nickname)
-
-            Constant.NotiType.TRAIL_POWER_EACH_40 ->
-                when (target) {
-                    Constant.MAX_TRAILBLAZE_POWER -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_240), account.honkai_sr_nickname, target)
-                    else -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_40), account.honkai_sr_nickname, target)
-                }
-            Constant.NotiType.TRAIL_POWER_230 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_230), account.honkai_sr_nickname, target)
-            Constant.NotiType.TRAIL_POWER_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_custom), account.honkai_sr_nickname, target)
-            Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_assignment_done), account.honkai_sr_nickname)
-
-            Constant.NotiType.BATTERY_EACH_40,
-            Constant.NotiType.BATTERY_EACH_60 ->
-                when (target) {
-                    Constant.MAX_BATTERY -> String.format(applicationContext.getString(R.string.push_msg_battery_noti_over_240), account.zzz_nickname, target)
-                    else -> String.format(applicationContext.getString(R.string.push_msg_battery_noti_over_40), account.zzz_nickname, target)
-                }
-            Constant.NotiType.BATTERY_230 -> String.format(applicationContext.getString(R.string.push_msg_battery_noti_over_230), account.zzz_nickname, target)
-            Constant.NotiType.BATTERY_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_battery_noti_custom), account.zzz_nickname, target)
-            else -> ""
-        }
+        val title = NotificationMapper.getNotiTitle(context, notiType)
+        val nickname = NotificationMapper.getNickname(notiType, account)
+        val msg = NotificationMapper.getNotiMsg(context, notiType, nickname, target)
 
         log.e(notiType)
         log.e(title)
@@ -600,17 +666,21 @@ class RefreshWorker @AssistedInject constructor(
                             }
 
 
-                            val firstDeferred = async { refreshHonkaiSrDailyNote(
-                                account,
-                                server,
-                                CommonFunction.getGenshinDS()
-                            ) }
+                            val firstDeferred = async {
+                                refreshHonkaiSrDailyNote(
+                                    account,
+                                    server,
+                                    CommonFunction.getGenshinDS()
+                                )
+                            }
 
-                            val secondDeferred = async { refreshHonkaiSrRogue(
-                                account,
-                                server,
-                                CommonFunction.getGenshinDS()
-                            ) }
+                            val secondDeferred = async {
+                                refreshHonkaiSrRogue(
+                                    account,
+                                    server,
+                                    CommonFunction.getGenshinDS()
+                                )
+                            }
 
                             awaitAll(firstDeferred, secondDeferred)
                             updateData(account, honkaiSrData)
