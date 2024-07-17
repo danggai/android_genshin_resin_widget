@@ -116,31 +116,30 @@ class MainViewModel @Inject constructor(
     fun onClickSave() {
         log.e()
 
-        val customNotiResin: Int = try {
-            if (sfCustomNotiResin.value.isEmpty()
-                || sfCustomNotiResin.value.toInt() < 0) 0
-            else if (sfCustomNotiResin.value.toInt() > Constant.MAX_RESIN) {
-                sfCustomNotiResin.value = Constant.MAX_RESIN.toString()
-                Constant.MAX_RESIN
-            } else sfCustomNotiResin.value.toInt()
-        } catch (e:java.lang.Exception) {
-            0
+        /* 커스텀 알림에 사용 할 스테미나를 Int화 및 핸들링하는 함수 */
+        fun stringToIntCustomStamina(targetStringFlow: MutableStateFlow<String>, maxStamina: Int): Int {
+            return try {
+                val stamina = targetStringFlow.value.toIntOrNull()
+
+                when {
+                    stamina == null || stamina < 0 -> 0
+                    stamina > maxStamina -> {
+                        targetStringFlow.value = maxStamina.toString()
+                        maxStamina
+                    }
+                    else -> stamina
+                }
+            } catch (e: Exception) { 0 }
         }
 
-        val customNotiTrailPower: Int = try {
-            if (sfCustomNotiTrailPower.value.isEmpty()
-                || sfCustomNotiTrailPower.value.toInt() < 0) 0
-            else if (sfCustomNotiTrailPower.value.toInt() > Constant.MAX_TRAILBLAZE_POWER) {
-                sfCustomNotiTrailPower.value = Constant.MAX_TRAILBLAZE_POWER.toString()
-                Constant.MAX_TRAILBLAZE_POWER
-            } else sfCustomNotiTrailPower.value.toInt()
-        } catch (e:java.lang.Exception) {
-            0
-        }
+        val customNotiResin: Int = stringToIntCustomStamina(sfCustomNotiResin, Constant.MAX_RESIN)
+        val customNotiTrailPower: Int = stringToIntCustomStamina(sfCustomNotiTrailPower, Constant.MAX_TRAILBLAZE_POWER)
+        val customNotiBattery: Int = stringToIntCustomStamina(sfCustomNotiBattery, Constant.MAX_BATTERY)
 
         preference.setDailyNoteSettings(
             DailyNoteSettings(
                 sfAutoRefreshPeriod.value,
+
                 sfEnableNotiEach40Resin.value,
                 sfEnableNoti140Resin.value,
                 sfEnableNotiCustomResin.value,
