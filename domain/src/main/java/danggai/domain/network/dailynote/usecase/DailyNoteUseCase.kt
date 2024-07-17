@@ -4,6 +4,7 @@ import danggai.domain.core.ApiResult
 import danggai.domain.network.dailynote.entity.GenshinDailyNote
 import danggai.domain.network.dailynote.entity.HonkaiSrDailyNote
 import danggai.domain.network.dailynote.entity.HonkaiSrRogue
+import danggai.domain.network.dailynote.entity.ZZZDailyNote
 import danggai.domain.network.dailynote.repository.DailyNoteRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -19,7 +20,7 @@ class DailyNoteUseCase @Inject constructor(
         onStart: () -> Unit,
         onComplete: () -> Unit
     ): Flow<ApiResult<GenshinDailyNote>> =
-        dailyNoteRepository.dailyNote(
+        dailyNoteRepository.dailyNoteGenshin(
             uid = uid,
             server = server,
             cookie = cookie,
@@ -58,6 +59,21 @@ class DailyNoteUseCase @Inject constructor(
             server = server,
             cookie = cookie,
             ds = ds,
+            onStart = onStart,
+            onComplete = onComplete
+        )
+
+    suspend fun ZZZ(
+        uid: String,
+        server: String,
+        cookie: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit
+    ): Flow<ApiResult<ZZZDailyNote>> =
+        dailyNoteRepository.dailyNoteZZZ(
+            uid = uid,
+            server = server,
+            cookie = cookie,
             onStart = onStart,
             onComplete = onComplete
         )

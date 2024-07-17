@@ -4,11 +4,14 @@ object Constant {
 
     const val MAX_RESIN = 200
     const val MAX_TRAILBLAZE_POWER = 240
+    const val MAX_BATTERY = 240
 
     /* URL */
 
     const val OS_TAKUMI_URL = "https://bbs-api-os.hoyoverse.com"
     const val CN_TAKUMI_URL = "https://api-takumi.hoyoverse.com"
+
+    const val SG_ACT_NAP_API = "https://sg-act-nap-api.hoyolab.com"
 
     const val OS_SALT = "6cqshh5dhw73bzxn20oexa9k516chk7s"
     const val CN_SALT = "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs"
@@ -30,6 +33,7 @@ object Constant {
     const val HOW_CAN_I_GET_COOKIE_URL =
         "https://github.com/danggai/android_genshin_resin_widget/blob/master/how_to_get_hoyolab_cookie.md"
 
+    /* 원신 서버 */
     const val SERVER_CN_GF_01 = "cn_gf01"
     const val SERVER_CN_QD_01 = "cn_qd01"
     const val SERVER_OS_USA = "os_usa"
@@ -37,10 +41,18 @@ object Constant {
     const val SERVER_OS_ASIA = "os_asia"
     const val SERVER_OS_CHT = "os_cht"
 
+    /* 스타레일 서버 */
     const val SERVER_PO_USA = "prod_official_usa"
     const val SERVER_PO_EURO = "prod_official_eur"
     const val SERVER_PO_ASIA = "prod_official_asia"
     const val SERVER_PO_CHT = "prod_official_cht"
+
+    /* ZZZ 서버 */
+    // TODO("USA, EURO, CHT 코드 알아내기")
+    const val SERVER_GF_USA = ""
+    const val SERVER_GF_EURO = ""
+    const val SERVER_GF_ASIA = "prod_gf_jp"
+    const val SERVER_GF_CHT = ""
 
     const val LANG_KO_KR = "ko-kr"
     const val LANG_EN_US = "en-us"
@@ -77,6 +89,20 @@ object Constant {
     const val RETCODE_ERROR_CLAIMED_DAILY_REWARD = "-5003"
     const val RETCODE_ERROR_CHECKED_INTO_HOYOLAB = "2001"
     const val RETCODE_ERROR_TOO_FAST = "-1004"
+
+
+    /*  ZZZ 비디오 가게 경영 / Video Store Management */
+    enum class ZZZSaleStatus(val value: String) {
+        NO("SaleStateNo"),                  // 영업 대기 중 / Revenue Available
+        DOING("SaleStateDoing"),            // 영업 중 / Currently Open
+        DONE("SaleStateDone")               // 결산 대기 / Revenue Available
+    }
+
+    /* ZZZ 복권 | Scratch Card */
+    enum class ZZZCardSign(val value: String) {
+        NO("CardSignNo"),                   // 미완료 / Incomplete
+        DONE("CardSignDone")                // 완료 / Complete
+    }
 
 
     /* API NAME */
@@ -133,6 +159,7 @@ object Constant {
     const val PREF_SELECTED_CHARACTER_ID_LIST = "PREF_SELECTED_CHARACTER_ID_LIST"
     const val PREF_DAILY_NOTE_DATA = "PREF_DAILY_NOTE_DATA"
     const val PREF_HONKAI_SR_DAILY_NOTE_DATA = "PREF_HONKAI_SR_DAILY_NOTE_DATA"
+    const val PREF_ZZZ_DAILY_NOTE_DATA = "PREF_ZZZ_DAILY_NOTE_DATA"
 
     /*daily/weekly noti date*/
     const val PREF_RECENT_DAILY_COMMISSION_NOTI_DATE = "PREF_RECENT_DAILY_COMMISSION_NOTI_DATE"
@@ -312,6 +339,11 @@ object Constant {
         TRAIL_POWER_230,
         TRAIL_POWER_CUSTOM,
         HONKAI_SR_EXPEDITION_DONE,
+
+        BATTERY_EACH_40,
+        BATTERY_EACH_60,
+        BATTERY_230,
+        BATTERY_CUSTOM,
     }
 
 

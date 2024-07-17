@@ -15,6 +15,7 @@ import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
+import danggai.domain.network.dailynote.entity.ZZZDailyNoteData
 import danggai.domain.network.dailynote.usecase.DailyNoteUseCase
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
@@ -123,7 +124,6 @@ class RefreshWorker @AssistedInject constructor(
         }.await()
     }
 
-
     var honkaiSrData = HonkaiSrDataLocal.EMPTY
 
     private suspend fun refreshHonkaiSrDailyNote(
@@ -149,15 +149,20 @@ class RefreshWorker @AssistedInject constructor(
                                 log.e()
                                 honkaiSrData = honkaiSrData.copy(
                                     accepted_epedition_num = it.data.data.accepted_epedition_num,
-                                    current_stamina = it.data.data.current_stamina,
+                                    total_expedition_num = it.data.data.total_expedition_num,
                                     expeditions = it.data.data.expeditions,
+                                    current_stamina = it.data.data.current_stamina,
                                     max_stamina = it.data.data.max_stamina,
                                     stamina_recover_time = it.data.data.stamina_recover_time,
-                                    total_expedition_num = it.data.data.total_expedition_num,
+                                    current_reserve_stamina = it.data.data.current_reserve_stamina,
+                                    is_reserve_stamina_full = it.data.data.is_reserve_stamina_full,
                                     current_train_score = it.data.data.current_train_score,
                                     max_train_score = it.data.data.max_train_score,
                                     current_rogue_score = it.data.data.current_rogue_score,
                                     max_rogue_score = it.data.data.max_rogue_score,
+                                    rogue_tourn_weekly_cur = it.data.data.rogue_tourn_weekly_cur,
+                                    rogue_tourn_weekly_max = it.data.data.rogue_tourn_weekly_max,
+                                    rogue_tourn_weekly_unlocked = it.data.data.rogue_tourn_weekly_unlocked,
                                     weekly_cocoon_cnt = it.data.data.weekly_cocoon_cnt,
                                     weekly_cocoon_limit = it.data.data.weekly_cocoon_limit,
                                 )
@@ -209,6 +214,49 @@ class RefreshWorker @AssistedInject constructor(
                                 honkaiSrData = honkaiSrData.copy(
                                     rogue_clear_count = if (currentRecord.has_data) currentRecord.basic.finish_cnt else 0
                                 )
+                            }
+                            else -> {
+                                log.e()
+                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, it.data.retcode.toString())
+                            }
+                        }
+                    }
+                    is ApiResult.Failure -> {
+                        log.e(it.message)
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, it.code, null)
+                        CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
+                    }
+                    is ApiResult.Error,
+                    is ApiResult.Null -> {
+                        log.e()
+                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_DAILY_NOTE, null, null)
+                        CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
+                    }
+                }
+            }
+        }.await()
+    }
+
+    private suspend fun refreshZZZDailyNote(
+        account: Account,
+        server: String,
+    ) {
+        return CoroutineScope(Dispatchers.IO).async {
+            dailyNote.ZZZ(
+                account.zzz_uid,
+                server,
+                account.cookie,
+                onStart = { log.e() },
+                onComplete = { log.e() }
+            ).collect {
+                log.e(it)
+
+                when (it) {
+                    is ApiResult.Success -> {
+                        when (it.data.retcode.toString()) {
+                            Constant.RETCODE_SUCCESS -> {
+                                log.e()
+                                updateData(account, it.data.data)
                             }
                             else -> {
                                 log.e()
@@ -390,6 +438,65 @@ class RefreshWorker @AssistedInject constructor(
         preference.setHonkaiSrDailyNote(account.honkai_sr_uid, dailyNote)
     }
 
+    private fun updateData(account: Account, dailyNote: ZZZDailyNoteData) {
+        log.e()
+
+        val prefDailyNote = preference.getZZZDailyNote(account.zzz_uid)
+        val settings = preference.getDailyNoteSettings()
+
+        val prefBattery: Int = prefDailyNote.energy.progress.current
+        val currentBattery: Int = dailyNote.energy.progress.current
+
+        val maxEnergy = dailyNote.energy.progress.max
+
+        // each 40 할까말까 흠
+        if (settings.notiEach60Battery) {
+            val gap = 60
+            val batteryLevels = (gap until maxEnergy + gap step gap).toList().reversed()
+
+            for (batteryLevel in batteryLevels) {
+                if (batteryLevel in (prefBattery + 1)..currentBattery) {
+                    log.e()
+                    sendNoti(account, Constant.NotiType.BATTERY_EACH_60, batteryLevel)
+                    break
+                }
+            }
+        }
+
+        if (settings.noti230Battery) {
+            if (maxEnergy - 20 in (prefBattery + 1)..currentBattery){
+                log.e()
+                sendNoti(account, Constant.NotiType.BATTERY_230, maxEnergy - 20)
+            }
+        }
+
+        if (settings.notiCustomBattery) {
+            val targetBattery: Int = settings.customBattery.takeUnless { it == 0 } ?: maxEnergy
+            if (targetBattery in (prefBattery + 1)..currentBattery){
+                log.e()
+                sendNoti(account, Constant.NotiType.BATTERY_CUSTOM, targetBattery)
+            }
+        }
+
+        // 일퀘알림
+//        val calendar = Calendar.getInstance()
+//        val yymmdd = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE).format(Date())
+
+//        if (settings.notiDailyYet &&
+//            yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.zzz_uid) &&
+//            calendar.get(Calendar.HOUR) >= settings.notiDailyYetTime &&
+//            !dailyNote.is_extra_task_reward_received
+//        ) {
+//            log.e()
+//            preference.setStringRecentDailyCommissionNotiDate(account.zzz_uid, yymmdd)
+//            sendNoti(account, Constant.NotiType.DAILY_COMMISSION_YET, 0)
+//        }
+
+        preference.setStringRecentSyncTime(account.zzz_uid, TimeFunction.getSyncDateTimeString())
+
+        preference.setZZZDailyNote(account.zzz_uid, dailyNote)
+    }
+
     private fun sendNoti(account: Account, notiType: Constant.NotiType, target: Int) {
         log.e()
 
@@ -402,10 +509,16 @@ class RefreshWorker @AssistedInject constructor(
             Constant.NotiType.PARAMETRIC_TRANSFORMER_REACHED -> applicationContext.getString(R.string.push_param_trans_title)
             Constant.NotiType.DAILY_COMMISSION_YET -> applicationContext.getString(R.string.push_daily_commission_title)
             Constant.NotiType.WEEKLY_BOSS_YET -> applicationContext.getString(R.string.push_weekly_boss_title)
+
             Constant.NotiType.TRAIL_POWER_EACH_40,
             Constant.NotiType.TRAIL_POWER_230,
             Constant.NotiType.TRAIL_POWER_CUSTOM, -> applicationContext.getString(R.string.push_trail_power_noti_title)
             Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> applicationContext.getString(R.string.push_assignment_title)
+
+            Constant.NotiType.BATTERY_EACH_40,
+            Constant.NotiType.BATTERY_EACH_60,
+            Constant.NotiType.BATTERY_230,
+            Constant.NotiType.BATTERY_CUSTOM, -> applicationContext.getString(R.string.push_battery_noti_title)
             else -> ""
         }
 
@@ -433,6 +546,15 @@ class RefreshWorker @AssistedInject constructor(
             Constant.NotiType.TRAIL_POWER_230 -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_over_230), account.honkai_sr_nickname, target)
             Constant.NotiType.TRAIL_POWER_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_trail_power_noti_custom), account.honkai_sr_nickname, target)
             Constant.NotiType.HONKAI_SR_EXPEDITION_DONE -> String.format(applicationContext.getString(R.string.push_msg_assignment_done), account.honkai_sr_nickname)
+
+            Constant.NotiType.BATTERY_EACH_40,
+            Constant.NotiType.BATTERY_EACH_60 ->
+                when (target) {
+                    Constant.MAX_BATTERY -> String.format(applicationContext.getString(R.string.push_msg_battery_noti_over_240), account.zzz_nickname, target)
+                    else -> String.format(applicationContext.getString(R.string.push_msg_battery_noti_over_40), account.zzz_nickname, target)
+                }
+            Constant.NotiType.BATTERY_230 -> String.format(applicationContext.getString(R.string.push_msg_battery_noti_over_230), account.zzz_nickname, target)
+            Constant.NotiType.BATTERY_CUSTOM -> String.format(applicationContext.getString(R.string.push_msg_battery_noti_custom), account.zzz_nickname, target)
             else -> ""
         }
 
@@ -492,6 +614,18 @@ class RefreshWorker @AssistedInject constructor(
 
                             awaitAll(firstDeferred, secondDeferred)
                             updateData(account, honkaiSrData)
+                        }
+
+                        if (account.zzz_uid.isNotEmpty()) {
+                            val server = when (account.server) {
+                                Constant.PREF_SERVER_ASIA -> Constant.SERVER_GF_ASIA
+                                Constant.PREF_SERVER_EUROPE -> Constant.SERVER_GF_EURO
+                                Constant.PREF_SERVER_USA -> Constant.SERVER_GF_USA
+                                Constant.PREF_SERVER_CHT -> Constant.SERVER_GF_CHT
+                                else -> Constant.SERVER_PO_ASIA
+                            }
+
+                            refreshZZZDailyNote(account, server)
                         }
                     }
                 }

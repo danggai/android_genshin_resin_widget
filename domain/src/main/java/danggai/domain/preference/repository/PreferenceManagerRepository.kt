@@ -7,6 +7,7 @@ import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
+import danggai.domain.network.dailynote.entity.ZZZDailyNoteData
 
 
 interface PreferenceManagerRepository {
@@ -47,6 +48,9 @@ interface PreferenceManagerRepository {
 
     fun getHonkaiSrDailyNote(uid: String): HonkaiSrDataLocal
     fun setHonkaiSrDailyNote(uid: String, value: HonkaiSrDataLocal)
+
+    fun getZZZDailyNote(uid: String): ZZZDailyNoteData
+    fun setZZZDailyNote(uid: String, value: ZZZDailyNoteData)
 
     fun getStringRecentSyncTime(uid: String): String
     fun setStringRecentSyncTime(uid: String, value: String)

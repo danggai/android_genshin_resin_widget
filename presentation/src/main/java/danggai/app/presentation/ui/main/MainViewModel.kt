@@ -58,6 +58,12 @@ class MainViewModel @Inject constructor(
     val sfCustomNotiTrailPower = MutableStateFlow("")
     val sfEnableNotiHonkaiSrExpeditionDone = MutableStateFlow(false)
 
+    val sfEnableNotiEach40Battery = MutableStateFlow(false)
+    val sfEnableNotiEach60Battery = MutableStateFlow(false)
+    val sfEnableNoti230Battery = MutableStateFlow(false)
+    val sfEnableNotiCustomBattery = MutableStateFlow(false)
+    val sfCustomNotiBattery = MutableStateFlow("")
+
     val sfAccountListRefreshSwitch = MutableStateFlow(false)
 
     val sfDeleteAccount = MutableSharedFlow<Account>()
@@ -84,6 +90,12 @@ class MainViewModel @Inject constructor(
             sfEnableNotiCustomTrailPower.value = it.notiCustomTrailPower
             sfCustomNotiTrailPower.value = if (it.customTrailPower != 0) it.customTrailPower.toString() else ""
             sfEnableNotiHonkaiSrExpeditionDone.value = it.notiExpeditionHonkaiSr
+
+            sfEnableNotiEach40Battery.value = it.notiEach40Battery
+            sfEnableNotiEach60Battery.value = it.notiEach60Battery
+            sfEnableNoti230Battery.value = it.noti230Battery
+            sfEnableNotiCustomBattery.value = it.notiCustomBattery
+            sfCustomNotiBattery.value = if (it.customBattery != 0) it.customBattery.toString() else ""
         }
 
         preference.getCheckInSettings().let {
@@ -141,11 +153,18 @@ class MainViewModel @Inject constructor(
                 sfEnableNotiWeeklyYet.value,
                 sfNotiWeeklyYetDay.value,
                 sfNotiWeeklyYetTime.value,
+
                 sfEnableNotiEach40TrailPower.value,
                 sfEnableNoti230TrailPower.value,
                 sfEnableNotiCustomTrailPower.value,
                 customNotiTrailPower,
                 sfEnableNotiHonkaiSrExpeditionDone.value,
+
+                sfEnableNotiEach40Battery.value,
+                sfEnableNotiEach60Battery.value,
+                sfEnableNoti230Battery.value,
+                sfEnableNotiCustomBattery.value,
+                customNotiBattery,
             )
         )
 

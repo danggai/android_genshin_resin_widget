@@ -67,6 +67,11 @@
     <string name="btn_each_40_trailblaze_power">Each 40 Trailblaze Power</string>
     <string name="btn_230_trailblaze_power">230 Trailblaze Power</string>
 
+    <string name="battery">Battery</string>
+    <string name="btn_each_40_battery">Each 40 Battery</string>
+    <string name="btn_each_60_battery">Each 60 Battery</string>
+    <string name="btn_230_battery">230 Battery</string>
+
     <string name="btn_remain_time">Remaining time</string>
     <string name="btn_full_charge_time">When fully charge</string>
     <string name="btn_disable">Disable</string>
@@ -201,12 +206,19 @@
     <string name="push_msg_resin_noti_over_180">%s! Your resin is over %d!</string>
     <string name="push_msg_resin_noti_custom">%s! Your resin is over %d!</string>
 
-    <string name="push_trail_power_noti_title">Trainblaze Power Notification</string>
-    <string name="push_trail_power_noti_description">This is a notification sent to inform trailblazers of each trainblaze power!</string>
+    <string name="push_trail_power_noti_title">Trailblaze Power Notification</string>
+    <string name="push_trail_power_noti_description">This is a notification sent to inform trailblazers of each trailblaze power!</string>
     <string name="push_msg_trail_power_noti_over_40">Hello, %s! Your Trainblaze Power is over %d!</string>
     <string name="push_msg_trail_power_noti_over_230">Hello, %s! Your Trainblaze Power is over %d!</string>
     <string name="push_msg_trail_power_noti_over_240">Hello, %s! Your Trainblaze Power is over %d!</string>
     <string name="push_msg_trail_power_noti_custom">Hello, %s! Your Trainblaze Power is over %d!</string>
+
+    <string name="push_battery_noti_title">Battery Notification</string>
+    <string name="push_battery_noti_description">This is a notification sent to inform proxies of each battery!</string>
+    <string name="push_msg_battery_noti_over_40">%s! Your battery is over %d!</string>
+    <string name="push_msg_battery_noti_over_230">%s! Your battery is over %d!</string>
+    <string name="push_msg_battery_noti_over_240">%s! Your battery is over %d!</string>
+    <string name="push_msg_battery_noti_custom">%s! Your battery is over %d!</string>
 
     <string name="push_genshin_checkin_title">Genshin Impact Check-in Notification</string>
     <string name="push_genshin_checkin_description">This is a notification to inform travelers of the daily check-in result of Genshin Impact!</string>
@@ -358,22 +370,45 @@
     <string name="widget_ui_no_talent_ingredient">Can\'t get Talent Level-Up Materials that selected character needs today.</string>
     <string name="widget_ui_no_selected_characters">Select target characters at Widget Design > Characters.</string>
 
+
+    <!--    Genshin Widget -->
     <string name="daily_commissions">Daily Commissions</string>
     <string name="enemies_of_note">Enemies Of Note</string>
-    <string name="until_expeditions_done">Until Expeditions Done</string>
-    <string name="expeditions_done_at">Expeditions Done At</string>
     <string name="parametric_transformer">Parametric Transformer</string>
     <string name="realm_currency">Realm Currency</string>
-    <string name="expedition_time">Expedition Time</string>
 
+    <string name="expedition_time">Expedition Time</string>
+    <string name="until_expeditions_done">Until Expeditions Done</string>
+    <string name="expeditions_done_at">Expeditions Done At</string>
+
+
+    <!--    Star Rail Widget -->
     <string name="daily_training">Daily Training</string>
     <string name="echo_of_war">Echo of War</string>
+    <string name="reserve_trailblaze_power">Reserved Stamina</string>
     <string name="simulated_universe">Simulated Universe</string>
+    <string name="divergent_universe">Divergent Universe</string>
     <string name="clear_count">Clear Count</string>
-    <string name="until_assignment_done">Until Assignment Done</string>
+
     <string name="assignment_time">Assignment Time</string>
+    <string name="until_assignment_done">Until Assignment Done</string>
     <string name="assignment_done_at">Assignment Done At</string>
 
+
+    <!--    ZZZ Widget -->
+    <string name="engagement_today">Engagement Today</string>
+
+    <string name="video_store_management">Video Store Management</string>
+    <string name="video_store_management_no">Waiting to Open</string>
+    <string name="video_store_management_doing">Currently Open</string>
+    <string name="video_store_management_done">Revenue Available</string>
+
+    <string name="scratch_card">Scratch Card</string>
+    <string name="scratch_card_done">Complete</string>
+    <string name="scratch_card_no">Incomplete</string>
+
+
+    <!--    Widget 공통 -->
     <string name="until_fully_replenished">Until Replenished</string>
     <string name="estimated_replenishment_time">ETC</string>
     <string name="until_all_completed">Until All Completed</string>

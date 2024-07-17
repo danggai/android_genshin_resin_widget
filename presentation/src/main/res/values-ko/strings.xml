@@ -46,6 +46,11 @@
     <string name="btn_each_40_trailblaze_power">40개척력 마다</string>
     <string name="btn_230_trailblaze_power">230개척력</string>
 
+    <string name="battery">배터리</string>
+    <string name="btn_each_40_battery">40배터리 마다</string>
+    <string name="btn_each_60_battery">60배터리 마다</string>
+    <string name="btn_230_battery">230배터리</string>
+
     <string name="btn_remain_time">남은 시간</string>
     <string name="btn_full_charge_time">완충 시각</string>
     <string name="btn_disable">표시 안 함</string>
@@ -182,6 +187,13 @@
     <string name="push_msg_trail_power_noti_over_230">안녕, %s! 현재 개척력이 %d을 넘어섰어! 앞으로 한 시간이면 가득 찰거야!</string>
     <string name="push_msg_trail_power_noti_over_240">%s! 현재 개척력이 %d을 넘어섰어! 빨리 사용해야 해!</string>
     <string name="push_msg_trail_power_noti_custom">안녕, %s! 현재 개척력이 %d을 넘어섰어! 지금 불러달라고 했었지?</string>
+
+    <string name="push_battery_noti_title">배터리 알림</string>
+    <string name="push_battery_noti_description">일정 배터리마다 로프꾼에게 알려주기 위해 발송하는 알림이야!</string>
+    <string name="push_msg_battery_noti_over_40">%s! 현재 배터리가 %d을 넘어섰어!</string>
+    <string name="push_msg_battery_noti_over_230">%s! 현재 배터리가 %d을 넘어섰어! 앞으로 한 시간이면 가득 찰거야!</string>
+    <string name="push_msg_battery_noti_over_240">%s! 현재 배터리가 %d을 넘어섰어! 빨리 사용해야 해!</string>
+    <string name="push_msg_battery_noti_custom">%s! 현재 배터리가 %d을 넘어섰어! 지금 불러달라고 했었지?</string>
 
     <string name="push_genshin_checkin_title">원신 출석 알림</string>
     <string name="push_genshin_checkin_description">원신 출석 결과를 여행자에게 알려주기 위해 발송하는 알림이야!</string>
@@ -334,22 +346,45 @@
     <string name="widget_ui_no_talent_ingredient">오늘은 선택 된 캐릭터가 필요한 특성 소재를 얻을 수 없습니다.</string>
     <string name="widget_ui_no_selected_characters">Widget Design > Characters 에서 대상 캐릭터를 지정해주세요.</string>
 
+
+    <!--    원신 위젯 -->
     <string name="daily_commissions">남은 일일 의뢰</string>
     <string name="enemies_of_note">주간 보스 할인</string>
-    <string name="until_expeditions_done">모든 탐험 완료까지</string>
-    <string name="expeditions_done_at">모든 탐사 완료 시각</string>
     <string name="parametric_transformer">매개변수 변환기</string>
     <string name="realm_currency">선계 주화</string>
-    <string name="expedition_time">탐험 시간</string>
 
+    <string name="expedition_time">탐험 시간</string>
+    <string name="until_expeditions_done">모든 탐험 완료까지</string>
+    <string name="expeditions_done_at">모든 탐사 완료 시각</string>
+
+
+    <!--    스타레일 위젯 -->
     <string name="daily_training">일일 훈련</string>
     <string name="echo_of_war">전쟁의 여운</string>
+    <string name="reserve_trailblaze_power">예비 개척력</string>
     <string name="simulated_universe">시뮬레이션 우주</string>
+    <string name="divergent_universe">차분화 우주</string>
     <string name="clear_count">완료 수</string>
-    <string name="until_assignment_done">모든 의뢰 완료까지</string>
+
     <string name="assignment_time">의뢰 시간</string>
+    <string name="until_assignment_done">모든 의뢰 완료까지</string>
     <string name="assignment_done_at">모든 의뢰 완료 시각</string>
 
+
+    <!--    ZZZ 위젯 -->
+    <string name="engagement_today">금일 활약도</string>
+
+    <string name="video_store_management">비디오 가게 경영</string>
+    <string name="video_store_management_no">영업 대기 중</string>
+    <string name="video_store_management_doing">영업 중</string>
+    <string name="video_store_management_done">결산 대기</string>
+
+    <string name="scratch_card">복권</string>
+    <string name="scratch_card_done">완료</string>
+    <string name="scratch_card_no">미완료</string>
+
+
+    <!--    위젯 공통 -->
     <string name="until_fully_replenished">전부 충전까지</string>
     <string name="estimated_replenishment_time">완충 예정 시각</string>
     <string name="until_all_completed">모두 완료까지</string>

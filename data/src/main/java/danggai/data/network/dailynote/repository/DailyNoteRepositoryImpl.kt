@@ -8,6 +8,7 @@ import danggai.domain.core.ApiResult
 import danggai.domain.network.dailynote.entity.GenshinDailyNote
 import danggai.domain.network.dailynote.entity.HonkaiSrDailyNote
 import danggai.domain.network.dailynote.entity.HonkaiSrRogue
+import danggai.domain.network.dailynote.entity.ZZZDailyNote
 import danggai.domain.network.dailynote.repository.DailyNoteRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
@@ -20,7 +21,7 @@ class DailyNoteRepositoryImpl @Inject constructor(
     private val dailyNoteApi: DailyNoteApi,
     private val ioDispatcher: CoroutineDispatcher
 ) : DailyNoteRepository {
-    override suspend fun dailyNote(
+    override suspend fun dailyNoteGenshin(
         uid: String,
         server: String,
         cookie: String,
@@ -28,7 +29,7 @@ class DailyNoteRepositoryImpl @Inject constructor(
         onStart: () -> Unit,
         onComplete: () -> Unit
     ) = flow<ApiResult<GenshinDailyNote>> {
-        val response = dailyNoteApi.dailyNote(
+        val response = dailyNoteApi.dailyNoteGenshin(
             uid,
             server,
             cookie,
@@ -108,6 +109,38 @@ class DailyNoteRepositoryImpl @Inject constructor(
         response.suspendOnSuccess {
             emit(this.response.body()?.let {
                 ApiResult.Success<HonkaiSrRogue>(
+                    this.response.code(),
+                    it
+                )
+            } ?:ApiResult.Null() )
+        }.suspendOnError {
+            emit(ApiResult.Failure(
+                this.response.code(),
+                this.response.message()
+            ))
+        }.suspendOnException {
+            emit(ApiResult.Error(
+                this.exception
+            ))
+        }
+    }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+
+    override suspend fun dailyNoteZZZ(
+        uid: String,
+        server: String,
+        cookie: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit
+    ) = flow<ApiResult<ZZZDailyNote>> {
+        val response = dailyNoteApi.dailyNoteZZZ(
+            uid,
+            server,
+            cookie
+        )
+
+        response.suspendOnSuccess {
+            emit(this.response.body()?.let {
+                ApiResult.Success<ZZZDailyNote>(
                     this.response.code(),
                     it
                 )

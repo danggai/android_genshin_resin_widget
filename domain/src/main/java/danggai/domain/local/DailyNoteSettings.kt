@@ -24,6 +24,12 @@ data class DailyNoteSettings(
     val notiCustomTrailPower: Boolean,
     val customTrailPower: Int,
     val notiExpeditionHonkaiSr: Boolean,
+
+    val notiEach40Battery: Boolean,
+    val notiEach60Battery: Boolean,
+    val noti230Battery: Boolean,
+    val notiCustomBattery: Boolean,
+    val customBattery: Int,
 ) {
     companion object {
         val EMPTY = DailyNoteSettings (
@@ -46,6 +52,12 @@ data class DailyNoteSettings(
             notiCustomTrailPower = false,
             customTrailPower = 0,
             notiExpeditionHonkaiSr = false,
+
+            notiEach40Battery = false,
+            notiEach60Battery = false,
+            noti230Battery = false,
+            notiCustomBattery = false,
+            customBattery = 0,
         )
     }
 }

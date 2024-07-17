@@ -527,7 +527,7 @@
                                         style="@style/EditTextStyle"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:hint="@string/hint_nickname_honkai_sr"
+                                        android:hint="@string/hint_nickname_zzz"
                                         android:singleLine="true"
                                         android:text="@={vm.sfZZZNickname}"
                                         android:textColorHint="@color/gray"

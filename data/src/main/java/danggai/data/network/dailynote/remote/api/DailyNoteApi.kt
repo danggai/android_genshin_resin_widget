@@ -4,6 +4,8 @@ import com.skydoves.sandwich.ApiResponse
 import danggai.domain.network.dailynote.entity.GenshinDailyNote
 import danggai.domain.network.dailynote.entity.HonkaiSrDailyNote
 import danggai.domain.network.dailynote.entity.HonkaiSrRogue
+import danggai.domain.network.dailynote.entity.ZZZDailyNote
+import danggai.domain.util.Constant
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
@@ -20,7 +22,7 @@ interface DailyNoteApi {
         "x-rpc-language: ko-kr",
     )
     @GET("/game_record/genshin/api/dailyNote")
-    suspend fun dailyNote(
+    suspend fun dailyNoteGenshin(
         @Query("role_id") uid: String,
         @Query("server") server: String,
         @Header("Cookie") cookie: String,
@@ -66,4 +68,24 @@ interface DailyNoteApi {
         @Header("Cookie") cookie: String,
         @Header("DS") ds: String
     ): ApiResponse<HonkaiSrRogue>
+
+    @Headers(
+        "Accept: */*",
+        "Accept-Encoding: gzip, deflate, br",
+        "Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Content-Type: application/json",
+        "Origin: https://act.hoyolab.com",
+        "Referer: https://act.hoyolab.com/",
+        "Sec-Ch-Ua-Mobile: ?1",
+        "Sec-Ch-Ua-Platform: \"Android\"",
+        "x-rpc-client_type: 4",
+        "x-rpc-app_version: 1.5.0",
+        "x-rpc-language: ko-kr",
+    )
+    @GET(Constant.SG_ACT_NAP_API + "/event/game_record_zzz/api/zzz/note")
+    suspend fun dailyNoteZZZ(
+        @Query("role_id") uid: String,
+        @Query("server") server: String,
+        @Header("Cookie") cookie: String,
+    ): ApiResponse<ZZZDailyNote>
 }
