@@ -285,64 +285,6 @@
     <string name="traveler">Traveler</string>
     <string name="proxy">Proxy</string>
 
-    <!-- Character Name -->
-    <string name="kate">Kate</string>
-    <string name="ayaka">Kamisato Ayaka</string>
-    <string name="jean">Jean</string>
-    <string name="aither">Aither</string>
-    <string name="lisa">Lisa</string>
-    <string name="lumine">Lumine</string>
-    <string name="barbara">Barbara</string>
-    <string name="keaya">Keaya</string>
-    <string name="diluc">Diluc</string>
-    <string name="razor">Razor</string>
-    <string name="amber">Amber</string>
-    <string name="venti">Venti</string>
-    <string name="xiangling">Xiangling</string>
-    <string name="beidou">Beidou</string>
-    <string name="xingqiu">Xingqiu</string>
-    <string name="xiao">Xiao</string>
-    <string name="ningguang">Ningguang</string>
-    <string name="klee">Klee</string>
-    <string name="zhongli">Zhongli</string>
-    <string name="fischl">Fischl</string>
-    <string name="bennett">Bennett</string>
-    <string name="childe">Childe</string>
-    <string name="noelle">Noelle</string>
-    <string name="qiqi">Qiqi</string>
-    <string name="chongyun">Chongyun</string>
-    <string name="ganyu">Ganyu</string>
-    <string name="albedo">Albedo</string>
-    <string name="diona">Diona</string>
-    <string name="mona">Mona</string>
-    <string name="keqing">Keqing</string>
-    <string name="sucrose">Sucrose</string>
-    <string name="xinyan">Xinyan</string>
-    <string name="rosaria">Rosaria</string>
-    <string name="hutao">Hu tao</string>
-    <string name="kazuha">Kaedehara Kazuha</string>
-    <string name="yanfei">Yanfei</string>
-    <string name="yoimiya">Yoimiya</string>
-    <string name="thoma">Thoma</string>
-    <string name="eula">Eula</string>
-    <string name="raiden">Raiden Shogun</string>
-    <string name="sayu">Sayu</string>
-    <string name="kokomi">Sangonomiya Kokomi</string>
-    <string name="gorou">Gorou</string>
-    <string name="sara">Kujou Sara</string>
-    <string name="itto">Arataki Itto</string>
-    <string name="yae">Yae Miko</string>
-    <string name="yeran">Yeran</string>
-    <string name="aloy">Aloy</string>
-    <string name="shenhe">Shenhe</string>
-    <string name="yunjin">Yun Jin</string>
-    <string name="kuki">Kuki Shinobu</string>
-    <string name="ayato">Kamisato Ayato</string>
-    <string name="collei">Collei</string>
-    <string name="dori">Dori</string>
-    <string name="tighnari">Tighnari</string>
-
-
     <!-- Widget UI -->
     <string name="widget_label_genshin_detail">Genshin Detail Widget</string>
     <string name="widget_label_resin_resizable">Resizable Resin Widget</string>

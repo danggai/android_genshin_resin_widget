@@ -261,64 +261,6 @@
     <string name="traveler">여행자</string>
     <string name="proxy">로프꾼</string>
 
-    <!-- Character Name -->
-    <string name="kate">케이트</string>
-    <string name="ayaka">카미사토 아야카</string>
-    <string name="jean">진</string>
-    <string name="aither">아이테르</string>
-    <string name="lisa">리사</string>
-    <string name="lumine">루미네</string>
-    <string name="barbara">바바라</string>
-    <string name="keaya">케이아</string>
-    <string name="diluc">다이루크</string>
-    <string name="razor">레이저</string>
-    <string name="amber">엠버</string>
-    <string name="venti">벤티</string>
-    <string name="xiangling">향릉</string>
-    <string name="beidou">북두</string>
-    <string name="xingqiu">행추</string>
-    <string name="xiao">소</string>
-    <string name="ningguang">응광</string>
-    <string name="klee">클레</string>
-    <string name="zhongli">종려</string>
-    <string name="fischl">피슬</string>
-    <string name="bennett">베넷</string>
-    <string name="childe">타르탈리아</string>
-    <string name="noelle">노엘</string>
-    <string name="qiqi">치치</string>
-    <string name="chongyun">중운</string>
-    <string name="ganyu">감우</string>
-    <string name="albedo">알베도</string>
-    <string name="diona">디오나</string>
-    <string name="mona">모나</string>
-    <string name="keqing">각청</string>
-    <string name="sucrose">설탕</string>
-    <string name="xinyan">신염</string>
-    <string name="rosaria">로자리아</string>
-    <string name="hutao">호두</string>
-    <string name="kazuha">카에데하라 카즈하</string>
-    <string name="yanfei">연비</string>
-    <string name="yoimiya">요이미야</string>
-    <string name="thoma">토마</string>
-    <string name="eula">유라</string>
-    <string name="raiden">라이덴 쇼군</string>
-    <string name="sayu">사유</string>
-    <string name="kokomi">산고노미야 코코미</string>
-    <string name="gorou">고로</string>
-    <string name="sara">쿠죠 사라</string>
-    <string name="itto">아라타키 이토</string>
-    <string name="yae">야에 미코</string>
-    <string name="yeran">야란</string>
-    <string name="aloy">에일로이</string>
-    <string name="shenhe">신학</string>
-    <string name="yunjin">운근</string>
-    <string name="kuki">쿠키 시노부</string>
-    <string name="ayato">카미사토 아야토</string>
-    <string name="collei">콜레이</string>
-    <string name="dori">도리</string>
-    <string name="tighnari">타이나리</string>
-
-
     <!-- Widget UI -->
     <string name="widget_label_genshin_detail">원신 상세 위젯</string>
     <string name="widget_label_resin_resizable">레진 위젯 (크기 조절 가능)</string>
