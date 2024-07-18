@@ -8,8 +8,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name="danggai.app.resinwidget.App"
@@ -26,8 +26,7 @@
             android:name="danggai.app.presentation.service.TemporaryNotificationListenerService"
             android:launchMode="singleTask"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
-            android:exported="false"
-            >
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
@@ -179,17 +178,38 @@
 
         </receiver>
 
-        <service android:name="danggai.app.presentation.service.TalentWidgetItemService"
+        <receiver
+            android:name="danggai.app.presentation.ui.widget.BatteryWidget"
+            android:label="@string/widget_label_battery"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="danggai.app.resinwidget.refresh.resin.ui" />
+                <action android:name="danggai.app.resinwidget.refresh.resin.data" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/battery_widget_info" />
+
+        </receiver>
+
+        <service
+            android:name="danggai.app.presentation.service.TalentWidgetItemService"
             android:enabled="true"
             android:exported="true"
-            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <activity
             android:name="danggai.app.presentation.ui.main.MainActivity"
             android:launchMode="singleTask"
             android:exported="true"
-            tools:ignore="Instantiatable"
-            >
+            tools:ignore="Instantiatable">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -198,26 +218,26 @@
 
         </activity>
 
-        <activity android:name="danggai.app.presentation.ui.cookie.CookieWebViewActivity"
+        <activity
+            android:name="danggai.app.presentation.ui.cookie.CookieWebViewActivity"
             android:exported="false"
-            tools:ignore="Instantiatable"
-            />
+            tools:ignore="Instantiatable" />
 
-        <activity android:name="danggai.app.presentation.ui.design.WidgetDesignActivity"
+        <activity
+            android:name="danggai.app.presentation.ui.design.WidgetDesignActivity"
             android:exported="false"
-            tools:ignore="Instantiatable"
-            />
+            tools:ignore="Instantiatable" />
 
-        <activity android:name="danggai.app.presentation.ui.newaccount.NewHoyolabAccountActivity"
+        <activity
+            android:name="danggai.app.presentation.ui.newaccount.NewHoyolabAccountActivity"
             android:launchMode="singleTask"
             android:exported="false"
-            tools:ignore="Instantiatable"
-            />
+            tools:ignore="Instantiatable" />
 
-        <activity android:name="danggai.app.presentation.ui.widget.config.WidgetConfigActivity"
+        <activity
+            android:name="danggai.app.presentation.ui.widget.config.WidgetConfigActivity"
             android:exported="false"
-            android:theme="@style/Theme.WidgetConfigure"
-            >
+            android:theme="@style/Theme.WidgetConfigure">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -227,8 +247,7 @@
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
-            tools:node="remove">
-        </provider>
+            tools:node="remove"></provider>
 
 
         <meta-data

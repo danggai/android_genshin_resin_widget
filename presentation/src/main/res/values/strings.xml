@@ -294,6 +294,7 @@
     <string name="widget_label_mini">Mini Widget</string>
     <string name="widget_label_trailblaze_power">Trailblaze Power Widget</string>
     <string name="widget_label_hksr_detail">Honkai: Starrail Detail Widget</string>
+    <string name="widget_label_battery">Battery Widget</string>
 
     <string name="widget_ui_simple_time">%dh %dm</string>
     <string name="widget_ui_remain_time">%dh %dm left</string>

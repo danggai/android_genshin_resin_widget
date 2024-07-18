@@ -7,8 +7,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import danggai.app.presentation.R
 import danggai.app.presentation.databinding.ItemWidgetConfigAccountBinding
-import danggai.app.presentation.ui.widget.MiniWidget
-import danggai.app.presentation.ui.widget.TrailPowerWidget
 import danggai.app.presentation.util.log
 import danggai.domain.db.account.entity.Account
 import kotlinx.coroutines.CoroutineScope
@@ -17,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class WidgetConfigAdapter(
     val vm: WidgetConfigViewModel
-): RecyclerView.Adapter<WidgetConfigAdapter.ItemViewHolder>() {
+) : RecyclerView.Adapter<WidgetConfigAdapter.ItemViewHolder>() {
 
     private var items: MutableList<Account> = arrayListOf()
 
@@ -27,16 +25,17 @@ class WidgetConfigAdapter(
         items.clear()
 
         val validAccountList =
-            if (vm.isHonkaiSrWidget())
-                _itemList.filter { it.honkai_sr_uid.isNotEmpty() }
-            else
-                _itemList.filter {!it.genshin_uid.contains("-")}
+            when {
+                vm.isHonkaiSrWidget() -> _itemList.filter { it.honkai_sr_uid.isNotEmpty() }
+                vm.isZZZWidget() -> _itemList.filter { it.zzz_uid.isNotEmpty() }
+                else -> _itemList.filter { !it.genshin_uid.contains("-") }
+            }
 
         if (validAccountList.isNotEmpty()) {
             items.addAll(validAccountList)
         } else {
             CoroutineScope(Dispatchers.IO).launch {
-                vm.sfNoAccount.emit (true)
+                vm.sfNoAccount.emit(true)
             }
         }
 

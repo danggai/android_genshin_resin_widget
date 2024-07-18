@@ -7,7 +7,8 @@ import danggai.domain.network.dailynote.entity.Transformer
 import danggai.domain.network.dailynote.entity.TransformerTime
 import danggai.domain.util.Constant
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
 object TimeFunction {
     fun resinSecondToTime(
@@ -107,6 +108,14 @@ object TimeFunction {
         second: String,
         timeType: Int = Constant.TIME_TYPE_MAX
     ): String {
+       return secondToRemainTime(context, second.toInt(), timeType)
+    }
+
+    fun secondToRemainTime(
+        context: Context,
+        second: Int,
+        timeType: Int = Constant.TIME_TYPE_MAX
+    ): String {
         var hour: Int
         var minute: Int
 
@@ -117,20 +126,29 @@ object TimeFunction {
         }
 
         try {
-            hour = second.toInt() / 3600
-            minute = (second.toInt() - hour * 3600) / 60
+            hour = second / 3600
+            minute = (second - hour * 3600) / 60
         } catch (e: Exception) {
             hour = 0
             minute = 0
         }
 
-        return if (second != "0") String.format(context.getString(R.string.widget_ui_remain_time), hour, minute) else timeOverString
+        return if (second != 0) String.format(context.getString(R.string.widget_ui_remain_time), hour, minute) else timeOverString
     }
 
     fun getSecondsLaterTime(
         context: Context,
         recentSyneTime: Date,
         second: String,
+        timeType: Int = Constant.TIME_TYPE_MAX
+    ): String {
+        return getSecondsLaterTime(context, recentSyneTime, second.toInt(), timeType)
+    }
+
+    fun getSecondsLaterTime(
+        context: Context,
+        recentSyneTime: Date,
+        second: Int,
         timeType: Int = Constant.TIME_TYPE_MAX
     ): String {
         val cal = Calendar.getInstance()
@@ -149,13 +167,13 @@ object TimeFunction {
         }
 
         try {
-            if (second.toInt() == 0)
+            if (second == 0)
                 return timeOverString
 
-            if (second.toInt() > 144000 || second.toInt() < -144000)
+            if (second > 144000 || second < -144000)
                 return String.format(format, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE))
 
-            cal.add(Calendar.SECOND, second.toInt())
+            cal.add(Calendar.SECOND, second)
 
             val minute = cal.get(Calendar.MINUTE)
 

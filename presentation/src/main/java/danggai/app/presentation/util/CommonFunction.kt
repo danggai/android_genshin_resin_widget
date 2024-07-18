@@ -25,12 +25,14 @@ import com.google.firebase.crashlytics.CustomKeysAndValues
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import danggai.app.presentation.BuildConfig
 import danggai.app.presentation.R
+import danggai.app.presentation.ui.widget.BatteryWidget
 import danggai.app.presentation.ui.widget.DetailWidget
 import danggai.app.presentation.ui.widget.HKSRDetailWidget
 import danggai.app.presentation.ui.widget.MiniWidget
 import danggai.app.presentation.ui.widget.ResinWidget
 import danggai.app.presentation.ui.widget.ResinWidgetResizable
 import danggai.app.presentation.ui.widget.TrailPowerWidget
+import danggai.app.presentation.ui.widget.ZZZDetailWidget
 import danggai.domain.db.account.entity.Account
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.NotiType
@@ -91,14 +93,14 @@ object CommonFunction {
     fun sendBroadcastAllWidgetRefreshUI(context: Context) {
         log.e()
 
-        context.apply {
-            sendBroadcastAppWidgetUpdate<ResinWidget>(context)
-            sendBroadcastAppWidgetUpdate<ResinWidgetResizable>(context)
-            sendBroadcastAppWidgetUpdate<DetailWidget>(context)
-            sendBroadcastAppWidgetUpdate<MiniWidget>(context)
-            sendBroadcastAppWidgetUpdate<TrailPowerWidget>(context)
-            sendBroadcastAppWidgetUpdate<HKSRDetailWidget>(context)
-        }
+        sendBroadcastAppWidgetUpdate<ResinWidget>(context)
+        sendBroadcastAppWidgetUpdate<ResinWidgetResizable>(context)
+        sendBroadcastAppWidgetUpdate<DetailWidget>(context)
+        sendBroadcastAppWidgetUpdate<MiniWidget>(context)
+        sendBroadcastAppWidgetUpdate<TrailPowerWidget>(context)
+        sendBroadcastAppWidgetUpdate<HKSRDetailWidget>(context)
+        sendBroadcastAppWidgetUpdate<BatteryWidget>(context)
+        sendBroadcastAppWidgetUpdate<ZZZDetailWidget>(context)
     }
 
     inline fun <reified T : AppWidgetProvider> sendBroadcastAppWidgetUpdate(context: Context) {

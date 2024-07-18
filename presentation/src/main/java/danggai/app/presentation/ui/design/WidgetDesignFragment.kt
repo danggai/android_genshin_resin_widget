@@ -21,7 +21,7 @@ import danggai.app.presentation.ui.design.charaters.WidgetDesignCharacterFragmen
 import danggai.app.presentation.ui.design.charaters.select.WidgetDesignSelectCharacterFragment
 import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
 import danggai.app.presentation.ui.design.resin.WidgetDesignResinFragment
-import danggai.app.presentation.ui.widget.*
+import danggai.app.presentation.ui.widget.TalentWidget
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.log
@@ -85,7 +85,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
                 val wallpaperDrawable = wallpaperManager.drawable
 
                 binding.vpMain.background = wallpaperDrawable
-            } catch (e:SecurityException) {
+            } catch (e: SecurityException) {
                 log.e()
                 makeToast(it, getString(R.string.msg_toast_storage_permission_denied))
             }
@@ -97,8 +97,13 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
             log.e()
 
             val permissionLauncher: ActivityResultLauncher<String> = registerForActivityResult(
-                ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-                PreferenceManager.setBoolean(context, Constant.PREF_CHECKED_STORAGE_PERMISSION, false)
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                PreferenceManager.setBoolean(
+                    context,
+                    Constant.PREF_CHECKED_STORAGE_PERMISSION,
+                    false
+                )
                 initUi()
             }
 
@@ -121,12 +126,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
                 mVM.sfApplySavedData.collect {
                     context?.let { _context ->
                         log.e()
-                        CommonFunction.sendBroadcastAppWidgetUpdate<ResinWidget>(_context)
-                        CommonFunction.sendBroadcastAppWidgetUpdate<ResinWidgetResizable>(_context)
-                        CommonFunction.sendBroadcastAppWidgetUpdate<DetailWidget>(_context)
-                        CommonFunction.sendBroadcastAppWidgetUpdate<MiniWidget>(_context)
-                        CommonFunction.sendBroadcastAppWidgetUpdate<TrailPowerWidget>(_context)
-                        CommonFunction.sendBroadcastAppWidgetUpdate<HKSRDetailWidget>(_context)
+                        CommonFunction.sendBroadcastAllWidgetRefreshUI(_context)
                         _context.sendBroadcast(
                             Intent(_context, TalentWidget::class.java)
                                 .setAction(Constant.ACTION_TALENT_WIDGET_REFRESH)
@@ -138,10 +138,17 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
             launch {
                 mVM.sfStartSelectFragment.collect {
                     parentFragmentManager.beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down, R.anim.slide_in_up, R.anim.slide_out_down)
-                        .add(R.id.fragment,
+                        .setCustomAnimations(
+                            R.anim.slide_in_up,
+                            R.anim.slide_out_down,
+                            R.anim.slide_in_up,
+                            R.anim.slide_out_down
+                        )
+                        .add(
+                            R.id.fragment,
                             WidgetDesignSelectCharacterFragment.newInstance(),
-                            WidgetDesignSelectCharacterFragment.TAG)
+                            WidgetDesignSelectCharacterFragment.TAG
+                        )
                         .commit()
                 }
             }

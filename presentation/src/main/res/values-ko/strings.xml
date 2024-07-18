@@ -270,6 +270,7 @@
     <string name="widget_label_mini">미니 위젯</string>
     <string name="widget_label_trailblaze_power">개척력 위젯</string>
     <string name="widget_label_hksr_detail">붕괴: 스타레일 상세 위젯</string>
+    <string name="widget_label_battery">배터리 위젯</string>
 
     <string name="widget_ui_simple_time">%d시간 %d분</string>
     <string name="widget_ui_remain_time">%d시간 %d분 남음</string>
