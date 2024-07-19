@@ -440,7 +440,7 @@
         <TextView
             android:id="@+id/tv_name"
             style="@style/TextView"
-            android:text="여행자"
+            android:text="@string/traveler"
             android:textColor="@color/widget_font_sub"
             android:textSize="10sp"
             android:layout_marginEnd="3dp" />
