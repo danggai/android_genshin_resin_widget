@@ -1,7 +1,6 @@
 package danggai.domain.local
 
 import danggai.domain.util.Constant
-import kotlinx.coroutines.flow.MutableStateFlow
 
 data class DetailWidgetDesignSettings(
     val widgetTheme: Int,
@@ -20,6 +19,11 @@ data class DetailWidgetDesignSettings(
     val simulatedUniverseDataVisibility: Boolean,
     val simulatedUniverseClearTimeVisibility: Boolean,
     val assignmentTimeDataVisibility: Boolean,
+
+    val batteryDataVisibility: Boolean,
+    val engagementTodayDataVisibility: Boolean,
+    val scratchCardDataVisibility: Boolean,
+    val videoStoreManagementDataVisibility: Boolean,
 
     val uidVisibility: Boolean = false,
     val nameVisibility: Boolean = false,
@@ -44,6 +48,11 @@ data class DetailWidgetDesignSettings(
             simulatedUniverseDataVisibility = true,
             simulatedUniverseClearTimeVisibility = true,
             assignmentTimeDataVisibility = true,
+
+            batteryDataVisibility = true,
+            engagementTodayDataVisibility = true,
+            scratchCardDataVisibility = true,
+            videoStoreManagementDataVisibility = true,
 
             uidVisibility = false,
             nameVisibility = false,

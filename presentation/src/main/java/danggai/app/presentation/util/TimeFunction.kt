@@ -25,6 +25,15 @@ object TimeFunction {
         }
     }
 
+    fun resinSecondToTime(
+        context: Context,
+        recentSyneTime: Date,
+        second: Int,
+        timeNotation: Int
+    ): String {
+        return resinSecondToTime(context, recentSyneTime, second.toString(), timeNotation)
+    }
+
     fun realmCurrencySecondToTime(
         context: Context,
         recentSyneTime: Date,

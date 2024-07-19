@@ -267,10 +267,11 @@
     <string name="widget_label_resin_resizable">레진 위젯 (크기 조절 가능)</string>
     <string name="widget_label_resin_fixed">레진 위젯 (크기 고정)</string>
     <string name="widget_label_talent">특성 소재 위젯</string>
-    <string name="widget_label_mini">미니 위젯</string>
+    <string name="widget_label_mini">원신 미니 위젯</string>
     <string name="widget_label_trailblaze_power">개척력 위젯</string>
     <string name="widget_label_hksr_detail">붕괴: 스타레일 상세 위젯</string>
     <string name="widget_label_battery">배터리 위젯</string>
+    <string name="widget_label_zzz_detail">ZZZ 상세 위젯</string>
 
     <string name="widget_ui_simple_time">%d시간 %d분</string>
     <string name="widget_ui_remain_time">%d시간 %d분 남음</string>

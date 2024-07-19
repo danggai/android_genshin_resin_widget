@@ -199,6 +199,27 @@
 
         </receiver>
 
+        <receiver
+            android:name="danggai.app.presentation.ui.widget.ZZZDetailWidget"
+            android:label="@string/widget_label_zzz_detail"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="danggai.app.resinwidget.refresh.resin.ui" />
+                <action android:name="danggai.app.resinwidget.refresh.resin.data" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/zzz_detail_widget_info" />
+
+        </receiver>
+
         <service
             android:name="danggai.app.presentation.service.TalentWidgetItemService"
             android:enabled="true"

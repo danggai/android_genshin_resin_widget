@@ -24,10 +24,11 @@ import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Date
 
 @AndroidEntryPoint
-class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBinding, WidgetDesignViewModel>() {
+class WidgetDesignDetailFragment :
+    BindingFragment<FragmentWidgetDesignDetailBinding, WidgetDesignViewModel>() {
 
     companion object {
         val TAG: String = WidgetDesignDetailFragment::class.java.simpleName
@@ -56,18 +57,23 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
         }
 
         binding.widget.tvWeeklyBoss.text = context?.let { CommonFunction.convertIntToTimes(3, it) }
-        binding.widgetHksr.tvEchoOfWar.text = context?.let { CommonFunction.convertIntToTimes(3, it) }
-        binding.widgetHksr.tvSimulatedUniverseCleared.text = context?.let { CommonFunction.convertIntToTimes(0, it) }
+        binding.widgetHksr.tvEchoOfWar.text =
+            context?.let { CommonFunction.convertIntToTimes(3, it) }
+        binding.widgetHksr.tvSimulatedUniverseCleared.text =
+            context?.let { CommonFunction.convertIntToTimes(0, it) }
 
-        when(mVM.sfDetailTimeNotation.value) {
+        when (mVM.sfDetailTimeNotation.value) {
             Constant.PREF_TIME_NOTATION_DEFAULT,
             Constant.PREF_TIME_NOTATION_REMAIN_TIME -> binding.rbRemainTime.isChecked = true
-            Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked = true
+
+            Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked =
+                true
+
             Constant.PREF_TIME_NOTATION_DISABLE -> binding.rbDisableTime.isChecked = true
             else -> binding.rbRemainTime.isChecked = true
         }
 
-        when(mVM.sfWidgetTheme.value) {
+        when (mVM.sfWidgetTheme.value) {
             Constant.PREF_WIDGET_THEME_AUTOMATIC -> binding.rbThemeAutomatic.isChecked = true
             Constant.PREF_WIDGET_THEME_LIGHT -> binding.rbThemeLight.isChecked = true
             Constant.PREF_WIDGET_THEME_DARK -> binding.rbThemeDark.isChecked = true
@@ -81,20 +87,25 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                 mVM.sfWidgetTheme.collect {
                     context?.let { _context ->
                         log.e()
-                        val unwrappedDrawable = AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
+                        val unwrappedDrawable =
+                            AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
                         val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
 
-                        val bgColor: Int =  ColorUtils.setAlphaComponent(getColor(_context,
-                            if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) {
-                                R.color.white
-                            } else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
-                                R.color.black
-                            } else {
-                                R.color.white
-                            }
-                        ), mVM.sfTransparency.value)
+                        val bgColor: Int = ColorUtils.setAlphaComponent(
+                            getColor(
+                                _context,
+                                if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) {
+                                    R.color.white
+                                } else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
+                                    R.color.black
+                                } else {
+                                    R.color.white
+                                }
+                            ), mVM.sfTransparency.value
+                        )
 
-                        val mainFontColor: Int = getColor(_context,
+                        val mainFontColor: Int = getColor(
+                            _context,
                             if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) {
                                 R.color.widget_font_main_light
                             } else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
@@ -104,7 +115,8 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                             }
                         )
 
-                        val subFontColor: Int = getColor(_context,
+                        val subFontColor: Int = getColor(
+                            _context,
                             if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) {
                                 R.color.widget_font_sub_light
                             } else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
@@ -174,17 +186,28 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
             launch {
                 mVM.sfTransparency.collect {
                     context?.let { _context ->
-                        val unwrappedDrawable = AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
+                        val unwrappedDrawable =
+                            AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
                         val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
 
-                        val color: Int = if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) getColor(_context, R.color.white)
-                        else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) getColor(_context, R.color.black)
-                        else getColor(_context, R.color.white)
+                        val color: Int =
+                            if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) getColor(
+                                _context,
+                                R.color.white
+                            )
+                            else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) getColor(
+                                _context,
+                                R.color.black
+                            )
+                            else getColor(_context, R.color.white)
 
-                        DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(color, mVM.sfTransparency.value))
+                        DrawableCompat.setTint(
+                            wrappedDrawable,
+                            ColorUtils.setAlphaComponent(color, mVM.sfTransparency.value)
+                        )
 
                         binding.widget.llRoot.background = wrappedDrawable
-                        binding.widgetHksr  .llRoot.background = wrappedDrawable
+                        binding.widgetHksr.llRoot.background = wrappedDrawable
                     }
                 }
             }
@@ -232,6 +255,21 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                             tvAssignmentTitle.textSize = it
                         }
                     }
+
+                    binding.widgetZzz.apply {
+                        it.toFloat().let {
+                            tvBattery.textSize = it
+                            tvBatteryTitle.textSize = it
+                            tvBatteryTime.textSize = it
+                            tvBatteryTimeTitle.textSize = it
+                            tvEngagementToday.textSize = it
+                            tvEngagementTodayTitle.textSize = it
+                            tvScratchCard.textSize = it
+                            tvScratchCardTitle.textSize = it
+                            tvVideoStoreManagement.textSize = it
+                            tvVideoStoreManagementTitle.textSize = it
+                        }
+                    }
                 }
             }
 
@@ -262,24 +300,51 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                                     tvExpeditionTitle.text =
                                         _context.getString(R.string.until_expeditions_done)
                                 }
-                                Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME ->  {
-                                    rlResinTime.visibility = if (mVM.sfResinDataVisibility.value) View.VISIBLE else View.GONE
-                                    rlRealmCurrencyTime.visibility = if (mVM.sfRealmCurrencyDataVisibility.value) View.VISIBLE else View.GONE
 
-                                    tvResinTimeTitle.text = _context.getString(R.string.estimated_replenishment_time)
-                                    tvRealmCurrencyTimeTitle.text = _context.getString(R.string.estimated_replenishment_time)
-                                    tvExpeditionTitle.text = _context.getString(R.string.expeditions_done_at)
+                                Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
+                                    rlResinTime.visibility =
+                                        if (mVM.sfResinDataVisibility.value) View.VISIBLE else View.GONE
+                                    rlRealmCurrencyTime.visibility =
+                                        if (mVM.sfRealmCurrencyDataVisibility.value) View.VISIBLE else View.GONE
+
+                                    tvResinTimeTitle.text =
+                                        _context.getString(R.string.estimated_replenishment_time)
+                                    tvRealmCurrencyTimeTitle.text =
+                                        _context.getString(R.string.estimated_replenishment_time)
+                                    tvExpeditionTitle.text =
+                                        _context.getString(R.string.expeditions_done_at)
                                 }
-                                Constant.PREF_TIME_NOTATION_DISABLE ->  {
+
+                                Constant.PREF_TIME_NOTATION_DISABLE -> {
                                     rlResinTime.visibility = View.GONE
                                     rlRealmCurrencyTime.visibility = View.GONE
                                 }
                             }
 
-                            tvResinTime.text = TimeFunction.resinSecondToTime(_context, Date(), fakeResinRemainTime, mVM.sfDetailTimeNotation.value)
-                            tvRealmCurrencyTime.text = TimeFunction.realmCurrencySecondToTime(_context, Date(), fakeRealmCurrencyRemainTime, mVM.sfDetailTimeNotation.value)
-                            tvExpeditionTime.text = TimeFunction.expeditionSecondToTime(_context, Date(), fakeExpedtionRemainTime, mVM.sfDetailTimeNotation.value)
-                            tvTransformer.text = TimeFunction.transformerToTime(_context, Date(), fakeTransformer, mVM.sfDetailTimeNotation.value)
+                            tvResinTime.text = TimeFunction.resinSecondToTime(
+                                _context,
+                                Date(),
+                                fakeResinRemainTime,
+                                mVM.sfDetailTimeNotation.value
+                            )
+                            tvRealmCurrencyTime.text = TimeFunction.realmCurrencySecondToTime(
+                                _context,
+                                Date(),
+                                fakeRealmCurrencyRemainTime,
+                                mVM.sfDetailTimeNotation.value
+                            )
+                            tvExpeditionTime.text = TimeFunction.expeditionSecondToTime(
+                                _context,
+                                Date(),
+                                fakeExpedtionRemainTime,
+                                mVM.sfDetailTimeNotation.value
+                            )
+                            tvTransformer.text = TimeFunction.transformerToTime(
+                                _context,
+                                Date(),
+                                fakeTransformer,
+                                mVM.sfDetailTimeNotation.value
+                            )
                         }
 
                         binding.widgetHksr.apply {
@@ -295,37 +360,87 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                                     tvAssignmentTitle.text =
                                         _context.getString(R.string.until_assignment_done)
                                 }
-                                Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME ->  {
+
+                                Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
                                     rlTrailblazePowerTime.visibility =
                                         if (mVM.sfTrailBlazepowerDataVisibility.value) View.VISIBLE else View.GONE
 
-                                    tvTrailblazePowerTimeTitle.text = _context.getString(R.string.estimated_replenishment_time)
-                                    tvAssignmentTitle.text = _context.getString(R.string.assignment_done_at)
+                                    tvTrailblazePowerTimeTitle.text =
+                                        _context.getString(R.string.estimated_replenishment_time)
+                                    tvAssignmentTitle.text =
+                                        _context.getString(R.string.assignment_done_at)
                                 }
-                                Constant.PREF_TIME_NOTATION_DISABLE ->  {
+
+                                Constant.PREF_TIME_NOTATION_DISABLE -> {
                                     rlTrailblazePowerTime.visibility = View.GONE
                                 }
                             }
 
-                            tvTrailblazePowerTime.text = TimeFunction.resinSecondToTime(_context, Date(), fakeResinRemainTime, mVM.sfDetailTimeNotation.value)
-                            tvAssignmentTime.text = TimeFunction.expeditionSecondToTime(_context, Date(), fakeExpedtionRemainTime, mVM.sfDetailTimeNotation.value)
+                            tvTrailblazePowerTime.text = TimeFunction.resinSecondToTime(
+                                _context,
+                                Date(),
+                                fakeResinRemainTime,
+                                mVM.sfDetailTimeNotation.value
+                            )
+                            tvAssignmentTime.text = TimeFunction.expeditionSecondToTime(
+                                _context,
+                                Date(),
+                                fakeExpedtionRemainTime,
+                                mVM.sfDetailTimeNotation.value
+                            )
+                        }
+
+                        binding.widgetZzz.apply {
+                            when (mVM.sfDetailTimeNotation.value) {
+                                Constant.PREF_TIME_NOTATION_DEFAULT,
+                                Constant.PREF_TIME_NOTATION_REMAIN_TIME,
+                                -> {
+                                    rlBatteryTime.visibility =
+                                        if (mVM.sfBatteryDataVisibility.value) View.VISIBLE else View.GONE
+
+                                    tvBatteryTimeTitle.text =
+                                        _context.getString(R.string.until_fully_replenished)
+                                }
+
+                                Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
+                                    rlBatteryTime.visibility =
+                                        if (mVM.sfBatteryDataVisibility.value) View.VISIBLE else View.GONE
+
+                                    tvBatteryTimeTitle.text =
+                                        _context.getString(R.string.estimated_replenishment_time)
+                                }
+
+                                Constant.PREF_TIME_NOTATION_DISABLE -> {
+                                    rlBatteryTime.visibility = View.GONE
+                                }
+                            }
+
+                            tvBatteryTime.text = TimeFunction.resinSecondToTime(
+                                _context,
+                                Date(),
+                                fakeResinRemainTime,
+                                mVM.sfDetailTimeNotation.value
+                            )
                         }
                     }
                 }
             }
 
+            // 원신
             launch {
                 mVM.sfResinDataVisibility.collect {
                     log.e()
                     binding.widget.rlResin.visibility = if (it) View.VISIBLE else View.GONE
-                    binding.widget.rlResinTime.visibility = if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
+                    binding.widget.rlResinTime.visibility =
+                        if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
                 }
             }
 
             launch {
                 mVM.sfDailyCommissionDataVisibility.collect {
                     log.e()
-                    binding.widget.rlDailyCommission.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widget.rlDailyCommission.visibility =
+                        if (it) View.VISIBLE else View.GONE
                 }
             }
 
@@ -340,7 +455,8 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                 mVM.sfRealmCurrencyDataVisibility.collect {
                     log.e()
                     binding.widget.rlRealmCurrency.visibility = if (it) View.VISIBLE else View.GONE
-                    binding.widget.rlRealmCurrencyTime.visibility = if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
+                    binding.widget.rlRealmCurrencyTime.visibility =
+                        if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
                 }
             }
 
@@ -374,18 +490,22 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                 }
             }
 
+            // 붕괴: 스타레일
             launch {
                 mVM.sfTrailBlazepowerDataVisibility.collect {
                     log.e()
-                    binding.widgetHksr.rlTrailblazePower.visibility = if (it) View.VISIBLE else View.GONE
-                    binding.widgetHksr.rlTrailblazePowerTime.visibility = if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
+                    binding.widgetHksr.rlTrailblazePower.visibility =
+                        if (it) View.VISIBLE else View.GONE
+                    binding.widgetHksr.rlTrailblazePowerTime.visibility =
+                        if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
                 }
             }
 
             launch {
                 mVM.sfDailyTrainingDataVisibility.collect {
                     log.e()
-                    binding.widgetHksr.rlDailyTraining.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widgetHksr.rlDailyTraining.visibility =
+                        if (it) View.VISIBLE else View.GONE
                 }
             }
 
@@ -399,15 +519,18 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
             launch {
                 mVM.sfSimulatedUniverseDataVisibility.collect {
                     log.e()
-                    binding.widgetHksr.rlSimulatedUniverse.visibility = if (it) View.VISIBLE else View.GONE
-                    binding.widgetHksr.rlSimulatedUniverseCleared.visibility = if (it && mVM.sfSimulatedUniverseClearTimeVisibility.value) View.VISIBLE else View.GONE
+                    binding.widgetHksr.rlSimulatedUniverse.visibility =
+                        if (it) View.VISIBLE else View.GONE
+                    binding.widgetHksr.rlSimulatedUniverseCleared.visibility =
+                        if (it && mVM.sfSimulatedUniverseClearTimeVisibility.value) View.VISIBLE else View.GONE
                 }
             }
 
             launch {
                 mVM.sfSimulatedUniverseClearTimeVisibility.collect {
                     log.e()
-                    binding.widgetHksr.rlSimulatedUniverseCleared.visibility = if (mVM.sfSimulatedUniverseDataVisibility.value && it) View.VISIBLE else View.GONE
+                    binding.widgetHksr.rlSimulatedUniverseCleared.visibility =
+                        if (mVM.sfSimulatedUniverseDataVisibility.value && it) View.VISIBLE else View.GONE
                 }
             }
 
@@ -415,6 +538,39 @@ class WidgetDesignDetailFragment : BindingFragment<FragmentWidgetDesignDetailBin
                 mVM.sfAssignmentTimeDataVisibility.collect {
                     log.e()
                     binding.widgetHksr.rlAssignment.visibility = if (it) View.VISIBLE else View.GONE
+                }
+            }
+
+            // 젠레스 존 제로
+            launch {
+                mVM.sfBatteryDataVisibility.collect {
+                    log.e()
+                    binding.widgetZzz.rlBattery.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widgetZzz.rlBatteryTime.visibility =
+                        if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
+                }
+            }
+
+            launch {
+                mVM.sfEngagementTodayDataVisibility.collect {
+                    log.e()
+                    binding.widgetZzz.rlEngagementToday.visibility =
+                        if (it) View.VISIBLE else View.GONE
+                }
+            }
+
+            launch {
+                mVM.sfScratchCardDataVisibility.collect {
+                    log.e()
+                    binding.widgetZzz.rlScratchCard.visibility = if (it) View.VISIBLE else View.GONE
+                }
+            }
+
+            launch {
+                mVM.sfVideoStoreManagementDataVisibility.collect {
+                    log.e()
+                    binding.widgetZzz.rlVideoStoreManagement.visibility =
+                        if (it) View.VISIBLE else View.GONE
                 }
             }
         }

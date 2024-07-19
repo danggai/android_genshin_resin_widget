@@ -430,7 +430,18 @@ object CommonFunction {
             R.id.tv_simulated_universe,
             R.id.tv_simulated_universe_title,
             R.id.tv_simulated_universe_cleared,
-            R.id.tv_simulated_universe_title_cleared
+            R.id.tv_simulated_universe_title_cleared,
+
+            R.id.tv_battery,
+            R.id.tv_battery_title,
+            R.id.tv_battery_time,
+            R.id.tv_battery_time_title,
+            R.id.tv_engagement_today,
+            R.id.tv_engagement_today_title,
+            R.id.tv_scratch_card,
+            R.id.tv_scratch_card_title,
+            R.id.tv_video_store_management,
+            R.id.tv_video_store_management_title,
         )
 
         fun setFontColorAndSize(view: RemoteViews, id: Int, color: Int, size: Float) {

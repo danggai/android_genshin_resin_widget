@@ -291,10 +291,11 @@
     <string name="widget_label_resin_resizable">Resizable Resin Widget</string>
     <string name="widget_label_resin_fixed">Fixed Sized Resin Widget</string>
     <string name="widget_label_talent">Talent Materials Widget</string>
-    <string name="widget_label_mini">Mini Widget</string>
+    <string name="widget_label_mini">Genshin Mini Widget</string>
     <string name="widget_label_trailblaze_power">Trailblaze Power Widget</string>
     <string name="widget_label_hksr_detail">Honkai: Starrail Detail Widget</string>
     <string name="widget_label_battery">Battery Widget</string>
+    <string name="widget_label_zzz_detail">ZZZ Detail Widget</string>
 
     <string name="widget_ui_simple_time">%dh %dm</string>
     <string name="widget_ui_remain_time">%dh %dm left</string>
@@ -342,7 +343,7 @@
     <!--    ZZZ Widget -->
     <string name="engagement_today">Engagement Today</string>
 
-    <string name="video_store_management">Video Store Management</string>
+    <string name="video_store_management">Video Store Manage</string>
     <string name="video_store_management_no">Waiting to Open</string>
     <string name="video_store_management_doing">Currently Open</string>
     <string name="video_store_management_done">Revenue Available</string>

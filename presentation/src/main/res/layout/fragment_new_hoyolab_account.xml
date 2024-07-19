@@ -409,6 +409,10 @@
                             android:text="@string/btn_no_honkai_sr_account"
                             android:onClick="@{() -> vm.initHonkaiSrDataInputField()}" />
 
+                        <android.widget.Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="8dp" />
+
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </FrameLayout>
@@ -581,19 +585,9 @@
                             android:text="@string/btn_no_zzz_account"
                             android:onClick="@{() -> vm.initZZZDataInputField()}" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="젠레스 존 제로 위젯은 아직 지원하지 않습니다." />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Zenless Zone Zero widget is not yet supported." />
-
                         <android.widget.Space
                             android:layout_width="wrap_content"
-                            android:layout_height="15dp" />
+                            android:layout_height="8dp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -59,17 +59,24 @@ class WidgetDesignViewModel @Inject constructor(
     val sfSimulatedUniverseClearTimeVisibility = MutableStateFlow(true)
     val sfAssignmentTimeDataVisibility = MutableStateFlow(true)
 
+    val sfBatteryDataVisibility = MutableStateFlow(true)
+    val sfEngagementTodayDataVisibility = MutableStateFlow(true)
+    val sfScratchCardDataVisibility = MutableStateFlow(true)
+    val sfVideoStoreManagementDataVisibility = MutableStateFlow(true)
+
     val sfFontSizeDetail = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
     val sfDetailUidVisibility = MutableStateFlow(false)
     val sfDetailNameVisibility = MutableStateFlow(false)
 
     val sfCharacterListRefreshSwitch = MutableStateFlow(false)
 
-    private var _sfCharacterList: MutableStateFlow<MutableList<LocalCharacter>> = MutableStateFlow(mutableListOf())
+    private var _sfCharacterList: MutableStateFlow<MutableList<LocalCharacter>> =
+        MutableStateFlow(mutableListOf())
     val sfCharacterList: MutableStateFlow<MutableList<LocalCharacter>>
         get() = _sfCharacterList
 
-    private var _sfSelectedCharacterList: MutableStateFlow<MutableList<LocalCharacter>> = MutableStateFlow(mutableListOf())
+    private var _sfSelectedCharacterList: MutableStateFlow<MutableList<LocalCharacter>> =
+        MutableStateFlow(mutableListOf())
     val sfSelectedCharacterList: MutableStateFlow<MutableList<LocalCharacter>>
         get() = _sfSelectedCharacterList
 
@@ -104,6 +111,11 @@ class WidgetDesignViewModel @Inject constructor(
             sfSimulatedUniverseDataVisibility.value = it.simulatedUniverseDataVisibility
             sfSimulatedUniverseClearTimeVisibility.value = it.simulatedUniverseClearTimeVisibility
             sfAssignmentTimeDataVisibility.value = it.assignmentTimeDataVisibility
+
+            sfBatteryDataVisibility.value = it.batteryDataVisibility
+            sfEngagementTodayDataVisibility.value = it.engagementTodayDataVisibility
+            sfScratchCardDataVisibility.value = it.scratchCardDataVisibility
+            sfVideoStoreManagementDataVisibility.value = it.videoStoreManagementDataVisibility
 
             sfDetailUidVisibility.value = it.uidVisibility
             sfDetailNameVisibility.value = it.nameVisibility
@@ -168,30 +180,51 @@ class WidgetDesignViewModel @Inject constructor(
 
                                 _sfCharacterList.value = list
 
-                                sfCharacterListRefreshSwitch.value = !sfCharacterListRefreshSwitch.value
+                                sfCharacterListRefreshSwitch.value =
+                                    !sfCharacterListRefreshSwitch.value
 
                                 sfStartSelectFragment.emitInVmScope(true)
                             }
+
                             else -> {
                                 log.e()
-                                CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHARACTERS, null, null)
+                                CommonFunction.sendCrashlyticsApiLog(
+                                    Constant.API_NAME_CHARACTERS,
+                                    null,
+                                    null
+                                )
                                 makeToast(resource.getString(R.string.msg_toast_get_characters_error))
                             }
                         }
                     }
+
                     is ApiResult.Failure -> {
                         it.message.let { msg ->
                             log.e(msg)
-                            CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHARACTERS, it.code, null)
+                            CommonFunction.sendCrashlyticsApiLog(
+                                Constant.API_NAME_CHARACTERS,
+                                it.code,
+                                null
+                            )
                             makeToast(resource.getString(R.string.msg_toast_common_network_error))
                         }
                     }
+
                     is ApiResult.Error -> {
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHARACTERS, null, null)
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_CHARACTERS,
+                            null,
+                            null
+                        )
                         makeToast(resource.getString(R.string.msg_toast_get_characters_error))
                     }
+
                     is ApiResult.Null -> {
-                        CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHARACTERS, null, null)
+                        CommonFunction.sendCrashlyticsApiLog(
+                            Constant.API_NAME_CHARACTERS,
+                            null,
+                            null
+                        )
                         makeToast(resource.getString(R.string.msg_toast_common_body_null_error))
                     }
                 }
@@ -232,6 +265,11 @@ class WidgetDesignViewModel @Inject constructor(
                 sfSimulatedUniverseDataVisibility.value,
                 sfSimulatedUniverseClearTimeVisibility.value,
                 sfAssignmentTimeDataVisibility.value,
+
+                sfBatteryDataVisibility.value,
+                sfEngagementTodayDataVisibility.value,
+                sfScratchCardDataVisibility.value,
+                sfVideoStoreManagementDataVisibility.value,
 
                 sfDetailUidVisibility.value,
                 sfDetailNameVisibility.value,

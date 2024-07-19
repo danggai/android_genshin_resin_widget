@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <import type="danggai.domain.util.Constant.WidgetTheme" />
+
         <import type="danggai.domain.util.Constant.TimeNotation" />
 
         <variable
             name="vm"
-            type="danggai.app.presentation.ui.design.WidgetDesignViewModel"
-            />
+            type="danggai.app.presentation.ui.design.WidgetDesignViewModel" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <include
             android:id="@+id/widget"
@@ -25,8 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:layout_marginHorizontal="50dp"
-            />
+            android:layout_marginHorizontal="50dp" />
 
         <include
             android:id="@+id/widget_hksr"
@@ -34,23 +33,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="50dp" />
+
+        <include
+            android:id="@+id/widget_zzz"
+            layout="@layout/widget_zzz_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="30dp"
-            android:layout_marginHorizontal="50dp"
-            />
+            android:layout_marginHorizontal="50dp" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@color/white"
-            >
+            android:background="@color/white">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingHorizontal="20dp"
-                >
+                android:paddingHorizontal="20dp">
 
                 <android.widget.Space
                     android:layout_width="wrap_content"
@@ -62,15 +66,13 @@
                     android:text="@string/widget_theme"
                     android:textColor="@color/black"
                     android:textSize="28sp"
-                    android:textStyle="bold|italic"
-                    />
+                    android:textStyle="bold|italic" />
 
                 <RadioGroup
                     style="@style/RadioGroup"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    >
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_theme_automatic"
@@ -144,14 +146,12 @@
                     android:text="@string/visible_data"
                     android:textColor="@color/black"
                     android:textSize="28sp"
-                    android:textStyle="bold|italic"
-                    />
+                    android:textStyle="bold|italic" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    >
+                    android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
@@ -171,11 +171,11 @@
                     android:layout_width="0dp"
                     android:layout_height="10dp" />
 
+                <!--                원신 -->
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    >
+                    android:gravity="center">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextView"
@@ -184,8 +184,7 @@
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold|italic"
-                        android:gravity="right"
-                        />
+                        android:gravity="right" />
 
                     <Space
                         android:layout_width="5dp"
@@ -195,8 +194,7 @@
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:layout_weight="1"
-                        android:background="#444444"
-                        />
+                        android:background="#444444" />
 
                     <Space
                         android:layout_width="10dp"
@@ -207,8 +205,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    >
+                    android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
@@ -227,8 +224,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    >
+                    android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
@@ -247,8 +243,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    >
+                    android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
@@ -268,11 +263,11 @@
                     android:layout_width="0dp"
                     android:layout_height="10dp" />
 
+                <!--                붕괴: 스타레일 -->
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    >
+                    android:gravity="center">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextView"
@@ -281,8 +276,7 @@
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold|italic"
-                        android:gravity="right"
-                        />
+                        android:gravity="right" />
 
                     <Space
                         android:layout_width="5dp"
@@ -292,8 +286,7 @@
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:layout_weight="1"
-                        android:background="#444444"
-                        />
+                        android:background="#444444" />
 
                     <Space
                         android:layout_width="10dp"
@@ -304,8 +297,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    >
+                    android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
@@ -324,8 +316,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    >
+                    android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
@@ -344,8 +335,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    >
+                    android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
@@ -366,6 +356,79 @@
                     android:layout_width="wrap_content"
                     android:layout_height="15dp" />
 
+                <!--                젠레스 존 제로 -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextView"
+                        android:layout_width="wrap_content"
+                        android:text="@string/zzz"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic"
+                        android:gravity="right" />
+
+                    <Space
+                        android:layout_width="5dp"
+                        android:layout_height="0dp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:background="#444444" />
+
+                    <Space
+                        android:layout_width="10dp"
+                        android:layout_height="0dp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_battery"
+                        android:checked="@={vm.sfBatteryDataVisibility}"
+                        android:text="@string/battery" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_engagemnent_today"
+                        android:checked="@={vm.sfEngagementTodayDataVisibility}"
+                        android:text="@string/engagement_today" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_scratch_card"
+                        android:checked="@={vm.sfScratchCardDataVisibility}"
+                        android:text="@string/scratch_card" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_video_store_management"
+                        android:checked="@={vm.sfVideoStoreManagementDataVisibility}"
+                        android:text="@string/video_store_management" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <android.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -377,8 +440,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="5dp"
-                    >
+                    android:paddingHorizontal="5dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -388,8 +450,7 @@
                         android:textSize="20sp"
                         android:textColor="@color/black"
                         android:textStyle="bold|italic"
-                        android:gravity="center"
-                        />
+                        android:gravity="center" />
 
                     <androidx.appcompat.widget.AppCompatSeekBar
                         style="@style/SeekBar"
@@ -397,8 +458,7 @@
                         android:progress="@={vm.sfFontSizeDetail}"
                         android:min="5"
                         android:max="30"
-                        android:layout_gravity="center_vertical"
-                        />
+                        android:layout_gravity="center_vertical" />
 
 
                     <com.google.android.material.button.MaterialButton
@@ -424,8 +484,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="5dp"
-                    >
+                    android:paddingHorizontal="5dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -435,16 +494,14 @@
                         android:textSize="20sp"
                         android:textColor="@color/black"
                         android:textStyle="bold|italic"
-                        android:gravity="center"
-                        />
+                        android:gravity="center" />
 
                     <androidx.appcompat.widget.AppCompatSeekBar
                         style="@style/SeekBar"
                         android:id="@+id/sb_transparent"
                         android:progress="@={vm.sfTransparency}"
                         android:max="255"
-                        android:layout_gravity="center_vertical"
-                        />
+                        android:layout_gravity="center_vertical" />
 
                     <com.google.android.material.button.MaterialButton
                         style="@style/SmallMaterialButton"
