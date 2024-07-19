@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <import type="danggai.domain.util.Constant.WidgetTheme" />
 
         <import type="danggai.domain.util.Constant.TimeNotation" />
@@ -17,7 +19,8 @@
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:animateLayoutChanges="true">
 
         <include
             android:id="@+id/widget"
@@ -25,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:layout_marginHorizontal="50dp" />
+            android:layout_marginHorizontal="50dp"/>
 
         <include
             android:id="@+id/widget_hksr"
@@ -33,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="50dp" />
+            android:layout_marginHorizontal="50dp"/>
 
         <include
             android:id="@+id/widget_zzz"
@@ -43,6 +46,57 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="30dp"
             android:layout_marginHorizontal="50dp" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/preview"
+                android:textColor="@color/black"
+                android:textSize="28sp"
+                android:textStyle="bold|italic"
+                android:layout_marginHorizontal="10dp" />
+
+            <RadioGroup
+                style="@style/RadioGroup"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginHorizontal="10dp">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    style="@style/RadioButton"
+                    android:onClick="@{() -> vm.onClickPreiew(0)}"
+                    android:text="@string/genshin" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    style="@style/RadioButton"
+                    android:onClick="@{() -> vm.onClickPreiew(1)}"
+                    android:text="@string/honkai_sr" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    style="@style/RadioButton"
+                    android:onClick="@{() -> vm.onClickPreiew(2)}"
+                    android:text="@string/zzz" />
+
+            </RadioGroup>
+
+            <android.widget.Space
+                android:layout_width="wrap_content"
+                android:layout_height="10dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="5dp"
+                android:background="#999999" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <ScrollView
             android:layout_width="match_parent"

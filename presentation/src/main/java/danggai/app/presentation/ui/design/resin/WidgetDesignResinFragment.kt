@@ -102,6 +102,12 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                             binding.widgetHonkaiSr.tvRemainTime.setTextColor(getColor(_context, R.color.widget_font_main_light))
                             binding.widgetHonkaiSr.ivRefersh.setColorFilter(getColor(_context, R.color.widget_font_sub_light))
                             binding.widgetHonkaiSr.tvSyncTime.setTextColor(getColor(_context, R.color.widget_font_sub_light))
+
+                            binding.widgetZzz.tvBattery.setTextColor(getColor(_context, R.color.widget_font_main_light))
+                            binding.widgetZzz.tvBatteryMax.setTextColor(getColor(_context, R.color.widget_font_main_light))
+                            binding.widgetZzz.tvRemainTime.setTextColor(getColor(_context, R.color.widget_font_main_light))
+                            binding.widgetZzz.ivRefersh.setColorFilter(getColor(_context, R.color.widget_font_sub_light))
+                            binding.widgetZzz.tvSyncTime.setTextColor(getColor(_context, R.color.widget_font_sub_light))
                         } else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
                             DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(getColor(_context, R.color.black), mVM.sfTransparency.value))
                             binding.widget.tvResin.setTextColor(getColor(_context, R.color.widget_font_main_dark))
@@ -115,6 +121,12 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                             binding.widgetHonkaiSr.tvRemainTime.setTextColor(getColor(_context, R.color.widget_font_main_dark))
                             binding.widgetHonkaiSr.ivRefersh.setColorFilter(getColor(_context, R.color.widget_font_sub_dark))
                             binding.widgetHonkaiSr.tvSyncTime.setTextColor(getColor(_context, R.color.widget_font_sub_dark))
+
+                            binding.widgetZzz.tvBattery.setTextColor(getColor(_context, R.color.widget_font_sub_dark))
+                            binding.widgetZzz.tvBatteryMax.setTextColor(getColor(_context, R.color.widget_font_sub_dark))
+                            binding.widgetZzz.tvRemainTime.setTextColor(getColor(_context, R.color.widget_font_sub_dark))
+                            binding.widgetZzz.ivRefersh.setColorFilter(getColor(_context, R.color.widget_font_sub_dark))
+                            binding.widgetZzz.tvSyncTime.setTextColor(getColor(_context, R.color.widget_font_sub_dark))
                         } else {
                             DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(getColor(_context, R.color.white), mVM.sfTransparency.value))
                             binding.widget.tvResin.setTextColor(getColor(_context, R.color.widget_font_main_light))
@@ -128,15 +140,35 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                             binding.widgetHonkaiSr.tvRemainTime.setTextColor(getColor(_context, R.color.widget_font_main_light))
                             binding.widgetHonkaiSr.ivRefersh.setColorFilter(getColor(_context, R.color.widget_font_sub_light))
                             binding.widgetHonkaiSr.tvSyncTime.setTextColor(getColor(_context, R.color.widget_font_sub_light))
+
+                            binding.widgetZzz.tvBattery.setTextColor(getColor(_context, R.color.widget_font_main_light))
+                            binding.widgetZzz.tvBatteryMax.setTextColor(getColor(_context, R.color.widget_font_main_light))
+                            binding.widgetZzz.tvRemainTime.setTextColor(getColor(_context, R.color.widget_font_main_light))
+                            binding.widgetZzz.ivRefersh.setColorFilter(getColor(_context, R.color.widget_font_sub_light))
+                            binding.widgetZzz.tvSyncTime.setTextColor(getColor(_context, R.color.widget_font_sub_light))
                         }
                         binding.widget.llRoot.background = wrappedDrawable
                         binding.widgetHonkaiSr.llRoot.background = wrappedDrawable
+                        binding.widgetZzz.llRoot.background = wrappedDrawable
                     }
                 }
             }
         }
 
         viewLifecycleOwner.repeatOnLifeCycleStarted {
+            launch {
+                mVM.sfSelectedPreview.collect { index ->
+                    binding.widget.root.visibility = View.GONE
+                    binding.widgetHonkaiSr.root.visibility = View.GONE
+                    binding.widgetZzz.root.visibility = View.GONE
+                    when (index) {
+                        0 -> binding.widget.root.visibility = View.VISIBLE
+                        1 -> binding.widgetHonkaiSr.root.visibility = View.VISIBLE
+                        2 -> binding.widgetZzz.root.visibility = View.VISIBLE
+                    }
+                }
+            }
+
             launch {
                 mVM.sfTransparency.collect {
                     context?.let { _context ->

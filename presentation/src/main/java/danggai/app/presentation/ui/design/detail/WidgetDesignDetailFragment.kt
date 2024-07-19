@@ -177,12 +177,46 @@ class WidgetDesignDetailFragment :
 
                             llRoot.background = wrappedDrawable
                         }
+
+                        binding.widgetZzz.apply {
+                            llRoot.setBackgroundColor(bgColor)
+
+                            ivRefersh.setColorFilter(subFontColor)
+                            tvSyncTime.setTextColor(subFontColor)
+                            tvDisable.setTextColor(subFontColor)
+
+                            tvBattery.setTextColor(mainFontColor)
+                            tvBatteryTime.setTextColor(mainFontColor)
+                            tvBatteryTitle.setTextColor(mainFontColor)
+                            tvBatteryTimeTitle.setTextColor(mainFontColor)
+                            tvScratchCard.setTextColor(mainFontColor)
+                            tvScratchCardTitle.setTextColor(mainFontColor)
+                            tvVideoStoreManagement.setTextColor(mainFontColor)
+                            tvVideoStoreManagementTitle.setTextColor(mainFontColor)
+                            tvEngagementToday.setTextColor(mainFontColor)
+                            tvEngagementTodayTitle.setTextColor(mainFontColor)
+
+                            llRoot.background = wrappedDrawable
+                        }
                     }
                 }
             }
         }
 
         viewLifecycleOwner.repeatOnLifeCycleStarted {
+            launch {
+                mVM.sfSelectedPreview.collect { index ->
+                    binding.widget.root.visibility = View.GONE
+                    binding.widgetHksr.root.visibility = View.GONE
+                    binding.widgetZzz.root.visibility = View.GONE
+                    when (index) {
+                        0 -> binding.widget.root.visibility = View.VISIBLE
+                        1 -> binding.widgetHksr.root.visibility = View.VISIBLE
+                        2 -> binding.widgetZzz.root.visibility = View.VISIBLE
+                    }
+                }
+            }
+
             launch {
                 mVM.sfTransparency.collect {
                     context?.let { _context ->

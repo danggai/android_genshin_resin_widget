@@ -35,6 +35,8 @@ class WidgetDesignViewModel @Inject constructor(
 
     val sfProgress = MutableStateFlow(false)
 
+    val sfSelectedPreview = MutableStateFlow(0)
+
     val sfWidgetTheme = MutableStateFlow(Constant.PREF_WIDGET_THEME_AUTOMATIC)
     val sfTransparency = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY)
 
@@ -288,6 +290,11 @@ class WidgetDesignViewModel @Inject constructor(
     fun onClickSave() {
         log.e()
         saveData()
+    }
+
+    fun onClickPreiew(index: Int) {
+        log.e("index -> $index")
+        sfSelectedPreview.value = index
     }
 
     fun onClickWidgetTheme(widgetTheme: Constant.WidgetTheme) {

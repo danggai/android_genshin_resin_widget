@@ -3,14 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="android.view.View" />
+
         <import type="danggai.domain.util.Constant.WidgetTheme" />
+
         <import type="danggai.domain.util.Constant.TimeNotation" />
+
         <import type="danggai.domain.util.Constant.ResinImageVisibility" />
 
         <variable
             name="vm"
-            type="danggai.app.presentation.ui.design.WidgetDesignViewModel"
-            />
+            type="danggai.app.presentation.ui.design.WidgetDesignViewModel" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -18,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        >
+        android:animateLayoutChanges="true">
 
         <include
             android:id="@+id/widget"
@@ -26,8 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:layout_marginHorizontal="50dp"
-            />
+            android:layout_marginHorizontal="50dp" />
 
         <include
             android:id="@+id/widget_honkai_sr"
@@ -35,23 +38,79 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="50dp"/>
+
+        <include
+            android:id="@+id/widget_zzz"
+            layout="@layout/widget_battery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="30dp"
-            android:layout_marginHorizontal="50dp"
-            />
+            android:layout_marginHorizontal="50dp" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/preview"
+                android:textColor="@color/black"
+                android:textSize="28sp"
+                android:textStyle="bold|italic"
+                android:layout_marginHorizontal="10dp" />
+
+            <RadioGroup
+                style="@style/RadioGroup"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginHorizontal="10dp">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    style="@style/RadioButton"
+                    android:onClick="@{() -> vm.onClickPreiew(0)}"
+                    android:text="@string/genshin" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    style="@style/RadioButton"
+                    android:onClick="@{() -> vm.onClickPreiew(1)}"
+                    android:text="@string/honkai_sr" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    style="@style/RadioButton"
+                    android:onClick="@{() -> vm.onClickPreiew(2)}"
+                    android:text="@string/zzz" />
+
+            </RadioGroup>
+
+            <android.widget.Space
+                android:layout_width="wrap_content"
+                android:layout_height="10dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="5dp"
+                android:background="#999999" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@color/white"
-            >
+            android:background="@color/white">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingHorizontal="20dp"
-                >
+                android:paddingHorizontal="20dp">
 
                 <android.widget.Space
                     android:layout_width="wrap_content"
@@ -63,15 +122,13 @@
                     android:text="@string/widget_theme"
                     android:textColor="@color/black"
                     android:textSize="28sp"
-                    android:textStyle="bold|italic"
-                    />
+                    android:textStyle="bold|italic" />
 
                 <RadioGroup
                     style="@style/RadioGroup"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    >
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_theme_automatic"
@@ -142,16 +199,14 @@
                     android:text="@string/resin_image"
                     android:textColor="@color/black"
                     android:textSize="28sp"
-                    android:textStyle="bold|italic"
-                    />
+                    android:textStyle="bold|italic" />
 
                 <RadioGroup
                     style="@style/RadioGroup"
                     android:weightSum="3"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    >
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_resin_image_visible"
@@ -177,14 +232,12 @@
                     android:text="@string/visible_data"
                     android:textColor="@color/black"
                     android:textSize="28sp"
-                    android:textStyle="bold|italic"
-                    />
+                    android:textStyle="bold|italic" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="3"
-                    >
+                    android:weightSum="3">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
@@ -215,8 +268,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="5dp"
-                    >
+                    android:paddingHorizontal="5dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -226,8 +278,7 @@
                         android:textSize="20sp"
                         android:textColor="@color/black"
                         android:textStyle="bold|italic"
-                        android:gravity="center"
-                        />
+                        android:gravity="center" />
 
                     <androidx.appcompat.widget.AppCompatSeekBar
                         style="@style/SeekBar"
@@ -235,8 +286,7 @@
                         android:progress="@={vm.sfResinFontSize}"
                         android:max="100"
                         android:min="20"
-                        android:layout_gravity="center_vertical"
-                        />
+                        android:layout_gravity="center_vertical" />
 
                     <com.google.android.material.button.MaterialButton
                         style="@style/SmallMaterialButton"
@@ -261,8 +311,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="5dp"
-                    >
+                    android:paddingHorizontal="5dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -272,17 +321,14 @@
                         android:textSize="20sp"
                         android:textColor="@color/black"
                         android:textStyle="bold|italic"
-                        android:gravity="center"
-                        />
+                        android:gravity="center" />
 
                     <androidx.appcompat.widget.AppCompatSeekBar
                         style="@style/SeekBar"
                         android:id="@+id/sb_transparent"
                         android:progress="@={vm.sfTransparency}"
                         android:max="255"
-                        android:layout_gravity="center_vertical"
-                        />
-
+                        android:layout_gravity="center_vertical" />
 
                     <com.google.android.material.button.MaterialButton
                         style="@style/SmallMaterialButton"
