@@ -48,11 +48,10 @@ object Constant {
     const val SERVER_PO_CHT = "prod_official_cht"
 
     /* ZZZ 서버 */
-    // TODO("USA, EURO, CHT 코드 알아내기")
-    const val SERVER_GF_USA = ""
-    const val SERVER_GF_EURO = ""
+    const val SERVER_GF_USA = "prod_gf_us"
+    const val SERVER_GF_EURO = "prod_gf_eu"
     const val SERVER_GF_ASIA = "prod_gf_jp"
-    const val SERVER_GF_CHT = ""
+    const val SERVER_GF_CHT = "prod_gf_sg"
 
     const val LANG_KO_KR = "ko-kr"
     const val LANG_EN_US = "en-us"
