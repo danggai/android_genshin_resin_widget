@@ -14,7 +14,7 @@ data class DetailWidgetDesignSettings(
     val transformerDataVisibility: Boolean = true,
 
     val trailBlazepowerDataVisibility: Boolean,
-    val reservedTrailBlazepowerDataVisibility: Boolean,
+    val reserveTrailBlazepowerDataVisibility: Boolean,
     val dailyTrainingDataVisibility: Boolean,
     val echoOfWarDataVisibility: Boolean,
     val simulatedUniverseDataVisibility: Boolean,
@@ -45,7 +45,7 @@ data class DetailWidgetDesignSettings(
             transformerDataVisibility = true,
 
             trailBlazepowerDataVisibility = true,
-            reservedTrailBlazepowerDataVisibility = true,
+            reserveTrailBlazepowerDataVisibility = true,
             dailyTrainingDataVisibility = true,
             echoOfWarDataVisibility = true,
             simulatedUniverseDataVisibility = true,

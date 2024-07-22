@@ -16,6 +16,7 @@ import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.design.WidgetDesignViewModel
 import danggai.app.presentation.util.WidgetDesignUtils
 import danggai.app.presentation.util.log
+import danggai.domain.local.Preview
 import danggai.domain.local.TimeNotation
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
@@ -128,14 +129,14 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
 
         viewLifecycleOwner.repeatOnLifeCycleStarted {
             launch {
-                mVM.sfSelectedPreview.collect { index ->
+                mVM.sfSelectedPreview.collect { preview ->
                     binding.widget.root.visibility = View.GONE
                     binding.widgetHonkaiSr.root.visibility = View.GONE
                     binding.widgetZzz.root.visibility = View.GONE
-                    when (index) {
-                        0 -> binding.widget.root.visibility = View.VISIBLE
-                        1 -> binding.widgetHonkaiSr.root.visibility = View.VISIBLE
-                        2 -> binding.widgetZzz.root.visibility = View.VISIBLE
+                    when (preview) {
+                        Preview.GENSHIN -> binding.widget.root.visibility = View.VISIBLE
+                        Preview.STARRAIL -> binding.widgetHonkaiSr.root.visibility = View.VISIBLE
+                        Preview.ZZZ -> binding.widgetZzz.root.visibility = View.VISIBLE
                     }
                 }
             }

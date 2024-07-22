@@ -18,6 +18,7 @@ import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.WidgetDesignUtils
 import danggai.app.presentation.util.log
+import danggai.domain.local.Preview
 import danggai.domain.local.TimeNotation
 import danggai.domain.network.dailynote.entity.Transformer
 import danggai.domain.network.dailynote.entity.TransformerTime
@@ -125,14 +126,14 @@ class WidgetDesignDetailFragment :
 
         viewLifecycleOwner.repeatOnLifeCycleStarted {
             launch {
-                mVM.sfSelectedPreview.collect { index ->
+                mVM.sfSelectedPreview.collect { preview ->
                     binding.widget.root.visibility = View.GONE
                     binding.widgetHksr.root.visibility = View.GONE
                     binding.widgetZzz.root.visibility = View.GONE
-                    when (index) {
-                        0 -> binding.widget.root.visibility = View.VISIBLE
-                        1 -> binding.widgetHksr.root.visibility = View.VISIBLE
-                        2 -> binding.widgetZzz.root.visibility = View.VISIBLE
+                    when (preview) {
+                        Preview.GENSHIN -> binding.widget.root.visibility = View.VISIBLE
+                        Preview.STARRAIL -> binding.widgetHksr.root.visibility = View.VISIBLE
+                        Preview.ZZZ -> binding.widgetZzz.root.visibility = View.VISIBLE
                     }
                 }
             }
@@ -343,7 +344,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfResinDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_GENSHIN
+                    mVM.sfSelectedPreview.value = Preview.GENSHIN
                     binding.widget.rlResin.visibility = if (it) View.VISIBLE else View.GONE
                     binding.widget.rlResinTime.visibility =
                         if (it && mVM.sfWidgetTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
@@ -353,7 +354,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfDailyCommissionDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_GENSHIN
+                    mVM.sfSelectedPreview.value = Preview.GENSHIN
                     binding.widget.rlDailyCommission.visibility =
                         if (it) View.VISIBLE else View.GONE
                 }
@@ -362,7 +363,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfWeeklyBossDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_GENSHIN
+                    mVM.sfSelectedPreview.value = Preview.GENSHIN
                     binding.widget.rlWeeklyBoss.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
@@ -370,7 +371,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfRealmCurrencyDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_GENSHIN
+                    mVM.sfSelectedPreview.value = Preview.GENSHIN
                     binding.widget.rlRealmCurrency.visibility = if (it) View.VISIBLE else View.GONE
                     binding.widget.rlRealmCurrencyTime.visibility =
                         if (it && mVM.sfWidgetTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
@@ -380,7 +381,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfExpeditionDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_GENSHIN
+                    mVM.sfSelectedPreview.value = Preview.GENSHIN
                     binding.widget.rlExpedition.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
@@ -388,7 +389,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfTransformerDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_GENSHIN
+                    mVM.sfSelectedPreview.value = Preview.GENSHIN
                     binding.widget.rlTransformer.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
@@ -397,7 +398,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfTrailBlazepowerDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_HKSR
+                    mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlTrailblazePower.visibility =
                         if (it) View.VISIBLE else View.GONE
                     binding.widgetHksr.rlTrailblazePowerTime.visibility =
@@ -408,8 +409,8 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfReserveTrailBlazepowerDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_HKSR
-                    binding.widgetHksr.rlReservedTrailblazePower.visibility =
+                    mVM.sfSelectedPreview.value = Preview.STARRAIL
+                    binding.widgetHksr.rlReserveTrailblazePower.visibility =
                         if (it) View.VISIBLE else View.GONE
                 }
             }
@@ -417,7 +418,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfDailyTrainingDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_HKSR
+                    mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlDailyTraining.visibility =
                         if (it) View.VISIBLE else View.GONE
                 }
@@ -426,7 +427,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfEchoOfWarDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_HKSR
+                    mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlEchoOfWar.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
@@ -434,7 +435,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfSimulatedUniverseDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_HKSR
+                    mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlSimulatedUniverse.visibility =
                         if (it) View.VISIBLE else View.GONE
                     binding.widgetHksr.rlSimulatedUniverseCleared.visibility =
@@ -445,7 +446,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfSimulatedUniverseClearTimeVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_HKSR
+                    mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlSimulatedUniverseCleared.visibility =
                         if (mVM.sfSimulatedUniverseDataVisibility.value && it) View.VISIBLE else View.GONE
                 }
@@ -454,7 +455,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfDivergentUniverseDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_HKSR
+                    mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlSynchronicityPoint.visibility =
                         if (mVM.sfDivergentUniverseDataVisibility.value && it) View.VISIBLE else View.GONE
                 }
@@ -463,7 +464,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfAssignmentTimeDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_HKSR
+                    mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlAssignment.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
@@ -472,7 +473,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfBatteryDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_ZZZ
+                    mVM.sfSelectedPreview.value = Preview.ZZZ
                     binding.widgetZzz.rlBattery.visibility = if (it) View.VISIBLE else View.GONE
                     binding.widgetZzz.rlBatteryTime.visibility =
                         if (it && mVM.sfWidgetTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
@@ -482,7 +483,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfEngagementTodayDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_ZZZ
+                    mVM.sfSelectedPreview.value = Preview.ZZZ
                     binding.widgetZzz.rlEngagementToday.visibility =
                         if (it) View.VISIBLE else View.GONE
                 }
@@ -491,7 +492,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfScratchCardDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_ZZZ
+                    mVM.sfSelectedPreview.value = Preview.ZZZ
                     binding.widgetZzz.rlScratchCard.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
@@ -499,7 +500,7 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfVideoStoreManagementDataVisibility.collect {
                     log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_ZZZ
+                    mVM.sfSelectedPreview.value = Preview.ZZZ
                     binding.widgetZzz.rlVideoStoreManagement.visibility =
                         if (it) View.VISIBLE else View.GONE
                 }

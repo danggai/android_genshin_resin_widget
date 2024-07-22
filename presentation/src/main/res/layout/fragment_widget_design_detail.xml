@@ -12,6 +12,8 @@
 
         <import type="danggai.domain.local.TimeNotation" />
 
+        <import type="danggai.domain.local.Preview" />
+
         <variable
             name="vm"
             type="danggai.app.presentation.ui.design.WidgetDesignViewModel" />
@@ -77,20 +79,20 @@
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     style="@style/RadioButton"
-                    android:checked="@{vm.sfSelectedPreview == Constant.PREVIEW_GENSHIN}"
-                    android:onClick="@{() -> vm.onClickPreiew(Constant.PREVIEW_GENSHIN)}"
+                    android:checked="@{vm.sfSelectedPreview == Preview.GENSHIN}"
+                    android:onClick="@{() -> vm.onClickPreiew(Preview.GENSHIN)}"
                     android:text="@string/genshin" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     style="@style/RadioButton"
-                    android:checked="@{vm.sfSelectedPreview == Constant.PREVIEW_HKSR}"
-                    android:onClick="@{() -> vm.onClickPreiew(Constant.PREVIEW_HKSR)}"
+                    android:checked="@{vm.sfSelectedPreview == Preview.STARRAIL}"
+                    android:onClick="@{() -> vm.onClickPreiew(Preview.STARRAIL)}"
                     android:text="@string/honkai_sr" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     style="@style/RadioButton"
-                    android:checked="@{vm.sfSelectedPreview == Constant.PREVIEW_ZZZ}"
-                    android:onClick="@{() -> vm.onClickPreiew(Constant.PREVIEW_ZZZ)}"
+                    android:checked="@{vm.sfSelectedPreview == Preview.ZZZ}"
+                    android:onClick="@{() -> vm.onClickPreiew(Preview.ZZZ)}"
                     android:text="@string/zzz" />
 
             </RadioGroup>
@@ -375,7 +377,7 @@
                         android:text="@string/trailblaze_power" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_reserved_trailblaze_power"
+                        android:id="@+id/cb_reserve_trailblaze_power"
                         style="@style/Checkbox"
                         android:checked="@={vm.sfReserveTrailBlazepowerDataVisibility}"
                         android:text="@string/reserve_trailblaze_power" />

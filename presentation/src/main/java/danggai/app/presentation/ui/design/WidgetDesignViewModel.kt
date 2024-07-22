@@ -11,6 +11,7 @@ import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.LocalCharacter
+import danggai.domain.local.Preview
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.local.TimeNotation
 import danggai.domain.local.WidgetTheme
@@ -37,7 +38,7 @@ class WidgetDesignViewModel @Inject constructor(
 
     val sfProgress = MutableStateFlow(false)
 
-    val sfSelectedPreview = MutableStateFlow(Constant.PREVIEW_GENSHIN)
+    val sfSelectedPreview = MutableStateFlow(Preview.GENSHIN)
 
     val sfWidgetTheme = MutableStateFlow(Constant.PREF_WIDGET_THEME_AUTOMATIC)
     val sfTransparency = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY)
@@ -111,7 +112,7 @@ class WidgetDesignViewModel @Inject constructor(
             sfTransformerDataVisibility.value = it.transformerDataVisibility
 
             sfTrailBlazepowerDataVisibility.value = it.trailBlazepowerDataVisibility
-            sfReserveTrailBlazepowerDataVisibility.value = it.reservedTrailBlazepowerDataVisibility
+            sfReserveTrailBlazepowerDataVisibility.value = it.reserveTrailBlazepowerDataVisibility
             sfDailyTrainingDataVisibility.value = it.dailyTrainingDataVisibility
             sfEchoOfWarDataVisibility.value = it.echoOfWarDataVisibility
             sfSimulatedUniverseDataVisibility.value = it.simulatedUniverseDataVisibility
@@ -299,9 +300,9 @@ class WidgetDesignViewModel @Inject constructor(
         saveData()
     }
 
-    fun onClickPreiew(index: Int) {
-        log.e("index -> $index")
-        sfSelectedPreview.value = index
+    fun onClickPreiew(preview: Preview) {
+        log.e("index -> $preview")
+        sfSelectedPreview.value = preview
     }
 
     fun onClickWidgetTheme(widgetTheme: WidgetTheme) {

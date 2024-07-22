@@ -120,12 +120,12 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/rl_reserved_trailblaze_power"
+                android:id="@+id/rl_reserve_trailblaze_power"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/iv_reserved_trailblaze_power"
+                    android:id="@+id/iv_reserve_trailblaze_power"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_alignParentLeft="true"
@@ -135,18 +135,18 @@
                     android:src="@drawable/icon_reserved_trailblaze_power" />
 
                 <TextView
-                    android:id="@+id/tv_reserved_trailblaze_power_title"
+                    android:id="@+id/tv_reserve_trailblaze_power_title"
                     style="@style/TextView"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/tv_reserved_trailblaze_power"
-                    android:layout_toRightOf="@id/iv_reserved_trailblaze_power"
+                    android:layout_toLeftOf="@id/tv_reserve_trailblaze_power"
+                    android:layout_toRightOf="@id/iv_reserve_trailblaze_power"
                     android:singleLine="true"
                     android:text="@string/reserve_trailblaze_power"
                     android:textColor="@color/widget_font_main"
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/tv_reserved_trailblaze_power"
+                    android:id="@+id/tv_reserve_trailblaze_power"
                     style="@style/TextView"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"

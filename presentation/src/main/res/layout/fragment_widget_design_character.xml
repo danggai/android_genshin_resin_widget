@@ -4,6 +4,7 @@
 
     <data>
         <import type="danggai.domain.local.WidgetTheme" />
+
         <import type="android.view.View" />
 
         <variable
@@ -122,18 +123,21 @@
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rb_theme_automatic"
                     style="@style/RadioButton"
+                    android:checked="@{vm.sfWidgetTheme == WidgetTheme.AUTOMATIC.value}"
                     android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.AUTOMATIC)}"
                     android:text="@string/btn_automatic" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rb_theme_light"
                     style="@style/RadioButton"
+                    android:checked="@{vm.sfWidgetTheme == WidgetTheme.LIGHT.value}"
                     android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.LIGHT)}"
                     android:text="@string/btn_light" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rb_theme_dark"
                     style="@style/RadioButton"
+                    android:checked="@{vm.sfWidgetTheme == WidgetTheme.DARK.value}"
                     android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.DARK)}"
                     android:text="@string/btn_dark" />
 
