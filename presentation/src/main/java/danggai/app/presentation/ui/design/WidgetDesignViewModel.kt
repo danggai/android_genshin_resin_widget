@@ -12,6 +12,8 @@ import danggai.domain.core.ApiResult
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.LocalCharacter
 import danggai.domain.local.ResinWidgetDesignSettings
+import danggai.domain.local.TimeNotation
+import danggai.domain.local.WidgetTheme
 import danggai.domain.network.character.usecase.CharacterUseCase
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.resource.repository.ResourceProviderRepository
@@ -35,18 +37,18 @@ class WidgetDesignViewModel @Inject constructor(
 
     val sfProgress = MutableStateFlow(false)
 
-    val sfSelectedPreview = MutableStateFlow(0)
+    val sfSelectedPreview = MutableStateFlow(Constant.PREVIEW_GENSHIN)
 
     val sfWidgetTheme = MutableStateFlow(Constant.PREF_WIDGET_THEME_AUTOMATIC)
     val sfTransparency = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY)
 
-    val sfResinTimeNotation = MutableStateFlow(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
+    val sfResinTimeNotation = MutableStateFlow(TimeNotation.REMAIN_TIME)
     val sfResinImageVisibility = MutableStateFlow(Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE)
     val sfResinFontSize = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE)
     val sfResinUidVisibility = MutableStateFlow(false)
     val sfResinNameVisibility = MutableStateFlow(false)
 
-    val sfDetailTimeNotation = MutableStateFlow(Constant.PREF_TIME_NOTATION_REMAIN_TIME)
+    val sfDetailTimeNotation = MutableStateFlow(TimeNotation.REMAIN_TIME)
     val sfResinDataVisibility = MutableStateFlow(true)
     val sfDailyCommissionDataVisibility = MutableStateFlow(true)
     val sfWeeklyBossDataVisibility = MutableStateFlow(true)
@@ -55,10 +57,12 @@ class WidgetDesignViewModel @Inject constructor(
     val sfTransformerDataVisibility = MutableStateFlow(true)
 
     val sfTrailBlazepowerDataVisibility = MutableStateFlow(true)
+    val sfReserveTrailBlazepowerDataVisibility = MutableStateFlow(true)
     val sfDailyTrainingDataVisibility = MutableStateFlow(true)
     val sfEchoOfWarDataVisibility = MutableStateFlow(true)
     val sfSimulatedUniverseDataVisibility = MutableStateFlow(true)
     val sfSimulatedUniverseClearTimeVisibility = MutableStateFlow(true)
+    val sfDivergentUniverseDataVisibility = MutableStateFlow(true)
     val sfAssignmentTimeDataVisibility = MutableStateFlow(true)
 
     val sfBatteryDataVisibility = MutableStateFlow(true)
@@ -90,7 +94,7 @@ class WidgetDesignViewModel @Inject constructor(
         preference.getResinWidgetDesignSettings().let {
             sfWidgetTheme.value = it.widgetTheme
             sfTransparency.value = it.backgroundTransparency
-            sfResinTimeNotation.value = it.timeNotation
+            sfResinTimeNotation.value = TimeNotation.fromValue(it.timeNotation)
             sfResinFontSize.value = it.fontSize
             sfResinImageVisibility.value = it.resinImageVisibility
             sfResinUidVisibility.value = it.uidVisibility
@@ -98,7 +102,7 @@ class WidgetDesignViewModel @Inject constructor(
         }
 
         preference.getDetailWidgetDesignSettings().let {
-            sfDetailTimeNotation.value = it.timeNotation
+            sfDetailTimeNotation.value = TimeNotation.fromValue(it.timeNotation)
             sfFontSizeDetail.value = it.fontSize
             sfResinDataVisibility.value = it.resinDataVisibility
             sfDailyCommissionDataVisibility.value = it.dailyCommissinDataVisibility
@@ -108,10 +112,12 @@ class WidgetDesignViewModel @Inject constructor(
             sfTransformerDataVisibility.value = it.transformerDataVisibility
 
             sfTrailBlazepowerDataVisibility.value = it.trailBlazepowerDataVisibility
+            sfReserveTrailBlazepowerDataVisibility.value = it.reservedTrailBlazepowerDataVisibility
             sfDailyTrainingDataVisibility.value = it.dailyTrainingDataVisibility
             sfEchoOfWarDataVisibility.value = it.echoOfWarDataVisibility
             sfSimulatedUniverseDataVisibility.value = it.simulatedUniverseDataVisibility
             sfSimulatedUniverseClearTimeVisibility.value = it.simulatedUniverseClearTimeVisibility
+            sfDivergentUniverseDataVisibility.value = it.synchronicityPointVisibility
             sfAssignmentTimeDataVisibility.value = it.assignmentTimeDataVisibility
 
             sfBatteryDataVisibility.value = it.batteryDataVisibility
@@ -240,7 +246,7 @@ class WidgetDesignViewModel @Inject constructor(
         preference.setResinWidgetDesignSettings(
             ResinWidgetDesignSettings(
                 sfWidgetTheme.value,
-                sfResinTimeNotation.value,
+                sfResinTimeNotation.value.value,
                 sfResinImageVisibility.value,
                 sfResinUidVisibility.value,
                 sfResinNameVisibility.value,
@@ -252,7 +258,7 @@ class WidgetDesignViewModel @Inject constructor(
         preference.setDetailWidgetDesignSettings(
             DetailWidgetDesignSettings(
                 sfWidgetTheme.value,
-                sfDetailTimeNotation.value,
+                sfDetailTimeNotation.value.value,
 
                 sfResinDataVisibility.value,
                 sfDailyCommissionDataVisibility.value,
@@ -262,10 +268,12 @@ class WidgetDesignViewModel @Inject constructor(
                 sfTransformerDataVisibility.value,
 
                 sfTrailBlazepowerDataVisibility.value,
+                sfReserveTrailBlazepowerDataVisibility.value,
                 sfDailyTrainingDataVisibility.value,
                 sfEchoOfWarDataVisibility.value,
                 sfSimulatedUniverseDataVisibility.value,
                 sfSimulatedUniverseClearTimeVisibility.value,
+                sfDivergentUniverseDataVisibility.value,
                 sfAssignmentTimeDataVisibility.value,
 
                 sfBatteryDataVisibility.value,
@@ -297,9 +305,9 @@ class WidgetDesignViewModel @Inject constructor(
         sfSelectedPreview.value = index
     }
 
-    fun onClickWidgetTheme(widgetTheme: Constant.WidgetTheme) {
+    fun onClickWidgetTheme(widgetTheme: WidgetTheme) {
         log.e("widgetTheme -> $widgetTheme")
-        sfWidgetTheme.value = widgetTheme.pref
+        sfWidgetTheme.value = widgetTheme.value
     }
 
     fun onClickResinImageVisible(resinImageVisibility: Constant.ResinImageVisibility) {
@@ -307,14 +315,14 @@ class WidgetDesignViewModel @Inject constructor(
         sfResinImageVisibility.value = resinImageVisibility.pref
     }
 
-    fun onClickSetResinTimeNotation(timeNotation: Constant.TimeNotation) {
+    fun onClickSetResinTimeNotation(timeNotation: TimeNotation) {
         log.e("timeNotation -> $timeNotation")
-        sfResinTimeNotation.value = timeNotation.pref
+        sfResinTimeNotation.value = timeNotation
     }
 
-    fun onClickSetDetailTimeNotation(timeNotation: Constant.TimeNotation) {
+    fun onClickSetDetailTimeNotation(timeNotation: TimeNotation) {
         log.e("timeNotation -> $timeNotation")
-        sfDetailTimeNotation.value = timeNotation.pref
+        sfDetailTimeNotation.value = timeNotation
     }
 
     fun onClickBackgroundTransparent() {

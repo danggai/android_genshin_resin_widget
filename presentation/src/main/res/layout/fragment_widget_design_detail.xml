@@ -8,9 +8,9 @@
 
         <import type="danggai.domain.util.Constant" />
 
-        <import type="danggai.domain.util.Constant.WidgetTheme" />
+        <import type="danggai.domain.local.WidgetTheme" />
 
-        <import type="danggai.domain.util.Constant.TimeNotation" />
+        <import type="danggai.domain.local.TimeNotation" />
 
         <variable
             name="vm"
@@ -77,18 +77,20 @@
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     style="@style/RadioButton"
-                    android:checked="true"
-                    android:onClick="@{() -> vm.onClickPreiew(0)}"
+                    android:checked="@{vm.sfSelectedPreview == Constant.PREVIEW_GENSHIN}"
+                    android:onClick="@{() -> vm.onClickPreiew(Constant.PREVIEW_GENSHIN)}"
                     android:text="@string/genshin" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     style="@style/RadioButton"
-                    android:onClick="@{() -> vm.onClickPreiew(1)}"
+                    android:checked="@{vm.sfSelectedPreview == Constant.PREVIEW_HKSR}"
+                    android:onClick="@{() -> vm.onClickPreiew(Constant.PREVIEW_HKSR)}"
                     android:text="@string/honkai_sr" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     style="@style/RadioButton"
-                    android:onClick="@{() -> vm.onClickPreiew(2)}"
+                    android:checked="@{vm.sfSelectedPreview == Constant.PREVIEW_ZZZ}"
+                    android:onClick="@{() -> vm.onClickPreiew(Constant.PREVIEW_ZZZ)}"
                     android:text="@string/zzz" />
 
             </RadioGroup>
@@ -138,18 +140,21 @@
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_theme_automatic"
                         style="@style/RadioButton"
+                        android:checked="@{vm.sfWidgetTheme == WidgetTheme.AUTOMATIC.value}"
                         android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.AUTOMATIC)}"
                         android:text="@string/btn_automatic" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_theme_light"
                         style="@style/RadioButton"
+                        android:checked="@{vm.sfWidgetTheme == WidgetTheme.LIGHT.value}"
                         android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.LIGHT)}"
                         android:text="@string/btn_light" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_theme_dark"
                         style="@style/RadioButton"
+                        android:checked="@{vm.sfWidgetTheme == WidgetTheme.DARK.value}"
                         android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.DARK)}"
                         android:text="@string/btn_dark" />
 
@@ -178,6 +183,7 @@
                         android:id="@+id/rb_remain_time"
                         style="@style/RadioButton"
                         android:layout_marginVertical="@dimen/button_vertical_minus_margin"
+                        android:checked="@{vm.sfDetailTimeNotation == TimeNotation.REMAIN_TIME}"
                         android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.REMAIN_TIME)}"
                         android:text="@string/btn_remain_time" />
 
@@ -185,6 +191,7 @@
                         android:id="@+id/rb_full_charge_time"
                         style="@style/RadioButton"
                         android:layout_marginVertical="@dimen/button_vertical_minus_margin"
+                        android:checked="@{vm.sfDetailTimeNotation == TimeNotation.FULL_CHARGE_TIME}"
                         android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.FULL_CHARGE_TIME)}"
                         android:text="@string/btn_full_charge_time" />
 
@@ -192,6 +199,7 @@
                         android:id="@+id/rb_disable_time"
                         style="@style/RadioButton"
                         android:layout_marginVertical="@dimen/button_vertical_minus_margin"
+                        android:checked="@{vm.sfDetailTimeNotation == TimeNotation.DISABLE_TIME}"
                         android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.DISABLE_TIME)}"
                         android:text="@string/btn_disable" />
 

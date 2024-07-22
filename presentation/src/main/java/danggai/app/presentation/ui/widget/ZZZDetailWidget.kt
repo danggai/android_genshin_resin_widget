@@ -19,6 +19,7 @@ import danggai.app.presentation.util.WidgetDesignUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.DetailWidgetDesignSettings
+import danggai.domain.local.TimeNotation
 import danggai.domain.network.dailynote.entity.ZZZDailyNoteData
 import danggai.domain.util.Constant
 import java.text.SimpleDateFormat
@@ -257,9 +258,9 @@ class ZZZDetailWidget() : AppWidgetProvider() {
 
                 view.setTextViewText(R.id.tv_sync_time, recentSyncTimeString)
 
-                when (widgetDesign.timeNotation) {
-                    Constant.PREF_TIME_NOTATION_DEFAULT,
-                    Constant.PREF_TIME_NOTATION_REMAIN_TIME -> {
+                when (TimeNotation.fromValue(widgetDesign.timeNotation)) {
+                    TimeNotation.DEFAULT,
+                    TimeNotation.REMAIN_TIME -> {
                         view.setTextViewText(
                             R.id.tv_battery_time_title,
                             _context.getString(R.string.until_fully_replenished)
@@ -270,7 +271,7 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                         )
                     }
 
-                    Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
+                    TimeNotation.FULL_CHARGE_TIME -> {
                         view.setTextViewText(
                             R.id.tv_battery_time_title,
                             _context.getString(R.string.estimated_replenishment_time)
@@ -280,6 +281,8 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                             _context.getString(R.string.assignment_done_at)
                         )
                     }
+
+                    else -> { }
                 }
 
                 view.setTextViewText(
@@ -287,7 +290,7 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                         _context,
                         recentSyncTimeDate,
                         dailyNote.energy.restore,
-                        widgetDesign.timeNotation
+                        TimeNotation.fromValue(widgetDesign.timeNotation)
                     )
                 )
                 view.setTextViewText(
@@ -298,7 +301,7 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                             context,
                             Constant.PREF_ASSIGNMENT_TIME + "_$uid"
                         ),
-                        widgetDesign.timeNotation
+                        TimeNotation.fromValue(widgetDesign.timeNotation)
                     )
                 )
 
@@ -309,7 +312,7 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                 view.setViewVisibility(
                     R.id.rl_battery_time,
                     if (widgetDesign.batteryDataVisibility &&
-                        widgetDesign.timeNotation != Constant.PREF_TIME_NOTATION_DISABLE
+                        TimeNotation.fromValue(widgetDesign.timeNotation) != TimeNotation.DISABLE_TIME
                     ) View.VISIBLE else View.GONE
                 )
 

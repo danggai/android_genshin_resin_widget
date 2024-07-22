@@ -19,6 +19,7 @@ import danggai.app.presentation.util.WidgetDesignUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.DetailWidgetDesignSettings
+import danggai.domain.local.TimeNotation
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.util.Constant
 import java.text.SimpleDateFormat
@@ -271,7 +272,7 @@ class DetailWidget() : AppWidgetProvider() {
                             _context,
                             recentSyncTimeDate,
                             dailyNote.transformer,
-                            widgetDesign.timeNotation
+                            TimeNotation.fromValue(widgetDesign.timeNotation)
                         )
 
                         else -> _context.getString(R.string.widget_ui_transformer_reached)
@@ -280,9 +281,9 @@ class DetailWidget() : AppWidgetProvider() {
 
                 view.setTextViewText(R.id.tv_sync_time, recentSyncTimeString)
 
-                when (widgetDesign.timeNotation) {
-                    Constant.PREF_TIME_NOTATION_DEFAULT,
-                    Constant.PREF_TIME_NOTATION_REMAIN_TIME -> {
+                when (TimeNotation.fromValue(widgetDesign.timeNotation)) {
+                    TimeNotation.DEFAULT,
+                    TimeNotation.REMAIN_TIME -> {
                         view.setTextViewText(
                             R.id.tv_resin_time_title,
                             _context.getString(R.string.until_fully_replenished)
@@ -297,7 +298,7 @@ class DetailWidget() : AppWidgetProvider() {
                         )
                     }
 
-                    Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
+                    TimeNotation.FULL_CHARGE_TIME -> {
                         view.setTextViewText(
                             R.id.tv_resin_time_title,
                             _context.getString(R.string.estimated_replenishment_time)
@@ -311,6 +312,8 @@ class DetailWidget() : AppWidgetProvider() {
                             _context.getString(R.string.expeditions_done_at)
                         )
                     }
+
+                    else -> { }
                 }
 
                 view.setTextViewText(
@@ -318,7 +321,7 @@ class DetailWidget() : AppWidgetProvider() {
                         _context,
                         recentSyncTimeDate,
                         dailyNote.resin_recovery_time,
-                        widgetDesign.timeNotation
+                        TimeNotation.fromValue(widgetDesign.timeNotation)
                     )
                 )
                 view.setTextViewText(
@@ -326,7 +329,7 @@ class DetailWidget() : AppWidgetProvider() {
                         _context,
                         recentSyncTimeDate,
                         dailyNote.home_coin_recovery_time,
-                        widgetDesign.timeNotation
+                        TimeNotation.fromValue(widgetDesign.timeNotation)
                     )
                 )
                 view.setTextViewText(
@@ -337,7 +340,7 @@ class DetailWidget() : AppWidgetProvider() {
                             context,
                             Constant.PREF_EXPEDITION_TIME + "_$uid"
                         ),
-                        widgetDesign.timeNotation
+                        TimeNotation.fromValue(widgetDesign.timeNotation)
                     )
                 )
 
@@ -348,7 +351,7 @@ class DetailWidget() : AppWidgetProvider() {
                 view.setViewVisibility(
                     R.id.rl_resin_time,
                     if (widgetDesign.resinDataVisibility &&
-                        widgetDesign.timeNotation != Constant.PREF_TIME_NOTATION_DISABLE
+                        TimeNotation.fromValue(widgetDesign.timeNotation) != TimeNotation.DISABLE_TIME
                     ) View.VISIBLE else View.GONE
                 )
 
@@ -368,7 +371,7 @@ class DetailWidget() : AppWidgetProvider() {
                 view.setViewVisibility(
                     R.id.rl_realm_currency_time,
                     if (widgetDesign.realmCurrencyDataVisibility &&
-                        widgetDesign.timeNotation != Constant.PREF_TIME_NOTATION_DISABLE &&
+                        TimeNotation.fromValue(widgetDesign.timeNotation) != TimeNotation.DISABLE_TIME &&
                         dailyNote.home_coin_recovery_time != "0"
                     ) View.VISIBLE else View.GONE
                 )

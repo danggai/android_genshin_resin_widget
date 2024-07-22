@@ -18,6 +18,7 @@ import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.WidgetDesignUtils
 import danggai.app.presentation.util.log
+import danggai.domain.local.TimeNotation
 import danggai.domain.network.dailynote.entity.Transformer
 import danggai.domain.network.dailynote.entity.TransformerTime
 import danggai.domain.util.Constant
@@ -63,13 +64,13 @@ class WidgetDesignDetailFragment :
             context?.let { CommonFunction.convertIntToTimes(0, it) }
 
         when (mVM.sfDetailTimeNotation.value) {
-            Constant.PREF_TIME_NOTATION_DEFAULT,
-            Constant.PREF_TIME_NOTATION_REMAIN_TIME -> binding.rbRemainTime.isChecked = true
+            TimeNotation.DEFAULT,
+            TimeNotation.REMAIN_TIME -> binding.rbRemainTime.isChecked = true
 
-            Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked =
+            TimeNotation.FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked =
                 true
 
-            Constant.PREF_TIME_NOTATION_DISABLE -> binding.rbDisableTime.isChecked = true
+            TimeNotation.DISABLE_TIME -> binding.rbDisableTime.isChecked = true
             else -> binding.rbRemainTime.isChecked = true
         }
 
@@ -181,8 +182,8 @@ class WidgetDesignDetailFragment :
 
                         binding.widget.apply {
                             when (mVM.sfDetailTimeNotation.value) {
-                                Constant.PREF_TIME_NOTATION_DEFAULT,
-                                Constant.PREF_TIME_NOTATION_REMAIN_TIME,
+                                TimeNotation.DEFAULT,
+                                TimeNotation.REMAIN_TIME,
                                 -> {
                                     rlResinTime.visibility =
                                         if (mVM.sfResinDataVisibility.value) View.VISIBLE else View.GONE
@@ -197,7 +198,7 @@ class WidgetDesignDetailFragment :
                                         _context.getString(R.string.until_expeditions_done)
                                 }
 
-                                Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
+                                TimeNotation.FULL_CHARGE_TIME -> {
                                     rlResinTime.visibility =
                                         if (mVM.sfResinDataVisibility.value) View.VISIBLE else View.GONE
                                     rlRealmCurrencyTime.visibility =
@@ -211,7 +212,7 @@ class WidgetDesignDetailFragment :
                                         _context.getString(R.string.expeditions_done_at)
                                 }
 
-                                Constant.PREF_TIME_NOTATION_DISABLE -> {
+                                TimeNotation.DISABLE_TIME -> {
                                     rlResinTime.visibility = View.GONE
                                     rlRealmCurrencyTime.visibility = View.GONE
                                 }
@@ -245,8 +246,8 @@ class WidgetDesignDetailFragment :
 
                         binding.widgetHksr.apply {
                             when (mVM.sfDetailTimeNotation.value) {
-                                Constant.PREF_TIME_NOTATION_DEFAULT,
-                                Constant.PREF_TIME_NOTATION_REMAIN_TIME,
+                                TimeNotation.DEFAULT,
+                                TimeNotation.REMAIN_TIME,
                                 -> {
                                     rlTrailblazePowerTime.visibility =
                                         if (mVM.sfTrailBlazepowerDataVisibility.value) View.VISIBLE else View.GONE
@@ -257,7 +258,7 @@ class WidgetDesignDetailFragment :
                                         _context.getString(R.string.until_assignment_done)
                                 }
 
-                                Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
+                                TimeNotation.FULL_CHARGE_TIME -> {
                                     rlTrailblazePowerTime.visibility =
                                         if (mVM.sfTrailBlazepowerDataVisibility.value) View.VISIBLE else View.GONE
 
@@ -267,7 +268,7 @@ class WidgetDesignDetailFragment :
                                         _context.getString(R.string.assignment_done_at)
                                 }
 
-                                Constant.PREF_TIME_NOTATION_DISABLE -> {
+                                TimeNotation.DISABLE_TIME -> {
                                     rlTrailblazePowerTime.visibility = View.GONE
                                 }
                             }
@@ -288,8 +289,8 @@ class WidgetDesignDetailFragment :
 
                         binding.widgetZzz.apply {
                             when (mVM.sfDetailTimeNotation.value) {
-                                Constant.PREF_TIME_NOTATION_DEFAULT,
-                                Constant.PREF_TIME_NOTATION_REMAIN_TIME,
+                                TimeNotation.DEFAULT,
+                                TimeNotation.REMAIN_TIME,
                                 -> {
                                     rlBatteryTime.visibility =
                                         if (mVM.sfBatteryDataVisibility.value) View.VISIBLE else View.GONE
@@ -298,7 +299,7 @@ class WidgetDesignDetailFragment :
                                         _context.getString(R.string.until_fully_replenished)
                                 }
 
-                                Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
+                                TimeNotation.FULL_CHARGE_TIME -> {
                                     rlBatteryTime.visibility =
                                         if (mVM.sfBatteryDataVisibility.value) View.VISIBLE else View.GONE
 
@@ -306,7 +307,7 @@ class WidgetDesignDetailFragment :
                                         _context.getString(R.string.estimated_replenishment_time)
                                 }
 
-                                Constant.PREF_TIME_NOTATION_DISABLE -> {
+                                TimeNotation.DISABLE_TIME -> {
                                     rlBatteryTime.visibility = View.GONE
                                 }
                             }
@@ -329,7 +330,7 @@ class WidgetDesignDetailFragment :
                     mVM.sfSelectedPreview.value = Constant.PREVIEW_GENSHIN
                     binding.widget.rlResin.visibility = if (it) View.VISIBLE else View.GONE
                     binding.widget.rlResinTime.visibility =
-                        if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
+                        if (it && mVM.sfDetailTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
                 }
             }
 
@@ -356,7 +357,7 @@ class WidgetDesignDetailFragment :
                     mVM.sfSelectedPreview.value = Constant.PREVIEW_GENSHIN
                     binding.widget.rlRealmCurrency.visibility = if (it) View.VISIBLE else View.GONE
                     binding.widget.rlRealmCurrencyTime.visibility =
-                        if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
+                        if (it && mVM.sfDetailTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
                 }
             }
 
@@ -402,7 +403,9 @@ class WidgetDesignDetailFragment :
                     binding.widgetHksr.rlTrailblazePower.visibility =
                         if (it) View.VISIBLE else View.GONE
                     binding.widgetHksr.rlTrailblazePowerTime.visibility =
-                        if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
+                        if (it && mVM.sfDetailTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
+                }
+            }
 
             launch {
                 mVM.sfReserveTrailBlazepowerDataVisibility.collect {
@@ -474,7 +477,7 @@ class WidgetDesignDetailFragment :
                     mVM.sfSelectedPreview.value = Constant.PREVIEW_ZZZ
                     binding.widgetZzz.rlBattery.visibility = if (it) View.VISIBLE else View.GONE
                     binding.widgetZzz.rlBatteryTime.visibility =
-                        if (it && mVM.sfDetailTimeNotation.value != Constant.PREF_TIME_NOTATION_DISABLE) View.VISIBLE else View.GONE
+                        if (it && mVM.sfDetailTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
                 }
             }
 
