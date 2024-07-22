@@ -312,7 +312,7 @@
     <string name="widget_ui_transformer_not_obtained">Not Obtained</string>
     <string name="widget_ui_transformer_not_reached">In Cooldown</string>
     <string name="widget_ui_transformer_reached">Ready</string>
-    <string name="widget_ui_unlocked">Unlocked</string>
+    <string name="widget_ui_locked">Unlocked</string>
     <string name="widget_ui_unknown">Unknown</string>
     <string name="widget_ui_no_talent_ingredient">Can\'t get Talent Level-Up Materials that selected character needs today.</string>
     <string name="widget_ui_no_selected_characters">Select target characters at Widget Design > Characters.</string>

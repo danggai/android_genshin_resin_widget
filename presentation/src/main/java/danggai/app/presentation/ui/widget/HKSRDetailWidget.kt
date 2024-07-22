@@ -225,6 +225,15 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 )
 
                 view.setTextViewText(
+                    R.id.tv_reserve_trailblaze_power_title,
+                    _context.getString(R.string.reserve_trailblaze_power)
+                )
+                view.setTextViewText(
+                    R.id.tv_reserve_trailblaze_power,
+                    dailyNote.current_reserve_stamina.toString()
+                )
+
+                view.setTextViewText(
                     R.id.tv_daily_training_title,
                     _context.getString(R.string.daily_training)
                 )
@@ -270,6 +279,19 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 view.setTextViewText(
                     R.id.tv_simulated_universe_cleared,
                     CommonFunction.convertIntToTimes(dailyNote.rogue_clear_count, _context)
+                )
+
+                view.setTextViewText(
+                    R.id.tv_synchronicity_point_title,
+                    _context.getString(R.string.divergent_universe)
+                )
+                view.setTextViewText(
+                    R.id.tv_synchronicity_point,
+                    if (!dailyNote.rogue_tourn_weekly_unlocked) {
+                        dailyNote.rogue_tourn_weekly_cur.toString() + "/" + dailyNote.rogue_tourn_weekly_max.toString()
+                    } else {
+                        context.getString(R.string.widget_ui_locked)
+                    }
                 )
 
                 view.setTextViewText(R.id.tv_sync_time, recentSyncTimeString)
@@ -331,6 +353,10 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                         TimeNotation.fromValue(widgetDesign.timeNotation) != TimeNotation.DISABLE_TIME
                     ) View.VISIBLE else View.GONE
                 )
+                view.setViewVisibility(
+                    R.id.rl_reserve_trailblaze_power,
+                    if (widgetDesign.reserveTrailBlazepowerDataVisibility) View.VISIBLE else View.GONE
+                )
 
                 view.setViewVisibility(
                     R.id.rl_daily_training,
@@ -349,6 +375,10 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                     if (widgetDesign.simulatedUniverseDataVisibility &&
                         widgetDesign.simulatedUniverseClearTimeVisibility
                     ) View.VISIBLE else View.GONE
+                )
+                view.setViewVisibility(
+                    R.id.rl_synchronicity_point,
+                    if (widgetDesign.synchronicityPointVisibility) View.VISIBLE else View.GONE
                 )
                 view.setViewVisibility(
                     R.id.rl_assignment,
