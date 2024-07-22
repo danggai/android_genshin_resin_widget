@@ -102,6 +102,8 @@ object WidgetDesignUtils {
                 tvResinTitle.textSize = it
                 tvResinTime.textSize = it
                 tvResinTimeTitle.textSize = it
+                tvResinTime.textSize = it
+                tvResinTimeTitle.textSize = it
                 tvDailyCommission.textSize = it
                 tvDailyCommissionTitle.textSize = it
                 tvWeeklyBoss.textSize = it
@@ -138,6 +140,8 @@ object WidgetDesignUtils {
             tvTrailblazePowerTitle.setTextColor(mainFontColor)
             tvTrailblazePowerTime.setTextColor(mainFontColor)
             tvTrailblazePowerTimeTitle.setTextColor(mainFontColor)
+            tvReservedTrailblazePower.setTextColor(mainFontColor)
+            tvReservedTrailblazePowerTitle.setTextColor(mainFontColor)
             tvDailyTraining.setTextColor(mainFontColor)
             tvDailyTrainingTitle.setTextColor(mainFontColor)
             tvEchoOfWar.setTextColor(mainFontColor)
@@ -146,6 +150,8 @@ object WidgetDesignUtils {
             tvSimulatedUniverseTitle.setTextColor(mainFontColor)
             tvSimulatedUniverseCleared.setTextColor(mainFontColor)
             tvSimulatedUniverseTitleCleared.setTextColor(mainFontColor)
+            tvSynchronicityPoint.setTextColor(mainFontColor)
+            tvSynchronicityPointTitle.setTextColor(mainFontColor)
             tvAssignmentTime.setTextColor(mainFontColor)
             tvAssignmentTitle.setTextColor(mainFontColor)
 
@@ -160,6 +166,8 @@ object WidgetDesignUtils {
                 tvTrailblazePowerTitle.textSize = it
                 tvTrailblazePowerTime.textSize = it
                 tvTrailblazePowerTimeTitle.textSize = it
+                tvReservedTrailblazePower.textSize = it
+                tvReservedTrailblazePowerTitle.textSize = it
                 tvDailyTraining.textSize = it
                 tvDailyTrainingTitle.textSize = it
                 tvEchoOfWar.textSize = it
@@ -168,6 +176,8 @@ object WidgetDesignUtils {
                 tvSimulatedUniverseTitle.textSize = it
                 tvSimulatedUniverseCleared.textSize = it
                 tvSimulatedUniverseTitleCleared.textSize = it
+                tvSynchronicityPoint.textSize = it
+                tvSynchronicityPointTitle.textSize = it
                 tvAssignmentTime.textSize = it
                 tvAssignmentTitle.textSize = it
             }
@@ -331,16 +341,20 @@ object WidgetDesignUtils {
             R.id.tv_trailblaze_power_title,
             R.id.tv_trailblaze_power_time,
             R.id.tv_trailblaze_power_time_title,
+            R.id.tv_reserved_trailblaze_power,
+            R.id.tv_reserved_trailblaze_power_title,
             R.id.tv_daily_training,
             R.id.tv_daily_training_title,
             R.id.tv_echo_of_war,
             R.id.tv_echo_of_war_title,
-            R.id.tv_assignment_time,
-            R.id.tv_assignment_title,
             R.id.tv_simulated_universe,
             R.id.tv_simulated_universe_title,
             R.id.tv_simulated_universe_cleared,
             R.id.tv_simulated_universe_title_cleared,
+            R.id.tv_synchronicity_point,
+            R.id.tv_synchronicity_point_title,
+            R.id.tv_assignment_time,
+            R.id.tv_assignment_title,
 
             R.id.tv_battery,
             R.id.tv_battery_title,

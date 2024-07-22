@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:paddingBottom="3dp">
+            android:paddingBottom="3dp"
+            android:animateLayoutChanges="true">
 
             <LinearLayout
                 android:id="@+id/ll_sync"
@@ -192,7 +193,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:singleLine="true"
-                    android:text="Incomplete"
+                    android:text="@string/scratch_card_no"
                     android:textColor="@color/widget_font_main"
                     android:textSize="12sp" />
 
@@ -229,7 +230,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:singleLine="true"
-                    android:text="Revenue Available"
+                    android:text="@string/video_store_management_no"
                     android:textColor="@color/widget_font_main"
                     android:textSize="12sp" />
 

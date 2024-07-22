@@ -240,6 +240,22 @@ object Constant {
     const val PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE = 30
     const val PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE = 12
 
+    enum class Preview(val value: Int) {
+        GENSHIN(PREF_SERVER_ASIA),
+        HKSR(PREF_SERVER_USA),
+        ZZZ(PREF_SERVER_EUROPE);
+
+        companion object {
+            fun fromValue(value: Int): Preview {
+                return Preview.values().find { it.value == value } ?: Preview.GENSHIN
+            }
+        }
+    }
+
+    const val PREVIEW_GENSHIN = 0
+    const val PREVIEW_HKSR = 1
+    const val PREVIEW_ZZZ = 2
+
     enum class Server(val pref: Int) {
         ASIA(PREF_SERVER_ASIA),
         USA(PREF_SERVER_USA),

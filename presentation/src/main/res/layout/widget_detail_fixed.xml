@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:paddingBottom="3dp">
+            android:paddingBottom="3dp"
+            android:animateLayoutChanges="true">
 
             <LinearLayout
                 android:id="@+id/ll_sync"

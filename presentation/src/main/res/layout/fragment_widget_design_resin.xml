@@ -6,6 +6,8 @@
 
         <import type="android.view.View" />
 
+        <import type="danggai.domain.util.Constant" />
+
         <import type="danggai.domain.util.Constant.WidgetTheme" />
 
         <import type="danggai.domain.util.Constant.TimeNotation" />
