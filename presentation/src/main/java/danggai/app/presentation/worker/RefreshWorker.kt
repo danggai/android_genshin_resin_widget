@@ -20,6 +20,7 @@ import danggai.domain.core.ApiResult
 import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
 import danggai.domain.local.NotiType
+import danggai.domain.local.Server
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.network.dailynote.entity.ZZZDailyNoteData
@@ -654,11 +655,11 @@ class RefreshWorker @AssistedInject constructor(
                     accountList.forEach { account ->
 
                         if (!account.genshin_uid.contains("-")) {
-                            val server = when (account.server) {
-                                Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
-                                Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
-                                Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
-                                Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
+                            val server = when (Server.fromValue(account.server)) {
+                                Server.ASIA -> Constant.SERVER_OS_ASIA
+                                Server.EUROPE -> Constant.SERVER_OS_EURO
+                                Server.USA -> Constant.SERVER_OS_USA
+                                Server.CHT -> Constant.SERVER_OS_CHT
                                 else -> Constant.SERVER_OS_ASIA
                             }
 
@@ -670,11 +671,11 @@ class RefreshWorker @AssistedInject constructor(
                         }
 
                         if (account.honkai_sr_uid.isNotBlank()) {
-                            val server = when (account.server) {
-                                Constant.PREF_SERVER_ASIA -> Constant.SERVER_PO_ASIA
-                                Constant.PREF_SERVER_EUROPE -> Constant.SERVER_PO_EURO
-                                Constant.PREF_SERVER_USA -> Constant.SERVER_PO_USA
-                                Constant.PREF_SERVER_CHT -> Constant.SERVER_PO_CHT
+                            val server = when (Server.fromValue(account.honkai_sr_server)) {
+                                Server.ASIA -> Constant.SERVER_PO_ASIA
+                                Server.EUROPE -> Constant.SERVER_PO_EURO
+                                Server.USA -> Constant.SERVER_PO_USA
+                                Server.CHT -> Constant.SERVER_PO_CHT
                                 else -> Constant.SERVER_PO_ASIA
                             }
 
@@ -700,11 +701,11 @@ class RefreshWorker @AssistedInject constructor(
                         }
 
                         if (account.zzz_uid.isNotEmpty()) {
-                            val server = when (account.server) {
-                                Constant.PREF_SERVER_ASIA -> Constant.SERVER_GF_ASIA
-                                Constant.PREF_SERVER_EUROPE -> Constant.SERVER_GF_EURO
-                                Constant.PREF_SERVER_USA -> Constant.SERVER_GF_USA
-                                Constant.PREF_SERVER_CHT -> Constant.SERVER_GF_CHT
+                            val server = when (Server.fromValue(account.zzz_server)) {
+                                Server.ASIA -> Constant.SERVER_GF_ASIA
+                                Server.EUROPE -> Constant.SERVER_GF_EURO
+                                Server.USA -> Constant.SERVER_GF_USA
+                                Server.CHT -> Constant.SERVER_GF_CHT
                                 else -> Constant.SERVER_PO_ASIA
                             }
 

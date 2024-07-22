@@ -239,18 +239,6 @@ object Constant {
     const val PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE = 30
     const val PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE = 12
 
-    enum class Server(val pref: Int) {
-        ASIA(PREF_SERVER_ASIA),
-        USA(PREF_SERVER_USA),
-        EUROPE(PREF_SERVER_EUROPE),
-        CHT(PREF_SERVER_CHT),
-    }
-
-    const val PREF_SERVER_ASIA = 0
-    const val PREF_SERVER_USA = 1
-    const val PREF_SERVER_EUROPE = 2
-    const val PREF_SERVER_CHT = 3
-
     const val PREF_WIDGET_THEME_AUTOMATIC = 0
     const val PREF_WIDGET_THEME_LIGHT = 1
     const val PREF_WIDGET_THEME_DARK = 2
