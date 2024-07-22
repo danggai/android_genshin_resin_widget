@@ -293,17 +293,6 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                         TimeNotation.fromValue(widgetDesign.timeNotation)
                     )
                 )
-                view.setTextViewText(
-                    R.id.tv_assignment_time, TimeFunction.expeditionSecondToTime(
-                        _context,
-                        recentSyncTimeDate,
-                        PreferenceManager.getString(
-                            context,
-                            Constant.PREF_ASSIGNMENT_TIME + "_$uid"
-                        ),
-                        TimeNotation.fromValue(widgetDesign.timeNotation)
-                    )
-                )
 
                 view.setViewVisibility(
                     R.id.rl_battery,
