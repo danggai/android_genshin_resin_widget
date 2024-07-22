@@ -183,7 +183,7 @@
                         android:id="@+id/rb_remain_time"
                         style="@style/RadioButton"
                         android:layout_marginVertical="@dimen/button_vertical_minus_margin"
-                        android:checked="@{vm.sfDetailTimeNotation == TimeNotation.REMAIN_TIME}"
+                        android:checked="@{vm.sfWidgetTimeNotation == TimeNotation.REMAIN_TIME}"
                         android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.REMAIN_TIME)}"
                         android:text="@string/btn_remain_time" />
 
@@ -191,7 +191,7 @@
                         android:id="@+id/rb_full_charge_time"
                         style="@style/RadioButton"
                         android:layout_marginVertical="@dimen/button_vertical_minus_margin"
-                        android:checked="@{vm.sfDetailTimeNotation == TimeNotation.FULL_CHARGE_TIME}"
+                        android:checked="@{vm.sfWidgetTimeNotation == TimeNotation.FULL_CHARGE_TIME}"
                         android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.FULL_CHARGE_TIME)}"
                         android:text="@string/btn_full_charge_time" />
 
@@ -199,7 +199,7 @@
                         android:id="@+id/rb_disable_time"
                         style="@style/RadioButton"
                         android:layout_marginVertical="@dimen/button_vertical_minus_margin"
-                        android:checked="@{vm.sfDetailTimeNotation == TimeNotation.DISABLE_TIME}"
+                        android:checked="@{vm.sfWidgetTimeNotation == TimeNotation.DISABLE_TIME}"
                         android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.DISABLE_TIME)}"
                         android:text="@string/btn_disable" />
 

@@ -63,7 +63,7 @@ class WidgetDesignDetailFragment :
         binding.widgetHksr.tvSimulatedUniverseCleared.text =
             context?.let { CommonFunction.convertIntToTimes(0, it) }
 
-        when (mVM.sfDetailTimeNotation.value) {
+        when (mVM.sfWidgetTimeNotation.value) {
             TimeNotation.DEFAULT,
             TimeNotation.REMAIN_TIME -> binding.rbRemainTime.isChecked = true
 
@@ -171,7 +171,7 @@ class WidgetDesignDetailFragment :
             }
 
             launch {
-                mVM.sfDetailTimeNotation.collect {
+                mVM.sfWidgetTimeNotation.collect {
                     context?.let { _context ->
                         log.e()
 
@@ -181,7 +181,7 @@ class WidgetDesignDetailFragment :
                         val fakeTransformer = Transformer(true, TransformerTime(3, 0, 0, 0, true))
 
                         binding.widget.apply {
-                            when (mVM.sfDetailTimeNotation.value) {
+                            when (mVM.sfWidgetTimeNotation.value) {
                                 TimeNotation.DEFAULT,
                                 TimeNotation.REMAIN_TIME,
                                 -> {
@@ -222,30 +222,30 @@ class WidgetDesignDetailFragment :
                                 _context,
                                 Date(),
                                 fakeResinRemainTime,
-                                mVM.sfDetailTimeNotation.value
+                                mVM.sfWidgetTimeNotation.value
                             )
                             tvRealmCurrencyTime.text = TimeFunction.realmCurrencySecondToTime(
                                 _context,
                                 Date(),
                                 fakeRealmCurrencyRemainTime,
-                                mVM.sfDetailTimeNotation.value
+                                mVM.sfWidgetTimeNotation.value
                             )
                             tvExpeditionTime.text = TimeFunction.expeditionSecondToTime(
                                 _context,
                                 Date(),
                                 fakeExpedtionRemainTime,
-                                mVM.sfDetailTimeNotation.value
+                                mVM.sfWidgetTimeNotation.value
                             )
                             tvTransformer.text = TimeFunction.transformerToTime(
                                 _context,
                                 Date(),
                                 fakeTransformer,
-                                mVM.sfDetailTimeNotation.value
+                                mVM.sfWidgetTimeNotation.value
                             )
                         }
 
                         binding.widgetHksr.apply {
-                            when (mVM.sfDetailTimeNotation.value) {
+                            when (mVM.sfWidgetTimeNotation.value) {
                                 TimeNotation.DEFAULT,
                                 TimeNotation.REMAIN_TIME,
                                 -> {
@@ -277,18 +277,18 @@ class WidgetDesignDetailFragment :
                                 _context,
                                 Date(),
                                 fakeResinRemainTime,
-                                mVM.sfDetailTimeNotation.value
+                                mVM.sfWidgetTimeNotation.value
                             )
                             tvAssignmentTime.text = TimeFunction.expeditionSecondToTime(
                                 _context,
                                 Date(),
                                 fakeExpedtionRemainTime,
-                                mVM.sfDetailTimeNotation.value
+                                mVM.sfWidgetTimeNotation.value
                             )
                         }
 
                         binding.widgetZzz.apply {
-                            when (mVM.sfDetailTimeNotation.value) {
+                            when (mVM.sfWidgetTimeNotation.value) {
                                 TimeNotation.DEFAULT,
                                 TimeNotation.REMAIN_TIME,
                                 -> {
@@ -316,10 +316,26 @@ class WidgetDesignDetailFragment :
                                 _context,
                                 Date(),
                                 fakeResinRemainTime,
-                                mVM.sfDetailTimeNotation.value
+                                mVM.sfWidgetTimeNotation.value
                             )
                         }
                     }
+                }
+            }
+
+            launch {
+                mVM.sfDetailUidVisibility.collect {
+                    log.e()
+                    binding.widget.tvUid.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widgetHksr.tvUid.visibility = if (it) View.VISIBLE else View.GONE
+                }
+            }
+
+            launch {
+                mVM.sfDetailNameVisibility.collect {
+                    log.e()
+                    binding.widget.tvName.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widgetHksr.tvName.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
 
@@ -330,7 +346,7 @@ class WidgetDesignDetailFragment :
                     mVM.sfSelectedPreview.value = Constant.PREVIEW_GENSHIN
                     binding.widget.rlResin.visibility = if (it) View.VISIBLE else View.GONE
                     binding.widget.rlResinTime.visibility =
-                        if (it && mVM.sfDetailTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
+                        if (it && mVM.sfWidgetTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
                 }
             }
 
@@ -357,7 +373,7 @@ class WidgetDesignDetailFragment :
                     mVM.sfSelectedPreview.value = Constant.PREVIEW_GENSHIN
                     binding.widget.rlRealmCurrency.visibility = if (it) View.VISIBLE else View.GONE
                     binding.widget.rlRealmCurrencyTime.visibility =
-                        if (it && mVM.sfDetailTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
+                        if (it && mVM.sfWidgetTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
                 }
             }
 
@@ -377,24 +393,6 @@ class WidgetDesignDetailFragment :
                 }
             }
 
-            launch {
-                mVM.sfDetailUidVisibility.collect {
-                    log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_GENSHIN
-                    binding.widget.tvUid.visibility = if (it) View.VISIBLE else View.GONE
-                    binding.widgetHksr.tvUid.visibility = if (it) View.VISIBLE else View.GONE
-                }
-            }
-
-            launch {
-                mVM.sfDetailNameVisibility.collect {
-                    log.e()
-                    mVM.sfSelectedPreview.value = Constant.PREVIEW_GENSHIN
-                    binding.widget.tvName.visibility = if (it) View.VISIBLE else View.GONE
-                    binding.widgetHksr.tvName.visibility = if (it) View.VISIBLE else View.GONE
-                }
-            }
-
             // 붕괴: 스타레일
             launch {
                 mVM.sfTrailBlazepowerDataVisibility.collect {
@@ -403,7 +401,7 @@ class WidgetDesignDetailFragment :
                     binding.widgetHksr.rlTrailblazePower.visibility =
                         if (it) View.VISIBLE else View.GONE
                     binding.widgetHksr.rlTrailblazePowerTime.visibility =
-                        if (it && mVM.sfDetailTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
+                        if (it && mVM.sfWidgetTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
                 }
             }
 
@@ -477,7 +475,7 @@ class WidgetDesignDetailFragment :
                     mVM.sfSelectedPreview.value = Constant.PREVIEW_ZZZ
                     binding.widgetZzz.rlBattery.visibility = if (it) View.VISIBLE else View.GONE
                     binding.widgetZzz.rlBatteryTime.visibility =
-                        if (it && mVM.sfDetailTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
+                        if (it && mVM.sfWidgetTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
                 }
             }
 

@@ -71,7 +71,7 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
             else -> binding.rbResinImageVisible.isChecked = true
         }
 
-        when(mVM.sfResinTimeNotation.value) {
+        when(mVM.sfWidgetTimeNotation.value) {
             TimeNotation.DEFAULT,
             TimeNotation.REMAIN_TIME -> binding.rbRemainTime.isChecked = true
             TimeNotation.FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked = true
@@ -179,10 +179,10 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
             }
 
             launch {
-                mVM.sfResinTimeNotation.collect {
+                mVM.sfWidgetTimeNotation.collect {
                     log.e()
 
-                    when (mVM.sfResinTimeNotation.value) {
+                    when (mVM.sfWidgetTimeNotation.value) {
                         TimeNotation.DEFAULT,
                         TimeNotation.REMAIN_TIME -> {
                             binding.widget.tvRemainTime.visibility = View.VISIBLE

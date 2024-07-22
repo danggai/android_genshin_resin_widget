@@ -41,14 +41,13 @@ class WidgetDesignViewModel @Inject constructor(
 
     val sfWidgetTheme = MutableStateFlow(Constant.PREF_WIDGET_THEME_AUTOMATIC)
     val sfTransparency = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY)
+    val sfWidgetTimeNotation = MutableStateFlow(TimeNotation.REMAIN_TIME)
 
-    val sfResinTimeNotation = MutableStateFlow(TimeNotation.REMAIN_TIME)
     val sfResinImageVisibility = MutableStateFlow(Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE)
     val sfResinFontSize = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE)
     val sfResinUidVisibility = MutableStateFlow(false)
     val sfResinNameVisibility = MutableStateFlow(false)
 
-    val sfDetailTimeNotation = MutableStateFlow(TimeNotation.REMAIN_TIME)
     val sfResinDataVisibility = MutableStateFlow(true)
     val sfDailyCommissionDataVisibility = MutableStateFlow(true)
     val sfWeeklyBossDataVisibility = MutableStateFlow(true)
@@ -94,7 +93,7 @@ class WidgetDesignViewModel @Inject constructor(
         preference.getResinWidgetDesignSettings().let {
             sfWidgetTheme.value = it.widgetTheme
             sfTransparency.value = it.backgroundTransparency
-            sfResinTimeNotation.value = TimeNotation.fromValue(it.timeNotation)
+            sfWidgetTimeNotation.value = TimeNotation.fromValue(it.timeNotation)
             sfResinFontSize.value = it.fontSize
             sfResinImageVisibility.value = it.resinImageVisibility
             sfResinUidVisibility.value = it.uidVisibility
@@ -102,7 +101,7 @@ class WidgetDesignViewModel @Inject constructor(
         }
 
         preference.getDetailWidgetDesignSettings().let {
-            sfDetailTimeNotation.value = TimeNotation.fromValue(it.timeNotation)
+            sfWidgetTimeNotation.value = TimeNotation.fromValue(it.timeNotation)
             sfFontSizeDetail.value = it.fontSize
             sfResinDataVisibility.value = it.resinDataVisibility
             sfDailyCommissionDataVisibility.value = it.dailyCommissinDataVisibility
@@ -246,7 +245,7 @@ class WidgetDesignViewModel @Inject constructor(
         preference.setResinWidgetDesignSettings(
             ResinWidgetDesignSettings(
                 sfWidgetTheme.value,
-                sfResinTimeNotation.value.value,
+                sfWidgetTimeNotation.value.value,
                 sfResinImageVisibility.value,
                 sfResinUidVisibility.value,
                 sfResinNameVisibility.value,
@@ -258,7 +257,7 @@ class WidgetDesignViewModel @Inject constructor(
         preference.setDetailWidgetDesignSettings(
             DetailWidgetDesignSettings(
                 sfWidgetTheme.value,
-                sfDetailTimeNotation.value.value,
+                sfWidgetTimeNotation.value.value,
 
                 sfResinDataVisibility.value,
                 sfDailyCommissionDataVisibility.value,
@@ -317,12 +316,12 @@ class WidgetDesignViewModel @Inject constructor(
 
     fun onClickSetResinTimeNotation(timeNotation: TimeNotation) {
         log.e("timeNotation -> $timeNotation")
-        sfResinTimeNotation.value = timeNotation
+        sfWidgetTimeNotation.value = timeNotation
     }
 
     fun onClickSetDetailTimeNotation(timeNotation: TimeNotation) {
         log.e("timeNotation -> $timeNotation")
-        sfDetailTimeNotation.value = timeNotation
+        sfWidgetTimeNotation.value = timeNotation
     }
 
     fun onClickBackgroundTransparent() {

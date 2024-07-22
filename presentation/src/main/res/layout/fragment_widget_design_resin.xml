@@ -184,21 +184,21 @@
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_remain_time"
                         style="@style/RadioButton"
-                        android:checked="@{vm.sfDetailTimeNotation == TimeNotation.REMAIN_TIME}"
+                        android:checked="@{vm.sfWidgetTimeNotation == TimeNotation.REMAIN_TIME}"
                         android:onClick="@{() -> vm.onClickSetResinTimeNotation(TimeNotation.REMAIN_TIME)}"
                         android:text="@string/btn_remain_time" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_full_charge_time"
                         style="@style/RadioButton"
-                        android:checked="@{vm.sfDetailTimeNotation == TimeNotation.FULL_CHARGE_TIME}"
+                        android:checked="@{vm.sfWidgetTimeNotation == TimeNotation.FULL_CHARGE_TIME}"
                         android:onClick="@{() -> vm.onClickSetResinTimeNotation(TimeNotation.FULL_CHARGE_TIME)}"
                         android:text="@string/btn_full_charge_time" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_disable_time"
                         style="@style/RadioButton"
-                        android:checked="@{vm.sfDetailTimeNotation == TimeNotation.DISABLE_TIME}"
+                        android:checked="@{vm.sfWidgetTimeNotation == TimeNotation.DISABLE_TIME}"
                         android:onClick="@{() -> vm.onClickSetResinTimeNotation(TimeNotation.DISABLE_TIME)}"
                         android:text="@string/btn_disable" />
 
