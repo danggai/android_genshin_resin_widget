@@ -14,16 +14,24 @@ import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.PlayableCharacters
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.TimeFunction.getSyncDayString
+import danggai.app.presentation.util.WidgetDesignUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.TalentWorker
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.util.Constant
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class TalentWidget() : AppWidgetProvider() {
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
 
         appWidgetIds.forEach { appWidgetId ->
@@ -61,16 +69,24 @@ class TalentWidget() : AppWidgetProvider() {
                         _intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 
                         val ids = AppWidgetManager.getInstance(it.applicationContext)
-                            .getAppWidgetIds(ComponentName(it.applicationContext,
-                                TalentWidget::class.java))
+                            .getAppWidgetIds(
+                                ComponentName(
+                                    it.applicationContext,
+                                    TalentWidget::class.java
+                                )
+                            )
 
                         _intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
                         it.sendBroadcast(_intent)
                     }
 
-                    appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.gv_characters)
+                    appWidgetManager.notifyAppWidgetViewDataChanged(
+                        appWidgetIds,
+                        R.id.gv_characters
+                    )
                 }
             }
+
             AppWidgetManager.ACTION_APPWIDGET_UPDATE -> {
                 log.e(action.toString())
             }
@@ -99,10 +115,23 @@ class TalentWidget() : AppWidgetProvider() {
         val intentUpdate = Intent(context, TalentWidget::class.java).apply {
             action = Constant.ACTION_TALENT_WIDGET_REFRESH
         }
-        remoteViews.setOnClickPendingIntent(R.id.ll_sync, PendingIntent.getBroadcast(context, 0, intentUpdate, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT))
+        remoteViews.setOnClickPendingIntent(
+            R.id.ll_sync,
+            PendingIntent.getBroadcast(
+                context,
+                0,
+                intentUpdate,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
+        )
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
-        val awId = manager.getAppWidgetIds(ComponentName(context.applicationContext, TalentWidget::class.java))
+        val awId = manager.getAppWidgetIds(
+            ComponentName(
+                context.applicationContext,
+                TalentWidget::class.java
+            )
+        )
 
         manager.updateAppWidget(awId, remoteViews)
 
@@ -114,26 +143,51 @@ class TalentWidget() : AppWidgetProvider() {
             log.e()
 
             val widgetDesign =
-                PreferenceManager.getT<ResinWidgetDesignSettings>(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS)?: ResinWidgetDesignSettings.EMPTY
+                PreferenceManager.getT<ResinWidgetDesignSettings>(
+                    context,
+                    Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS
+                ) ?: ResinWidgetDesignSettings.EMPTY
 
-            CommonFunction.applyWidgetTheme(widgetDesign, _context, view)
+            WidgetDesignUtils.applyWidgetTheme(widgetDesign, _context, view)
 
-            val selectedCharacterIds = PreferenceManager.getIntArray(context, Constant.PREF_SELECTED_CHARACTER_ID_LIST)
+            val selectedCharacterIds =
+                PreferenceManager.getIntArray(context, Constant.PREF_SELECTED_CHARACTER_ID_LIST)
 
             val targetCharacters = PlayableCharacters
                 .filter {
                     selectedCharacterIds.contains(it.id) &&
                             when (it.talentDay) {
-                                Constant.TALENT_DATE_MONTHU -> CommonFunction.getDateInGenshin() in listOf(1, 2, 5)
-                                Constant.TALENT_DATE_TUEFRI -> CommonFunction.getDateInGenshin() in listOf(1, 3, 6)
-                                Constant.TALENT_DATE_WEDSAT -> CommonFunction.getDateInGenshin() in listOf(1, 4, 7)
+                                Constant.TALENT_DATE_MONTHU -> CommonFunction.getDateInGenshin() in listOf(
+                                    1,
+                                    2,
+                                    5
+                                )
+
+                                Constant.TALENT_DATE_TUEFRI -> CommonFunction.getDateInGenshin() in listOf(
+                                    1,
+                                    3,
+                                    6
+                                )
+
+                                Constant.TALENT_DATE_WEDSAT -> CommonFunction.getDateInGenshin() in listOf(
+                                    1,
+                                    4,
+                                    7
+                                )
+
                                 Constant.TALENT_DATE_ALL -> true
                                 else -> false
                             }
                 }
 
-            view.setTextViewText(R.id.tv_no_talent_ingredient, _context.getString(R.string.widget_ui_no_talent_ingredient))
-            view.setTextViewText(R.id.tv_no_selected_characters, _context.getString(R.string.widget_ui_no_selected_characters))
+            view.setTextViewText(
+                R.id.tv_no_talent_ingredient,
+                _context.getString(R.string.widget_ui_no_talent_ingredient)
+            )
+            view.setTextViewText(
+                R.id.tv_no_selected_characters,
+                _context.getString(R.string.widget_ui_no_selected_characters)
+            )
 
             view.setViewVisibility(R.id.gv_characters, View.GONE)
             view.setViewVisibility(R.id.tv_no_talent_ingredient, View.GONE)

@@ -19,33 +19,37 @@
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:animateLayoutChanges="true">
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="20dp" />
 
         <include
             android:id="@+id/widget"
             layout="@layout/widget_detail_fixed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginHorizontal="50dp"/>
+            android:layout_marginHorizontal="50dp" />
 
         <include
             android:id="@+id/widget_hksr"
             layout="@layout/widget_hksr_detail_fixed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="50dp"/>
+            android:layout_marginHorizontal="50dp" />
 
         <include
             android:id="@+id/widget_zzz"
             layout="@layout/widget_zzz_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="30dp"
             android:layout_marginHorizontal="50dp" />
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="15dp" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -55,22 +59,23 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:text="@string/preview"
                 android:textColor="@color/black"
                 android:textSize="28sp"
-                android:textStyle="bold|italic"
-                android:layout_marginHorizontal="10dp" />
+                android:textStyle="bold|italic" />
 
             <RadioGroup
                 style="@style/RadioGroup"
                 android:layout_height="40dp"
+                android:layout_marginHorizontal="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginHorizontal="10dp">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     style="@style/RadioButton"
+                    android:checked="true"
                     android:onClick="@{() -> vm.onClickPreiew(0)}"
                     android:text="@string/genshin" />
 
@@ -161,8 +166,8 @@
                     android:textStyle="bold|italic" />
 
                 <RadioGroup
-                    style="@style/RadioGroup"
                     android:id="@+id/rg_time_notation_1"
+                    style="@style/RadioGroup"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -170,22 +175,22 @@
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_remain_time"
                         style="@style/RadioButton"
-                        android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.REMAIN_TIME)}"
                         android:layout_marginVertical="@dimen/button_vertical_minus_margin"
+                        android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.REMAIN_TIME)}"
                         android:text="@string/btn_remain_time" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_full_charge_time"
                         style="@style/RadioButton"
-                        android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.FULL_CHARGE_TIME)}"
                         android:layout_marginVertical="@dimen/button_vertical_minus_margin"
+                        android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.FULL_CHARGE_TIME)}"
                         android:text="@string/btn_full_charge_time" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_disable_time"
                         style="@style/RadioButton"
-                        android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.DISABLE_TIME)}"
                         android:layout_marginVertical="@dimen/button_vertical_minus_margin"
+                        android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.DISABLE_TIME)}"
                         android:text="@string/btn_disable" />
 
                 </RadioGroup>
@@ -197,7 +202,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/visible_data"
+                    android:text="@string/identifier"
                     android:textColor="@color/black"
                     android:textSize="28sp"
                     android:textStyle="bold|italic" />
@@ -208,14 +213,14 @@
                     android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_uid"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfDetailUidVisibility}"
                         android:text="@string/uid" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_name"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfDetailNameVisibility}"
                         android:text="@string/nickname_" />
 
@@ -234,11 +239,11 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextView"
                         android:layout_width="wrap_content"
+                        android:gravity="right"
                         android:text="@string/genshin"
                         android:textColor="@color/black"
                         android:textSize="20sp"
-                        android:textStyle="bold|italic"
-                        android:gravity="right" />
+                        android:textStyle="bold|italic" />
 
                     <Space
                         android:layout_width="5dp"
@@ -262,14 +267,14 @@
                     android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_resin"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfResinDataVisibility}"
                         android:text="@string/resin" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_daily_commission"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfDailyCommissionDataVisibility}"
                         android:text="@string/daily_commissions" />
 
@@ -281,14 +286,14 @@
                     android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_enemies_of_note"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfWeeklyBossDataVisibility}"
                         android:text="@string/enemies_of_note" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_realm_currency"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfRealmCurrencyDataVisibility}"
                         android:text="@string/realm_currency" />
 
@@ -300,14 +305,14 @@
                     android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_number_of_expedition"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfExpeditionDataVisibility}"
                         android:text="@string/expedition_time" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_parametric_transformer"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfTransformerDataVisibility}"
                         android:text="@string/parametric_transformer" />
 
@@ -326,11 +331,11 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextView"
                         android:layout_width="wrap_content"
+                        android:gravity="right"
                         android:text="@string/honkai_sr"
                         android:textColor="@color/black"
                         android:textSize="20sp"
-                        android:textStyle="bold|italic"
-                        android:gravity="right" />
+                        android:textStyle="bold|italic" />
 
                     <Space
                         android:layout_width="5dp"
@@ -354,14 +359,14 @@
                     android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_trailblaze_power"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfTrailBlazepowerDataVisibility}"
                         android:text="@string/trailblaze_power" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_daily_training"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfDailyTrainingDataVisibility}"
                         android:text="@string/daily_training" />
 
@@ -373,14 +378,14 @@
                     android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_echo_of_war"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfEchoOfWarDataVisibility}"
                         android:text="@string/echo_of_war" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_assignment"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfAssignmentTimeDataVisibility}"
                         android:text="@string/assignment_time" />
 
@@ -392,14 +397,14 @@
                     android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_simulated_universe"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfSimulatedUniverseDataVisibility}"
                         android:text="@string/simulated_universe" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_empty"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfSimulatedUniverseClearTimeVisibility}"
                         android:enabled="@{vm.sfSimulatedUniverseDataVisibility}"
                         android:text="@string/clear_count" />
@@ -419,11 +424,11 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextView"
                         android:layout_width="wrap_content"
+                        android:gravity="right"
                         android:text="@string/zzz"
                         android:textColor="@color/black"
                         android:textSize="20sp"
-                        android:textStyle="bold|italic"
-                        android:gravity="right" />
+                        android:textStyle="bold|italic" />
 
                     <Space
                         android:layout_width="5dp"
@@ -447,14 +452,14 @@
                     android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_battery"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfBatteryDataVisibility}"
                         android:text="@string/battery" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_engagemnent_today"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfEngagementTodayDataVisibility}"
                         android:text="@string/engagement_today" />
 
@@ -466,14 +471,14 @@
                     android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_scratch_card"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfScratchCardDataVisibility}"
                         android:text="@string/scratch_card" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_video_store_management"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfVideoStoreManagementDataVisibility}"
                         android:text="@string/video_store_management" />
 
@@ -499,27 +504,27 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@{vm.sfFontSizeDetail.toString()}"
+                        android:gravity="center"
                         android:hint="12"
-                        android:textSize="20sp"
+                        android:text="@{vm.sfFontSizeDetail.toString()}"
                         android:textColor="@color/black"
-                        android:textStyle="bold|italic"
-                        android:gravity="center" />
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic" />
 
                     <androidx.appcompat.widget.AppCompatSeekBar
-                        style="@style/SeekBar"
                         android:id="@+id/sb_fontsize"
-                        android:progress="@={vm.sfFontSizeDetail}"
-                        android:min="5"
+                        style="@style/SeekBar"
+                        android:layout_gravity="center_vertical"
                         android:max="30"
-                        android:layout_gravity="center_vertical" />
+                        android:min="5"
+                        android:progress="@={vm.sfFontSizeDetail}" />
 
 
                     <com.google.android.material.button.MaterialButton
-                        style="@style/SmallMaterialButton"
                         android:id="@+id/mb_reset_detail_fontsize"
-                        android:text="@string/reset"
-                        android:onClick="@{()->vm.onClickDetailFontSize()}" />
+                        style="@style/SmallMaterialButton"
+                        android:onClick="@{()->vm.onClickDetailFontSize()}"
+                        android:text="@string/reset" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -543,25 +548,25 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@{vm.sfTransparency.toString()}"
+                        android:gravity="center"
                         android:hint="100"
-                        android:textSize="20sp"
+                        android:text="@{vm.sfTransparency.toString()}"
                         android:textColor="@color/black"
-                        android:textStyle="bold|italic"
-                        android:gravity="center" />
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic" />
 
                     <androidx.appcompat.widget.AppCompatSeekBar
-                        style="@style/SeekBar"
                         android:id="@+id/sb_transparent"
-                        android:progress="@={vm.sfTransparency}"
+                        style="@style/SeekBar"
+                        android:layout_gravity="center_vertical"
                         android:max="255"
-                        android:layout_gravity="center_vertical" />
+                        android:progress="@={vm.sfTransparency}" />
 
                     <com.google.android.material.button.MaterialButton
-                        style="@style/SmallMaterialButton"
                         android:id="@+id/mb_reset_bg_trans"
-                        android:text="@string/reset"
-                        android:onClick="@{()->vm.onClickBackgroundTransparent()}" />
+                        style="@style/SmallMaterialButton"
+                        android:onClick="@{()->vm.onClickBackgroundTransparent()}"
+                        android:text="@string/reset" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

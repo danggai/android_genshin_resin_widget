@@ -21,15 +21,18 @@
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:animateLayoutChanges="true">
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="20dp" />
 
         <include
             android:id="@+id/widget"
             layout="@layout/widget_resin_fixed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:layout_marginHorizontal="50dp" />
 
         <include
@@ -37,17 +40,18 @@
             layout="@layout/widget_trailblaze_power"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="50dp"/>
+            android:layout_marginHorizontal="50dp" />
 
         <include
             android:id="@+id/widget_zzz"
             layout="@layout/widget_battery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="30dp"
             android:layout_marginHorizontal="50dp" />
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="15dp" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -57,22 +61,23 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:text="@string/preview"
                 android:textColor="@color/black"
                 android:textSize="28sp"
-                android:textStyle="bold|italic"
-                android:layout_marginHorizontal="10dp" />
+                android:textStyle="bold|italic" />
 
             <RadioGroup
                 style="@style/RadioGroup"
                 android:layout_height="40dp"
+                android:layout_marginHorizontal="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginHorizontal="10dp">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     style="@style/RadioButton"
+                    android:checked="true"
                     android:onClick="@{() -> vm.onClickPreiew(0)}"
                     android:text="@string/genshin" />
 
@@ -229,7 +234,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/visible_data"
+                    android:text="@string/identifier"
                     android:textColor="@color/black"
                     android:textSize="28sp"
                     android:textStyle="bold|italic" />
@@ -240,14 +245,14 @@
                     android:weightSum="3">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_uid"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfResinUidVisibility}"
                         android:text="@string/uid" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_name"
+                        style="@style/Checkbox"
                         android:checked="@={vm.sfResinNameVisibility}"
                         android:text="@string/nickname_" />
 
@@ -273,26 +278,26 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@{vm.sfResinFontSize.toString()}"
+                        android:gravity="center"
                         android:hint="030"
-                        android:textSize="20sp"
+                        android:text="@{vm.sfResinFontSize.toString()}"
                         android:textColor="@color/black"
-                        android:textStyle="bold|italic"
-                        android:gravity="center" />
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic" />
 
                     <androidx.appcompat.widget.AppCompatSeekBar
-                        style="@style/SeekBar"
                         android:id="@+id/sb_fontsize"
-                        android:progress="@={vm.sfResinFontSize}"
+                        style="@style/SeekBar"
+                        android:layout_gravity="center_vertical"
                         android:max="100"
                         android:min="20"
-                        android:layout_gravity="center_vertical" />
+                        android:progress="@={vm.sfResinFontSize}" />
 
                     <com.google.android.material.button.MaterialButton
-                        style="@style/SmallMaterialButton"
                         android:id="@+id/mb_reset_resin_fontsize"
-                        android:text="@string/reset"
-                        android:onClick="@{()->vm.onClickResinFontSize()}" />
+                        style="@style/SmallMaterialButton"
+                        android:onClick="@{()->vm.onClickResinFontSize()}"
+                        android:text="@string/reset" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -316,25 +321,25 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@{vm.sfTransparency.toString()}"
+                        android:gravity="center"
                         android:hint="170"
-                        android:textSize="20sp"
+                        android:text="@{vm.sfTransparency.toString()}"
                         android:textColor="@color/black"
-                        android:textStyle="bold|italic"
-                        android:gravity="center" />
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic" />
 
                     <androidx.appcompat.widget.AppCompatSeekBar
-                        style="@style/SeekBar"
                         android:id="@+id/sb_transparent"
-                        android:progress="@={vm.sfTransparency}"
+                        style="@style/SeekBar"
+                        android:layout_gravity="center_vertical"
                         android:max="255"
-                        android:layout_gravity="center_vertical" />
+                        android:progress="@={vm.sfTransparency}" />
 
                     <com.google.android.material.button.MaterialButton
-                        style="@style/SmallMaterialButton"
                         android:id="@+id/mb_reset_bg_trans"
-                        android:text="@string/reset"
-                        android:onClick="@{()->vm.onClickBackgroundTransparent()}" />
+                        style="@style/SmallMaterialButton"
+                        android:onClick="@{()->vm.onClickBackgroundTransparent()}"
+                        android:text="@string/reset" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

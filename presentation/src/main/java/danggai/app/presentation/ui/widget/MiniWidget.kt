@@ -13,6 +13,7 @@ import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.TimeFunction
+import danggai.app.presentation.util.WidgetDesignUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.ResinWidgetDesignSettings
@@ -23,7 +24,11 @@ import danggai.domain.util.Constant
 
 class MiniWidget() : AppWidgetProvider() {
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
 
         appWidgetIds.forEach { appWidgetId ->
@@ -43,10 +48,10 @@ class MiniWidget() : AppWidgetProvider() {
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
-        val widgetId = intent?.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)?:-1
-        val uid = intent?.getStringExtra("uid")?:""
-        val name = intent?.getStringExtra("name")?:""
-        val paramType = intent?.getStringExtra("paramType")?:""
+        val widgetId = intent?.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1) ?: -1
+        val uid = intent?.getStringExtra("uid") ?: ""
+        val name = intent?.getStringExtra("name") ?: ""
+        val paramType = intent?.getStringExtra("paramType") ?: ""
 
         if (widgetId != -1 && uid.isNotEmpty()) {
             context.let {
@@ -60,7 +65,11 @@ class MiniWidget() : AppWidgetProvider() {
         }
         if (widgetId != -1 && paramType.isNotEmpty()) {
             context.let {
-                PreferenceManager.setString(context, Constant.PREF_MINI_WIDGET_TYPE + "_$widgetId", paramType)
+                PreferenceManager.setString(
+                    context,
+                    Constant.PREF_MINI_WIDGET_TYPE + "_$widgetId",
+                    paramType
+                )
             }
         }
 
@@ -71,6 +80,7 @@ class MiniWidget() : AppWidgetProvider() {
                 setWidgetRefreshing(context, appWidgetManager, appWidgetIds)
                 context.let { RefreshWorker.startWorkerPeriodic(context) }
             }
+
             AppWidgetManager.ACTION_APPWIDGET_UPDATE -> {
                 log.e(action.toString())
             }
@@ -99,16 +109,41 @@ class MiniWidget() : AppWidgetProvider() {
         val intentUpdate = Intent(context, MiniWidget::class.java).apply {
             action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
         }
-        views.setOnClickPendingIntent(R.id.ll_sync, PendingIntent.getBroadcast(context, 0, intentUpdate, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT))
+        views.setOnClickPendingIntent(
+            R.id.ll_sync,
+            PendingIntent.getBroadcast(
+                context,
+                0,
+                intentUpdate,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
+        )
 
         val intentMainActivity = Intent(context, MainActivity::class.java)
-        views.setOnClickPendingIntent(R.id.iv_resin, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
-        views.setOnClickPendingIntent(R.id.iv_transformer, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
-        views.setOnClickPendingIntent(R.id.tv_realm_currency, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
-        views.setOnClickPendingIntent(R.id.ll_disable, PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE))
+        views.setOnClickPendingIntent(
+            R.id.iv_resin,
+            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+        )
+        views.setOnClickPendingIntent(
+            R.id.iv_transformer,
+            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+        )
+        views.setOnClickPendingIntent(
+            R.id.tv_realm_currency,
+            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+        )
+        views.setOnClickPendingIntent(
+            R.id.ll_disable,
+            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+        )
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
-        val awId = manager.getAppWidgetIds(ComponentName(context.applicationContext, MiniWidget::class.java))
+        val awId = manager.getAppWidgetIds(
+            ComponentName(
+                context.applicationContext,
+                MiniWidget::class.java
+            )
+        )
 
         manager.updateAppWidget(awId, views)
 
@@ -118,17 +153,25 @@ class MiniWidget() : AppWidgetProvider() {
     private fun syncView(widgetId: Int, view: RemoteViews, context: Context?) {
         context?.let {
             val widgetDesign =
-                PreferenceManager.getT<ResinWidgetDesignSettings>(context, Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS)?: ResinWidgetDesignSettings.EMPTY
+                PreferenceManager.getT<ResinWidgetDesignSettings>(
+                    context,
+                    Constant.PREF_RESIN_WIDGET_DESIGN_SETTINGS
+                ) ?: ResinWidgetDesignSettings.EMPTY
 
-            CommonFunction.applyWidgetTheme(widgetDesign, context, view)
+            WidgetDesignUtils.applyWidgetTheme(widgetDesign, context, view)
 
             if (CommonFunction.isUidValidate(widgetId, context)) {
                 val uid = PreferenceManager.getString(context, Constant.PREF_UID + "_$widgetId")
                 val name = PreferenceManager.getString(context, Constant.PREF_NAME + "_$widgetId")
-                val recentSyncTimeString = PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid").ifEmpty {
-                    TimeFunction.getSyncDateTimeString()
-                }.split(" ")[1]
-                val dailyNote = PreferenceManager.getT<GenshinDailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid")?: GenshinDailyNoteData.EMPTY
+                val recentSyncTimeString =
+                    PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid")
+                        .ifEmpty {
+                            TimeFunction.getSyncDateTimeString()
+                        }.split(" ")[1]
+                val dailyNote = PreferenceManager.getT<GenshinDailyNoteData>(
+                    context,
+                    Constant.PREF_DAILY_NOTE_DATA + "_$uid"
+                ) ?: GenshinDailyNoteData.EMPTY
                 log.e()
 
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
@@ -137,45 +180,61 @@ class MiniWidget() : AppWidgetProvider() {
                 view.setViewVisibility(R.id.ll_realm_currency, View.GONE)
                 view.setViewVisibility(R.id.ll_transformer, View.GONE)
 
-                when (PreferenceManager.getString(context, Constant.PREF_MINI_WIDGET_TYPE + "_$widgetId")) {
+                when (PreferenceManager.getString(
+                    context,
+                    Constant.PREF_MINI_WIDGET_TYPE + "_$widgetId"
+                )) {
                     Constant.PREF_MINI_WIDGET_RESIN -> {
                         view.setViewVisibility(R.id.ll_resin, View.VISIBLE)
                         view.setTextViewText(R.id.tv_resin, dailyNote.current_resin.toString())
-                        view.setTextViewText(R.id.tv_resin_max, "/"+ dailyNote.max_resin.toString())
+                        view.setTextViewText(
+                            R.id.tv_resin_max,
+                            "/" + dailyNote.max_resin.toString()
+                        )
                     }
+
                     Constant.PREF_MINI_WIDGET_REALM_CURRENCY -> {
                         view.setViewVisibility(R.id.ll_realm_currency, View.VISIBLE)
-                        view.setTextViewText(R.id.tv_realm_currency, dailyNote.current_home_coin.toString())
-                        view.setTextViewText(R.id.tv_realm_currency_max, "/"+ dailyNote.max_home_coin.toString())
+                        view.setTextViewText(
+                            R.id.tv_realm_currency,
+                            dailyNote.current_home_coin.toString()
+                        )
+                        view.setTextViewText(
+                            R.id.tv_realm_currency_max,
+                            "/" + dailyNote.max_home_coin.toString()
+                        )
                     }
+
                     Constant.PREF_MINI_WIDGET_PARAMETRIC_TRANSFORMER -> {
                         view.setViewVisibility(R.id.ll_transformer, View.VISIBLE)
-                        view.setTextViewText(R.id.tv_transformer,
+                        view.setTextViewText(
+                            R.id.tv_transformer,
                             when {
                                 dailyNote.transformer == null -> context.getString(R.string.widget_ui_unknown)
                                 !dailyNote.transformer!!.obtained -> context.getString(R.string.widget_ui_transformer_not_obtained)
                                 !dailyNote.transformer!!.recovery_time.reached -> {
                                     if (dailyNote.transformer != null && dailyNote.transformer!!.recovery_time == TransformerTime.REACHED)
                                         context.getString(R.string.widget_ui_transformer_reached)
-
                                     else if (dailyNote.transformer != null && dailyNote.transformer!!.recovery_time != TransformerTime.REACHED)
                                         context.getString(R.string.widget_ui_transformer_not_reached)
-
                                     else context.getString(R.string.widget_ui_unknown)
                                 }
+
                                 else -> context.getString(R.string.widget_ui_transformer_reached)
                             }
                         )
                     }
                 }
 
-                view.setViewVisibility(R.id.tv_uid,
-                    if(widgetDesign.uidVisibility) View.VISIBLE else View.GONE
+                view.setViewVisibility(
+                    R.id.tv_uid,
+                    if (widgetDesign.uidVisibility) View.VISIBLE else View.GONE
                 )
                 view.setTextViewText(R.id.tv_uid, uid)
 
-                view.setViewVisibility(R.id.tv_name,
-                    if(widgetDesign.nameVisibility) View.VISIBLE else View.GONE
+                view.setViewVisibility(
+                    R.id.tv_name,
+                    if (widgetDesign.nameVisibility) View.VISIBLE else View.GONE
                 )
                 view.setTextViewText(R.id.tv_name, name)
 

@@ -16,10 +16,8 @@ import android.net.Uri
 import android.os.Build
 import android.util.DisplayMetrics
 import android.view.Display
-import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
 import androidx.core.hardware.display.DisplayManagerCompat
 import com.google.firebase.crashlytics.CustomKeysAndValues
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -34,9 +32,7 @@ import danggai.app.presentation.ui.widget.ResinWidgetResizable
 import danggai.app.presentation.ui.widget.TrailPowerWidget
 import danggai.app.presentation.ui.widget.ZZZDetailWidget
 import danggai.domain.db.account.entity.Account
-import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.NotiType
-import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.util.Constant
@@ -282,177 +278,6 @@ object CommonFunction {
         return when (int) {
             1 -> int.toString() + context.getString(R.string.time)
             else -> int.toString() + context.getString(R.string.times)
-        }
-    }
-
-    fun applyWidgetTheme(
-        widgetDesign: ResinWidgetDesignSettings,
-        context: Context,
-        view: RemoteViews,
-    ) {
-        val bgColor: Int = if (widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_LIGHT) {
-            ColorUtils.setAlphaComponent(
-                ContextCompat.getColor(context, R.color.white),
-                widgetDesign.backgroundTransparency
-            )
-        } else if ((widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
-            ColorUtils.setAlphaComponent(
-                ContextCompat.getColor(context, R.color.black),
-                widgetDesign.backgroundTransparency
-            )
-        } else {
-            ColorUtils.setAlphaComponent(
-                ContextCompat.getColor(context, R.color.white),
-                widgetDesign.backgroundTransparency
-            )
-        }
-
-        val mainFontColor: Int =
-            if (widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_LIGHT) {
-                ContextCompat.getColor(context, R.color.widget_font_main_light)
-            } else if ((widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
-                ContextCompat.getColor(context, R.color.widget_font_main_dark)
-            } else {
-                ContextCompat.getColor(context, R.color.widget_font_main_light)
-            }
-
-        val subFontColor: Int =
-            if (widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_LIGHT) {
-                ContextCompat.getColor(context, R.color.widget_font_sub_light)
-            } else if ((widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
-                ContextCompat.getColor(context, R.color.widget_font_sub_dark)
-            } else {
-                ContextCompat.getColor(context, R.color.widget_font_sub_light)
-            }
-
-        view.setInt(R.id.ll_root, "setBackgroundColor", bgColor)
-        view.setInt(R.id.iv_refersh, "setColorFilter", subFontColor)
-        view.setTextColor(R.id.tv_sync_time, subFontColor)
-        view.setTextColor(R.id.tv_disable, mainFontColor)
-
-        /* Talent Widget 꼽사리ㅎㅎ; */
-        view.setTextColor(R.id.tv_no_talent_ingredient, mainFontColor)
-        view.setTextColor(R.id.tv_no_selected_characters, mainFontColor)
-
-        when (view.layoutId) {
-            R.layout.widget_resin_fixed,
-            R.layout.widget_trailblaze_power -> {
-                val fontSize = widgetDesign.fontSize
-                view.setFloat(R.id.tv_resin, "setTextSize", fontSize.toFloat())
-                view.setFloat(R.id.tv_trail_power, "setTextSize", fontSize.toFloat())
-            }
-        }
-
-        view.setTextColor(R.id.tv_resin, mainFontColor)
-        view.setTextColor(R.id.tv_resin_max, mainFontColor)
-        view.setTextColor(R.id.tv_trail_power, mainFontColor)
-        view.setTextColor(R.id.tv_trail_power_max, mainFontColor)
-        view.setTextColor(R.id.tv_remain_time, mainFontColor)
-    }
-
-    fun applyWidgetTheme(
-        widgetDesign: DetailWidgetDesignSettings,
-        context: Context,
-        view: RemoteViews,
-    ) {
-        val bgColor: Int = if (widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_LIGHT) {
-            ColorUtils.setAlphaComponent(
-                ContextCompat.getColor(context, R.color.white),
-                widgetDesign.backgroundTransparency
-            )
-        } else if ((widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
-            ColorUtils.setAlphaComponent(
-                ContextCompat.getColor(context, R.color.black),
-                widgetDesign.backgroundTransparency
-            )
-        } else {
-            ColorUtils.setAlphaComponent(
-                ContextCompat.getColor(context, R.color.white),
-                widgetDesign.backgroundTransparency
-            )
-        }
-
-        val mainFontColor: Int =
-            if (widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_LIGHT) {
-                ContextCompat.getColor(context, R.color.widget_font_main_light)
-            } else if ((widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
-                ContextCompat.getColor(context, R.color.widget_font_main_dark)
-            } else {
-                ContextCompat.getColor(context, R.color.widget_font_main_light)
-            }
-
-        val subFontColor: Int =
-            if (widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_LIGHT) {
-                ContextCompat.getColor(context, R.color.widget_font_sub_light)
-            } else if ((widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_DARK) || context.isDarkMode()) {
-                ContextCompat.getColor(context, R.color.widget_font_sub_dark)
-            } else {
-                ContextCompat.getColor(context, R.color.widget_font_sub_light)
-            }
-
-        view.setInt(R.id.ll_root, "setBackgroundColor", bgColor)
-        view.setInt(R.id.iv_refersh, "setColorFilter", subFontColor)
-        view.setTextColor(R.id.tv_sync_time, subFontColor)
-        view.setTextColor(R.id.tv_disable, mainFontColor)
-        view.setTextColor(R.id.tv_no_selected_characters, mainFontColor)
-
-        val mainFontViews = listOf(
-            R.id.tv_disable,
-            R.id.tv_no_selected_characters,
-
-            R.id.tv_resin,
-            R.id.tv_resin_title,
-            R.id.tv_resin_time,
-            R.id.tv_resin_time_title,
-            R.id.tv_daily_commission,
-            R.id.tv_daily_commission_title,
-            R.id.tv_weekly_boss,
-            R.id.tv_weekly_boss_title,
-            R.id.tv_expedition_title,
-            R.id.tv_expedition_time,
-            R.id.tv_transformer_title,
-            R.id.tv_transformer,
-            R.id.tv_realm_currency,
-            R.id.tv_realm_currency_title,
-            R.id.tv_realm_currency_time,
-            R.id.tv_realm_currency_time_title,
-
-            R.id.tv_trailblaze_power,
-            R.id.tv_trailblaze_power_title,
-            R.id.tv_trailblaze_power_time,
-            R.id.tv_trailblaze_power_time_title,
-            R.id.tv_daily_training,
-            R.id.tv_daily_training_title,
-            R.id.tv_echo_of_war,
-            R.id.tv_echo_of_war_title,
-            R.id.tv_assignment_time,
-            R.id.tv_assignment_title,
-            R.id.tv_simulated_universe,
-            R.id.tv_simulated_universe_title,
-            R.id.tv_simulated_universe_cleared,
-            R.id.tv_simulated_universe_title_cleared,
-
-            R.id.tv_battery,
-            R.id.tv_battery_title,
-            R.id.tv_battery_time,
-            R.id.tv_battery_time_title,
-            R.id.tv_engagement_today,
-            R.id.tv_engagement_today_title,
-            R.id.tv_scratch_card,
-            R.id.tv_scratch_card_title,
-            R.id.tv_video_store_management,
-            R.id.tv_video_store_management_title,
-        )
-
-        fun setFontColorAndSize(view: RemoteViews, id: Int, color: Int, size: Float) {
-            view.setTextColor(id, color)
-            view.setFloat(id, "setTextSize", size)
-        }
-
-        val fontSize = widgetDesign.fontSize.toFloat()
-
-        mainFontViews.forEach { id ->
-            setFontColorAndSize(view, id, mainFontColor, fontSize)
         }
     }
 

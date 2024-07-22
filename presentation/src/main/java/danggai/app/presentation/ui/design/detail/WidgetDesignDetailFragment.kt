@@ -15,8 +15,8 @@ import danggai.app.presentation.databinding.FragmentWidgetDesignDetailBinding
 import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.design.WidgetDesignViewModel
 import danggai.app.presentation.util.CommonFunction
-import danggai.app.presentation.util.CommonFunction.isDarkMode
 import danggai.app.presentation.util.TimeFunction
+import danggai.app.presentation.util.WidgetDesignUtils
 import danggai.app.presentation.util.log
 import danggai.domain.network.dailynote.entity.Transformer
 import danggai.domain.network.dailynote.entity.TransformerTime
@@ -91,113 +91,32 @@ class WidgetDesignDetailFragment :
                             AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
                         val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
 
-                        val bgColor: Int = ColorUtils.setAlphaComponent(
+                        val isDarkTheme = WidgetDesignUtils.isDarkTheme(_context, mVM.sfWidgetTheme.value)
+
+                        val bgColor = ColorUtils.setAlphaComponent(
                             getColor(
                                 _context,
-                                if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) {
-                                    R.color.white
-                                } else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
-                                    R.color.black
-                                } else {
-                                    R.color.white
-                                }
-                            ), mVM.sfTransparency.value
+                                if (isDarkTheme) R.color.black
+                                else R.color.white
+                            )
+                            , mVM.sfTransparency.value
                         )
 
-                        val mainFontColor: Int = getColor(
+                        val mainFontColor = getColor(
                             _context,
-                            if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) {
-                                R.color.widget_font_main_light
-                            } else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
-                                R.color.widget_font_main_dark
-                            } else {
-                                R.color.widget_font_main_light
-                            }
+                            if (isDarkTheme) R.color.widget_font_main_dark
+                            else R.color.widget_font_main_light
                         )
 
-                        val subFontColor: Int = getColor(
+                        val subFontColor = getColor(
                             _context,
-                            if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) {
-                                R.color.widget_font_sub_light
-                            } else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
-                                R.color.widget_font_sub_dark
-                            } else {
-                                R.color.widget_font_sub_light
-                            }
+                            if (isDarkTheme) R.color.widget_font_sub_dark
+                            else R.color.widget_font_sub_light
                         )
 
-                        binding.widget.apply {
-                            llRoot.setBackgroundColor(bgColor)
-
-                            ivRefersh.setColorFilter(subFontColor)
-                            tvSyncTime.setTextColor(subFontColor)
-                            tvDisable.setTextColor(subFontColor)
-
-                            tvResin.setTextColor(mainFontColor)
-                            tvResinTitle.setTextColor(mainFontColor)
-                            tvResinTime.setTextColor(mainFontColor)
-                            tvResinTimeTitle.setTextColor(mainFontColor)
-                            tvDailyCommission.setTextColor(mainFontColor)
-                            tvDailyCommissionTitle.setTextColor(mainFontColor)
-                            tvWeeklyBoss.setTextColor(mainFontColor)
-                            tvWeeklyBossTitle.setTextColor(mainFontColor)
-                            tvExpeditionTitle.setTextColor(mainFontColor)
-                            tvExpeditionTime.setTextColor(mainFontColor)
-                            tvRealmCurrency.setTextColor(mainFontColor)
-                            tvRealmCurrencyTitle.setTextColor(mainFontColor)
-                            tvRealmCurrencyTime.setTextColor(mainFontColor)
-                            tvRealmCurrencyTimeTitle.setTextColor(mainFontColor)
-                            tvTransformer.setTextColor(mainFontColor)
-                            tvTransformerTitle.setTextColor(mainFontColor)
-
-                            llRoot.background = wrappedDrawable
-                        }
-
-                        binding.widgetHksr.apply {
-                            llRoot.setBackgroundColor(bgColor)
-
-                            ivRefersh.setColorFilter(subFontColor)
-                            tvSyncTime.setTextColor(subFontColor)
-                            tvDisable.setTextColor(subFontColor)
-
-                            tvTrailblazePower.setTextColor(mainFontColor)
-                            tvTrailblazePowerTitle.setTextColor(mainFontColor)
-                            tvTrailblazePowerTime.setTextColor(mainFontColor)
-                            tvTrailblazePowerTimeTitle.setTextColor(mainFontColor)
-                            tvDailyTraining.setTextColor(mainFontColor)
-                            tvDailyTrainingTitle.setTextColor(mainFontColor)
-                            tvEchoOfWar.setTextColor(mainFontColor)
-                            tvEchoOfWarTitle.setTextColor(mainFontColor)
-                            tvSimulatedUniverse.setTextColor(mainFontColor)
-                            tvSimulatedUniverseTitle.setTextColor(mainFontColor)
-                            tvSimulatedUniverseCleared.setTextColor(mainFontColor)
-                            tvSimulatedUniverseTitleCleared.setTextColor(mainFontColor)
-                            tvAssignmentTime.setTextColor(mainFontColor)
-                            tvAssignmentTitle.setTextColor(mainFontColor)
-
-                            llRoot.background = wrappedDrawable
-                        }
-
-                        binding.widgetZzz.apply {
-                            llRoot.setBackgroundColor(bgColor)
-
-                            ivRefersh.setColorFilter(subFontColor)
-                            tvSyncTime.setTextColor(subFontColor)
-                            tvDisable.setTextColor(subFontColor)
-
-                            tvBattery.setTextColor(mainFontColor)
-                            tvBatteryTime.setTextColor(mainFontColor)
-                            tvBatteryTitle.setTextColor(mainFontColor)
-                            tvBatteryTimeTitle.setTextColor(mainFontColor)
-                            tvScratchCard.setTextColor(mainFontColor)
-                            tvScratchCardTitle.setTextColor(mainFontColor)
-                            tvVideoStoreManagement.setTextColor(mainFontColor)
-                            tvVideoStoreManagementTitle.setTextColor(mainFontColor)
-                            tvEngagementToday.setTextColor(mainFontColor)
-                            tvEngagementTodayTitle.setTextColor(mainFontColor)
-
-                            llRoot.background = wrappedDrawable
-                        }
+                        WidgetDesignUtils.applyDetailWidgetColors(binding.widget, bgColor, mainFontColor, subFontColor, wrappedDrawable)
+                        WidgetDesignUtils.applyDetailWidgetColors(binding.widgetHksr, bgColor, mainFontColor, subFontColor, wrappedDrawable)
+                        WidgetDesignUtils.applyDetailWidgetColors(binding.widgetZzz, bgColor, mainFontColor, subFontColor, wrappedDrawable)
                     }
                 }
             }
@@ -224,15 +143,10 @@ class WidgetDesignDetailFragment :
                             AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
                         val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
 
+                        val isDarkTheme = WidgetDesignUtils.isDarkTheme(_context, mVM.sfWidgetTheme.value)
+
                         val color: Int =
-                            if (mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_LIGHT) getColor(
-                                _context,
-                                R.color.white
-                            )
-                            else if ((mVM.sfWidgetTheme.value == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) getColor(
-                                _context,
-                                R.color.black
-                            )
+                            if (isDarkTheme) getColor(_context, R.color.black)
                             else getColor(_context, R.color.white)
 
                         DrawableCompat.setTint(
@@ -242,68 +156,16 @@ class WidgetDesignDetailFragment :
 
                         binding.widget.llRoot.background = wrappedDrawable
                         binding.widgetHksr.llRoot.background = wrappedDrawable
+                        binding.widgetZzz.llRoot.background = wrappedDrawable
                     }
                 }
             }
 
             launch {
                 mVM.sfFontSizeDetail.collect {
-                    binding.widget.apply {
-                        it.toFloat().let {
-                            tvResin.textSize = it
-                            tvResinTitle.textSize = it
-                            tvResinTime.textSize = it
-                            tvResinTimeTitle.textSize = it
-                            tvDailyCommission.textSize = it
-                            tvDailyCommissionTitle.textSize = it
-                            tvWeeklyBoss.textSize = it
-                            tvWeeklyBossTitle.textSize = it
-                            tvRealmCurrency.textSize = it
-                            tvRealmCurrencyTitle.textSize = it
-                            tvRealmCurrencyTime.textSize = it
-                            tvRealmCurrencyTimeTitle.textSize = it
-                            tvExpeditionTitle.textSize = it
-                            tvExpeditionTitle.textSize = it
-                            tvExpeditionTime.textSize = it
-                            tvExpeditionTime.textSize = it
-                            tvTransformer.textSize = it
-                            tvTransformerTitle.textSize = it
-                        }
-                    }
-
-                    binding.widgetHksr.apply {
-                        it.toFloat().let {
-                            tvTrailblazePower.textSize = it
-                            tvTrailblazePowerTitle.textSize = it
-                            tvTrailblazePowerTime.textSize = it
-                            tvTrailblazePowerTimeTitle.textSize = it
-                            tvDailyTraining.textSize = it
-                            tvDailyTrainingTitle.textSize = it
-                            tvEchoOfWar.textSize = it
-                            tvEchoOfWarTitle.textSize = it
-                            tvSimulatedUniverse.textSize = it
-                            tvSimulatedUniverseTitle.textSize = it
-                            tvSimulatedUniverseCleared.textSize = it
-                            tvSimulatedUniverseTitleCleared.textSize = it
-                            tvAssignmentTime.textSize = it
-                            tvAssignmentTitle.textSize = it
-                        }
-                    }
-
-                    binding.widgetZzz.apply {
-                        it.toFloat().let {
-                            tvBattery.textSize = it
-                            tvBatteryTitle.textSize = it
-                            tvBatteryTime.textSize = it
-                            tvBatteryTimeTitle.textSize = it
-                            tvEngagementToday.textSize = it
-                            tvEngagementTodayTitle.textSize = it
-                            tvScratchCard.textSize = it
-                            tvScratchCardTitle.textSize = it
-                            tvVideoStoreManagement.textSize = it
-                            tvVideoStoreManagementTitle.textSize = it
-                        }
-                    }
+                    WidgetDesignUtils.setDetailWidgetFontSize(binding.widget, it)
+                    WidgetDesignUtils.setDetailWidgetFontSize(binding.widgetHksr, it)
+                    WidgetDesignUtils.setDetailWidgetFontSize(binding.widgetZzz, it)
                 }
             }
 
