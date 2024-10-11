@@ -599,7 +599,7 @@ class RefreshWorker @AssistedInject constructor(
         if (settings.noti230Battery) {
             if (maxEnergy - 20 in (prefBattery + 1)..currentBattery) {
                 log.e()
-                sendNoti(account, NotiType.ZZZ.Stamina230, maxEnergy - 20)
+                sendNoti(account, NotiType.ZZZ.Stamina230, maxEnergy - 10)
             }
         }
 
