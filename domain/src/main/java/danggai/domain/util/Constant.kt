@@ -27,7 +27,7 @@ object Constant {
     const val OS_HONKAI_SR_CHECK_IN_URL = "https://sg-public-api.hoyolab.com/event/luna/os/sign"
     const val OS_HONKAI_SR_ACT_ID = "e202303301540311"
 
-    const val OS_ZZZ_CHECK_IN_URL = "https://sg-act-nap-api.hoyolab.com/event/luna/zzz/os/sign"
+    const val OS_ZZZ_CHECK_IN_URL = "https://sg-public-api.hoyolab.com/event/luna/zzz/os/sign"
     const val OS_ZZZ_ACT_ID = "e202406031448091"
 
     const val HOW_CAN_I_GET_COOKIE_URL =
