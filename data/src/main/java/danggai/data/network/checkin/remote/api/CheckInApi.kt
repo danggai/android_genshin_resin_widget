@@ -42,7 +42,8 @@ interface CheckInApi {
         "x-rpc-app_version: ",
         "x-rpc-device_id: ",
         "x-rpc-device_name: ",
-        "x-rpc-platform: 5"
+        "x-rpc-platform: 5",
+        "x-rpc-signgame: hk4e",
     )
     @POST(Constant.OS_GENSHIN_CHECK_IN_URL)
     suspend fun genshinImpactRetry(
@@ -56,7 +57,8 @@ interface CheckInApi {
         "Accept: application/json, text/plain, */*",
         "Content-Type: application/json;charset=UTF-8",
         "Referer: https://webstatic-sea.hoyolab.com/",
-        "sec-ch-ua-mobile: ?1"
+        "sec-ch-ua-mobile: ?1",
+        "x-rpc-signgame: bh3",
     )
     @POST(Constant.OS_HONKAI_3RD_CHECK_IN_URL)
     suspend fun honkai3rd(
@@ -69,7 +71,8 @@ interface CheckInApi {
         "Accept: application/json, text/plain, */*",
         "Content-Type: application/json;charset=UTF-8",
         "Referer: https://webstatic-sea.hoyolab.com/",
-        "sec-ch-ua-mobile: ?1"
+        "sec-ch-ua-mobile: ?1",
+        "x-rpc-signgame: hkrpg",
     )
     @POST(Constant.OS_HONKAI_SR_CHECK_IN_URL)
     suspend fun honkaiSR(
