@@ -6,9 +6,13 @@
 
         <import type="android.view.View" />
 
-        <import type="danggai.domain.util.Constant.WidgetTheme" />
+        <import type="danggai.domain.util.Constant" />
 
-        <import type="danggai.domain.util.Constant.TimeNotation" />
+        <import type="danggai.domain.local.WidgetTheme" />
+
+        <import type="danggai.domain.local.TimeNotation" />
+
+        <import type="danggai.domain.local.Preview" />
 
         <variable
             name="vm"
@@ -75,18 +79,20 @@
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     style="@style/RadioButton"
-                    android:checked="true"
-                    android:onClick="@{() -> vm.onClickPreiew(0)}"
+                    android:checked="@{vm.sfSelectedPreview == Preview.GENSHIN}"
+                    android:onClick="@{() -> vm.onClickPreiew(Preview.GENSHIN)}"
                     android:text="@string/genshin" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     style="@style/RadioButton"
-                    android:onClick="@{() -> vm.onClickPreiew(1)}"
+                    android:checked="@{vm.sfSelectedPreview == Preview.STARRAIL}"
+                    android:onClick="@{() -> vm.onClickPreiew(Preview.STARRAIL)}"
                     android:text="@string/honkai_sr" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     style="@style/RadioButton"
-                    android:onClick="@{() -> vm.onClickPreiew(2)}"
+                    android:checked="@{vm.sfSelectedPreview == Preview.ZZZ}"
+                    android:onClick="@{() -> vm.onClickPreiew(Preview.ZZZ)}"
                     android:text="@string/zzz" />
 
             </RadioGroup>
@@ -136,18 +142,21 @@
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_theme_automatic"
                         style="@style/RadioButton"
+                        android:checked="@{vm.sfWidgetTheme == WidgetTheme.AUTOMATIC.value}"
                         android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.AUTOMATIC)}"
                         android:text="@string/btn_automatic" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_theme_light"
                         style="@style/RadioButton"
+                        android:checked="@{vm.sfWidgetTheme == WidgetTheme.LIGHT.value}"
                         android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.LIGHT)}"
                         android:text="@string/btn_light" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_theme_dark"
                         style="@style/RadioButton"
+                        android:checked="@{vm.sfWidgetTheme == WidgetTheme.DARK.value}"
                         android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.DARK)}"
                         android:text="@string/btn_dark" />
 
@@ -176,6 +185,7 @@
                         android:id="@+id/rb_remain_time"
                         style="@style/RadioButton"
                         android:layout_marginVertical="@dimen/button_vertical_minus_margin"
+                        android:checked="@{vm.sfWidgetTimeNotation == TimeNotation.REMAIN_TIME}"
                         android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.REMAIN_TIME)}"
                         android:text="@string/btn_remain_time" />
 
@@ -183,6 +193,7 @@
                         android:id="@+id/rb_full_charge_time"
                         style="@style/RadioButton"
                         android:layout_marginVertical="@dimen/button_vertical_minus_margin"
+                        android:checked="@{vm.sfWidgetTimeNotation == TimeNotation.FULL_CHARGE_TIME}"
                         android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.FULL_CHARGE_TIME)}"
                         android:text="@string/btn_full_charge_time" />
 
@@ -190,6 +201,7 @@
                         android:id="@+id/rb_disable_time"
                         style="@style/RadioButton"
                         android:layout_marginVertical="@dimen/button_vertical_minus_margin"
+                        android:checked="@{vm.sfWidgetTimeNotation == TimeNotation.DISABLE_TIME}"
                         android:onClick="@{() -> vm.onClickSetDetailTimeNotation(TimeNotation.DISABLE_TIME)}"
                         android:text="@string/btn_disable" />
 
@@ -365,10 +377,10 @@
                         android:text="@string/trailblaze_power" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_daily_training"
+                        android:id="@+id/cb_reserve_trailblaze_power"
                         style="@style/Checkbox"
-                        android:checked="@={vm.sfDailyTrainingDataVisibility}"
-                        android:text="@string/daily_training" />
+                        android:checked="@={vm.sfReserveTrailBlazepowerDataVisibility}"
+                        android:text="@string/reserve_trailblaze_power" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -378,16 +390,16 @@
                     android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/cb_daily_training"
+                        style="@style/Checkbox"
+                        android:checked="@={vm.sfDailyTrainingDataVisibility}"
+                        android:text="@string/daily_training" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_echo_of_war"
                         style="@style/Checkbox"
                         android:checked="@={vm.sfEchoOfWarDataVisibility}"
                         android:text="@string/echo_of_war" />
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_assignment"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfAssignmentTimeDataVisibility}"
-                        android:text="@string/assignment_time" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -403,11 +415,30 @@
                         android:text="@string/simulated_universe" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_empty"
+                        android:id="@+id/cb_simulated_universe_clear_count"
                         style="@style/Checkbox"
                         android:checked="@={vm.sfSimulatedUniverseClearTimeVisibility}"
                         android:enabled="@{vm.sfSimulatedUniverseDataVisibility}"
                         android:text="@string/clear_count" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/cb_divergent_universe"
+                        style="@style/Checkbox"
+                        android:checked="@={vm.sfDivergentUniverseDataVisibility}"
+                        android:text="@string/divergent_universe" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/cb_assignment"
+                        style="@style/Checkbox"
+                        android:checked="@={vm.sfAssignmentTimeDataVisibility}"
+                        android:text="@string/assignment_time" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

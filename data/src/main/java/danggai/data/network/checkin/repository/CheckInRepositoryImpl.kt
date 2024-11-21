@@ -172,11 +172,12 @@ class CheckInRepositoryImpl @Inject constructor(
         onStart: () -> Unit,
         onComplete: () -> Unit
     ) = flow<ApiResult<CheckInZZZ>> {
-        val response = checkInApi.zenlessZoneZero(
-            lang,
-            actId,
-            cookie
+        val requestBody = mapOf(
+            "lang" to lang,
+            "act_id" to actId
         )
+
+        val response = checkInApi.zenlessZoneZero(requestBody, cookie)
 
         response.suspendOnSuccess {
             emit(this.response.body()?.let {

@@ -16,6 +16,8 @@ import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.design.WidgetDesignViewModel
 import danggai.app.presentation.util.WidgetDesignUtils
 import danggai.app.presentation.util.log
+import danggai.domain.local.Preview
+import danggai.domain.local.TimeNotation
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -70,11 +72,11 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
             else -> binding.rbResinImageVisible.isChecked = true
         }
 
-        when(mVM.sfResinTimeNotation.value) {
-            Constant.PREF_TIME_NOTATION_DEFAULT,
-            Constant.PREF_TIME_NOTATION_REMAIN_TIME -> binding.rbRemainTime.isChecked = true
-            Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked = true
-            Constant.PREF_TIME_NOTATION_DISABLE -> binding.rbDisableTime.isChecked = true
+        when(mVM.sfWidgetTimeNotation.value) {
+            TimeNotation.DEFAULT,
+            TimeNotation.REMAIN_TIME -> binding.rbRemainTime.isChecked = true
+            TimeNotation.FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked = true
+            TimeNotation.DISABLE_TIME -> binding.rbDisableTime.isChecked = true
             else -> binding.rbRemainTime.isChecked = true
         }
 
@@ -127,14 +129,14 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
 
         viewLifecycleOwner.repeatOnLifeCycleStarted {
             launch {
-                mVM.sfSelectedPreview.collect { index ->
+                mVM.sfSelectedPreview.collect { preview ->
                     binding.widget.root.visibility = View.GONE
                     binding.widgetHonkaiSr.root.visibility = View.GONE
                     binding.widgetZzz.root.visibility = View.GONE
-                    when (index) {
-                        0 -> binding.widget.root.visibility = View.VISIBLE
-                        1 -> binding.widgetHonkaiSr.root.visibility = View.VISIBLE
-                        2 -> binding.widgetZzz.root.visibility = View.VISIBLE
+                    when (preview) {
+                        Preview.GENSHIN -> binding.widget.root.visibility = View.VISIBLE
+                        Preview.STARRAIL -> binding.widgetHonkaiSr.root.visibility = View.VISIBLE
+                        Preview.ZZZ -> binding.widgetZzz.root.visibility = View.VISIBLE
                     }
                 }
             }
@@ -178,26 +180,31 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
             }
 
             launch {
-                mVM.sfResinTimeNotation.collect {
+                mVM.sfWidgetTimeNotation.collect {
                     log.e()
 
-                    when (mVM.sfResinTimeNotation.value) {
-                        Constant.PREF_TIME_NOTATION_DEFAULT,
-                        Constant.PREF_TIME_NOTATION_REMAIN_TIME -> {
+                    when (mVM.sfWidgetTimeNotation.value) {
+                        TimeNotation.DEFAULT,
+                        TimeNotation.REMAIN_TIME -> {
                             binding.widget.tvRemainTime.visibility = View.VISIBLE
                             binding.widget.tvRemainTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
                             binding.widgetHonkaiSr.tvRemainTime.visibility = View.VISIBLE
                             binding.widgetHonkaiSr.tvRemainTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
+                            binding.widgetZzz.tvRemainTime.visibility = View.VISIBLE
+                            binding.widgetZzz.tvRemainTime.text = String.format(getString(R.string.widget_ui_remain_time), 0, 0)
                         }
-                        Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
+                        TimeNotation.FULL_CHARGE_TIME -> {
                             binding.widget.tvRemainTime.visibility = View.VISIBLE
                             binding.widget.tvRemainTime.text = String.format(getString(R.string.widget_format_max_time), 0, 0)
                             binding.widgetHonkaiSr.tvRemainTime.visibility = View.VISIBLE
                             binding.widgetHonkaiSr.tvRemainTime.text = String.format(getString(R.string.widget_format_max_time), 0, 0)
+                            binding.widgetZzz.tvRemainTime.visibility = View.VISIBLE
+                            binding.widgetZzz.tvRemainTime.text = String.format(getString(R.string.widget_format_max_time), 0, 0)
                         }
-                        Constant.PREF_TIME_NOTATION_DISABLE -> {
+                        TimeNotation.DISABLE_TIME -> {
                             binding.widget.tvRemainTime.visibility = View.GONE
                             binding.widgetHonkaiSr.tvRemainTime.visibility = View.GONE
+                            binding.widgetZzz.tvRemainTime.visibility = View.GONE
                         }
                     }
                 }

@@ -6,7 +6,7 @@
 
         <import type="android.view.View" />
 
-        <import type="danggai.domain.util.Constant.Server" />
+        <import type="danggai.domain.local.Server" />
 
         <variable
             name="vm"
@@ -124,7 +124,7 @@
                                 android:id="@+id/rb_genshin_asia"
                                 style="@style/RadioButton"
                                 android:layout_marginEnd="5dp"
-                                android:checked="@{vm.sfGenshinServer == Server.ASIA.pref}"
+                                android:checked="@{vm.sfGenshinServer == Server.ASIA}"
                                 android:onClick="@{() -> vm.onClickSetGenshinServer(Server.ASIA)}"
                                 android:text="@string/asia"
                                 android:enabled="@{vm.sfNoGenshinAccount ?false :true}" />
@@ -133,7 +133,7 @@
                                 android:id="@+id/rb_genshin_usa"
                                 style="@style/RadioButton"
                                 android:layout_marginEnd="5dp"
-                                android:checked="@{vm.sfGenshinServer == Server.USA.pref}"
+                                android:checked="@{vm.sfGenshinServer == Server.USA}"
                                 android:onClick="@{() -> vm.onClickSetGenshinServer(Server.USA)}"
                                 android:text="@string/america"
                                 android:enabled="@{vm.sfNoGenshinAccount ?false :true}" />
@@ -142,7 +142,7 @@
                                 android:id="@+id/rb_genshin_euro"
                                 style="@style/RadioButton"
                                 android:layout_marginEnd="5dp"
-                                android:checked="@{vm.sfGenshinServer == Server.EUROPE.pref}"
+                                android:checked="@{vm.sfGenshinServer == Server.EUROPE}"
                                 android:onClick="@{() -> vm.onClickSetGenshinServer(Server.EUROPE)}"
                                 android:text="@string/europe"
                                 android:enabled="@{vm.sfNoGenshinAccount ?false :true}" />
@@ -150,7 +150,7 @@
                             <com.google.android.material.radiobutton.MaterialRadioButton
                                 android:id="@+id/rb_genshin_cht"
                                 style="@style/RadioButton"
-                                android:checked="@{vm.sfGenshinServer == Server.CHT.pref}"
+                                android:checked="@{vm.sfGenshinServer == Server.CHT}"
                                 android:onClick="@{() -> vm.onClickSetGenshinServer(Server.CHT)}"
                                 android:text="@string/cht"
                                 android:enabled="@{vm.sfNoGenshinAccount ?false :true}" />
@@ -295,7 +295,7 @@
                                     android:id="@+id/rb_honkai_sr_asia"
                                     style="@style/RadioButton"
                                     android:layout_marginEnd="5dp"
-                                    android:checked="@{vm.sfHonkaiSrServer == Server.ASIA.pref}"
+                                    android:checked="@{vm.sfHonkaiSrServer == Server.ASIA}"
                                     android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.ASIA)}"
                                     android:text="@string/asia"
                                     android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}" />
@@ -304,7 +304,7 @@
                                     android:id="@+id/rb_honkai_sr_usa"
                                     style="@style/RadioButton"
                                     android:layout_marginEnd="5dp"
-                                    android:checked="@{vm.sfHonkaiSrServer == Server.USA.pref}"
+                                    android:checked="@{vm.sfHonkaiSrServer == Server.USA}"
                                     android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.USA)}"
                                     android:text="@string/america"
                                     android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}" />
@@ -313,7 +313,7 @@
                                     android:id="@+id/rb_honkai_sr_euro"
                                     style="@style/RadioButton"
                                     android:layout_marginEnd="5dp"
-                                    android:checked="@{vm.sfHonkaiSrServer == Server.EUROPE.pref}"
+                                    android:checked="@{vm.sfHonkaiSrServer == Server.EUROPE}"
                                     android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.EUROPE)}"
                                     android:text="@string/europe"
                                     android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}" />
@@ -321,7 +321,7 @@
                                 <com.google.android.material.radiobutton.MaterialRadioButton
                                     android:id="@+id/rb_honkai_sr_cht"
                                     style="@style/RadioButton"
-                                    android:checked="@{vm.sfHonkaiSrServer == Server.CHT.pref}"
+                                    android:checked="@{vm.sfHonkaiSrServer == Server.CHT}"
                                     android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.CHT)}"
                                     android:text="@string/cht"
                                     android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}" />
@@ -471,7 +471,7 @@
                                     android:id="@+id/rb_zzz_asia"
                                     style="@style/RadioButton"
                                     android:layout_marginEnd="5dp"
-                                    android:checked="@{vm.sfZZZServer == Server.ASIA.pref}"
+                                    android:checked="@{vm.sfZZZServer == Server.ASIA}"
                                     android:onClick="@{() -> vm.onClickSetZZZServer(Server.ASIA)}"
                                     android:text="@string/asia"
                                     android:enabled="@{vm.sfNoZZZAccount ?false :true}" />
@@ -480,7 +480,7 @@
                                     android:id="@+id/rb_zzz_usa"
                                     style="@style/RadioButton"
                                     android:layout_marginEnd="5dp"
-                                    android:checked="@{vm.sfZZZServer == Server.USA.pref}"
+                                    android:checked="@{vm.sfZZZServer == Server.USA}"
                                     android:onClick="@{() -> vm.onClickSetZZZServer(Server.USA)}"
                                     android:text="@string/america"
                                     android:enabled="@{vm.sfNoZZZAccount ?false :true}" />
@@ -489,7 +489,7 @@
                                     android:id="@+id/rb_zzz_euro"
                                     style="@style/RadioButton"
                                     android:layout_marginEnd="5dp"
-                                    android:checked="@{vm.sfZZZServer == Server.EUROPE.pref}"
+                                    android:checked="@{vm.sfZZZServer == Server.EUROPE}"
                                     android:onClick="@{() -> vm.onClickSetZZZServer(Server.EUROPE)}"
                                     android:text="@string/europe"
                                     android:enabled="@{vm.sfNoZZZAccount ?false :true}" />
@@ -497,7 +497,7 @@
                                 <com.google.android.material.radiobutton.MaterialRadioButton
                                     android:id="@+id/rb_zzz_cht"
                                     style="@style/RadioButton"
-                                    android:checked="@{vm.sfZZZServer == Server.CHT.pref}"
+                                    android:checked="@{vm.sfZZZServer == Server.CHT}"
                                     android:onClick="@{() -> vm.onClickSetZZZServer(Server.CHT)}"
                                     android:text="@string/cht"
                                     android:enabled="@{vm.sfNoZZZAccount ?false :true}" />

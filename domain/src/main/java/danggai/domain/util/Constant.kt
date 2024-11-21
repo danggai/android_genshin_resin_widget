@@ -27,7 +27,7 @@ object Constant {
     const val OS_HONKAI_SR_CHECK_IN_URL = "https://sg-public-api.hoyolab.com/event/luna/os/sign"
     const val OS_HONKAI_SR_ACT_ID = "e202303301540311"
 
-    const val OS_ZZZ_CHECK_IN_URL = "https://sg-act-nap-api.hoyolab.com/event/luna/zzz/os/sign"
+    const val OS_ZZZ_CHECK_IN_URL = "https://sg-public-api.hoyolab.com/event/luna/zzz/os/sign"
     const val OS_ZZZ_ACT_ID = "e202406031448091"
 
     const val HOW_CAN_I_GET_COOKIE_URL =
@@ -48,11 +48,10 @@ object Constant {
     const val SERVER_PO_CHT = "prod_official_cht"
 
     /* ZZZ 서버 */
-    // TODO("USA, EURO, CHT 코드 알아내기")
-    const val SERVER_GF_USA = ""
-    const val SERVER_GF_EURO = ""
+    const val SERVER_GF_USA = "prod_gf_us"
+    const val SERVER_GF_EURO = "prod_gf_eu"
     const val SERVER_GF_ASIA = "prod_gf_jp"
-    const val SERVER_GF_CHT = ""
+    const val SERVER_GF_CHT = "prod_gf_sg"
 
     const val LANG_KO_KR = "ko-kr"
     const val LANG_EN_US = "en-us"
@@ -239,35 +238,6 @@ object Constant {
     const val PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY = 170
     const val PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE = 30
     const val PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE = 12
-
-    enum class Server(val pref: Int) {
-        ASIA(PREF_SERVER_ASIA),
-        USA(PREF_SERVER_USA),
-        EUROPE(PREF_SERVER_EUROPE),
-        CHT(PREF_SERVER_CHT),
-    }
-
-    const val PREF_SERVER_ASIA = 0
-    const val PREF_SERVER_USA = 1
-    const val PREF_SERVER_EUROPE = 2
-    const val PREF_SERVER_CHT = 3
-
-    enum class TimeNotation(val pref: Int) {
-        REMAIN_TIME(PREF_TIME_NOTATION_REMAIN_TIME),
-        FULL_CHARGE_TIME(PREF_TIME_NOTATION_FULL_CHARGE_TIME),
-        DISABLE_TIME(PREF_TIME_NOTATION_DISABLE)
-    }
-
-    const val PREF_TIME_NOTATION_DEFAULT = -1
-    const val PREF_TIME_NOTATION_REMAIN_TIME = 0
-    const val PREF_TIME_NOTATION_FULL_CHARGE_TIME = 1
-    const val PREF_TIME_NOTATION_DISABLE = 2
-
-    enum class WidgetTheme(val pref: Int) {
-        AUTOMATIC(PREF_WIDGET_THEME_AUTOMATIC),
-        LIGHT(PREF_WIDGET_THEME_LIGHT),
-        DARK(PREF_WIDGET_THEME_DARK)
-    }
 
     const val PREF_WIDGET_THEME_AUTOMATIC = 0
     const val PREF_WIDGET_THEME_LIGHT = 1

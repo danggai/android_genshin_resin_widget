@@ -19,6 +19,7 @@ import danggai.app.presentation.util.WidgetDesignUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.DetailWidgetDesignSettings
+import danggai.domain.local.TimeNotation
 import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.util.Constant
 import java.text.SimpleDateFormat
@@ -224,6 +225,15 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 )
 
                 view.setTextViewText(
+                    R.id.tv_reserve_trailblaze_power_title,
+                    _context.getString(R.string.reserve_trailblaze_power)
+                )
+                view.setTextViewText(
+                    R.id.tv_reserve_trailblaze_power,
+                    dailyNote.current_reserve_stamina.toString()
+                )
+
+                view.setTextViewText(
                     R.id.tv_daily_training_title,
                     _context.getString(R.string.daily_training)
                 )
@@ -271,11 +281,24 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                     CommonFunction.convertIntToTimes(dailyNote.rogue_clear_count, _context)
                 )
 
+                view.setTextViewText(
+                    R.id.tv_synchronicity_point_title,
+                    _context.getString(R.string.divergent_universe)
+                )
+                view.setTextViewText(
+                    R.id.tv_synchronicity_point,
+                    if (!dailyNote.rogue_tourn_weekly_unlocked) {
+                        dailyNote.rogue_tourn_weekly_cur.toString() + "/" + dailyNote.rogue_tourn_weekly_max.toString()
+                    } else {
+                        context.getString(R.string.widget_ui_locked)
+                    }
+                )
+
                 view.setTextViewText(R.id.tv_sync_time, recentSyncTimeString)
 
-                when (widgetDesign.timeNotation) {
-                    Constant.PREF_TIME_NOTATION_DEFAULT,
-                    Constant.PREF_TIME_NOTATION_REMAIN_TIME -> {
+                when (TimeNotation.fromValue(widgetDesign.timeNotation)) {
+                    TimeNotation.DEFAULT,
+                    TimeNotation.REMAIN_TIME -> {
                         view.setTextViewText(
                             R.id.tv_trailblaze_power_time_title,
                             _context.getString(R.string.until_fully_replenished)
@@ -286,7 +309,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                         )
                     }
 
-                    Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> {
+                    TimeNotation.FULL_CHARGE_TIME -> {
                         view.setTextViewText(
                             R.id.tv_trailblaze_power_time_title,
                             _context.getString(R.string.estimated_replenishment_time)
@@ -296,6 +319,8 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                             _context.getString(R.string.assignment_done_at)
                         )
                     }
+
+                    TimeNotation.DISABLE_TIME -> { }
                 }
 
                 view.setTextViewText(
@@ -303,7 +328,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                         _context,
                         recentSyncTimeDate,
                         dailyNote.stamina_recover_time,
-                        widgetDesign.timeNotation
+                        TimeNotation.fromValue(widgetDesign.timeNotation)
                     )
                 )
                 view.setTextViewText(
@@ -314,7 +339,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                             context,
                             Constant.PREF_ASSIGNMENT_TIME + "_$uid"
                         ),
-                        widgetDesign.timeNotation
+                        TimeNotation.fromValue(widgetDesign.timeNotation)
                     )
                 )
 
@@ -325,8 +350,12 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 view.setViewVisibility(
                     R.id.rl_trailblaze_power_time,
                     if (widgetDesign.trailBlazepowerDataVisibility &&
-                        widgetDesign.timeNotation != Constant.PREF_TIME_NOTATION_DISABLE
+                        TimeNotation.fromValue(widgetDesign.timeNotation) != TimeNotation.DISABLE_TIME
                     ) View.VISIBLE else View.GONE
+                )
+                view.setViewVisibility(
+                    R.id.rl_reserve_trailblaze_power,
+                    if (widgetDesign.reserveTrailBlazepowerDataVisibility) View.VISIBLE else View.GONE
                 )
 
                 view.setViewVisibility(
@@ -346,6 +375,10 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                     if (widgetDesign.simulatedUniverseDataVisibility &&
                         widgetDesign.simulatedUniverseClearTimeVisibility
                     ) View.VISIBLE else View.GONE
+                )
+                view.setViewVisibility(
+                    R.id.rl_synchronicity_point,
+                    if (widgetDesign.synchronicityPointVisibility) View.VISIBLE else View.GONE
                 )
                 view.setViewVisibility(
                     R.id.rl_assignment,

@@ -10,6 +10,7 @@ import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
+import danggai.domain.local.Server
 import danggai.domain.network.changedataswitch.usecase.ChangeDataSwitchUseCase
 import danggai.domain.network.dailynote.usecase.DailyNoteUseCase
 import danggai.domain.network.getgamerecordcard.usecase.GetGameRecordCardUseCase
@@ -31,17 +32,17 @@ class NewHoyolabAccountViewModel @Inject constructor(
 ) : BaseViewModel() {
     val sfProgress = MutableStateFlow(false)
 
-    val sfGenshinServer = MutableStateFlow(0)
+    val sfGenshinServer = MutableStateFlow(Server.ASIA)
     val sfGenshinNickname = MutableStateFlow("")
     val sfGenshinUid = MutableStateFlow("")
     val sfNoGenshinAccount = MutableStateFlow(false)
 
-    val sfHonkaiSrServer = MutableStateFlow(0)
+    val sfHonkaiSrServer = MutableStateFlow(Server.ASIA)
     val sfHonkaiSrNickname = MutableStateFlow("")
     val sfHonkaiSrUid = MutableStateFlow("")
     val sfNoHonkaiSrAccount = MutableStateFlow(false)
 
-    val sfZZZServer = MutableStateFlow(0)
+    val sfZZZServer = MutableStateFlow(Server.ASIA)
     val sfZZZNickname = MutableStateFlow("")
     val sfZZZUid = MutableStateFlow("")
     val sfNoZZZAccount = MutableStateFlow(false)
@@ -125,16 +126,16 @@ class NewHoyolabAccountViewModel @Inject constructor(
 
                                             when (recordCard.region) {
                                                 Constant.SERVER_OS_ASIA -> sfGenshinServer.value =
-                                                    Constant.Server.ASIA.pref
+                                                    Server.ASIA
 
                                                 Constant.SERVER_OS_USA -> sfGenshinServer.value =
-                                                    Constant.Server.USA.pref
+                                                    Server.USA
 
                                                 Constant.SERVER_OS_EURO -> sfGenshinServer.value =
-                                                    Constant.Server.EUROPE.pref
+                                                    Server.EUROPE
 
                                                 Constant.SERVER_OS_CHT -> sfGenshinServer.value =
-                                                    Constant.Server.CHT.pref
+                                                    Server.CHT
                                             }
 
                                             sfEnableGenshinAutoCheckIn.value = true
@@ -147,16 +148,16 @@ class NewHoyolabAccountViewModel @Inject constructor(
 
                                             when (recordCard.region) {
                                                 Constant.SERVER_PO_ASIA -> sfHonkaiSrServer.value =
-                                                    Constant.Server.ASIA.pref
+                                                    Server.ASIA
 
                                                 Constant.SERVER_PO_USA -> sfHonkaiSrServer.value =
-                                                    Constant.Server.USA.pref
+                                                    Server.USA
 
                                                 Constant.SERVER_PO_EURO -> sfHonkaiSrServer.value =
-                                                    Constant.Server.EUROPE.pref
+                                                    Server.EUROPE
 
                                                 Constant.SERVER_PO_CHT -> sfHonkaiSrServer.value =
-                                                    Constant.Server.CHT.pref
+                                                    Server.CHT
                                             }
 
                                             sfEnableHonkaiSrAutoCheckIn.value = true
@@ -169,16 +170,16 @@ class NewHoyolabAccountViewModel @Inject constructor(
 
                                             when (recordCard.region) {
                                                 Constant.SERVER_PO_ASIA -> sfZZZServer.value =
-                                                    Constant.Server.ASIA.pref
+                                                    Server.ASIA
 
                                                 Constant.SERVER_PO_USA -> sfZZZServer.value =
-                                                    Constant.Server.USA.pref
+                                                    Server.USA
 
                                                 Constant.SERVER_PO_EURO -> sfZZZServer.value =
-                                                    Constant.Server.EUROPE.pref
+                                                    Server.EUROPE
 
                                                 Constant.SERVER_PO_CHT -> sfZZZServer.value =
-                                                    Constant.Server.CHT.pref
+                                                    Server.CHT
                                             }
 
                                             sfEnableZZZAutoCheckIn.value = true
@@ -374,13 +375,13 @@ class NewHoyolabAccountViewModel @Inject constructor(
                                     sfGenshinNickname.value,
                                     sfHoyolabCookie.value,
                                     sfGenshinUid.value,
-                                    sfGenshinServer.value,
+                                    sfGenshinServer.value.value,
                                     sfHonkaiSrNickname.value,
                                     sfHonkaiSrUid.value,
-                                    sfHonkaiSrServer.value,
+                                    sfHonkaiSrServer.value.value,
                                     sfZZZNickname.value,
                                     sfZZZUid.value,
-                                    sfZZZServer.value,
+                                    sfZZZServer.value.value,
                                     sfEnableGenshinAutoCheckIn.value,
                                     sfEnableHonkai3rdAutoCheckIn.value,
                                     sfEnableHonkaiSrAutoCheckIn.value,
@@ -555,19 +556,19 @@ class NewHoyolabAccountViewModel @Inject constructor(
         }
     }
 
-    fun onClickSetGenshinServer(server: Constant.Server) {
+    fun onClickSetGenshinServer(server: Server) {
         log.e("server -> $server")
-        sfGenshinServer.value = server.pref
+        sfGenshinServer.value = server
     }
 
-    fun onClickSetHonkaiSrServer(server: Constant.Server) {
+    fun onClickSetHonkaiSrServer(server: Server) {
         log.e("server -> $server")
-        sfHonkaiSrServer.value = server.pref
+        sfHonkaiSrServer.value = server
     }
 
-    fun onClickSetZZZServer(server: Constant.Server) {
+    fun onClickSetZZZServer(server: Server) {
         log.e("server -> $server")
-        sfZZZServer.value = server.pref
+        sfZZZServer.value = server
     }
 
     fun makeDailyNotePublic() {
@@ -634,10 +635,10 @@ class NewHoyolabAccountViewModel @Inject constructor(
                     genshin_uid = sfGenshinUid.value,
                     honkai_sr_nickname = sfHonkaiSrNickname.value,
                     honkai_sr_uid = sfHonkaiSrUid.value,
-                    honkai_sr_server = sfHonkaiSrServer.value,
+                    honkai_sr_server = sfHonkaiSrServer.value.value,
                     zzz_nickname = sfZZZNickname.value,
                     zzz_uid = sfZZZUid.value,
-                    zzz_server = sfZZZServer.value,
+                    zzz_server = sfZZZServer.value.value,
                     enable_genshin_checkin = sfEnableGenshinAutoCheckIn.value,
                     enable_honkai3rd_checkin = sfEnableHonkai3rdAutoCheckIn.value,
                     enable_honkai_sr_checkin = sfEnableHonkaiSrAutoCheckIn.value,
@@ -653,10 +654,10 @@ class NewHoyolabAccountViewModel @Inject constructor(
             dailyNote(
                 sfGenshinUid.value,
                 when (sfGenshinServer.value) {
-                    Constant.PREF_SERVER_ASIA -> Constant.SERVER_OS_ASIA
-                    Constant.PREF_SERVER_EUROPE -> Constant.SERVER_OS_EURO
-                    Constant.PREF_SERVER_USA -> Constant.SERVER_OS_USA
-                    Constant.PREF_SERVER_CHT -> Constant.SERVER_OS_CHT
+                    Server.ASIA -> Constant.SERVER_OS_ASIA
+                    Server.EUROPE -> Constant.SERVER_OS_EURO
+                    Server.USA -> Constant.SERVER_OS_USA
+                    Server.CHT -> Constant.SERVER_OS_CHT
                     else -> Constant.SERVER_OS_ASIA
                 },
                 sfHoyolabCookie.value,
@@ -674,17 +675,17 @@ class NewHoyolabAccountViewModel @Inject constructor(
                 sfHoyolabCookie.value = account.cookie
                 sfGenshinUid.value = account.genshin_uid
                 sfGenshinNickname.value = account.nickname
-                sfGenshinServer.value = account.server
+                sfGenshinServer.value = Server.fromValue(account.server)?:Server.ASIA
                 sfNoGenshinAccount.value = account.genshin_uid.contains("-")
 
                 sfHonkaiSrUid.value = account.honkai_sr_uid
                 sfHonkaiSrNickname.value = account.honkai_sr_nickname
-                sfHonkaiSrServer.value = account.honkai_sr_server
+                sfHonkaiSrServer.value = Server.fromValue(account.honkai_sr_server)?:Server.ASIA
                 sfNoHonkaiSrAccount.value = account.honkai_sr_uid.isEmpty()
 
                 sfZZZUid.value = account.zzz_uid
                 sfZZZNickname.value = account.zzz_nickname
-                sfZZZServer.value = account.zzz_server
+                sfZZZServer.value = Server.fromValue(account.zzz_server)?:Server.ASIA
                 sfNoZZZAccount.value = account.zzz_uid.isEmpty()
 
                 sfEnableGenshinAutoCheckIn.value = account.enable_genshin_checkin

@@ -17,6 +17,7 @@ import danggai.app.presentation.util.WidgetDesignUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.ResinWidgetDesignSettings
+import danggai.domain.local.TimeNotation
 import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
 import danggai.domain.util.Constant
 import java.text.SimpleDateFormat
@@ -197,20 +198,20 @@ class TrailPowerWidget() : AppWidgetProvider() {
 
                 view.setViewVisibility(
                     R.id.tv_remain_time,
-                    if (widgetDesign.timeNotation == Constant.PREF_TIME_NOTATION_DISABLE) View.GONE
+                    if (TimeNotation.fromValue(widgetDesign.timeNotation) == TimeNotation.DISABLE_TIME) View.GONE
                     else View.VISIBLE
                 )
                 view.setTextViewText(
                     R.id.tv_remain_time,
-                    when (widgetDesign.timeNotation) {
-                        Constant.PREF_TIME_NOTATION_DEFAULT,
-                        Constant.PREF_TIME_NOTATION_REMAIN_TIME -> TimeFunction.secondToRemainTime(
+                    when (TimeNotation.fromValue(widgetDesign.timeNotation)) {
+                        TimeNotation.DEFAULT,
+                        TimeNotation.REMAIN_TIME -> TimeFunction.secondToRemainTime(
                             _context,
                             dailyNote.stamina_recover_time,
                             timeType = Constant.TIME_TYPE_MAX
                         )
 
-                        Constant.PREF_TIME_NOTATION_FULL_CHARGE_TIME -> TimeFunction.getSecondsLaterTime(
+                        TimeNotation.FULL_CHARGE_TIME -> TimeFunction.getSecondsLaterTime(
                             _context,
                             recentSyncTimeDate,
                             dailyNote.stamina_recover_time,
