@@ -64,8 +64,12 @@
 
 ## ScreenShots
 
+| <img src="./assets/en00.jpg?raw=true" width="100%"> | <img src="./assets/en01.png?raw=true" width="100%"> | <img src="./assets/en02.jpg?raw=true" width="100%"> |
+|:--------------------------------------------------:|:--------------------------------------------------:|:--------------------------------------------------:|
+| 메인 화면                                          | 계정 연동 화면                                      | 디자인 화면                                        |
+
+| <img src="./assets/en03.jpg?raw=true" width="100%"> | <img src="./assets/en04.png?raw=true" width="100%"> | <img src="./assets/kr05.jpg?raw=true" width="100%"> |
+|:--------------------------------------------------:|:--------------------------------------------------:|:--------------------------------------------------:|
+| 디자인 화면                                        | 디자인 예시                                        | 위젯 예시                                          |
 
 
-| ![screenshot_00.jpg](./assets/en00.jpg?raw=true)<br /><center>메인 화면</center> | ![screenshot_01.jpg](./assets/en01.png?raw=true)<br /><center>계정 연동 화면</center> | ![screenshot_02.jpg](./assets/en02.jpg?raw=true)<br /><center>디자인 화면</center> |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![screenshot_00.jpg](./assets/en03.png?raw=true)<br /><center>디자인 화면</center> | ![screenshot_01.jpg](./assets/en04.png?raw=true)<br /><center>디자인 예시</center> | ![screenshot_02.jpg](./assets/kr05.jpg?raw=true)<br /><center>위젯 예시</center> |
