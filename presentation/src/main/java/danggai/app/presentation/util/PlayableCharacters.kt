@@ -15,7 +15,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.CYRO,
         TalentArea.INAZUMA,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_ayaka
     ),
 
@@ -26,7 +26,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.ANEMO,
         TalentArea.MONDSTADT,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_jean
     ),
 
@@ -70,7 +70,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.ELECTRO,
         TalentArea.MONDSTADT,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_lisa
     ),
 
@@ -114,7 +114,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.HYDRO,
         TalentArea.MONDSTADT,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_barbara
     ),
 
@@ -125,7 +125,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.CYRO,
         TalentArea.MONDSTADT,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_keaya
     ),
 
@@ -136,7 +136,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.PYRO,
         TalentArea.MONDSTADT,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_diluc
     ),
 
@@ -147,7 +147,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.ELECTRO,
         TalentArea.MONDSTADT,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_razor
     ),
 
@@ -158,7 +158,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.PYRO,
         TalentArea.MONDSTADT,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_amber
     ),
 
@@ -169,7 +169,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.ANEMO,
         TalentArea.MONDSTADT,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_venti
     ),
 
@@ -180,7 +180,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.PYRO,
         TalentArea.LIYUE,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_xiangling
     ),
 
@@ -191,7 +191,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.ELECTRO,
         TalentArea.LIYUE,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_beidou
     ),
 
@@ -202,7 +202,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.HYDRO,
         TalentArea.LIYUE,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_xingqiu
     ),
 
@@ -213,7 +213,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.ANEMO,
         TalentArea.LIYUE,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_xiao
     ),
 
@@ -224,7 +224,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.GEO,
         TalentArea.LIYUE,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_ningguang
     ),
 
@@ -235,7 +235,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.PYRO,
         TalentArea.MONDSTADT,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_klee
     ),
 
@@ -246,7 +246,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.GEO,
         TalentArea.LIYUE,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_zhongli
     ),
 
@@ -257,7 +257,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.ELECTRO,
         TalentArea.MONDSTADT,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_fischl
     ),
 
@@ -268,7 +268,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.PYRO,
         TalentArea.MONDSTADT,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_bennett
     ),
 
@@ -279,7 +279,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.HYDRO,
         TalentArea.MONDSTADT,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_childe
     ),
 
@@ -290,7 +290,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.GEO,
         TalentArea.MONDSTADT,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_noelle
     ),
 
@@ -301,7 +301,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.CYRO,
         TalentArea.LIYUE,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_qiqi
     ),
 
@@ -312,7 +312,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.CYRO,
         TalentArea.LIYUE,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_chongyun
     ),
 
@@ -323,7 +323,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.CYRO,
         TalentArea.LIYUE,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_ganyu
     ),
 
@@ -334,7 +334,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.GEO,
         TalentArea.MONDSTADT,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_albedo
     ),
 
@@ -345,7 +345,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.CYRO,
         TalentArea.MONDSTADT,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_diona
     ),
 
@@ -356,7 +356,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.HYDRO,
         TalentArea.MONDSTADT,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_mona
     ),
 
@@ -367,7 +367,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.ELECTRO,
         TalentArea.LIYUE,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_keqing
     ),
 
@@ -378,7 +378,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.ANEMO,
         TalentArea.MONDSTADT,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_sucrose
     ),
 
@@ -389,7 +389,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.PYRO,
         TalentArea.LIYUE,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_xinyan
     ),
 
@@ -400,7 +400,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.CYRO,
         TalentArea.MONDSTADT,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_rosaria
     ),
 
@@ -411,7 +411,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.PYRO,
         TalentArea.LIYUE,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_hutao
     ),
 
@@ -422,7 +422,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.ANEMO,
         TalentArea.LIYUE,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_kazuha
     ),
 
@@ -433,7 +433,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.PYRO,
         TalentArea.LIYUE,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_yanfei
     ),
 
@@ -444,7 +444,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.PYRO,
         TalentArea.INAZUMA,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_yoimiya
     ),
 
@@ -455,7 +455,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.PYRO,
         TalentArea.INAZUMA,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_thoma
     ),
 
@@ -466,7 +466,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.CYRO,
         TalentArea.MONDSTADT,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_eula
     ),
 
@@ -477,7 +477,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.ELECTRO,
         TalentArea.INAZUMA,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_raiden
     ),
 
@@ -488,7 +488,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.ANEMO,
         TalentArea.INAZUMA,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_sayu
     ),
 
@@ -499,7 +499,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.HYDRO,
         TalentArea.INAZUMA,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_kokomi
     ),
 
@@ -510,7 +510,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.GEO,
         TalentArea.INAZUMA,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_gorou
     ),
 
@@ -521,7 +521,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.ELECTRO,
         TalentArea.INAZUMA,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_sara
     ),
 
@@ -532,7 +532,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.GEO,
         TalentArea.INAZUMA,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_itto
     ),
 
@@ -543,7 +543,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.ELECTRO,
         TalentArea.INAZUMA,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_yae
     ),
 
@@ -554,7 +554,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.ANEMO,
         TalentArea.INAZUMA,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_heizou
     ),
 
@@ -565,7 +565,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.HYDRO,
         TalentArea.LIYUE,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_yeran
     ),
 
@@ -576,7 +576,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         105,
         Elements.CYRO,
         TalentArea.MONDSTADT,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_aloy
     ),
 
@@ -587,7 +587,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.CYRO,
         TalentArea.LIYUE,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_shenhe
     ),
 
@@ -598,7 +598,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.GEO,
         TalentArea.LIYUE,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_yunjin
     ),
 
@@ -609,7 +609,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.ELECTRO,
         TalentArea.INAZUMA,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_kuki
     ),
 
@@ -620,7 +620,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.HYDRO,
         TalentArea.INAZUMA,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_ayato
     ),
 
@@ -631,7 +631,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.DENDRO,
         TalentArea.SUMERU,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_collei
     ),
 
@@ -642,7 +642,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.ELECTRO,
         TalentArea.SUMERU,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_dori
     ),
 
@@ -653,7 +653,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.DENDRO,
         TalentArea.SUMERU,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_tighnari
     ),
 
@@ -664,7 +664,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.HYDRO,
         TalentArea.SUMERU,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_nilou
     ),
 
@@ -675,7 +675,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.ELECTRO,
         TalentArea.SUMERU,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_cyno
     ),
 
@@ -686,7 +686,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.HYDRO,
         TalentArea.SUMERU,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_candace
     ),
 
@@ -697,7 +697,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.DENDRO,
         TalentArea.SUMERU,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_nahida
     ),
 
@@ -708,7 +708,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.CYRO,
         TalentArea.SUMERU,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_layla
     ),
 
@@ -719,7 +719,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.ANEMO,
         TalentArea.SUMERU,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_wanderer
     ),
 
@@ -730,7 +730,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.ANEMO,
         TalentArea.SUMERU,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_faruzan
     ),
 
@@ -741,7 +741,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.DENDRO,
         TalentArea.LIYUE,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_yaoyao
     ),
 
@@ -752,7 +752,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.DENDRO,
         TalentArea.SUMERU,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_alhaitham
     ),
 
@@ -763,7 +763,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.PYRO,
         TalentArea.SUMERU,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_dehya
     ),
 
@@ -774,7 +774,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.CYRO,
         TalentArea.MONDSTADT,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_mika
     ),
 
@@ -785,7 +785,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.DENDRO,
         TalentArea.SUMERU,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_kaveh
     ),
 
@@ -796,7 +796,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.DENDRO,
         TalentArea.LIYUE,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_baizhuer
     ),
 
@@ -807,7 +807,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.DENDRO,
         TalentArea.INAZUMA,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_kirara
     ),
 
@@ -818,7 +818,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.ANEMO,
         TalentArea.FONTAINE,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_lynette
     ),
 
@@ -829,7 +829,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.PYRO,
         TalentArea.FONTAINE,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_lyney
     ),
 
@@ -840,7 +840,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.CYRO,
         TalentArea.FONTAINE,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_freminet
     ),
 
@@ -851,7 +851,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.CYRO,
         TalentArea.FONTAINE,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_wriothesley
     ),
 
@@ -862,7 +862,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.HYDRO,
         TalentArea.FONTAINE,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_neuvillette
     ),
 
@@ -873,7 +873,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.CYRO,
         TalentArea.FONTAINE,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_charlotte
     ),
 
@@ -884,7 +884,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.HYDRO,
         TalentArea.FONTAINE,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_furina
     ),
 
@@ -895,7 +895,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.PYRO,
         TalentArea.FONTAINE,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_chevreuse
     ),
 
@@ -906,7 +906,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.GEO,
         TalentArea.FONTAINE,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_navia
     ),
 
@@ -917,7 +917,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.PYRO,
         TalentArea.LIYUE,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_gaming
     ),
 
@@ -928,7 +928,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.ANEMO,
         TalentArea.LIYUE,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_xianyun
     ),
 
@@ -939,7 +939,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.GEO,
         TalentArea.INAZUMA,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_chiori
     ),
 
@@ -950,7 +950,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.HYDRO,
         TalentArea.FONTAINE,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_sigewinne
     ),
 
@@ -961,7 +961,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.PYRO,
         TalentArea.FONTAINE,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_arlecchino
     ),
 
@@ -972,7 +972,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.ELECTRO,
         TalentArea.SUMERU,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_sethos
     ),
 
@@ -983,7 +983,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.ELECTRO,
         TalentArea.FONTAINE,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_clorinde
     ),
 
@@ -994,7 +994,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.DENDRO,
         TalentArea.FONTAINE,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_emilie
     ),
 
@@ -1005,7 +1005,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.GEO,
         TalentArea.NATLAN,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_kachina
     ),
 
@@ -1016,7 +1016,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.DENDRO,
         TalentArea.NATLAN,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_kinich
     ),
 
@@ -1027,7 +1027,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.HYDRO,
         TalentArea.NATLAN,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_mualani
     ),
 
@@ -1038,7 +1038,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.GEO,
         TalentArea.NATLAN,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_xilonen
     ),
 
@@ -1049,7 +1049,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.ANEMO,
         TalentArea.NATLAN,
-        TalentDate.WEDSAT,
+        TalentDate.WED_SAT,
         R.drawable.icon_chasca
     ),
 
@@ -1060,7 +1060,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.ELECTRO,
         TalentArea.NATLAN,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_ororon
     ),
 
@@ -1071,7 +1071,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.PYRO,
         TalentArea.NATLAN,
-        TalentDate.MONTHU,
+        TalentDate.MON_THU,
         R.drawable.icon_mavuika
     ),
 
@@ -1082,7 +1082,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         5,
         Elements.CYRO,
         TalentArea.NATLAN,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_citlali
     ),
 
@@ -1093,7 +1093,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         4,
         Elements.ANEMO,
         TalentArea.LIYUE,
-        TalentDate.TUEFRI,
+        TalentDate.TUE_FRI,
         R.drawable.icon_lanyan
     ),
 )

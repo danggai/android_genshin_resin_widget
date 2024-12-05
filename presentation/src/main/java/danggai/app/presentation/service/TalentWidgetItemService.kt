@@ -13,6 +13,7 @@ import danggai.app.presentation.util.log
 import danggai.domain.local.LocalCharacter
 import danggai.domain.local.TalentArea
 import danggai.domain.local.TalentDate
+import danggai.domain.local.TalentDays
 import danggai.domain.util.Constant
 
 class TalentWidgetItemService : RemoteViewsService() {
@@ -37,32 +38,9 @@ class TalentWidgetItemFactory(
         val selectedCharacterIds =
             PreferenceManager.getIntArray(context, Constant.PREF_SELECTED_CHARACTER_ID_LIST)
 
-        data = PlayableCharacters
-            .filter {
-                selectedCharacterIds.contains(it.id) &&
-                        when (it.talentDay) {
-                            TalentDate.MONTHU -> CommonFunction.getDateInGenshin() in listOf(
-                                1,
-                                2,
-                                5
-                            )
-
-                            TalentDate.TUEFRI -> CommonFunction.getDateInGenshin() in listOf(
-                                1,
-                                3,
-                                6
-                            )
-
-                            TalentDate.WEDSAT -> CommonFunction.getDateInGenshin() in listOf(
-                                1,
-                                4,
-                                7
-                            )
-
-                            TalentDate.ALL -> true
-                            else -> false
-                        }
-            } as ArrayList<LocalCharacter>
+        data = PlayableCharacters.filter {
+            selectedCharacterIds.contains(it.id) && isTalentAvailableToday(it.talentDay)
+        } as ArrayList<LocalCharacter>
 
         data.apply {
             sortBy { -it.id }
@@ -95,18 +73,31 @@ class TalentWidgetItemFactory(
                     setViewVisibility(R.id.iv_area_emblem, View.VISIBLE)
                     setImageViewResource(
                         R.id.iv_area_emblem,
-                        when (data[position].talentArea) {
-                            TalentArea.MONDSTADT -> R.drawable.icon_emblem_mondstadt
-                            TalentArea.LIYUE -> R.drawable.icon_emblem_liyue
-                            TalentArea.INAZUMA -> R.drawable.icon_emblem_inazuma
-                            TalentArea.SUMERU -> R.drawable.icon_emblem_sumeru
-                            TalentArea.FONTAINE -> R.drawable.icon_emblem_fontaine
-                            TalentArea.NATLAN -> R.drawable.icon_emblem_natlan
-                            else -> R.drawable.icon_emblem_mondstadt
-                        }
+                        getEmblemResource(data[position].talentArea)
                     )
                 }
             return widgetItem
+        }
+    }
+
+    private fun getEmblemResource(talentArea: TalentArea): Int {
+        return when (talentArea) {
+            TalentArea.MONDSTADT -> R.drawable.icon_emblem_mondstadt
+            TalentArea.LIYUE -> R.drawable.icon_emblem_liyue
+            TalentArea.INAZUMA -> R.drawable.icon_emblem_inazuma
+            TalentArea.SUMERU -> R.drawable.icon_emblem_sumeru
+            TalentArea.FONTAINE -> R.drawable.icon_emblem_fontaine
+            TalentArea.NATLAN -> R.drawable.icon_emblem_natlan
+        }
+    }
+
+    private fun isTalentAvailableToday(talentDate: TalentDate): Boolean {
+        val currentDate = CommonFunction.getDateInGenshin()
+        return when (talentDate) {
+            TalentDate.MON_THU -> currentDate in TalentDays.MON_THU
+            TalentDate.TUE_FRI -> currentDate in TalentDays.TUE_FRI
+            TalentDate.WED_SAT -> currentDate in TalentDays.WED_SAT
+            TalentDate.ALL -> true
         }
     }
 
