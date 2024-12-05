@@ -18,6 +18,8 @@ import danggai.app.presentation.util.WidgetDesignUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.TalentWorker
 import danggai.domain.local.ResinWidgetDesignSettings
+import danggai.domain.local.TalentDate
+import danggai.domain.local.TalentDays
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -153,32 +155,9 @@ class TalentWidget() : AppWidgetProvider() {
             val selectedCharacterIds =
                 PreferenceManager.getIntArray(context, Constant.PREF_SELECTED_CHARACTER_ID_LIST)
 
-            val targetCharacters = PlayableCharacters
-                .filter {
-                    selectedCharacterIds.contains(it.id) &&
-                            when (it.talentDay) {
-                                Constant.TALENT_DATE_MONTHU -> CommonFunction.getDateInGenshin() in listOf(
-                                    1,
-                                    2,
-                                    5
-                                )
-
-                                Constant.TALENT_DATE_TUEFRI -> CommonFunction.getDateInGenshin() in listOf(
-                                    1,
-                                    3,
-                                    6
-                                )
-
-                                Constant.TALENT_DATE_WEDSAT -> CommonFunction.getDateInGenshin() in listOf(
-                                    1,
-                                    4,
-                                    7
-                                )
-
-                                Constant.TALENT_DATE_ALL -> true
-                                else -> false
-                            }
-                }
+            val targetCharacters = PlayableCharacters.filter {
+                selectedCharacterIds.contains(it.id) && isTalentAvailableToday(it.talentDay)
+            }
 
             view.setTextViewText(
                 R.id.tv_no_talent_ingredient,
@@ -205,6 +184,16 @@ class TalentWidget() : AppWidgetProvider() {
 
             view.setViewVisibility(R.id.pb_loading, View.GONE)
             view.setViewVisibility(R.id.ll_body, View.VISIBLE)
+        }
+    }
+
+    private fun isTalentAvailableToday(talentDate: TalentDate): Boolean {
+        val currentDate = CommonFunction.getDateInGenshin()
+        return when (talentDate) {
+            TalentDate.MON_THU -> currentDate in TalentDays.MON_THU
+            TalentDate.TUE_FRI -> currentDate in TalentDays.TUE_FRI
+            TalentDate.WED_SAT -> currentDate in TalentDays.WED_SAT
+            TalentDate.ALL -> true
         }
     }
 

@@ -13,11 +13,11 @@ import danggai.app.presentation.util.log
 import danggai.domain.local.Elements
 import danggai.domain.local.LocalCharacter
 import danggai.domain.util.Constant
-import java.util.*
+import java.util.Locale
 
 class WidgetDesignCharacterAdapter(
     val vm: WidgetDesignViewModel
-): BaseAdapter() {
+) : BaseAdapter() {
 
     private var items: MutableList<LocalCharacter> = arrayListOf()
 
@@ -34,7 +34,7 @@ class WidgetDesignCharacterAdapter(
                     this.add(this[0])
                     this.removeFirst()
                 }
-                
+
                 items.addAll(this)
             }
         }
@@ -61,52 +61,7 @@ class WidgetDesignCharacterAdapter(
         holder.binding.vm = vm
         holder.binding.item = items[position]
 
-        for (character in vm.selectedCharacterIdList) {
-            if (character == items[position].id) {
-                items[position].isSelected = true
-                break
-            }
-        }
-
-        holder.binding.ivIcon.apply {
-            this.setImageResource(items[position].icon)
-        }
-
-        holder.binding.tvName.apply {
-            this.text =
-                when (PreferenceManager.getString(context, Constant.PREF_LOCALE, Locale.getDefault().language)) {
-                    Constant.Locale.ENGLISH.locale -> items[position].name_en
-                    Constant.Locale.KOREAN.locale -> items[position].name_ko
-                    else -> items[position].name_en
-                }
-        }
-
-        holder.binding.ivElement.apply {
-            this.setImageResource(when (items[position].element) {
-                Elements.PYRO -> R.drawable.icon_element_pyro
-                Elements.HYDRO -> R.drawable.icon_element_hydro
-                Elements.ELECTRO -> R.drawable.icon_element_electro
-                Elements.CYRO -> R.drawable.icon_element_cyro
-                Elements.ANEMO -> R.drawable.icon_element_anemo
-                Elements.GEO -> R.drawable.icon_element_geo
-                Elements.DENDRO -> R.drawable.icon_element_dendro
-            })
-        }
-
-        when (items[position].rarity) {
-            5 -> {
-                holder.binding.ivBackground.setImageResource(R.drawable.bg_character_5stars)
-                holder.binding.ivStars.setImageResource(R.drawable.icon_5stars)
-            }
-            4 -> {
-                holder.binding.ivBackground.setImageResource(R.drawable.bg_character_4stars)
-                holder.binding.ivStars.setImageResource(R.drawable.icon_4stars)
-            }
-            105 -> {  // 콜라보 5성
-                holder.binding.ivBackground.setImageResource(R.drawable.bg_character_collabo)
-                holder.binding.ivStars.setImageResource(R.drawable.icon_5stars_collabo)
-            }
-        }
+        bindCharacterData(holder, position)
 
         holder.binding.llRoot.setOnClickListener {
             items[position].isSelected = !items[position].isSelected
@@ -115,6 +70,72 @@ class WidgetDesignCharacterAdapter(
         }
 
         return holder.view
+    }
+
+    private fun bindCharacterData(holder: ItemViewHolder, position: Int) {
+        holder.binding.vm = vm
+        holder.binding.item = items[position]
+
+        // 각 아이템의 선택 상태를 동기화
+        updateSelectionState(position)
+
+        setIcon(holder, position)
+        setName(holder, position)
+        setElement(holder, position)
+        setRarity(holder, position)
+    }
+
+    private fun updateSelectionState(position: Int) {
+        items[position].isSelected = vm.selectedCharacterIdList.contains(items[position].id)
+    }
+
+    private fun setIcon(holder: ItemViewHolder, position: Int) {
+        holder.binding.ivIcon.setImageResource(items[position].icon)
+    }
+    
+    private fun setName(holder: ItemViewHolder, position: Int) {
+        holder.binding.tvName.text = when (PreferenceManager.getString(
+            holder.view.context,
+            Constant.PREF_LOCALE,
+            Locale.getDefault().language
+        )) {
+            Constant.Locale.ENGLISH.locale -> items[position].name_en
+            Constant.Locale.KOREAN.locale -> items[position].name_ko
+            else -> items[position].name_en
+        }
+    }
+
+    private fun setElement(holder: ItemViewHolder, position: Int) {
+        holder.binding.ivElement.setImageResource(
+            when (items[position].element) {
+                Elements.PYRO -> R.drawable.icon_element_pyro
+                Elements.HYDRO -> R.drawable.icon_element_hydro
+                Elements.ELECTRO -> R.drawable.icon_element_electro
+                Elements.CYRO -> R.drawable.icon_element_cyro
+                Elements.ANEMO -> R.drawable.icon_element_anemo
+                Elements.GEO -> R.drawable.icon_element_geo
+                Elements.DENDRO -> R.drawable.icon_element_dendro
+            }
+        )
+    }
+
+    private fun setRarity(holder: ItemViewHolder, position: Int) {
+        when (items[position].rarity) {
+            5 -> {
+                holder.binding.ivBackground.setImageResource(R.drawable.bg_character_5stars)
+                holder.binding.ivStars.setImageResource(R.drawable.icon_5stars)
+            }
+
+            4 -> {
+                holder.binding.ivBackground.setImageResource(R.drawable.bg_character_4stars)
+                holder.binding.ivStars.setImageResource(R.drawable.icon_4stars)
+            }
+
+            105 -> {  // 콜라보 5성
+                holder.binding.ivBackground.setImageResource(R.drawable.bg_character_collabo)
+                holder.binding.ivStars.setImageResource(R.drawable.icon_5stars_collabo)
+            }
+        }
     }
 
     override fun getCount(): Int = items.size

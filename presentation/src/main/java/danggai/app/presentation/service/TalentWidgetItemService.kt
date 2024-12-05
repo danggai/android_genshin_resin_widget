@@ -11,6 +11,9 @@ import danggai.app.presentation.util.PlayableCharacters
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.log
 import danggai.domain.local.LocalCharacter
+import danggai.domain.local.TalentArea
+import danggai.domain.local.TalentDate
+import danggai.domain.local.TalentDays
 import danggai.domain.util.Constant
 
 class TalentWidgetItemService : RemoteViewsService() {
@@ -32,19 +35,12 @@ class TalentWidgetItemFactory(
     }
 
     private fun setData() {
-        val selectedCharacterIds = PreferenceManager.getIntArray(context, Constant.PREF_SELECTED_CHARACTER_ID_LIST)
+        val selectedCharacterIds =
+            PreferenceManager.getIntArray(context, Constant.PREF_SELECTED_CHARACTER_ID_LIST)
 
-        data = PlayableCharacters
-            .filter {
-                selectedCharacterIds.contains(it.id) &&
-                        when (it.talentDay) {
-                            Constant.TALENT_DATE_MONTHU -> CommonFunction.getDateInGenshin() in listOf(1, 2, 5)
-                            Constant.TALENT_DATE_TUEFRI -> CommonFunction.getDateInGenshin() in listOf(1, 3, 6)
-                            Constant.TALENT_DATE_WEDSAT -> CommonFunction.getDateInGenshin() in listOf(1, 4, 7)
-                            Constant.TALENT_DATE_ALL -> true
-                            else -> false
-                        }
-            } as ArrayList<LocalCharacter>
+        data = PlayableCharacters.filter {
+            selectedCharacterIds.contains(it.id) && isTalentAvailableToday(it.talentDay)
+        } as ArrayList<LocalCharacter>
 
         data.apply {
             sortBy { -it.id }
@@ -57,34 +53,67 @@ class TalentWidgetItemFactory(
     override fun getCount() = data.size
 
     override fun getViewAt(position: Int): RemoteViews {
-        if (position >= count) {
-            return loadingView
+        return if (position >= count) {
+            loadingView
         } else {
-            val widgetItem = RemoteViews(context.packageName, R.layout.item_character_widget).apply {
-                setViewVisibility(R.id.iv_background, View.VISIBLE)
-                setImageViewResource(R.id.iv_background,
-                    when (data[position].rarity) {
-                        5 -> R.drawable.bg_character_5stars
-                        else -> R.drawable.bg_character_4stars
-                    }
-                )
+            createCharacterWidgetItem(context, data, position)
+        }
+    }
 
-                setViewVisibility(R.id.iv_icon, View.VISIBLE)
-                setImageViewResource(R.id.iv_icon, data[position].icon)
+    private fun createCharacterWidgetItem(
+        context: Context,
+        data: List<LocalCharacter>,
+        position: Int
+    ): RemoteViews {
+        return RemoteViews(context.packageName, R.layout.item_character_widget).apply {
+            // 배경
+            setViewVisibility(R.id.iv_background, View.VISIBLE)
+            setImageViewResource(
+                R.id.iv_background,
+                getBackgroundResourceByRarity(data[position].rarity)
+            )
 
-                setViewVisibility(R.id.iv_area_emblem, View.VISIBLE)
-                setImageViewResource(R.id.iv_area_emblem,
-                    when (data[position].talentArea) {
-                        Constant.TALENT_AREA_MONDSTADT -> R.drawable.icon_emblem_mondstadt
-                        Constant.TALENT_AREA_LIYUE -> R.drawable.icon_emblem_liyue
-                        Constant.TALENT_AREA_INAZUMA -> R.drawable.icon_emblem_inazuma
-                        Constant.TALENT_AREA_SUMERU -> R.drawable.icon_emblem_sumeru
-                        Constant.TALENT_AREA_FONTAINE -> R.drawable.icon_emblem_fontaine
-                        else -> R.drawable.icon_emblem_mondstadt
-                    }
-                )
-            }
-            return widgetItem
+            // 캐릭터 아이콘
+            setViewVisibility(R.id.iv_icon, View.VISIBLE)
+            setImageViewResource(R.id.iv_icon, data[position].icon)
+
+            // 지역 엠블렘
+            setViewVisibility(R.id.iv_area_emblem, View.VISIBLE)
+            setImageViewResource(
+                R.id.iv_area_emblem,
+                getEmblemResource(data[position].talentArea)
+            )
+        }
+    }
+
+
+    private fun getBackgroundResourceByRarity(rarity: Int): Int {
+        return if (rarity == 5) {
+            R.drawable.bg_character_5stars
+        } else {
+            R.drawable.bg_character_4stars
+        }
+    }
+
+
+    private fun getEmblemResource(talentArea: TalentArea): Int {
+        return when (talentArea) {
+            TalentArea.MONDSTADT -> R.drawable.icon_emblem_mondstadt
+            TalentArea.LIYUE -> R.drawable.icon_emblem_liyue
+            TalentArea.INAZUMA -> R.drawable.icon_emblem_inazuma
+            TalentArea.SUMERU -> R.drawable.icon_emblem_sumeru
+            TalentArea.FONTAINE -> R.drawable.icon_emblem_fontaine
+            TalentArea.NATLAN -> R.drawable.icon_emblem_natlan
+        }
+    }
+
+    private fun isTalentAvailableToday(talentDate: TalentDate): Boolean {
+        val currentDate = CommonFunction.getDateInGenshin()
+        return when (talentDate) {
+            TalentDate.MON_THU -> currentDate in TalentDays.MON_THU
+            TalentDate.TUE_FRI -> currentDate in TalentDays.TUE_FRI
+            TalentDate.WED_SAT -> currentDate in TalentDays.WED_SAT
+            TalentDate.ALL -> true
         }
     }
 

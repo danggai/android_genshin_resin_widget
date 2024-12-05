@@ -243,17 +243,6 @@ object Constant {
     const val PREF_WIDGET_THEME_LIGHT = 1
     const val PREF_WIDGET_THEME_DARK = 2
 
-    const val TALENT_AREA_MONDSTADT = 0
-    const val TALENT_AREA_LIYUE = 1
-    const val TALENT_AREA_INAZUMA = 2
-    const val TALENT_AREA_SUMERU = 3
-    const val TALENT_AREA_FONTAINE = 4
-
-    const val TALENT_DATE_MONTHU = 0
-    const val TALENT_DATE_TUEFRI = 1
-    const val TALENT_DATE_WEDSAT = 2
-    const val TALENT_DATE_ALL = 3
-
     const val TIME_TYPE_MAX = 0
     const val TIME_TYPE_DONE = 1
 
@@ -402,4 +391,13 @@ object Constant {
     const val ID_SETHOS = 10000097
     const val ID_CLORINDE = 10000098
     const val ID_EMILIE = 10000099
+    const val ID_KACHINA = 10000100
+    const val ID_KINICH = 10000101
+    const val ID_MUALANI = 10000102
+    const val ID_XILONEN = 10000103
+    const val ID_CHASCA = 10000104
+    const val ID_ORORON = 10000105
+    const val ID_MAVUIKA = 10000106
+    const val ID_CITLALI = 10000107
+    const val ID_LANYAN = 10000108
 }
