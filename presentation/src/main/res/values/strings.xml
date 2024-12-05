@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Genshin &amp; Star Rail Widget</string>
+    <string name="app_name">HoYo Widgets</string>
 
-    <string name="genshin_resin_widget" translatable="false">Genshin &amp; Star Rail Widget</string>
+    <string name="hoyo_widgets" translatable="false">HoYo Widgets</string>
 
     <string name="genshin">Genshin\u00A0</string>
     <string name="honkai_sr">Honkai: Star Rail\u00A0</string>
