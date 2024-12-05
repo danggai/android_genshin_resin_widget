@@ -243,18 +243,6 @@ object Constant {
     const val PREF_WIDGET_THEME_LIGHT = 1
     const val PREF_WIDGET_THEME_DARK = 2
 
-    const val TALENT_AREA_MONDSTADT = 0
-    const val TALENT_AREA_LIYUE = 1
-    const val TALENT_AREA_INAZUMA = 2
-    const val TALENT_AREA_SUMERU = 3
-    const val TALENT_AREA_FONTAINE = 4
-    const val TALENT_AREA_NATLAN = 5
-
-    const val TALENT_DATE_MONTHU = 0
-    const val TALENT_DATE_TUEFRI = 1
-    const val TALENT_DATE_WEDSAT = 2
-    const val TALENT_DATE_ALL = 3
-
     const val TIME_TYPE_MAX = 0
     const val TIME_TYPE_DONE = 1
 

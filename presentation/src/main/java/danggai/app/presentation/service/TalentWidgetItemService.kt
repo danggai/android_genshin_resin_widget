@@ -11,6 +11,8 @@ import danggai.app.presentation.util.PlayableCharacters
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.log
 import danggai.domain.local.LocalCharacter
+import danggai.domain.local.TalentArea
+import danggai.domain.local.TalentDate
 import danggai.domain.util.Constant
 
 class TalentWidgetItemService : RemoteViewsService() {
@@ -39,25 +41,25 @@ class TalentWidgetItemFactory(
             .filter {
                 selectedCharacterIds.contains(it.id) &&
                         when (it.talentDay) {
-                            Constant.TALENT_DATE_MONTHU -> CommonFunction.getDateInGenshin() in listOf(
+                            TalentDate.MONTHU -> CommonFunction.getDateInGenshin() in listOf(
                                 1,
                                 2,
                                 5
                             )
 
-                            Constant.TALENT_DATE_TUEFRI -> CommonFunction.getDateInGenshin() in listOf(
+                            TalentDate.TUEFRI -> CommonFunction.getDateInGenshin() in listOf(
                                 1,
                                 3,
                                 6
                             )
 
-                            Constant.TALENT_DATE_WEDSAT -> CommonFunction.getDateInGenshin() in listOf(
+                            TalentDate.WEDSAT -> CommonFunction.getDateInGenshin() in listOf(
                                 1,
                                 4,
                                 7
                             )
 
-                            Constant.TALENT_DATE_ALL -> true
+                            TalentDate.ALL -> true
                             else -> false
                         }
             } as ArrayList<LocalCharacter>
@@ -94,12 +96,12 @@ class TalentWidgetItemFactory(
                     setImageViewResource(
                         R.id.iv_area_emblem,
                         when (data[position].talentArea) {
-                            Constant.TALENT_AREA_MONDSTADT -> R.drawable.icon_emblem_mondstadt
-                            Constant.TALENT_AREA_LIYUE -> R.drawable.icon_emblem_liyue
-                            Constant.TALENT_AREA_INAZUMA -> R.drawable.icon_emblem_inazuma
-                            Constant.TALENT_AREA_SUMERU -> R.drawable.icon_emblem_sumeru
-                            Constant.TALENT_AREA_FONTAINE -> R.drawable.icon_emblem_fontaine
-                            Constant.TALENT_AREA_NATLAN -> R.drawable.icon_emblem_natlan
+                            TalentArea.MONDSTADT -> R.drawable.icon_emblem_mondstadt
+                            TalentArea.LIYUE -> R.drawable.icon_emblem_liyue
+                            TalentArea.INAZUMA -> R.drawable.icon_emblem_inazuma
+                            TalentArea.SUMERU -> R.drawable.icon_emblem_sumeru
+                            TalentArea.FONTAINE -> R.drawable.icon_emblem_fontaine
+                            TalentArea.NATLAN -> R.drawable.icon_emblem_natlan
                             else -> R.drawable.icon_emblem_mondstadt
                         }
                     )

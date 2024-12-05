@@ -18,6 +18,7 @@ import danggai.app.presentation.util.WidgetDesignUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.TalentWorker
 import danggai.domain.local.ResinWidgetDesignSettings
+import danggai.domain.local.TalentDate
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -157,25 +158,25 @@ class TalentWidget() : AppWidgetProvider() {
                 .filter {
                     selectedCharacterIds.contains(it.id) &&
                             when (it.talentDay) {
-                                Constant.TALENT_DATE_MONTHU -> CommonFunction.getDateInGenshin() in listOf(
+                                TalentDate.MONTHU -> CommonFunction.getDateInGenshin() in listOf(
                                     1,
                                     2,
                                     5
                                 )
 
-                                Constant.TALENT_DATE_TUEFRI -> CommonFunction.getDateInGenshin() in listOf(
+                                TalentDate.TUEFRI -> CommonFunction.getDateInGenshin() in listOf(
                                     1,
                                     3,
                                     6
                                 )
 
-                                Constant.TALENT_DATE_WEDSAT -> CommonFunction.getDateInGenshin() in listOf(
+                                TalentDate.WEDSAT -> CommonFunction.getDateInGenshin() in listOf(
                                     1,
                                     4,
                                     7
                                 )
 
-                                Constant.TALENT_DATE_ALL -> true
+                                TalentDate.ALL -> true
                                 else -> false
                             }
                 }
