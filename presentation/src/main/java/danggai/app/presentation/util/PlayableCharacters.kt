@@ -994,5 +994,104 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         Constant.TALENT_AREA_FONTAINE,
         Constant.TALENT_DATE_WEDSAT,
         R.drawable.icon_emilie
-    )
+    ),
+
+    LocalCharacter(
+        Constant.ID_KACHINA,
+        "카치나",
+        "Kachina",
+        4,
+        Elements.GEO,
+        Constant.TALENT_AREA_NATLAN,
+        Constant.TALENT_DATE_WEDSAT,
+        R.drawable.icon_kachina
+    ),
+
+    LocalCharacter(
+        Constant.ID_KINICH,
+        "키니치",
+        "Kinich",
+        5,
+        Elements.DENDRO,
+        Constant.TALENT_AREA_NATLAN,
+        Constant.TALENT_DATE_TUEFRI,
+        R.drawable.icon_kinich
+    ),
+
+    LocalCharacter(
+        Constant.ID_MUALANI,
+        "말라니",
+        "Mualani",
+        5,
+        Elements.HYDRO,
+        Constant.TALENT_AREA_NATLAN,
+        Constant.TALENT_DATE_MONTHU,
+        R.drawable.icon_mualani
+    ),
+
+    LocalCharacter(
+        Constant.ID_XILONEN,
+        "실로닌",
+        "Xilonen",
+        5,
+        Elements.GEO,
+        Constant.TALENT_AREA_NATLAN,
+        Constant.TALENT_DATE_TUEFRI,
+        R.drawable.icon_xilonen
+    ),
+
+    LocalCharacter(
+        Constant.ID_CHASCA,
+        "차스카",
+        "Chasca",
+        5,
+        Elements.ANEMO,
+        Constant.TALENT_AREA_NATLAN,
+        Constant.TALENT_DATE_WEDSAT,
+        R.drawable.icon_chasca
+    ),
+
+    LocalCharacter(
+        Constant.ID_ORORON,
+        "올로룬",
+        "Ororon",
+        4,
+        Elements.ELECTRO,
+        Constant.TALENT_AREA_NATLAN,
+        Constant.TALENT_DATE_TUEFRI,
+        R.drawable.icon_ororon
+    ),
+
+    LocalCharacter(
+        Constant.ID_MAVUIKA,
+        "마비카",
+        "Mavuika",
+        5,
+        Elements.PYRO,
+        Constant.TALENT_AREA_NATLAN,
+        Constant.TALENT_DATE_MONTHU,
+        R.drawable.icon_mavuika
+    ),
+
+    LocalCharacter(
+        Constant.ID_CITLALI,
+        "시틀라리",
+        "Citlali",
+        5,
+        Elements.CYRO,
+        Constant.TALENT_AREA_NATLAN,
+        Constant.TALENT_DATE_TUEFRI,
+        R.drawable.icon_citlali
+    ),
+
+    LocalCharacter(
+        Constant.ID_LANYAN,
+        "남연",
+        "Lan Yan",
+        4,
+        Elements.ANEMO,
+        Constant.TALENT_AREA_LIYUE,
+        Constant.TALENT_DATE_TUEFRI,
+        R.drawable.icon_lanyan
+    ),
 )
