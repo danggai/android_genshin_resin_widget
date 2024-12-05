@@ -22,7 +22,7 @@
     <string name="font_size" translatable="false">Font Size</string>
     <string name="resin_image" translatable="false">Image</string>
     <string name="identifier" translatable="false">Identifier</string>
-    <string name="select_character" translatable="false">Select Character</string>
+    <string name="select_character">Select Character</string>
     <string name="select_character_title">Characters display in widget</string>
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>

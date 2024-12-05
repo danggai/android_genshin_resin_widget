@@ -21,6 +21,7 @@
     <string name="time">회</string>
     <string name="times">회</string>
 
+    <string name="select_character">대상 캐릭터 선택하기</string>
     <string name="select_character_title">위젯에 표시할 캐릭터</string>
 
     <string name="save_setting">설정 저장</string>

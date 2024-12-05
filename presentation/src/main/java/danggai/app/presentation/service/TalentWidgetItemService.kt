@@ -53,32 +53,48 @@ class TalentWidgetItemFactory(
     override fun getCount() = data.size
 
     override fun getViewAt(position: Int): RemoteViews {
-        if (position >= count) {
-            return loadingView
+        return if (position >= count) {
+            loadingView
         } else {
-            val widgetItem =
-                RemoteViews(context.packageName, R.layout.item_character_widget).apply {
-                    setViewVisibility(R.id.iv_background, View.VISIBLE)
-                    setImageViewResource(
-                        R.id.iv_background,
-                        when (data[position].rarity) {
-                            5 -> R.drawable.bg_character_5stars
-                            else -> R.drawable.bg_character_4stars
-                        }
-                    )
-
-                    setViewVisibility(R.id.iv_icon, View.VISIBLE)
-                    setImageViewResource(R.id.iv_icon, data[position].icon)
-
-                    setViewVisibility(R.id.iv_area_emblem, View.VISIBLE)
-                    setImageViewResource(
-                        R.id.iv_area_emblem,
-                        getEmblemResource(data[position].talentArea)
-                    )
-                }
-            return widgetItem
+            createCharacterWidgetItem(context, data, position)
         }
     }
+
+    private fun createCharacterWidgetItem(
+        context: Context,
+        data: List<LocalCharacter>,
+        position: Int
+    ): RemoteViews {
+        return RemoteViews(context.packageName, R.layout.item_character_widget).apply {
+            // 배경
+            setViewVisibility(R.id.iv_background, View.VISIBLE)
+            setImageViewResource(
+                R.id.iv_background,
+                getBackgroundResourceByRarity(data[position].rarity)
+            )
+
+            // 캐릭터 아이콘
+            setViewVisibility(R.id.iv_icon, View.VISIBLE)
+            setImageViewResource(R.id.iv_icon, data[position].icon)
+
+            // 지역 엠블렘
+            setViewVisibility(R.id.iv_area_emblem, View.VISIBLE)
+            setImageViewResource(
+                R.id.iv_area_emblem,
+                getEmblemResource(data[position].talentArea)
+            )
+        }
+    }
+
+
+    private fun getBackgroundResourceByRarity(rarity: Int): Int {
+        return if (rarity == 5) {
+            R.drawable.bg_character_5stars
+        } else {
+            R.drawable.bg_character_4stars
+        }
+    }
+
 
     private fun getEmblemResource(talentArea: TalentArea): Int {
         return when (talentArea) {
