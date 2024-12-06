@@ -3,12 +3,7 @@
 buildscript {
     repositories {
         google()
-        jcenter()
         mavenCentral()
-        maven {
-            setUrl("http://jcenter.bintray.com")
-            isAllowInsecureProtocol = true
-        }
     }
 
     dependencies {
