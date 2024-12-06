@@ -1,0 +1,146 @@
+[versions]
+# SDK Versions
+minSdk = "23"
+compileSdk = "34"
+
+# App Version
+versionCode = "75"
+versionName = "5.0.0"
+
+# Gradle Plugins
+buildGradle = "7.4.2"
+kotlinGradle = "1.7.10"
+googleService = "4.3.14"
+crashlyticsGradle = "2.9.2"
+gson = "2.8.6"
+
+# AndroidX Versions
+core = "1.6.0"
+appCompat = "1.3.1"
+activityKtx = "1.3.1"
+fragmentKtx = "1.4.0"
+material = "1.8.0-alpha01"
+constraint = "2.1.0"
+lifecycle = "2.4.1"
+
+# Coroutine
+coroutine = "1.6.0"
+
+# RxJava
+rxAndroid = "2.1.1"
+rxJava = "2.2.17"
+rxKotlin = "2.4.0"
+
+# Dagger Hilt
+daggerHilt = "2.42"
+hilt = "1.0.0"
+javapoet = "1.13.0"
+
+# Network Libraries
+okhttp = "4.9.0"
+retrofit = "2.6.0"
+sandwich = "1.2.3"
+glide = "4.13.0"
+
+# Room Database
+room = "2.4.3"
+
+# Google Ads
+googleAds = "21.4.0"
+
+# Worker
+worker = "2.7.1"
+
+# Ted Permission
+tedPermission = "3.3.0"
+
+# Firebase
+firebase = "31.1.0"
+
+# Test Libraries
+junit = "4.13.2"
+junitExt = "1.1.3"
+espresso = "3.4.0"
+
+[libraries]
+# Android
+android-gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "buildGradle" }
+android-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+android-ads = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "googleAds" }
+
+# AndroidX
+androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
+androidx-activity = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
+androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraint" }
+
+# Lifecycle
+lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+
+# Kotlin
+kotlin-gradle = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinGradle" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinGradle" }
+
+# Google
+google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleService" }
+google-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+
+# Rx
+rx-android = { group = "io.reactivex.rxjava2", name = "rxandroid", version.ref = "rxAndroid" }
+rx-java = { group = "io.reactivex.rxjava2", name = "rxjava", version.ref = "rxJava" }
+rx-kotlin = { group = "io.reactivex.rxjava2", name = "rxkotlin", version.ref = "rxKotlin" }
+
+# Coroutine
+coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
+coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine" }
+
+# Glide
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+
+# Dagger Hilt
+daggerHilt-gradle = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "daggerHilt" }
+daggerHilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "daggerHilt" }
+daggerHilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "daggerHilt" }
+
+# Hilt
+hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hilt" }
+hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt" }
+
+# Retrofit
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+retrofit-rxjava = { group = "com.squareup.retrofit2", name = "adapter-rxjava2", version.ref = "retrofit" }
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+
+# Sandwich
+sandwich = { group = "com.github.skydoves", name = "sandwich", version.ref = "sandwich" }
+
+# Room
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+
+# Firebase
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase" }
+firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
+firebase-crashlytics-gradle = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version.ref = "crashlyticsGradle" }
+
+# Work
+work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "worker" }
+
+# Ted Permission
+tedPermission-normal = { group = "io.github.ParkSangGwon", name = "tedpermission-normal", version.ref = "tedPermission" }
+tedPermission-coroutine = { group = "io.github.ParkSangGwon", name = "tedpermission-coroutine", version.ref = "tedPermission" }
+
+# JUnit
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+junit-ext = { group = "androidx.test.ext", name = "junit", version.ref = "junitExt" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+
+# Other
+javapoet = { group = "com.squareup", name = "javapoet", version.ref = "javapoet" }
+java-inject = { group = "javax.inject", name = "javax.inject", version = "1" }

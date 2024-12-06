@@ -12,24 +12,19 @@ buildscript {
     }
 
     dependencies {
-        classpath (dependency.Dependencies.Android.gradle)
-        classpath (dependency.Dependencies.Kotlin.gradle)
-        classpath (dependency.Dependencies.DaggerHilt.gradle)
-        classpath (dependency.Dependencies.Google.services)
-        classpath (dependency.Dependencies.Firebase.crashlyticsGradle)
-        classpath (dependency.Dependencies.javapoet)
+        classpath(libs.android.gradle)
+        classpath(libs.kotlin.gradle)
+        classpath(libs.daggerHilt.gradle)
+        classpath(libs.google.services)
+        classpath(libs.firebase.crashlytics.gradle)
+        classpath(libs.javapoet)
     }
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
-        maven {
-            setUrl("http://jcenter.bintray.com")
-            isAllowInsecureProtocol = true
-        }
     }
 }
 

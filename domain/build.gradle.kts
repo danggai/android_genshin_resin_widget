@@ -1,6 +1,6 @@
 plugins {
-    id ("java-library")
-    id ("kotlin")
+    id("java-library")
+    id("kotlin")
 }
 
 java {
@@ -9,11 +9,8 @@ java {
 }
 
 dependencies {
-    implementation (dependency.Dependencies.Kotlin.stdlib)
-
-    implementation (dependency.Dependencies.Coroutine.core)
-
-    implementation(platform(dependency.Dependencies.Firebase.bom))
-
-    implementation (dependency.Dependencies.Java.java)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.coroutines.core)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.java.inject)
 }

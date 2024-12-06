@@ -1,11 +1,10 @@
-import dependency.Dependencies
 import dependency.Versions
 
 plugins {
-    id ("com.android.library")
-    id ("kotlin-android")
-    id ("kotlin-kapt")
-    id ("dagger.hilt.android.plugin")
+    id("com.android.library")
+    id("kotlin-android")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -21,13 +20,16 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             buildConfigField("long", "VERSION_CODE", "${Versions.versionCode}")
-            buildConfigField("String","VERSION_NAME","\"${Versions.versionName}\"")
+            buildConfigField("String", "VERSION_NAME", "\"${Versions.versionName}\"")
         }
         getByName("debug") {
             buildConfigField("long", "VERSION_CODE", "${Versions.versionCode}")
-            buildConfigField("String","VERSION_NAME","\"${Versions.versionName}\"")
+            buildConfigField("String", "VERSION_NAME", "\"${Versions.versionName}\"")
         }
     }
     compileOptions {
@@ -48,56 +50,57 @@ kapt {
 }
 
 dependencies {
-    implementation (project(":domain"))
+    implementation(project(":domain"))
 
-    implementation (Dependencies.AndroidX.core)
-    implementation (Dependencies.AndroidX.appcompat)
-    implementation (Dependencies.AndroidX.activity)
-    implementation (Dependencies.AndroidX.fragment)
-    implementation (Dependencies.AndroidX.constraintlayout)
+    // AndroidX
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.fragment)
+    implementation(libs.androidx.constraintlayout)
 
-    implementation (Dependencies.Android.material)
-    implementation (Dependencies.Android.ads)
+    implementation(libs.android.material)
+    implementation(libs.android.ads)
 
-    // gson
-    implementation (Dependencies.Google.gson)
+    // Gson
+    implementation(libs.google.gson)
 
-    // lifecycle
-    implementation (Dependencies.Lifecycle.runtime)
-    implementation (Dependencies.Lifecycle.viewmodel)
+    // Lifecycle
+    implementation(libs.lifecycle.runtime)
+    implementation(libs.lifecycle.viewmodel)
 
-    // coroutine
-    implementation (Dependencies.Coroutine.core)
-    implementation (Dependencies.Coroutine.android)
+    // Coroutine
+    implementation(libs.coroutines.core)
+    implementation(libs.coroutines.android)
 
-    // rx
-    implementation (Dependencies.Rx.android)
-    implementation (Dependencies.Rx.java)
-    implementation (Dependencies.Rx.kotlin)
+    // Rx
+    implementation(libs.rx.android)
+    implementation(libs.rx.java)
+    implementation(libs.rx.kotlin)
 
-    // hilt - DI
-    implementation (Dependencies.Hilt.work)
-    implementation (Dependencies.DaggerHilt.android)
-    kapt (Dependencies.Hilt.compiler)
-    kapt (Dependencies.DaggerHilt.compiler)
+    // Hilt - DI
+    implementation(libs.hilt.work)
+    implementation(libs.daggerHilt.android)
+    kapt(libs.hilt.compiler)
+    kapt(libs.daggerHilt.compiler)
 
-    // gilde - image
-//    kapt (Dependencies.Glide.gilde)
-//    kapt (Dependencies.Glide.compiler)
+    // Glide - image
+    // kapt(libs.glide.gilde)
+    // kapt(libs.glide.compiler)
 
-    // firebase crashlytics
-    implementation (Dependencies.Firebase.analytics)
-    implementation (Dependencies.Firebase.crashlyticsKtx)
+    // Firebase Crashlytics
+    implementation(libs.firebase.analytics.ktx)
+    implementation(libs.firebase.crashlytics.ktx)
 
-    // worker - Background Action
-    implementation (Dependencies.Work.runtime)
+    // Worker - Background Action
+    implementation(libs.work.runtime)
 
     // TedPermission - Permission Check
-    implementation (Dependencies.TedPermission.normal)
-    implementation (Dependencies.TedPermission.coroutine)
+    implementation(libs.tedPermission.normal)
+    implementation(libs.tedPermission.coroutine)
 
-    // unittest
-    testImplementation (Dependencies.Junit.junit)
-    androidTestImplementation (Dependencies.Junit.ext)
-    androidTestImplementation (Dependencies.Junit.espressoCore)
+    // Unit Test
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.junit.ext)
+    androidTestImplementation(libs.espresso.core)
 }

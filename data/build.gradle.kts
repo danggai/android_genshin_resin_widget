@@ -1,11 +1,10 @@
-import dependency.Dependencies
 import dependency.Versions
 
 plugins {
-    id ("com.android.library")
-    id ("kotlin-android")
-    id ("kotlin-kapt")
-    id ("dagger.hilt.android.plugin")
+    id("com.android.library")
+    id("kotlin-android")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -19,13 +18,16 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             buildConfigField("long", "VERSION_CODE", "${Versions.versionCode}")
-            buildConfigField("String","VERSION_NAME","\"${Versions.versionName}\"")
+            buildConfigField("String", "VERSION_NAME", "\"${Versions.versionName}\"")
         }
         getByName("debug") {
             buildConfigField("long", "VERSION_CODE", "${Versions.versionCode}")
-            buildConfigField("String","VERSION_NAME","\"${Versions.versionName}\"")
+            buildConfigField("String", "VERSION_NAME", "\"${Versions.versionName}\"")
         }
     }
 }
@@ -36,48 +38,48 @@ java {
 }
 
 dependencies {
-    implementation (project(":domain"))
+    implementation(project(":domain"))
 
-    // gson
-    implementation (Dependencies.Google.gson)
+    // Gson
+    implementation(libs.google.gson)
 
-    // coroutine
-    implementation (Dependencies.Coroutine.core)
-    implementation (Dependencies.Coroutine.android)
+    // Coroutine
+    implementation(libs.coroutines.core)
+    implementation(libs.coroutines.android)
 
-    // rx
-    implementation (Dependencies.Rx.android)
-    implementation (Dependencies.Rx.java)
-    implementation (Dependencies.Rx.kotlin)
+    // Rx
+    implementation(libs.rx.android)
+    implementation(libs.rx.java)
+    implementation(libs.rx.kotlin)
 
-    // hilt - DI
-    implementation (Dependencies.DaggerHilt.android)
-    kapt (Dependencies.DaggerHilt.compiler)
+    // Hilt - DI
+    implementation(libs.daggerHilt.android)
+    kapt(libs.daggerHilt.compiler)
 
-    // OkHttp3 & Retrofit - for network
-    implementation (Dependencies.Retrofit.loggingInterceptor)
-    implementation (Dependencies.Retrofit.gsonConverter)
-    implementation (Dependencies.Retrofit.retrofit)
-    implementation (Dependencies.Retrofit.rxjava2Adapter)
+    // OkHttp3 & Retrofit - Network
+    implementation(libs.logging.interceptor)
+    implementation(libs.retrofit.gson)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.rxjava)
 
-    // Sandwich - network success/fail Handling
-    implementation (Dependencies.Sandwich.sandwich)
+    // Sandwich - Network success/fail handling
+    implementation(libs.sandwich)
 
-    // Room - database
-    implementation(Dependencies.Room.runtime)
-    kapt(Dependencies.Room.compiler)
-    implementation(Dependencies.Room.ktx)
+    // Room . Database
+    implementation(libs.room.runtime)
+    kapt(libs.room.compiler)
+    implementation(libs.room.ktx)
 
-    // unittest
-    testImplementation (Dependencies.Junit.junit)
-    androidTestImplementation (Dependencies.Junit.ext)
-    androidTestImplementation (Dependencies.Junit.espressoCore)
+    // Unit Test
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.junit.ext)
+    androidTestImplementation(libs.espresso.core)
 }
 
 android {
     compileOptions {
-        sourceCompatibility (JavaVersion.VERSION_1_8)
-        targetCompatibility (JavaVersion.VERSION_1_8)
+        sourceCompatibility(JavaVersion.VERSION_1_8)
+        targetCompatibility(JavaVersion.VERSION_1_8)
     }
     kotlinOptions {
         jvmTarget = "1.8"
