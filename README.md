@@ -1,6 +1,6 @@
 # 원신&붕스타 위젯 / Genshin&StarRail Widget
 
-<img src="./assets/icon.jpg?raw=true" width="200" height="200">
+<img src="./assets/icon.png?raw=true" width="200" height="200">
 
 
 
