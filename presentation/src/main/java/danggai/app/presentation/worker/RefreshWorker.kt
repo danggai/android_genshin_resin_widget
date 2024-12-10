@@ -354,114 +354,123 @@ class RefreshWorker @AssistedInject constructor(
     private fun updateData(account: Account, dailyNote: GenshinDailyNoteData) {
         log.e()
 
-        val prefDailyNote = preference.getGenshinDailyNote(account.genshin_uid)
-        val settings = preference.getDailyNoteSettings()
+        fun sendNotiActions() {
+            val prefDailyNote = preference.getGenshinDailyNote(account.genshin_uid)
+            val settings = preference.getDailyNoteSettings()
 
-        val prefResin: Int = prefDailyNote.current_resin
-        val nowResin: Int = dailyNote.current_resin
+            val prefResin: Int = prefDailyNote.currentResin
+            val nowResin: Int = dailyNote.currentResin
 
-        if (settings.notiEach40Resin) {
-            val resinLevels = (40 until Constant.MAX_RESIN + 40 step 40).toList().reversed()
+            if (settings.notiEach40Resin) {
+                val resinLevels = (40 until Constant.MAX_RESIN + 40 step 40).toList().reversed()
 
-            for (resinLevel in resinLevels) {
-                if (resinLevel in (prefResin + 1)..nowResin) {
-                    log.e()
-                    sendNoti(account, NotiType.Genshin.StaminaEach40, resinLevel)
-                    break
+                for (resinLevel in resinLevels) {
+                    if (resinLevel in (prefResin + 1)..nowResin) {
+                        log.e()
+                        sendNoti(account, NotiType.Genshin.StaminaEach40, resinLevel)
+                        break
+                    }
                 }
             }
-        }
 
-        if (settings.noti140Resin) {
-            if (Constant.MAX_RESIN - 20 in (prefResin + 1)..nowResin) {
-                log.e()
-                sendNoti(account, NotiType.Genshin.Stamina180, Constant.MAX_RESIN - 20)
+            if (settings.noti140Resin) {
+                if (Constant.MAX_RESIN - 20 in (prefResin + 1)..nowResin) {
+                    log.e()
+                    sendNoti(account, NotiType.Genshin.Stamina180, Constant.MAX_RESIN - 20)
+                }
             }
-        }
 
-        if (settings.notiCustomResin) {
-            val targetResin: Int = settings.customResin.takeUnless { it == 0 } ?: Constant.MAX_RESIN
-            if (targetResin in (prefResin + 1)..nowResin) {
-                log.e()
-                sendNoti(account, NotiType.Genshin.StaminaCustom, targetResin)
+            if (settings.notiCustomResin) {
+                val targetResin: Int =
+                    settings.customResin.takeUnless { it == 0 } ?: Constant.MAX_RESIN
+                if (targetResin in (prefResin + 1)..nowResin) {
+                    log.e()
+                    sendNoti(account, NotiType.Genshin.StaminaCustom, targetResin)
+                }
             }
-        }
 
-        val prefExpeditionTime: Int = try {
-            preference.getStringExpeditionTime(account.genshin_uid).toInt()
-        } catch (e: Exception) {
-            0
-        }
-        val nowExpeditionTime: Int = CommonFunction.getExpeditionTime(dailyNote).toInt()
-        if (settings.notiExpedition) {
-            if (1 in (nowExpeditionTime)..prefExpeditionTime
-                && dailyNote.expeditions.isNotEmpty()
-                && nowExpeditionTime == 0
+            val prefExpeditionTime: Int = try {
+                preference.getStringExpeditionTime(account.genshin_uid).toInt()
+            } catch (e: Exception) {
+                0
+            }
+            val nowExpeditionTime: Int = CommonFunction.getExpeditionTime(dailyNote).toInt()
+            if (settings.notiExpedition) {
+                if (1 in (nowExpeditionTime)..prefExpeditionTime
+                    && dailyNote.expeditions.isNotEmpty()
+                    && nowExpeditionTime == 0
+                ) {
+                    log.e()
+                    sendNoti(account, NotiType.Genshin.ExpeditionDone, null)
+                }
+            }
+
+            val prefHomeCoinRecoveryTime: Int = try {
+                prefDailyNote.homeCoinRecoveryTime.toInt()
+            } catch (e: Exception) {
+                0
+            }
+            val nowHomeCoinRecoveryTime: Int = try {
+                (dailyNote.homeCoinRecoveryTime).toInt()
+            } catch (e: Exception) {
+                0
+            }
+            if (settings.notiHomeCoin) {
+                if (1 in (nowHomeCoinRecoveryTime)..prefHomeCoinRecoveryTime
+                    && dailyNote.maxHomeCoin != 0
+                    && nowHomeCoinRecoveryTime == 0
+                ) {
+                    log.e()
+                    sendNoti(account, NotiType.Genshin.RealmCurrencyFull, null)
+                }
+            }
+
+            val prefParamTransState: Boolean = try {
+                prefDailyNote.transformer!!.recoveryTime.reached
+            } catch (e: Exception) {
+                false
+            }
+            val nowParamTransState: Boolean = try {
+                dailyNote.transformer!!.recoveryTime.reached
+            } catch (e: Exception) {
+                false
+            }
+            if (settings.notiParamTrans) {
+                if (!prefParamTransState && nowParamTransState) {
+                    log.e()
+                    sendNoti(account, NotiType.Genshin.ParametricTransformerReached, null)
+                }
+            }
+
+            val calendar = Calendar.getInstance()
+            val yymmdd = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE).format(Date())
+
+            if (settings.notiDailyYet &&
+                yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.genshin_uid) &&
+                calendar.get(Calendar.HOUR) >= settings.notiDailyYetTime &&
+                !dailyNote.isExtraTaskRewardReceived
             ) {
                 log.e()
-                sendNoti(account, NotiType.Genshin.ExpeditionDone, null)
+                preference.setStringRecentDailyCommissionNotiDate(account.genshin_uid, yymmdd)
+                sendNoti(account, NotiType.Genshin.DailyCommissionNotDone, null)
             }
-        }
 
-        val prefHomeCoinRecoveryTime: Int = try {
-            prefDailyNote.home_coin_recovery_time.toInt()
-        } catch (e: Exception) {
-            0
-        }
-        val nowHomeCoinRecoveryTime: Int = try {
-            (dailyNote.home_coin_recovery_time).toInt()
-        } catch (e: Exception) {
-            0
-        }
-        if (settings.notiHomeCoin) {
-            if (1 in (nowHomeCoinRecoveryTime)..prefHomeCoinRecoveryTime
-                && dailyNote.max_home_coin != 0
-                && nowHomeCoinRecoveryTime == 0
+            if (settings.notiWeeklyYet &&
+                yymmdd != preference.getStringRecentWeeklyBossNotiDate(account.genshin_uid) &&
+                calendar.get(Calendar.HOUR) >= settings.notiWeeklyYetTime &&
+                calendar.get(Calendar.DAY_OF_WEEK) == settings.notiWeeklyYetDay &&
+                dailyNote.remainResinDiscountNum != 0
             ) {
                 log.e()
-                sendNoti(account, NotiType.Genshin.RealmCurrencyFull, null)
+                preference.setStringRecentWeeklyBossNotiDate(account.genshin_uid, yymmdd)
+                sendNoti(account, NotiType.Genshin.WeeklyBossNotDone, null)
             }
         }
 
-        val prefParamTransState: Boolean = try {
-            prefDailyNote.transformer!!.recovery_time.reached
-        } catch (e: Exception) {
-            false
-        }
-        val nowParamTransState: Boolean = try {
-            dailyNote.transformer!!.recovery_time.reached
-        } catch (e: Exception) {
-            false
-        }
-        if (settings.notiParamTrans) {
-            if (!prefParamTransState && nowParamTransState) {
-                log.e()
-                sendNoti(account, NotiType.Genshin.ParametricTransformerReached, null)
-            }
-        }
-
-        val calendar = Calendar.getInstance()
-        val yymmdd = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE).format(Date())
-
-        if (settings.notiDailyYet &&
-            yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.genshin_uid) &&
-            calendar.get(Calendar.HOUR) >= settings.notiDailyYetTime &&
-            !dailyNote.is_extra_task_reward_received
-        ) {
-            log.e()
-            preference.setStringRecentDailyCommissionNotiDate(account.genshin_uid, yymmdd)
-            sendNoti(account, NotiType.Genshin.DailyCommissionNotDone, null)
-        }
-
-        if (settings.notiWeeklyYet &&
-            yymmdd != preference.getStringRecentWeeklyBossNotiDate(account.genshin_uid) &&
-            calendar.get(Calendar.HOUR) >= settings.notiWeeklyYetTime &&
-            calendar.get(Calendar.DAY_OF_WEEK) == settings.notiWeeklyYetDay &&
-            dailyNote.remain_resin_discount_num != 0
-        ) {
-            log.e()
-            preference.setStringRecentWeeklyBossNotiDate(account.genshin_uid, yymmdd)
-            sendNoti(account, NotiType.Genshin.WeeklyBossNotDone, null)
+        try {
+            sendNotiActions()
+        } catch (e: NullPointerException) {
+            log.e(e.message.toString())
         }
 
         preference.setStringRecentSyncTime(
@@ -476,6 +485,8 @@ class RefreshWorker @AssistedInject constructor(
     }
 
     private fun updateData(account: Account, data: HonkaiSrDataLocal) {
+        log.e()
+
         fun sendNotiActions() {
             val notiSettings = preference.getDailyNoteSettings()
             val prefData = preference.getHonkaiSrDailyNote(account.honkai_sr_uid)

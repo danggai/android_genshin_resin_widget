@@ -18,7 +18,6 @@ import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
-import danggai.domain.network.dailynote.entity.TransformerTime
 import danggai.domain.util.Constant
 
 
@@ -186,10 +185,10 @@ class MiniWidget() : AppWidgetProvider() {
                 )) {
                     Constant.PREF_MINI_WIDGET_RESIN -> {
                         view.setViewVisibility(R.id.ll_resin, View.VISIBLE)
-                        view.setTextViewText(R.id.tv_resin, dailyNote.current_resin.toString())
+                        view.setTextViewText(R.id.tv_resin, dailyNote.currentResin.toString())
                         view.setTextViewText(
                             R.id.tv_resin_max,
-                            "/" + dailyNote.max_resin.toString()
+                            "/" + dailyNote.maxResin.toString()
                         )
                     }
 
@@ -197,11 +196,11 @@ class MiniWidget() : AppWidgetProvider() {
                         view.setViewVisibility(R.id.ll_realm_currency, View.VISIBLE)
                         view.setTextViewText(
                             R.id.tv_realm_currency,
-                            dailyNote.current_home_coin.toString()
+                            dailyNote.currentHomeCoin.toString()
                         )
                         view.setTextViewText(
                             R.id.tv_realm_currency_max,
-                            "/" + dailyNote.max_home_coin.toString()
+                            "/" + dailyNote.maxHomeCoin.toString()
                         )
                     }
 
@@ -212,14 +211,7 @@ class MiniWidget() : AppWidgetProvider() {
                             when {
                                 dailyNote.transformer == null -> context.getString(R.string.widget_ui_unknown)
                                 !dailyNote.transformer!!.obtained -> context.getString(R.string.widget_ui_transformer_not_obtained)
-                                !dailyNote.transformer!!.recovery_time.reached -> {
-                                    if (dailyNote.transformer != null && dailyNote.transformer!!.recovery_time == TransformerTime.REACHED)
-                                        context.getString(R.string.widget_ui_transformer_reached)
-                                    else if (dailyNote.transformer != null && dailyNote.transformer!!.recovery_time != TransformerTime.REACHED)
-                                        context.getString(R.string.widget_ui_transformer_not_reached)
-                                    else context.getString(R.string.widget_ui_unknown)
-                                }
-
+                                !dailyNote.transformer!!.recoveryTime.reached -> context.getString(R.string.widget_ui_transformer_not_reached)
                                 else -> context.getString(R.string.widget_ui_transformer_reached)
                             }
                         )

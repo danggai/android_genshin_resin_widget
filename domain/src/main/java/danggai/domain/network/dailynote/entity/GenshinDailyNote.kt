@@ -1,6 +1,8 @@
 package danggai.domain.network.dailynote.entity
 
-data class GenshinDailyNote (
+import com.google.gson.annotations.SerializedName
+
+data class GenshinDailyNote(
     val retcode: String,
     val message: String,
     val data: GenshinDailyNoteData?
@@ -15,49 +17,49 @@ data class GenshinDailyNote (
 }
 
 data class GenshinDailyNoteData(
-    val current_resin: Int,
-    val max_resin: Int,
-    val resin_recovery_time: String = "-1",
+    @SerializedName("current_resin") val currentResin: Int,
+    @SerializedName("max_resin") val maxResin: Int,
+    @SerializedName("resin_recovery_time") val resinRecoveryTime: String = "-1",
 
-    val finished_task_num: Int,                 // 완료한 일일 임무 수
-    val total_task_num: Int,                    // 수행 가능한 일일 임무
-    val is_extra_task_reward_received: Boolean, // 일일 임무 완료 보상
+    @SerializedName("finished_task_num") val finishedTaskNum: Int,                          // 완료한 일일 임무 수
+    @SerializedName("total_task_num") val totalTaskNum: Int,                                // 수행 가능한 일일 임무
+    @SerializedName("is_extra_task_reward_received") val isExtraTaskRewardReceived: Boolean,// 일일 임무 완료 보상
 
-    val remain_resin_discount_num: Int,
-    val resin_discount_num_limit: Int,          // 주간 보스 할인 최대치
+    @SerializedName("remain_resin_discount_num") val remainResinDiscountNum: Int,
+    @SerializedName("resin_discount_num_limit") val resinDiscountNumLimit: Int,             // 주간 보스 할인 최대치
 
-    val current_home_coin: Int = -1,
-    val max_home_coin: Int = -1,
-    val home_coin_recovery_time: String = "-1",
+    @SerializedName("current_home_coin") val currentHomeCoin: Int = -1,
+    @SerializedName("max_home_coin") val maxHomeCoin: Int = -1,
+    @SerializedName("home_coin_recovery_time") val homeCoinRecoveryTime: String = "-1",
 
-    val current_expedition_num: Int,
-    val max_expedition_num: Int,
-    val expeditions: List<GenshinExpedition> = listOf(),
-    val transformer: Transformer? = Transformer.EMPTY
+    @SerializedName("current_expedition_num") val currentExpeditionNum: Int,
+    @SerializedName("max_expedition_num") val maxExpeditionNum: Int,
+    @SerializedName("expeditions") val expeditions: List<GenshinExpedition> = listOf(),
+    @SerializedName("transformer") val transformer: Transformer? = Transformer.EMPTY
 ) {
     companion object {
         val EMPTY = GenshinDailyNoteData(
-            current_resin = -1,
-            max_resin = -1,
-            resin_recovery_time = "-1",
-            finished_task_num = -1,
-            total_task_num = -1,
-            is_extra_task_reward_received = false,
-            remain_resin_discount_num = -1,
-            resin_discount_num_limit = -1,
-            current_home_coin = -1,
-            max_home_coin = -1,
-            home_coin_recovery_time = "-1",
-            current_expedition_num = -1,
-            max_expedition_num = -1,
+            currentResin = -1,
+            maxResin = -1,
+            resinRecoveryTime = "-1",
+            finishedTaskNum = -1,
+            totalTaskNum = -1,
+            isExtraTaskRewardReceived = false,
+            remainResinDiscountNum = -1,
+            resinDiscountNumLimit = -1,
+            currentHomeCoin = -1,
+            maxHomeCoin = -1,
+            homeCoinRecoveryTime = "-1",
+            currentExpeditionNum = -1,
+            maxExpeditionNum = -1,
             expeditions = listOf(),
             transformer = Transformer.EMPTY
         )
     }
 }
 
-data class GenshinExpedition (
-    val avatar_side_icon: String,
-    val status: String,
-    val remained_time: String
+data class GenshinExpedition(
+    @SerializedName("avatar_side_icon") val avatarSideIcon: String,
+    @SerializedName("status") val status: String,
+    @SerializedName("remained_time") val remainedTime: String
 )

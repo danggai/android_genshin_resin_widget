@@ -229,7 +229,7 @@ object CommonFunction {
     fun getExpeditionTime(dailyNote: GenshinDailyNoteData): String {
         return try {
             if (dailyNote.expeditions.isEmpty()) "0"
-            else dailyNote.expeditions.maxOf { it.remained_time }
+            else dailyNote.expeditions.maxOf { it.remainedTime }
         } catch (e: java.lang.Exception) {
             "0"
         }
