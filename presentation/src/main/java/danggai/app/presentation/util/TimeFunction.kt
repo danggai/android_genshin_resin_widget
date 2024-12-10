@@ -20,8 +20,17 @@ object TimeFunction {
     ): String {
         return when (timeNotation) {
             TimeNotation.DEFAULT,
-            TimeNotation.REMAIN_TIME, -> secondToRemainTime(context, second, timeType = Constant.TIME_TYPE_MAX)
-            TimeNotation.FULL_CHARGE_TIME -> getSecondsLaterDate(context, recentSyneTime, second, false, timeType = Constant.TIME_TYPE_MAX)
+            TimeNotation.REMAIN_TIME,
+            -> secondToRemainTime(context, second, timeType = Constant.TIME_TYPE_MAX)
+
+            TimeNotation.FULL_CHARGE_TIME -> getSecondsLaterDate(
+                context,
+                recentSyneTime,
+                second,
+                false,
+                timeType = Constant.TIME_TYPE_MAX
+            )
+
             else -> ""
         }
     }
@@ -43,8 +52,20 @@ object TimeFunction {
     ): String {
         return when (timeNotation) {
             TimeNotation.DEFAULT,
-            TimeNotation.REMAIN_TIME -> secondToRemainTime(context, second, timeType = Constant.TIME_TYPE_MAX)
-            TimeNotation.FULL_CHARGE_TIME -> getSecondsLaterDate(context, recentSyneTime, second, true, timeType = Constant.TIME_TYPE_MAX)
+            TimeNotation.REMAIN_TIME -> secondToRemainTime(
+                context,
+                second,
+                timeType = Constant.TIME_TYPE_MAX
+            )
+
+            TimeNotation.FULL_CHARGE_TIME -> getSecondsLaterDate(
+                context,
+                recentSyneTime,
+                second,
+                true,
+                timeType = Constant.TIME_TYPE_MAX
+            )
+
             else -> ""
         }
     }
@@ -57,12 +78,25 @@ object TimeFunction {
     ): String {
         return when (timeNotation) {
             TimeNotation.DISABLE_TIME,
-            TimeNotation.REMAIN_TIME -> secondToRemainTime(context, second, timeType = Constant.TIME_TYPE_DONE)
-            TimeNotation.FULL_CHARGE_TIME -> getSecondsLaterDate(context, recentSyneTime, second, false, timeType = Constant.TIME_TYPE_DONE)
+            TimeNotation.REMAIN_TIME -> secondToRemainTime(
+                context,
+                second,
+                timeType = Constant.TIME_TYPE_DONE
+            )
+
+            TimeNotation.FULL_CHARGE_TIME -> getSecondsLaterDate(
+                context,
+                recentSyneTime,
+                second,
+                false,
+                timeType = Constant.TIME_TYPE_DONE
+            )
+
             TimeNotation.DEFAULT -> {
                 if (second == "0") context.getString(R.string.widget_ui_parameter_done)
                 else context.getString(R.string.widget_format_under_expedition)
             }
+
             else -> ""
         }
     }
@@ -75,40 +109,58 @@ object TimeFunction {
     ): String {
         return when (timeNotation) {
             TimeNotation.DISABLE_TIME,
-            TimeNotation.REMAIN_TIME ->  {
+            TimeNotation.REMAIN_TIME -> {
                 // 1일 이상 남음
-                if (transformer != null && transformer.recovery_time.Day > 0)
-                    String.format(context.getString(R.string.widget_ui_remain_days), transformer.recovery_time.Day)
+                if (transformer != null && transformer.recoveryTime.day > 0)
+                    String.format(
+                        context.getString(R.string.widget_ui_remain_days),
+                        transformer.recoveryTime.day.toString()
+                    )
 
                 // 1일 이내로 남음
-                else if (transformer != null && transformer.recovery_time.Day == 0)
-                    secondToRemainTime(context, transformerTimeToSecond(transformer.recovery_time), timeType = Constant.TIME_TYPE_DONE)
+                else if (transformer != null && transformer.recoveryTime.day == 0)
+                    secondToRemainTime(
+                        context,
+                        transformerTimeToSecond(transformer.recoveryTime),
+                        timeType = Constant.TIME_TYPE_DONE
+                    )
 
                 // transformer == null
                 else context.getString(R.string.widget_ui_unknown)
             }
+
             TimeNotation.FULL_CHARGE_TIME -> {
                 // 1일 이상 남음
-                if (transformer != null && transformer.recovery_time.Day > 0)
-                    String.format(context.getString(R.string.widget_ui_expect_date), getExpectDate(context, transformer.recovery_time.Day))
+                if (transformer != null && transformer.recoveryTime.day > 0)
+                    String.format(
+                        context.getString(R.string.widget_ui_expect_date),
+                        getExpectDate(context, transformer.recoveryTime.day)
+                    )
 
                 // 1일 이내로 남음
-                else if (transformer != null && transformer.recovery_time.Day == 0)
-                    getSecondsLaterDate(context, recentSyneTime, transformerTimeToSecond(transformer.recovery_time), true, timeType = Constant.TIME_TYPE_DONE)
+                else if (transformer != null && transformer.recoveryTime.day == 0)
+                    getSecondsLaterDate(
+                        context,
+                        recentSyneTime,
+                        transformerTimeToSecond(transformer.recoveryTime),
+                        true,
+                        timeType = Constant.TIME_TYPE_DONE
+                    )
 
                 // transformer == null
                 else context.getString(R.string.widget_ui_unknown)
             }
-            TimeNotation.DEFAULT -> {
-                if (transformer != null && transformer.recovery_time == TransformerTime.REACHED)
-                    context.getString(R.string.widget_ui_transformer_reached)
 
-                else if (transformer != null && transformer.recovery_time != TransformerTime.REACHED)
+            TimeNotation.DEFAULT -> {
+                if (transformer != null && transformer.recoveryTime == TransformerTime.REACHED)
+                    context.getString(R.string.widget_ui_transformer_reached)
+                else if (transformer != null && transformer.recoveryTime != TransformerTime.REACHED)
                     context.getString(R.string.widget_ui_transformer_not_reached)
 
                 // transformer == null
                 else context.getString(R.string.widget_ui_unknown)
             }
+
             else -> ""
         }
     }
@@ -118,7 +170,7 @@ object TimeFunction {
         second: String,
         timeType: Int = Constant.TIME_TYPE_MAX
     ): String {
-       return secondToRemainTime(context, second.toInt(), timeType)
+        return secondToRemainTime(context, second.toInt(), timeType)
     }
 
     fun secondToRemainTime(
@@ -143,7 +195,11 @@ object TimeFunction {
             minute = 0
         }
 
-        return if (second != 0) String.format(context.getString(R.string.widget_ui_remain_time), hour, minute) else timeOverString
+        return if (second != 0) String.format(
+            context.getString(R.string.widget_ui_remain_time),
+            hour,
+            minute
+        ) else timeOverString
     }
 
     fun getSecondsLaterTime(
@@ -181,7 +237,11 @@ object TimeFunction {
                 return timeOverString
 
             if (second > 144000 || second < -144000)
-                return String.format(format, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE))
+                return String.format(
+                    format,
+                    cal.get(Calendar.HOUR_OF_DAY),
+                    cal.get(Calendar.MINUTE)
+                )
 
             cal.add(Calendar.SECOND, second)
 
@@ -222,13 +282,17 @@ object TimeFunction {
             val minute = target.get(Calendar.MINUTE)
 
             return if (includeDate || now.get(Calendar.DATE) != target.get(Calendar.DATE)) {
-                String.format(context.getString(R.string.widget_ui_date),
+                String.format(
+                    context.getString(R.string.widget_ui_date),
                     getDayWithMonthSuffix(context, target.get(Calendar.DATE)),
                     target.get(Calendar.HOUR_OF_DAY),
-                    minute)
-            } else String.format(context.getString(R.string.widget_ui_today),
+                    minute
+                )
+            } else String.format(
+                context.getString(R.string.widget_ui_today),
                 target.get(Calendar.HOUR_OF_DAY),
-                minute)
+                minute
+            )
         } catch (e: NumberFormatException) {
             return timeOverString
         }
@@ -247,10 +311,10 @@ object TimeFunction {
     }
 
     private fun transformerTimeToSecond(time: TransformerTime): String {
-        return (time.Day*86400 +
-                time.Hour*3600 +
-                time.Minute*60 +
-                time.Second).toString()
+        return (time.day * 86400 +
+                time.hour * 3600 +
+                time.minute * 60 +
+                time.second).toString()
     }
 
     private fun getExpectDate(context: Context, days: Int): String {

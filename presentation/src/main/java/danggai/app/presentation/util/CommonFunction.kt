@@ -229,16 +229,16 @@ object CommonFunction {
     fun getExpeditionTime(dailyNote: GenshinDailyNoteData): String {
         return try {
             if (dailyNote.expeditions.isEmpty()) "0"
-            else dailyNote.expeditions.maxOf { it.remained_time }
+            else dailyNote.expeditions.maxOf { it.remainedTime }
         } catch (e: java.lang.Exception) {
             "0"
         }
     }
 
-    fun getExpeditionTime(dailyNote: HonkaiSrDataLocal): String {
+    fun getExpeditionTime(data: HonkaiSrDataLocal): String {
         return try {
-            if (dailyNote.expeditions.isEmpty()) "0"
-            else dailyNote.expeditions.maxOf { it.remaining_time.toString() }
+            if (data.dailyNote.expeditions.isEmpty()) "0"
+            else data.dailyNote.expeditions.maxOf { it.remainingTime.toString() }
         } catch (e: java.lang.Exception) {
             "0"
         }

@@ -1,6 +1,6 @@
 # 호요 도우미
 
-<img src="./assets/icon.jpg?raw=true" width="200" height="200">
+<img src="./assets/icon.png?raw=true" width="200" height="200">
 
 코틀린 언어를 사용한 안드로이드 네이티브 앱이에요.
 
@@ -14,6 +14,8 @@
 
 ## 소개
 
+### 한국어
+
 > 2025년부터 *원신&붕스타 위젯*이 이름이 **호요 도우미**로 변경됩니다!
 
 
@@ -24,15 +26,40 @@
 호요랩에서 제공하는 인게임 재화에 대한 정보를 모바일 위젯으로 설정하고 확인하거나, 알림으로 받을 수 있어요.
 
 
+### English
+
+> Starting from 2025, the Genshin & Honkai Star Widget will be renamed to HoYo Assistant!
+
+This is an Android app that provides convenience features for HoYoverse games, including Genshin Impact,  Honkai Impact 3rd,Honkai: Star Rail, and Zenless Zone Zero.
+
+With this app, you can automatically complete the HoYoLAB daily check-in for each game.
+
+Additionally, you can set up and view in-game currency information provided by HoYoLAB as a mobile widget or receive it as notifications.
+
 
 
 ## 주의사항 
+
+### 한국어
 
 1. 앱의 기능을 정상적으로 사용하기 위해서 호요랩 계정의 cookie 값과, 각 게임의 인게임 uid가 필요해요.
 
 2. 앱은 사용자의 모든 정보를 기기에 보관하며, 별도의 서버에 저장하지 않아요.
 
 3. 호요랩과 통신하는 용도 이외로 사용자의 어떤 정보도 절대 사용하지 않아요.
+
+4. 이 앱은 호요랩에서 공식으로 제공하는 앱이 아니에요.
+
+
+### English 
+
+1. To use the app's features properly, you need the cookie value of your HoYoLAB account and the in-game UID for each game.
+
+2. The app stores all user information on the device and does not save any data on an external server.
+
+3. Apart from communicating with HoYoLAB, the app does not use any user information for any other purpose.
+
+4. This app is not an official app provided by HoYoLAB.
 
 
 

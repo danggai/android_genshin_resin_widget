@@ -1,5 +1,7 @@
 package danggai.domain.network.dailynote.entity
 
+import com.google.gson.annotations.SerializedName
+
 data class ZZZDailyNote(
     val data: ZZZDailyNoteData,
     val message: String,
@@ -15,51 +17,51 @@ data class ZZZDailyNote(
 }
 
 data class ZZZDailyNoteData(
-    val card_sign: String,
-    val energy: ZZZEnergy,
-    val vhs_sale: ZZZVhsSale,
-    val vitality: ZZZProgress,
-){
+    @SerializedName("card_sign") val cardSign: String,
+    @SerializedName("energy") val energy: ZZZEnergy,
+    @SerializedName("vhs_sale") val vhsSale: ZZZVhsSale,
+    @SerializedName("vitality") val vitality: ZZZProgress
+) {
     companion object {
         val EMPTY = ZZZDailyNoteData(
-            card_sign = "",
+            cardSign = "",
             energy = ZZZEnergy.EMPTY,
-            vhs_sale = ZZZVhsSale.EMPTY,
-            vitality = ZZZProgress.EMPTY,
+            vhsSale = ZZZVhsSale.EMPTY,
+            vitality = ZZZProgress.EMPTY
         )
     }
 }
 
 data class ZZZEnergy(
-    val progress: ZZZProgress,
-    val restore: Int
+    @SerializedName("progress") val progress: ZZZProgress,
+    @SerializedName("restore") val restore: Int
 ) {
     companion object {
         val EMPTY = ZZZEnergy(
             progress = ZZZProgress.EMPTY,
-            restore = -1,
+            restore = -1
         )
     }
 }
 
 data class ZZZProgress(
-    val max: Int,
-    val current: Int
+    @SerializedName("max") val max: Int,
+    @SerializedName("current") val current: Int
 ) {
     companion object {
         val EMPTY = ZZZProgress(
             max = -1,
-            current = -1,
+            current = -1
         )
     }
 }
 
 data class ZZZVhsSale(
-    val sale_state: String,
+    @SerializedName("sale_state") val saleState: String
 ) {
     companion object {
         val EMPTY = ZZZVhsSale(
-            sale_state = "",
+            saleState = ""
         )
     }
 }

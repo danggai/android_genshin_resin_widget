@@ -186,8 +186,8 @@ class ResinWidgetResizable() : AppWidgetProvider() {
                 )
                 view.setTextViewText(R.id.tv_name, name)
 
-                view.setTextViewText(R.id.tv_resin, dailyNote.current_resin.toString())
-                view.setTextViewText(R.id.tv_resin_max, "/" + dailyNote.max_resin.toString())
+                view.setTextViewText(R.id.tv_resin, dailyNote.currentResin.toString())
+                view.setTextViewText(R.id.tv_resin_max, "/" + dailyNote.maxResin.toString())
 
                 view.setViewVisibility(
                     R.id.tv_remain_time,
@@ -200,20 +200,20 @@ class ResinWidgetResizable() : AppWidgetProvider() {
                         TimeNotation.DEFAULT,
                         TimeNotation.REMAIN_TIME -> TimeFunction.secondToRemainTime(
                             _context,
-                            dailyNote.resin_recovery_time,
+                            dailyNote.resinRecoveryTime,
                             timeType = Constant.TIME_TYPE_MAX
                         )
 
                         TimeNotation.FULL_CHARGE_TIME -> TimeFunction.getSecondsLaterTime(
                             _context,
                             recentSyncTimeDate,
-                            dailyNote.resin_recovery_time,
+                            dailyNote.resinRecoveryTime,
                             Constant.TIME_TYPE_MAX
                         )
 
                         else -> TimeFunction.secondToRemainTime(
                             _context,
-                            dailyNote.resin_recovery_time,
+                            dailyNote.resinRecoveryTime,
                             timeType = Constant.TIME_TYPE_MAX
                         )
                     }

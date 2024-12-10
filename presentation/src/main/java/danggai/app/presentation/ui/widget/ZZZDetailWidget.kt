@@ -235,7 +235,7 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_scratch_card,
-                    when (dailyNote.card_sign) {
+                    when (dailyNote.cardSign) {
                         Constant.ZZZCardSign.NO.value -> context.getString(R.string.scratch_card_no)
                         Constant.ZZZCardSign.DONE.value -> context.getString(R.string.scratch_card_done)
                         else -> ""
@@ -248,7 +248,7 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_video_store_management,
-                    when (dailyNote.vhs_sale.sale_state) {
+                    when (dailyNote.vhsSale.saleState) {
                         Constant.ZZZSaleStatus.NO.value -> context.getString(R.string.video_store_management_no)
                         Constant.ZZZSaleStatus.DOING.value -> context.getString(R.string.video_store_management_doing)
                         Constant.ZZZSaleStatus.DONE.value -> context.getString(R.string.video_store_management_done)
@@ -282,7 +282,7 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                         )
                     }
 
-                    else -> { }
+                    else -> {}
                 }
 
                 view.setTextViewText(

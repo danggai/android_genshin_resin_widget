@@ -1,13 +1,12 @@
-import dependency.Dependencies
 import dependency.Versions
 
 plugins {
-    id ("com.android.application")
-    id ("kotlin-android")
-    id ("kotlin-kapt")
-    id ("dagger.hilt.android.plugin")
-    id ("com.google.gms.google-services")
-    id ("com.google.firebase.crashlytics")
+    id("com.android.application")
+    id("kotlin-android")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -27,15 +26,18 @@ android {
         getByName("release") {
             isDebuggable = false
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             buildConfigField("long", "VERSION_CODE", "${Versions.versionCode}")
-            buildConfigField("String","VERSION_NAME","\"${Versions.versionName}\"")
+            buildConfigField("String", "VERSION_NAME", "\"${Versions.versionName}\"")
         }
         getByName("debug") {
 //            applicationIdSuffix = ".debug"
             isDebuggable = true
             buildConfigField("long", "VERSION_CODE", "${Versions.versionCode}")
-            buildConfigField("String","VERSION_NAME","\"${Versions.versionName}\"")
+            buildConfigField("String", "VERSION_NAME", "\"${Versions.versionName}\"")
         }
     }
 
@@ -58,34 +60,34 @@ android {
 }
 
 dependencies {
-    implementation (project(":data"))
-    implementation (project(":domain"))
-    implementation (project(":presentation"))
+    implementation(project(":data"))
+    implementation(project(":domain"))
+    implementation(project(":presentation"))
 
-    // coroutine
-    implementation (Dependencies.Coroutine.core)
-    implementation (Dependencies.Coroutine.android)
+// Coroutine
+    implementation(libs.coroutines.core)
+    implementation(libs.coroutines.android)
 
-    // rx
-    implementation (Dependencies.Rx.android)
-    implementation (Dependencies.Rx.java)
-    implementation (Dependencies.Rx.kotlin)
+    // Rx
+    implementation(libs.rx.android)
+    implementation(libs.rx.java)
+    implementation(libs.rx.kotlin)
 
-    // hilt - DI
-    implementation (Dependencies.DaggerHilt.android)
-    implementation (Dependencies.Hilt.work)
-    kapt (Dependencies.DaggerHilt.compiler)
-    kapt (Dependencies.Hilt.compiler)
+    // Hilt - DI
+    implementation(libs.daggerHilt.android)
+    kapt(libs.daggerHilt.compiler)
+    implementation(libs.hilt.work)
+    kapt(libs.hilt.compiler)
 
     // OkHttp3 & Retrofit - for network
-    implementation (Dependencies.Retrofit.loggingInterceptor)
-    implementation (Dependencies.Retrofit.gsonConverter)
-    implementation (Dependencies.Retrofit.retrofit)
-    implementation (Dependencies.Retrofit.rxjava2Adapter)
+    implementation(libs.logging.interceptor)
+    implementation(libs.retrofit.gson)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.rxjava)
 
-    // Sandwich - network success/fail Handling
-    implementation (Dependencies.Sandwich.sandwich)
+    // Sandwich - Network success/fail Handling
+    implementation(libs.sandwich)
 
-    // firebase crashlytics
-    implementation (Dependencies.Firebase.crashlyticsKtx)
+    // Firebase Crashlytics
+    implementation(libs.firebase.crashlytics.ktx)
 }

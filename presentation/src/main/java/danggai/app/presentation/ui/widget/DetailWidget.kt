@@ -218,7 +218,7 @@ class DetailWidget() : AppWidgetProvider() {
                 view.setTextViewText(R.id.tv_resin_title, _context.getString(R.string.resin))
                 view.setTextViewText(
                     R.id.tv_resin,
-                    dailyNote.current_resin.toString() + "/" + dailyNote.max_resin.toString()
+                    dailyNote.currentResin.toString() + "/" + dailyNote.maxResin.toString()
                 )
 
                 view.setTextViewText(
@@ -227,10 +227,10 @@ class DetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_daily_commission,
-                    if (dailyNote.is_extra_task_reward_received) {
+                    if (dailyNote.isExtraTaskRewardReceived) {
                         _context.getString(R.string.done)
                     } else {
-                        (dailyNote.total_task_num - dailyNote.finished_task_num).toString() + "/" + dailyNote.total_task_num.toString()
+                        (dailyNote.totalTaskNum - dailyNote.finishedTaskNum).toString() + "/" + dailyNote.totalTaskNum.toString()
                     }
                 )
 
@@ -240,11 +240,11 @@ class DetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_weekly_boss,
-                    if (dailyNote.remain_resin_discount_num == 0) {
+                    if (dailyNote.remainResinDiscountNum == 0) {
                         context.getString(R.string.done)
                     } else {
                         CommonFunction.convertIntToTimes(
-                            dailyNote.remain_resin_discount_num,
+                            dailyNote.remainResinDiscountNum,
                             _context
                         )
                     }
@@ -256,7 +256,7 @@ class DetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_realm_currency,
-                    (dailyNote.current_home_coin).toString() + "/" + (dailyNote.max_home_coin).toString()
+                    (dailyNote.currentHomeCoin).toString() + "/" + (dailyNote.maxHomeCoin).toString()
                 )
 
                 view.setTextViewText(
@@ -268,7 +268,7 @@ class DetailWidget() : AppWidgetProvider() {
                     when {
                         dailyNote.transformer == null -> _context.getString(R.string.widget_ui_unknown)
                         !dailyNote.transformer!!.obtained -> _context.getString(R.string.widget_ui_transformer_not_obtained)
-                        !dailyNote.transformer!!.recovery_time.reached -> TimeFunction.transformerToTime(
+                        !dailyNote.transformer!!.recoveryTime.reached -> TimeFunction.transformerToTime(
                             _context,
                             recentSyncTimeDate,
                             dailyNote.transformer,
@@ -313,14 +313,14 @@ class DetailWidget() : AppWidgetProvider() {
                         )
                     }
 
-                    else -> { }
+                    else -> {}
                 }
 
                 view.setTextViewText(
                     R.id.tv_resin_time, TimeFunction.resinSecondToTime(
                         _context,
                         recentSyncTimeDate,
-                        dailyNote.resin_recovery_time,
+                        dailyNote.resinRecoveryTime,
                         TimeNotation.fromValue(widgetDesign.timeNotation)
                     )
                 )
@@ -328,7 +328,7 @@ class DetailWidget() : AppWidgetProvider() {
                     R.id.tv_realm_currency_time, TimeFunction.realmCurrencySecondToTime(
                         _context,
                         recentSyncTimeDate,
-                        dailyNote.home_coin_recovery_time,
+                        dailyNote.homeCoinRecoveryTime,
                         TimeNotation.fromValue(widgetDesign.timeNotation)
                     )
                 )
@@ -372,7 +372,7 @@ class DetailWidget() : AppWidgetProvider() {
                     R.id.rl_realm_currency_time,
                     if (widgetDesign.realmCurrencyDataVisibility &&
                         TimeNotation.fromValue(widgetDesign.timeNotation) != TimeNotation.DISABLE_TIME &&
-                        dailyNote.home_coin_recovery_time != "0"
+                        dailyNote.homeCoinRecoveryTime != "0"
                     ) View.VISIBLE else View.GONE
                 )
 

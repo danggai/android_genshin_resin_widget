@@ -1,14 +1,16 @@
 package danggai.domain.network.dailynote.entity
 
+import com.google.gson.annotations.SerializedName
+
 data class TransformerTime(
-    val Day: Int,
-    val Hour: Int,
-    val Minute: Int,
-    val Second: Int,
-    val reached: Boolean
+    @SerializedName("Day") val day: Int,
+    @SerializedName("Hour") val hour: Int,
+    @SerializedName("Minute") val minute: Int,
+    @SerializedName("Second") val second: Int,
+    @SerializedName("reached") val reached: Boolean
 ) {
     companion object {
-        val EMPTY = TransformerTime (
+        val EMPTY = TransformerTime(
             0,
             0,
             0,
@@ -16,7 +18,7 @@ data class TransformerTime(
             false
         )
 
-        val REACHED = TransformerTime (
+        val REACHED = TransformerTime(
             0,
             0,
             0,

@@ -170,6 +170,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
     }
 
     private fun syncView(widgetId: Int, view: RemoteViews, context: Context?) {
+
         context?.let { _context ->
             val widgetDesign =
                 PreferenceManager.getT<DetailWidgetDesignSettings>(
@@ -198,7 +199,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 view.setViewVisibility(R.id.ll_body, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_bottom, View.VISIBLE)
 
-                val dailyNote = PreferenceManager.getT<HonkaiSrDataLocal>(
+                val data = PreferenceManager.getT<HonkaiSrDataLocal>(
                     context,
                     Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid"
                 ) ?: HonkaiSrDataLocal.EMPTY
@@ -221,7 +222,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_trailblaze_power,
-                    dailyNote.current_stamina.toString() + "/" + dailyNote.max_stamina.toString()
+                    data.dailyNote.currentStamina.toString() + "/" + data.dailyNote.maxStamina.toString()
                 )
 
                 view.setTextViewText(
@@ -230,7 +231,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_reserve_trailblaze_power,
-                    dailyNote.current_reserve_stamina.toString()
+                    data.dailyNote.currentReserveStamina.toString()
                 )
 
                 view.setTextViewText(
@@ -239,10 +240,10 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_daily_training,
-                    if (dailyNote.current_train_score == dailyNote.max_train_score) {
+                    if (data.dailyNote.currentTrainScore == data.dailyNote.maxTrainScore) {
                         _context.getString(R.string.done)
                     } else {
-                        dailyNote.current_train_score.toString() + "/" + dailyNote.max_train_score.toString()
+                        data.dailyNote.currentTrainScore.toString() + "/" + data.dailyNote.maxTrainScore.toString()
                     }
                 )
 
@@ -252,10 +253,10 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_echo_of_war,
-                    if (dailyNote.weekly_cocoon_cnt == 0) {
+                    if (data.dailyNote.weeklyCocoonCnt == 0) {
                         context.getString(R.string.done)
                     } else {
-                        CommonFunction.convertIntToTimes(dailyNote.weekly_cocoon_cnt, _context)
+                        CommonFunction.convertIntToTimes(data.dailyNote.weeklyCocoonCnt, _context)
                     }
                 )
 
@@ -265,10 +266,10 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_simulated_universe,
-                    if (dailyNote.current_rogue_score == dailyNote.max_rogue_score) {
+                    if (data.dailyNote.currentRogueScore == data.dailyNote.maxRogueScore) {
                         context.getString(R.string.done)
                     } else {
-                        dailyNote.current_rogue_score.toString() + "/" + dailyNote.max_rogue_score.toString()
+                        data.dailyNote.currentRogueScore.toString() + "/" + data.dailyNote.maxRogueScore.toString()
                     }
                 )
 
@@ -278,7 +279,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_simulated_universe_cleared,
-                    CommonFunction.convertIntToTimes(dailyNote.rogue_clear_count, _context)
+                    CommonFunction.convertIntToTimes(data.rogueClearCount, _context)
                 )
 
                 view.setTextViewText(
@@ -287,8 +288,8 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_synchronicity_point,
-                    if (!dailyNote.rogue_tourn_weekly_unlocked) {
-                        dailyNote.rogue_tourn_weekly_cur.toString() + "/" + dailyNote.rogue_tourn_weekly_max.toString()
+                    if (!data.dailyNote.rogueTournWeeklyUnlocked) {
+                        data.dailyNote.rogueTournWeeklyCur.toString() + "/" + data.dailyNote.rogueTournWeeklyMax.toString()
                     } else {
                         context.getString(R.string.widget_ui_locked)
                     }
@@ -320,14 +321,14 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                         )
                     }
 
-                    TimeNotation.DISABLE_TIME -> { }
+                    TimeNotation.DISABLE_TIME -> {}
                 }
 
                 view.setTextViewText(
                     R.id.tv_trailblaze_power_time, TimeFunction.resinSecondToTime(
                         _context,
                         recentSyncTimeDate,
-                        dailyNote.stamina_recover_time,
+                        data.dailyNote.staminaRecoverTime,
                         TimeNotation.fromValue(widgetDesign.timeNotation)
                     )
                 )

@@ -190,23 +190,7 @@ class RefreshWorker @AssistedInject constructor(
                             Constant.RETCODE_SUCCESS -> {
                                 log.e()
                                 honkaiSrData = honkaiSrData.copy(
-                                    accepted_epedition_num = it.data.data.accepted_epedition_num,
-                                    total_expedition_num = it.data.data.total_expedition_num,
-                                    expeditions = it.data.data.expeditions,
-                                    current_stamina = it.data.data.current_stamina,
-                                    max_stamina = it.data.data.max_stamina,
-                                    stamina_recover_time = it.data.data.stamina_recover_time,
-                                    current_reserve_stamina = it.data.data.current_reserve_stamina,
-                                    is_reserve_stamina_full = it.data.data.is_reserve_stamina_full,
-                                    current_train_score = it.data.data.current_train_score,
-                                    max_train_score = it.data.data.max_train_score,
-                                    current_rogue_score = it.data.data.current_rogue_score,
-                                    max_rogue_score = it.data.data.max_rogue_score,
-                                    rogue_tourn_weekly_cur = it.data.data.rogue_tourn_weekly_cur,
-                                    rogue_tourn_weekly_max = it.data.data.rogue_tourn_weekly_max,
-                                    rogue_tourn_weekly_unlocked = it.data.data.rogue_tourn_weekly_unlocked,
-                                    weekly_cocoon_cnt = it.data.data.weekly_cocoon_cnt,
-                                    weekly_cocoon_limit = it.data.data.weekly_cocoon_limit,
+                                    dailyNote = it.data.data
                                 )
                             }
 
@@ -269,7 +253,7 @@ class RefreshWorker @AssistedInject constructor(
                                 log.e()
                                 val currentRecord = it.data.data.current_record
                                 honkaiSrData = honkaiSrData.copy(
-                                    rogue_clear_count = if (currentRecord.has_data) currentRecord.basic.finish_cnt else 0
+                                    rogueClearCount = if (currentRecord.has_data) currentRecord.basic.finish_cnt else 0
                                 )
                             }
 
@@ -370,114 +354,123 @@ class RefreshWorker @AssistedInject constructor(
     private fun updateData(account: Account, dailyNote: GenshinDailyNoteData) {
         log.e()
 
-        val prefDailyNote = preference.getGenshinDailyNote(account.genshin_uid)
-        val settings = preference.getDailyNoteSettings()
+        fun sendNotiActions() {
+            val prefDailyNote = preference.getGenshinDailyNote(account.genshin_uid)
+            val settings = preference.getDailyNoteSettings()
 
-        val prefResin: Int = prefDailyNote.current_resin
-        val nowResin: Int = dailyNote.current_resin
+            val prefResin: Int = prefDailyNote.currentResin
+            val nowResin: Int = dailyNote.currentResin
 
-        if (settings.notiEach40Resin) {
-            val resinLevels = (40 until Constant.MAX_RESIN + 40 step 40).toList().reversed()
+            if (settings.notiEach40Resin) {
+                val resinLevels = (40 until Constant.MAX_RESIN + 40 step 40).toList().reversed()
 
-            for (resinLevel in resinLevels) {
-                if (resinLevel in (prefResin + 1)..nowResin) {
-                    log.e()
-                    sendNoti(account, NotiType.Genshin.StaminaEach40, resinLevel)
-                    break
+                for (resinLevel in resinLevels) {
+                    if (resinLevel in (prefResin + 1)..nowResin) {
+                        log.e()
+                        sendNoti(account, NotiType.Genshin.StaminaEach40, resinLevel)
+                        break
+                    }
                 }
             }
-        }
 
-        if (settings.noti140Resin) {
-            if (Constant.MAX_RESIN - 20 in (prefResin + 1)..nowResin) {
-                log.e()
-                sendNoti(account, NotiType.Genshin.Stamina180, Constant.MAX_RESIN - 20)
+            if (settings.noti140Resin) {
+                if (Constant.MAX_RESIN - 20 in (prefResin + 1)..nowResin) {
+                    log.e()
+                    sendNoti(account, NotiType.Genshin.Stamina180, Constant.MAX_RESIN - 20)
+                }
             }
-        }
 
-        if (settings.notiCustomResin) {
-            val targetResin: Int = settings.customResin.takeUnless { it == 0 } ?: Constant.MAX_RESIN
-            if (targetResin in (prefResin + 1)..nowResin) {
-                log.e()
-                sendNoti(account, NotiType.Genshin.StaminaCustom, targetResin)
+            if (settings.notiCustomResin) {
+                val targetResin: Int =
+                    settings.customResin.takeUnless { it == 0 } ?: Constant.MAX_RESIN
+                if (targetResin in (prefResin + 1)..nowResin) {
+                    log.e()
+                    sendNoti(account, NotiType.Genshin.StaminaCustom, targetResin)
+                }
             }
-        }
 
-        val prefExpeditionTime: Int = try {
-            preference.getStringExpeditionTime(account.genshin_uid).toInt()
-        } catch (e: Exception) {
-            0
-        }
-        val nowExpeditionTime: Int = CommonFunction.getExpeditionTime(dailyNote).toInt()
-        if (settings.notiExpedition) {
-            if (1 in (nowExpeditionTime)..prefExpeditionTime
-                && dailyNote.expeditions.isNotEmpty()
-                && nowExpeditionTime == 0
+            val prefExpeditionTime: Int = try {
+                preference.getStringExpeditionTime(account.genshin_uid).toInt()
+            } catch (e: Exception) {
+                0
+            }
+            val nowExpeditionTime: Int = CommonFunction.getExpeditionTime(dailyNote).toInt()
+            if (settings.notiExpedition) {
+                if (1 in (nowExpeditionTime)..prefExpeditionTime
+                    && dailyNote.expeditions.isNotEmpty()
+                    && nowExpeditionTime == 0
+                ) {
+                    log.e()
+                    sendNoti(account, NotiType.Genshin.ExpeditionDone, null)
+                }
+            }
+
+            val prefHomeCoinRecoveryTime: Int = try {
+                prefDailyNote.homeCoinRecoveryTime.toInt()
+            } catch (e: Exception) {
+                0
+            }
+            val nowHomeCoinRecoveryTime: Int = try {
+                (dailyNote.homeCoinRecoveryTime).toInt()
+            } catch (e: Exception) {
+                0
+            }
+            if (settings.notiHomeCoin) {
+                if (1 in (nowHomeCoinRecoveryTime)..prefHomeCoinRecoveryTime
+                    && dailyNote.maxHomeCoin != 0
+                    && nowHomeCoinRecoveryTime == 0
+                ) {
+                    log.e()
+                    sendNoti(account, NotiType.Genshin.RealmCurrencyFull, null)
+                }
+            }
+
+            val prefParamTransState: Boolean = try {
+                prefDailyNote.transformer!!.recoveryTime.reached
+            } catch (e: Exception) {
+                false
+            }
+            val nowParamTransState: Boolean = try {
+                dailyNote.transformer!!.recoveryTime.reached
+            } catch (e: Exception) {
+                false
+            }
+            if (settings.notiParamTrans) {
+                if (!prefParamTransState && nowParamTransState) {
+                    log.e()
+                    sendNoti(account, NotiType.Genshin.ParametricTransformerReached, null)
+                }
+            }
+
+            val calendar = Calendar.getInstance()
+            val yymmdd = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE).format(Date())
+
+            if (settings.notiDailyYet &&
+                yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.genshin_uid) &&
+                calendar.get(Calendar.HOUR) >= settings.notiDailyYetTime &&
+                !dailyNote.isExtraTaskRewardReceived
             ) {
                 log.e()
-                sendNoti(account, NotiType.Genshin.ExpeditionDone, null)
+                preference.setStringRecentDailyCommissionNotiDate(account.genshin_uid, yymmdd)
+                sendNoti(account, NotiType.Genshin.DailyCommissionNotDone, null)
             }
-        }
 
-        val prefHomeCoinRecoveryTime: Int = try {
-            prefDailyNote.home_coin_recovery_time.toInt()
-        } catch (e: Exception) {
-            0
-        }
-        val nowHomeCoinRecoveryTime: Int = try {
-            (dailyNote.home_coin_recovery_time).toInt()
-        } catch (e: Exception) {
-            0
-        }
-        if (settings.notiHomeCoin) {
-            if (1 in (nowHomeCoinRecoveryTime)..prefHomeCoinRecoveryTime
-                && dailyNote.max_home_coin != 0
-                && nowHomeCoinRecoveryTime == 0
+            if (settings.notiWeeklyYet &&
+                yymmdd != preference.getStringRecentWeeklyBossNotiDate(account.genshin_uid) &&
+                calendar.get(Calendar.HOUR) >= settings.notiWeeklyYetTime &&
+                calendar.get(Calendar.DAY_OF_WEEK) == settings.notiWeeklyYetDay &&
+                dailyNote.remainResinDiscountNum != 0
             ) {
                 log.e()
-                sendNoti(account, NotiType.Genshin.RealmCurrencyFull, null)
+                preference.setStringRecentWeeklyBossNotiDate(account.genshin_uid, yymmdd)
+                sendNoti(account, NotiType.Genshin.WeeklyBossNotDone, null)
             }
         }
 
-        val prefParamTransState: Boolean = try {
-            prefDailyNote.transformer!!.recovery_time.reached
-        } catch (e: Exception) {
-            false
-        }
-        val nowParamTransState: Boolean = try {
-            dailyNote.transformer!!.recovery_time.reached
-        } catch (e: Exception) {
-            false
-        }
-        if (settings.notiParamTrans) {
-            if (!prefParamTransState && nowParamTransState) {
-                log.e()
-                sendNoti(account, NotiType.Genshin.ParametricTransformerReached, null)
-            }
-        }
-
-        val calendar = Calendar.getInstance()
-        val yymmdd = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE).format(Date())
-
-        if (settings.notiDailyYet &&
-            yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.genshin_uid) &&
-            calendar.get(Calendar.HOUR) >= settings.notiDailyYetTime &&
-            !dailyNote.is_extra_task_reward_received
-        ) {
-            log.e()
-            preference.setStringRecentDailyCommissionNotiDate(account.genshin_uid, yymmdd)
-            sendNoti(account, NotiType.Genshin.DailyCommissionNotDone, null)
-        }
-
-        if (settings.notiWeeklyYet &&
-            yymmdd != preference.getStringRecentWeeklyBossNotiDate(account.genshin_uid) &&
-            calendar.get(Calendar.HOUR) >= settings.notiWeeklyYetTime &&
-            calendar.get(Calendar.DAY_OF_WEEK) == settings.notiWeeklyYetDay &&
-            dailyNote.remain_resin_discount_num != 0
-        ) {
-            log.e()
-            preference.setStringRecentWeeklyBossNotiDate(account.genshin_uid, yymmdd)
-            sendNoti(account, NotiType.Genshin.WeeklyBossNotDone, null)
+        try {
+            sendNotiActions()
+        } catch (e: NullPointerException) {
+            log.e(e.message.toString())
         }
 
         preference.setStringRecentSyncTime(
@@ -491,60 +484,73 @@ class RefreshWorker @AssistedInject constructor(
         preference.setGenshinDailyNote(account.genshin_uid, dailyNote)
     }
 
-    private fun updateData(account: Account, dailyNote: HonkaiSrDataLocal) {
+    private fun updateData(account: Account, data: HonkaiSrDataLocal) {
         log.e()
 
-        val prefDailyNote = preference.getHonkaiSrDailyNote(account.honkai_sr_uid)
-        val settings = preference.getDailyNoteSettings()
+        fun sendNotiActions() {
+            val notiSettings = preference.getDailyNoteSettings()
+            val prefData = preference.getHonkaiSrDailyNote(account.honkai_sr_uid)
 
-        val prefStamina: Int = prefDailyNote.current_stamina
-        val nowStamina: Int = dailyNote.current_stamina
+            val prefStamina: Int = prefData.dailyNote.currentStamina
+            val nowStamina: Int = data.dailyNote.currentStamina
 
-        log.e("prefStamina = $prefStamina")
-        log.e("nowStamina = $nowStamina")
+            log.e("prefStamina = $prefStamina")
+            log.e("nowStamina = $nowStamina")
 
-        if (settings.notiEach40TrailPower) {
-            val staminaLevels = (40 until Constant.MAX_TRAILBLAZE_POWER step 40).toList().reversed()
+            if (notiSettings.notiEach40TrailPower) {
+                val staminaLevels =
+                    (40 until Constant.MAX_TRAILBLAZE_POWER step 40).toList().reversed()
 
-            for (staminaLevel in staminaLevels) {
-                if (staminaLevel in (prefStamina + 1)..nowStamina) {
+                for (staminaLevel in staminaLevels) {
+                    if (staminaLevel in (prefStamina + 1)..nowStamina) {
+                        log.e()
+                        sendNoti(account, NotiType.StarRail.StaminaEach40, staminaLevel)
+                        break
+                    }
+                }
+            }
+
+            if (notiSettings.noti170TrailPower) {
+                if (Constant.MAX_TRAILBLAZE_POWER - 10 in (prefStamina + 1)..nowStamina) {
                     log.e()
-                    sendNoti(account, NotiType.StarRail.StaminaEach40, staminaLevel)
-                    break
+                    sendNoti(
+                        account,
+                        NotiType.StarRail.Stamina230,
+                        Constant.MAX_TRAILBLAZE_POWER - 10
+                    )
+                }
+            }
+
+            if (notiSettings.notiCustomTrailPower) {
+                val targetTrailPower: Int = notiSettings.customTrailPower.takeUnless { it == 0 }
+                    ?: (Constant.MAX_TRAILBLAZE_POWER - 20)
+                if (targetTrailPower in (prefStamina + 1)..nowStamina) {
+                    log.e()
+                    sendNoti(account, NotiType.StarRail.StaminaCustom, targetTrailPower)
+                }
+            }
+
+            val prefExpeditionTime: Int = try {
+                preference.getStringHonkaiSrExpeditionTime(account.honkai_sr_uid).toInt()
+            } catch (e: Exception) {
+                0
+            }
+            val nowExpeditionTime: Int = CommonFunction.getExpeditionTime(data).toInt()
+            if (notiSettings.notiExpeditionHonkaiSr) {
+                if (1 in (nowExpeditionTime)..prefExpeditionTime
+                    && data.dailyNote.expeditions.isNotEmpty()
+                    && nowExpeditionTime == 0
+                ) {
+                    log.e()
+                    sendNoti(account, NotiType.StarRail.ExpeditionDone, null)
                 }
             }
         }
 
-        if (settings.noti170TrailPower) {
-            if (Constant.MAX_TRAILBLAZE_POWER - 10 in (prefStamina + 1)..nowStamina) {
-                log.e()
-                sendNoti(account, NotiType.StarRail.Stamina230, Constant.MAX_TRAILBLAZE_POWER - 10)
-            }
-        }
-
-        if (settings.notiCustomTrailPower) {
-            val targetTrailPower: Int = settings.customTrailPower.takeUnless { it == 0 }
-                ?: (Constant.MAX_TRAILBLAZE_POWER - 20)
-            if (targetTrailPower in (prefStamina + 1)..nowStamina) {
-                log.e()
-                sendNoti(account, NotiType.StarRail.StaminaCustom, targetTrailPower)
-            }
-        }
-
-        val prefExpeditionTime: Int = try {
-            preference.getStringHonkaiSrExpeditionTime(account.honkai_sr_uid).toInt()
-        } catch (e: Exception) {
-            0
-        }
-        val nowExpeditionTime: Int = CommonFunction.getExpeditionTime(dailyNote).toInt()
-        if (settings.notiExpeditionHonkaiSr) {
-            if (1 in (nowExpeditionTime)..prefExpeditionTime
-                && dailyNote.expeditions.isNotEmpty()
-                && nowExpeditionTime == 0
-            ) {
-                log.e()
-                sendNoti(account, NotiType.StarRail.ExpeditionDone, null)
-            }
+        try {
+            sendNotiActions()
+        } catch (e: NullPointerException) {
+            log.e(e.message.toString())
         }
 
         preference.setStringRecentSyncTime(
@@ -552,66 +558,67 @@ class RefreshWorker @AssistedInject constructor(
             TimeFunction.getSyncDateTimeString()
         )
 
-        val expeditionTime: String = CommonFunction.getExpeditionTime(dailyNote)
+        val expeditionTime: String = CommonFunction.getExpeditionTime(data)
         preference.setStringHonkaiSrExpeditionTime(account.honkai_sr_uid, expeditionTime)
 
-        preference.setHonkaiSrDailyNote(account.honkai_sr_uid, dailyNote)
+        preference.setHonkaiSrDailyNote(account.honkai_sr_uid, data)
     }
 
     private fun updateData(account: Account, dailyNote: ZZZDailyNoteData) {
         log.e()
 
-        val prefDailyNote = preference.getZZZDailyNote(account.zzz_uid)
-        val settings = preference.getDailyNoteSettings()
+        fun sendNotiActions() {
+            val prefDailyNote = preference.getZZZDailyNote(account.zzz_uid)
+            val settings = preference.getDailyNoteSettings()
 
-        val prefBattery: Int = prefDailyNote.energy.progress.current
-        val currentBattery: Int = dailyNote.energy.progress.current
+            val prefBattery: Int = prefDailyNote.energy.progress.current
+            val currentBattery: Int = dailyNote.energy.progress.current
 
-        val maxEnergy = dailyNote.energy.progress.max
+            val maxEnergy = dailyNote.energy.progress.max
 
-        if (settings.notiEach40Battery) {
-            val gap = 40
-            val batteryLevels = (gap until maxEnergy + gap step gap).toList().reversed()
+            if (settings.notiEach40Battery) {
+                val gap = 40
+                val batteryLevels = (gap until maxEnergy + gap step gap).toList().reversed()
 
-            for (batteryLevel in batteryLevels) {
-                if (batteryLevel in (prefBattery + 1)..currentBattery) {
-                    log.e()
-                    sendNoti(account, NotiType.ZZZ.StaminaEach60, batteryLevel)
-                    break
+                for (batteryLevel in batteryLevels) {
+                    if (batteryLevel in (prefBattery + 1)..currentBattery) {
+                        log.e()
+                        sendNoti(account, NotiType.ZZZ.StaminaEach60, batteryLevel)
+                        break
+                    }
                 }
             }
-        }
 
-        if (settings.notiEach60Battery) {
-            val gap = 60
-            val batteryLevels = (gap until maxEnergy + gap step gap).toList().reversed()
+            if (settings.notiEach60Battery) {
+                val gap = 60
+                val batteryLevels = (gap until maxEnergy + gap step gap).toList().reversed()
 
-            for (batteryLevel in batteryLevels) {
-                if (batteryLevel in (prefBattery + 1)..currentBattery) {
-                    log.e()
-                    if (batteryLevel % 120 == 0 && settings.notiEach40Battery) continue
-                    sendNoti(account, NotiType.ZZZ.StaminaEach60, batteryLevel)
-                    break
+                for (batteryLevel in batteryLevels) {
+                    if (batteryLevel in (prefBattery + 1)..currentBattery) {
+                        log.e()
+                        if (batteryLevel % 120 == 0 && settings.notiEach40Battery) continue
+                        sendNoti(account, NotiType.ZZZ.StaminaEach60, batteryLevel)
+                        break
+                    }
                 }
             }
-        }
 
-        if (settings.noti230Battery) {
-            if (maxEnergy - 10 in (prefBattery + 1)..currentBattery) {
-                log.e()
-                sendNoti(account, NotiType.ZZZ.Stamina230, maxEnergy - 10)
+            if (settings.noti230Battery) {
+                if (maxEnergy - 10 in (prefBattery + 1)..currentBattery) {
+                    log.e()
+                    sendNoti(account, NotiType.ZZZ.Stamina230, maxEnergy - 10)
+                }
             }
-        }
 
-        if (settings.notiCustomBattery) {
-            val targetBattery: Int = settings.customBattery.takeUnless { it == 0 } ?: maxEnergy
-            if (targetBattery in (prefBattery + 1)..currentBattery) {
-                log.e()
-                sendNoti(account, NotiType.ZZZ.StaminaCustom, targetBattery)
+            if (settings.notiCustomBattery) {
+                val targetBattery: Int = settings.customBattery.takeUnless { it == 0 } ?: maxEnergy
+                if (targetBattery in (prefBattery + 1)..currentBattery) {
+                    log.e()
+                    sendNoti(account, NotiType.ZZZ.StaminaCustom, targetBattery)
+                }
             }
-        }
 
-        // 일퀘알림
+            // 일퀘알림
 //        val calendar = Calendar.getInstance()
 //        val yymmdd = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE).format(Date())
 
@@ -624,6 +631,13 @@ class RefreshWorker @AssistedInject constructor(
 //            preference.setStringRecentDailyCommissionNotiDate(account.zzz_uid, yymmdd)
 //            sendNoti(account, Constant.NotiType.DAILY_COMMISSION_YET, 0)
 //        }
+        }
+
+        try {
+            sendNotiActions()
+        } catch (e: NullPointerException) {
+            log.e(e.message.toString())
+        }
 
         preference.setStringRecentSyncTime(account.zzz_uid, TimeFunction.getSyncDateTimeString())
 
