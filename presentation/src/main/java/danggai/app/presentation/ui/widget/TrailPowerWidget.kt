@@ -18,7 +18,7 @@ import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.local.TimeNotation
-import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
+import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.util.Constant
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -173,10 +173,10 @@ class TrailPowerWidget() : AppWidgetProvider() {
                 view.setViewVisibility(R.id.ll_bottom, View.VISIBLE)
                 view.setViewVisibility(R.id.ll_disable, View.GONE)
 
-                val dailyNote = PreferenceManager.getT<HonkaiSrDailyNoteData>(
+                val data = PreferenceManager.getT<HonkaiSrDataLocal>(
                     context,
                     Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid"
-                ) ?: HonkaiSrDailyNoteData.EMPTY
+                ) ?: HonkaiSrDataLocal.EMPTY
 
                 view.setViewVisibility(
                     R.id.tv_uid,
@@ -190,10 +190,10 @@ class TrailPowerWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(R.id.tv_name, name)
 
-                view.setTextViewText(R.id.tv_trail_power, dailyNote.current_stamina.toString())
+                view.setTextViewText(R.id.tv_trail_power, data.dailyNote.currentStamina.toString())
                 view.setTextViewText(
                     R.id.tv_trail_power_max,
-                    "/" + dailyNote.max_stamina.toString()
+                    "/" + data.dailyNote.maxStamina.toString()
                 )
 
                 view.setViewVisibility(
@@ -207,20 +207,20 @@ class TrailPowerWidget() : AppWidgetProvider() {
                         TimeNotation.DEFAULT,
                         TimeNotation.REMAIN_TIME -> TimeFunction.secondToRemainTime(
                             _context,
-                            dailyNote.stamina_recover_time,
+                            data.dailyNote.staminaRecoverTime,
                             timeType = Constant.TIME_TYPE_MAX
                         )
 
                         TimeNotation.FULL_CHARGE_TIME -> TimeFunction.getSecondsLaterTime(
                             _context,
                             recentSyncTimeDate,
-                            dailyNote.stamina_recover_time,
+                            data.dailyNote.staminaRecoverTime,
                             Constant.TIME_TYPE_MAX
                         )
 
                         else -> TimeFunction.secondToRemainTime(
                             _context,
-                            dailyNote.stamina_recover_time,
+                            data.dailyNote.staminaRecoverTime,
                             timeType = Constant.TIME_TYPE_MAX
                         )
                     }
