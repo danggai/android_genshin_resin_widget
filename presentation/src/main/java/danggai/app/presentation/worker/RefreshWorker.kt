@@ -567,57 +567,58 @@ class RefreshWorker @AssistedInject constructor(
     private fun updateData(account: Account, dailyNote: ZZZDailyNoteData) {
         log.e()
 
-        val prefDailyNote = preference.getZZZDailyNote(account.zzz_uid)
-        val settings = preference.getDailyNoteSettings()
+        fun sendNotiActions() {
+            val prefDailyNote = preference.getZZZDailyNote(account.zzz_uid)
+            val settings = preference.getDailyNoteSettings()
 
-        val prefBattery: Int = prefDailyNote.energy.progress.current
-        val currentBattery: Int = dailyNote.energy.progress.current
+            val prefBattery: Int = prefDailyNote.energy.progress.current
+            val currentBattery: Int = dailyNote.energy.progress.current
 
-        val maxEnergy = dailyNote.energy.progress.max
+            val maxEnergy = dailyNote.energy.progress.max
 
-        if (settings.notiEach40Battery) {
-            val gap = 40
-            val batteryLevels = (gap until maxEnergy + gap step gap).toList().reversed()
+            if (settings.notiEach40Battery) {
+                val gap = 40
+                val batteryLevels = (gap until maxEnergy + gap step gap).toList().reversed()
 
-            for (batteryLevel in batteryLevels) {
-                if (batteryLevel in (prefBattery + 1)..currentBattery) {
-                    log.e()
-                    sendNoti(account, NotiType.ZZZ.StaminaEach60, batteryLevel)
-                    break
+                for (batteryLevel in batteryLevels) {
+                    if (batteryLevel in (prefBattery + 1)..currentBattery) {
+                        log.e()
+                        sendNoti(account, NotiType.ZZZ.StaminaEach60, batteryLevel)
+                        break
+                    }
                 }
             }
-        }
 
-        if (settings.notiEach60Battery) {
-            val gap = 60
-            val batteryLevels = (gap until maxEnergy + gap step gap).toList().reversed()
+            if (settings.notiEach60Battery) {
+                val gap = 60
+                val batteryLevels = (gap until maxEnergy + gap step gap).toList().reversed()
 
-            for (batteryLevel in batteryLevels) {
-                if (batteryLevel in (prefBattery + 1)..currentBattery) {
-                    log.e()
-                    if (batteryLevel % 120 == 0 && settings.notiEach40Battery) continue
-                    sendNoti(account, NotiType.ZZZ.StaminaEach60, batteryLevel)
-                    break
+                for (batteryLevel in batteryLevels) {
+                    if (batteryLevel in (prefBattery + 1)..currentBattery) {
+                        log.e()
+                        if (batteryLevel % 120 == 0 && settings.notiEach40Battery) continue
+                        sendNoti(account, NotiType.ZZZ.StaminaEach60, batteryLevel)
+                        break
+                    }
                 }
             }
-        }
 
-        if (settings.noti230Battery) {
-            if (maxEnergy - 10 in (prefBattery + 1)..currentBattery) {
-                log.e()
-                sendNoti(account, NotiType.ZZZ.Stamina230, maxEnergy - 10)
+            if (settings.noti230Battery) {
+                if (maxEnergy - 10 in (prefBattery + 1)..currentBattery) {
+                    log.e()
+                    sendNoti(account, NotiType.ZZZ.Stamina230, maxEnergy - 10)
+                }
             }
-        }
 
-        if (settings.notiCustomBattery) {
-            val targetBattery: Int = settings.customBattery.takeUnless { it == 0 } ?: maxEnergy
-            if (targetBattery in (prefBattery + 1)..currentBattery) {
-                log.e()
-                sendNoti(account, NotiType.ZZZ.StaminaCustom, targetBattery)
+            if (settings.notiCustomBattery) {
+                val targetBattery: Int = settings.customBattery.takeUnless { it == 0 } ?: maxEnergy
+                if (targetBattery in (prefBattery + 1)..currentBattery) {
+                    log.e()
+                    sendNoti(account, NotiType.ZZZ.StaminaCustom, targetBattery)
+                }
             }
-        }
 
-        // 일퀘알림
+            // 일퀘알림
 //        val calendar = Calendar.getInstance()
 //        val yymmdd = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE).format(Date())
 
@@ -630,6 +631,13 @@ class RefreshWorker @AssistedInject constructor(
 //            preference.setStringRecentDailyCommissionNotiDate(account.zzz_uid, yymmdd)
 //            sendNoti(account, Constant.NotiType.DAILY_COMMISSION_YET, 0)
 //        }
+        }
+
+        try {
+            sendNotiActions()
+        } catch (e: NullPointerException) {
+            log.e(e.message.toString())
+        }
 
         preference.setStringRecentSyncTime(account.zzz_uid, TimeFunction.getSyncDateTimeString())
 
