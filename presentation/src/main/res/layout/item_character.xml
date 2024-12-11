@@ -3,25 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="vm"
-            type="danggai.app.presentation.ui.design.WidgetDesignViewModel"
-            />
+            type="danggai.app.presentation.ui.design.WidgetDesignViewModel" />
+
         <variable
             name="item"
-            type="danggai.domain.local.LocalCharacter"
-            />
+            type="danggai.domain.local.LocalCharacter" />
     </data>
 
     <LinearLayout
         android:id="@+id/ll_root"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:gravity="center"
         android:clickable="true"
-        android:focusable="true"
-        >
+        android:focusable="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="85dp"
@@ -33,8 +34,7 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/bg_character_5stars"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                />
+                app:layout_constraintLeft_toLeftOf="parent" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_icon"
@@ -44,8 +44,7 @@
                 app:layout_constraintTop_toTopOf="@id/iv_background"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/iv_background"
-                />
+                app:layout_constraintBottom_toBottomOf="@id/iv_background" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_element"
@@ -54,7 +53,7 @@
                 android:layout_margin="3dp"
                 android:src="@drawable/icon_element_pyro"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                app:layout_constraintLeft_toLeftOf="parent" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_stars"
@@ -72,15 +71,13 @@
                 android:gravity="center"
                 android:background="@color/mid_light_gray"
                 android:animateLayoutChanges="true"
-                android:visibility="@{item.isSelected ?View.VISIBLE :View.GONE}"
-                >
+                android:visibility="@{item.isSelected ?View.VISIBLE :View.GONE}">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/baseline_check_24"
-                    android:tint="@color/white"
-                    />
+                    android:tint="@color/white" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -95,8 +92,7 @@
             app:autoSizeMaxTextSize="16sp"
             android:textAlignment="center"
             android:paddingTop="2dp"
-            android:paddingBottom="5dp"
-            />
+            android:paddingBottom="5dp" />
 
     </LinearLayout>
 
