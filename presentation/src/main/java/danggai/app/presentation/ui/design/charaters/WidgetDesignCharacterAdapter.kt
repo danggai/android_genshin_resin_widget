@@ -1,10 +1,10 @@
 package danggai.app.presentation.ui.design.charaters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
 import danggai.app.presentation.R
 import danggai.app.presentation.databinding.ItemCharacterBinding
 import danggai.app.presentation.ui.design.WidgetDesignViewModel
@@ -16,13 +16,22 @@ import danggai.domain.util.Constant
 import java.util.Locale
 
 class WidgetDesignCharacterAdapter(
-    val vm: WidgetDesignViewModel
-) : BaseAdapter() {
+    private val vm: WidgetDesignViewModel
+) : RecyclerView.Adapter<WidgetDesignCharacterAdapter.ItemViewHolder>() {
+
+    init {
+        setHasStableIds(true)  // 여기에 넣어서 초기화 시점에 안정적인 ID 설정
+    }
+
 
     private var items: MutableList<LocalCharacter> = arrayListOf()
 
     fun setItemList(_itemList: MutableList<LocalCharacter>) {
         log.e(_itemList.size)
+
+        val oldItems = items.toList() // 기존 아이템 리스트 저장
+        val oldSize = items.size
+
         items.clear()
 
         if (_itemList.isNotEmpty()) {
@@ -39,63 +48,75 @@ class WidgetDesignCharacterAdapter(
             }
         }
 
-        notifyDataSetChanged()
+        // 비교 후 변경된 항목만 갱신
+        val newSize = items.size
+        if (newSize > oldSize) {
+            for (i in oldSize until newSize) {
+                notifyItemInserted(i)
+            }
+        } else if (newSize < oldSize) {
+            for (i in newSize until oldSize) {
+                notifyItemRemoved(i)
+            }
+        }
+
+        // 변경된 항목만 갱신
+        for (i in 0 until minOf(oldSize, newSize)) {
+            if (oldItems[i] != items[i]) {
+                notifyItemChanged(i) // 해당 항목만 갱신
+            }
+        }
     }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        lateinit var holder: ItemViewHolder
-        if (convertView == null) {
-            val itemBinding: ItemCharacterBinding = DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.item_character,
-                parent,
-                false
-            )
-            holder = ItemViewHolder(itemBinding)
-            holder.view = itemBinding.root
-            holder.view.tag = holder
-        } else {
-            holder = convertView.tag as ItemViewHolder
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
+        return ItemViewHolder(R.layout.item_character, parent)
+    }
+
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        when (holder.binding) {
+            is ItemCharacterBinding -> {
+                holder.binding.vm = vm
+                holder.binding.item = items[position]
+
+                bindCharacterData(holder, position)
+
+                holder.binding.llRoot.setOnClickListener {
+                    items[position].isSelected = !items[position].isSelected
+                    vm.onClickCharacterItem(items[position])
+                    notifyItemChanged(position)
+                }
+            }
         }
-
-        holder.binding.vm = vm
-        holder.binding.item = items[position]
-
-        bindCharacterData(holder, position)
-
-        holder.binding.llRoot.setOnClickListener {
-            items[position].isSelected = !items[position].isSelected
-            vm.onClickCharacterItem(items[position])
-            notifyDataSetChanged()
-        }
-
-        return holder.view
     }
 
     private fun bindCharacterData(holder: ItemViewHolder, position: Int) {
-        holder.binding.vm = vm
-        holder.binding.item = items[position]
+        when (holder.binding) {
+            is ItemCharacterBinding -> {
+                holder.binding.vm = vm
+                holder.binding.item = items[position]
 
-        // 각 아이템의 선택 상태를 동기화
-        updateSelectionState(position)
+                // 각 아이템의 선택 상태를 동기화
+                updateSelectionState(position)
 
-        setIcon(holder, position)
-        setName(holder, position)
-        setElement(holder, position)
-        setRarity(holder, position)
+                setIcon(holder.binding, position)
+                setName(holder.binding, position)
+                setElement(holder.binding, position)
+                setRarity(holder.binding, position)
+            }
+        }
     }
 
     private fun updateSelectionState(position: Int) {
         items[position].isSelected = vm.selectedCharacterIdList.contains(items[position].id)
     }
 
-    private fun setIcon(holder: ItemViewHolder, position: Int) {
-        holder.binding.ivIcon.setImageResource(items[position].icon)
+    private fun setIcon(binding: ItemCharacterBinding, position: Int) {
+        binding.ivIcon.setImageResource(items[position].icon)
     }
-    
-    private fun setName(holder: ItemViewHolder, position: Int) {
-        holder.binding.tvName.text = when (PreferenceManager.getString(
-            holder.view.context,
+
+    private fun setName(binding: ItemCharacterBinding, position: Int) {
+        binding.tvName.text = when (PreferenceManager.getString(
+            binding.root.context,
             Constant.PREF_LOCALE,
             Locale.getDefault().language
         )) {
@@ -105,8 +126,8 @@ class WidgetDesignCharacterAdapter(
         }
     }
 
-    private fun setElement(holder: ItemViewHolder, position: Int) {
-        holder.binding.ivElement.setImageResource(
+    private fun setElement(binding: ItemCharacterBinding, position: Int) {
+        binding.ivElement.setImageResource(
             when (items[position].element) {
                 Elements.PYRO -> R.drawable.icon_element_pyro
                 Elements.HYDRO -> R.drawable.icon_element_hydro
@@ -119,37 +140,39 @@ class WidgetDesignCharacterAdapter(
         )
     }
 
-    private fun setRarity(holder: ItemViewHolder, position: Int) {
+    private fun setRarity(binding: ItemCharacterBinding, position: Int) {
         when (items[position].rarity) {
             5 -> {
-                holder.binding.ivBackground.setImageResource(R.drawable.bg_character_5stars)
-                holder.binding.ivStars.setImageResource(R.drawable.icon_5stars)
+                binding.ivBackground.setImageResource(R.drawable.bg_character_5stars)
+                binding.ivStars.setImageResource(R.drawable.icon_5stars)
             }
 
             4 -> {
-                holder.binding.ivBackground.setImageResource(R.drawable.bg_character_4stars)
-                holder.binding.ivStars.setImageResource(R.drawable.icon_4stars)
+                binding.ivBackground.setImageResource(R.drawable.bg_character_4stars)
+                binding.ivStars.setImageResource(R.drawable.icon_4stars)
             }
 
             105 -> {  // 콜라보 5성
-                holder.binding.ivBackground.setImageResource(R.drawable.bg_character_collabo)
-                holder.binding.ivStars.setImageResource(R.drawable.icon_5stars_collabo)
+                binding.ivBackground.setImageResource(R.drawable.bg_character_collabo)
+                binding.ivStars.setImageResource(R.drawable.icon_5stars_collabo)
             }
         }
     }
 
-    override fun getCount(): Int = items.size
-
-    override fun getItem(position: Int) = items[position]
-
-    override fun getItemId(position: Int): Long = items[position].id.toLong()
-
-    override fun getItemViewType(position: Int): Int {
-        return 0
+    override fun getItemId(position: Int): Long {
+        return items[position].id.toLong()  // 고유 ID를 반환
     }
 
-    class ItemViewHolder internal constructor(_binding: ItemCharacterBinding) {
-        var view: View = _binding.root
-        var binding: ItemCharacterBinding = _binding
-    }
+    override fun getItemCount(): Int = items.size
+
+    class ItemViewHolder(
+        layoutId: Int,
+        parent: ViewGroup,
+        val binding: ViewDataBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            layoutId,
+            parent,
+            false
+        )
+    ) : RecyclerView.ViewHolder(binding.root)
 }

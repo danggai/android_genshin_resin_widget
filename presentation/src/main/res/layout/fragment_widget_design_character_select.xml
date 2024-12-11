@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <import type="danggai.domain.local.WidgetTheme" />
+
         <import type="android.view.View" />
 
         <variable
             name="vm"
-            type="danggai.app.presentation.ui.design.WidgetDesignViewModel"
-            />
+            type="danggai.app.presentation.ui.design.WidgetDesignViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,8 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ll_toolbar"
@@ -28,8 +28,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:background="@color/light_blue_600"
-            android:gravity="center_vertical|right"
-            >
+            android:gravity="center_vertical|right">
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextView"
@@ -43,8 +42,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                />
+                app:layout_constraintRight_toRightOf="parent" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_close"
@@ -58,25 +56,22 @@
                 app:tint="@color/white"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <GridView
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:numColumns="4"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:visibility="@{vm.sfCharacterList.empty ? View.GONE : View.VISIBLE}"
-            item="@{vm.sfCharacterList}"
+            characters="@{vm.sfCharacterList}"
             viewModel="@{vm}"
             refreshSwitch="@{vm.sfCharacterListRefreshSwitch}"
+            numColumns="@{4}"
             app:layout_constraintTop_toBottomOf="@id/ll_toolbar"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            />
+            app:layout_constraintRight_toRightOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
