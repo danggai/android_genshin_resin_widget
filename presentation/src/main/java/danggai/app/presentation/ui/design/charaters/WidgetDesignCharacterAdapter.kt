@@ -19,10 +19,19 @@ class WidgetDesignCharacterAdapter(
     private val vm: WidgetDesignViewModel
 ) : RecyclerView.Adapter<WidgetDesignCharacterAdapter.ItemViewHolder>() {
 
+    init {
+        setHasStableIds(true)  // 여기에 넣어서 초기화 시점에 안정적인 ID 설정
+    }
+
+
     private var items: MutableList<LocalCharacter> = arrayListOf()
 
     fun setItemList(_itemList: MutableList<LocalCharacter>) {
         log.e(_itemList.size)
+
+        val oldItems = items.toList() // 기존 아이템 리스트 저장
+        val oldSize = items.size
+
         items.clear()
 
         if (_itemList.isNotEmpty()) {
@@ -39,7 +48,24 @@ class WidgetDesignCharacterAdapter(
             }
         }
 
-        notifyDataSetChanged()
+        // 비교 후 변경된 항목만 갱신
+        val newSize = items.size
+        if (newSize > oldSize) {
+            for (i in oldSize until newSize) {
+                notifyItemInserted(i)
+            }
+        } else if (newSize < oldSize) {
+            for (i in newSize until oldSize) {
+                notifyItemRemoved(i)
+            }
+        }
+
+        // 변경된 항목만 갱신
+        for (i in 0 until minOf(oldSize, newSize)) {
+            if (oldItems[i] != items[i]) {
+                notifyItemChanged(i) // 해당 항목만 갱신
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -131,6 +157,10 @@ class WidgetDesignCharacterAdapter(
                 binding.ivStars.setImageResource(R.drawable.icon_5stars_collabo)
             }
         }
+    }
+
+    override fun getItemId(position: Int): Long {
+        return items[position].id.toLong()  // 고유 ID를 반환
     }
 
     override fun getItemCount(): Int = items.size
