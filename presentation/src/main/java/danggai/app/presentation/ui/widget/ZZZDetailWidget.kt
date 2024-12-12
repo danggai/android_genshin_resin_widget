@@ -131,23 +131,25 @@ class ZZZDetailWidget() : AppWidgetProvider() {
         )
 
         val intentMainActivity = Intent(context, MainActivity::class.java)
-        views.setOnClickPendingIntent(
+        listOf(
             R.id.iv_battery,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
-        )
-        views.setOnClickPendingIntent(
             R.id.iv_engagement_today,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
-        )
-        views.setOnClickPendingIntent(
             R.id.iv_scratch_card,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
-        )
-        views.setOnClickPendingIntent(
             R.id.iv_video_store_management,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
-        )
-
+            R.id.iv_investigation_point,
+            R.id.iv_scratch_card,
+            R.id.iv_coffee,
+        ).forEach { viewId ->
+            views.setOnClickPendingIntent(
+                viewId,
+                PendingIntent.getActivity(
+                    context,
+                    0,
+                    intentMainActivity,
+                    PendingIntent.FLAG_IMMUTABLE
+                )
+            )
+        }
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
         val awId = manager.getAppWidgetIds(
             ComponentName(
@@ -226,6 +228,45 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                         _context.getString(R.string.done)
                     } else {
                         "${dailyNote.vitality.current}/${dailyNote.vitality.max}"
+                    }
+                )
+
+//                view.setTextViewText(
+//                    R.id.tv_coffee_title,
+//                    _context.getString(R.string.coffee)
+//                )
+//                view.setTextViewText(
+//                    R.id.tv_coffee,
+//                    if (dailyNote.vitality.current == dailyNote.vitality.max) {
+//                        _context.getString(R.string.done)
+//                    } else {
+//                        "${dailyNote.vitality.current}/${dailyNote.vitality.max}"
+//                    }
+//                )
+
+                view.setTextViewText(
+                    R.id.tv_ridu_weekly_title,
+                    _context.getString(R.string.ridu_weekly)
+                )
+                view.setTextViewText(
+                    R.id.tv_ridu_weekly,
+                    if (dailyNote.weeklyTask.curPoint == dailyNote.weeklyTask.maxPoint) {
+                        _context.getString(R.string.done)
+                    } else {
+                        "${dailyNote.weeklyTask.curPoint}/${dailyNote.weeklyTask.maxPoint}"
+                    }
+                )
+
+                view.setTextViewText(
+                    R.id.tv_investigation_point_title,
+                    _context.getString(R.string.investigation_point)
+                )
+                view.setTextViewText(
+                    R.id.tv_investigation_point,
+                    if (dailyNote.surveyPoints.num == dailyNote.surveyPoints.total) {
+                        _context.getString(R.string.done)
+                    } else {
+                        "${dailyNote.surveyPoints.num}/${dailyNote.surveyPoints.total}"
                     }
                 )
 
