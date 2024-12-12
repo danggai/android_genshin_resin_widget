@@ -157,6 +157,123 @@
                     android:textColor="@color/widget_font_main"
                     android:textSize="12sp" />
 
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_coffee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_coffee"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="2dp"
+                    android:src="@drawable/icon_coffee" />
+
+                <TextView
+                    android:id="@+id/tv_coffee_title"
+                    style="@style/TextView"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_coffee"
+                    android:layout_toRightOf="@id/iv_coffee"
+                    android:singleLine="true"
+                    android:text="@string/coffee"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_coffee"
+                    style="@style/TextView"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
+                    android:text="1300/1300"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_ridu_weekly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/iv_ridu_weekly"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="2dp"
+                    android:src="@drawable/icon_ridu_weekly" />
+
+                <TextView
+                    android:id="@+id/tv_ridu_weekly_title"
+                    style="@style/TextView"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_ridu_weekly"
+                    android:layout_toRightOf="@id/iv_ridu_weekly"
+                    android:singleLine="true"
+                    android:text="@string/ridu_weekly"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_ridu_weekly"
+                    style="@style/TextView"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
+                    android:text="1300/1300"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_investigation_point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/iv_investigation_point"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="2dp"
+                    android:src="@drawable/icon_investigation_point" />
+
+                <TextView
+                    android:id="@+id/tv_investigation_point_title"
+                    style="@style/TextView"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_investigation_point"
+                    android:layout_toRightOf="@id/iv_investigation_point"
+                    android:singleLine="true"
+                    android:text="@string/investigation_point"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_investigation_point"
+                    style="@style/TextView"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
+                    android:text="8000/8000"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
 
             </RelativeLayout>
 

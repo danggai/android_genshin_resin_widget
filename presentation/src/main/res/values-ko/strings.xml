@@ -320,6 +320,10 @@
 
     <!--    ZZZ 위젯 -->
     <string name="engagement_today">금일 활약도</string>
+    <string name="coffee">COFF 카페</string>
+
+    <string name="ridu_weekly">주간 리두</string>
+    <string name="investigation_point">제로 공동 조사 포인트</string>
 
     <string name="video_store_management">비디오 가게 경영</string>
     <string name="video_store_management_no">영업 대기 중</string>

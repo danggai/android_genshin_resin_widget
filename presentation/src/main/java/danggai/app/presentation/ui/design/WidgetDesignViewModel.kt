@@ -44,6 +44,7 @@ class WidgetDesignViewModel @Inject constructor(
     val sfTransparency = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_BACKGROUND_TRANSPARENCY)
     val sfWidgetTimeNotation = MutableStateFlow(TimeNotation.REMAIN_TIME)
 
+    // 원신
     val sfResinImageVisibility = MutableStateFlow(Constant.PREF_WIDGET_RESIN_IMAGE_VISIBLE)
     val sfResinFontSize = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_RESIN_FONT_SIZE)
     val sfResinUidVisibility = MutableStateFlow(false)
@@ -56,6 +57,7 @@ class WidgetDesignViewModel @Inject constructor(
     val sfExpeditionDataVisibility = MutableStateFlow(true)
     val sfTransformerDataVisibility = MutableStateFlow(true)
 
+    // 붕스
     val sfTrailBlazepowerDataVisibility = MutableStateFlow(true)
     val sfReserveTrailBlazepowerDataVisibility = MutableStateFlow(true)
     val sfDailyTrainingDataVisibility = MutableStateFlow(true)
@@ -65,10 +67,14 @@ class WidgetDesignViewModel @Inject constructor(
     val sfDivergentUniverseDataVisibility = MutableStateFlow(true)
     val sfAssignmentTimeDataVisibility = MutableStateFlow(true)
 
+    // ZZZ
     val sfBatteryDataVisibility = MutableStateFlow(true)
     val sfEngagementTodayDataVisibility = MutableStateFlow(true)
     val sfScratchCardDataVisibility = MutableStateFlow(true)
     val sfVideoStoreManagementDataVisibility = MutableStateFlow(true)
+    val sfCoffeeDataVisibility = MutableStateFlow(true)
+    val sfRiduWeeklyDataVisibility = MutableStateFlow(true)
+    val sfInvestigationPointDataVisibility = MutableStateFlow(true)
 
     val sfFontSizeDetail = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
     val sfDetailUidVisibility = MutableStateFlow(false)
@@ -124,6 +130,9 @@ class WidgetDesignViewModel @Inject constructor(
             sfEngagementTodayDataVisibility.value = it.engagementTodayDataVisibility
             sfScratchCardDataVisibility.value = it.scratchCardDataVisibility
             sfVideoStoreManagementDataVisibility.value = it.videoStoreManagementDataVisibility
+            sfCoffeeDataVisibility.value = it.coffeeDataVisibility
+            sfRiduWeeklyDataVisibility.value = it.riduWeeklyDataVisibility
+            sfInvestigationPointDataVisibility.value = it.investigationPointDataVisibility
 
             sfDetailUidVisibility.value = it.uidVisibility
             sfDetailNameVisibility.value = it.nameVisibility
@@ -280,6 +289,9 @@ class WidgetDesignViewModel @Inject constructor(
                 sfEngagementTodayDataVisibility.value,
                 sfScratchCardDataVisibility.value,
                 sfVideoStoreManagementDataVisibility.value,
+                sfCoffeeDataVisibility.value,
+                sfRiduWeeklyDataVisibility.value,
+                sfInvestigationPointDataVisibility.value,
 
                 sfDetailUidVisibility.value,
                 sfDetailNameVisibility.value,

@@ -93,15 +93,15 @@ class WidgetDesignDetailFragment :
                             AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
                         val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
 
-                        val isDarkTheme = WidgetDesignUtils.isDarkTheme(_context, mVM.sfWidgetTheme.value)
+                        val isDarkTheme =
+                            WidgetDesignUtils.isDarkTheme(_context, mVM.sfWidgetTheme.value)
 
                         val bgColor = ColorUtils.setAlphaComponent(
                             getColor(
                                 _context,
                                 if (isDarkTheme) R.color.black
                                 else R.color.white
-                            )
-                            , mVM.sfTransparency.value
+                            ), mVM.sfTransparency.value
                         )
 
                         val mainFontColor = getColor(
@@ -116,9 +116,27 @@ class WidgetDesignDetailFragment :
                             else R.color.widget_font_sub_light
                         )
 
-                        WidgetDesignUtils.applyDetailWidgetColors(binding.widget, bgColor, mainFontColor, subFontColor, wrappedDrawable)
-                        WidgetDesignUtils.applyDetailWidgetColors(binding.widgetHksr, bgColor, mainFontColor, subFontColor, wrappedDrawable)
-                        WidgetDesignUtils.applyDetailWidgetColors(binding.widgetZzz, bgColor, mainFontColor, subFontColor, wrappedDrawable)
+                        WidgetDesignUtils.applyDetailWidgetColors(
+                            binding.widget,
+                            bgColor,
+                            mainFontColor,
+                            subFontColor,
+                            wrappedDrawable
+                        )
+                        WidgetDesignUtils.applyDetailWidgetColors(
+                            binding.widgetHksr,
+                            bgColor,
+                            mainFontColor,
+                            subFontColor,
+                            wrappedDrawable
+                        )
+                        WidgetDesignUtils.applyDetailWidgetColors(
+                            binding.widgetZzz,
+                            bgColor,
+                            mainFontColor,
+                            subFontColor,
+                            wrappedDrawable
+                        )
                     }
                 }
             }
@@ -145,7 +163,8 @@ class WidgetDesignDetailFragment :
                             AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
                         val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
 
-                        val isDarkTheme = WidgetDesignUtils.isDarkTheme(_context, mVM.sfWidgetTheme.value)
+                        val isDarkTheme =
+                            WidgetDesignUtils.isDarkTheme(_context, mVM.sfWidgetTheme.value)
 
                         val color: Int =
                             if (isDarkTheme) getColor(_context, R.color.black)
@@ -502,6 +521,33 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.ZZZ
                     binding.widgetZzz.rlVideoStoreManagement.visibility =
+                        if (it) View.VISIBLE else View.GONE
+                }
+            }
+
+            launch {
+                mVM.sfCoffeeDataVisibility.collect {
+                    log.e()
+                    mVM.sfSelectedPreview.value = Preview.ZZZ
+                    binding.widgetZzz.rlCoffee.visibility =
+                        if (it) View.VISIBLE else View.GONE
+                }
+            }
+
+            launch {
+                mVM.sfRiduWeeklyDataVisibility.collect {
+                    log.e()
+                    mVM.sfSelectedPreview.value = Preview.ZZZ
+                    binding.widgetZzz.rlRiduWeekly.visibility =
+                        if (it) View.VISIBLE else View.GONE
+                }
+            }
+
+            launch {
+                mVM.sfInvestigationPointDataVisibility.collect {
+                    log.e()
+                    mVM.sfSelectedPreview.value = Preview.ZZZ
+                    binding.widgetZzz.rlInvestigationPoint.visibility =
                         if (it) View.VISIBLE else View.GONE
                 }
             }
