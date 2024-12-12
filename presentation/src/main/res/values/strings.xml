@@ -344,6 +344,10 @@
 
     <!--    ZZZ Widget -->
     <string name="engagement_today">Engagement Today</string>
+    <string name="coffee">COFF Coffee</string>
+
+    <string name="ridu_weekly">Ridu Weekly</string>
+    <string name="investigation_point">Investigation Point</string>
 
     <string name="video_store_management">Video Store Manage</string>
     <string name="video_store_management_no">Waiting to Open</string>
