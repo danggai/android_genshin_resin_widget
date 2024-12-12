@@ -42,14 +42,16 @@
             layout="@layout/widget_hksr_detail_fixed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp" />
+            android:layout_marginHorizontal="50dp"
+            android:visibility="gone" />
 
         <include
             android:id="@+id/widget_zzz"
             layout="@layout/widget_zzz_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp" />
+            android:layout_marginHorizontal="50dp"
+            android:visibility="gone" />
 
         <Space
             android:layout_width="1dp"
@@ -493,6 +495,38 @@
                         style="@style/Checkbox"
                         android:checked="@={vm.sfEngagementTodayDataVisibility}"
                         android:text="@string/engagement_today" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <!--                <androidx.appcompat.widget.LinearLayoutCompat-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:gravity="center_vertical">-->
+
+                <!--                    <com.google.android.material.checkbox.MaterialCheckBox-->
+                <!--                        style="@style/Checkbox"-->
+                <!--                        android:id="@+id/cb_coffee"-->
+                <!--                        android:checked="@={vm.sfCoffeeDataVisibility}"-->
+                <!--                        android:text="@string/coffee" />-->
+
+                <!--                </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_ridu_weekly"
+                        android:checked="@={vm.sfRiduWeeklyDataVisibility}"
+                        android:text="@string/ridu_weekly" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_investigation_point"
+                        android:checked="@={vm.sfInvestigationPointDataVisibility}"
+                        android:text="@string/investigation_point" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

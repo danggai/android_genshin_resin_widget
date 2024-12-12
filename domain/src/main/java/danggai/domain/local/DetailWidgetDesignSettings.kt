@@ -26,6 +26,9 @@ data class DetailWidgetDesignSettings(
     val engagementTodayDataVisibility: Boolean,
     val scratchCardDataVisibility: Boolean,
     val videoStoreManagementDataVisibility: Boolean,
+    val coffeeDataVisibility: Boolean,
+    val riduWeeklyDataVisibility: Boolean,
+    val investigationPointDataVisibility: Boolean,
 
     val uidVisibility: Boolean = false,
     val nameVisibility: Boolean = false,
@@ -36,7 +39,7 @@ data class DetailWidgetDesignSettings(
         val EMPTY = DetailWidgetDesignSettings(
             widgetTheme = 0,
             timeNotation = 0,
-            
+
             resinDataVisibility = true,
             dailyCommissinDataVisibility = true,
             weeklyBossDataVisibility = true,
@@ -57,6 +60,9 @@ data class DetailWidgetDesignSettings(
             engagementTodayDataVisibility = true,
             scratchCardDataVisibility = true,
             videoStoreManagementDataVisibility = true,
+            coffeeDataVisibility = true,
+            riduWeeklyDataVisibility = true,
+            investigationPointDataVisibility = true,
 
             uidVisibility = false,
             nameVisibility = false,

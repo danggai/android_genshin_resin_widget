@@ -317,6 +317,20 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                     R.id.rl_video_store_management,
                     if (widgetDesign.videoStoreManagementDataVisibility) View.VISIBLE else View.GONE
                 )
+                // TODO(커피 관련 데이터추가 시 해제)
+                view.setViewVisibility(R.id.rl_coffee, View.GONE)
+//                view.setViewVisibility(
+//                    R.id.rl_coffee,
+//                    if (widgetDesign.coffeeDataVisibility) View.VISIBLE else View.GONE
+//                )
+                view.setViewVisibility(
+                    R.id.rl_ridu_weekly,
+                    if (widgetDesign.riduWeeklyDataVisibility) View.VISIBLE else View.GONE
+                )
+                view.setViewVisibility(
+                    R.id.rl_investigation_point,
+                    if (widgetDesign.investigationPointDataVisibility) View.VISIBLE else View.GONE
+                )
 
             } else {
                 view.setViewVisibility(R.id.pb_loading, View.GONE)
