@@ -137,7 +137,7 @@ class ZZZDetailWidget() : AppWidgetProvider() {
             R.id.iv_scratch_card,
             R.id.iv_video_store_management,
             R.id.iv_investigation_point,
-            R.id.iv_scratch_card,
+            R.id.iv_ridu_weekly,
             R.id.iv_coffee,
         ).forEach { viewId ->
             views.setOnClickPendingIntent(
