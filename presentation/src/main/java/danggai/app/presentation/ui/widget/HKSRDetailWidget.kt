@@ -288,7 +288,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_synchronicity_point,
-                    if (!data.dailyNote.rogueTournWeeklyUnlocked) {
+                    if (data.dailyNote.rogueTournWeeklyUnlocked) {
                         data.dailyNote.rogueTournWeeklyCur.toString() + "/" + data.dailyNote.rogueTournWeeklyMax.toString()
                     } else {
                         context.getString(R.string.widget_ui_locked)
