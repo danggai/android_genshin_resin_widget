@@ -580,7 +580,7 @@
                         style="@style/TextView"
                         android:layout_width="wrap_content"
                         android:gravity="right"
-                        android:text="@string/common"
+                        android:text="@string/check_in"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold|italic" />
