@@ -8,20 +8,20 @@
     <string name="zzz">Zenless Zone Zero\u00A0</string>
     <string name="check_in">Check In\u00A0</string>
 
-    <string name="genshin_uid" translatable="false">Genshin Uid</string>
-    <string name="nickname" translatable="false">Nickname</string>
-    <string name="cookie" translatable="false">Cookie</string>
-    <string name="server" translatable="false">Server</string>
-    <string name="refresh_cycle" translatable="false">Data Update Cycle</string>
-    <string name="notification" translatable="false">Notification</string>
-    <string name="auto_check_in" translatable="false">Auto Check In</string>
-    <string name="time_notation" translatable="false">Time Notation</string>
-    <string name="preview" translatable="false">Preview</string>
-    <string name="widget_theme" translatable="false">Widget Theme</string>
-    <string name="background_transparency" translatable="false">Background Transparency</string>
-    <string name="font_size" translatable="false">Font Size</string>
-    <string name="resin_image" translatable="false">Image</string>
-    <string name="identifier" translatable="false">Identifier</string>
+    <string name="genshin_uid">Genshin UID</string>
+    <string name="nickname">Nickname</string>
+    <string name="cookie">Cookie</string>
+    <string name="server">Server</string>
+    <string name="refresh_cycle">Data Update Cycle</string>
+    <string name="notification">Notification</string>
+    <string name="auto_check_in">Auto Check In</string>
+    <string name="time_notation">Time Notation</string>
+    <string name="preview">Preview</string>
+    <string name="widget_theme">Widget Theme</string>
+    <string name="background_transparency">Background Transparency</string>
+    <string name="font_size">Font Size</string>
+    <string name="image">Image</string>
+    <string name="identifier">Identifier</string>
     <string name="select_character">Select Character</string>
     <string name="select_character_title">Characters display in widget</string>
     <string name="apply">Apply</string>
@@ -29,7 +29,7 @@
     <string name="time">\u0020time</string>
     <string name="times">\u0020times</string>
 
-    <string name="uid" translatable="false">Uid</string>
+    <string name="uid" translatable="false">UID</string>
     <string name="nickname_">Nickname</string>
     <string name="new_hoyolab_account">New HoYoLab Account</string>
     <string name="hoyolab_checkin">HoYoLab CheckIn</string>
