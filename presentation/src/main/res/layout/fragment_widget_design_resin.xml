@@ -213,7 +213,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/resin_image"
+                    android:text="@string/image"
                     android:textColor="@color/black"
                     android:textSize="28sp"
                     android:textStyle="bold|italic" />

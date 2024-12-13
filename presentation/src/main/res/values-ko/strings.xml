@@ -4,7 +4,7 @@
     <string name="genshin">원신\u00A0</string>
     <string name="honkai_sr">붕괴: 스타레일\u00A0</string>
     <string name="zzz">젠레스 존 제로\u00A0</string>
-    <string name="common">공통\u00A0</string>
+    <string name="check_in">출석\u00A0</string>
 
     <string name="nickname_">닉네임</string>
     <string name="new_hoyolab_account">새 호요랩 계정</string>
@@ -21,6 +21,21 @@
     <string name="time">회</string>
     <string name="times">회</string>
 
+    <string name="genshin_uid">원신 UID</string>
+    <string name="nickname">닉네임</string>
+    <string name="cookie">쿠키</string>
+    <string name="server">서버</string>
+    <string name="refresh_cycle">데이터 갱신 주기</string>
+    <string name="notification">알림</string>
+    <string name="auto_check_in">자동 체크인</string>
+    <string name="time_notation">시간 표기</string>
+    <string name="preview">미리보기</string>
+    <string name="widget_theme">위젯 테마</string>
+    <string name="background_transparency">배경 투명도</string>
+    <string name="font_size">글꼴 크기</string>
+    <string name="image">이미지</string>
+    <string name="identifier">식별자 표시</string>
+
     <string name="select_character">대상 캐릭터 선택하기</string>
     <string name="select_character_title">위젯에 표시할 캐릭터</string>
 
@@ -33,6 +48,11 @@
     <string name="get_cookie">로그인 후 여기를 눌러주세요!</string>
     <string name="get_cookie_btn">호요랩에 로그인 해 쿠키 가져오기</string>
     <string name="get_uid_btn">자동으로 인게임 정보 가져오기</string>
+
+    <string name="disable">수동</string>
+    <string name="time_15m">15분</string>
+    <string name="time_30m">30분</string>
+    <string name="time_1h">1시간</string>
 
     <string name="btn_each_40_resin">40레진 마다</string>
     <string name="btn_180_resin">180레진</string>
