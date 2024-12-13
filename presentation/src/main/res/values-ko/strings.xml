@@ -49,6 +49,11 @@
     <string name="get_cookie_btn">호요랩에 로그인 해 쿠키 가져오기</string>
     <string name="get_uid_btn">자동으로 인게임 정보 가져오기</string>
 
+    <string name="disable">수동</string>
+    <string name="time_15m">15분</string>
+    <string name="time_30m">30분</string>
+    <string name="time_1h">1시간</string>
+
     <string name="btn_each_40_resin">40레진 마다</string>
     <string name="btn_180_resin">180레진</string>
     <string name="resin">레진</string>

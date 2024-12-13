@@ -55,6 +55,11 @@
     <string name="europe" translatable="false">Europe</string>
     <string name="cht" translatable="false">TK, HT, MO</string>
 
+    <string name="disable">Disable</string>
+    <string name="time_15m">15m</string>
+    <string name="time_30m">30m</string>
+    <string name="time_1h">1h</string>
+
     <string name="btn_each_40_resin">Each 40 Resins</string>
     <string name="btn_180_resin">180 Resins</string>
     <string name="resin">Resin</string>

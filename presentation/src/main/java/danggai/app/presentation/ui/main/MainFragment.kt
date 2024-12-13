@@ -12,7 +12,6 @@ import android.provider.Settings
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
@@ -32,12 +31,16 @@ import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.cookie.CookieWebViewActivity
 import danggai.app.presentation.ui.design.WidgetDesignActivity
 import danggai.app.presentation.ui.newaccount.NewHoyolabAccountActivity
-import danggai.app.presentation.util.*
+import danggai.app.presentation.util.CommonFunction
+import danggai.app.presentation.util.DayTimeMapper
+import danggai.app.presentation.util.Event
+import danggai.app.presentation.util.PreferenceManager
+import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.CheckInWorker
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.util.Constant
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Locale
 
 
 @AndroidEntryPoint
@@ -52,7 +55,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
     override fun getLayoutResId() = R.layout.fragment_main
 
     private val mVM: MainViewModel by activityViewModels()
-    private lateinit var mAdView : AdView
+    private lateinit var mAdView: AdView
 
     private val weeklyDaySpinnerAdapter by lazy {
         ArrayAdapter.createFromResource(
@@ -61,13 +64,23 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             R.layout.text_spinner
         ).apply {
             this.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spWeeklyYetNotiDay.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long, ) {
-                    mVM.setWeeklyCommissionNotiDay(binding.spWeeklyYetNotiDay.getItemAtPosition(position) as String)
-                }
+            binding.spWeeklyYetNotiDay.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long,
+                    ) {
+                        mVM.setWeeklyCommissionNotiDay(
+                            binding.spWeeklyYetNotiDay.getItemAtPosition(
+                                position
+                            ) as String
+                        )
+                    }
 
-                override fun onNothingSelected(parent: AdapterView<*>?) { }
-            }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
         }
     }
 
@@ -78,13 +91,23 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             R.layout.text_spinner
         ).apply {
             this.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spWeeklyYetNotiTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long, ) {
-                    mVM.setWeeklyCommissionNotiTime(binding.spWeeklyYetNotiTime.getItemAtPosition(position) as String)
-                }
+            binding.spWeeklyYetNotiTime.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long,
+                    ) {
+                        mVM.setWeeklyCommissionNotiTime(
+                            binding.spWeeklyYetNotiTime.getItemAtPosition(
+                                position
+                            ) as String
+                        )
+                    }
 
-                override fun onNothingSelected(parent: AdapterView<*>?) { }
-            }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
         }
     }
 
@@ -95,13 +118,23 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             R.layout.text_spinner
         ).apply {
             this.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spDailyYetNoti.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long, ) {
-                    mVM.setDailyCommissionNotiTime(binding.spDailyYetNoti.getItemAtPosition(position) as String)
-                }
+            binding.spDailyYetNoti.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long,
+                    ) {
+                        mVM.setDailyCommissionNotiTime(
+                            binding.spDailyYetNoti.getItemAtPosition(
+                                position
+                            ) as String
+                        )
+                    }
 
-                override fun onNothingSelected(parent: AdapterView<*>?) { }
-            }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
         }
     }
 
@@ -131,25 +164,31 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
 
         WorkManager.getInstance(requireContext())
             .getWorkInfosByTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH).get().forEach {
-                if (it.state !in listOf(WorkInfo.State.SUCCEEDED,
+                if (it.state !in listOf(
+                        WorkInfo.State.SUCCEEDED,
                         WorkInfo.State.FAILED,
-                        WorkInfo.State.CANCELLED)
+                        WorkInfo.State.CANCELLED
+                    )
                 )
                     log.e("refresh worker ${it.id} state -> ${it.state}")
             }
         WorkManager.getInstance(requireContext())
             .getWorkInfosByTag(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN).get().forEach {
-                if (it.state !in listOf(WorkInfo.State.SUCCEEDED,
+                if (it.state !in listOf(
+                        WorkInfo.State.SUCCEEDED,
                         WorkInfo.State.FAILED,
-                        WorkInfo.State.CANCELLED)
+                        WorkInfo.State.CANCELLED
+                    )
                 )
                     log.e("checkin worker ${it.id} state -> ${it.state}")
             }
         WorkManager.getInstance(requireContext())
             .getWorkInfosByTag(Constant.WORKER_UNIQUE_NAME_TALENT_WIDGET_REFRESH).get().forEach {
-                if (it.state !in listOf(WorkInfo.State.SUCCEEDED,
+                if (it.state !in listOf(
+                        WorkInfo.State.SUCCEEDED,
                         WorkInfo.State.FAILED,
-                        WorkInfo.State.CANCELLED)
+                        WorkInfo.State.CANCELLED
+                    )
                 )
                     log.e("talent worker ${it.id} state -> ${it.state}")
             }
@@ -157,8 +196,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         when (mVM.sfAutoRefreshPeriod.value) {
             15L -> binding.rb15m.isChecked = true
             30L -> binding.rb30m.isChecked = true
-            60L -> binding.rb1h.isChecked = true
-            120L -> binding.rb2h.isChecked = true
+            60L, 120L -> binding.rb1h.isChecked = true
             else -> binding.rbDisable.isChecked = true
         }
 
@@ -193,7 +231,10 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                         AlertDialog.Builder(activity)
                             .setTitle(R.string.dialog_hoyolab_account_delete)
                             .setMessage(
-                                String.format(getString(R.string.dialog_msg_hoyolab_account_delete), account.nickname)
+                                String.format(
+                                    getString(R.string.dialog_msg_hoyolab_account_delete),
+                                    account.nickname
+                                )
                             )
                             .setCancelable(false)
                             .setPositiveButton(R.string.apply) { dialog, whichButton ->
@@ -265,14 +306,23 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
     }
 
     private fun antidozePermisisonCheck(context: Context) {
-        if (PreferenceManager.getBoolean(context, Constant.PREF_CHECKED_ANTIDOZE_PERMISSION, true)) {
+        if (PreferenceManager.getBoolean(
+                context,
+                Constant.PREF_CHECKED_ANTIDOZE_PERMISSION,
+                true
+            )
+        ) {
             AlertDialog.Builder(requireActivity())
                 .setTitle(R.string.dialog_title_permission)
                 .setMessage(R.string.dialog_msg_permission_antidoze)
                 .setCancelable(false)
                 .setPositiveButton(R.string.apply) { dialog, whichButton ->
                     log.e()
-                    PreferenceManager.setBoolean(context, Constant.PREF_CHECKED_ANTIDOZE_PERMISSION, false)
+                    PreferenceManager.setBoolean(
+                        context,
+                        Constant.PREF_CHECKED_ANTIDOZE_PERMISSION,
+                        false
+                    )
 
                     val intent = Intent()
                     val packageName = context.packageName
@@ -292,15 +342,28 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
     private fun notificationPermisisonCheck(context: Context) {
         log.e()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
-            && PreferenceManager.getBoolean(context, Constant.PREF_CHECKED_NOTIFICATION_PERMISSION, true)
+            && PreferenceManager.getBoolean(
+                context,
+                Constant.PREF_CHECKED_NOTIFICATION_PERMISSION,
+                true
+            )
         ) {
             log.e()
-            PreferenceManager.setBoolean(context, Constant.PREF_CHECKED_NOTIFICATION_PERMISSION, false)
+            PreferenceManager.setBoolean(
+                context,
+                Constant.PREF_CHECKED_NOTIFICATION_PERMISSION,
+                false
+            )
 
             TedPermission.create()
-                .setPermissionListener(object: PermissionListener {
-                    override fun onPermissionGranted() { log.e() }
-                    override fun onPermissionDenied(deniedPermissions: MutableList<String>?) { log.e() }
+                .setPermissionListener(object : PermissionListener {
+                    override fun onPermissionGranted() {
+                        log.e()
+                    }
+
+                    override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+                        log.e()
+                    }
                 })
                 .setPermissions(Manifest.permission.POST_NOTIFICATIONS)
                 .check()
@@ -309,10 +372,24 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
 
     private fun updateNoteCheck() {
         context?.let { it ->
-            if (PreferenceManager.getString(it, Constant.PREF_CHECKED_UPDATE_NOTE) != BuildConfig.VERSION_NAME) {
-                if (!PreferenceManager.getBoolean(it, Constant.PREF_CHECKED_STORAGE_PERMISSION, true)) {
+            if (PreferenceManager.getString(
+                    it,
+                    Constant.PREF_CHECKED_UPDATE_NOTE
+                ) != BuildConfig.VERSION_NAME
+            ) {
+                if (!PreferenceManager.getBoolean(
+                        it,
+                        Constant.PREF_CHECKED_STORAGE_PERMISSION,
+                        true
+                    )
+                ) {
                     AlertDialog.Builder(requireActivity())
-                        .setTitle(String.format(getString(R.string.dialog_patch_note), BuildConfig.VERSION_NAME))
+                        .setTitle(
+                            String.format(
+                                getString(R.string.dialog_patch_note),
+                                BuildConfig.VERSION_NAME
+                            )
+                        )
                         .setMessage(R.string.dialog_msg_patch_note)
                         .setPositiveButton(R.string.ok) { dialog, whichButton ->
                             log.e()
@@ -321,7 +398,11 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                         .show()
                 }
 
-                PreferenceManager.setString(it, Constant.PREF_CHECKED_UPDATE_NOTE, BuildConfig.VERSION_NAME)
+                PreferenceManager.setString(
+                    it,
+                    Constant.PREF_CHECKED_UPDATE_NOTE,
+                    BuildConfig.VERSION_NAME
+                )
             }
         }
     }
@@ -348,7 +429,10 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                         .setPositiveButton(R.string.data_save_mode_disable) { dialog, whichButton ->
                             log.e()
                             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                                makeToast(requireContext(), getString(R.string.data_save_mode_not_supported))
+                                makeToast(
+                                    requireContext(),
+                                    getString(R.string.data_save_mode_not_supported)
+                                )
                             } else {
                                 try {
                                     startActivity(Intent("android.settings.DATA_USAGE_SETTINGS"))
@@ -373,6 +457,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                         .show()
                 }
             }
+
             is Event.GetCookie -> {
                 activity?.let {
                     log.e()
@@ -385,31 +470,38 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                         }
                         .setNegativeButton(R.string.sns_account) { dialog, whichButton ->
                             log.e()
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constant.HOW_CAN_I_GET_COOKIE_URL))
+                            val intent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(Constant.HOW_CAN_I_GET_COOKIE_URL)
+                            )
                             startActivity(intent)
                         }
                         .create()
                         .show()
                 }
             }
+
             is Event.StartWidgetDesignActivity -> {
                 log.e()
                 activity?.let {
                     WidgetDesignActivity.startActivity(it)
                 }
             }
+
             is Event.StartNewHoyolabAccountActivity -> {
                 log.e()
                 activity?.let {
                     NewHoyolabAccountActivity.startActivity(it)
                 }
             }
+
             is Event.StartManageAccount -> {
                 log.e()
                 activity?.let {
                     NewHoyolabAccountActivity.startActivityWithUid(it, event.account.genshin_uid)
                 }
             }
+
             is Event.ChangeLanguage -> {
                 log.e()
                 activity?.let {
@@ -424,9 +516,18 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                                     else -> Locale.getDefault().language
                                 }
 
-                                if (PreferenceManager.getString(it.baseContext, Constant.PREF_LOCALE, Locale.getDefault().language) == locale) return@OnClickListener
+                                if (PreferenceManager.getString(
+                                        it.baseContext,
+                                        Constant.PREF_LOCALE,
+                                        Locale.getDefault().language
+                                    ) == locale
+                                ) return@OnClickListener
 
-                                PreferenceManager.setString(it.baseContext, Constant.PREF_LOCALE, locale)
+                                PreferenceManager.setString(
+                                    it.baseContext,
+                                    Constant.PREF_LOCALE,
+                                    locale
+                                )
 
                                 AlertDialog.Builder(requireActivity())
                                     .setTitle(R.string.dialog_restart)
@@ -442,6 +543,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                     builder.show()
                 }
             }
+
             is Event.StartShutRefreshWorker -> {
                 log.e()
                 context?.let { context ->
@@ -449,6 +551,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                     else RefreshWorker.shutdownWorker(context)
                 }
             }
+
             is Event.StartShutCheckInWorker -> {
                 log.e()
                 context?.let { context ->
@@ -456,6 +559,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                     else CheckInWorker.shutdownWorker(context)
                 }
             }
+
             else -> {}
         }
     }
