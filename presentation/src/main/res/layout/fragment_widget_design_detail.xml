@@ -245,35 +245,10 @@
                     android:layout_height="10dp" />
 
                 <!--                원신 -->
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextView"
-                        android:layout_width="wrap_content"
-                        android:gravity="right"
-                        android:text="@string/genshin"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold|italic" />
-
-                    <Space
-                        android:layout_width="5dp"
-                        android:layout_height="0dp" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1"
-                        android:background="#444444" />
-
-                    <Space
-                        android:layout_width="10dp"
-                        android:layout_height="0dp" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                    app:titleText="@string/genshin" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -337,35 +312,10 @@
                     android:layout_height="10dp" />
 
                 <!--                붕괴: 스타레일 -->
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextView"
-                        android:layout_width="wrap_content"
-                        android:gravity="right"
-                        android:text="@string/honkai_sr"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold|italic" />
-
-                    <Space
-                        android:layout_width="5dp"
-                        android:layout_height="0dp" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1"
-                        android:background="#444444" />
-
-                    <Space
-                        android:layout_width="10dp"
-                        android:layout_height="0dp" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                    app:titleText="@string/honkai_sr" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -449,35 +399,10 @@
                     android:layout_height="15dp" />
 
                 <!--                젠레스 존 제로 -->
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextView"
-                        android:layout_width="wrap_content"
-                        android:gravity="right"
-                        android:text="@string/zzz"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold|italic" />
-
-                    <Space
-                        android:layout_width="5dp"
-                        android:layout_height="0dp" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1"
-                        android:background="#444444" />
-
-                    <Space
-                        android:layout_width="10dp"
-                        android:layout_height="0dp" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                    app:titleText="@string/zzz" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
