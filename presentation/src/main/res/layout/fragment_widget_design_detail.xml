@@ -240,10 +240,6 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="10dp" />
-
                 <!--                원신 -->
                 <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
@@ -393,10 +389,6 @@
                         android:text="@string/assignment_time" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <android.widget.Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp" />
 
                 <!--                젠레스 존 제로 -->
                 <danggai.app.presentation.view.TitleDividerView
