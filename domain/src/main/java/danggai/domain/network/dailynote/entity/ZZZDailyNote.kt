@@ -32,9 +32,9 @@ data class ZZZDailyNoteData(
     @SerializedName("vhs_sale") val vhsSale: ZZZVhsSale,
     @SerializedName("vitality") val vitality: ZZZProgress,
     @SerializedName("coffee") val coffee: Any?,  // 아직 미구현 인듯? null로만 옴
-    @SerializedName("bounty_commission") val bountyCommission: ZZZNumTotal,
-    @SerializedName("survey_points") val surveyPoints: ZZZNumTotal,
-    @SerializedName("weekly_task") val weeklyTask: ZZZWeeklyTask
+    @SerializedName("bounty_commission") val bountyCommission: ZZZNumTotal?,
+    @SerializedName("survey_points") val surveyPoints: ZZZNumTotal?,
+    @SerializedName("weekly_task") val weeklyTask: ZZZWeeklyTask?
 ) {
     companion object {
         val EMPTY = ZZZDailyNoteData(
