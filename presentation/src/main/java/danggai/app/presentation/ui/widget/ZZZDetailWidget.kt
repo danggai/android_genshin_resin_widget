@@ -250,10 +250,10 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_ridu_weekly,
-                    if (dailyNote.weeklyTask.curPoint == dailyNote.weeklyTask.maxPoint) {
+                    if ((dailyNote.weeklyTask?.curPoint == dailyNote.weeklyTask?.maxPoint) && dailyNote.weeklyTask !== null) {
                         _context.getString(R.string.done)
                     } else {
-                        "${dailyNote.weeklyTask.curPoint}/${dailyNote.weeklyTask.maxPoint}"
+                        "${dailyNote.weeklyTask?.curPoint ?: "?"}/${dailyNote.weeklyTask?.maxPoint ?: "?"}"
                     }
                 )
 
@@ -263,10 +263,10 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_investigation_point,
-                    if (dailyNote.surveyPoints.num == dailyNote.surveyPoints.total) {
+                    if ((dailyNote.surveyPoints?.num == dailyNote.surveyPoints?.total) && dailyNote.surveyPoints !== null) {
                         _context.getString(R.string.done)
                     } else {
-                        "${dailyNote.surveyPoints.num}/${dailyNote.surveyPoints.total}"
+                        "${dailyNote.surveyPoints?.num ?: "?"}/${dailyNote.surveyPoints?.total ?: "?"}"
                     }
                 )
 
