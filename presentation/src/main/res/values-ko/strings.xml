@@ -43,6 +43,7 @@
     <string name="save">저장</string>
     <string name="ok">확인</string>
     <string name="reset">초기화</string>
+    <string name="save_add">저장하고 위젯 추가하기</string>
 
     <string name="no_hoyolab_accounts">등록 된 호요랩 계정이 없습니다.</string>
     <string name="get_cookie">로그인 후 여기를 눌러주세요!</string>

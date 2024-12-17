@@ -44,6 +44,7 @@
     <string name="save">Save</string>
     <string name="ok">OK</string>
     <string name="reset">RESET</string>
+    <string name="save_add">Save and add widgets</string>
 
     <string name="no_hoyolab_accounts">No HoYoLab account registered.</string>
     <string name="get_cookie">Click here after Login!</string>

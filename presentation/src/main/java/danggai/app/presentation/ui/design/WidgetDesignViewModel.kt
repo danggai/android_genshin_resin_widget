@@ -21,6 +21,7 @@ import danggai.domain.resource.repository.ResourceProviderRepository
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -33,6 +34,7 @@ class WidgetDesignViewModel @Inject constructor(
     private val characters: CharacterUseCase
 ) : BaseViewModel() {
     val sfApplySavedData = MutableSharedFlow<Boolean>()
+    val sfAddWidget = MutableSharedFlow<Int>()
     val sfStartSelectFragment = MutableSharedFlow<Boolean>()
     val sfFinishSelectFragment = MutableSharedFlow<Boolean>()
 
@@ -303,13 +305,26 @@ class WidgetDesignViewModel @Inject constructor(
         sfApplySavedData.emitInVmScope(true)
 
         makeToast(resource.getString(R.string.msg_toast_save_done))
-
-        sendEvent(Event.FinishThisActivity())
     }
 
     fun onClickSave() {
         log.e()
         saveData()
+
+        viewModelScope.launch {
+            delay(100L)
+            sendEvent(Event.FinishThisActivity())
+        }
+    }
+
+    fun onClickSaveAndAddWidget() {
+        log.e()
+        saveData()
+
+        viewModelScope.launch {
+            delay(100L)
+            sfAddWidget.emitInVmScope(0)
+        }
     }
 
     fun onClickPreiew(preview: Preview) {
