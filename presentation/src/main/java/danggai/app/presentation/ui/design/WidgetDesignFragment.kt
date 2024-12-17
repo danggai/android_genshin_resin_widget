@@ -1,9 +1,14 @@
 package danggai.app.presentation.ui.design
 
 import android.Manifest
+import android.app.PendingIntent
 import android.app.WallpaperManager
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
@@ -21,7 +26,9 @@ import danggai.app.presentation.ui.design.charaters.WidgetDesignCharacterFragmen
 import danggai.app.presentation.ui.design.charaters.select.WidgetDesignSelectCharacterFragment
 import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
 import danggai.app.presentation.ui.design.resin.WidgetDesignResinFragment
+import danggai.app.presentation.ui.widget.DetailWidget
 import danggai.app.presentation.ui.widget.TalentWidget
+import danggai.app.presentation.ui.widget.config.WidgetPinnedReceiver
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.log
@@ -120,6 +127,35 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
         }
     }
 
+    private fun <T : AppWidgetProvider> requestPinWidget(context: Context, widgetClass: Class<T>) {
+        val appWidgetManager = context.getSystemService(AppWidgetManager::class.java)
+        val widgetProvider = ComponentName(context, widgetClass)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            if (appWidgetManager.isRequestPinAppWidgetSupported) {
+                val pinnedWidgetCallbackIntent =
+                    Intent(context, WidgetPinnedReceiver::class.java)
+
+                val successCallback = PendingIntent.getBroadcast(
+                    context,
+                    0,
+                    pinnedWidgetCallbackIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+
+                appWidgetManager.requestPinAppWidget(
+                    widgetProvider,
+                    null,
+                    successCallback
+                )
+            } else {
+                makeToast(context, context.getString(R.string.msg_toast_widget_pin_not_supported))
+            }
+        else {
+            makeToast(context, context.getString(R.string.msg_toast_widget_pin_supports_android_8))
+        }
+    }
+
     private fun initSf() {
         viewLifecycleOwner.repeatOnLifeCycleStarted {
             launch {
@@ -132,6 +168,15 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
                                 .setAction(Constant.ACTION_TALENT_WIDGET_REFRESH)
                         )
                     }
+                }
+            }
+
+            launch {
+                mVM.sfAddWidget.collect { widgetId ->
+                    val context = requireContext()
+                    val widgetClass = DetailWidget::class.java
+
+                    requestPinWidget(context, widgetClass)
                 }
             }
 

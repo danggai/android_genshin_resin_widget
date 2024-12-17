@@ -107,6 +107,9 @@
 
     <string name="data_save_mode_not_supported">Android7 미만에서는 데이터 절약 모드를 지원하지 않습니다.</string>
 
+    <string name="msg_toast_widget_pin_not_supported">런처가 위젯 고정 기능을 지원하지 않습니다.</string>
+    <string name="msg_toast_widget_pin_supports_android_8">Android 8.0 이상에서 지원되는 기능입니다.</string>
+
     <string name="dialog_title_permission">권한 허용하기</string>
     <string name="dialog_msg_permission_storage">위젯 커스텀 중, 실제로 사용하는 배경화면에 대입하여 디자인을 진행하기 위해 저장소 권한이 필요합니다.\n\n권한을 거부하여도 앱 사용이 가능합니다.</string>
     <string name="dialog_msg_permission_antidoze">배터리 부족/절전모드 등의 문제로 위젯 새로고침/자동 출석체크에 문제가 생기는 것을 방지하기 위해 배터리 절약 설정 예외 권한이 필요합니다.\n\n권한을 거부하여도 앱 사용이 가능합니다.</string>

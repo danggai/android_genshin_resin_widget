@@ -114,6 +114,9 @@
 
     <string name="data_save_mode_not_supported">Data saving mode is not supported under Android 7.</string>
 
+    <string name="msg_toast_widget_pin_not_supported">The launcher does not support widget pinning.</string>
+    <string name="msg_toast_widget_pin_supports_android_8">This feature is supported on Android 8.0 and above.</string>
+
     <string name="dialog_title_permission">Allowing permission</string>
     <string name="dialog_msg_permission_storage">When customizing widget, storage permission is required to proceed with the design by substituting it into the wallpaper you actually use.\n\nYou can use the app even if you reject the permission.</string>
     <string name="dialog_msg_permission_antidoze">Power saving exclusion is required to prevent problems with widget refresh/auto checkin due to issues such as low battery/sleep mode.\n\nYou can use the app even if you deny the permission.</string>
