@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -281,18 +280,12 @@ object CommonFunction {
         }
     }
 
-    private const val widgetHasNoUid = "nouid"
     fun isUidValidate(widgetId: Int, context: Context): Boolean {
         val uid = PreferenceManager.getString(context, Constant.PREF_UID + "_$widgetId")
 
         return if (uid == "") { // uid 없이 처음 인입되는 경우
             if (PreferenceManager.getString(context, Constant.PREF_UID) == "") {
                 log.e()
-                PreferenceManager.setString(
-                    context,
-                    Constant.PREF_UID + "_$widgetId",
-                    widgetHasNoUid
-                )
                 false
             } else {    // 마이그레이션용
                 log.e("uid -> $uid")
@@ -303,15 +296,6 @@ object CommonFunction {
                 )
                 true
             }
-        } else if (uid == widgetHasNoUid) { // 반복적으로 uid 없이 인입되는 경우
-            log.e("widget($widgetId) deleted")
-            try {
-                val a = AppWidgetHost(context, 0)
-                a.deleteAppWidgetId(widgetId)
-            } catch (e: Exception) {
-                log.e()
-            }
-            false
         } else { // 정상
             log.e("widget($widgetId) uid -> $uid")
             true
