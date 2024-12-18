@@ -114,7 +114,7 @@ class TalentWidget() : AppWidgetProvider() {
     private fun makeRemoteViews(context: Context?): RemoteViews {
         val remoteViews = RemoteViews(context!!.packageName, R.layout.widget_talent)
 
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
             context,
             remoteViews,
             R.id.ll_sync,

@@ -104,7 +104,7 @@ class MiniWidget() : AppWidgetProvider() {
     private fun makeRemoteViews(context: Context?): RemoteViews {
         val views = RemoteViews(context!!.packageName, R.layout.widget_mini)
 
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
             context,
             views,
             R.id.ll_sync,
@@ -117,14 +117,14 @@ class MiniWidget() : AppWidgetProvider() {
             R.id.tv_realm_currency,
             R.id.ll_disable
         )
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickActivityPendingIntent(
             context,
             views,
             mainActivityTargetViews,
             WidgetUtils.getMainActivityIntent(context)
         )
 
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
             context,
             views,
             R.id.ll_disable,

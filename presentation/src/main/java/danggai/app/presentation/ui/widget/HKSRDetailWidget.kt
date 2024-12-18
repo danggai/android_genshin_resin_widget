@@ -116,7 +116,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
     private fun makeRemoteViews(context: Context?): RemoteViews {
         val views = RemoteViews(context!!.packageName, R.layout.widget_hksr_detail_fixed)
 
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
             context,
             views,
             R.id.ll_sync,
@@ -130,14 +130,14 @@ class HKSRDetailWidget() : AppWidgetProvider() {
             R.id.iv_simulated_universe,
             R.id.iv_credit
         )
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickActivityPendingIntent(
             context,
             views,
             mainActivityTargetViews,
             WidgetUtils.getMainActivityIntent(context)
         )
 
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
             context,
             views,
             R.id.ll_disable,

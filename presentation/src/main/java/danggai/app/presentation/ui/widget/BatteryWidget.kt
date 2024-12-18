@@ -97,21 +97,21 @@ class BatteryWidget() : AppWidgetProvider() {
         log.e()
         val views = RemoteViews(context!!.packageName, R.layout.widget_battery)
 
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
             context,
             views,
             R.id.ll_sync,
             WidgetUtils.getUpdateIntent(context, BatteryWidget::class.java)
         )
 
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
             context,
             views,
             R.id.iv_battery,
             WidgetUtils.getMainActivityIntent(context)
         )
 
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
             context,
             views,
             R.id.ll_disable,

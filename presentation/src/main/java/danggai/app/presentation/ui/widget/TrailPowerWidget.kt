@@ -97,21 +97,21 @@ class TrailPowerWidget() : AppWidgetProvider() {
         log.e()
         val views = RemoteViews(context!!.packageName, R.layout.widget_trailblaze_power)
 
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
             context,
             views,
             R.id.ll_sync,
             WidgetUtils.getUpdateIntent(context, TrailPowerWidget::class.java)
         )
 
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
             context,
             views,
             R.id.iv_trail_power,
             WidgetUtils.getMainActivityIntent(context)
         )
 
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
             context,
             views,
             R.id.ll_disable,

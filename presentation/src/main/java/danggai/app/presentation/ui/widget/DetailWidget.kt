@@ -28,6 +28,10 @@ import java.util.Locale
 
 class DetailWidget() : AppWidgetProvider() {
 
+    companion object {
+        val className = DetailWidget::class.java
+    }
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -39,7 +43,7 @@ class DetailWidget() : AppWidgetProvider() {
 
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
-            val remoteView: RemoteViews = makeRemoteViews(context)
+            val remoteView: RemoteViews = makeRemoteViews(context, appWidgetId)
 
             syncView(appWidgetId, remoteView, context)
             appWidgetManager.updateAppWidget(appWidgetId, remoteView)
@@ -113,14 +117,14 @@ class DetailWidget() : AppWidgetProvider() {
         config.setLocale(sLocale)
     }
 
-    private fun makeRemoteViews(context: Context?): RemoteViews {
+    private fun makeRemoteViews(context: Context?, appWidgetId: Int): RemoteViews {
         val views = RemoteViews(context!!.packageName, R.layout.widget_detail_fixed)
 
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
             context,
             views,
             R.id.ll_sync,
-            WidgetUtils.getUpdateIntent(context, DetailWidget::class.java)
+            WidgetUtils.getUpdateIntent(context, className)
         )
 
         val mainActivityTargetViews = listOf(
@@ -130,26 +134,23 @@ class DetailWidget() : AppWidgetProvider() {
             R.id.iv_serenitea_pot,
             R.id.iv_warp
         )
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickActivityPendingIntent(
             context,
             views,
             mainActivityTargetViews,
             WidgetUtils.getMainActivityIntent(context)
         )
 
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickActivityPendingIntent(
             context,
             views,
             R.id.ll_disable,
-            WidgetUtils.getWidgetConfigActivityIntent(context)
+            WidgetUtils.getWidgetConfigActivityIntent(context, appWidgetId)
         )
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
         val awId = manager.getAppWidgetIds(
-            ComponentName(
-                context.applicationContext,
-                DetailWidget::class.java
-            )
+            ComponentName(context.applicationContext, className)
         )
 
         manager.updateAppWidget(awId, views)

@@ -116,7 +116,7 @@ class ZZZDetailWidget() : AppWidgetProvider() {
     private fun makeRemoteViews(context: Context?): RemoteViews {
         val views = RemoteViews(context!!.packageName, R.layout.widget_zzz_detail)
 
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
             context,
             views,
             R.id.ll_sync,
@@ -132,14 +132,14 @@ class ZZZDetailWidget() : AppWidgetProvider() {
             R.id.iv_ridu_weekly,
             R.id.iv_coffee,
         )
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickActivityPendingIntent(
             context,
             views,
             mainActivityTargetViews,
             WidgetUtils.getMainActivityIntent(context)
         )
 
-        WidgetUtils.setOnClickPendingIntentForWidget(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
             context,
             views,
             R.id.ll_disable,
