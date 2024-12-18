@@ -1,6 +1,5 @@
 package danggai.app.presentation.ui.widget
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -10,11 +9,11 @@ import android.view.View
 import android.widget.RemoteViews
 import android.widget.Toast
 import danggai.app.presentation.R
-import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.WidgetDesignUtils
+import danggai.app.presentation.util.WidgetUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.ResinWidgetDesignSettings
@@ -105,27 +104,25 @@ class ResinWidgetResizable() : AppWidgetProvider() {
         log.e()
         val views = RemoteViews(context!!.packageName, R.layout.widget_resin_resizable)
 
-        val intentUpdate = Intent(context, ResinWidgetResizable::class.java).apply {
-            action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
-        }
-        views.setOnClickPendingIntent(
+        WidgetUtils.setOnClickPendingIntentForWidget(
+            context,
+            views,
             R.id.ll_sync,
-            PendingIntent.getBroadcast(
-                context,
-                0,
-                intentUpdate,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-            )
+            WidgetUtils.getUpdateIntent(context, ResinWidgetResizable::class.java)
         )
 
-        val intentMainActivity = Intent(context, MainActivity::class.java)
-        views.setOnClickPendingIntent(
+        WidgetUtils.setOnClickPendingIntentForWidget(
+            context,
+            views,
             R.id.iv_resin,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+            WidgetUtils.getMainActivityIntent(context)
         )
-        views.setOnClickPendingIntent(
+
+        WidgetUtils.setOnClickPendingIntentForWidget(
+            context,
+            views,
             R.id.ll_disable,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+            WidgetUtils.getWidgetConfigActivityIntent(context)
         )
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)

@@ -1,6 +1,5 @@
 package danggai.app.presentation.ui.widget
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -10,12 +9,12 @@ import android.view.View
 import android.widget.RemoteViews
 import androidx.core.content.ContextCompat.getColor
 import danggai.app.presentation.R
-import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.CommonFunction.isDarkMode
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.WidgetDesignUtils
+import danggai.app.presentation.util.WidgetUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.DetailWidgetDesignSettings
@@ -117,21 +116,14 @@ class ZZZDetailWidget() : AppWidgetProvider() {
     private fun makeRemoteViews(context: Context?): RemoteViews {
         val views = RemoteViews(context!!.packageName, R.layout.widget_zzz_detail)
 
-        val intentUpdate = Intent(context, ZZZDetailWidget::class.java).apply {
-            action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
-        }
-        views.setOnClickPendingIntent(
+        WidgetUtils.setOnClickPendingIntentForWidget(
+            context,
+            views,
             R.id.ll_sync,
-            PendingIntent.getBroadcast(
-                context,
-                0,
-                intentUpdate,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-            )
+            WidgetUtils.getUpdateIntent(context, ZZZDetailWidget::class.java)
         )
 
-        val intentMainActivity = Intent(context, MainActivity::class.java)
-        listOf(
+        val mainActivityTargetViews = listOf(
             R.id.iv_battery,
             R.id.iv_engagement_today,
             R.id.iv_scratch_card,
@@ -139,17 +131,21 @@ class ZZZDetailWidget() : AppWidgetProvider() {
             R.id.iv_investigation_point,
             R.id.iv_ridu_weekly,
             R.id.iv_coffee,
-        ).forEach { viewId ->
-            views.setOnClickPendingIntent(
-                viewId,
-                PendingIntent.getActivity(
-                    context,
-                    0,
-                    intentMainActivity,
-                    PendingIntent.FLAG_IMMUTABLE
-                )
-            )
-        }
+        )
+        WidgetUtils.setOnClickPendingIntentForWidget(
+            context,
+            views,
+            mainActivityTargetViews,
+            WidgetUtils.getMainActivityIntent(context)
+        )
+
+        WidgetUtils.setOnClickPendingIntentForWidget(
+            context,
+            views,
+            R.id.ll_disable,
+            WidgetUtils.getWidgetConfigActivityIntent(context)
+        )
+
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
         val awId = manager.getAppWidgetIds(
             ComponentName(
