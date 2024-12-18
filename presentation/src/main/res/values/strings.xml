@@ -289,7 +289,7 @@
     <string name="hint_nickname_honkai_sr">Enter name of trailblazer!</string>
     <string name="hint_nickname_zzz">Enter name of proxy!</string>
 
-    <string name="invalid_user_info">You can\'t use it\nwithout user information!</string>
+    <string name="invalid_user_info">Click here to select a user account!</string>
 
     <string name="pioneer">Trailblazer</string>
     <string name="captain">Captain</string>

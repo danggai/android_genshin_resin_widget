@@ -280,7 +280,7 @@
     <string name="hint_nickname_honkai_sr">개척자의 이름을 적어 줘!</string>
     <string name="hint_nickname_zzz">로프꾼의 이름을 적어 줘!</string>
 
-    <string name="invalid_user_info">유저 정보 없이는\n사용할 수 없어!</string>
+    <string name="invalid_user_info">여기를 클릭해서 사용자 계정을 선택해주세요!</string>
 
     <string name="pioneer">개척자</string>
     <string name="captain">함장</string>
