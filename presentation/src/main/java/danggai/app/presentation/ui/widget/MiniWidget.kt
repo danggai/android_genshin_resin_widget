@@ -22,6 +22,10 @@ import danggai.domain.util.Constant
 
 class MiniWidget() : AppWidgetProvider() {
 
+    companion object {
+        val className = MiniWidget::class.java
+    }
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -42,7 +46,7 @@ class MiniWidget() : AppWidgetProvider() {
         super.onReceive(context, intent)
         val action = intent?.action
 
-        val thisWidget = ComponentName(context!!, MiniWidget::class.java)
+        val thisWidget = ComponentName(context!!, className)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
@@ -108,7 +112,7 @@ class MiniWidget() : AppWidgetProvider() {
             context,
             views,
             R.id.ll_sync,
-            WidgetUtils.getUpdateIntent(context, MiniWidget::class.java)
+            WidgetUtils.getUpdateIntent(context, className)
         )
 
         val mainActivityTargetViews = listOf(
@@ -135,7 +139,7 @@ class MiniWidget() : AppWidgetProvider() {
         val awId = manager.getAppWidgetIds(
             ComponentName(
                 context.applicationContext,
-                MiniWidget::class.java
+                className
             )
         )
 

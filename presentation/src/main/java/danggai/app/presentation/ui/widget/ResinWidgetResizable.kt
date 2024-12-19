@@ -26,6 +26,10 @@ import java.util.Date
 
 class ResinWidgetResizable() : AppWidgetProvider() {
 
+    companion object {
+        val className = ResinWidgetResizable::class.java
+    }
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -46,7 +50,7 @@ class ResinWidgetResizable() : AppWidgetProvider() {
         super.onReceive(context, intent)
         val action = intent?.action
 
-        val thisWidget = ComponentName(context!!, ResinWidgetResizable::class.java)
+        val thisWidget = ComponentName(context!!, className)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
@@ -108,7 +112,7 @@ class ResinWidgetResizable() : AppWidgetProvider() {
             context,
             views,
             R.id.ll_sync,
-            WidgetUtils.getUpdateIntent(context, ResinWidgetResizable::class.java)
+            WidgetUtils.getUpdateIntent(context, className)
         )
 
         WidgetUtils.setOnClickBroadcastPendingIntent(
@@ -129,7 +133,7 @@ class ResinWidgetResizable() : AppWidgetProvider() {
         val awId = manager.getAppWidgetIds(
             ComponentName(
                 context.applicationContext,
-                ResinWidgetResizable::class.java
+                className
             )
         )
 

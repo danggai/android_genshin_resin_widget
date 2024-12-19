@@ -28,6 +28,10 @@ import java.util.Locale
 
 class ZZZDetailWidget() : AppWidgetProvider() {
 
+    companion object {
+        val className = ZZZDetailWidget::class.java
+    }
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -50,7 +54,7 @@ class ZZZDetailWidget() : AppWidgetProvider() {
         super.onReceive(context, intent)
         val action = intent?.action
 
-        val thisWidget = ComponentName(context!!, ZZZDetailWidget::class.java)
+        val thisWidget = ComponentName(context!!, className)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
@@ -120,7 +124,7 @@ class ZZZDetailWidget() : AppWidgetProvider() {
             context,
             views,
             R.id.ll_sync,
-            WidgetUtils.getUpdateIntent(context, ZZZDetailWidget::class.java)
+            WidgetUtils.getUpdateIntent(context, className)
         )
 
         val mainActivityTargetViews = listOf(
@@ -150,7 +154,7 @@ class ZZZDetailWidget() : AppWidgetProvider() {
         val awId = manager.getAppWidgetIds(
             ComponentName(
                 context.applicationContext,
-                ZZZDetailWidget::class.java
+                className
             )
         )
 

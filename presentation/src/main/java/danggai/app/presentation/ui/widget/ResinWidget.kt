@@ -25,6 +25,10 @@ import java.util.Date
 
 class ResinWidget() : AppWidgetProvider() {
 
+    companion object {
+        val className = ResinWidget::class.java
+    }
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -45,7 +49,7 @@ class ResinWidget() : AppWidgetProvider() {
         super.onReceive(context, intent)
         val action = intent?.action
 
-        val thisWidget = ComponentName(context!!, ResinWidget::class.java)
+        val thisWidget = ComponentName(context!!, className)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
@@ -101,7 +105,7 @@ class ResinWidget() : AppWidgetProvider() {
             context,
             views,
             R.id.ll_sync,
-            WidgetUtils.getUpdateIntent(context, ResinWidget::class.java)
+            WidgetUtils.getUpdateIntent(context, className)
         )
 
         WidgetUtils.setOnClickBroadcastPendingIntent(
@@ -122,7 +126,7 @@ class ResinWidget() : AppWidgetProvider() {
         val awId = manager.getAppWidgetIds(
             ComponentName(
                 context.applicationContext,
-                ResinWidget::class.java
+                className
             )
         )
 

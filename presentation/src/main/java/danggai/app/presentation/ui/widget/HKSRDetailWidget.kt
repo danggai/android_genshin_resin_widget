@@ -28,6 +28,10 @@ import java.util.Locale
 
 class HKSRDetailWidget() : AppWidgetProvider() {
 
+    companion object {
+        val className = HKSRDetailWidget::class.java
+    }
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -50,7 +54,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
         super.onReceive(context, intent)
         val action = intent?.action
 
-        val thisWidget = ComponentName(context!!, HKSRDetailWidget::class.java)
+        val thisWidget = ComponentName(context!!, className)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
@@ -120,7 +124,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
             context,
             views,
             R.id.ll_sync,
-            WidgetUtils.getUpdateIntent(context, HKSRDetailWidget::class.java)
+            WidgetUtils.getUpdateIntent(context, className)
         )
 
         val mainActivityTargetViews = listOf(
@@ -148,7 +152,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
         val awId = manager.getAppWidgetIds(
             ComponentName(
                 context.applicationContext,
-                HKSRDetailWidget::class.java
+                className
             )
         )
 

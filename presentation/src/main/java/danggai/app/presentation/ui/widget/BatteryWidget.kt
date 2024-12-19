@@ -25,6 +25,10 @@ import java.util.Date
 
 class BatteryWidget() : AppWidgetProvider() {
 
+    companion object {
+        val className = BatteryWidget::class.java
+    }
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -45,7 +49,7 @@ class BatteryWidget() : AppWidgetProvider() {
         super.onReceive(context, intent)
         val action = intent?.action
 
-        val thisWidget = ComponentName(context!!, BatteryWidget::class.java)
+        val thisWidget = ComponentName(context!!, className)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
@@ -101,7 +105,7 @@ class BatteryWidget() : AppWidgetProvider() {
             context,
             views,
             R.id.ll_sync,
-            WidgetUtils.getUpdateIntent(context, BatteryWidget::class.java)
+            WidgetUtils.getUpdateIntent(context, className)
         )
 
         WidgetUtils.setOnClickBroadcastPendingIntent(
@@ -122,7 +126,7 @@ class BatteryWidget() : AppWidgetProvider() {
         val awId = manager.getAppWidgetIds(
             ComponentName(
                 context.applicationContext,
-                BatteryWidget::class.java
+                className
             )
         )
 
