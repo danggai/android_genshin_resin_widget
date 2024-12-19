@@ -31,7 +31,7 @@ class MiniWidget() : AppWidgetProvider() {
 
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
-            val remoteView: RemoteViews = makeRemoteViews(context)
+            val remoteView: RemoteViews = makeRemoteViews(context, appWidgetId)
             syncView(appWidgetId, remoteView, context)
 
             appWidgetManager.updateAppWidget(appWidgetId, remoteView)
@@ -101,7 +101,7 @@ class MiniWidget() : AppWidgetProvider() {
         }
     }
 
-    private fun makeRemoteViews(context: Context?): RemoteViews {
+    private fun makeRemoteViews(context: Context?, appWidgetId: Int): RemoteViews {
         val views = RemoteViews(context!!.packageName, R.layout.widget_mini)
 
         WidgetUtils.setOnClickBroadcastPendingIntent(
@@ -128,7 +128,7 @@ class MiniWidget() : AppWidgetProvider() {
             context,
             views,
             R.id.ll_disable,
-            WidgetUtils.getWidgetConfigActivityIntent(context)
+            WidgetUtils.getWidgetConfigActivityIntent(context, appWidgetId)
         )
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)

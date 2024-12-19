@@ -77,11 +77,6 @@ object WidgetUtils {
 
     fun getMainActivityIntent(context: Context) = Intent(context, MainActivity::class.java)
 
-    fun getWidgetConfigActivityIntent(context: Context) =
-        Intent(context, WidgetConfigActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        }
-
     fun getWidgetConfigActivityIntent(
         context: Context,
         appWidgetId: Int
