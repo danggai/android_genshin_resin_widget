@@ -34,7 +34,7 @@ class WidgetDesignViewModel @Inject constructor(
     private val characters: CharacterUseCase
 ) : BaseViewModel() {
     val sfApplySavedData = MutableSharedFlow<Boolean>()
-    val sfAddWidget = MutableSharedFlow<Int>()
+    val sfAddWidget = MutableSharedFlow<Preview>()
     val sfStartSelectFragment = MutableSharedFlow<Boolean>()
     val sfFinishSelectFragment = MutableSharedFlow<Boolean>()
 
@@ -323,7 +323,7 @@ class WidgetDesignViewModel @Inject constructor(
 
         viewModelScope.launch {
             delay(100L)
-            sfAddWidget.emitInVmScope(0)
+            sfAddWidget.emitInVmScope(sfSelectedPreview.value)
         }
     }
 

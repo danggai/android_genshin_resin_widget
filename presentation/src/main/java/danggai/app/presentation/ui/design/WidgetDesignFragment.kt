@@ -26,12 +26,19 @@ import danggai.app.presentation.ui.design.charaters.WidgetDesignCharacterFragmen
 import danggai.app.presentation.ui.design.charaters.select.WidgetDesignSelectCharacterFragment
 import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
 import danggai.app.presentation.ui.design.resin.WidgetDesignResinFragment
+import danggai.app.presentation.ui.widget.BatteryWidget
 import danggai.app.presentation.ui.widget.DetailWidget
+import danggai.app.presentation.ui.widget.HKSRDetailWidget
+import danggai.app.presentation.ui.widget.ResinWidget
 import danggai.app.presentation.ui.widget.TalentWidget
+import danggai.app.presentation.ui.widget.TrailPowerWidget
+import danggai.app.presentation.ui.widget.ZZZDetailWidget
 import danggai.app.presentation.ui.widget.config.WidgetPinnedReceiver
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.log
+import danggai.domain.local.DesignTabType
+import danggai.domain.local.Preview
 import danggai.domain.util.Constant
 import kotlinx.coroutines.launch
 
@@ -172,11 +179,29 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
             }
 
             launch {
-                mVM.sfAddWidget.collect { widgetId ->
+                mVM.sfAddWidget.collect { preview ->
                     val context = requireContext()
-                    val widgetClass = DetailWidget::class.java
+                    val designTab = DesignTabType.fromPosition(binding.vpMain.currentItem)
 
-                    requestPinWidget(context, widgetClass)
+                    // 위젯 매핑 테이블 (디자인 탭 + 프리뷰에 따른 위젯 매핑)
+                    val widgetMap = mapOf(
+                        DesignTabType.STAMINA to mapOf(
+                            Preview.GENSHIN to ResinWidget::class.java,
+                            Preview.STARRAIL to TrailPowerWidget::class.java,
+                            Preview.ZZZ to BatteryWidget::class.java
+                        ),
+                        DesignTabType.DETAIL to mapOf(
+                            Preview.GENSHIN to DetailWidget::class.java,
+                            Preview.STARRAIL to HKSRDetailWidget::class.java,
+                            Preview.ZZZ to ZZZDetailWidget::class.java
+                        )
+                    )
+
+                    val widgetClass = widgetMap[designTab]?.get(preview)
+
+
+                    if (widgetClass !== null)
+                        requestPinWidget(context, widgetClass)
                 }
             }
 
