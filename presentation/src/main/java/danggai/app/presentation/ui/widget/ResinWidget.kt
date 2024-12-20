@@ -115,7 +115,7 @@ class ResinWidget() : AppWidgetProvider() {
             WidgetUtils.getMainActivityIntent(context)
         )
 
-        WidgetUtils.setOnClickBroadcastPendingIntent(
+        WidgetUtils.setOnClickActivityPendingIntent(
             context,
             views,
             R.id.ll_disable,
