@@ -74,20 +74,23 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
 
     private fun initTabLayout() {
         val pagerAdapter = WidgetDesignAdapter(requireActivity()).apply {
-            addFragment(WidgetDesignResinFragment())
-            addFragment(WidgetDesignDetailFragment())
-            addFragment(WidgetDesignCharacterFragment())
+            DesignTabType.values()
+                .sortedBy { it.position } // position 기준으로 정렬
+                .forEach { tabType ->
+                    when (tabType) {
+                        DesignTabType.STAMINA -> addFragment(WidgetDesignResinFragment())
+                        DesignTabType.DETAIL -> addFragment(WidgetDesignDetailFragment())
+                        DesignTabType.TALENT -> addFragment(WidgetDesignCharacterFragment())
+                        DesignTabType.UNKNOWN -> { /* 아무것도 하지 않음 */
+                        }
+                    }
+                }
         }
 
         binding.vpMain.adapter = pagerAdapter
 
         TabLayoutMediator(binding.tlTop, binding.vpMain) { tab, position ->
-            tab.text = when (position) {
-                0 -> "Stamina\u00A0"
-                1 -> "Detail\u00A0"
-                2 -> "Talent\u00A0"
-                else -> ""
-            }
+            tab.text = DesignTabType.fromPosition(position).title
         }.attach()
     }
 
