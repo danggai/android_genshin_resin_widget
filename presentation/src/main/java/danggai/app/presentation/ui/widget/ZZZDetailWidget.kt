@@ -1,6 +1,5 @@
 package danggai.app.presentation.ui.widget
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -10,12 +9,12 @@ import android.view.View
 import android.widget.RemoteViews
 import androidx.core.content.ContextCompat.getColor
 import danggai.app.presentation.R
-import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.CommonFunction.isDarkMode
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.WidgetDesignUtils
+import danggai.app.presentation.util.WidgetUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.DetailWidgetDesignSettings
@@ -29,6 +28,10 @@ import java.util.Locale
 
 class ZZZDetailWidget() : AppWidgetProvider() {
 
+    companion object {
+        val className = ZZZDetailWidget::class.java
+    }
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -40,7 +43,7 @@ class ZZZDetailWidget() : AppWidgetProvider() {
 
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
-            val remoteView: RemoteViews = makeRemoteViews(context)
+            val remoteView: RemoteViews = makeRemoteViews(context, appWidgetId)
 
             syncView(appWidgetId, remoteView, context)
             appWidgetManager.updateAppWidget(appWidgetId, remoteView)
@@ -51,7 +54,7 @@ class ZZZDetailWidget() : AppWidgetProvider() {
         super.onReceive(context, intent)
         val action = intent?.action
 
-        val thisWidget = ComponentName(context!!, ZZZDetailWidget::class.java)
+        val thisWidget = ComponentName(context!!, className)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
@@ -114,24 +117,17 @@ class ZZZDetailWidget() : AppWidgetProvider() {
         config.setLocale(sLocale)
     }
 
-    private fun makeRemoteViews(context: Context?): RemoteViews {
+    private fun makeRemoteViews(context: Context?, appWidgetId: Int): RemoteViews {
         val views = RemoteViews(context!!.packageName, R.layout.widget_zzz_detail)
 
-        val intentUpdate = Intent(context, ZZZDetailWidget::class.java).apply {
-            action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
-        }
-        views.setOnClickPendingIntent(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
+            context,
+            views,
             R.id.ll_sync,
-            PendingIntent.getBroadcast(
-                context,
-                0,
-                intentUpdate,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-            )
+            WidgetUtils.getUpdateIntent(context, className)
         )
 
-        val intentMainActivity = Intent(context, MainActivity::class.java)
-        listOf(
+        val mainActivityTargetViews = listOf(
             R.id.iv_battery,
             R.id.iv_engagement_today,
             R.id.iv_scratch_card,
@@ -139,22 +135,26 @@ class ZZZDetailWidget() : AppWidgetProvider() {
             R.id.iv_investigation_point,
             R.id.iv_ridu_weekly,
             R.id.iv_coffee,
-        ).forEach { viewId ->
-            views.setOnClickPendingIntent(
-                viewId,
-                PendingIntent.getActivity(
-                    context,
-                    0,
-                    intentMainActivity,
-                    PendingIntent.FLAG_IMMUTABLE
-                )
-            )
-        }
+        )
+        WidgetUtils.setOnClickActivityPendingIntent(
+            context,
+            views,
+            mainActivityTargetViews,
+            WidgetUtils.getMainActivityIntent(context)
+        )
+
+        WidgetUtils.setOnClickActivityPendingIntent(
+            context,
+            views,
+            R.id.ll_disable,
+            WidgetUtils.getWidgetConfigActivityIntent(context, appWidgetId)
+        )
+
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
         val awId = manager.getAppWidgetIds(
             ComponentName(
                 context.applicationContext,
-                ZZZDetailWidget::class.java
+                className
             )
         )
 
@@ -250,10 +250,10 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_ridu_weekly,
-                    if (dailyNote.weeklyTask.curPoint == dailyNote.weeklyTask.maxPoint) {
+                    if ((dailyNote.weeklyTask?.curPoint == dailyNote.weeklyTask?.maxPoint) && dailyNote.weeklyTask !== null) {
                         _context.getString(R.string.done)
                     } else {
-                        "${dailyNote.weeklyTask.curPoint}/${dailyNote.weeklyTask.maxPoint}"
+                        "${dailyNote.weeklyTask?.curPoint ?: "?"}/${dailyNote.weeklyTask?.maxPoint ?: "?"}"
                     }
                 )
 
@@ -263,10 +263,10 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                 )
                 view.setTextViewText(
                     R.id.tv_investigation_point,
-                    if (dailyNote.surveyPoints.num == dailyNote.surveyPoints.total) {
+                    if ((dailyNote.surveyPoints?.num == dailyNote.surveyPoints?.total) && dailyNote.surveyPoints !== null) {
                         _context.getString(R.string.done)
                     } else {
-                        "${dailyNote.surveyPoints.num}/${dailyNote.surveyPoints.total}"
+                        "${dailyNote.surveyPoints?.num ?: "?"}/${dailyNote.surveyPoints?.total ?: "?"}"
                     }
                 )
 

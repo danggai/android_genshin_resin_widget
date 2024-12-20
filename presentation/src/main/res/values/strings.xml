@@ -44,6 +44,7 @@
     <string name="save">Save</string>
     <string name="ok">OK</string>
     <string name="reset">RESET</string>
+    <string name="save_add">Save and add widgets</string>
 
     <string name="no_hoyolab_accounts">No HoYoLab account registered.</string>
     <string name="get_cookie">Click here after Login!</string>
@@ -112,6 +113,9 @@
     <string name="sns_account">SNS Account</string>
 
     <string name="data_save_mode_not_supported">Data saving mode is not supported under Android 7.</string>
+
+    <string name="msg_toast_widget_pin_not_supported">The launcher does not support widget pinning.</string>
+    <string name="msg_toast_widget_pin_supports_android_8">This feature is supported on Android 8.0 and above.</string>
 
     <string name="dialog_title_permission">Allowing permission</string>
     <string name="dialog_msg_permission_storage">When customizing widget, storage permission is required to proceed with the design by substituting it into the wallpaper you actually use.\n\nYou can use the app even if you reject the permission.</string>
@@ -285,7 +289,7 @@
     <string name="hint_nickname_honkai_sr">Enter name of trailblazer!</string>
     <string name="hint_nickname_zzz">Enter name of proxy!</string>
 
-    <string name="invalid_user_info">You can\'t use it\nwithout user information!</string>
+    <string name="invalid_user_info">Click here to select a user account!</string>
 
     <string name="pioneer">Trailblazer</string>
     <string name="captain">Captain</string>
