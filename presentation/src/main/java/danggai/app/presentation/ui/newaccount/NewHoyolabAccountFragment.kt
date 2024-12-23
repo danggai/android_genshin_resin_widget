@@ -11,13 +11,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentNewHoyolabAccountBinding
+import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.cookie.CookieWebViewActivity
 import danggai.app.presentation.util.Event
 import danggai.app.presentation.util.log
+import danggai.app.presentation.worker.CheckInWorker
 import danggai.domain.util.Constant
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class NewHoyolabAccountFragment : BindingFragment<FragmentNewHoyolabAccountBinding, NewHoyolabAccountViewModel>() {
+class NewHoyolabAccountFragment :
+    BindingFragment<FragmentNewHoyolabAccountBinding, NewHoyolabAccountViewModel>() {
 
     companion object {
         val TAG: String = NewHoyolabAccountFragment::class.java.simpleName
@@ -39,6 +43,8 @@ class NewHoyolabAccountFragment : BindingFragment<FragmentNewHoyolabAccountBindi
         activity?.intent?.getStringExtra(NewHoyolabAccountActivity.ARG_PARAM_UID)?.let { uid ->
             mVM.selectAccountByUid(uid)
         }
+
+        initSf()
     }
 
     fun onNewIntent(intent: Intent?) {
@@ -50,6 +56,18 @@ class NewHoyolabAccountFragment : BindingFragment<FragmentNewHoyolabAccountBindi
                 mVM.onClickGetUid()
             } catch (e: Exception) {
                 log.e(e.toString())
+            }
+        }
+    }
+
+    private fun initSf() {
+        viewLifecycleOwner.repeatOnLifeCycleStarted {
+            launch {
+                activity?.let { act ->
+                    mVM.sfStartCheckInWorker.collect { boolean ->
+                        CheckInWorker.startWorkerOneTimeImmediately(act.applicationContext)
+                    }
+                }
             }
         }
     }
@@ -70,13 +88,17 @@ class NewHoyolabAccountFragment : BindingFragment<FragmentNewHoyolabAccountBindi
                         }
                         .setNegativeButton(R.string.sns_account) { dialog, whichButton ->
                             log.e()
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constant.HOW_CAN_I_GET_COOKIE_URL))
+                            val intent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(Constant.HOW_CAN_I_GET_COOKIE_URL)
+                            )
                             startActivity(intent)
                         }
                         .create()
                         .show()
                 }
             }
+
             is Event.WhenDailyNoteIsPrivate -> {
                 activity?.let {
                     log.e()
@@ -102,12 +124,16 @@ class NewHoyolabAccountFragment : BindingFragment<FragmentNewHoyolabAccountBindi
                         }
                         .setNegativeButton(R.string.cancel) { dialog, whichButton ->
                             log.e()
-                            makeToast(requireContext(), getString(R.string.msg_toast_dailynote_error_data_not_public))
+                            makeToast(
+                                requireContext(),
+                                getString(R.string.msg_toast_dailynote_error_data_not_public)
+                            )
                         }
                         .create()
                         .show()
                 }
             }
+
             else -> {}
         }
     }

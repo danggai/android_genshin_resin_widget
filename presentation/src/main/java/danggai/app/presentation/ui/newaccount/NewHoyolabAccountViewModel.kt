@@ -18,6 +18,7 @@ import danggai.domain.resource.repository.ResourceProviderRepository
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,6 +31,8 @@ class NewHoyolabAccountViewModel @Inject constructor(
     private val changeDataSwitch: ChangeDataSwitchUseCase,
     private val dailyNote: DailyNoteUseCase,
 ) : BaseViewModel() {
+    val sfStartCheckInWorker = MutableSharedFlow<Boolean>()
+
     val sfProgress = MutableStateFlow(false)
 
     val sfGenshinServer = MutableStateFlow(Server.ASIA)
@@ -553,6 +556,11 @@ class NewHoyolabAccountViewModel @Inject constructor(
         viewModelScope.launch {
             accountDao.insertAccount(account).collect {
                 log.e()
+
+                if (sfEnableStartCheckIn.value) {
+                    sfStartCheckInWorker.emitInVmScope(true)
+                }
+
                 sendEvent(Event.FinishThisActivity())
             }
         }
