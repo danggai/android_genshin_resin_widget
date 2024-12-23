@@ -122,12 +122,8 @@
             android:visibility="gone">
 
             <TextView
-                style="@style/TextView"
                 android:id="@+id/tv_disable"
-                android:textSize="12sp"
-                android:textColor="@color/widget_font_main"
-                android:gravity="center"
-                android:maxLines="2"
+                style="@style/TextViewDisabled"
                 android:text="@string/invalid_user_info" />
 
         </LinearLayout>

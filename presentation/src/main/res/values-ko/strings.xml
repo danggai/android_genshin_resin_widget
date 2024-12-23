@@ -43,6 +43,7 @@
     <string name="save">저장</string>
     <string name="ok">확인</string>
     <string name="reset">초기화</string>
+    <string name="save_add">저장하고 위젯 추가하기</string>
 
     <string name="no_hoyolab_accounts">등록 된 호요랩 계정이 없습니다.</string>
     <string name="get_cookie">로그인 후 여기를 눌러주세요!</string>
@@ -105,6 +106,9 @@
     <string name="sns_account">SNS 계정</string>
 
     <string name="data_save_mode_not_supported">Android7 미만에서는 데이터 절약 모드를 지원하지 않습니다.</string>
+
+    <string name="msg_toast_widget_pin_not_supported">런처가 위젯 고정 기능을 지원하지 않습니다.</string>
+    <string name="msg_toast_widget_pin_supports_android_8">Android 8.0 이상에서 지원되는 기능입니다.</string>
 
     <string name="dialog_title_permission">권한 허용하기</string>
     <string name="dialog_msg_permission_storage">위젯 커스텀 중, 실제로 사용하는 배경화면에 대입하여 디자인을 진행하기 위해 저장소 권한이 필요합니다.\n\n권한을 거부하여도 앱 사용이 가능합니다.</string>
@@ -276,7 +280,7 @@
     <string name="hint_nickname_honkai_sr">개척자의 이름을 적어 줘!</string>
     <string name="hint_nickname_zzz">로프꾼의 이름을 적어 줘!</string>
 
-    <string name="invalid_user_info">유저 정보 없이는\n사용할 수 없어!</string>
+    <string name="invalid_user_info">여기를 클릭해서 사용자 계정을 선택해주세요!</string>
 
     <string name="pioneer">개척자</string>
     <string name="captain">함장</string>

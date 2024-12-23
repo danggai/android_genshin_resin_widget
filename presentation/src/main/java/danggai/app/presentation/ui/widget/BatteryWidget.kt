@@ -1,6 +1,5 @@
 package danggai.app.presentation.ui.widget
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -9,11 +8,11 @@ import android.content.Intent
 import android.view.View
 import android.widget.RemoteViews
 import danggai.app.presentation.R
-import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.WidgetDesignUtils
+import danggai.app.presentation.util.WidgetUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.ResinWidgetDesignSettings
@@ -26,6 +25,10 @@ import java.util.Date
 
 class BatteryWidget() : AppWidgetProvider() {
 
+    companion object {
+        val className = BatteryWidget::class.java
+    }
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -35,7 +38,7 @@ class BatteryWidget() : AppWidgetProvider() {
 
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
-            val remoteView: RemoteViews = makeRemoteViews(context)
+            val remoteView: RemoteViews = makeRemoteViews(context, appWidgetId)
             syncView(appWidgetId, remoteView, context)
 
             appWidgetManager.updateAppWidget(appWidgetId, remoteView)
@@ -46,7 +49,7 @@ class BatteryWidget() : AppWidgetProvider() {
         super.onReceive(context, intent)
         val action = intent?.action
 
-        val thisWidget = ComponentName(context!!, BatteryWidget::class.java)
+        val thisWidget = ComponentName(context!!, className)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
@@ -94,48 +97,36 @@ class BatteryWidget() : AppWidgetProvider() {
         }
     }
 
-    private fun makeRemoteViews(context: Context?): RemoteViews {
+    private fun makeRemoteViews(context: Context?, appWidgetId: Int): RemoteViews {
         log.e()
         val views = RemoteViews(context!!.packageName, R.layout.widget_battery)
 
-        val intentUpdate = Intent(context, BatteryWidget::class.java).apply {
-            action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
-        }
-        views.setOnClickPendingIntent(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
+            context,
+            views,
             R.id.ll_sync,
-            PendingIntent.getBroadcast(
-                context,
-                0,
-                intentUpdate,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-            )
+            WidgetUtils.getUpdateIntent(context, className)
         )
 
-        val intentMainActivity = Intent(context, MainActivity::class.java)
-        views.setOnClickPendingIntent(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
+            context,
+            views,
             R.id.iv_battery,
-            PendingIntent.getActivity(
-                context,
-                0,
-                intentMainActivity,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-            )
+            WidgetUtils.getMainActivityIntent(context)
         )
-        views.setOnClickPendingIntent(
+
+        WidgetUtils.setOnClickActivityPendingIntent(
+            context,
+            views,
             R.id.ll_disable,
-            PendingIntent.getActivity(
-                context,
-                0,
-                intentMainActivity,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-            )
+            WidgetUtils.getWidgetConfigActivityIntent(context, appWidgetId)
         )
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
         val awId = manager.getAppWidgetIds(
             ComponentName(
                 context.applicationContext,
-                BatteryWidget::class.java
+                className
             )
         )
 

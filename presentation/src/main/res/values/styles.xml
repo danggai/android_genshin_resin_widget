@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="RadioGroup">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -59,6 +60,13 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:letterSpacing">-0.04</item>
         <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="TextViewDisabled" parent="TextView">
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">5</item>
+        <item name="android:textColor">@color/widget_font_main</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="SmallMaterialButton">

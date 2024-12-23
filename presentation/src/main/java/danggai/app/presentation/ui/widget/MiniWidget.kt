@@ -1,6 +1,5 @@
 package danggai.app.presentation.ui.widget
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -9,11 +8,11 @@ import android.content.Intent
 import android.view.View
 import android.widget.RemoteViews
 import danggai.app.presentation.R
-import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.WidgetDesignUtils
+import danggai.app.presentation.util.WidgetUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.ResinWidgetDesignSettings
@@ -22,6 +21,10 @@ import danggai.domain.util.Constant
 
 
 class MiniWidget() : AppWidgetProvider() {
+
+    companion object {
+        val className = MiniWidget::class.java
+    }
 
     override fun onUpdate(
         context: Context,
@@ -32,7 +35,7 @@ class MiniWidget() : AppWidgetProvider() {
 
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
-            val remoteView: RemoteViews = makeRemoteViews(context)
+            val remoteView: RemoteViews = makeRemoteViews(context, appWidgetId)
             syncView(appWidgetId, remoteView, context)
 
             appWidgetManager.updateAppWidget(appWidgetId, remoteView)
@@ -43,7 +46,7 @@ class MiniWidget() : AppWidgetProvider() {
         super.onReceive(context, intent)
         val action = intent?.action
 
-        val thisWidget = ComponentName(context!!, MiniWidget::class.java)
+        val thisWidget = ComponentName(context!!, className)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
@@ -102,45 +105,41 @@ class MiniWidget() : AppWidgetProvider() {
         }
     }
 
-    private fun makeRemoteViews(context: Context?): RemoteViews {
+    private fun makeRemoteViews(context: Context?, appWidgetId: Int): RemoteViews {
         val views = RemoteViews(context!!.packageName, R.layout.widget_mini)
 
-        val intentUpdate = Intent(context, MiniWidget::class.java).apply {
-            action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
-        }
-        views.setOnClickPendingIntent(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
+            context,
+            views,
             R.id.ll_sync,
-            PendingIntent.getBroadcast(
-                context,
-                0,
-                intentUpdate,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-            )
+            WidgetUtils.getUpdateIntent(context, className)
         )
 
-        val intentMainActivity = Intent(context, MainActivity::class.java)
-        views.setOnClickPendingIntent(
+        val mainActivityTargetViews = listOf(
             R.id.iv_resin,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
-        )
-        views.setOnClickPendingIntent(
             R.id.iv_transformer,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
-        )
-        views.setOnClickPendingIntent(
             R.id.tv_realm_currency,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+            R.id.ll_disable
         )
-        views.setOnClickPendingIntent(
+        WidgetUtils.setOnClickActivityPendingIntent(
+            context,
+            views,
+            mainActivityTargetViews,
+            WidgetUtils.getMainActivityIntent(context)
+        )
+
+        WidgetUtils.setOnClickActivityPendingIntent(
+            context,
+            views,
             R.id.ll_disable,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+            WidgetUtils.getWidgetConfigActivityIntent(context, appWidgetId)
         )
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
         val awId = manager.getAppWidgetIds(
             ComponentName(
                 context.applicationContext,
-                MiniWidget::class.java
+                className
             )
         )
 

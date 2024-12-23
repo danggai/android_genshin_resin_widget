@@ -219,6 +219,14 @@
 
         </receiver>
 
+        <receiver
+            android:name="danggai.app.presentation.ui.widget.config.WidgetPinnedReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="danggai.app.resinwidget.PINNED_WIDGET" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name="danggai.app.presentation.service.TalentWidgetItemService"
             android:enabled="true"

@@ -1,6 +1,5 @@
 package danggai.app.presentation.ui.widget
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -10,12 +9,12 @@ import android.view.View
 import android.widget.RemoteViews
 import androidx.core.content.ContextCompat.getColor
 import danggai.app.presentation.R
-import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.CommonFunction.isDarkMode
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.WidgetDesignUtils
+import danggai.app.presentation.util.WidgetUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.DetailWidgetDesignSettings
@@ -29,6 +28,10 @@ import java.util.Locale
 
 class DetailWidget() : AppWidgetProvider() {
 
+    companion object {
+        val className = DetailWidget::class.java
+    }
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -40,7 +43,7 @@ class DetailWidget() : AppWidgetProvider() {
 
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
-            val remoteView: RemoteViews = makeRemoteViews(context)
+            val remoteView: RemoteViews = makeRemoteViews(context, appWidgetId)
 
             syncView(appWidgetId, remoteView, context)
             appWidgetManager.updateAppWidget(appWidgetId, remoteView)
@@ -114,54 +117,40 @@ class DetailWidget() : AppWidgetProvider() {
         config.setLocale(sLocale)
     }
 
-    private fun makeRemoteViews(context: Context?): RemoteViews {
+    private fun makeRemoteViews(context: Context?, appWidgetId: Int): RemoteViews {
         val views = RemoteViews(context!!.packageName, R.layout.widget_detail_fixed)
 
-        val intentUpdate = Intent(context, DetailWidget::class.java).apply {
-            action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
-        }
-        views.setOnClickPendingIntent(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
+            context,
+            views,
             R.id.ll_sync,
-            PendingIntent.getBroadcast(
-                context,
-                0,
-                intentUpdate,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-            )
+            WidgetUtils.getUpdateIntent(context, className)
         )
 
-        val intentMainActivity = Intent(context, MainActivity::class.java)
-        views.setOnClickPendingIntent(
+        val mainActivityTargetViews = listOf(
             R.id.iv_resin,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
-        )
-        views.setOnClickPendingIntent(
             R.id.iv_daily_commission,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
-        )
-        views.setOnClickPendingIntent(
             R.id.iv_domain,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
-        )
-        views.setOnClickPendingIntent(
             R.id.iv_serenitea_pot,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+            R.id.iv_warp
         )
-        views.setOnClickPendingIntent(
-            R.id.iv_warp,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+        WidgetUtils.setOnClickActivityPendingIntent(
+            context,
+            views,
+            mainActivityTargetViews,
+            WidgetUtils.getMainActivityIntent(context)
         )
-        views.setOnClickPendingIntent(
+
+        WidgetUtils.setOnClickActivityPendingIntent(
+            context,
+            views,
             R.id.ll_disable,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+            WidgetUtils.getWidgetConfigActivityIntent(context, appWidgetId)
         )
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
         val awId = manager.getAppWidgetIds(
-            ComponentName(
-                context.applicationContext,
-                DetailWidget::class.java
-            )
+            ComponentName(context.applicationContext, className)
         )
 
         manager.updateAppWidget(awId, views)
