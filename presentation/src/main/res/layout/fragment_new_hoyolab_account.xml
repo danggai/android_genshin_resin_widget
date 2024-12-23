@@ -707,11 +707,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="15dp" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:layout_width="wrap_content"
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/save"
-                        android:onClick="@{()->vm.onClickSave()}" />
+                        android:gravity="center">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/save"
+                            android:onClick="@{()->vm.onClickSave()}" />
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            style="@style/Checkbox"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/cb_enable_auto_checkin_start"
+                            android:checked="@={vm.sfEnableStartCheckIn}"
+                            android:text="@string/btn_start_check_in" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <android.widget.Space
                         android:layout_width="wrap_content"

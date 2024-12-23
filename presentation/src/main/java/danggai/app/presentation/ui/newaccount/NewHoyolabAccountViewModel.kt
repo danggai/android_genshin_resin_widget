@@ -53,6 +53,8 @@ class NewHoyolabAccountViewModel @Inject constructor(
     val sfEnableHonkaiSrAutoCheckIn = MutableStateFlow(false)
     val sfEnableZZZAutoCheckIn = MutableStateFlow(false)
 
+    val sfEnableStartCheckIn = MutableStateFlow(true)
+
     private var _dailyNotePrivateErrorCount = 0
     val dailyNotePrivateErrorCount
         get() = _dailyNotePrivateErrorCount
@@ -675,17 +677,17 @@ class NewHoyolabAccountViewModel @Inject constructor(
                 sfHoyolabCookie.value = account.cookie
                 sfGenshinUid.value = account.genshin_uid
                 sfGenshinNickname.value = account.nickname
-                sfGenshinServer.value = Server.fromValue(account.server)?:Server.ASIA
+                sfGenshinServer.value = Server.fromValue(account.server) ?: Server.ASIA
                 sfNoGenshinAccount.value = account.genshin_uid.contains("-")
 
                 sfHonkaiSrUid.value = account.honkai_sr_uid
                 sfHonkaiSrNickname.value = account.honkai_sr_nickname
-                sfHonkaiSrServer.value = Server.fromValue(account.honkai_sr_server)?:Server.ASIA
+                sfHonkaiSrServer.value = Server.fromValue(account.honkai_sr_server) ?: Server.ASIA
                 sfNoHonkaiSrAccount.value = account.honkai_sr_uid.isEmpty()
 
                 sfZZZUid.value = account.zzz_uid
                 sfZZZNickname.value = account.zzz_nickname
-                sfZZZServer.value = Server.fromValue(account.zzz_server)?:Server.ASIA
+                sfZZZServer.value = Server.fromValue(account.zzz_server) ?: Server.ASIA
                 sfNoZZZAccount.value = account.zzz_uid.isEmpty()
 
                 sfEnableGenshinAutoCheckIn.value = account.enable_genshin_checkin
