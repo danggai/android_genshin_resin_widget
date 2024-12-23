@@ -696,6 +696,9 @@ class NewHoyolabAccountViewModel @Inject constructor(
                 sfEnableZZZAutoCheckIn.value = account.enable_zzz_checkin
 
                 if (account.genshin_uid.contains("-")) sfNoGenshinAccount.value = true
+
+                // 기존 계정 존재 시 자동 체크인 기본 비활성화
+                sfEnableStartCheckIn.value = false
             }
         }
     }
