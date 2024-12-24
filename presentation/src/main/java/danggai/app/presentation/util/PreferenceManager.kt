@@ -92,11 +92,12 @@ object PreferenceManager {
      */
     fun getString(context: Context, key: String?): String {
         val prefs = getPreferences(context)
-        return prefs.getString(key, DEFAULT_VALUE_STRING)?: DEFAULT_VALUE_STRING
+        return prefs.getString(key, DEFAULT_VALUE_STRING) ?: DEFAULT_VALUE_STRING
     }
+
     fun getString(context: Context, key: String?, default: String): String {
         val prefs = getPreferences(context)
-        return prefs.getString(key, default)?:default
+        return prefs.getString(key, default) ?: default
     }
 
     /**
@@ -120,7 +121,8 @@ object PreferenceManager {
         val prefs = getPreferences(context)
         return prefs.getInt(key, DEFAULT_VALUE_INT)
     }
-    fun getIntDefault(context: Context, default: Int, key: String?): Int {
+
+    fun getInt(context: Context, key: String?, default: Int): Int {
         val prefs = getPreferences(context)
         return prefs.getInt(key, default)
     }
