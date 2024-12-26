@@ -11,7 +11,7 @@
 
     <declare-styleable name="DetailWidgetRow">
         <attr name="iconDrawable" format="reference" />
-        <attr name="titleText" format="string" />
-        <attr name="valueText" format="string" />
+        <attr name="rowTitleText" format="string" />
+        <attr name="rowValueText" format="string" />
     </declare-styleable>
 </resources>

@@ -418,7 +418,7 @@ class WidgetDesignDetailFragment :
                 mVM.sfTrailBlazepowerDataVisibility.collect {
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.STARRAIL
-                    binding.widgetHksr.rlTrailblazePower.visibility =
+                    binding.widgetHksr.rowTrailblazePower.visibility =
                         if (it) View.VISIBLE else View.GONE
                     binding.widgetHksr.rlTrailblazePowerTime.visibility =
                         if (it && mVM.sfWidgetTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE

@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@android:id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -54,43 +55,13 @@
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/rl_trailblaze_power"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/iv_trailblaze_power"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="2dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/trailblaze_power" />
-
-                <TextView
-                    android:id="@+id/tv_trailblaze_power_title"
-                    style="@style/TextView"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/tv_trailblaze_power"
-                    android:layout_toRightOf="@id/iv_trailblaze_power"
-                    android:singleLine="true"
-                    android:text="@string/trailblaze_power"
-                    android:textColor="@color/widget_font_main"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tv_trailblaze_power"
-                    style="@style/TextView"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:singleLine="true"
-                    android:text="240/240"
-                    android:textColor="@color/widget_font_main"
-                    android:textSize="12sp" />
-
-            </RelativeLayout>
+            <danggai.app.presentation.view.DetailWidgetRow
+                android:id="@+id/row_trailblaze_power"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iconDrawable="@drawable/trailblaze_power"
+                app:titleText="@string/trailblaze_power"
+                app:valueText="240/240" />
 
             <RelativeLayout
                 android:id="@+id/rl_trailblaze_power_time"
