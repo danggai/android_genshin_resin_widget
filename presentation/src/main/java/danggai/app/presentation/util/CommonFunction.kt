@@ -301,4 +301,13 @@ object CommonFunction {
             true
         }
     }
+
+    fun isSameDay(date1: Long, date2: Long): Boolean {
+        val calendar1 = Calendar.getInstance().apply { timeInMillis = date1 }
+        val calendar2 = Calendar.getInstance().apply { timeInMillis = date2 }
+
+        return calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
+                calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH) &&
+                calendar1.get(Calendar.DAY_OF_MONTH) == calendar2.get(Calendar.DAY_OF_MONTH)
+    }
 }

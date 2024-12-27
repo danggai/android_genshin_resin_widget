@@ -18,6 +18,7 @@
 
     <string name="apply">확인</string>
     <string name="cancel">취소</string>
+    <string name="not_show_today">오늘 보지 않기</string>
     <string name="time">회</string>
     <string name="times">회</string>
 
@@ -194,6 +195,11 @@
 
     <string name="dialog_daily_weekly_yet_noti">알림 설정 시 주의</string>
     <string name="dialog_msg_daily_weekly_yet_noti">해당 기능 사용 시, HoYoLAB에서 올바르지 않은 일일의뢰/주간보스 진척도를 제공하는 경우 사용자가 잘못 된 알림을 수신 받을 수 있습니다.\n이 점 유의하시고 해당 기능 사용을 권장합니다.</string>
+
+    <string name="dialog_no_noti_permission">알림 권한이 없어요!</string>
+    <string name="dialog_msg_no_noti_permission">알림 권한이 없으면 앱의 알림 기능이 정상적으로 작동하지 않을 수 있습니다.\n알림 권한을 설정할까요?</string>
+
+    <!-- 푸시 알림  -->
 
     <string name="push_default_noti_title">알림</string>
     <string name="push_default_noti_description">설명</string>

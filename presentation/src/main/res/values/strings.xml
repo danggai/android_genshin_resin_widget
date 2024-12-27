@@ -24,8 +24,10 @@
     <string name="identifier">Identifier</string>
     <string name="select_character">Select Character</string>
     <string name="select_character_title">Characters display in widget</string>
+
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
+    <string name="not_show_today">Do not show today</string>
     <string name="time">\u0020time</string>
     <string name="times">\u0020times</string>
 
@@ -202,6 +204,9 @@
 
     <string name="dialog_daily_weekly_yet_noti">Caution when setting up notifications</string>
     <string name="dialog_msg_daily_weekly_yet_noti">When using this feature, if HoYoLAB provides an incorrect daily request/weekly boss progress, the user may receive an incorrect notification.\nPlease note that we recommend you to use this feature.</string>
+
+    <string name="dialog_no_noti_permission">No notification permission!</string>
+    <string name="dialog_msg_no_noti_permission">If you don\'t have notification permission, the app\'s notification features might not work properly.\nWould you like to enable notification permission?</string>
 
     <!-- 푸시 알림  -->
 
