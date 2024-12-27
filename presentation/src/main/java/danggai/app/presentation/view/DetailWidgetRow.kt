@@ -32,11 +32,11 @@ class DetailWidgetRow @JvmOverloads constructor(
         context.theme.obtainStyledAttributes(attrs, R.styleable.DetailWidgetRow, 0, 0).apply {
             try {
                 // titleText 속성 읽기
-                val title = getString(R.styleable.DetailWidgetRow_rowTitleText) ?: "Title"
+                val title = getString(R.styleable.DetailWidgetRow_titleText) ?: "Default Title"
                 setTitle(title)
 
                 // valueText 속성 읽기
-                val value = getString(R.styleable.DetailWidgetRow_rowValueText) ?: "Value"
+                val value = getString(R.styleable.DetailWidgetRow_valueText) ?: "Default Value"
                 setValue(value)
 
                 // iconDrawable 속성 읽기
@@ -49,17 +49,16 @@ class DetailWidgetRow @JvmOverloads constructor(
         }
     }
 
-    fun setTitle(title: String) {
+    private fun setTitle(title: String) {
         titleTextView.text = title
-    }
-
-    fun setValue(value: String) {
-        valueTextView.text = value
     }
 
     private fun setIcon(iconResId: Int) {
         if (iconResId != DEFAULT_DRAWABLE_ID)
             iconImageView.setImageResource(iconResId)
-        else iconImageView.visibility = INVISIBLE
+    }
+
+    private fun setValue(value: String) {
+        valueTextView.text = value
     }
 }

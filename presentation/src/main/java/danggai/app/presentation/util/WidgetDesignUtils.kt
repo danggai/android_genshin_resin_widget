@@ -3,7 +3,6 @@ package danggai.app.presentation.util
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.widget.RemoteViews
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import danggai.app.presentation.R
@@ -14,7 +13,6 @@ import danggai.app.presentation.databinding.WidgetResinFixedBinding
 import danggai.app.presentation.databinding.WidgetTrailblazePowerBinding
 import danggai.app.presentation.databinding.WidgetZzzDetailBinding
 import danggai.app.presentation.util.CommonFunction.isDarkMode
-import danggai.app.presentation.view.DetailWidgetRow
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.util.Constant
@@ -164,7 +162,8 @@ object WidgetDesignUtils {
     fun setDetailWidgetFontSize(widget: WidgetHksrDetailFixedBinding, fontSize: Int) {
         widget.apply {
             fontSize.toFloat().let {
-                setDetailWidgetRowFontSize(widget.rowTrailblazePower, it)
+                tvTrailblazePower.textSize = it
+                tvTrailblazePowerTitle.textSize = it
                 tvTrailblazePowerTime.textSize = it
                 tvTrailblazePowerTimeTitle.textSize = it
                 tvReserveTrailblazePower.textSize = it
@@ -183,11 +182,6 @@ object WidgetDesignUtils {
                 tvAssignmentTitle.textSize = it
             }
         }
-    }
-
-    private fun setDetailWidgetRowFontSize(row: DetailWidgetRow, size: Float) {
-        row.findViewById<TextView>(R.id.tv_title)?.textSize = size
-        row.findViewById<TextView>(R.id.tv_value)?.textSize = size
     }
 
     fun applyDetailWidgetColors(

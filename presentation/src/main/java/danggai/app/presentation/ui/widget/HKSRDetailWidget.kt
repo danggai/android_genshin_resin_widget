@@ -215,7 +215,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                     if (widgetDesign.nameVisibility) View.VISIBLE else View.GONE
                 )
                 view.setTextViewText(R.id.tv_name, name)
-                
+
                 view.setTextViewText(
                     R.id.tv_trailblaze_power_title,
                     _context.getString(R.string.trailblaze_power)
