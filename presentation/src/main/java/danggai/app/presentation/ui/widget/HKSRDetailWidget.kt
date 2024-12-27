@@ -209,11 +209,6 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 )
                 setVisibility(R.id.rl_assignment, widgetDesign.assignmentTimeDataVisibility)
 
-                val data = PreferenceManager.getT<HonkaiSrDataLocal>(
-                    context,
-                    Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid"
-                ) ?: HonkaiSrDataLocal.EMPTY
-
                 setText(R.id.tv_sync_time, recentSyncTimeString)
 
                 setVisibility(R.id.tv_uid, widgetDesign.uidVisibility)
@@ -221,6 +216,11 @@ class HKSRDetailWidget() : AppWidgetProvider() {
 
                 setVisibility(R.id.tv_name, widgetDesign.nameVisibility)
                 setText(R.id.tv_name, name)
+
+                val data = PreferenceManager.getT<HonkaiSrDataLocal>(
+                    context,
+                    Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid"
+                ) ?: HonkaiSrDataLocal.EMPTY
 
                 with(data.dailyNote) {
                     setText(
