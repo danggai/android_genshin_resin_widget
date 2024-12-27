@@ -165,7 +165,7 @@ class ZZZDetailWidget() : AppWidgetProvider() {
 
     private fun syncView(widgetId: Int, view: RemoteViews, context: Context?) {
         fun setText(viewId: Int, text: String?) {
-            setText(viewId, text ?: "")
+            view.setTextViewText(viewId, text ?: "")
         }
 
         fun setVisibility(viewId: Int, isVisible: Boolean) {
