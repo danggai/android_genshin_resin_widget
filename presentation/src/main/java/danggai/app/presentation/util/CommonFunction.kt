@@ -157,17 +157,9 @@ object CommonFunction {
             setStyle(NotificationCompat.BigTextStyle().bigText(msg))
             setPriority(notificationParams.priority)
 
-            if (notiType == NotiType.CheckIn._Genshin.CaptchaOccured) {
-                val intent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("https://act.hoyolab.com/ys/event/signin-sea-v3/index.html?act_id=e202102251931481&lang=ko-kr")
-                )
-                val pendingIntent =
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-                        PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-                    else PendingIntent.getActivity(context, 0, intent, 0);
-
-                setContentIntent(pendingIntent)
+            val pendingIntent = createIntentByNotiType(notiType, context)
+            pendingIntent?.let {
+                setContentIntent(it)
             }
         }
 
@@ -185,6 +177,31 @@ object CommonFunction {
 
         notificationManager.notify(notificationParams.notificationId, builder.build())
     }
+
+    private fun createIntentByNotiType(notiType: NotiType, context: Context): PendingIntent? {
+        val intent = when (notiType) {
+            NotiType.CheckIn._Genshin.CaptchaOccured -> Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://act.hoyolab.com/ys/event/signin-sea-v3/index.html?act_id=e202102251931481&lang=ko-kr")
+            )
+
+            is NotiType.Genshin -> Intent().setPackage(Constant.PACKAGE_GENSHIN)
+
+            is NotiType.StarRail -> Intent().setPackage(Constant.PACKAGE_HONKAI_STARRAIL)
+
+            is NotiType.ZZZ -> Intent().setPackage(Constant.PACKAGE_ZENLESS_ZONE_ZERO)
+
+            else -> null
+        }
+
+        return intent?.let {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                PendingIntent.getActivity(context, 0, it, PendingIntent.FLAG_IMMUTABLE)
+            else
+                PendingIntent.getActivity(context, 0, it, 0)
+        }
+    }
+
 
     fun getTimeLeftUntilChinaTime(isAM: Boolean, hour: Int, startCalendar: Calendar): Long {
         val targetCalendar = Calendar.getInstance()
