@@ -164,6 +164,14 @@ class ZZZDetailWidget() : AppWidgetProvider() {
     }
 
     private fun syncView(widgetId: Int, view: RemoteViews, context: Context?) {
+        fun setText(viewId: Int, text: String?) {
+            view.setTextViewText(viewId, text ?: "")
+        }
+
+        fun setVisibility(viewId: Int, isVisible: Boolean) {
+            view.setViewVisibility(viewId, if (isVisible) View.VISIBLE else View.GONE)
+        }
+
         context?.let { _context ->
             val widgetDesign =
                 PreferenceManager.getT<DetailWidgetDesignSettings>(
@@ -187,197 +195,157 @@ class ZZZDetailWidget() : AppWidgetProvider() {
 
                 log.e()
 
-                view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.ll_disable, View.GONE)
-                view.setViewVisibility(R.id.ll_body, View.VISIBLE)
-                view.setViewVisibility(R.id.ll_bottom, View.VISIBLE)
+                setVisibility(R.id.pb_loading, false)
+                setVisibility(R.id.ll_disable, false)
+                setVisibility(R.id.ll_body, true)
+                setVisibility(R.id.ll_bottom, true)
 
                 val dailyNote = PreferenceManager.getT<ZZZDailyNoteData>(
                     context,
                     Constant.PREF_ZZZ_DAILY_NOTE_DATA + "_$uid"
                 ) ?: ZZZDailyNoteData.EMPTY
 
-                view.setViewVisibility(
-                    R.id.tv_uid,
-                    if (widgetDesign.uidVisibility) View.VISIBLE else View.GONE
-                )
-                view.setTextViewText(R.id.tv_uid, uid)
+                setText(R.id.tv_sync_time, recentSyncTimeString)
 
-                view.setViewVisibility(
-                    R.id.tv_name,
-                    if (widgetDesign.nameVisibility) View.VISIBLE else View.GONE
-                )
-                view.setTextViewText(R.id.tv_name, name)
+                setVisibility(R.id.tv_uid, widgetDesign.uidVisibility)
+                setText(R.id.tv_uid, uid)
 
-                view.setTextViewText(
-                    R.id.tv_battery_title,
-                    _context.getString(R.string.battery)
-                )
-                view.setTextViewText(
-                    R.id.tv_battery,
-                    "${dailyNote.energy.progress.current}/${dailyNote.energy.progress.max}"
-                )
+                setVisibility(R.id.tv_name, widgetDesign.nameVisibility)
+                setText(R.id.tv_name, name)
 
-                view.setTextViewText(
-                    R.id.tv_engagement_today_title,
-                    _context.getString(R.string.engagement_today)
-                )
-                view.setTextViewText(
-                    R.id.tv_engagement_today,
-                    if (dailyNote.vitality.current == dailyNote.vitality.max) {
-                        _context.getString(R.string.done)
-                    } else {
-                        "${dailyNote.vitality.current}/${dailyNote.vitality.max}"
-                    }
-                )
+                with(dailyNote) {
+                    setText(R.id.tv_battery_title, _context.getString(R.string.battery))
+                    setText(R.id.tv_battery, "${energy.progress.current}/${energy.progress.max}")
+                    setVisibility(R.id.rl_battery, widgetDesign.batteryDataVisibility)
 
-//                view.setTextViewText(
+                    setText(
+                        R.id.tv_battery_time, TimeFunction.resinSecondToTime(
+                            _context,
+                            recentSyncTimeDate,
+                            energy.restore,
+                            TimeNotation.fromValue(widgetDesign.timeNotation)
+                        )
+                    )
+                    setVisibility(
+                        R.id.rl_battery_time,
+                        widgetDesign.batteryDataVisibility &&
+                                TimeNotation.fromValue(widgetDesign.timeNotation) != TimeNotation.DISABLE_TIME
+                    )
+
+                    setText(
+                        R.id.tv_engagement_today_title,
+                        _context.getString(R.string.engagement_today)
+                    )
+                    setText(
+                        R.id.tv_engagement_today,
+                        if (vitality.current == vitality.max) _context.getString(R.string.done)
+                        else "${vitality.current}/${vitality.max}"
+                    )
+                    setVisibility(
+                        R.id.rl_engagement_today,
+                        widgetDesign.engagementTodayDataVisibility
+                    )
+
+                    // TODO(커피 관련 데이터추가 시 해제)
+                    setVisibility(R.id.rl_coffee, false)
+//                setText(
 //                    R.id.tv_coffee_title,
 //                    _context.getString(R.string.coffee)
 //                )
-//                view.setTextViewText(
+//                setText(
 //                    R.id.tv_coffee,
-//                    if (dailyNote.vitality.current == dailyNote.vitality.max) {
-//                        _context.getString(R.string.done)
-//                    } else {
-//                        "${dailyNote.vitality.current}/${dailyNote.vitality.max}"
-//                    }
+//                    if (vitality.current == vitality.max) _context.getString(R.string.done)
+//                    else "${vitality.current}/${vitality.max}"
 //                )
+//                setVisibility(R.id.rl_coffee, widgetDesign.coffeeDataVisibility)
 
-                view.setTextViewText(
-                    R.id.tv_ridu_weekly_title,
-                    _context.getString(R.string.ridu_weekly)
-                )
-                view.setTextViewText(
-                    R.id.tv_ridu_weekly,
-                    if ((dailyNote.weeklyTask?.curPoint == dailyNote.weeklyTask?.maxPoint) && dailyNote.weeklyTask !== null) {
-                        _context.getString(R.string.done)
-                    } else {
-                        "${dailyNote.weeklyTask?.curPoint ?: "?"}/${dailyNote.weeklyTask?.maxPoint ?: "?"}"
-                    }
-                )
+                    setText(
+                        R.id.tv_ridu_weekly_title,
+                        _context.getString(R.string.ridu_weekly)
+                    )
+                    setText(
+                        R.id.tv_ridu_weekly,
+                        if ((weeklyTask?.curPoint == weeklyTask?.maxPoint) && weeklyTask !== null) {
+                            _context.getString(R.string.done)
+                        } else {
+                            "${weeklyTask?.curPoint ?: "?"}/${weeklyTask?.maxPoint ?: "?"}"
+                        }
+                    )
+                    setVisibility(R.id.rl_ridu_weekly, widgetDesign.riduWeeklyDataVisibility)
 
-                view.setTextViewText(
-                    R.id.tv_investigation_point_title,
-                    _context.getString(R.string.investigation_point)
-                )
-                view.setTextViewText(
-                    R.id.tv_investigation_point,
-                    if ((dailyNote.surveyPoints?.num == dailyNote.surveyPoints?.total) && dailyNote.surveyPoints !== null) {
-                        _context.getString(R.string.done)
-                    } else {
-                        "${dailyNote.surveyPoints?.num ?: "?"}/${dailyNote.surveyPoints?.total ?: "?"}"
-                    }
-                )
+                    setText(
+                        R.id.tv_investigation_point_title,
+                        _context.getString(R.string.investigation_point)
+                    )
+                    setText(
+                        R.id.tv_investigation_point,
+                        if ((surveyPoints?.num == surveyPoints?.total) && surveyPoints !== null) {
+                            _context.getString(R.string.done)
+                        } else {
+                            "${surveyPoints?.num ?: "?"}/${surveyPoints?.total ?: "?"}"
+                        }
+                    )
+                    setVisibility(
+                        R.id.rl_investigation_point,
+                        widgetDesign.investigationPointDataVisibility
+                    )
 
-                view.setTextViewText(
-                    R.id.tv_scratch_card_title,
-                    _context.getString(R.string.scratch_card)
-                )
-                view.setTextViewText(
-                    R.id.tv_scratch_card,
-                    when (dailyNote.cardSign) {
-                        Constant.ZZZCardSign.NO.value -> context.getString(R.string.scratch_card_no)
-                        Constant.ZZZCardSign.DONE.value -> context.getString(R.string.scratch_card_done)
-                        else -> ""
-                    }
-                )
+                    setText(
+                        R.id.tv_scratch_card_title,
+                        _context.getString(R.string.scratch_card)
+                    )
+                    setText(
+                        R.id.tv_scratch_card,
+                        when (cardSign) {
+                            Constant.ZZZCardSign.NO.value -> context.getString(R.string.scratch_card_no)
+                            Constant.ZZZCardSign.DONE.value -> context.getString(R.string.scratch_card_done)
+                            else -> ""
+                        }
+                    )
+                    setVisibility(R.id.rl_scratch_card, widgetDesign.scratchCardDataVisibility)
 
-                view.setTextViewText(
-                    R.id.tv_video_store_management_title,
-                    _context.getString(R.string.video_store_management)
-                )
-                view.setTextViewText(
-                    R.id.tv_video_store_management,
-                    when (dailyNote.vhsSale.saleState) {
-                        Constant.ZZZSaleStatus.NO.value -> context.getString(R.string.video_store_management_no)
-                        Constant.ZZZSaleStatus.DOING.value -> context.getString(R.string.video_store_management_doing)
-                        Constant.ZZZSaleStatus.DONE.value -> context.getString(R.string.video_store_management_done)
-                        else -> ""
-                    }
-                )
-
-                view.setTextViewText(R.id.tv_sync_time, recentSyncTimeString)
+                    setText(
+                        R.id.tv_video_store_management_title,
+                        _context.getString(R.string.video_store_management)
+                    )
+                    setText(
+                        R.id.tv_video_store_management,
+                        when (vhsSale.saleState) {
+                            Constant.ZZZSaleStatus.NO.value -> context.getString(R.string.video_store_management_no)
+                            Constant.ZZZSaleStatus.DOING.value -> context.getString(R.string.video_store_management_doing)
+                            Constant.ZZZSaleStatus.DONE.value -> context.getString(R.string.video_store_management_done)
+                            else -> ""
+                        }
+                    )
+                    setVisibility(
+                        R.id.rl_video_store_management,
+                        widgetDesign.videoStoreManagementDataVisibility
+                    )
+                }
 
                 when (TimeNotation.fromValue(widgetDesign.timeNotation)) {
                     TimeNotation.DEFAULT,
                     TimeNotation.REMAIN_TIME -> {
-                        view.setTextViewText(
+                        setText(
                             R.id.tv_battery_time_title,
                             _context.getString(R.string.until_fully_replenished)
-                        )
-                        view.setTextViewText(
-                            R.id.tv_assignment_title,
-                            _context.getString(R.string.until_assignment_done)
                         )
                     }
 
                     TimeNotation.FULL_CHARGE_TIME -> {
-                        view.setTextViewText(
+                        setText(
                             R.id.tv_battery_time_title,
                             _context.getString(R.string.estimated_replenishment_time)
-                        )
-                        view.setTextViewText(
-                            R.id.tv_assignment_title,
-                            _context.getString(R.string.assignment_done_at)
                         )
                     }
 
                     else -> {}
                 }
-
-                view.setTextViewText(
-                    R.id.tv_battery_time, TimeFunction.resinSecondToTime(
-                        _context,
-                        recentSyncTimeDate,
-                        dailyNote.energy.restore,
-                        TimeNotation.fromValue(widgetDesign.timeNotation)
-                    )
-                )
-
-                view.setViewVisibility(
-                    R.id.rl_battery,
-                    if (widgetDesign.batteryDataVisibility) View.VISIBLE else View.GONE
-                )
-                view.setViewVisibility(
-                    R.id.rl_battery_time,
-                    if (widgetDesign.batteryDataVisibility &&
-                        TimeNotation.fromValue(widgetDesign.timeNotation) != TimeNotation.DISABLE_TIME
-                    ) View.VISIBLE else View.GONE
-                )
-
-                view.setViewVisibility(
-                    R.id.rl_engagement_today,
-                    if (widgetDesign.engagementTodayDataVisibility) View.VISIBLE else View.GONE
-                )
-                view.setViewVisibility(
-                    R.id.rl_scratch_card,
-                    if (widgetDesign.scratchCardDataVisibility) View.VISIBLE else View.GONE
-                )
-                view.setViewVisibility(
-                    R.id.rl_video_store_management,
-                    if (widgetDesign.videoStoreManagementDataVisibility) View.VISIBLE else View.GONE
-                )
-                // TODO(커피 관련 데이터추가 시 해제)
-                view.setViewVisibility(R.id.rl_coffee, View.GONE)
-//                view.setViewVisibility(
-//                    R.id.rl_coffee,
-//                    if (widgetDesign.coffeeDataVisibility) View.VISIBLE else View.GONE
-//                )
-                view.setViewVisibility(
-                    R.id.rl_ridu_weekly,
-                    if (widgetDesign.riduWeeklyDataVisibility) View.VISIBLE else View.GONE
-                )
-                view.setViewVisibility(
-                    R.id.rl_investigation_point,
-                    if (widgetDesign.investigationPointDataVisibility) View.VISIBLE else View.GONE
-                )
-
             } else {
-                view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.ll_body, View.GONE)
-                view.setViewVisibility(R.id.ll_bottom, View.GONE)
-                view.setViewVisibility(R.id.ll_disable, View.VISIBLE)
+                setVisibility(R.id.pb_loading, false)
+                setVisibility(R.id.ll_body, false)
+                setVisibility(R.id.ll_bottom, false)
+                setVisibility(R.id.ll_disable, true)
 
                 if ((widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
                     view.setTextColor(
