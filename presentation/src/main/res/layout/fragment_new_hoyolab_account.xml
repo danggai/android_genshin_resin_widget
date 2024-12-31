@@ -102,9 +102,10 @@
                         android:orientation="vertical"
                         android:paddingHorizontal="10dp">
 
-                        <android.widget.Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="8dp" />
+                        <danggai.app.presentation.view.TitleDividerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:titleText="@string/genshin" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="match_parent"
@@ -266,10 +267,10 @@
                         android:paddingHorizontal="10dp"
                         android:animateLayoutChanges="true">
 
-                        <android.widget.Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="8dp" />
-
+                        <danggai.app.presentation.view.TitleDividerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:titleText="@string/honkai_sr" />
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
@@ -442,10 +443,10 @@
                         android:paddingHorizontal="10dp"
                         android:animateLayoutChanges="true">
 
-                        <android.widget.Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="8dp" />
-
+                        <danggai.app.presentation.view.TitleDividerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:titleText="@string/zzz" />
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"

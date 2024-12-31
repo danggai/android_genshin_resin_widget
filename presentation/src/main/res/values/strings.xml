@@ -22,6 +22,7 @@
     <string name="font_size">Font Size</string>
     <string name="image">Image</string>
     <string name="identifier">Identifier</string>
+
     <string name="select_character">Select Character</string>
     <string name="select_character_title">Characters display in widget</string>
 
