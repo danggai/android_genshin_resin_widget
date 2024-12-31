@@ -17,6 +17,7 @@ import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentWidgetDesignBinding
 import danggai.app.presentation.extension.repeatOnLifeCycleStarted
+import danggai.app.presentation.receiver.WidgetPinnedReceiver
 import danggai.app.presentation.ui.design.charaters.WidgetDesignCharacterFragment
 import danggai.app.presentation.ui.design.charaters.select.WidgetDesignSelectCharacterFragment
 import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
@@ -28,7 +29,6 @@ import danggai.app.presentation.ui.widget.ResinWidget
 import danggai.app.presentation.ui.widget.TalentWidget
 import danggai.app.presentation.ui.widget.TrailPowerWidget
 import danggai.app.presentation.ui.widget.ZZZDetailWidget
-import danggai.app.presentation.ui.widget.config.WidgetPinnedReceiver
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.log
 import danggai.domain.local.DesignTabType
