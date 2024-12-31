@@ -1,9 +1,6 @@
 package danggai.app.presentation.util
 
 import android.app.Activity
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -11,12 +8,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.net.Uri
 import android.os.Build
 import android.util.DisplayMetrics
 import android.view.Display
-import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
 import androidx.core.hardware.display.DisplayManagerCompat
 import com.google.firebase.crashlytics.CustomKeysAndValues
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -30,8 +24,6 @@ import danggai.app.presentation.ui.widget.ResinWidget
 import danggai.app.presentation.ui.widget.ResinWidgetResizable
 import danggai.app.presentation.ui.widget.TrailPowerWidget
 import danggai.app.presentation.ui.widget.ZZZDetailWidget
-import danggai.domain.db.account.entity.Account
-import danggai.domain.local.NotiType
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.util.Constant
@@ -131,77 +123,6 @@ object CommonFunction {
 
         FirebaseCrashlytics.getInstance().setCustomKeys(keysAndValues)
     }
-
-    fun sendNotification(
-        notiType: NotiType,
-        context: Context,
-        account: Account,
-        title: String,
-        msg: String,
-    ) {
-        log.e()
-
-        val notificationParams = NotificationMapper.getNotiParams(context, notiType, account)
-        val icon = NotificationMapper.getNotiIcon(notiType)
-
-        val notificationManager: NotificationManager = ContextCompat.getSystemService(
-            context,
-            NotificationManager::class.java
-        ) ?: return
-
-        val builder = NotificationCompat.Builder(context, notificationParams.channelId).apply {
-            setSmallIcon(icon)
-            setContentTitle(title)
-            setContentText(msg)
-            setAutoCancel(true)
-            setStyle(NotificationCompat.BigTextStyle().bigText(msg))
-            setPriority(notificationParams.priority)
-
-            val pendingIntent = createIntentByNotiType(notiType, context)
-            pendingIntent?.let {
-                setContentIntent(it)
-            }
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager.createNotificationChannel(
-                NotificationChannel(
-                    notificationParams.channelId,
-                    title,
-                    NotificationManager.IMPORTANCE_DEFAULT
-                ).apply {
-                    description = notificationParams.channelDesc
-                }
-            )
-        }
-
-        notificationManager.notify(notificationParams.notificationId, builder.build())
-    }
-
-    private fun createIntentByNotiType(notiType: NotiType, context: Context): PendingIntent? {
-        val intent = when (notiType) {
-            NotiType.CheckIn._Genshin.CaptchaOccured -> Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://act.hoyolab.com/ys/event/signin-sea-v3/index.html?act_id=e202102251931481&lang=ko-kr")
-            )
-
-            is NotiType.Genshin -> Intent().setPackage(Constant.PACKAGE_GENSHIN)
-
-            is NotiType.StarRail -> Intent().setPackage(Constant.PACKAGE_HONKAI_STARRAIL)
-
-            is NotiType.ZZZ -> Intent().setPackage(Constant.PACKAGE_ZENLESS_ZONE_ZERO)
-
-            else -> null
-        }
-
-        return intent?.let {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-                PendingIntent.getActivity(context, 0, it, PendingIntent.FLAG_IMMUTABLE)
-            else
-                PendingIntent.getActivity(context, 0, it, 0)
-        }
-    }
-
 
     fun getTimeLeftUntilChinaTime(isAM: Boolean, hour: Int, startCalendar: Calendar): Long {
         val targetCalendar = Calendar.getInstance()
