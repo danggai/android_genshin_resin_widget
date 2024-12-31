@@ -313,8 +313,6 @@ object WidgetDesignUtils {
         view.setInt(R.id.ll_root, "setBackgroundColor", bgColor)
         view.setInt(R.id.iv_refersh, "setColorFilter", subFontColor)
         view.setTextColor(R.id.tv_sync_time, subFontColor)
-        view.setTextColor(R.id.tv_disable, mainFontColor)
-        view.setTextColor(R.id.tv_no_selected_characters, mainFontColor)
 
         val mainFontViews = listOf(
             R.id.tv_disable,
@@ -362,6 +360,10 @@ object WidgetDesignUtils {
             R.id.tv_battery_time_title,
             R.id.tv_engagement_today,
             R.id.tv_engagement_today_title,
+            R.id.tv_ridu_weekly,
+            R.id.tv_ridu_weekly_title,
+            R.id.tv_investigation_point,
+            R.id.tv_investigation_point_title,
             R.id.tv_scratch_card,
             R.id.tv_scratch_card_title,
             R.id.tv_video_store_management,

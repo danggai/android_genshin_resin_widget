@@ -18,6 +18,7 @@ import danggai.domain.resource.repository.ResourceProviderRepository
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,6 +31,8 @@ class NewHoyolabAccountViewModel @Inject constructor(
     private val changeDataSwitch: ChangeDataSwitchUseCase,
     private val dailyNote: DailyNoteUseCase,
 ) : BaseViewModel() {
+    val sfStartCheckInWorker = MutableSharedFlow<Boolean>()
+
     val sfProgress = MutableStateFlow(false)
 
     val sfGenshinServer = MutableStateFlow(Server.ASIA)
@@ -52,6 +55,8 @@ class NewHoyolabAccountViewModel @Inject constructor(
     val sfEnableHonkai3rdAutoCheckIn = MutableStateFlow(false)
     val sfEnableHonkaiSrAutoCheckIn = MutableStateFlow(false)
     val sfEnableZZZAutoCheckIn = MutableStateFlow(false)
+
+    val sfEnableStartCheckIn = MutableStateFlow(true)
 
     private var _dailyNotePrivateErrorCount = 0
     val dailyNotePrivateErrorCount
@@ -551,6 +556,11 @@ class NewHoyolabAccountViewModel @Inject constructor(
         viewModelScope.launch {
             accountDao.insertAccount(account).collect {
                 log.e()
+
+                if (sfEnableStartCheckIn.value) {
+                    sfStartCheckInWorker.emitInVmScope(true)
+                }
+
                 sendEvent(Event.FinishThisActivity())
             }
         }
@@ -675,17 +685,17 @@ class NewHoyolabAccountViewModel @Inject constructor(
                 sfHoyolabCookie.value = account.cookie
                 sfGenshinUid.value = account.genshin_uid
                 sfGenshinNickname.value = account.nickname
-                sfGenshinServer.value = Server.fromValue(account.server)?:Server.ASIA
+                sfGenshinServer.value = Server.fromValue(account.server) ?: Server.ASIA
                 sfNoGenshinAccount.value = account.genshin_uid.contains("-")
 
                 sfHonkaiSrUid.value = account.honkai_sr_uid
                 sfHonkaiSrNickname.value = account.honkai_sr_nickname
-                sfHonkaiSrServer.value = Server.fromValue(account.honkai_sr_server)?:Server.ASIA
+                sfHonkaiSrServer.value = Server.fromValue(account.honkai_sr_server) ?: Server.ASIA
                 sfNoHonkaiSrAccount.value = account.honkai_sr_uid.isEmpty()
 
                 sfZZZUid.value = account.zzz_uid
                 sfZZZNickname.value = account.zzz_nickname
-                sfZZZServer.value = Server.fromValue(account.zzz_server)?:Server.ASIA
+                sfZZZServer.value = Server.fromValue(account.zzz_server) ?: Server.ASIA
                 sfNoZZZAccount.value = account.zzz_uid.isEmpty()
 
                 sfEnableGenshinAutoCheckIn.value = account.enable_genshin_checkin
@@ -694,6 +704,9 @@ class NewHoyolabAccountViewModel @Inject constructor(
                 sfEnableZZZAutoCheckIn.value = account.enable_zzz_checkin
 
                 if (account.genshin_uid.contains("-")) sfNoGenshinAccount.value = true
+
+                // 기존 계정 존재 시 자동 체크인 기본 비활성화
+                sfEnableStartCheckIn.value = false
             }
         }
     }

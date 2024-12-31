@@ -1,6 +1,5 @@
 package danggai.app.presentation.ui.widget
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -10,12 +9,12 @@ import android.view.View
 import android.widget.RemoteViews
 import androidx.core.content.ContextCompat.getColor
 import danggai.app.presentation.R
-import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.CommonFunction.isDarkMode
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.WidgetDesignUtils
+import danggai.app.presentation.util.WidgetUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.DetailWidgetDesignSettings
@@ -29,6 +28,10 @@ import java.util.Locale
 
 class HKSRDetailWidget() : AppWidgetProvider() {
 
+    companion object {
+        val className = HKSRDetailWidget::class.java
+    }
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -40,7 +43,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
 
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
-            val remoteView: RemoteViews = makeRemoteViews(context)
+            val remoteView: RemoteViews = makeRemoteViews(context, appWidgetId)
 
             syncView(appWidgetId, remoteView, context)
             appWidgetManager.updateAppWidget(appWidgetId, remoteView)
@@ -51,7 +54,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
         super.onReceive(context, intent)
         val action = intent?.action
 
-        val thisWidget = ComponentName(context!!, HKSRDetailWidget::class.java)
+        val thisWidget = ComponentName(context!!, className)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
@@ -114,53 +117,42 @@ class HKSRDetailWidget() : AppWidgetProvider() {
         config.setLocale(sLocale)
     }
 
-    private fun makeRemoteViews(context: Context?): RemoteViews {
+    private fun makeRemoteViews(context: Context?, appWidgetId: Int): RemoteViews {
         val views = RemoteViews(context!!.packageName, R.layout.widget_hksr_detail_fixed)
 
-        val intentUpdate = Intent(context, HKSRDetailWidget::class.java).apply {
-            action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
-        }
-        views.setOnClickPendingIntent(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
+            context,
+            views,
             R.id.ll_sync,
-            PendingIntent.getBroadcast(
-                context,
-                0,
-                intentUpdate,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-            )
+            WidgetUtils.getUpdateIntent(context, className)
         )
 
-        val intentMainActivity = Intent(context, MainActivity::class.java)
-        views.setOnClickPendingIntent(
+        val mainActivityTargetViews = listOf(
             R.id.iv_trailblaze_power,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
-        )
-        views.setOnClickPendingIntent(
             R.id.iv_daily_training,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
-        )
-        views.setOnClickPendingIntent(
             R.id.iv_echo_of_war,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
-        )
-        views.setOnClickPendingIntent(
             R.id.iv_simulated_universe,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+            R.id.iv_credit
         )
-        views.setOnClickPendingIntent(
-            R.id.iv_credit,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+        WidgetUtils.setOnClickActivityPendingIntent(
+            context,
+            views,
+            mainActivityTargetViews,
+            WidgetUtils.getMainActivityIntent(context)
         )
-        views.setOnClickPendingIntent(
+
+        WidgetUtils.setOnClickActivityPendingIntent(
+            context,
+            views,
             R.id.ll_disable,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+            WidgetUtils.getWidgetConfigActivityIntent(context, appWidgetId)
         )
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
         val awId = manager.getAppWidgetIds(
             ComponentName(
                 context.applicationContext,
-                HKSRDetailWidget::class.java
+                className
             )
         )
 
@@ -170,6 +162,13 @@ class HKSRDetailWidget() : AppWidgetProvider() {
     }
 
     private fun syncView(widgetId: Int, view: RemoteViews, context: Context?) {
+        fun setText(viewId: Int, text: String?) {
+            view.setTextViewText(viewId, text ?: "")
+        }
+
+        fun setVisibility(viewId: Int, isVisible: Boolean) {
+            view.setViewVisibility(viewId, if (isVisible) View.VISIBLE else View.GONE)
+        }
 
         context?.let { _context ->
             val widgetDesign =
@@ -185,154 +184,19 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 val name = PreferenceManager.getString(context, Constant.PREF_NAME + "_$widgetId")
                 val recentSyncTimeString =
                     PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid")
-                        .ifEmpty {
-                            TimeFunction.getSyncDateTimeString()
-                        }
+                        .ifEmpty { TimeFunction.getSyncDateTimeString() }
                 val recentSyncTimeDate =
                     SimpleDateFormat(Constant.DATE_FORMAT_SYNC_DATE_TIME).parse(recentSyncTimeString)
                         ?: Date()
 
                 log.e()
 
-                view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.ll_disable, View.GONE)
-                view.setViewVisibility(R.id.ll_body, View.VISIBLE)
-                view.setViewVisibility(R.id.ll_bottom, View.VISIBLE)
+                setVisibility(R.id.pb_loading, false)
+                setVisibility(R.id.ll_disable, false)
+                setVisibility(R.id.ll_body, true)
+                setVisibility(R.id.ll_bottom, true)
 
-                val data = PreferenceManager.getT<HonkaiSrDataLocal>(
-                    context,
-                    Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid"
-                ) ?: HonkaiSrDataLocal.EMPTY
-
-                view.setViewVisibility(
-                    R.id.tv_uid,
-                    if (widgetDesign.uidVisibility) View.VISIBLE else View.GONE
-                )
-                view.setTextViewText(R.id.tv_uid, uid)
-
-                view.setViewVisibility(
-                    R.id.tv_name,
-                    if (widgetDesign.nameVisibility) View.VISIBLE else View.GONE
-                )
-                view.setTextViewText(R.id.tv_name, name)
-
-                view.setTextViewText(
-                    R.id.tv_trailblaze_power_title,
-                    _context.getString(R.string.trailblaze_power)
-                )
-                view.setTextViewText(
-                    R.id.tv_trailblaze_power,
-                    data.dailyNote.currentStamina.toString() + "/" + data.dailyNote.maxStamina.toString()
-                )
-
-                view.setTextViewText(
-                    R.id.tv_reserve_trailblaze_power_title,
-                    _context.getString(R.string.reserve_trailblaze_power)
-                )
-                view.setTextViewText(
-                    R.id.tv_reserve_trailblaze_power,
-                    data.dailyNote.currentReserveStamina.toString()
-                )
-
-                view.setTextViewText(
-                    R.id.tv_daily_training_title,
-                    _context.getString(R.string.daily_training)
-                )
-                view.setTextViewText(
-                    R.id.tv_daily_training,
-                    if (data.dailyNote.currentTrainScore == data.dailyNote.maxTrainScore) {
-                        _context.getString(R.string.done)
-                    } else {
-                        data.dailyNote.currentTrainScore.toString() + "/" + data.dailyNote.maxTrainScore.toString()
-                    }
-                )
-
-                view.setTextViewText(
-                    R.id.tv_echo_of_war_title,
-                    _context.getString(R.string.echo_of_war)
-                )
-                view.setTextViewText(
-                    R.id.tv_echo_of_war,
-                    if (data.dailyNote.weeklyCocoonCnt == 0) {
-                        context.getString(R.string.done)
-                    } else {
-                        CommonFunction.convertIntToTimes(data.dailyNote.weeklyCocoonCnt, _context)
-                    }
-                )
-
-                view.setTextViewText(
-                    R.id.tv_simulated_universe_title,
-                    _context.getString(R.string.simulated_universe)
-                )
-                view.setTextViewText(
-                    R.id.tv_simulated_universe,
-                    if (data.dailyNote.currentRogueScore == data.dailyNote.maxRogueScore) {
-                        context.getString(R.string.done)
-                    } else {
-                        data.dailyNote.currentRogueScore.toString() + "/" + data.dailyNote.maxRogueScore.toString()
-                    }
-                )
-
-                view.setTextViewText(
-                    R.id.tv_simulated_universe_title_cleared,
-                    _context.getString(R.string.clear_count)
-                )
-                view.setTextViewText(
-                    R.id.tv_simulated_universe_cleared,
-                    CommonFunction.convertIntToTimes(data.rogueClearCount, _context)
-                )
-
-                view.setTextViewText(
-                    R.id.tv_synchronicity_point_title,
-                    _context.getString(R.string.divergent_universe)
-                )
-                view.setTextViewText(
-                    R.id.tv_synchronicity_point,
-                    if (data.dailyNote.rogueTournWeeklyUnlocked) {
-                        data.dailyNote.rogueTournWeeklyCur.toString() + "/" + data.dailyNote.rogueTournWeeklyMax.toString()
-                    } else {
-                        context.getString(R.string.widget_ui_locked)
-                    }
-                )
-
-                view.setTextViewText(R.id.tv_sync_time, recentSyncTimeString)
-
-                when (TimeNotation.fromValue(widgetDesign.timeNotation)) {
-                    TimeNotation.DEFAULT,
-                    TimeNotation.REMAIN_TIME -> {
-                        view.setTextViewText(
-                            R.id.tv_trailblaze_power_time_title,
-                            _context.getString(R.string.until_fully_replenished)
-                        )
-                        view.setTextViewText(
-                            R.id.tv_assignment_title,
-                            _context.getString(R.string.until_assignment_done)
-                        )
-                    }
-
-                    TimeNotation.FULL_CHARGE_TIME -> {
-                        view.setTextViewText(
-                            R.id.tv_trailblaze_power_time_title,
-                            _context.getString(R.string.estimated_replenishment_time)
-                        )
-                        view.setTextViewText(
-                            R.id.tv_assignment_title,
-                            _context.getString(R.string.assignment_done_at)
-                        )
-                    }
-
-                    TimeNotation.DISABLE_TIME -> {}
-                }
-
-                view.setTextViewText(
-                    R.id.tv_trailblaze_power_time, TimeFunction.resinSecondToTime(
-                        _context,
-                        recentSyncTimeDate,
-                        data.dailyNote.staminaRecoverTime,
-                        TimeNotation.fromValue(widgetDesign.timeNotation)
-                    )
-                )
-                view.setTextViewText(
+                setText(
                     R.id.tv_assignment_time, TimeFunction.expeditionSecondToTime(
                         _context,
                         recentSyncTimeDate,
@@ -343,54 +207,160 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                         TimeNotation.fromValue(widgetDesign.timeNotation)
                     )
                 )
+                setVisibility(R.id.rl_assignment, widgetDesign.assignmentTimeDataVisibility)
 
-                view.setViewVisibility(
-                    R.id.rl_trailblaze_power,
-                    if (widgetDesign.trailBlazepowerDataVisibility) View.VISIBLE else View.GONE
-                )
-                view.setViewVisibility(
-                    R.id.rl_trailblaze_power_time,
-                    if (widgetDesign.trailBlazepowerDataVisibility &&
-                        TimeNotation.fromValue(widgetDesign.timeNotation) != TimeNotation.DISABLE_TIME
-                    ) View.VISIBLE else View.GONE
-                )
-                view.setViewVisibility(
-                    R.id.rl_reserve_trailblaze_power,
-                    if (widgetDesign.reserveTrailBlazepowerDataVisibility) View.VISIBLE else View.GONE
-                )
+                setText(R.id.tv_sync_time, recentSyncTimeString)
 
-                view.setViewVisibility(
-                    R.id.rl_daily_training,
-                    if (widgetDesign.dailyTrainingDataVisibility) View.VISIBLE else View.GONE
-                )
-                view.setViewVisibility(
-                    R.id.rl_echo_of_war,
-                    if (widgetDesign.echoOfWarDataVisibility) View.VISIBLE else View.GONE
-                )
-                view.setViewVisibility(
-                    R.id.rl_simulated_universe,
-                    if (widgetDesign.simulatedUniverseDataVisibility) View.VISIBLE else View.GONE
-                )
-                view.setViewVisibility(
-                    R.id.rl_simulated_universe_cleared,
-                    if (widgetDesign.simulatedUniverseDataVisibility &&
-                        widgetDesign.simulatedUniverseClearTimeVisibility
-                    ) View.VISIBLE else View.GONE
-                )
-                view.setViewVisibility(
-                    R.id.rl_synchronicity_point,
-                    if (widgetDesign.synchronicityPointVisibility) View.VISIBLE else View.GONE
-                )
-                view.setViewVisibility(
-                    R.id.rl_assignment,
-                    if (widgetDesign.assignmentTimeDataVisibility) View.VISIBLE else View.GONE
-                )
+                setVisibility(R.id.tv_uid, widgetDesign.uidVisibility)
+                setText(R.id.tv_uid, uid)
 
+                setVisibility(R.id.tv_name, widgetDesign.nameVisibility)
+                setText(R.id.tv_name, name)
+
+                val data = PreferenceManager.getT<HonkaiSrDataLocal>(
+                    context,
+                    Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid"
+                ) ?: HonkaiSrDataLocal.EMPTY
+
+                with(data.dailyNote) {
+                    setText(
+                        R.id.tv_trailblaze_power_title,
+                        _context.getString(R.string.trailblaze_power)
+                    )
+                    setText(
+                        R.id.tv_trailblaze_power,
+                        "$currentStamina/$maxStamina"
+                    )
+                    setVisibility(
+                        R.id.rl_trailblaze_power,
+                        widgetDesign.trailBlazepowerDataVisibility
+                    )
+
+                    setText(
+                        R.id.tv_reserve_trailblaze_power_title,
+                        _context.getString(R.string.reserve_trailblaze_power)
+                    )
+                    setText(
+                        R.id.tv_reserve_trailblaze_power,
+                        currentReserveStamina.toString()
+                    )
+                    setVisibility(
+                        R.id.rl_reserve_trailblaze_power,
+                        widgetDesign.reserveTrailBlazepowerDataVisibility
+                    )
+
+                    setText(
+                        R.id.tv_daily_training_title,
+                        _context.getString(R.string.daily_training)
+                    )
+                    setText(
+                        R.id.tv_daily_training,
+                        if (currentTrainScore == maxTrainScore) _context.getString(R.string.done)
+                        else "$currentTrainScore/$maxTrainScore"
+                    )
+                    setVisibility(R.id.rl_daily_training, widgetDesign.dailyTrainingDataVisibility)
+
+                    setText(
+                        R.id.tv_echo_of_war_title,
+                        _context.getString(R.string.echo_of_war)
+                    )
+                    setText(
+                        R.id.tv_echo_of_war,
+                        if (weeklyCocoonCnt == 0) {
+                            context.getString(R.string.done)
+                        } else {
+                            CommonFunction.convertIntToTimes(weeklyCocoonCnt, _context)
+                        }
+                    )
+                    setVisibility(R.id.rl_echo_of_war, widgetDesign.echoOfWarDataVisibility)
+
+                    setText(
+                        R.id.tv_simulated_universe_title,
+                        _context.getString(R.string.simulated_universe)
+                    )
+                    setText(
+                        R.id.tv_simulated_universe,
+                        if (currentRogueScore == maxRogueScore) context.getString(R.string.done)
+                        else "$currentRogueScore/$maxRogueScore"
+                    )
+                    setVisibility(
+                        R.id.rl_simulated_universe,
+                        widgetDesign.simulatedUniverseDataVisibility
+                    )
+
+                    setText(
+                        R.id.tv_simulated_universe_title_cleared,
+                        _context.getString(R.string.clear_count)
+                    )
+                    setText(
+                        R.id.tv_simulated_universe_cleared,
+                        CommonFunction.convertIntToTimes(data.rogueClearCount, _context)
+                    )
+                    setVisibility(
+                        R.id.rl_simulated_universe_cleared,
+                        widgetDesign.simulatedUniverseDataVisibility && widgetDesign.simulatedUniverseClearTimeVisibility
+                    )
+
+                    setText(
+                        R.id.tv_synchronicity_point_title,
+                        _context.getString(R.string.divergent_universe)
+                    )
+                    setText(
+                        R.id.tv_synchronicity_point,
+                        if (rogueTournWeeklyUnlocked) "$rogueTournWeeklyCur/$rogueTournWeeklyMax"
+                        else context.getString(R.string.widget_ui_locked)
+                    )
+                    setVisibility(
+                        R.id.rl_synchronicity_point,
+                        widgetDesign.synchronicityPointVisibility
+                    )
+
+                    setText(
+                        R.id.tv_trailblaze_power_time, TimeFunction.resinSecondToTime(
+                            _context,
+                            recentSyncTimeDate,
+                            staminaRecoverTime,
+                            TimeNotation.fromValue(widgetDesign.timeNotation)
+                        )
+                    )
+                    setVisibility(
+                        R.id.rl_trailblaze_power_time,
+                        widgetDesign.trailBlazepowerDataVisibility &&
+                                TimeNotation.fromValue(widgetDesign.timeNotation) != TimeNotation.DISABLE_TIME
+                    )
+                }
+
+                when (TimeNotation.fromValue(widgetDesign.timeNotation)) {
+                    TimeNotation.DEFAULT,
+                    TimeNotation.REMAIN_TIME -> {
+                        setText(
+                            R.id.tv_trailblaze_power_time_title,
+                            _context.getString(R.string.until_fully_replenished)
+                        )
+                        setText(
+                            R.id.tv_assignment_title,
+                            _context.getString(R.string.until_assignment_done)
+                        )
+                    }
+
+                    TimeNotation.FULL_CHARGE_TIME -> {
+                        setText(
+                            R.id.tv_trailblaze_power_time_title,
+                            _context.getString(R.string.estimated_replenishment_time)
+                        )
+                        setText(
+                            R.id.tv_assignment_title,
+                            _context.getString(R.string.assignment_done_at)
+                        )
+                    }
+
+                    TimeNotation.DISABLE_TIME -> {}
+                }
             } else {
-                view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.ll_body, View.GONE)
-                view.setViewVisibility(R.id.ll_bottom, View.GONE)
-                view.setViewVisibility(R.id.ll_disable, View.VISIBLE)
+                setVisibility(R.id.pb_loading, false)
+                setVisibility(R.id.ll_body, false)
+                setVisibility(R.id.ll_bottom, false)
+                setVisibility(R.id.ll_disable, true)
 
                 if ((widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
                     view.setTextColor(

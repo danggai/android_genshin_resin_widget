@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.widget.ImageViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -18,6 +19,8 @@ class MainAdapter(
 ) : RecyclerView.Adapter<MainAdapter.ItemViewHolder>() {
 
     private var items: MutableList<Account> = arrayListOf()
+
+    private val grayTint = ColorStateList.valueOf(Color.argb(55, 99, 99, 99))
 
     fun setItemList(_itemList: List<Account>) {
         log.e(_itemList.size)
@@ -46,31 +49,10 @@ class MainAdapter(
                         else "Auto Check In Only"
                 }
 
-                holder.binding.ivResin.apply {
-                    if (item.genshin_uid.contains("-"))
-                        ImageViewCompat.setImageTintList(
-                            this,
-                            ColorStateList.valueOf(Color.argb(55, 99, 99, 99))
-                        )
-                    else ImageViewCompat.setImageTintList(this, null)
-                }
-
-                holder.binding.ivTrailPower.apply {
-                    if (item.honkai_sr_uid.isEmpty())
-                        ImageViewCompat.setImageTintList(
-                            this,
-                            ColorStateList.valueOf(Color.argb(55, 99, 99, 99))
-                        )
-                    else ImageViewCompat.setImageTintList(this, null)
-                }
-
-                holder.binding.ivBattery.apply {
-                    if (item.zzz_uid.isEmpty())
-                        ImageViewCompat.setImageTintList(
-                            this,
-                            ColorStateList.valueOf(Color.argb(55, 99, 99, 99))
-                        )
-                    else ImageViewCompat.setImageTintList(this, null)
+                with(holder.binding) {
+                    if (item.genshin_uid.contains("-")) makeImageTintGray(ivResin)
+                    if (item.honkai_sr_uid.isEmpty()) makeImageTintGray(ivTrailPower)
+                    if (item.zzz_uid.isEmpty()) makeImageTintGray(ivBattery)
                 }
 
                 holder.binding.tvNickname.apply {
@@ -78,6 +60,10 @@ class MainAdapter(
                 }
             }
         }
+    }
+
+    private fun makeImageTintGray(imageView: AppCompatImageView) {
+        ImageViewCompat.setImageTintList(imageView, grayTint)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {

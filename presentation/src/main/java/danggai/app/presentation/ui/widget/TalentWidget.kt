@@ -1,6 +1,5 @@
 package danggai.app.presentation.ui.widget
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -15,6 +14,7 @@ import danggai.app.presentation.util.PlayableCharacters
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.TimeFunction.getSyncDayString
 import danggai.app.presentation.util.WidgetDesignUtils
+import danggai.app.presentation.util.WidgetUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.TalentWorker
 import danggai.domain.local.ResinWidgetDesignSettings
@@ -114,17 +114,11 @@ class TalentWidget() : AppWidgetProvider() {
     private fun makeRemoteViews(context: Context?): RemoteViews {
         val remoteViews = RemoteViews(context!!.packageName, R.layout.widget_talent)
 
-        val intentUpdate = Intent(context, TalentWidget::class.java).apply {
-            action = Constant.ACTION_TALENT_WIDGET_REFRESH
-        }
-        remoteViews.setOnClickPendingIntent(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
+            context,
+            remoteViews,
             R.id.ll_sync,
-            PendingIntent.getBroadcast(
-                context,
-                0,
-                intentUpdate,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-            )
+            WidgetUtils.getUpdateIntent(context, DetailWidget::class.java)
         )
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)

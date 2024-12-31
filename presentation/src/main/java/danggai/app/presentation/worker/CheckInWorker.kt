@@ -23,6 +23,7 @@ import danggai.app.presentation.R
 import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.NotificationMapper
+import danggai.app.presentation.util.NotificationUtils
 import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.db.account.entity.Account
@@ -684,7 +685,7 @@ class CheckInWorker @AssistedInject constructor(
         val nickname = NotificationMapper.getNickname(notiType, account)
         val msg = NotificationMapper.getNotiMsg(context, notiType, nickname, null)
 
-        CommonFunction.sendNotification(notiType, applicationContext, account, title, msg)
+        NotificationUtils.sendNotification(notiType, applicationContext, account, title, msg)
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo {

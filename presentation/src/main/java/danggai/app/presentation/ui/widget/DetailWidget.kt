@@ -1,6 +1,5 @@
 package danggai.app.presentation.ui.widget
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -10,12 +9,12 @@ import android.view.View
 import android.widget.RemoteViews
 import androidx.core.content.ContextCompat.getColor
 import danggai.app.presentation.R
-import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.CommonFunction.isDarkMode
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.WidgetDesignUtils
+import danggai.app.presentation.util.WidgetUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.local.DetailWidgetDesignSettings
@@ -29,6 +28,10 @@ import java.util.Locale
 
 class DetailWidget() : AppWidgetProvider() {
 
+    companion object {
+        val className = DetailWidget::class.java
+    }
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -40,7 +43,7 @@ class DetailWidget() : AppWidgetProvider() {
 
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
-            val remoteView: RemoteViews = makeRemoteViews(context)
+            val remoteView: RemoteViews = makeRemoteViews(context, appWidgetId)
 
             syncView(appWidgetId, remoteView, context)
             appWidgetManager.updateAppWidget(appWidgetId, remoteView)
@@ -114,54 +117,40 @@ class DetailWidget() : AppWidgetProvider() {
         config.setLocale(sLocale)
     }
 
-    private fun makeRemoteViews(context: Context?): RemoteViews {
+    private fun makeRemoteViews(context: Context?, appWidgetId: Int): RemoteViews {
         val views = RemoteViews(context!!.packageName, R.layout.widget_detail_fixed)
 
-        val intentUpdate = Intent(context, DetailWidget::class.java).apply {
-            action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
-        }
-        views.setOnClickPendingIntent(
+        WidgetUtils.setOnClickBroadcastPendingIntent(
+            context,
+            views,
             R.id.ll_sync,
-            PendingIntent.getBroadcast(
-                context,
-                0,
-                intentUpdate,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-            )
+            WidgetUtils.getUpdateIntent(context, className)
         )
 
-        val intentMainActivity = Intent(context, MainActivity::class.java)
-        views.setOnClickPendingIntent(
+        val mainActivityTargetViews = listOf(
             R.id.iv_resin,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
-        )
-        views.setOnClickPendingIntent(
             R.id.iv_daily_commission,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
-        )
-        views.setOnClickPendingIntent(
             R.id.iv_domain,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
-        )
-        views.setOnClickPendingIntent(
             R.id.iv_serenitea_pot,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+            R.id.iv_warp
         )
-        views.setOnClickPendingIntent(
-            R.id.iv_warp,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+        WidgetUtils.setOnClickActivityPendingIntent(
+            context,
+            views,
+            mainActivityTargetViews,
+            WidgetUtils.getMainActivityIntent(context)
         )
-        views.setOnClickPendingIntent(
+
+        WidgetUtils.setOnClickActivityPendingIntent(
+            context,
+            views,
             R.id.ll_disable,
-            PendingIntent.getActivity(context, 0, intentMainActivity, PendingIntent.FLAG_IMMUTABLE)
+            WidgetUtils.getWidgetConfigActivityIntent(context, appWidgetId)
         )
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
         val awId = manager.getAppWidgetIds(
-            ComponentName(
-                context.applicationContext,
-                DetailWidget::class.java
-            )
+            ComponentName(context.applicationContext, className)
         )
 
         manager.updateAppWidget(awId, views)
@@ -170,6 +159,14 @@ class DetailWidget() : AppWidgetProvider() {
     }
 
     private fun syncView(widgetId: Int, view: RemoteViews, context: Context?) {
+        fun setText(viewId: Int, text: String?) {
+            view.setTextViewText(viewId, text ?: "")
+        }
+
+        fun setVisibility(viewId: Int, isVisible: Boolean) {
+            view.setViewVisibility(viewId, if (isVisible) View.VISIBLE else View.GONE)
+        }
+
         context?.let { _context ->
             val widgetDesign =
                 PreferenceManager.getT<DetailWidgetDesignSettings>(
@@ -193,203 +190,174 @@ class DetailWidget() : AppWidgetProvider() {
 
                 log.e()
 
-                view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.ll_disable, View.GONE)
-                view.setViewVisibility(R.id.ll_body, View.VISIBLE)
-                view.setViewVisibility(R.id.ll_bottom, View.VISIBLE)
+                setVisibility(R.id.pb_loading, false)
+                setVisibility(R.id.ll_disable, false)
+                setVisibility(R.id.ll_body, true)
+                setVisibility(R.id.ll_bottom, true)
+
+                setText(R.id.tv_sync_time, recentSyncTimeString)
+
+                setVisibility(R.id.tv_uid, widgetDesign.uidVisibility)
+                setText(R.id.tv_uid, uid)
+
+                setVisibility(R.id.tv_name, widgetDesign.nameVisibility)
+                setText(R.id.tv_name, name)
 
                 val dailyNote = PreferenceManager.getT<GenshinDailyNoteData>(
                     context,
                     Constant.PREF_DAILY_NOTE_DATA + "_$uid"
                 ) ?: GenshinDailyNoteData.EMPTY
 
-                view.setViewVisibility(
-                    R.id.tv_uid,
-                    if (widgetDesign.uidVisibility) View.VISIBLE else View.GONE
-                )
-                view.setTextViewText(R.id.tv_uid, uid)
+                with(dailyNote) {
+                    setText(R.id.tv_resin_title, _context.getString(R.string.resin))
+                    setText(R.id.tv_resin, "$currentResin/$maxResin")
+                    setVisibility(R.id.rl_resin, widgetDesign.resinDataVisibility)
 
-                view.setViewVisibility(
-                    R.id.tv_name,
-                    if (widgetDesign.nameVisibility) View.VISIBLE else View.GONE
-                )
-                view.setTextViewText(R.id.tv_name, name)
-
-                view.setTextViewText(R.id.tv_resin_title, _context.getString(R.string.resin))
-                view.setTextViewText(
-                    R.id.tv_resin,
-                    dailyNote.currentResin.toString() + "/" + dailyNote.maxResin.toString()
-                )
-
-                view.setTextViewText(
-                    R.id.tv_daily_commission_title,
-                    _context.getString(R.string.daily_commissions)
-                )
-                view.setTextViewText(
-                    R.id.tv_daily_commission,
-                    if (dailyNote.isExtraTaskRewardReceived) {
-                        _context.getString(R.string.done)
-                    } else {
-                        (dailyNote.totalTaskNum - dailyNote.finishedTaskNum).toString() + "/" + dailyNote.totalTaskNum.toString()
-                    }
-                )
-
-                view.setTextViewText(
-                    R.id.tv_weekly_boss_title,
-                    _context.getString(R.string.enemies_of_note)
-                )
-                view.setTextViewText(
-                    R.id.tv_weekly_boss,
-                    if (dailyNote.remainResinDiscountNum == 0) {
-                        context.getString(R.string.done)
-                    } else {
-                        CommonFunction.convertIntToTimes(
-                            dailyNote.remainResinDiscountNum,
-                            _context
-                        )
-                    }
-                )
-
-                view.setTextViewText(
-                    R.id.tv_realm_currency_title,
-                    _context.getString(R.string.realm_currency)
-                )
-                view.setTextViewText(
-                    R.id.tv_realm_currency,
-                    (dailyNote.currentHomeCoin).toString() + "/" + (dailyNote.maxHomeCoin).toString()
-                )
-
-                view.setTextViewText(
-                    R.id.tv_transformer_title,
-                    _context.getString(R.string.parametric_transformer)
-                )
-                view.setTextViewText(
-                    R.id.tv_transformer,
-                    when {
-                        dailyNote.transformer == null -> _context.getString(R.string.widget_ui_unknown)
-                        !dailyNote.transformer!!.obtained -> _context.getString(R.string.widget_ui_transformer_not_obtained)
-                        !dailyNote.transformer!!.recoveryTime.reached -> TimeFunction.transformerToTime(
+                    setText(
+                        R.id.tv_resin_time, TimeFunction.resinSecondToTime(
                             _context,
                             recentSyncTimeDate,
-                            dailyNote.transformer,
+                            resinRecoveryTime,
                             TimeNotation.fromValue(widgetDesign.timeNotation)
                         )
+                    )
+                    setVisibility(
+                        R.id.rl_resin_time,
+                        widgetDesign.resinDataVisibility &&
+                                TimeNotation.fromValue(widgetDesign.timeNotation) != TimeNotation.DISABLE_TIME
+                    )
 
-                        else -> _context.getString(R.string.widget_ui_transformer_reached)
+                    setText(
+                        R.id.tv_daily_commission_title,
+                        _context.getString(R.string.daily_commissions)
+                    )
+                    setText(
+                        R.id.tv_daily_commission,
+                        if (isExtraTaskRewardReceived) _context.getString(R.string.done)
+                        else "${totalTaskNum - finishedTaskNum}/$totalTaskNum"
+                    )
+                    setVisibility(
+                        R.id.rl_daily_commission,
+                        widgetDesign.dailyCommissinDataVisibility
+                    )
+
+                    setText(
+                        R.id.tv_weekly_boss_title,
+                        _context.getString(R.string.enemies_of_note)
+                    )
+                    setText(
+                        R.id.tv_weekly_boss,
+                        if (remainResinDiscountNum == 0) {
+                            context.getString(R.string.done)
+                        } else {
+                            CommonFunction.convertIntToTimes(
+                                remainResinDiscountNum,
+                                _context
+                            )
+                        }
+                    )
+                    setVisibility(R.id.rl_weekly_boss, widgetDesign.weeklyBossDataVisibility)
+
+
+                    setText(
+                        R.id.tv_realm_currency_title,
+                        _context.getString(R.string.realm_currency)
+                    )
+                    setText(
+                        R.id.tv_realm_currency,
+                        "$currentHomeCoin/$maxHomeCoin"
+                    )
+                    setVisibility(R.id.rl_realm_currency, widgetDesign.realmCurrencyDataVisibility)
+
+                    setText(
+                        R.id.tv_realm_currency_time, TimeFunction.realmCurrencySecondToTime(
+                            _context,
+                            recentSyncTimeDate,
+                            homeCoinRecoveryTime,
+                            TimeNotation.fromValue(widgetDesign.timeNotation)
+                        )
+                    )
+                    setVisibility(
+                        R.id.rl_realm_currency_time,
+                        widgetDesign.realmCurrencyDataVisibility &&
+                                TimeNotation.fromValue(widgetDesign.timeNotation) != TimeNotation.DISABLE_TIME &&
+                                homeCoinRecoveryTime != "0"
+                    )
+
+                    setText(
+                        R.id.tv_transformer_title,
+                        _context.getString(R.string.parametric_transformer)
+                    )
+                    setText(
+                        R.id.tv_transformer,
+                        when {
+                            transformer == null -> _context.getString(R.string.widget_ui_unknown)
+                            !transformer!!.obtained -> _context.getString(R.string.widget_ui_transformer_not_obtained)
+                            !transformer!!.recoveryTime.reached -> TimeFunction.transformerToTime(
+                                _context,
+                                recentSyncTimeDate,
+                                transformer,
+                                TimeNotation.fromValue(widgetDesign.timeNotation)
+                            )
+
+                            else -> _context.getString(R.string.widget_ui_transformer_reached)
+                        }
+                    )
+                    setVisibility(R.id.rl_transformer, widgetDesign.transformerDataVisibility)
+
+                    setText(
+                        R.id.tv_expedition_time, TimeFunction.expeditionSecondToTime(
+                            _context,
+                            recentSyncTimeDate,
+                            PreferenceManager.getString(
+                                context,
+                                Constant.PREF_EXPEDITION_TIME + "_$uid"
+                            ),
+                            TimeNotation.fromValue(widgetDesign.timeNotation)
+                        )
+                    )
+                    setVisibility(R.id.rl_expedition, widgetDesign.expeditionDataVisibility)
+
+                    when (TimeNotation.fromValue(widgetDesign.timeNotation)) {
+                        TimeNotation.DEFAULT,
+                        TimeNotation.REMAIN_TIME -> {
+                            setText(
+                                R.id.tv_resin_time_title,
+                                _context.getString(R.string.until_fully_replenished)
+                            )
+                            setText(
+                                R.id.tv_realm_currency_time_title,
+                                _context.getString(R.string.until_fully_replenished)
+                            )
+                            setText(
+                                R.id.tv_expedition_title,
+                                _context.getString(R.string.until_expeditions_done)
+                            )
+                        }
+
+                        TimeNotation.FULL_CHARGE_TIME -> {
+                            setText(
+                                R.id.tv_resin_time_title,
+                                _context.getString(R.string.estimated_replenishment_time)
+                            )
+                            setText(
+                                R.id.tv_realm_currency_time_title,
+                                _context.getString(R.string.estimated_replenishment_time)
+                            )
+                            setText(
+                                R.id.tv_expedition_title,
+                                _context.getString(R.string.expeditions_done_at)
+                            )
+                        }
+
+                        else -> {}
                     }
-                )
-
-                view.setTextViewText(R.id.tv_sync_time, recentSyncTimeString)
-
-                when (TimeNotation.fromValue(widgetDesign.timeNotation)) {
-                    TimeNotation.DEFAULT,
-                    TimeNotation.REMAIN_TIME -> {
-                        view.setTextViewText(
-                            R.id.tv_resin_time_title,
-                            _context.getString(R.string.until_fully_replenished)
-                        )
-                        view.setTextViewText(
-                            R.id.tv_realm_currency_time_title,
-                            _context.getString(R.string.until_fully_replenished)
-                        )
-                        view.setTextViewText(
-                            R.id.tv_expedition_title,
-                            _context.getString(R.string.until_expeditions_done)
-                        )
-                    }
-
-                    TimeNotation.FULL_CHARGE_TIME -> {
-                        view.setTextViewText(
-                            R.id.tv_resin_time_title,
-                            _context.getString(R.string.estimated_replenishment_time)
-                        )
-                        view.setTextViewText(
-                            R.id.tv_realm_currency_time_title,
-                            _context.getString(R.string.estimated_replenishment_time)
-                        )
-                        view.setTextViewText(
-                            R.id.tv_expedition_title,
-                            _context.getString(R.string.expeditions_done_at)
-                        )
-                    }
-
-                    else -> {}
                 }
-
-                view.setTextViewText(
-                    R.id.tv_resin_time, TimeFunction.resinSecondToTime(
-                        _context,
-                        recentSyncTimeDate,
-                        dailyNote.resinRecoveryTime,
-                        TimeNotation.fromValue(widgetDesign.timeNotation)
-                    )
-                )
-                view.setTextViewText(
-                    R.id.tv_realm_currency_time, TimeFunction.realmCurrencySecondToTime(
-                        _context,
-                        recentSyncTimeDate,
-                        dailyNote.homeCoinRecoveryTime,
-                        TimeNotation.fromValue(widgetDesign.timeNotation)
-                    )
-                )
-                view.setTextViewText(
-                    R.id.tv_expedition_time, TimeFunction.expeditionSecondToTime(
-                        _context,
-                        recentSyncTimeDate,
-                        PreferenceManager.getString(
-                            context,
-                            Constant.PREF_EXPEDITION_TIME + "_$uid"
-                        ),
-                        TimeNotation.fromValue(widgetDesign.timeNotation)
-                    )
-                )
-
-                view.setViewVisibility(
-                    R.id.rl_resin,
-                    if (widgetDesign.resinDataVisibility) View.VISIBLE else View.GONE
-                )
-                view.setViewVisibility(
-                    R.id.rl_resin_time,
-                    if (widgetDesign.resinDataVisibility &&
-                        TimeNotation.fromValue(widgetDesign.timeNotation) != TimeNotation.DISABLE_TIME
-                    ) View.VISIBLE else View.GONE
-                )
-
-                view.setViewVisibility(
-                    R.id.rl_daily_commission,
-                    if (widgetDesign.dailyCommissinDataVisibility) View.VISIBLE else View.GONE
-                )
-                view.setViewVisibility(
-                    R.id.rl_weekly_boss,
-                    if (widgetDesign.weeklyBossDataVisibility) View.VISIBLE else View.GONE
-                )
-
-                view.setViewVisibility(
-                    R.id.rl_realm_currency,
-                    if (widgetDesign.realmCurrencyDataVisibility) View.VISIBLE else View.GONE
-                )
-                view.setViewVisibility(
-                    R.id.rl_realm_currency_time,
-                    if (widgetDesign.realmCurrencyDataVisibility &&
-                        TimeNotation.fromValue(widgetDesign.timeNotation) != TimeNotation.DISABLE_TIME &&
-                        dailyNote.homeCoinRecoveryTime != "0"
-                    ) View.VISIBLE else View.GONE
-                )
-
-                view.setViewVisibility(
-                    R.id.rl_expedition,
-                    if (widgetDesign.expeditionDataVisibility) View.VISIBLE else View.GONE
-                )
-
-                view.setViewVisibility(
-                    R.id.rl_transformer,
-                    if (widgetDesign.transformerDataVisibility) View.VISIBLE else View.GONE
-                )
             } else {
-                view.setViewVisibility(R.id.pb_loading, View.GONE)
-                view.setViewVisibility(R.id.ll_body, View.GONE)
-                view.setViewVisibility(R.id.ll_bottom, View.GONE)
-                view.setViewVisibility(R.id.ll_disable, View.VISIBLE)
+                setVisibility(R.id.pb_loading, false)
+                setVisibility(R.id.ll_body, false)
+                setVisibility(R.id.ll_bottom, false)
+                setVisibility(R.id.ll_disable, true)
 
                 if ((widgetDesign.widgetTheme == Constant.PREF_WIDGET_THEME_DARK) || _context.isDarkMode()) {
                     view.setTextColor(

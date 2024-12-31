@@ -33,6 +33,15 @@ object Constant {
     const val HOW_CAN_I_GET_COOKIE_URL =
         "https://github.com/danggai/android_genshin_resin_widget/blob/master/how_to_get_hoyolab_cookie.md"
 
+
+    /* Package names */
+    const val PACKAGE_NAMES_KEY = "PACKAGE_NAMES"
+    const val PACKAGE_GENSHIN = "com.miHoYo.GenshinImpact"
+    const val PACKAGE_GENSHIN_GALAXY = "com.miHoYo.GI.samsung"
+    const val PACKAGE_HONKAI_STARRAIL = "com.HoYoverse.hkrpgoversea"
+    const val PACKAGE_HONKAI_STARRAIL_GALAXY = "com.HoYoverse.hkrpgsamsung"
+    const val PACKAGE_ZENLESS_ZONE_ZERO = "com.HoYoverse.Nap"
+
     /* 원신 서버 */
     const val SERVER_CN_GF_01 = "cn_gf01"
     const val SERVER_CN_QD_01 = "cn_qd01"
@@ -145,7 +154,7 @@ object Constant {
 
     const val PREF_CHECKED_STORAGE_PERMISSION = "PREF_FIRST_LAUNCH"
     const val PREF_CHECKED_ANTIDOZE_PERMISSION = "PREF_CHECKED_ANTIDOZE_PERMISSION"
-    const val PREF_CHECKED_NOTIFICATION_PERMISSION = "PREF_CHECKED_NOTIFICATION_PERMISSION"
+    const val PREF_LAST_NOTIFICATION_PERMISSION_CHECK = "PREF_LAST_NOTIFICATION_PERMISSION_CHECK"
 
     const val PREF_CHECKED_ROOM_DB_MIGRATION = "PREF_CHECKED_ROOM_DB_MIGRATION"
 

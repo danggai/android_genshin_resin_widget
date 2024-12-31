@@ -1,15 +1,15 @@
 package danggai.app.presentation.ui.design
 
-import android.Manifest
-import android.app.WallpaperManager
+import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,14 +17,22 @@ import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentWidgetDesignBinding
 import danggai.app.presentation.extension.repeatOnLifeCycleStarted
+import danggai.app.presentation.receiver.WidgetPinnedReceiver
 import danggai.app.presentation.ui.design.charaters.WidgetDesignCharacterFragment
 import danggai.app.presentation.ui.design.charaters.select.WidgetDesignSelectCharacterFragment
 import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
 import danggai.app.presentation.ui.design.resin.WidgetDesignResinFragment
+import danggai.app.presentation.ui.widget.BatteryWidget
+import danggai.app.presentation.ui.widget.DetailWidget
+import danggai.app.presentation.ui.widget.HKSRDetailWidget
+import danggai.app.presentation.ui.widget.ResinWidget
 import danggai.app.presentation.ui.widget.TalentWidget
+import danggai.app.presentation.ui.widget.TrailPowerWidget
+import danggai.app.presentation.ui.widget.ZZZDetailWidget
 import danggai.app.presentation.util.CommonFunction
-import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.log
+import danggai.domain.local.DesignTabType
+import danggai.domain.local.Preview
 import danggai.domain.util.Constant
 import kotlinx.coroutines.launch
 
@@ -45,78 +53,64 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
         super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.vm = mVM
-        binding.vm?.setCommonFun()
-
-        context?.let { it ->
-            storagePermissionCheck(it)
+        binding.vm = mVM.apply {
+            initUi()
+            setCommonFun()
         }
 
         initTabLayout()
 
-        initUi()
         initSf()
     }
 
     private fun initTabLayout() {
         val pagerAdapter = WidgetDesignAdapter(requireActivity()).apply {
-            addFragment(WidgetDesignResinFragment())
-            addFragment(WidgetDesignDetailFragment())
-            addFragment(WidgetDesignCharacterFragment())
+            DesignTabType.values()
+                .sortedBy { it.position } // position 기준으로 정렬
+                .forEach { tabType ->
+                    when (tabType) {
+                        DesignTabType.STAMINA -> addFragment(WidgetDesignResinFragment())
+                        DesignTabType.DETAIL -> addFragment(WidgetDesignDetailFragment())
+                        DesignTabType.TALENT -> addFragment(WidgetDesignCharacterFragment())
+                        DesignTabType.UNKNOWN -> { /* 아무것도 하지 않음 */
+                        }
+                    }
+                }
         }
 
         binding.vpMain.adapter = pagerAdapter
 
         TabLayoutMediator(binding.tlTop, binding.vpMain) { tab, position ->
-            tab.text = when (position) {
-                0 -> "Stamina\u00A0"
-                1 -> "Detail\u00A0"
-                2 -> "Talent\u00A0"
-                else -> ""
-            }
+            tab.text = DesignTabType.fromPosition(position).title
         }.attach()
     }
 
-    private fun initUi() {
-        mVM.initUi()
-        context?.let { it ->
-            try {
-                val wallpaperManager = WallpaperManager.getInstance(it)
-                val wallpaperDrawable = wallpaperManager.drawable
+    private fun <T : AppWidgetProvider> requestPinWidget(context: Context, widgetClass: Class<T>) {
+        val appWidgetManager = context.getSystemService(AppWidgetManager::class.java)
+        val widgetProvider = ComponentName(context, widgetClass)
 
-                binding.vpMain.background = wallpaperDrawable
-            } catch (e: SecurityException) {
-                log.e()
-                makeToast(it, getString(R.string.msg_toast_storage_permission_denied))
-            }
-        }
-    }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            if (appWidgetManager.isRequestPinAppWidgetSupported) {
+                val pinnedWidgetCallbackIntent =
+                    Intent(context, WidgetPinnedReceiver::class.java)
 
-    private fun storagePermissionCheck(context: Context) {
-        if (PreferenceManager.getBoolean(context, Constant.PREF_CHECKED_STORAGE_PERMISSION, true)) {
-            log.e()
-
-            val permissionLauncher: ActivityResultLauncher<String> = registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-            ) { isGranted: Boolean ->
-                PreferenceManager.setBoolean(
+                val successCallback = PendingIntent.getBroadcast(
                     context,
-                    Constant.PREF_CHECKED_STORAGE_PERMISSION,
-                    false
+                    0,
+                    pinnedWidgetCallbackIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
-                initUi()
-            }
 
-            AlertDialog.Builder(requireActivity())
-                .setTitle(R.string.dialog_title_permission)
-                .setMessage(R.string.dialog_msg_permission_storage)
-                .setCancelable(false)
-                .setPositiveButton(R.string.apply) { dialog, whichButton ->
-                    log.e()
-                    permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-                }
-                .create()
-                .show()
+                appWidgetManager.requestPinAppWidget(
+                    widgetProvider,
+                    null,
+                    successCallback
+                )
+            } else {
+                makeToast(context, context.getString(R.string.msg_toast_widget_pin_not_supported))
+            }
+        else {
+            makeToast(context, context.getString(R.string.msg_toast_widget_pin_supports_android_8))
         }
     }
 
@@ -132,6 +126,33 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
                                 .setAction(Constant.ACTION_TALENT_WIDGET_REFRESH)
                         )
                     }
+                }
+            }
+
+            launch {
+                mVM.sfAddWidget.collect { preview ->
+                    val context = requireContext()
+                    val designTab = DesignTabType.fromPosition(binding.vpMain.currentItem)
+
+                    // 위젯 매핑 테이블 (디자인 탭 + 프리뷰에 따른 위젯 매핑)
+                    val widgetMap = mapOf(
+                        DesignTabType.STAMINA to mapOf(
+                            Preview.GENSHIN to ResinWidget::class.java,
+                            Preview.STARRAIL to TrailPowerWidget::class.java,
+                            Preview.ZZZ to BatteryWidget::class.java
+                        ),
+                        DesignTabType.DETAIL to mapOf(
+                            Preview.GENSHIN to DetailWidget::class.java,
+                            Preview.STARRAIL to HKSRDetailWidget::class.java,
+                            Preview.ZZZ to ZZZDetailWidget::class.java
+                        )
+                    )
+
+                    val widgetClass = widgetMap[designTab]?.get(preview)
+
+
+                    if (widgetClass !== null)
+                        requestPinWidget(context, widgetClass)
                 }
             }
 

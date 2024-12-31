@@ -1,6 +1,6 @@
 package danggai.app.presentation.ui.main
 
-import android.Manifest
+import android.app.NotificationManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -20,8 +20,6 @@ import androidx.work.WorkManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.normal.TedPermission
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.BuildConfig
 import danggai.app.presentation.R
@@ -151,7 +149,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         initSf()
         initUi()
 
-        notificationPermisisonCheck(view.context)
+        notificationPermisisonCheck()
         antidozePermisisonCheck(view.context)
 
         updateNoteCheck()
@@ -339,34 +337,58 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         }
     }
 
-    private fun notificationPermisisonCheck(context: Context) {
+    private fun isNotificationEnabled(): Boolean {
+        val notificationManager =
+            requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) true
+        else notificationManager.areNotificationsEnabled()
+    }
+
+    private fun notificationPermisisonCheck() {
         log.e()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
-            && PreferenceManager.getBoolean(
-                context,
-                Constant.PREF_CHECKED_NOTIFICATION_PERMISSION,
-                true
-            )
-        ) {
-            log.e()
-            PreferenceManager.setBoolean(
-                context,
-                Constant.PREF_CHECKED_NOTIFICATION_PERMISSION,
-                false
-            )
+        val currentTime = System.currentTimeMillis()
 
-            TedPermission.create()
-                .setPermissionListener(object : PermissionListener {
-                    override fun onPermissionGranted() {
-                        log.e()
-                    }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (!isNotificationEnabled()) {
+                val currentCheckedDate = PreferenceManager.getLong(
+                    requireContext(),
+                    Constant.PREF_LAST_NOTIFICATION_PERMISSION_CHECK,
+                    0
+                )
 
-                    override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-                        log.e()
+                if (!CommonFunction.isSameDay(currentCheckedDate, currentTime))
+                    activity?.let { activity ->
+                        AlertDialog.Builder(activity)
+                            .setTitle(R.string.dialog_no_noti_permission)
+                            .setMessage(getString(R.string.dialog_msg_no_noti_permission))
+                            .setCancelable(false)
+                            .setPositiveButton(R.string.apply) { dialog, whichButton ->
+                                log.e()
+                                // 알림 권한이 없는 경우 권한 요청
+                                val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                                intent.putExtra(
+                                    Settings.EXTRA_APP_PACKAGE,
+                                    requireContext().packageName
+                                )
+                                startActivity(intent)
+                            }
+                            .setNegativeButton(R.string.not_show_today) { dialog, whichButton ->
+                                log.e()
+                                PreferenceManager.setLong(
+                                    requireContext(),
+                                    Constant.PREF_LAST_NOTIFICATION_PERMISSION_CHECK,
+                                    currentTime
+                                )
+                            }
+                            .create()
+                            .show()
                     }
-                })
-                .setPermissions(Manifest.permission.POST_NOTIFICATIONS)
-                .check()
+            } else {
+                log.e("Permission already granted")
+            }
+        } else {
+            log.e("No need to grant Permission (Android below Tiramisu)")
         }
     }
 

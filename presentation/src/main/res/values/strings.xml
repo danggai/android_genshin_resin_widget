@@ -22,28 +22,32 @@
     <string name="font_size">Font Size</string>
     <string name="image">Image</string>
     <string name="identifier">Identifier</string>
+
     <string name="select_character">Select Character</string>
     <string name="select_character_title">Characters display in widget</string>
+
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
+    <string name="not_show_today">Do not show today</string>
     <string name="time">\u0020time</string>
     <string name="times">\u0020times</string>
 
     <string name="uid" translatable="false">UID</string>
     <string name="nickname_">Nickname</string>
     <string name="new_hoyolab_account">New HoYoLab Account</string>
-    <string name="hoyolab_checkin">HoYoLab CheckIn</string>
+    <string name="hoyolab_checkin">HoYoLab Check In</string>
     <string name="widget_customizing">Widget Design Customizing</string>
     <string name="btn_no_genshin_account">Don\'t use genshin widget.</string>
     <string name="btn_no_honkai_sr_account">Don\'t use Honkai: Star Rail widget.</string>
     <string name="btn_no_zzz_account">Don\'t use Zenless Zone Zero Rail widget.</string>
-    <string name="hoyolab_checkin_desc">For the first time, you must press the \'HoYoLab CheckIn\' button manually to proceed with automatic attendance.</string>
+    <string name="hoyolab_checkin_desc">For the first time, you must press the \'HoYoLab Check In\' button manually to proceed with automatic attendance.</string>
     <string name="hoyolab_checkin_desc_2">Automatic attendance is performed based on Within HoYoLab, My Information > My Character.</string>
 
     <string name="save_setting">Save Setting</string>
     <string name="save">Save</string>
     <string name="ok">OK</string>
     <string name="reset">RESET</string>
+    <string name="save_add">Save and add widgets</string>
 
     <string name="no_hoyolab_accounts">No HoYoLab account registered.</string>
     <string name="get_cookie">Click here after Login!</string>
@@ -94,8 +98,11 @@
     <string name="btn_auto_check_in_enable_honkai_3rd">Honkai Impact 3rd</string>
     <string name="btn_auto_check_in_enable_honkai_sr">Honkai: Star Rail</string>
     <string name="btn_auto_check_in_enable_zzz">Zenless Zone Zero</string>
-    <string name="btn_check_in_success">Checkin Succeed</string>
-    <string name="btn_check_in_failed">Checkin Failed</string>
+
+    <string name="btn_start_check_in">Start Check In now</string>
+
+    <string name="btn_check_in_success">Check In Succeed</string>
+    <string name="btn_check_in_failed">Check In Failed</string>
 
 
     <string name="done">Done</string>
@@ -113,9 +120,12 @@
 
     <string name="data_save_mode_not_supported">Data saving mode is not supported under Android 7.</string>
 
+    <string name="msg_toast_widget_pin_not_supported">The launcher does not support widget pinning.</string>
+    <string name="msg_toast_widget_pin_supports_android_8">This feature is supported on Android 8.0 and above.</string>
+
     <string name="dialog_title_permission">Allowing permission</string>
     <string name="dialog_msg_permission_storage">When customizing widget, storage permission is required to proceed with the design by substituting it into the wallpaper you actually use.\n\nYou can use the app even if you reject the permission.</string>
-    <string name="dialog_msg_permission_antidoze">Power saving exclusion is required to prevent problems with widget refresh/auto checkin due to issues such as low battery/sleep mode.\n\nYou can use the app even if you deny the permission.</string>
+    <string name="dialog_msg_permission_antidoze">Power saving exclusion is required to prevent problems with widget refresh/auto check in due to issues such as low battery/sleep mode.\n\nYou can use the app even if you deny the permission.</string>
 
     <string name="msg_toast_widget_no_account">You can\'t use widgets without a linked HoYoLAB account!</string>
     <string name="msg_toast_widget_no_account_select">Select the HoYoLAB account to display in the widget!</string>
@@ -198,6 +208,9 @@
 
     <string name="dialog_daily_weekly_yet_noti">Caution when setting up notifications</string>
     <string name="dialog_msg_daily_weekly_yet_noti">When using this feature, if HoYoLAB provides an incorrect daily request/weekly boss progress, the user may receive an incorrect notification.\nPlease note that we recommend you to use this feature.</string>
+
+    <string name="dialog_no_noti_permission">No notification permission!</string>
+    <string name="dialog_msg_no_noti_permission">If you don\'t have notification permission, the app\'s notification features might not work properly.\nWould you like to enable notification permission?</string>
 
     <!-- 푸시 알림  -->
 
@@ -285,7 +298,7 @@
     <string name="hint_nickname_honkai_sr">Enter name of trailblazer!</string>
     <string name="hint_nickname_zzz">Enter name of proxy!</string>
 
-    <string name="invalid_user_info">You can\'t use it\nwithout user information!</string>
+    <string name="invalid_user_info">Click here to select a user account!</string>
 
     <string name="pioneer">Trailblazer</string>
     <string name="captain">Captain</string>

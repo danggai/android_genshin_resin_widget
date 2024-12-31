@@ -21,6 +21,15 @@
     <string name="image">이미지</string>
     <string name="identifier">식별자 표시</string>
 
+    <string name="select_character">대상 캐릭터 선택하기</string>
+    <string name="select_character_title">위젯에 표시할 캐릭터</string>
+
+    <string name="apply">확인</string>
+    <string name="cancel">취소</string>
+    <string name="not_show_today">오늘 보지 않기</string>
+    <string name="time">회</string>
+    <string name="times">회</string>
+
     <string name="nickname_">닉네임</string>
     <string name="new_hoyolab_account">새 호요랩 계정</string>
     <string name="hoyolab_checkin">호요랩 출석체크</string>
@@ -31,18 +40,11 @@
     <string name="hoyolab_checkin_desc">최초 1회는 <b>\'호요랩 출석체크\'</b> 버튼을 눌러 수동으로 진행해야\n자동 출석이 정상적으로 진행됩니다.</string>
     <string name="hoyolab_checkin_desc_2">호요랩 내의 내 정보 > 나의 캐릭터 탭에 있는 계정을\n기준으로 자동 출석체크를 진행합니다.</string>
 
-    <string name="apply">확인</string>
-    <string name="cancel">취소</string>
-    <string name="time">회</string>
-    <string name="times">회</string>
-
-    <string name="select_character">대상 캐릭터 선택하기</string>
-    <string name="select_character_title">위젯에 표시할 캐릭터</string>
-
     <string name="save_setting">설정 저장</string>
     <string name="save">저장</string>
     <string name="ok">확인</string>
     <string name="reset">초기화</string>
+    <string name="save_add">저장하고 위젯 추가하기</string>
 
     <string name="no_hoyolab_accounts">등록 된 호요랩 계정이 없습니다.</string>
     <string name="get_cookie">로그인 후 여기를 눌러주세요!</string>
@@ -88,6 +90,9 @@
     <string name="btn_auto_check_in_enable_honkai_3rd">붕괴 3rd</string>
     <string name="btn_auto_check_in_enable_honkai_sr">붕괴: 스타레일</string>
     <string name="btn_auto_check_in_enable_zzz">젠레스 존 제로</string>
+
+    <string name="btn_start_check_in">바로 출석체크 진행하기</string>
+
     <string name="btn_check_in_success">출석 성공 시</string>
     <string name="btn_check_in_failed">출석 실패 시</string>
 
@@ -105,6 +110,9 @@
     <string name="sns_account">SNS 계정</string>
 
     <string name="data_save_mode_not_supported">Android7 미만에서는 데이터 절약 모드를 지원하지 않습니다.</string>
+
+    <string name="msg_toast_widget_pin_not_supported">런처가 위젯 고정 기능을 지원하지 않습니다.</string>
+    <string name="msg_toast_widget_pin_supports_android_8">Android 8.0 이상에서 지원되는 기능입니다.</string>
 
     <string name="dialog_title_permission">권한 허용하기</string>
     <string name="dialog_msg_permission_storage">위젯 커스텀 중, 실제로 사용하는 배경화면에 대입하여 디자인을 진행하기 위해 저장소 권한이 필요합니다.\n\n권한을 거부하여도 앱 사용이 가능합니다.</string>
@@ -191,6 +199,11 @@
     <string name="dialog_daily_weekly_yet_noti">알림 설정 시 주의</string>
     <string name="dialog_msg_daily_weekly_yet_noti">해당 기능 사용 시, HoYoLAB에서 올바르지 않은 일일의뢰/주간보스 진척도를 제공하는 경우 사용자가 잘못 된 알림을 수신 받을 수 있습니다.\n이 점 유의하시고 해당 기능 사용을 권장합니다.</string>
 
+    <string name="dialog_no_noti_permission">알림 권한이 없어요!</string>
+    <string name="dialog_msg_no_noti_permission">알림 권한이 없으면 앱의 알림 기능이 정상적으로 작동하지 않을 수 있습니다.\n알림 권한을 설정할까요?</string>
+
+    <!-- 푸시 알림  -->
+
     <string name="push_default_noti_title">알림</string>
     <string name="push_default_noti_description">설명</string>
 
@@ -276,7 +289,7 @@
     <string name="hint_nickname_honkai_sr">개척자의 이름을 적어 줘!</string>
     <string name="hint_nickname_zzz">로프꾼의 이름을 적어 줘!</string>
 
-    <string name="invalid_user_info">유저 정보 없이는\n사용할 수 없어!</string>
+    <string name="invalid_user_info">여기를 클릭해서 사용자 계정을 선택해주세요!</string>
 
     <string name="pioneer">개척자</string>
     <string name="captain">함장</string>
