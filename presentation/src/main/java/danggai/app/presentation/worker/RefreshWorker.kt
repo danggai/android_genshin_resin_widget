@@ -13,6 +13,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.NotificationMapper
+import danggai.app.presentation.util.NotificationUtils
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.TimeFunction
 import danggai.app.presentation.util.log
@@ -656,7 +657,7 @@ class RefreshWorker @AssistedInject constructor(
         log.e(title)
         log.e(msg)
 
-        CommonFunction.sendNotification(notiType, applicationContext, account, title, msg)
+        NotificationUtils.sendNotification(notiType, applicationContext, account, title, msg)
     }
 
     override fun doWork(): Result {

@@ -1,4 +1,4 @@
-package danggai.app.presentation.ui.widget.config
+package danggai.app.presentation.receiver
 
 import android.appwidget.AppWidgetManager
 import android.content.BroadcastReceiver

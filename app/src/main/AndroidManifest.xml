@@ -10,6 +10,14 @@
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <queries>
+        <package android:name="com.miHoYo.GenshinImpact" />
+        <package android:name="com.miHoYo.GI.samsung" />
+        <package android:name="com.HoYoverse.hkrpgoversea" />
+        <package android:name="com.HoYoverse.hkrpgsamsung" />
+        <package android:name="com.HoYoverse.Nap" />
+    </queries>
+
     <application
         android:name="danggai.app.resinwidget.App"
         android:allowBackup="true"
@@ -219,7 +227,7 @@
         </receiver>
 
         <receiver
-            android:name="danggai.app.presentation.ui.widget.config.WidgetPinnedReceiver"
+            android:name="danggai.app.presentation.receiver.WidgetPinnedReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="danggai.app.resinwidget.PINNED_WIDGET" />
