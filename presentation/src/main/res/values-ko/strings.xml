@@ -422,5 +422,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 젠레스 존 제로 자동 출석 오류 수정</string>
+    <string name="dialog_msg_patch_note">- 앱 이름이 "호요 도우미"로 변경되었습니다!\n\n- 여러 사용자 편의성이 개선되었습니다. (앱 내 위젯 추가 기능, 계정 추가 시 출석, 알림 클릭 시 앱 실행 등)\n- 젠레스 존 제로 상세 위젯에 패러미터가 추가되었습니다.</string>
 </resources>

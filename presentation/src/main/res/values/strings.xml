@@ -431,5 +431,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Bug Fix: Zenless Zone Zero Auto check in</string>
+    <string name="dialog_msg_patch_note">- App name has been changed to "HoYo Assistant"!\n\n- Various user convenience improvements have been made. (Added features like in-app widget addition, attendance when adding an account, opening each game when clicking notifications, etc.)\n- Parameters have been added to the ZZZ detail widget.</string>
 </resources>
