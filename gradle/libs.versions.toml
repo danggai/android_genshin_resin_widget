@@ -1,12 +1,4 @@
 [versions]
-# SDK Versions
-minSdk = "23"
-compileSdk = "34"
-
-# App Version
-versionCode = "75"
-versionName = "5.0.0"
-
 # Gradle Plugins
 buildGradle = "7.4.2"
 kotlinGradle = "1.7.10"
