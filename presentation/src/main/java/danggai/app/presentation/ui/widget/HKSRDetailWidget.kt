@@ -222,6 +222,8 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                     Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid"
                 ) ?: HonkaiSrDataLocal.EMPTY
 
+                setVisibility(R.id.iv_error, data.isError)
+
                 with(data.dailyNote) {
                     setText(
                         R.id.tv_trailblaze_power_title,

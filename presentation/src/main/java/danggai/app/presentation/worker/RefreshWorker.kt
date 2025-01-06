@@ -562,7 +562,11 @@ class RefreshWorker @AssistedInject constructor(
         val expeditionTime: String = CommonFunction.getExpeditionTime(data)
         preference.setStringHonkaiSrExpeditionTime(account.honkai_sr_uid, expeditionTime)
 
-        preference.setHonkaiSrDailyNote(account.honkai_sr_uid, data)
+        preference.setHonkaiSrDailyNote(
+            account.honkai_sr_uid,
+            if (data.dailyNote.currentStamina != -1) data
+            else preference.getHonkaiSrDailyNote(account.honkai_sr_uid).copy(isError = true)
+        )
     }
 
     private fun updateData(account: Account, dailyNote: ZZZDailyNoteData) {
