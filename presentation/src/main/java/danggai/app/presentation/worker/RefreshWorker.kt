@@ -554,10 +554,11 @@ class RefreshWorker @AssistedInject constructor(
             log.e(e.message.toString())
         }
 
-        preference.setStringRecentSyncTime(
-            account.honkai_sr_uid,
-            TimeFunction.getSyncDateTimeString()
-        )
+        if (data.dailyNote.currentStamina != -1)
+            preference.setStringRecentSyncTime(
+                account.honkai_sr_uid,
+                TimeFunction.getSyncDateTimeString()
+            )
 
         val expeditionTime: String = CommonFunction.getExpeditionTime(data)
         preference.setStringHonkaiSrExpeditionTime(account.honkai_sr_uid, expeditionTime)
