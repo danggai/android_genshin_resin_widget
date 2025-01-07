@@ -487,6 +487,9 @@ class RefreshWorker @AssistedInject constructor(
 
     private fun updateData(account: Account, data: HonkaiSrDataLocal) {
         log.e()
+        fun isErrorOccurred(data: HonkaiSrDataLocal): Boolean {
+            return data.dailyNote.currentStamina == -1
+        }
 
         fun sendNotiActions() {
             val notiSettings = preference.getDailyNoteSettings()
@@ -554,7 +557,7 @@ class RefreshWorker @AssistedInject constructor(
             log.e(e.message.toString())
         }
 
-        if (data.dailyNote.currentStamina != -1)
+        if (!isErrorOccurred(data))
             preference.setStringRecentSyncTime(
                 account.honkai_sr_uid,
                 TimeFunction.getSyncDateTimeString()
@@ -565,7 +568,7 @@ class RefreshWorker @AssistedInject constructor(
 
         preference.setHonkaiSrDailyNote(
             account.honkai_sr_uid,
-            if (data.dailyNote.currentStamina != -1) data
+            if (!isErrorOccurred(data)) data
             else preference.getHonkaiSrDailyNote(account.honkai_sr_uid).copy(isError = true)
         )
     }
