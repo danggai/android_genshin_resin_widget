@@ -132,7 +132,9 @@ object WidgetDesignUtils {
         widget.apply {
             llRoot.setBackgroundColor(bgColor)
 
-            ivRefersh.setColorFilter(subFontColor)
+            ivError.setColorFilter(R.color.red)
+
+            ivRefresh.setColorFilter(subFontColor)
             tvSyncTime.setTextColor(subFontColor)
             tvDisable.setTextColor(subFontColor)
 

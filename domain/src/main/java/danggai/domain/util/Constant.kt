@@ -252,6 +252,8 @@ object Constant {
     const val PREF_WIDGET_THEME_LIGHT = 1
     const val PREF_WIDGET_THEME_DARK = 2
 
+    const val PREF_LAST_HONKAI_SR_FAIL_TIME = "PREF_LAST_HONKAI_SR_FAIL_TIME"
+
     const val TIME_TYPE_MAX = 0
     const val TIME_TYPE_DONE = 1
 

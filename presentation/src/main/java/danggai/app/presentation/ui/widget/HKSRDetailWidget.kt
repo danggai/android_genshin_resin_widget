@@ -45,7 +45,27 @@ class HKSRDetailWidget() : AppWidgetProvider() {
             log.e(appWidgetId)
             val remoteView: RemoteViews = makeRemoteViews(context, appWidgetId)
 
-            syncView(appWidgetId, remoteView, context)
+            try {
+                syncView(appWidgetId, remoteView, context)
+            } catch (e: NullPointerException) {
+                // 무한재시도 방지용 임시코드
+                val lastAttemptTime =
+                    PreferenceManager.getLong(context, Constant.PREF_LAST_HONKAI_SR_FAIL_TIME, 0L)
+                val currentTime = System.currentTimeMillis()
+
+                // 10분 내 재시도면 그냥 에러 쓰로우
+                if (currentTime - lastAttemptTime < 600000) {
+                    throw e
+                }
+
+                RefreshWorker.startWorkerOneTime(context)
+                PreferenceManager.setLong(
+                    context,
+                    Constant.PREF_LAST_HONKAI_SR_FAIL_TIME,
+                    currentTime
+                )
+            }
+
             appWidgetManager.updateAppWidget(appWidgetId, remoteView)
         }
     }
@@ -221,6 +241,8 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                     context,
                     Constant.PREF_HONKAI_SR_DAILY_NOTE_DATA + "_$uid"
                 ) ?: HonkaiSrDataLocal.EMPTY
+
+                setVisibility(R.id.iv_error, data.isError)
 
                 with(data.dailyNote) {
                     setText(

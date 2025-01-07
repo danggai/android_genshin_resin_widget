@@ -29,30 +29,40 @@
             android:paddingBottom="3dp"
             android:animateLayoutChanges="true">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/ll_sync"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginBottom="5dp"
-                android:paddingLeft="20dp">
+                android:layout_marginBottom="5dp">
+
+                <ImageView
+                    android:id="@+id/iv_error"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/baseline_wifi_tethering_error_24"
+                    android:tint="@color/red"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tv_sync_time"
                     style="@style/TextView"
-                    android:singleLine="true"
                     android:text="MM/dd hh:mm"
                     android:textColor="@color/widget_font_sub"
+                    android:layout_toStartOf="@id/iv_refresh"
+                    android:layout_centerVertical="true"
                     android:textSize="10sp" />
 
                 <ImageView
-                    android:id="@+id/iv_refersh"
+                    android:id="@+id/iv_refresh"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:src="@drawable/baseline_sync_24" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_trailblaze_power"
