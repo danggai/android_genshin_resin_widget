@@ -170,7 +170,7 @@ object TimeFunction {
         second: String,
         timeType: Int = Constant.TIME_TYPE_MAX
     ): String {
-        return secondToRemainTime(context, second.toInt(), timeType)
+        return if (second.isBlank()) "" else secondToRemainTime(context, second.toInt(), timeType)
     }
 
     fun secondToRemainTime(
