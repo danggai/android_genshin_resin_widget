@@ -30,37 +30,49 @@
             android:animateLayoutChanges="true">
 
             <RelativeLayout
-                android:id="@+id/ll_sync"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp">
 
-                <ImageView
-                    android:id="@+id/iv_error"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                <LinearLayout
+                    android:id="@+id/ll_error"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/baseline_wifi_tethering_error_24"
-                    android:tint="@color/red"
-                    android:visibility="gone" />
+                    android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/tv_sync_time"
-                    style="@style/TextView"
-                    android:text="MM/dd hh:mm"
-                    android:textColor="@color/widget_font_sub"
-                    android:layout_toStartOf="@id/iv_refresh"
-                    android:layout_centerVertical="true"
-                    android:textSize="10sp" />
+                    <ImageView
+                        android:id="@+id/iv_error"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/baseline_wifi_tethering_error_24"
+                        android:tint="@color/red" />
 
-                <ImageView
-                    android:id="@+id/iv_refresh"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_sync"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/baseline_sync_24" />
+                    android:gravity="right">
+
+                    <TextView
+                        android:id="@+id/tv_sync_time"
+                        style="@style/TextView"
+                        android:text="MM/dd hh:mm"
+                        android:textColor="@color/widget_font_sub"
+                        android:textSize="10sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_refresh"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/baseline_sync_24"
+                        android:layout_gravity="center_vertical" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 

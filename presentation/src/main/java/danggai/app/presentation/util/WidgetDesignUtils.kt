@@ -260,6 +260,7 @@ object WidgetDesignUtils {
 
         view.setInt(R.id.ll_root, "setBackgroundColor", bgColor)
         view.setInt(R.id.iv_refersh, "setColorFilter", subFontColor)
+        view.setInt(R.id.iv_refresh, "setColorFilter", subFontColor)
         view.setTextColor(R.id.tv_sync_time, subFontColor)
         view.setTextColor(R.id.tv_disable, mainFontColor)
 
@@ -314,6 +315,7 @@ object WidgetDesignUtils {
 
         view.setInt(R.id.ll_root, "setBackgroundColor", bgColor)
         view.setInt(R.id.iv_refersh, "setColorFilter", subFontColor)
+        view.setInt(R.id.iv_refresh, "setColorFilter", subFontColor)
         view.setTextColor(R.id.tv_sync_time, subFontColor)
 
         val mainFontViews = listOf(
