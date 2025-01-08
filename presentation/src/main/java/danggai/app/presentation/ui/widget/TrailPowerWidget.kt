@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.widget.RemoteViews
+import android.widget.Toast
 import danggai.app.presentation.R
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.PreferenceManager
@@ -95,6 +96,14 @@ class TrailPowerWidget() : AppWidgetProvider() {
                 context.let { RefreshWorker.startWorkerPeriodic(context) }
             }
 
+            Constant.ACTION_SHOW_TOAST -> {
+                log.e("SHOW_TOAST")
+                val message = intent.getStringExtra(Constant.EXTRA_TOAST_MESSAGE)
+
+                if (!message.isNullOrBlank())
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+            }
+
             AppWidgetManager.ACTION_APPWIDGET_UPDATE -> {
                 log.e(action.toString())
             }
@@ -131,6 +140,17 @@ class TrailPowerWidget() : AppWidgetProvider() {
         WidgetUtils.setOnClickBroadcastPendingIntent(
             context,
             views,
+            R.id.ll_error,
+            WidgetUtils.getToastIntent(
+                context,
+                context.getString(R.string.msg_toast_widget_refresh_error),
+                HKSRDetailWidget.className
+            )
+        )
+
+        WidgetUtils.setOnClickBroadcastPendingIntent(
+            context,
+            views,
             R.id.iv_trail_power,
             WidgetUtils.getMainActivityIntent(context)
         )
@@ -156,6 +176,14 @@ class TrailPowerWidget() : AppWidgetProvider() {
     }
 
     private fun syncView(widgetId: Int, view: RemoteViews, context: Context?) {
+        fun setText(viewId: Int, text: String?) {
+            view.setTextViewText(viewId, text ?: "")
+        }
+
+        fun setVisibility(viewId: Int, isVisible: Boolean) {
+            view.setViewVisibility(viewId, if (isVisible) View.VISIBLE else View.GONE)
+        }
+
         context?.let { _context ->
             val widgetDesign =
                 PreferenceManager.getT<ResinWidgetDesignSettings>(
@@ -200,6 +228,8 @@ class TrailPowerWidget() : AppWidgetProvider() {
                     if (widgetDesign.nameVisibility) View.VISIBLE else View.GONE
                 )
                 view.setTextViewText(R.id.tv_name, name)
+
+                setVisibility(R.id.ll_error, data.isError)
 
                 view.setTextViewText(R.id.tv_trail_power, data.dailyNote.currentStamina.toString())
                 view.setTextViewText(

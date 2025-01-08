@@ -44,7 +44,7 @@ object WidgetDesignUtils {
         binding.tvTrailPower.setTextColor(mainFontColor)
         binding.tvTrailPowerMax.setTextColor(mainFontColor)
         binding.tvRemainTime.setTextColor(mainFontColor)
-        binding.ivRefersh.setColorFilter(subFontColor)
+        binding.ivRefresh.setColorFilter(subFontColor)
         binding.tvSyncTime.setTextColor(subFontColor)
     }
 
