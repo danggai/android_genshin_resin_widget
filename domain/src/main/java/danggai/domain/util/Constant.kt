@@ -305,10 +305,13 @@ object Constant {
     /* ACTION */
 
     const val ACTION_RESIN_WIDGET_REFRESH_DATA = "danggai.app.resinwidget.refresh.resin.data"
+    const val ACTION_SHOW_TOAST = "danggai.app.resinwidget.toast"
     const val ACTION_TALENT_WIDGET_REFRESH = "danggai.app.resinwidget.refresh.talent"
     const val ACTION_ON_BOOT_COMPLETED = "android.intent.action.BOOT_COMPLETED"
 
     const val ACTION_APPWIDGET_UPDATE = "android.appwidget.action.APPWIDGET_UPDATE"
+
+    const val EXTRA_TOAST_MESSAGE = "EXTRA_TOAST_MESSAGE"
 
     const val BACK_BUTTON_INTERVAL: Long = 1000
 

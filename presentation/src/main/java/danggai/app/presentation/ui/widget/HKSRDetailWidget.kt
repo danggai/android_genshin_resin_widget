@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.widget.RemoteViews
+import android.widget.Toast
 import androidx.core.content.ContextCompat.getColor
 import danggai.app.presentation.R
 import danggai.app.presentation.util.CommonFunction
@@ -101,6 +102,14 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                 context.let { RefreshWorker.startWorkerPeriodic(context) }
             }
 
+            Constant.ACTION_SHOW_TOAST -> {
+                log.e("SHOW_TOAST")
+                val message = intent.getStringExtra(Constant.EXTRA_TOAST_MESSAGE)
+
+                if (!message.isNullOrBlank())
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+            }
+
             AppWidgetManager.ACTION_APPWIDGET_UPDATE -> {
                 /* 별도 핸들링 없어도 onUpdate 호출 후 여기로 옴 */
                 log.e(action.toString())
@@ -145,6 +154,17 @@ class HKSRDetailWidget() : AppWidgetProvider() {
             views,
             R.id.ll_sync,
             WidgetUtils.getUpdateIntent(context, className)
+        )
+
+        WidgetUtils.setOnClickBroadcastPendingIntent(
+            context,
+            views,
+            R.id.ll_error,
+            WidgetUtils.getToastIntent(
+                context,
+                context.getString(R.string.msg_toast_widget_refresh_error),
+                className
+            )
         )
 
         val mainActivityTargetViews = listOf(
