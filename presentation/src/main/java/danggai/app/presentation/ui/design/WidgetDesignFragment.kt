@@ -1,6 +1,5 @@
 package danggai.app.presentation.ui.design
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -17,7 +16,6 @@ import danggai.app.presentation.R
 import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentWidgetDesignBinding
 import danggai.app.presentation.extension.repeatOnLifeCycleStarted
-import danggai.app.presentation.receiver.WidgetPinnedReceiver
 import danggai.app.presentation.ui.design.charaters.WidgetDesignCharacterFragment
 import danggai.app.presentation.ui.design.charaters.select.WidgetDesignSelectCharacterFragment
 import danggai.app.presentation.ui.design.detail.WidgetDesignDetailFragment
@@ -91,20 +89,10 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             if (appWidgetManager.isRequestPinAppWidgetSupported) {
-                val pinnedWidgetCallbackIntent =
-                    Intent(context, WidgetPinnedReceiver::class.java)
-
-                val successCallback = PendingIntent.getBroadcast(
-                    context,
-                    0,
-                    pinnedWidgetCallbackIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                )
-
                 appWidgetManager.requestPinAppWidget(
                     widgetProvider,
                     null,
-                    successCallback
+                    null
                 )
             } else {
                 makeToast(context, context.getString(R.string.msg_toast_widget_pin_not_supported))
