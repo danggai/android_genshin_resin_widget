@@ -206,6 +206,8 @@
     <string name="dialog_msg_hoyolab_account_delete">Are you really going disconnect with %s account?</string>
     <string name="msg_toast_hoyolab_account_deleted">account has been disconnected successfully!</string>
 
+    <string name="msg_toast_widget_refresh_error">Tap the time to retry, or resolve the CAPTCHA in HoYoLAB\'s battle record.</string>
+
     <string name="dialog_daily_weekly_yet_noti">Caution when setting up notifications</string>
     <string name="dialog_msg_daily_weekly_yet_noti">When using this feature, if HoYoLAB provides an incorrect daily request/weekly boss progress, the user may receive an incorrect notification.\nPlease note that we recommend you to use this feature.</string>
 

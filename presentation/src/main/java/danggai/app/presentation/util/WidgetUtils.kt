@@ -75,6 +75,16 @@ object WidgetUtils {
             action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
         }
 
+    fun <T : AppWidgetProvider> getToastIntent(
+        context: Context,
+        toastMsg: String,
+        widgetClass: Class<T>
+    ) =
+        Intent(context, widgetClass).apply {
+            action = Constant.ACTION_SHOW_TOAST
+            this.putExtra(Constant.EXTRA_TOAST_MESSAGE, toastMsg)
+        }
+
     fun getMainActivityIntent(context: Context) = Intent(context, MainActivity::class.java)
 
     fun getWidgetConfigActivityIntent(
