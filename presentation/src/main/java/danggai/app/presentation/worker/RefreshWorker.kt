@@ -570,6 +570,7 @@ class RefreshWorker @AssistedInject constructor(
             account.honkai_sr_uid,
             if (!isErrorOccurred(data)) data
             else preference.getHonkaiSrDailyNote(account.honkai_sr_uid).copy(isError = true)
+                ?: HonkaiSrDataLocal.EMPTY.copy(isError = true)
         )
     }
 
