@@ -569,8 +569,11 @@ class RefreshWorker @AssistedInject constructor(
         preference.setHonkaiSrDailyNote(
             account.honkai_sr_uid,
             if (!isErrorOccurred(data)) data
-            else preference.getHonkaiSrDailyNote(account.honkai_sr_uid).copy(isError = true)
-                ?: HonkaiSrDataLocal.EMPTY.copy(isError = true)
+            else try {
+                preference.getHonkaiSrDailyNote(account.honkai_sr_uid).copy(isError = true)
+            } catch (e: NullPointerException) {
+                HonkaiSrDataLocal.EMPTY.copy(isError = true)
+            }
         )
     }
 
