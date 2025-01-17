@@ -221,8 +221,8 @@
     <string name="push_trail_power_noti_title">개척력 알림</string>
     <string name="push_trail_power_noti_description">일정 개척력마다 개척자에게 알려주기 위해 발송하는 알림이야!</string>
     <string name="push_msg_trail_power_noti_over_40">안녕, %s! 현재 개척력이 %d을 넘어섰어!</string>
-    <string name="push_msg_trail_power_noti_over_230">안녕, %s! 현재 개척력이 %d을 넘어섰어! 앞으로 한 시간이면 가득 찰거야!</string>
-    <string name="push_msg_trail_power_noti_over_240">%s! 현재 개척력이 %d을 넘어섰어! 빨리 사용해야 해!</string>
+    <string name="push_msg_trail_power_noti_over_290">안녕, %s! 현재 개척력이 %d을 넘어섰어! 앞으로 한 시간이면 가득 찰거야!</string>
+    <string name="push_msg_trail_power_noti_over_300">%s! 현재 개척력이 %d을 넘어섰어! 빨리 사용해야 해!</string>
     <string name="push_msg_trail_power_noti_custom">안녕, %s! 현재 개척력이 %d을 넘어섰어! 지금 불러달라고 했었지?</string>
 
     <string name="push_battery_noti_title">배터리 알림</string>

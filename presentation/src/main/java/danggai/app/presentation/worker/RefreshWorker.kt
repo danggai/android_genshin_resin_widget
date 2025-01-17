@@ -519,7 +519,7 @@ class RefreshWorker @AssistedInject constructor(
                     log.e()
                     sendNoti(
                         account,
-                        NotiType.StarRail.Stamina230,
+                        NotiType.StarRail.Stamina290,
                         Constant.MAX_TRAILBLAZE_POWER - 10
                     )
                 }

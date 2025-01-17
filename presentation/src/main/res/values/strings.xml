@@ -231,8 +231,8 @@
     <string name="push_trail_power_noti_title">Trailblaze Power Notification</string>
     <string name="push_trail_power_noti_description">This is a notification sent to inform trailblazers of each trailblaze power!</string>
     <string name="push_msg_trail_power_noti_over_40">Hello, %s! Your Trainblaze Power is over %d!</string>
-    <string name="push_msg_trail_power_noti_over_230">Hello, %s! Your Trainblaze Power is over %d!</string>
-    <string name="push_msg_trail_power_noti_over_240">Hello, %s! Your Trainblaze Power is over %d!</string>
+    <string name="push_msg_trail_power_noti_over_290">Hello, %s! Your Trainblaze Power is over %d!</string>
+    <string name="push_msg_trail_power_noti_over_300">Hello, %s! Your Trainblaze Power is over %d!</string>
     <string name="push_msg_trail_power_noti_custom">Hello, %s! Your Trainblaze Power is over %d!</string>
 
     <string name="push_battery_noti_title">Battery Notification</string>
