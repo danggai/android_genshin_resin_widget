@@ -6,6 +6,9 @@ object Constant {
     const val MAX_TRAILBLAZE_POWER = 300
     const val MAX_BATTERY = 240
 
+    const val RESIN_GAP = 40
+    const val TRAILBLAZE_POWER_GAP = 60
+
     /* URL */
 
     const val OS_TAKUMI_URL = "https://bbs-api-os.hoyoverse.com"

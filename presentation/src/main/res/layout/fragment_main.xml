@@ -345,13 +345,13 @@
                         android:id="@+id/cb_each_40_trail_power"
                         style="@style/Checkbox"
                         android:checked="@={vm.sfEnableNotiEach40TrailPower}"
-                        android:text="@string/btn_each_40_trailblaze_power" />
+                        android:text="@string/btn_each_60_trailblaze_power" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_230_trail_power"
                         style="@style/Checkbox"
                         android:checked="@={vm.sfEnableNoti230TrailPower}"
-                        android:text="@string/btn_230_trailblaze_power" />
+                        android:text="@string/btn_290_trailblaze_power" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

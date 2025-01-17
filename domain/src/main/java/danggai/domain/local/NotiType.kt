@@ -13,7 +13,7 @@ sealed class NotiType {
     }
 
     sealed class StarRail : NotiType() {
-        object StaminaEach40 : StarRail()
+        object StaminaEach60 : StarRail()
         object Stamina290 : StarRail()
         object StaminaCustom : StarRail()
         object ExpeditionDone : StarRail()

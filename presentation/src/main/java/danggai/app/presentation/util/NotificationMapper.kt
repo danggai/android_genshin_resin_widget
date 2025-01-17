@@ -67,7 +67,7 @@ object NotificationMapper {
             NotiType.Genshin.DailyCommissionNotDone -> context.getString(R.string.push_daily_commission_title)
             NotiType.Genshin.WeeklyBossNotDone -> context.getString(R.string.push_weekly_boss_title)
 
-            NotiType.StarRail.StaminaEach40,
+            NotiType.StarRail.StaminaEach60,
             NotiType.StarRail.Stamina290,
             NotiType.StarRail.StaminaCustom,
             -> context.getString(R.string.push_trail_power_noti_title)
@@ -163,7 +163,7 @@ object NotificationMapper {
                 nickname
             )
 
-            NotiType.StarRail.StaminaEach40 ->
+            NotiType.StarRail.StaminaEach60 ->
                 when (target) {
                     Constant.MAX_TRAILBLAZE_POWER -> String.format(
                         context.getString(R.string.push_msg_trail_power_noti_over_300),
@@ -172,7 +172,7 @@ object NotificationMapper {
                     )
 
                     else -> String.format(
-                        context.getString(R.string.push_msg_trail_power_noti_over_40),
+                        context.getString(R.string.push_msg_trail_power_noti_over_60),
                         nickname,
                         target
                     )
@@ -371,7 +371,7 @@ object NotificationMapper {
                 priority = priorityDefault
             }
 
-            NotiType.StarRail.StaminaEach40,
+            NotiType.StarRail.StaminaEach60,
             NotiType.StarRail.Stamina290,
             NotiType.StarRail.StaminaCustom,
             -> {
