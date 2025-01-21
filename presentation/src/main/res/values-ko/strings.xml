@@ -67,8 +67,8 @@
     <string name="btn_weekly_boss_yet">주간보스 할인 잔여 시 알림</string>
 
     <string name="trailblaze_power">개척력</string>
-    <string name="btn_each_40_trailblaze_power">40개척력 마다</string>
-    <string name="btn_230_trailblaze_power">230개척력</string>
+    <string name="btn_each_60_trailblaze_power">60개척력 마다</string>
+    <string name="btn_290_trailblaze_power">290개척력</string>
 
     <string name="battery">배터리</string>
     <string name="btn_each_40_battery">40배터리 마다</string>
@@ -220,9 +220,9 @@
 
     <string name="push_trail_power_noti_title">개척력 알림</string>
     <string name="push_trail_power_noti_description">일정 개척력마다 개척자에게 알려주기 위해 발송하는 알림이야!</string>
-    <string name="push_msg_trail_power_noti_over_40">안녕, %s! 현재 개척력이 %d을 넘어섰어!</string>
-    <string name="push_msg_trail_power_noti_over_230">안녕, %s! 현재 개척력이 %d을 넘어섰어! 앞으로 한 시간이면 가득 찰거야!</string>
-    <string name="push_msg_trail_power_noti_over_240">%s! 현재 개척력이 %d을 넘어섰어! 빨리 사용해야 해!</string>
+    <string name="push_msg_trail_power_noti_over_60">안녕, %s! 현재 개척력이 %d을 넘어섰어!</string>
+    <string name="push_msg_trail_power_noti_over_290">안녕, %s! 현재 개척력이 %d을 넘어섰어! 앞으로 한 시간이면 가득 찰거야!</string>
+    <string name="push_msg_trail_power_noti_over_300">%s! 현재 개척력이 %d을 넘어섰어! 빨리 사용해야 해!</string>
     <string name="push_msg_trail_power_noti_custom">안녕, %s! 현재 개척력이 %d을 넘어섰어! 지금 불러달라고 했었지?</string>
 
     <string name="push_battery_noti_title">배터리 알림</string>
@@ -424,5 +424,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 앱 이름이 "호요 도우미"로 변경되었습니다!\n\n- 여러 사용자 편의성이 개선되었습니다. (앱 내 위젯 추가 기능, 계정 추가 시 출석, 알림 클릭 시 앱 실행 등)\n- 젠레스 존 제로 상세 위젯에 패러미터가 추가되었습니다.</string>
+    <string name="dialog_msg_patch_note">- 앱 이름이 "호요 도우미"로 변경되었습니다!\n\n- 여러 사용자 편의성이 개선되었습니다. (앱 내 위젯 추가 기능, 계정 추가 시 출석, 알림 클릭 시 앱 실행 등)\n- 젠레스 존 제로 상세 위젯에 패러미터가 추가되었습니다.\n- 붕괴: 스타레일 최대 개척력 300 대응 및 알림 간격이 60 개척력으로 변경되었습니다.</string>
 </resources>

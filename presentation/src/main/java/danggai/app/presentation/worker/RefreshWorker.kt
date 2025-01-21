@@ -363,7 +363,9 @@ class RefreshWorker @AssistedInject constructor(
             val nowResin: Int = dailyNote.currentResin
 
             if (settings.notiEach40Resin) {
-                val resinLevels = (40 until Constant.MAX_RESIN + 40 step 40).toList().reversed()
+                val resinLevels =
+                    (Constant.RESIN_GAP until Constant.MAX_RESIN + Constant.RESIN_GAP step Constant.RESIN_GAP).toList()
+                        .reversed()
 
                 for (resinLevel in resinLevels) {
                     if (resinLevel in (prefResin + 1)..nowResin) {
@@ -503,12 +505,13 @@ class RefreshWorker @AssistedInject constructor(
 
             if (notiSettings.notiEach40TrailPower) {
                 val staminaLevels =
-                    (40 until Constant.MAX_TRAILBLAZE_POWER step 40).toList().reversed()
+                    (Constant.TRAILBLAZE_POWER_GAP until Constant.MAX_TRAILBLAZE_POWER step Constant.TRAILBLAZE_POWER_GAP).toList()
+                        .reversed()
 
                 for (staminaLevel in staminaLevels) {
                     if (staminaLevel in (prefStamina + 1)..nowStamina) {
                         log.e()
-                        sendNoti(account, NotiType.StarRail.StaminaEach40, staminaLevel)
+                        sendNoti(account, NotiType.StarRail.StaminaEach60, staminaLevel)
                         break
                     }
                 }
@@ -519,7 +522,7 @@ class RefreshWorker @AssistedInject constructor(
                     log.e()
                     sendNoti(
                         account,
-                        NotiType.StarRail.Stamina230,
+                        NotiType.StarRail.Stamina290,
                         Constant.MAX_TRAILBLAZE_POWER - 10
                     )
                 }

@@ -102,7 +102,7 @@
                             android:id="@+id/tv_trail_power"
                             android:textSize="30sp"
                             android:textStyle="bold"
-                            android:text="240"
+                            android:text="300"
                             android:textColor="@color/widget_font_main"
                             android:layout_gravity="left"
                             android:singleLine="true" />
@@ -110,7 +110,7 @@
                         <TextView
                             style="@style/TextView"
                             android:id="@+id/tv_trail_power_max"
-                            android:text="/240"
+                            android:text="/300"
                             android:textSize="16sp"
                             android:textColor="@color/widget_font_main"
                             android:layout_gravity="left|bottom"
