@@ -1,6 +1,6 @@
 [versions]
 # Gradle Plugins
-buildGradle = "7.4.2"
+buildGradle = "8.4.0"
 kotlinGradle = "1.7.10"
 googleService = "4.3.14"
 crashlyticsGradle = "2.9.2"
