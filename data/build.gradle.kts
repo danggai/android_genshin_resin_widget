@@ -9,10 +9,11 @@ plugins {
 
 android {
     compileSdk = Versions.compileSdk
+    compileSdkVersion = Versions.compileSdkString
 
     defaultConfig {
         minSdk = Versions.minSdk
-        targetSdk = Versions.compileSdk
+        lint.targetSdk = Versions.compileSdk
     }
 
     buildTypes {
@@ -84,4 +85,5 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    namespace = "danggai.data"
 }

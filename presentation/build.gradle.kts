@@ -6,9 +6,9 @@ plugins {
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
 }
-
 android {
     compileSdk = Versions.compileSdk
+    compileSdkVersion = Versions.compileSdkString
 
     defaultConfig {
         minSdk = Versions.minSdk
@@ -43,6 +43,7 @@ android {
         dataBinding = true
         viewBinding = true
     }
+    namespace = "danggai.app.presentation"
 }
 
 kapt {
