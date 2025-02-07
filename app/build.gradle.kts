@@ -11,6 +11,7 @@ plugins {
 
 android {
     compileSdk = Versions.compileSdk
+    compileSdkVersion = Versions.compileSdkString
 
     defaultConfig {
         applicationId = "danggai.app.resinwidget"
@@ -42,18 +43,21 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 
     buildFeatures {
         dataBinding = true
         viewBinding = true
+        buildConfig = true
     }
+
+    namespace = "danggai.app.resinwidget"
     kapt {
         correctErrorTypes = true
     }

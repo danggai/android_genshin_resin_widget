@@ -11,7 +11,7 @@ import danggai.app.presentation.util.Event
 import danggai.app.presentation.util.log
 import kotlinx.coroutines.launch
 
-open class BaseFragment: Fragment() {
+open class BaseFragment : Fragment() {
 
     fun getIntent(): Intent {
         return activity?.intent ?: Intent()
@@ -31,9 +31,9 @@ open class BaseFragment: Fragment() {
         context?.let {
             try {
                 val i: PackageInfo = it.packageManager.getPackageInfo(it.packageName, 0)
-                return i.versionName
-            } catch (e: PackageManager.NameNotFoundException)
-            { }
+                return i.versionName ?: ""
+            } catch (e: PackageManager.NameNotFoundException) {
+            }
         }
 
         return ""
@@ -56,9 +56,11 @@ open class BaseFragment: Fragment() {
                     if (event.message.isNotBlank()) makeToast(it, event.message)
                 }
             }
+
             is Event.FinishThisActivity -> {
                 activity?.finish()
             }
+
             else -> {}
         }
     }
