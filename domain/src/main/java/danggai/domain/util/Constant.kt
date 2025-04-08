@@ -36,6 +36,8 @@ object Constant {
     const val HOW_CAN_I_GET_COOKIE_URL =
         "https://github.com/danggai/android_genshin_resin_widget/blob/master/how_to_get_hoyolab_cookie.md"
 
+    const val NEW_CHARA_GENSHIN_BASE_URL =
+        "https://raw.githubusercontent.com/danggai/android_genshin_resin_widget/refs/heads/feature/%2368/newCharacters/genshin/"
 
     /* Package names */
     const val PACKAGE_NAMES_KEY = "PACKAGE_NAMES"
