@@ -1096,4 +1096,58 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         TalentDate.TUE_FRI,
         R.drawable.icon_lanyan
     ),
+    LocalCharacter(
+        Constant.ID_MIZUKI,
+        "유메미즈키 미즈키",
+        "Yumemizuki Mizuki",
+        5,
+        Elements.ANEMO,
+        TalentArea.INAZUMA,
+        TalentDate.MON_THU,
+        R.drawable.icon_mizuki
+    ),
+
+    LocalCharacter(
+        Constant.ID_VARESA,
+        "바레사",
+        "Varesa",
+        5,
+        Elements.ELECTRO,
+        TalentArea.NATLAN,
+        TalentDate.WED_SAT,
+        R.drawable.icon_varesa
+    ),
+
+    LocalCharacter(
+        Constant.ID_IANSAN,
+        "얀사",
+        "Iansan",
+        4,
+        Elements.ELECTRO,
+        TalentArea.NATLAN,
+        TalentDate.MON_THU,
+        R.drawable.icon_iansan
+    ),
+
+    LocalCharacter(
+        Constant.ID_IFA,
+        "이파",
+        "Ifa",
+        4,
+        Elements.ANEMO,
+        TalentArea.NATLAN,
+        TalentDate.WED_SAT,
+        R.drawable.icon_ifa
+    ),
+
+    LocalCharacter(
+        Constant.ID_ESCOFFIER,
+        "에스코피에",
+        "Escoffier",
+        5,
+        Elements.CYRO,
+        TalentArea.FONTAINE,
+        TalentDate.TUE_FRI,
+        R.drawable.icon_escoffier
+    ),
 )

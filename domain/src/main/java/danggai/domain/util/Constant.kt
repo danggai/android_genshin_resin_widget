@@ -417,4 +417,9 @@ object Constant {
     const val ID_MAVUIKA = 10000106
     const val ID_CITLALI = 10000107
     const val ID_LANYAN = 10000108
+    const val ID_MIZUKI = 10000109
+    const val ID_VARESA = 10000110
+    const val ID_IANSAN = 10000111
+    const val ID_IFA = 10000112
+    const val ID_ESCOFFIER = 10000113
 }
