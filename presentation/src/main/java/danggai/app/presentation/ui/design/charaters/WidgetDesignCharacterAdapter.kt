@@ -132,7 +132,7 @@ class WidgetDesignCharacterAdapter(
                 Elements.PYRO -> R.drawable.icon_element_pyro
                 Elements.HYDRO -> R.drawable.icon_element_hydro
                 Elements.ELECTRO -> R.drawable.icon_element_electro
-                Elements.CYRO -> R.drawable.icon_element_cyro
+                Elements.CRYO -> R.drawable.icon_element_cryo
                 Elements.ANEMO -> R.drawable.icon_element_anemo
                 Elements.GEO -> R.drawable.icon_element_geo
                 Elements.DENDRO -> R.drawable.icon_element_dendro
