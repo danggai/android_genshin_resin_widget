@@ -30,9 +30,9 @@ class WidgetConfigViewModel @Inject constructor(
     val sfSelectAccount = MutableSharedFlow<Account>()
     val sfNoAccount = MutableSharedFlow<Boolean>()
 
-    private var _miniWidgetType = ""
-    val miniWidgetType: String
-        get() = this._miniWidgetType
+    private var _widgetType = ""
+    val widgetType: String
+        get() = this._widgetType
 
     var widgetClassName = ""
     var sfSelectedAccount = MutableStateFlow<Account>(Account.EMPTY)
@@ -46,7 +46,7 @@ class WidgetConfigViewModel @Inject constructor(
             )
 
     fun onClickRoundButton(i: Int) {
-        _miniWidgetType = when (i) {
+        _widgetType = when (i) {
             R.id.rb_resin ->
                 Constant.PREF_MINI_WIDGET_RESIN
 
@@ -55,6 +55,12 @@ class WidgetConfigViewModel @Inject constructor(
 
             R.id.rb_realm_currency ->
                 Constant.PREF_MINI_WIDGET_REALM_CURRENCY
+
+            R.id.rb_selected_chara ->
+                Constant.PREF_TALENT_SELECTED_CHARACTERS
+
+            R.id.rb_recent_chara ->
+                Constant.PREF_TALENT_RECENT_CHARACTERS
 
             else -> ""
         }
@@ -101,7 +107,7 @@ class WidgetConfigViewModel @Inject constructor(
 
     private fun confirmEnable(): Boolean {
         if (widgetClassName == MiniWidget::class.java.name)
-            if (this._miniWidgetType == "") {
+            if (this._widgetType == "") {
                 makeToast(resource.getString(R.string.msg_toast_miniwidget_no_type))
                 return false
             }

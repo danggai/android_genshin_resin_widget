@@ -348,6 +348,8 @@
     <string name="until_expeditions_done">Until Expeditions Done</string>
     <string name="expeditions_done_at">Expeditions Done At</string>
 
+    <string name="selected_characters">Selected Characters</string>
+    <string name="recent_characters">Recent Characters (Auto)</string>
 
     <!--    Star Rail Widget -->
     <string name="daily_training">Daily Training</string>

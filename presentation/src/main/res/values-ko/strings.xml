@@ -339,6 +339,9 @@
     <string name="until_expeditions_done">모든 탐험 완료까지</string>
     <string name="expeditions_done_at">모든 탐사 완료 시각</string>
 
+    <string name="selected_characters">선택한 캐릭터</string>
+    <string name="recent_characters">최근 캐릭터 (자동)</string>
+
 
     <!--    스타레일 위젯 -->
     <string name="daily_training">일일 훈련</string>

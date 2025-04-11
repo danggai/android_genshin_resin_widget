@@ -14,6 +14,7 @@ import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentWidgetConfigBinding
 import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.widget.MiniWidget
+import danggai.app.presentation.ui.widget.TalentWidget
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.log
 import danggai.domain.util.Constant
@@ -59,7 +60,7 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = mVM.apply {
             setCommonFun()
-            this.widgetClassName =  this@WidgetConfigFragment.widgetClassName
+            this.widgetClassName = this@WidgetConfigFragment.widgetClassName
         }
 
         // appwidgetid 없는 widget 삭제 지연을 위해
@@ -98,8 +99,8 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
                             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
                             putExtra("uid", mVM.getUid(account))
                             putExtra("name", mVM.getNickname(account))
-                            if (widgetClassName == MiniWidget::class.java.name)
-                                putExtra("paramType", mVM.miniWidgetType)
+                            if (widgetClassName == MiniWidget::class.java.name || widgetClassName == TalentWidget::class.java.name)
+                                putExtra("paramType", mVM.widgetType)
                         }
                         act.sendBroadcast(updateIntent)
 
@@ -118,7 +119,10 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
                 activity?.let { act ->
                     mVM.sfNoAccount.collect { account ->
                         log.e()
-                        makeToast(act.applicationContext, getString(R.string.msg_toast_widget_no_account))
+                        makeToast(
+                            act.applicationContext,
+                            getString(R.string.msg_toast_widget_no_account)
+                        )
 
                         activity?.setResult(Activity.RESULT_CANCELED)
                         activity?.finish()
