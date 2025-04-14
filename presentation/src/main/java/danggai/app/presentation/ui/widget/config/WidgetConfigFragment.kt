@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.RadioGroup
 import android.widget.RemoteViews
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.activityViewModels
@@ -71,9 +72,11 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
         views = RemoteViews(context?.packageName, R.layout.widget_detail_fixed)
         appWidgetManager.updateAppWidget(appWidgetId, views)
 
-        binding.rgMiniWidgetType.setOnCheckedChangeListener { radioGroup, i ->
-            mVM.onClickRoundButton(i)
+        val listener = RadioGroup.OnCheckedChangeListener { _, checkedId ->
+            mVM.onClickRoundButton(checkedId)
         }
+        binding.rgMiniWidgetType.setOnCheckedChangeListener(listener)
+        binding.rgSelectedChara.setOnCheckedChangeListener(listener)
 
         initUi()
         initSf()
@@ -83,6 +86,14 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
         binding.llMiniSetting.visibility =
             if (widgetClassName == MiniWidget::class.java.name) View.VISIBLE
             else View.GONE
+
+        binding.llTalentSetting.visibility =
+            if (widgetClassName == TalentWidget::class.java.name) View.VISIBLE
+            else View.GONE
+
+        binding.rvAccounts.visibility =
+            if (widgetClassName == TalentWidget::class.java.name) View.GONE
+            else View.VISIBLE
     }
 
     private fun initSf() {
@@ -118,6 +129,8 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
             launch {
                 activity?.let { act ->
                     mVM.sfNoAccount.collect { account ->
+                        if (widgetClassName == TalentWidget::class.java.name) return@collect
+
                         log.e()
                         makeToast(
                             act.applicationContext,

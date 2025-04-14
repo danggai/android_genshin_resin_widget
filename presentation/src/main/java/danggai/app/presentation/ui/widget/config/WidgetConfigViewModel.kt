@@ -7,6 +7,7 @@ import danggai.app.presentation.core.BaseViewModel
 import danggai.app.presentation.ui.widget.BatteryWidget
 import danggai.app.presentation.ui.widget.HKSRDetailWidget
 import danggai.app.presentation.ui.widget.MiniWidget
+import danggai.app.presentation.ui.widget.TalentWidget
 import danggai.app.presentation.ui.widget.TrailPowerWidget
 import danggai.app.presentation.ui.widget.ZZZDetailWidget
 import danggai.app.presentation.util.log
@@ -106,11 +107,17 @@ class WidgetConfigViewModel @Inject constructor(
     }
 
     private fun confirmEnable(): Boolean {
-        if (widgetClassName == MiniWidget::class.java.name)
+        fun isRequiresTypeWidget(className: String): Boolean {
+            return className in listOf(MiniWidget::class.java.name, TalentWidget::class.java.name)
+        }
+
+        if (isRequiresTypeWidget(widgetClassName))
             if (this._widgetType == "") {
                 makeToast(resource.getString(R.string.msg_toast_miniwidget_no_type))
                 return false
             }
+
+        if (widgetClassName == TalentWidget::class.java.name) return true
 
         return if (sfSelectedAccount.value == Account.EMPTY) {
             log.e()
