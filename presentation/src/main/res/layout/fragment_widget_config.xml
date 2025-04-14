@@ -164,8 +164,8 @@
                     android:orientation="vertical"
                     viewModel="@{vm}"
                     item="@{vm.sfAccountList}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:visibility="@{vm.sfAccountList.empty ?View.GONE :View.VISIBLE}" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                <!--                    android:visibility="@{vm.sfAccountList.empty ?View.GONE :View.VISIBLE}" />-->
 
                 <Space
                     android:layout_width="0dp"
