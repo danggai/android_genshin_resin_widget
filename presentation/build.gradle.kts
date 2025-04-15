@@ -87,8 +87,8 @@ dependencies {
     kapt(libs.daggerHilt.compiler)
 
     // Glide - image
-    // kapt(libs.glide.gilde)
-    // kapt(libs.glide.compiler)
+    implementation(libs.glide)
+    kapt(libs.glide.compiler)
 
     // Firebase Crashlytics
     implementation(libs.firebase.analytics.ktx)

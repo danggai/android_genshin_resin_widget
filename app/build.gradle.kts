@@ -76,6 +76,10 @@ dependencies {
     implementation(libs.rx.android)
     implementation(libs.rx.java)
     implementation(libs.rx.kotlin)
+    
+    // Glide - image
+    implementation(libs.glide)
+    kapt(libs.glide.compiler)
 
     // Hilt - DI
     implementation(libs.daggerHilt.android)

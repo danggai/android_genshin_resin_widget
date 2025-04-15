@@ -32,7 +32,7 @@ javapoet = "1.13.0"
 okhttp = "4.9.0"
 retrofit = "2.6.0"
 sandwich = "1.2.3"
-glide = "4.13.0"
+glide = "4.14.2"
 
 # Room Database
 room = "2.4.3"
@@ -90,7 +90,7 @@ coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutin
 
 # Glide
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
-glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "ksp", version.ref = "glide" }
 
 # Dagger Hilt
 daggerHilt-gradle = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "daggerHilt" }
