@@ -41,7 +41,7 @@ class WidgetDesignCharacterAdapter(
 
                 if (this.isNotEmpty() && this[0].rarity >= 105) {  // 콜라보캐릭 맨뒤로
                     this.add(this[0])
-                    this.removeFirst()
+                    this.removeAt(0)
                 }
 
                 items.addAll(this)
