@@ -91,8 +91,9 @@ dependencies {
     kapt(libs.glide.compiler)
 
     // Firebase Crashlytics
-    implementation(libs.firebase.analytics.ktx)
-    implementation(libs.firebase.crashlytics.ktx)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
     // Worker - Background Action
     implementation(libs.work.runtime)

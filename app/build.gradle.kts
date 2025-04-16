@@ -76,7 +76,7 @@ dependencies {
     implementation(libs.rx.android)
     implementation(libs.rx.java)
     implementation(libs.rx.kotlin)
-    
+
     // Glide - image
     implementation(libs.glide)
     kapt(libs.glide.compiler)
@@ -97,5 +97,8 @@ dependencies {
     implementation(libs.sandwich)
 
     // Firebase Crashlytics
-    implementation(libs.firebase.crashlytics.ktx)
+
+    // Firebase Crashlytics
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
 }
