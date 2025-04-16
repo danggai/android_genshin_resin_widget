@@ -20,11 +20,10 @@ import danggai.domain.local.TalentDate
 import danggai.domain.local.TalentDays
 import danggai.domain.network.githubRaw.entity.RecentGenshinCharacters
 import danggai.domain.util.Constant
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 class TalentWidgetItemService() : RemoteViewsService() {
@@ -55,10 +54,13 @@ class TalentWidgetItemFactory(
 
     override fun onDataSetChanged() {
         log.e()
-        setData()
+
+        runBlocking {
+            setData()
+        }
     }
 
-    private fun setData() {
+    private suspend fun setData() {
         val paramType = PreferenceManager.getString(
             context,
             Constant.PREF_TELENT_WIDGET_TYPE + "_$appWidgetId"
@@ -75,32 +77,30 @@ class TalentWidgetItemFactory(
                 val filteredList =
                     recentCharacters.filter { isTalentAvailableToday(it.talentDay) }
 
-                CoroutineScope(Dispatchers.IO).launch {
-                    var count = 0
-                    val result = CoroutineScope(Dispatchers.IO).async {
-                        filteredList
-                            .map { item ->
-                                async {
-                                    CharacterItem(
-                                        count++,
-                                        item.name_ko,
-                                        item.name_en,
-                                        item.rarity,
-                                        item.element,
-                                        item.talentArea,
-                                        item.talentDay,
-                                        getImage(context, item.icon)
-                                            ?: BitmapFactory.decodeResource(
-                                                context.resources,
-                                                R.drawable.icon_unknown
-                                            )
-                                    )
-                                }
-                            }.awaitAll()
-                    }
-
-                    data = result.await() as ArrayList<CharacterItem>
+                var count = 0
+                val result = withContext(Dispatchers.IO) {
+                    filteredList
+                        .map { item ->
+                            async {
+                                CharacterItem(
+                                    count++,
+                                    item.name_ko,
+                                    item.name_en,
+                                    item.rarity,
+                                    item.element,
+                                    item.talentArea,
+                                    item.talentDay,
+                                    getImage(context, item.icon)
+                                        ?: BitmapFactory.decodeResource(
+                                            context.resources,
+                                            R.drawable.icon_unknown
+                                        )
+                                )
+                            }
+                        }.awaitAll()
                 }
+
+                data = result as ArrayList<CharacterItem>
             }
 
             else -> {
