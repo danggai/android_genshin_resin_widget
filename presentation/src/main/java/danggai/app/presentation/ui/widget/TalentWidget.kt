@@ -167,6 +167,24 @@ class TalentWidget() : AppWidgetProvider() {
     }
 
     private fun syncView(widgetId: Int, view: RemoteViews, context: Context?) {
+        fun initViews() {
+            view.setViewVisibility(R.id.gv_characters, View.GONE)
+            view.setViewVisibility(R.id.tv_no_talent_ingredient, View.GONE)
+            view.setViewVisibility(R.id.tv_no_selected_characters, View.GONE)
+
+
+            view.setTextViewText(
+                R.id.tv_no_talent_ingredient,
+                context?.getString(R.string.widget_ui_no_talent_ingredient)
+            )
+            view.setTextViewText(
+                R.id.tv_no_selected_characters,
+                context?.getString(R.string.widget_ui_no_selected_characters)
+            )
+
+            view.setTextViewText(R.id.tv_sync_time, getSyncDayString())
+        }
+
         context?.let { _context ->
             log.e()
 
@@ -182,6 +200,9 @@ class TalentWidget() : AppWidgetProvider() {
                 context,
                 Constant.PREF_TELENT_WIDGET_TYPE + "_$widgetId"
             )
+
+            initViews()
+
             when (widgetType) {
                 Constant.PREF_TALENT_RECENT_CHARACTERS -> {
                     val selectedCharacterIds = PreferenceManager.getT<RecentGenshinCharacters>(
@@ -222,21 +243,6 @@ class TalentWidget() : AppWidgetProvider() {
                     }
                 }
             }
-
-            view.setTextViewText(
-                R.id.tv_no_talent_ingredient,
-                _context.getString(R.string.widget_ui_no_talent_ingredient)
-            )
-            view.setTextViewText(
-                R.id.tv_no_selected_characters,
-                _context.getString(R.string.widget_ui_no_selected_characters)
-            )
-
-            view.setViewVisibility(R.id.gv_characters, View.GONE)
-            view.setViewVisibility(R.id.tv_no_talent_ingredient, View.GONE)
-            view.setViewVisibility(R.id.tv_no_selected_characters, View.GONE)
-
-            view.setTextViewText(R.id.tv_sync_time, getSyncDayString())
 
             view.setViewVisibility(R.id.pb_loading, View.GONE)
             view.setViewVisibility(R.id.ll_body, View.VISIBLE)
