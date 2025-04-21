@@ -95,14 +95,14 @@ class TalentWidgetItemFactory(
                         }.awaitAll()
                 }
 
-                data = result as ArrayList<CharacterItem>
+                data = ArrayList(result)
             }
 
             else -> {
                 val selectedCharacterIds =
                     PreferenceManager.getIntArray(context, Constant.PREF_SELECTED_CHARACTER_ID_LIST)
 
-                data = PlayableCharacters.filter {
+                val filteredList = PlayableCharacters.filter {
                     selectedCharacterIds.contains(it.id) && isTalentAvailableToday(it.talentDay)
                 }.map { item ->
                     CharacterItem(
@@ -118,7 +118,9 @@ class TalentWidgetItemFactory(
                             item.icon
                         )
                     )
-                } as ArrayList<CharacterItem>
+                }
+
+                data = ArrayList(filteredList)
             }
         }
 
