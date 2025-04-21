@@ -17,7 +17,6 @@ import danggai.app.presentation.util.log
 import danggai.domain.local.Elements
 import danggai.domain.local.TalentArea
 import danggai.domain.local.TalentDate
-import danggai.domain.local.TalentDays
 import danggai.domain.network.githubRaw.entity.RecentGenshinCharacters
 import danggai.domain.util.Constant
 import kotlinx.coroutines.Dispatchers
@@ -73,8 +72,11 @@ class TalentWidgetItemFactory(
                     Constant.PREF_RECENT_CHARACTER_LIST
                 )?.characters ?: listOf()
 
-                val filteredList =
-                    recentCharacters.filter { isTalentAvailableToday(it.talentDay) }
+                val filteredList = recentCharacters
+                    .filter { CommonFunction.isTalentAvailableToday(it.talentDay) }
+
+                log.e(recentCharacters.toString())
+                log.e(filteredList.toString())
 
                 var count = 0
                 val result = withContext(Dispatchers.IO) {
@@ -102,23 +104,24 @@ class TalentWidgetItemFactory(
                 val selectedCharacterIds =
                     PreferenceManager.getIntArray(context, Constant.PREF_SELECTED_CHARACTER_ID_LIST)
 
-                val filteredList = PlayableCharacters.filter {
-                    selectedCharacterIds.contains(it.id) && isTalentAvailableToday(it.talentDay)
-                }.map { item ->
-                    CharacterItem(
-                        item.id,
-                        item.name_ko,
-                        item.name_en,
-                        item.rarity,
-                        item.element,
-                        item.talentArea,
-                        item.talentDay,
-                        BitmapFactory.decodeResource(
-                            context.resources,
-                            item.icon
+                val filteredList = PlayableCharacters
+                    .filter { selectedCharacterIds.contains(it.id) }
+                    .filter { CommonFunction.isTalentAvailableToday(it.talentDay) }
+                    .map { item ->
+                        CharacterItem(
+                            item.id,
+                            item.name_ko,
+                            item.name_en,
+                            item.rarity,
+                            item.element,
+                            item.talentArea,
+                            item.talentDay,
+                            BitmapFactory.decodeResource(
+                                context.resources,
+                                item.icon
+                            )
                         )
-                    )
-                }
+                    }
 
                 data = ArrayList(filteredList)
             }
@@ -201,16 +204,6 @@ class TalentWidgetItemFactory(
             TalentArea.SUMERU -> R.drawable.icon_emblem_sumeru
             TalentArea.FONTAINE -> R.drawable.icon_emblem_fontaine
             TalentArea.NATLAN -> R.drawable.icon_emblem_natlan
-        }
-    }
-
-    private fun isTalentAvailableToday(talentDate: TalentDate): Boolean {
-        val currentDate = CommonFunction.getDateInGenshin()
-        return when (talentDate) {
-            TalentDate.MON_THU -> currentDate in TalentDays.MON_THU
-            TalentDate.TUE_FRI -> currentDate in TalentDays.TUE_FRI
-            TalentDate.WED_SAT -> currentDate in TalentDays.WED_SAT
-            TalentDate.ALL -> true
         }
     }
 

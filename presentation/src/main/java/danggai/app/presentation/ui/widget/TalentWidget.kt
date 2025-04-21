@@ -19,8 +19,6 @@ import danggai.app.presentation.util.WidgetUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.TalentWorker
 import danggai.domain.local.ResinWidgetDesignSettings
-import danggai.domain.local.TalentDate
-import danggai.domain.local.TalentDays
 import danggai.domain.network.githubRaw.entity.RecentGenshinCharacters
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
@@ -215,9 +213,8 @@ class TalentWidget() : AppWidgetProvider() {
 
                     log.e(selectedCharacterIds)
 
-                    val targetCharacters = selectedCharacterIds.filter {
-                        isTalentAvailableToday(it.talentDay)
-                    }
+                    val targetCharacters = selectedCharacterIds
+                        .filter { CommonFunction.isTalentAvailableToday(it.talentDay) }
 
                     if (targetCharacters.isEmpty()) {
                         view.setViewVisibility(R.id.tv_no_talent_ingredient, View.VISIBLE)
@@ -233,9 +230,9 @@ class TalentWidget() : AppWidgetProvider() {
                             Constant.PREF_SELECTED_CHARACTER_ID_LIST
                         )
 
-                    val targetCharacters = PlayableCharacters.filter {
-                        selectedCharacterIds.contains(it.id) && isTalentAvailableToday(it.talentDay)
-                    }
+                    val targetCharacters = PlayableCharacters
+                        .filter { selectedCharacterIds.contains(it.id) }
+                        .filter { CommonFunction.isTalentAvailableToday(it.talentDay) }
 
                     if (selectedCharacterIds.isEmpty()) {
                         view.setViewVisibility(R.id.tv_no_selected_characters, View.VISIBLE)
@@ -249,16 +246,6 @@ class TalentWidget() : AppWidgetProvider() {
 
             view.setViewVisibility(R.id.pb_loading, View.GONE)
             view.setViewVisibility(R.id.ll_body, View.VISIBLE)
-        }
-    }
-
-    private fun isTalentAvailableToday(talentDate: TalentDate): Boolean {
-        val currentDate = CommonFunction.getDateInGenshin()
-        return when (talentDate) {
-            TalentDate.MON_THU -> currentDate in TalentDays.MON_THU
-            TalentDate.TUE_FRI -> currentDate in TalentDays.TUE_FRI
-            TalentDate.WED_SAT -> currentDate in TalentDays.WED_SAT
-            TalentDate.ALL -> true
         }
     }
 

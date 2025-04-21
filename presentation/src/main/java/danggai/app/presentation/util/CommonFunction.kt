@@ -24,6 +24,8 @@ import danggai.app.presentation.ui.widget.ResinWidget
 import danggai.app.presentation.ui.widget.ResinWidgetResizable
 import danggai.app.presentation.ui.widget.TrailPowerWidget
 import danggai.app.presentation.ui.widget.ZZZDetailWidget
+import danggai.domain.local.TalentDate
+import danggai.domain.local.TalentDays
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.util.Constant
@@ -247,5 +249,15 @@ object CommonFunction {
         return calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
                 calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH) &&
                 calendar1.get(Calendar.DAY_OF_MONTH) == calendar2.get(Calendar.DAY_OF_MONTH)
+    }
+
+    fun isTalentAvailableToday(talentDate: TalentDate): Boolean {
+        val currentDate = getDateInGenshin()
+        return when (talentDate) {
+            TalentDate.MON_THU -> currentDate in TalentDays.MON_THU
+            TalentDate.TUE_FRI -> currentDate in TalentDays.TUE_FRI
+            TalentDate.WED_SAT -> currentDate in TalentDays.WED_SAT
+            TalentDate.ALL -> true
+        }
     }
 }
