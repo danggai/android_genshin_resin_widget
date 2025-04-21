@@ -53,11 +53,10 @@ class TalentWidgetItemFactory(
     override fun onCreate() {}
 
     override fun onDataSetChanged() {
-        log.e()
-
         runBlocking {
             setData()
         }
+        log.e(data)
     }
 
     private suspend fun setData() {
@@ -91,10 +90,6 @@ class TalentWidgetItemFactory(
                                     item.talentArea,
                                     item.talentDay,
                                     getImage(context, item.icon)
-                                        ?: BitmapFactory.decodeResource(
-                                            context.resources,
-                                            R.drawable.icon_unknown
-                                        )
                                 )
                             }
                         }.awaitAll()
@@ -171,7 +166,7 @@ class TalentWidgetItemFactory(
         }
     }
 
-    private suspend fun getImage(context: Context, imageUrl: String): Bitmap? {
+    private suspend fun getImage(context: Context, imageUrl: String): Bitmap {
         return withContext(Dispatchers.IO) {
             try {
                 Glide.with(context)
@@ -181,7 +176,8 @@ class TalentWidgetItemFactory(
                     .get()
             } catch (e: Exception) {
                 e.printStackTrace()
-                null
+                log.e("FAIL")
+                BitmapFactory.decodeResource(context.resources, R.drawable.icon_unknown)
             }
         }
     }

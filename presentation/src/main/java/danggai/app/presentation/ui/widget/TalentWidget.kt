@@ -50,7 +50,7 @@ class TalentWidget() : AppWidgetProvider() {
             val serviceIntent = Intent(context, TalentWidgetItemService::class.java).apply {
                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
                 putExtra("paramType", paramType)
-                data = Uri.parse(toUri(Intent.URI_INTENT_SCHEME))
+                data = Uri.parse("content://danggai.app.resinwidget/$appWidgetId")
             }
 
             val remoteView = makeRemoteViews(context)
@@ -161,7 +161,10 @@ class TalentWidget() : AppWidgetProvider() {
             )
         )
 
-        manager.updateAppWidget(awId, remoteViews)
+        awId.forEach { appWidgetId ->
+            log.e(appWidgetId)
+            manager.updateAppWidget(appWidgetId, remoteViews)
+        }
 
         return remoteViews
     }
