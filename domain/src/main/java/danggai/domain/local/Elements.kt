@@ -6,6 +6,6 @@ enum class Elements(val attr: Int) {
     ANEMO(2),   // 바람
     ELECTRO(5), // 전기
     DENDRO(4),  // 풀
-    CYRO(7),    // 얼음
+    CRYO(7),    // 얼음
     GEO(3)      // 바위
 }

@@ -120,7 +120,7 @@
 
     <string name="msg_toast_widget_no_account">연동 된 호요랩 계정이 없으면 위젯을 사용할 수 없어!</string>
     <string name="msg_toast_widget_no_account_select">위젯에서 표시할 HoYoLAB 계정을 선택해 줘!</string>
-    <string name="msg_toast_miniwidget_no_type">미니 위젯에서 표시할 데이터를 1개 선택해 줘!</string>
+    <string name="msg_toast_miniwidget_no_type">위젯에서 표시할 데이터 종류를 1개 선택해 줘!</string>
     <string name="dialog_widget_refresh_not_work">위젯이 새로고침 되지 않나요?</string>
     <string name="dialog_msg_widget_refresh_not_work"><b>절전 모드나 데이터 절약 모드</b>를 사용 중인 경우, 위젯에서 새로고침이 작동하지 않습니다.\n\n설정에서 데이터 절약 모드를 비활성화하거나, 다음 화면에서 원신&amp;붕스타 위젯을 접근 허용 하는 것으로 우회할 수 있습니다.\n\n해당 권한은 앱이 기기가 수신하는 알림에 접근할 수 있도록 하는 권한이나, 원신&amp;붕스타 위젯은 알림 수신 서비스를 HoYoLAB 데이터 수신 목적 외에는 이용하지 않으며, 사용자의 개인 정보에 <b>절대</b> 접근하지 않습니다.\n\n원신&amp;붕스타 위젯은 데이터 절약 모드 비활성화를 권장합니다.</string>
 
@@ -338,6 +338,9 @@
     <string name="expedition_time">탐험 시간</string>
     <string name="until_expeditions_done">모든 탐험 완료까지</string>
     <string name="expeditions_done_at">모든 탐사 완료 시각</string>
+
+    <string name="selected_characters">선택한 캐릭터</string>
+    <string name="recent_characters">최근 캐릭터 (자동)</string>
 
 
     <!--    스타레일 위젯 -->

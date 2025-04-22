@@ -36,6 +36,8 @@ object Constant {
     const val HOW_CAN_I_GET_COOKIE_URL =
         "https://github.com/danggai/android_genshin_resin_widget/blob/master/how_to_get_hoyolab_cookie.md"
 
+    const val NEW_CHARA_GENSHIN_BASE_URL =
+        "https://raw.githubusercontent.com/danggai/android_genshin_resin_widget/refs/heads/feature/%2368/newCharacters/genshin/"
 
     /* Package names */
     const val PACKAGE_NAMES_KEY = "PACKAGE_NAMES"
@@ -123,6 +125,7 @@ object Constant {
     const val API_NAME_GET_GAME_RECORD_CARD = "Get Game Record Card"
     const val API_NAME_CHARACTERS = "Characters"
     const val API_NAME_CHECK_IN = "Check In"
+    const val API_NAME_GITHUB_RECENT_CHARACTERS = "Github recent Characters"
 
 
     /* WORKER */
@@ -168,6 +171,7 @@ object Constant {
     const val PREF_RESIN_WIDGET_DESIGN_SETTINGS = "PREF_RESIN_WIDGET_DESIGN_SETTINGS"
     const val PREF_DETAIL_WIDGET_DESIGN_SETTINGS = "PREF_DETAIL_WIDGET_DESIGN_SETTINGS"
     const val PREF_SELECTED_CHARACTER_ID_LIST = "PREF_SELECTED_CHARACTER_ID_LIST"
+    const val PREF_RECENT_CHARACTER_LIST = "PREF_RECENT_CHARACTER_LIST"
     const val PREF_DAILY_NOTE_DATA = "PREF_DAILY_NOTE_DATA"
     const val PREF_HONKAI_SR_DAILY_NOTE_DATA = "PREF_HONKAI_SR_DAILY_NOTE_DATA"
     const val PREF_ZZZ_DAILY_NOTE_DATA = "PREF_ZZZ_DAILY_NOTE_DATA"
@@ -192,6 +196,11 @@ object Constant {
     const val PREF_MINI_WIDGET_REALM_CURRENCY = "PREF_MINI_WIDGET_REALM_CURRENCY"
     const val PREF_MINI_WIDGET_PARAMETRIC_TRANSFORMER = "PREF_MINI_WIDGET_PARAMETRIC_TRANSFORMER"
     const val PREF_MINI_WIDGET_EXPEDITION = "PREF_MINI_WIDGET_EXPEDITION"
+
+    /*talent widget settings*/
+    const val PREF_TELENT_WIDGET_TYPE = "PREF_TELENT_WIDGET_TYPE"
+    const val PREF_TALENT_SELECTED_CHARACTERS = "PREF_TALENT_SELECTED_CHARACTERS"
+    const val PREF_TALENT_RECENT_CHARACTERS = "PREF_TALENT_RECENT_CHARACTERS"
 
     /*check in settings*/
     const val PREF_ENABLE_GENSHIN_AUTO_CHECK_IN = "PREF_ENABLE_AUTO_CHECK_IN"

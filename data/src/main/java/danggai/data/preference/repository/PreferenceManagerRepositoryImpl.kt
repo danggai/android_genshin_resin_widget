@@ -11,6 +11,7 @@ import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.network.dailynote.entity.ZZZDailyNoteData
+import danggai.domain.network.githubRaw.entity.RecentGenshinCharacters
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import org.json.JSONArray
@@ -283,6 +284,12 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
     override fun setSelectedCharacterIdList(value: List<Int>) =
         setIntArray(context, Constant.PREF_SELECTED_CHARACTER_ID_LIST, value)
 
+    override fun getRecentCharacetrsList(): RecentGenshinCharacters =
+        getT<RecentGenshinCharacters>(context, Constant.PREF_RECENT_CHARACTER_LIST)
+            ?: RecentGenshinCharacters.EMPTY
+
+    override fun setRecentCharacetrsList(value: RecentGenshinCharacters) =
+        setT(context, Constant.PREF_RECENT_CHARACTER_LIST, value)
 
     override fun getGenshinDailyNote(uid: String): GenshinDailyNoteData =
         getT<GenshinDailyNoteData>(context, Constant.PREF_DAILY_NOTE_DATA + "_$uid")

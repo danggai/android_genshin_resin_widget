@@ -13,7 +13,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "카미사토 아야카",
         "Kamisato Ayaka",
         5,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.INAZUMA,
         TalentDate.TUE_FRI,
         R.drawable.icon_ayaka
@@ -123,7 +123,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "케이아",
         "Keaya",
         4,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.MONDSTADT,
         TalentDate.WED_SAT,
         R.drawable.icon_keaya
@@ -299,7 +299,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "치치",
         "Qiqi",
         5,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.LIYUE,
         TalentDate.MON_THU,
         R.drawable.icon_qiqi
@@ -310,7 +310,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "중운",
         "Chongyun",
         4,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.LIYUE,
         TalentDate.TUE_FRI,
         R.drawable.icon_chongyun
@@ -321,7 +321,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "감우",
         "Ganyu",
         5,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.LIYUE,
         TalentDate.TUE_FRI,
         R.drawable.icon_ganyu
@@ -343,7 +343,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "디오나",
         "Diona",
         4,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.MONDSTADT,
         TalentDate.MON_THU,
         R.drawable.icon_diona
@@ -398,7 +398,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "로자리아",
         "Rosaria",
         4,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.MONDSTADT,
         TalentDate.WED_SAT,
         R.drawable.icon_rosaria
@@ -464,7 +464,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "유라",
         "Eula",
         5,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.MONDSTADT,
         TalentDate.TUE_FRI,
         R.drawable.icon_eula
@@ -574,7 +574,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "에일로이",
         "Aloy",
         105,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.MONDSTADT,
         TalentDate.MON_THU,
         R.drawable.icon_aloy
@@ -585,7 +585,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "신학",
         "Shenhe",
         5,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.LIYUE,
         TalentDate.MON_THU,
         R.drawable.icon_shenhe
@@ -706,7 +706,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "레일라",
         "Layla",
         4,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.SUMERU,
         TalentDate.TUE_FRI,
         R.drawable.icon_layla
@@ -772,7 +772,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "미카",
         "Mika",
         4,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.MONDSTADT,
         TalentDate.WED_SAT,
         R.drawable.icon_mika
@@ -838,7 +838,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "프리미네",
         "Freminet",
         4,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.FONTAINE,
         TalentDate.TUE_FRI,
         R.drawable.icon_freminet
@@ -849,7 +849,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "라이오슬리",
         "Wriothesley",
         5,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.FONTAINE,
         TalentDate.WED_SAT,
         R.drawable.icon_wriothesley
@@ -871,7 +871,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "샤를로트",
         "Charlotte",
         4,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.FONTAINE,
         TalentDate.WED_SAT,
         R.drawable.icon_charlotte
@@ -1080,7 +1080,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "시틀라리",
         "Citlali",
         5,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.NATLAN,
         TalentDate.TUE_FRI,
         R.drawable.icon_citlali
@@ -1096,6 +1096,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         TalentDate.TUE_FRI,
         R.drawable.icon_lanyan
     ),
+
     LocalCharacter(
         Constant.ID_MIZUKI,
         "유메미즈키 미즈키",
@@ -1145,7 +1146,7 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         "에스코피에",
         "Escoffier",
         5,
-        Elements.CYRO,
+        Elements.CRYO,
         TalentArea.FONTAINE,
         TalentDate.TUE_FRI,
         R.drawable.icon_escoffier

@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.RadioGroup
 import android.widget.RemoteViews
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.activityViewModels
@@ -14,6 +15,7 @@ import danggai.app.presentation.core.BindingFragment
 import danggai.app.presentation.databinding.FragmentWidgetConfigBinding
 import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.widget.MiniWidget
+import danggai.app.presentation.ui.widget.TalentWidget
 import danggai.app.presentation.util.PreferenceManager
 import danggai.app.presentation.util.log
 import danggai.domain.util.Constant
@@ -59,7 +61,7 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = mVM.apply {
             setCommonFun()
-            this.widgetClassName =  this@WidgetConfigFragment.widgetClassName
+            this.widgetClassName = this@WidgetConfigFragment.widgetClassName
         }
 
         // appwidgetid 없는 widget 삭제 지연을 위해
@@ -70,9 +72,11 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
         views = RemoteViews(context?.packageName, R.layout.widget_detail_fixed)
         appWidgetManager.updateAppWidget(appWidgetId, views)
 
-        binding.rgMiniWidgetType.setOnCheckedChangeListener { radioGroup, i ->
-            mVM.onClickRoundButton(i)
+        val listener = RadioGroup.OnCheckedChangeListener { _, checkedId ->
+            mVM.onClickRoundButton(checkedId)
         }
+        binding.rgMiniWidgetType.setOnCheckedChangeListener(listener)
+        binding.rgSelectedChara.setOnCheckedChangeListener(listener)
 
         initUi()
         initSf()
@@ -82,6 +86,14 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
         binding.llMiniSetting.visibility =
             if (widgetClassName == MiniWidget::class.java.name) View.VISIBLE
             else View.GONE
+
+        binding.llTalentSetting.visibility =
+            if (widgetClassName == TalentWidget::class.java.name) View.VISIBLE
+            else View.GONE
+
+        binding.rvAccounts.visibility =
+            if (widgetClassName == TalentWidget::class.java.name) View.GONE
+            else View.VISIBLE
     }
 
     private fun initSf() {
@@ -98,8 +110,8 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
                             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
                             putExtra("uid", mVM.getUid(account))
                             putExtra("name", mVM.getNickname(account))
-                            if (widgetClassName == MiniWidget::class.java.name)
-                                putExtra("paramType", mVM.miniWidgetType)
+                            if (widgetClassName == MiniWidget::class.java.name || widgetClassName == TalentWidget::class.java.name)
+                                putExtra("paramType", mVM.widgetType)
                         }
                         act.sendBroadcast(updateIntent)
 
@@ -117,8 +129,13 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
             launch {
                 activity?.let { act ->
                     mVM.sfNoAccount.collect { account ->
+                        if (widgetClassName == TalentWidget::class.java.name) return@collect
+
                         log.e()
-                        makeToast(act.applicationContext, getString(R.string.msg_toast_widget_no_account))
+                        makeToast(
+                            act.applicationContext,
+                            getString(R.string.msg_toast_widget_no_account)
+                        )
 
                         activity?.setResult(Activity.RESULT_CANCELED)
                         activity?.finish()

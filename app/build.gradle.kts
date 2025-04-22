@@ -77,6 +77,10 @@ dependencies {
     implementation(libs.rx.java)
     implementation(libs.rx.kotlin)
 
+    // Glide - image
+    implementation(libs.glide)
+    kapt(libs.glide.compiler)
+
     // Hilt - DI
     implementation(libs.daggerHilt.android)
     kapt(libs.daggerHilt.compiler)
@@ -93,5 +97,8 @@ dependencies {
     implementation(libs.sandwich)
 
     // Firebase Crashlytics
-    implementation(libs.firebase.crashlytics.ktx)
+
+    // Firebase Crashlytics
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
 }

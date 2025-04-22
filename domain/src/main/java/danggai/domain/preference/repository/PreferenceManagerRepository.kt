@@ -5,9 +5,9 @@ import danggai.domain.local.DailyNoteSettings
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
-import danggai.domain.network.dailynote.entity.HonkaiSrDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.network.dailynote.entity.ZZZDailyNoteData
+import danggai.domain.network.githubRaw.entity.RecentGenshinCharacters
 
 
 interface PreferenceManagerRepository {
@@ -42,6 +42,8 @@ interface PreferenceManagerRepository {
     fun getSelectedCharacterIdList(): List<Int>
     fun setSelectedCharacterIdList(value: List<Int>)
 
+    fun getRecentCharacetrsList(): RecentGenshinCharacters
+    fun setRecentCharacetrsList(value: RecentGenshinCharacters)
 
     fun getGenshinDailyNote(uid: String): GenshinDailyNoteData
     fun setGenshinDailyNote(uid: String, value: GenshinDailyNoteData)

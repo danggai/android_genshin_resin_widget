@@ -129,7 +129,7 @@
 
     <string name="msg_toast_widget_no_account">You can\'t use widgets without a linked HoYoLAB account!</string>
     <string name="msg_toast_widget_no_account_select">Select the HoYoLAB account to display in the widget!</string>
-    <string name="msg_toast_miniwidget_no_type">Select 1 data to display in the mini widget!</string>
+    <string name="msg_toast_miniwidget_no_type">Select 1 data type to display in the widget!</string>
     <string name="dialog_widget_refresh_not_work">Refresh doesn\'t work on the Widget?</string>
     <string name="dialog_msg_widget_refresh_not_work">If device using <b>power saving mode or data saving mode.</b>, widget doesn\'t refresh.\n\You can disable data saving mode in setting, or detour to allow access to the Genshin StarRail Widget on the next screen.\n\nThis permission allows the app to access the notifications the device receives, but the Genshin StarRail Widget does not use the notification reception service other than for HoYoLAB data reception purposes, and <b>never</b> accesses the user\'s personal information.\n\nGenshin StarRail Widget recommends data saving mode deactivation.</string>
 
@@ -348,6 +348,8 @@
     <string name="until_expeditions_done">Until Expeditions Done</string>
     <string name="expeditions_done_at">Expeditions Done At</string>
 
+    <string name="selected_characters">Selected Characters</string>
+    <string name="recent_characters">Recent Characters (Auto)</string>
 
     <!--    Star Rail Widget -->
     <string name="daily_training">Daily Training</string>

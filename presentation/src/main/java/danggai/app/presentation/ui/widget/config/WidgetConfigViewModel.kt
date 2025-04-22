@@ -7,6 +7,7 @@ import danggai.app.presentation.core.BaseViewModel
 import danggai.app.presentation.ui.widget.BatteryWidget
 import danggai.app.presentation.ui.widget.HKSRDetailWidget
 import danggai.app.presentation.ui.widget.MiniWidget
+import danggai.app.presentation.ui.widget.TalentWidget
 import danggai.app.presentation.ui.widget.TrailPowerWidget
 import danggai.app.presentation.ui.widget.ZZZDetailWidget
 import danggai.app.presentation.util.log
@@ -30,9 +31,9 @@ class WidgetConfigViewModel @Inject constructor(
     val sfSelectAccount = MutableSharedFlow<Account>()
     val sfNoAccount = MutableSharedFlow<Boolean>()
 
-    private var _miniWidgetType = ""
-    val miniWidgetType: String
-        get() = this._miniWidgetType
+    private var _widgetType = ""
+    val widgetType: String
+        get() = this._widgetType
 
     var widgetClassName = ""
     var sfSelectedAccount = MutableStateFlow<Account>(Account.EMPTY)
@@ -46,7 +47,7 @@ class WidgetConfigViewModel @Inject constructor(
             )
 
     fun onClickRoundButton(i: Int) {
-        _miniWidgetType = when (i) {
+        _widgetType = when (i) {
             R.id.rb_resin ->
                 Constant.PREF_MINI_WIDGET_RESIN
 
@@ -55,6 +56,12 @@ class WidgetConfigViewModel @Inject constructor(
 
             R.id.rb_realm_currency ->
                 Constant.PREF_MINI_WIDGET_REALM_CURRENCY
+
+            R.id.rb_selected_chara ->
+                Constant.PREF_TALENT_SELECTED_CHARACTERS
+
+            R.id.rb_recent_chara ->
+                Constant.PREF_TALENT_RECENT_CHARACTERS
 
             else -> ""
         }
@@ -100,11 +107,17 @@ class WidgetConfigViewModel @Inject constructor(
     }
 
     private fun confirmEnable(): Boolean {
-        if (widgetClassName == MiniWidget::class.java.name)
-            if (this._miniWidgetType == "") {
+        fun isRequiresTypeWidget(className: String): Boolean {
+            return className in listOf(MiniWidget::class.java.name, TalentWidget::class.java.name)
+        }
+
+        if (isRequiresTypeWidget(widgetClassName))
+            if (this._widgetType == "") {
                 makeToast(resource.getString(R.string.msg_toast_miniwidget_no_type))
                 return false
             }
+
+        if (widgetClassName == TalentWidget::class.java.name) return true
 
         return if (sfSelectedAccount.value == Account.EMPTY) {
             log.e()

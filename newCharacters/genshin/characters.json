@@ -1,0 +1,54 @@
+{
+  "characters": [
+    {
+      "id": 10000109,
+      "name_ko": "유메미즈키 미즈키",
+      "name_en": "Yumemizuki Mizuki",
+      "rarity": 5,
+      "element": "ANEMO",
+      "talentArea": "INAZUMA",
+      "talentDay": "MON_THU",
+      "icon": "icon_mizuki.png"
+    },
+    {
+      "id": 10000110,
+      "name_ko": "바레사",
+      "name_en": "Varesa",
+      "rarity": 5,
+      "element": "ELECTRO",
+      "talentArea": "NATLAN",
+      "talentDay": "WED_SAT",
+      "icon": "icon_varesa.png"
+    },
+    {
+      "id": 10000111,
+      "name_ko": "얀사",
+      "name_en": "Iansan",
+      "rarity": 4,
+      "element": "ELECTRO",
+      "talentArea": "NATLAN",
+      "talentDay": "MON_THU",
+      "icon": "icon_iansan.png"
+    },
+    {
+      "id": 10000112,
+      "name_ko": "이파",
+      "name_en": "Ifa",
+      "rarity": 4,
+      "element": "ANEMO",
+      "talentArea": "NATLAN",
+      "talentDay": "WED_SAT",
+      "icon": "icon_ifa.png"
+    },
+    {
+      "id": 10000113,
+      "name_ko": "에스코피에",
+      "name_en": "Escoffier",
+      "rarity": 5,
+      "element": "CRYO",
+      "talentArea": "FONTAINE",
+      "talentDay": "TUE_FRI",
+      "icon": "icon_escoffier.png"
+    }
+  ]
+}

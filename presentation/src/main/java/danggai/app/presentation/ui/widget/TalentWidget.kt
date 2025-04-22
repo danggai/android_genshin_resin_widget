@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.View
 import android.widget.RemoteViews
 import danggai.app.presentation.R
@@ -18,8 +19,7 @@ import danggai.app.presentation.util.WidgetUtils
 import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.TalentWorker
 import danggai.domain.local.ResinWidgetDesignSettings
-import danggai.domain.local.TalentDate
-import danggai.domain.local.TalentDays
+import danggai.domain.network.githubRaw.entity.RecentGenshinCharacters
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,16 +38,33 @@ class TalentWidget() : AppWidgetProvider() {
 
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
-            val serviceIntent = Intent(context, TalentWidgetItemService::class.java)
+
+            val paramType = PreferenceManager.getString(
+                context,
+                Constant.PREF_TELENT_WIDGET_TYPE + "_$appWidgetId"
+            )
+
+            log.e("paramType: $paramType")
+            val serviceIntent = Intent(context, TalentWidgetItemService::class.java).apply {
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                putExtra("paramType", paramType)
+                data = Uri.parse("content://danggai.app.resinwidget/$appWidgetId")
+            }
+
             val remoteView = makeRemoteViews(context)
             remoteView.setRemoteAdapter(R.id.gv_characters, serviceIntent)
 
             CoroutineScope(Dispatchers.Main.immediate).launch {
-                syncView(remoteView, context)
+                syncView(appWidgetId, remoteView, context)
                 appWidgetManager.updateAppWidget(appWidgetId, remoteView)
             }
         }
     }
+
+    private fun getWidgetId(intent: Intent?) =
+        intent?.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1) ?: -1
+
+    private fun getParamType(intent: Intent?) = intent?.getStringExtra("paramType") ?: ""
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
@@ -56,6 +73,19 @@ class TalentWidget() : AppWidgetProvider() {
         val thisWidget = ComponentName(context!!, TalentWidget::class.java)
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
+
+        val widgetId = getWidgetId(intent)
+        val paramType = getParamType(intent)
+
+        if (widgetId != -1 && paramType.isNotEmpty()) {
+            context.let {
+                PreferenceManager.setString(
+                    context,
+                    Constant.PREF_TELENT_WIDGET_TYPE + "_$widgetId",
+                    paramType
+                )
+            }
+        }
 
         when (action) {
             Constant.ACTION_TALENT_WIDGET_REFRESH,
@@ -129,12 +159,33 @@ class TalentWidget() : AppWidgetProvider() {
             )
         )
 
-        manager.updateAppWidget(awId, remoteViews)
+        awId.forEach { appWidgetId ->
+            log.e(appWidgetId)
+            manager.updateAppWidget(appWidgetId, remoteViews)
+        }
 
         return remoteViews
     }
 
-    private fun syncView(view: RemoteViews, context: Context?) {
+    private fun syncView(widgetId: Int, view: RemoteViews, context: Context?) {
+        fun initViews() {
+            view.setViewVisibility(R.id.gv_characters, View.GONE)
+            view.setViewVisibility(R.id.tv_no_talent_ingredient, View.GONE)
+            view.setViewVisibility(R.id.tv_no_selected_characters, View.GONE)
+
+
+            view.setTextViewText(
+                R.id.tv_no_talent_ingredient,
+                context?.getString(R.string.widget_ui_no_talent_ingredient)
+            )
+            view.setTextViewText(
+                R.id.tv_no_selected_characters,
+                context?.getString(R.string.widget_ui_no_selected_characters)
+            )
+
+            view.setTextViewText(R.id.tv_sync_time, getSyncDayString())
+        }
+
         context?.let { _context ->
             log.e()
 
@@ -146,48 +197,55 @@ class TalentWidget() : AppWidgetProvider() {
 
             WidgetDesignUtils.applyWidgetTheme(widgetDesign, _context, view)
 
-            val selectedCharacterIds =
-                PreferenceManager.getIntArray(context, Constant.PREF_SELECTED_CHARACTER_ID_LIST)
-
-            val targetCharacters = PlayableCharacters.filter {
-                selectedCharacterIds.contains(it.id) && isTalentAvailableToday(it.talentDay)
-            }
-
-            view.setTextViewText(
-                R.id.tv_no_talent_ingredient,
-                _context.getString(R.string.widget_ui_no_talent_ingredient)
-            )
-            view.setTextViewText(
-                R.id.tv_no_selected_characters,
-                _context.getString(R.string.widget_ui_no_selected_characters)
+            val widgetType = PreferenceManager.getString(
+                context,
+                Constant.PREF_TELENT_WIDGET_TYPE + "_$widgetId"
             )
 
-            view.setViewVisibility(R.id.gv_characters, View.GONE)
-            view.setViewVisibility(R.id.tv_no_talent_ingredient, View.GONE)
-            view.setViewVisibility(R.id.tv_no_selected_characters, View.GONE)
+            initViews()
 
-            if (selectedCharacterIds.isEmpty()) {
-                view.setViewVisibility(R.id.tv_no_selected_characters, View.VISIBLE)
-            } else if (targetCharacters.isEmpty()) {
-                view.setViewVisibility(R.id.tv_no_talent_ingredient, View.VISIBLE)
-            } else {
-                view.setViewVisibility(R.id.gv_characters, View.VISIBLE)
+            when (widgetType) {
+                Constant.PREF_TALENT_RECENT_CHARACTERS -> {
+                    val selectedCharacterIds = PreferenceManager.getT<RecentGenshinCharacters>(
+                        context,
+                        Constant.PREF_RECENT_CHARACTER_LIST
+                    )?.characters ?: listOf()
+
+                    log.e(selectedCharacterIds)
+
+                    val targetCharacters = selectedCharacterIds
+                        .filter { CommonFunction.isTalentAvailableToday(it.talentDay) }
+
+                    if (targetCharacters.isEmpty()) {
+                        view.setViewVisibility(R.id.tv_no_talent_ingredient, View.VISIBLE)
+                    } else {
+                        view.setViewVisibility(R.id.gv_characters, View.VISIBLE)
+                    }
+                }
+
+                else -> {
+                    val selectedCharacterIds =
+                        PreferenceManager.getIntArray(
+                            context,
+                            Constant.PREF_SELECTED_CHARACTER_ID_LIST
+                        )
+
+                    val targetCharacters = PlayableCharacters
+                        .filter { selectedCharacterIds.contains(it.id) }
+                        .filter { CommonFunction.isTalentAvailableToday(it.talentDay) }
+
+                    if (selectedCharacterIds.isEmpty()) {
+                        view.setViewVisibility(R.id.tv_no_selected_characters, View.VISIBLE)
+                    } else if (targetCharacters.isEmpty()) {
+                        view.setViewVisibility(R.id.tv_no_talent_ingredient, View.VISIBLE)
+                    } else {
+                        view.setViewVisibility(R.id.gv_characters, View.VISIBLE)
+                    }
+                }
             }
-
-            view.setTextViewText(R.id.tv_sync_time, getSyncDayString())
 
             view.setViewVisibility(R.id.pb_loading, View.GONE)
             view.setViewVisibility(R.id.ll_body, View.VISIBLE)
-        }
-    }
-
-    private fun isTalentAvailableToday(talentDate: TalentDate): Boolean {
-        val currentDate = CommonFunction.getDateInGenshin()
-        return when (talentDate) {
-            TalentDate.MON_THU -> currentDate in TalentDays.MON_THU
-            TalentDate.TUE_FRI -> currentDate in TalentDays.TUE_FRI
-            TalentDate.WED_SAT -> currentDate in TalentDays.WED_SAT
-            TalentDate.ALL -> true
         }
     }
 
