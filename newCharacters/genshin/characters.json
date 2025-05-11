@@ -1,16 +1,6 @@
 {
   "characters": [
     {
-      "id": 10000109,
-      "name_ko": "유메미즈키 미즈키",
-      "name_en": "Yumemizuki Mizuki",
-      "rarity": 5,
-      "element": "ANEMO",
-      "talentArea": "INAZUMA",
-      "talentDay": "MON_THU",
-      "icon": "icon_mizuki.png"
-    },
-    {
       "id": 10000110,
       "name_ko": "바레사",
       "name_en": "Varesa",
@@ -49,6 +39,26 @@
       "talentArea": "FONTAINE",
       "talentDay": "TUE_FRI",
       "icon": "icon_escoffier.png"
+    },
+    {
+      "id": 10000114,
+      "name_ko": "스커크",
+      "name_en": "Skirk",
+      "rarity": 5,
+      "element": "CRYO",
+      "talentArea": "NATLAN",
+      "talentDay": "MON_THU",
+      "icon": "icon_skirk.png"
+    },
+    {
+      "id": 10000115,
+      "name_ko": "달리아",
+      "name_en": "Dahlia",
+      "rarity": 4,
+      "element": "HYDRO",
+      "talentArea": "MONDSTADT",
+      "talentDay": "WED_SAT",
+      "icon": "icon_dahlia.png"
     }
   ]
 }
