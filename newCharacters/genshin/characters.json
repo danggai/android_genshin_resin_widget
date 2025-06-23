@@ -59,6 +59,16 @@
       "talentArea": "MONDSTADT",
       "talentDay": "WED_SAT",
       "icon": "icon_dahlia.png"
+    },
+    {
+      "id": 10000116,
+      "name_ko": "이네파",
+      "name_en": "Ineffa",
+      "rarity": 5,
+      "element": "ELECTRO",
+      "talentArea": "NATLAN",
+      "talentDay": "WED_SAT",
+      "icon": "icon_innefa.png"
     }
   ]
 }
