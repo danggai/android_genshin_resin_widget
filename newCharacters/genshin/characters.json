@@ -1,26 +1,6 @@
 {
   "characters": [
     {
-      "id": 10000110,
-      "name_ko": "바레사",
-      "name_en": "Varesa",
-      "rarity": 5,
-      "element": "ELECTRO",
-      "talentArea": "NATLAN",
-      "talentDay": "WED_SAT",
-      "icon": "icon_varesa.png"
-    },
-    {
-      "id": 10000111,
-      "name_ko": "얀사",
-      "name_en": "Iansan",
-      "rarity": 4,
-      "element": "ELECTRO",
-      "talentArea": "NATLAN",
-      "talentDay": "MON_THU",
-      "icon": "icon_iansan.png"
-    },
-    {
       "id": 10000112,
       "name_ko": "이파",
       "name_en": "Ifa",
@@ -69,6 +49,36 @@
       "talentArea": "NATLAN",
       "talentDay": "WED_SAT",
       "icon": "icon_ineffa.png"
+    },
+    {
+      "id": 10000119,
+      "name_ko": "라우마",
+      "name_en": "Lauma",
+      "rarity": 5,
+      "element": "DENDRO",
+      "talentArea": "NODKRAI",
+      "talentDay": "MON_THU",
+      "icon": "icon_lauma.png"
+    },
+    {
+      "id": 10000120,
+      "name_ko": "플린스",
+      "name_en": "Flins",
+      "rarity": 5,
+      "element": "HYDRO",
+      "talentArea": "NODKRAI",
+      "talentDay": "WED_SAT",
+      "icon": "icon_flins.png"
+    },
+    {
+      "id": 10000121,
+      "name_ko": "아이노",
+      "name_en": "Aino",
+      "rarity": 4,
+      "element": "ELECTRO",
+      "talentArea": "NODKRAI",
+      "talentDay": "TUE_FRI",
+      "icon": "icon_aino.png"
     }
   ]
 }
