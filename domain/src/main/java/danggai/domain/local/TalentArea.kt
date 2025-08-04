@@ -6,5 +6,6 @@ enum class TalentArea {
     INAZUMA,
     SUMERU,
     FONTAINE,
-    NATLAN;
+    NATLAN,
+    NODKRAI
 }
