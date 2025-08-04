@@ -204,6 +204,8 @@ class TalentWidgetItemFactory(
             TalentArea.SUMERU -> R.drawable.icon_emblem_sumeru
             TalentArea.FONTAINE -> R.drawable.icon_emblem_fontaine
             TalentArea.NATLAN -> R.drawable.icon_emblem_natlan
+            TalentArea.NODKRAI -> R.drawable.icon_emblem_nodkrai
+            else -> R.drawable.icon_unknown
         }
     }
 
