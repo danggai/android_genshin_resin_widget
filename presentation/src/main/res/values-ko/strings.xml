@@ -427,5 +427,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 특성 소재 위젯에 최근 버전 캐릭터 목록을 자동으로 갱신하는 옵션을 추가했습니다. (새로 위젯을 생성해주세요.)\n- 원신 5.6버전까지의 캐릭터 데이터 추가</string>
+    <string name="dialog_msg_patch_note">- 6.0 및 노드크라이 관련 데이터 추가</string>
 </resources>
