@@ -366,7 +366,7 @@
     <string name="zzz_member_card">로프넷 회원</string>
     <string name="zzz_member_card_not_opened">비회원</string>
     <string name="zzz_member_card_no">미수령</string>
-    <string name="zzz_member_card_ack">수령완료</string>
+    <string name="zzz_member_card_ack">수령</string>
     <string name="zzz_member_card_less_1day">1일 미만</string>
     <plurals name="zzz_member_card_days">
         <item quantity="one">%d일</item>
