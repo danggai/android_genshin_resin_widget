@@ -544,6 +544,15 @@ class WidgetDesignDetailFragment :
             }
 
             launch {
+                mVM.sfMemberCardDataVisibility.collect {
+                    log.e()
+                    mVM.sfSelectedPreview.value = Preview.ZZZ
+                    binding.widgetZzz.rlMemberCard.visibility =
+                        if (it) View.VISIBLE else View.GONE
+                }
+            }
+
+            launch {
                 mVM.sfInvestigationPointDataVisibility.collect {
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.ZZZ

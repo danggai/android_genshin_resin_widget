@@ -76,6 +76,7 @@ class WidgetDesignViewModel @Inject constructor(
     val sfVideoStoreManagementDataVisibility = MutableStateFlow(true)
     val sfCoffeeDataVisibility = MutableStateFlow(true)
     val sfRiduWeeklyDataVisibility = MutableStateFlow(true)
+    val sfMemberCardDataVisibility = MutableStateFlow(true)
     val sfInvestigationPointDataVisibility = MutableStateFlow(true)
 
     val sfFontSizeDetail = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
@@ -134,6 +135,7 @@ class WidgetDesignViewModel @Inject constructor(
             sfVideoStoreManagementDataVisibility.value = it.videoStoreManagementDataVisibility
             sfCoffeeDataVisibility.value = it.coffeeDataVisibility
             sfRiduWeeklyDataVisibility.value = it.riduWeeklyDataVisibility
+            sfMemberCardDataVisibility.value = it.memberCardDataVisibility
             sfInvestigationPointDataVisibility.value = it.investigationPointDataVisibility
 
             sfDetailUidVisibility.value = it.uidVisibility
@@ -293,6 +295,7 @@ class WidgetDesignViewModel @Inject constructor(
                 sfVideoStoreManagementDataVisibility.value,
                 sfCoffeeDataVisibility.value,
                 sfRiduWeeklyDataVisibility.value,
+                sfMemberCardDataVisibility.value,
                 sfInvestigationPointDataVisibility.value,
 
                 sfDetailUidVisibility.value,
