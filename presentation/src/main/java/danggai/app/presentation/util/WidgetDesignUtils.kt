@@ -275,6 +275,7 @@ object WidgetDesignUtils {
                 val fontSize = widgetDesign.fontSize
                 view.setFloat(R.id.tv_resin, "setTextSize", fontSize.toFloat())
                 view.setFloat(R.id.tv_trail_power, "setTextSize", fontSize.toFloat())
+                view.setFloat(R.id.tv_battery, "setTextSize", fontSize.toFloat())
             }
         }
 
