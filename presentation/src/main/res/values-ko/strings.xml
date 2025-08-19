@@ -363,12 +363,22 @@
     <string name="ridu_weekly">주간 리두</string>
     <string name="investigation_point">제로 공동 조사 포인트</string>
 
+    <string name="zzz_member_card">로프넷 회원</string>
+    <string name="zzz_member_card_not_opened">비회원</string>
+    <string name="zzz_member_card_no">미수령</string>
+    <string name="zzz_member_card_ack">수령완료</string>
+    <string name="zzz_member_card_less_1day">1일 미만</string>
+    <plurals name="zzz_member_card_days">
+        <item quantity="one">%d일</item>
+        <item quantity="other">%d일</item>
+    </plurals>
+
     <string name="video_store_management">비디오 가게 경영</string>
     <string name="video_store_management_no">영업 대기 중</string>
     <string name="video_store_management_doing">영업 중</string>
     <string name="video_store_management_done">결산 대기</string>
 
-    <string name="scratch_card">복권</string>
+    <string name="scratch_card">복권/점술</string>
     <string name="scratch_card_done">완료</string>
     <string name="scratch_card_no">미완료</string>
 

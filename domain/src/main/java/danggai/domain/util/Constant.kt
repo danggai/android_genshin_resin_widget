@@ -117,6 +117,12 @@ object Constant {
         DONE("CardSignDone")                // 완료 / Complete
     }
 
+    /* 로프넷 회원 | Member Card */
+    enum class ZZZMemberCardState(val value: String) {
+        NO("MemberCardStateNo"),            // 미완료 / Incomplete
+        DONE("MemberCardStateACK")          // 완료 / Complete
+    }
+
 
     /* API NAME */
 
