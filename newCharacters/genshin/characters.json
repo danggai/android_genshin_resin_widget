@@ -1,26 +1,6 @@
 {
   "characters": [
     {
-      "id": 10000112,
-      "name_ko": "이파",
-      "name_en": "Ifa",
-      "rarity": 4,
-      "element": "ANEMO",
-      "talentArea": "NATLAN",
-      "talentDay": "WED_SAT",
-      "icon": "icon_ifa.png"
-    },
-    {
-      "id": 10000113,
-      "name_ko": "에스코피에",
-      "name_en": "Escoffier",
-      "rarity": 5,
-      "element": "CRYO",
-      "talentArea": "FONTAINE",
-      "talentDay": "TUE_FRI",
-      "icon": "icon_escoffier.png"
-    },
-    {
       "id": 10000114,
       "name_ko": "스커크",
       "name_en": "Skirk",
@@ -79,6 +59,16 @@
       "talentArea": "NODKRAI",
       "talentDay": "TUE_FRI",
       "icon": "icon_aino.png"
+    },
+    {
+      "id": 10000122,
+      "name_ko": "네페르",
+      "name_en": "Nefer",
+      "rarity": 5,
+      "element": "DENDRO",
+      "talentArea": "NODKRAI",
+      "talentDay": "TUE_FRI",
+      "icon": "icon_nefer.png"
     }
   ]
 }
