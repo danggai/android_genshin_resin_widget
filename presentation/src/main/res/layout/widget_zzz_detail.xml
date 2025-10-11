@@ -239,6 +239,45 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_member_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_member_card"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:padding="1dp"
+                    android:layout_marginRight="2dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_polychrome" />
+
+                <TextView
+                    android:id="@+id/tv_member_card_title"
+                    style="@style/TextView"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_member_card"
+                    android:layout_toRightOf="@id/iv_member_card"
+                    android:singleLine="true"
+                    android:text="@string/zzz_member_card"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_member_card"
+                    style="@style/TextView"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
+                    android:text="@string/zzz_member_card_no"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/rl_investigation_point"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -291,7 +330,7 @@
                     android:padding="1dp"
                     android:layout_marginRight="2dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/icon_polychrome" />
+                    android:src="@drawable/icon_scratch_card" />
 
                 <TextView
                     android:id="@+id/tv_scratch_card_title"

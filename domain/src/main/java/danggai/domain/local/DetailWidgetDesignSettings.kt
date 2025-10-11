@@ -28,6 +28,7 @@ data class DetailWidgetDesignSettings(
     val videoStoreManagementDataVisibility: Boolean,
     val coffeeDataVisibility: Boolean,
     val riduWeeklyDataVisibility: Boolean,
+    val memberCardDataVisibility: Boolean = true,
     val investigationPointDataVisibility: Boolean,
 
     val uidVisibility: Boolean = false,

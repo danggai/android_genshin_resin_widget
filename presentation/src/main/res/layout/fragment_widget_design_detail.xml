@@ -454,9 +454,9 @@
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
-                        android:id="@+id/cb_investigation_point"
-                        android:checked="@={vm.sfInvestigationPointDataVisibility}"
-                        android:text="@string/investigation_point" />
+                        android:id="@+id/cb_member_card"
+                        android:checked="@={vm.sfMemberCardDataVisibility}"
+                        android:text="@string/zzz_member_card" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -466,13 +466,33 @@
                     android:gravity="center_vertical">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_investigation_point"
+                        android:checked="@={vm.sfInvestigationPointDataVisibility}"
+                        android:text="@string/investigation_point" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_scratch_card"
                         style="@style/Checkbox"
                         android:checked="@={vm.sfScratchCardDataVisibility}"
                         android:text="@string/scratch_card" />
 
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_video_store_management"
+                        style="@style/Checkbox"
+                        android:checked="@={vm.sfVideoStoreManagementDataVisibility}"
+                        android:text="@string/video_store_management" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/cb_empty"
+                        android:visibility="invisible"
                         style="@style/Checkbox"
                         android:checked="@={vm.sfVideoStoreManagementDataVisibility}"
                         android:text="@string/video_store_management" />

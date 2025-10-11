@@ -25,6 +25,7 @@ data class ZZZDailyNote(
  * @param bountyCommission 제로 공동 현상금 의뢰
  * @param surveyPoints 제로 공동 조사 포인트
  * @param weeklyTask 주간 리두
+ * @param memberCard 월정액
  */
 data class ZZZDailyNoteData(
     @SerializedName("card_sign") val cardSign: String,
@@ -34,7 +35,8 @@ data class ZZZDailyNoteData(
     @SerializedName("coffee") val coffee: Any?,  // 아직 미구현 인듯? null로만 옴
     @SerializedName("bounty_commission") val bountyCommission: ZZZNumTotal?,
     @SerializedName("survey_points") val surveyPoints: ZZZNumTotal?,
-    @SerializedName("weekly_task") val weeklyTask: ZZZWeeklyTask?
+    @SerializedName("weekly_task") val weeklyTask: ZZZWeeklyTask?,
+    @SerializedName("member_card") val memberCard: ZZZMemberCard?
 ) {
     companion object {
         val EMPTY = ZZZDailyNoteData(
@@ -45,7 +47,8 @@ data class ZZZDailyNoteData(
             coffee = null,
             bountyCommission = ZZZNumTotal.EMPTY,
             surveyPoints = ZZZNumTotal.EMPTY,
-            weeklyTask = ZZZWeeklyTask.EMPTY
+            weeklyTask = ZZZWeeklyTask.EMPTY,
+            memberCard = ZZZMemberCard.EMPTY
         )
     }
 }
@@ -104,6 +107,20 @@ data class ZZZWeeklyTask(
         val EMPTY = ZZZWeeklyTask(
             curPoint = -1,
             maxPoint = -1
+        )
+    }
+}
+
+data class ZZZMemberCard(
+    @SerializedName("is_open") val isOpen: Boolean,
+    @SerializedName("member_card_state") val memberCardState: String,
+    @SerializedName("exp_time") val expTime: Int
+) {
+    companion object {
+        val EMPTY = ZZZMemberCard(
+            isOpen = false,
+            memberCardState = "",
+            expTime = 0
         )
     }
 }

@@ -273,6 +273,34 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                     )
                     setVisibility(R.id.rl_ridu_weekly, widgetDesign.riduWeeklyDataVisibility)
 
+                    val expDays: Int = (memberCard?.expTime ?: 0) / (60 * 60 * 24)
+                    val expDaysString =
+                        if (expDays < 1)
+                            _context.getString(R.string.zzz_member_card_less_1day)
+                        else _context.resources.getQuantityString(
+                            R.plurals.zzz_member_card_days, expDays, expDays
+                        )
+                    log.e(expDaysString)
+                    val dayText = if (memberCard?.isOpen == true) " ($expDaysString)" else ""
+
+                    setText(
+                        R.id.tv_member_card_title,
+                        _context.getString(R.string.zzz_member_card) + dayText
+                    )
+                    setText(
+                        R.id.tv_member_card,
+                        if (memberCard?.isOpen == false) {
+                            _context.getString(R.string.zzz_member_card_not_opened)
+                        } else {
+                            when (memberCard?.memberCardState) {
+                                Constant.ZZZMemberCardState.NO.value -> _context.getString(R.string.zzz_member_card_no)
+                                Constant.ZZZMemberCardState.DONE.value -> _context.getString(R.string.zzz_member_card_ack)
+                                else -> ""
+                            }
+                        }
+                    )
+                    setVisibility(R.id.rl_member_card, widgetDesign.memberCardDataVisibility)
+
                     setText(
                         R.id.tv_investigation_point_title,
                         _context.getString(R.string.investigation_point)

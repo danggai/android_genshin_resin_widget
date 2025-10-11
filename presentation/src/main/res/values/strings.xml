@@ -371,6 +371,16 @@
     <string name="ridu_weekly">Ridu Weekly</string>
     <string name="investigation_point">Investigation Point</string>
 
+    <string name="zzz_member_card">Membership</string>
+    <string name="zzz_member_card_not_opened">Non-member</string>
+    <string name="zzz_member_card_no">Not Claimed</string>
+    <string name="zzz_member_card_ack">Claimed</string>
+    <string name="zzz_member_card_less_1day">&lt;1d</string>
+    <plurals name="zzz_member_card_days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+
     <string name="video_store_management">Video Store Manage</string>
     <string name="video_store_management_no">Waiting to Open</string>
     <string name="video_store_management_doing">Currently Open</string>
