@@ -1,7 +1,7 @@
 [versions]
 # Gradle Plugins
 buildGradle = "8.4.2"
-kotlinGradle = "1.9.20"
+kotlinGradle = "1.9.24"
 googleService = "4.3.14"
 crashlyticsGradle = "2.9.2"
 gson = "2.8.6"
