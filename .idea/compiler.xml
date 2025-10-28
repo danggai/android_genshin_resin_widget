@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="17">
+    <bytecodeTargetLevel target="21">
       <module name="android_genshin_resin_widget.buildSrc" target="11" />
       <module name="android_genshin_resin_widget.buildSrc.main" target="11" />
       <module name="android_genshin_resin_widget.buildSrc.test" target="11" />
+      <module name="genshin_resin_widget.buildSrc.main" target="21" />
+      <module name="genshin_resin_widget.buildSrc.test" target="21" />
     </bytecodeTargetLevel>
   </component>
 </project>
