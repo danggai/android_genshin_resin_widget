@@ -1131,6 +1131,28 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
     ),
 
     LocalCharacter(
+        Constant.ID_IFA,
+        "이파",
+        "Ifa",
+        4,
+        Elements.ANEMO,
+        TalentArea.NATLAN,
+        TalentDate.WED_SAT,
+        R.drawable.icon_ifa
+    ),
+
+    LocalCharacter(
+        Constant.ID_ESCOFFIER,
+        "에스코피에",
+        "Escoffier",
+        5,
+        Elements.CRYO,
+        TalentArea.FONTAINE,
+        TalentDate.TUE_FRI,
+        R.drawable.icon_escoffier
+    ),
+
+    LocalCharacter(
         Constant.ID_SKIRK,
         "스커크",
         "Skirk",
