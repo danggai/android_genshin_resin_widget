@@ -1228,4 +1228,26 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         TalentDate.TUE_FRI,
         R.drawable.icon_nefer
     ),
+
+    LocalCharacter(
+        Constant.ID_DURIN,
+        "두린",
+        "Durin",
+        5,
+        Elements.PYRO,
+        TalentArea.MONDSTADT,
+        TalentDate.WED_SAT,
+        R.drawable.icon_durin
+    ),
+
+    LocalCharacter(
+        Constant.ID_JAHODA,
+        "야호다",
+        "Jahoda",
+        4,
+        Elements.ANEMO,
+        TalentArea.NODKRAI,
+        TalentDate.WED_SAT,
+        R.drawable.icon_jahoda
+    ),
 )
