@@ -3,8 +3,8 @@ import dependency.Versions
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -55,7 +55,7 @@ dependencies {
 
     // Hilt - DI
     implementation(libs.daggerHilt.android)
-    kapt(libs.daggerHilt.compiler)
+    ksp(libs.daggerHilt.compiler)
 
     // OkHttp3 & Retrofit - Network
     implementation(libs.logging.interceptor)
@@ -68,7 +68,7 @@ dependencies {
 
     // Room . Database
     implementation(libs.room.runtime)
-    kapt(libs.room.compiler)
+    ksp(libs.room.compiler)
     implementation(libs.room.ktx)
 
     // Unit Test

@@ -3,8 +3,8 @@ import dependency.Versions
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp")
 }
 android {
     compileSdk = Versions.compileSdk
@@ -45,10 +45,7 @@ android {
         buildConfig = true
     }
     namespace = "danggai.app.presentation"
-}
 
-kapt {
-    correctErrorTypes = true
 }
 
 dependencies {
@@ -83,12 +80,12 @@ dependencies {
     // Hilt - DI
     implementation(libs.hilt.work)
     implementation(libs.daggerHilt.android)
-    kapt(libs.hilt.compiler)
-    kapt(libs.daggerHilt.compiler)
+    ksp(libs.hilt.compiler)
+    ksp(libs.daggerHilt.compiler)
 
     // Glide - image
     implementation(libs.glide)
-    kapt(libs.glide.compiler)
+    ksp(libs.glide.compiler)
 
     // Firebase Crashlytics
     implementation(platform(libs.firebase.bom))

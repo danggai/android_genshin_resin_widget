@@ -3,7 +3,7 @@ import dependency.Versions
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
@@ -58,9 +58,6 @@ android {
     }
 
     namespace = "danggai.app.resinwidget"
-    kapt {
-        correctErrorTypes = true
-    }
 }
 
 dependencies {
@@ -79,13 +76,13 @@ dependencies {
 
     // Glide - image
     implementation(libs.glide)
-    kapt(libs.glide.compiler)
+    ksp(libs.glide.compiler)
 
     // Hilt - DI
     implementation(libs.daggerHilt.android)
-    kapt(libs.daggerHilt.compiler)
+    ksp(libs.daggerHilt.compiler)
     implementation(libs.hilt.work)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     // OkHttp3 & Retrofit - for network
     implementation(libs.logging.interceptor)
