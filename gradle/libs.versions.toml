@@ -5,6 +5,7 @@ kotlinGradle = "1.9.21"
 googleService = "4.3.14"
 crashlyticsGradle = "2.9.2"
 gson = "2.8.6"
+guava = "33.5.0-android"
 
 # AndroidX Versions
 core = "1.15.0"
@@ -38,7 +39,7 @@ glide = "4.14.2"
 room = "2.4.3"
 
 # Google Ads
-googleAds = "21.4.0"
+googleAds = "23.1.0"
 
 # Worker
 worker = "2.7.1"
@@ -78,6 +79,7 @@ kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", versio
 # Google
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleService" }
 google-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+google-guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
 
 # Rx
 rx-android = { group = "io.reactivex.rxjava2", name = "rxandroid", version.ref = "rxAndroid" }

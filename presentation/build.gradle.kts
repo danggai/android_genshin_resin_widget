@@ -66,6 +66,7 @@ dependencies {
 
     // Gson
     implementation(libs.google.gson)
+    implementation(libs.google.guava)
 
     // Lifecycle
     implementation(libs.lifecycle.runtime)
