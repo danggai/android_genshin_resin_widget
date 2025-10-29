@@ -2,6 +2,7 @@ package danggai.app.presentation.ui.main
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.annotation.LayoutRes
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,10 +33,7 @@ class MainActivity : BindingActivity<ActivityMainBinding, MainViewModel>() {
 
         initFragment()
         initRx()
-    }
-
-    override fun onBackPressed() {
-        rxBackButtonAction.onNext(System.currentTimeMillis())
+        initBackPressed()
     }
 
     private fun initFragment() {
@@ -44,18 +42,34 @@ class MainActivity : BindingActivity<ActivityMainBinding, MainViewModel>() {
             .commit()
     }
 
+    private fun initBackPressed() {
+        onBackPressedDispatcher.addCallback {
+            if (rxBackButtonAction.hasObservers()) {
+                rxBackButtonAction.onNext(System.currentTimeMillis())
+            } else {
+                isEnabled = false
+                onBackPressedDispatcher.onBackPressed()
+                isEnabled = true
+            }
+        }
+    }
+
     private fun initRx() {
         rxBackButtonAction
             .observeOn(AndroidSchedulers.mainThread())
-            .buffer(2,1)
+            .buffer(2, 1)
             .map { it[1] - it[0] < Constant.BACK_BUTTON_INTERVAL }
             .subscribe {
                 if (it) {
-                    super.onBackPressed()
                     finish()
                     exitProcess(0)
-                } else { Toast.makeText(applicationContext, getString(
-                    R.string.msg_toast_back_button), Toast.LENGTH_SHORT).show() }
+                } else {
+                    Toast.makeText(
+                        applicationContext, getString(
+                            R.string.msg_toast_back_button
+                        ), Toast.LENGTH_SHORT
+                    ).show()
+                }
             }.addDisposableExt()
     }
 
