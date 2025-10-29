@@ -148,7 +148,7 @@ class TalentWidget() : AppWidgetProvider() {
             context,
             remoteViews,
             R.id.ll_sync,
-            WidgetUtils.getUpdateIntent(context, DetailWidget::class.java)
+            WidgetUtils.getTalentRefreshIntent(context)
         )
 
         val manager: AppWidgetManager = AppWidgetManager.getInstance(context)

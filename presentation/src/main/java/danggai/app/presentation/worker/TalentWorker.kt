@@ -1,7 +1,6 @@
 package danggai.app.presentation.worker
 
 import android.content.Context
-import android.content.Intent
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingWorkPolicy
@@ -10,8 +9,8 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import danggai.app.presentation.ui.widget.TalentWidget
 import danggai.app.presentation.util.CommonFunction
+import danggai.app.presentation.util.WidgetUtils
 import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.network.githubRaw.usecase.GithubRawUseCase
@@ -115,17 +114,13 @@ class TalentWorker @AssistedInject constructor(
     }
 
     override suspend fun doWork(): Result {
+        val updateIntent = WidgetUtils.getTalentRefreshIntent(applicationContext)
+
         return try {
             log.e()
             CoroutineScope(Dispatchers.IO).launch {
                 val deferred = async { getRecentGenshinCharactersList() }
                 awaitAll(deferred)
-
-                applicationContext.sendBroadcast(
-                    Intent(applicationContext, TalentWidget::class.java)
-                        .setAction(Constant.ACTION_TALENT_WIDGET_REFRESH)
-                )
-
                 startWorkerOneTimeAtChina4AM(applicationContext)
             }
             Result.success()
@@ -136,11 +131,9 @@ class TalentWorker @AssistedInject constructor(
                 is CancellationException -> log.e("Job cancelled!")
                 else -> log.e(e.message.toString())
             }
-            applicationContext.sendBroadcast(
-                Intent(applicationContext, TalentWidget::class.java)
-                    .setAction(Constant.ACTION_TALENT_WIDGET_REFRESH)
-            )
             Result.failure()
+        } finally {
+            applicationContext.sendBroadcast(updateIntent)
         }
     }
 }

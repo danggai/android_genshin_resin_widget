@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import danggai.app.presentation.ui.main.MainActivity
+import danggai.app.presentation.ui.widget.TalentWidget
 import danggai.app.presentation.ui.widget.config.WidgetConfigActivity
 import danggai.domain.util.Constant
 
@@ -73,6 +74,11 @@ object WidgetUtils {
     fun <T : AppWidgetProvider> getUpdateIntent(context: Context, widgetClass: Class<T>) =
         Intent(context, widgetClass).apply {
             action = Constant.ACTION_RESIN_WIDGET_REFRESH_DATA
+        }
+
+    fun getTalentRefreshIntent(context: Context) =
+        Intent(context, TalentWidget::class.java).apply {
+            action = Constant.ACTION_TALENT_WIDGET_REFRESH
         }
 
     fun <T : AppWidgetProvider> getToastIntent(

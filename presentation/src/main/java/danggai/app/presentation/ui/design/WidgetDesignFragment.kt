@@ -4,7 +4,6 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -24,14 +23,13 @@ import danggai.app.presentation.ui.widget.BatteryWidget
 import danggai.app.presentation.ui.widget.DetailWidget
 import danggai.app.presentation.ui.widget.HKSRDetailWidget
 import danggai.app.presentation.ui.widget.ResinWidget
-import danggai.app.presentation.ui.widget.TalentWidget
 import danggai.app.presentation.ui.widget.TrailPowerWidget
 import danggai.app.presentation.ui.widget.ZZZDetailWidget
 import danggai.app.presentation.util.CommonFunction
+import danggai.app.presentation.util.WidgetUtils
 import danggai.app.presentation.util.log
 import danggai.domain.local.DesignTabType
 import danggai.domain.local.Preview
-import danggai.domain.util.Constant
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -109,10 +107,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
                     context?.let { _context ->
                         log.e()
                         CommonFunction.sendBroadcastAllWidgetRefreshUI(_context)
-                        _context.sendBroadcast(
-                            Intent(_context, TalentWidget::class.java)
-                                .setAction(Constant.ACTION_TALENT_WIDGET_REFRESH)
-                        )
+                        _context.sendBroadcast(WidgetUtils.getTalentRefreshIntent(_context))
                     }
                 }
             }
