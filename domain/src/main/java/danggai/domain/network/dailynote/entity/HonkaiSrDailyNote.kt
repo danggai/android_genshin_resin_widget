@@ -39,6 +39,9 @@ data class HonkaiSrDailyNoteData(
     @SerializedName("rogue_tourn_weekly_max") val rogueTournWeeklyMax: Int,
     @SerializedName("rogue_tourn_weekly_unlocked") val rogueTournWeeklyUnlocked: Boolean,
 
+    @SerializedName("grid_fight_weekly_cur") val gridFightWeeklyCur: Int,    // 화폐 전쟁
+    @SerializedName("grid_fight_weekly_max") val gridFightWeeklyMax: Int,
+
     @SerializedName("weekly_cocoon_cnt") val weeklyCocoonCnt: Int,             // 전쟁의 여운
     @SerializedName("weekly_cocoon_limit") val weeklyCocoonLimit: Int,
 ) {
@@ -64,6 +67,9 @@ data class HonkaiSrDailyNoteData(
             rogueTournWeeklyCur = -1,
             rogueTournWeeklyMax = -1,
             rogueTournWeeklyUnlocked = false,
+
+            gridFightWeeklyCur = -1,
+            gridFightWeeklyMax = -1,
 
             weeklyCocoonCnt = -1,
             weeklyCocoonLimit = -1,
