@@ -11,7 +11,7 @@ data class DetailWidgetDesignSettings(
     val weeklyBossDataVisibility: Boolean,
     val realmCurrencyDataVisibility: Boolean,
     val expeditionDataVisibility: Boolean,
-    val transformerDataVisibility: Boolean = true,
+    val transformerDataVisibility: Boolean,
 
     val trailBlazepowerDataVisibility: Boolean,
     val reserveTrailBlazepowerDataVisibility: Boolean,
@@ -19,6 +19,7 @@ data class DetailWidgetDesignSettings(
     val echoOfWarDataVisibility: Boolean,
     val simulatedUniverseDataVisibility: Boolean,
     val simulatedUniverseClearTimeVisibility: Boolean,
+    val gridFightDataVisibility: Boolean,
     val synchronicityPointVisibility: Boolean,
     val assignmentTimeDataVisibility: Boolean,
 
@@ -28,11 +29,11 @@ data class DetailWidgetDesignSettings(
     val videoStoreManagementDataVisibility: Boolean,
     val coffeeDataVisibility: Boolean,
     val riduWeeklyDataVisibility: Boolean,
-    val memberCardDataVisibility: Boolean = true,
+    val memberCardDataVisibility: Boolean,
     val investigationPointDataVisibility: Boolean,
 
-    val uidVisibility: Boolean = false,
-    val nameVisibility: Boolean = false,
+    val uidVisibility: Boolean,
+    val nameVisibility: Boolean,
     val fontSize: Int,
     val backgroundTransparency: Int
 ) {
@@ -54,6 +55,7 @@ data class DetailWidgetDesignSettings(
             echoOfWarDataVisibility = true,
             simulatedUniverseDataVisibility = true,
             simulatedUniverseClearTimeVisibility = true,
+            gridFightDataVisibility = true,
             synchronicityPointVisibility = true,
             assignmentTimeDataVisibility = true,
 
@@ -63,6 +65,7 @@ data class DetailWidgetDesignSettings(
             videoStoreManagementDataVisibility = true,
             coffeeDataVisibility = true,
             riduWeeklyDataVisibility = true,
+            memberCardDataVisibility = true,
             investigationPointDataVisibility = true,
 
             uidVisibility = false,
