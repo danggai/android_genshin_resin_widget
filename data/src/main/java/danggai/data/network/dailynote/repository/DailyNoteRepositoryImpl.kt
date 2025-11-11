@@ -7,6 +7,7 @@ import danggai.data.network.dailynote.remote.api.DailyNoteApi
 import danggai.domain.core.ApiResult
 import danggai.domain.network.dailynote.entity.GenshinDailyNote
 import danggai.domain.network.dailynote.entity.HonkaiSrDailyNote
+import danggai.domain.network.dailynote.entity.HonkaiSrGrid
 import danggai.domain.network.dailynote.entity.HonkaiSrRogue
 import danggai.domain.network.dailynote.entity.ZZZDailyNote
 import danggai.domain.network.dailynote.repository.DailyNoteRepository
@@ -42,18 +43,22 @@ class DailyNoteRepositoryImpl @Inject constructor(
                     this.response.code(),
                     it
                 )
-            } ?:ApiResult.Null() )
+            } ?: ApiResult.Null())
         }.suspendOnError {
-            emit(ApiResult.Failure(
-                this.response.code(),
-                this.response.message()
-            ))
+            emit(
+                ApiResult.Failure(
+                    this.response.code(),
+                    this.response.message()
+                )
+            )
         }.suspendOnException {
-            emit(ApiResult.Error(
-                this.exception
-            ))
+            emit(
+                ApiResult.Error(
+                    this.exception
+                )
+            )
         }
-    }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 
     override suspend fun dailyNoteHonkaiSr(
         uid: String,
@@ -76,18 +81,22 @@ class DailyNoteRepositoryImpl @Inject constructor(
                     this.response.code(),
                     it
                 )
-            } ?:ApiResult.Null() )
+            } ?: ApiResult.Null())
         }.suspendOnError {
-            emit(ApiResult.Failure(
-                this.response.code(),
-                this.response.message()
-            ))
+            emit(
+                ApiResult.Failure(
+                    this.response.code(),
+                    this.response.message()
+                )
+            )
         }.suspendOnException {
-            emit(ApiResult.Error(
-                this.exception
-            ))
+            emit(
+                ApiResult.Error(
+                    this.exception
+                )
+            )
         }
-    }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 
     override suspend fun rogueHonkaiSr(
         uid: String,
@@ -112,18 +121,60 @@ class DailyNoteRepositoryImpl @Inject constructor(
                     this.response.code(),
                     it
                 )
-            } ?:ApiResult.Null() )
+            } ?: ApiResult.Null())
         }.suspendOnError {
-            emit(ApiResult.Failure(
-                this.response.code(),
-                this.response.message()
-            ))
+            emit(
+                ApiResult.Failure(
+                    this.response.code(),
+                    this.response.message()
+                )
+            )
         }.suspendOnException {
-            emit(ApiResult.Error(
-                this.exception
-            ))
+            emit(
+                ApiResult.Error(
+                    this.exception
+                )
+            )
         }
-    }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+
+    override suspend fun gridHonkaiSr(
+        uid: String,
+        server: String,
+        cookie: String,
+        ds: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit
+    ) = flow<ApiResult<HonkaiSrGrid>> {
+        val response = dailyNoteApi.gridHonkaiSr(
+            uid,
+            server,
+            cookie,
+            ds
+        )
+
+        response.suspendOnSuccess {
+            emit(this.response.body()?.let {
+                ApiResult.Success<HonkaiSrGrid>(
+                    this.response.code(),
+                    it
+                )
+            } ?: ApiResult.Null())
+        }.suspendOnError {
+            emit(
+                ApiResult.Failure(
+                    this.response.code(),
+                    this.response.message()
+                )
+            )
+        }.suspendOnException {
+            emit(
+                ApiResult.Error(
+                    this.exception
+                )
+            )
+        }
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 
     override suspend fun dailyNoteZZZ(
         uid: String,
@@ -144,17 +195,21 @@ class DailyNoteRepositoryImpl @Inject constructor(
                     this.response.code(),
                     it
                 )
-            } ?:ApiResult.Null() )
+            } ?: ApiResult.Null())
         }.suspendOnError {
-            emit(ApiResult.Failure(
-                this.response.code(),
-                this.response.message()
-            ))
+            emit(
+                ApiResult.Failure(
+                    this.response.code(),
+                    this.response.message()
+                )
+            )
         }.suspendOnException {
-            emit(ApiResult.Error(
-                this.exception
-            ))
+            emit(
+                ApiResult.Error(
+                    this.exception
+                )
+            )
         }
-    }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 }
 

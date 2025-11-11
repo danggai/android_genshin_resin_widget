@@ -3,6 +3,7 @@ package danggai.domain.network.dailynote.usecase
 import danggai.domain.core.ApiResult
 import danggai.domain.network.dailynote.entity.GenshinDailyNote
 import danggai.domain.network.dailynote.entity.HonkaiSrDailyNote
+import danggai.domain.network.dailynote.entity.HonkaiSrGrid
 import danggai.domain.network.dailynote.entity.HonkaiSrRogue
 import danggai.domain.network.dailynote.entity.ZZZDailyNote
 import danggai.domain.network.dailynote.repository.DailyNoteRepository
@@ -55,6 +56,23 @@ class DailyNoteUseCase @Inject constructor(
         onComplete: () -> Unit
     ): Flow<ApiResult<HonkaiSrRogue>> =
         dailyNoteRepository.rogueHonkaiSr(
+            uid = uid,
+            server = server,
+            cookie = cookie,
+            ds = ds,
+            onStart = onStart,
+            onComplete = onComplete
+        )
+
+    suspend fun gridHonkaiSr(
+        uid: String,
+        server: String,
+        cookie: String,
+        ds: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit
+    ): Flow<ApiResult<HonkaiSrGrid>> =
+        dailyNoteRepository.gridHonkaiSr(
             uid = uid,
             server = server,
             cookie = cookie,

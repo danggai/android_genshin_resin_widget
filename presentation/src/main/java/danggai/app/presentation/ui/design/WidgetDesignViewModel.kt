@@ -66,6 +66,7 @@ class WidgetDesignViewModel @Inject constructor(
     val sfEchoOfWarDataVisibility = MutableStateFlow(true)
     val sfSimulatedUniverseDataVisibility = MutableStateFlow(true)
     val sfSimulatedUniverseClearTimeVisibility = MutableStateFlow(true)
+    val sfIsGridFightDataInvisible = MutableStateFlow(false)
     val sfDivergentUniverseDataVisibility = MutableStateFlow(true)
     val sfAssignmentTimeDataVisibility = MutableStateFlow(true)
 
@@ -126,6 +127,7 @@ class WidgetDesignViewModel @Inject constructor(
             sfEchoOfWarDataVisibility.value = it.echoOfWarDataVisibility
             sfSimulatedUniverseDataVisibility.value = it.simulatedUniverseDataVisibility
             sfSimulatedUniverseClearTimeVisibility.value = it.simulatedUniverseClearTimeVisibility
+            sfIsGridFightDataInvisible.value = it.isGridFightInvisible
             sfDivergentUniverseDataVisibility.value = it.synchronicityPointVisibility
             sfAssignmentTimeDataVisibility.value = it.assignmentTimeDataVisibility
 
@@ -286,6 +288,7 @@ class WidgetDesignViewModel @Inject constructor(
                 sfEchoOfWarDataVisibility.value,
                 sfSimulatedUniverseDataVisibility.value,
                 sfSimulatedUniverseClearTimeVisibility.value,
+                sfIsGridFightDataInvisible.value,
                 sfDivergentUniverseDataVisibility.value,
                 sfAssignmentTimeDataVisibility.value,
 

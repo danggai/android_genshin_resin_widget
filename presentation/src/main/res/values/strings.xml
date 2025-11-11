@@ -357,6 +357,7 @@
     <string name="reserve_trailblaze_power">Reserved Stamina</string>
     <string name="simulated_universe">Simulated Universe</string>
     <string name="divergent_universe">Divergent Universe</string>
+    <string name="grid_fight">Grid Fight</string>
     <string name="clear_count">Clear Count</string>
 
     <string name="assignment_time">Assignment Time</string>

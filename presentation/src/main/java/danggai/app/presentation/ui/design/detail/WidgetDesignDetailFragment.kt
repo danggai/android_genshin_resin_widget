@@ -204,7 +204,7 @@ class WidgetDesignDetailFragment :
                             when (mVM.sfWidgetTimeNotation.value) {
                                 TimeNotation.DEFAULT,
                                 TimeNotation.REMAIN_TIME,
-                                -> {
+                                    -> {
                                     rlResinTime.visibility =
                                         if (mVM.sfResinDataVisibility.value) View.VISIBLE else View.GONE
                                     rlRealmCurrencyTime.visibility =
@@ -268,7 +268,7 @@ class WidgetDesignDetailFragment :
                             when (mVM.sfWidgetTimeNotation.value) {
                                 TimeNotation.DEFAULT,
                                 TimeNotation.REMAIN_TIME,
-                                -> {
+                                    -> {
                                     rlTrailblazePowerTime.visibility =
                                         if (mVM.sfTrailBlazepowerDataVisibility.value) View.VISIBLE else View.GONE
 
@@ -311,7 +311,7 @@ class WidgetDesignDetailFragment :
                             when (mVM.sfWidgetTimeNotation.value) {
                                 TimeNotation.DEFAULT,
                                 TimeNotation.REMAIN_TIME,
-                                -> {
+                                    -> {
                                     rlBatteryTime.visibility =
                                         if (mVM.sfBatteryDataVisibility.value) View.VISIBLE else View.GONE
 
@@ -459,6 +459,14 @@ class WidgetDesignDetailFragment :
                         if (it) View.VISIBLE else View.GONE
                     binding.widgetHksr.rlSimulatedUniverseCleared.visibility =
                         if (it && mVM.sfSimulatedUniverseClearTimeVisibility.value) View.VISIBLE else View.GONE
+                }
+            }
+
+            launch {
+                mVM.sfIsGridFightDataInvisible.collect {
+                    log.e()
+                    mVM.sfSelectedPreview.value = Preview.STARRAIL
+                    binding.widgetHksr.rlGridFight.visibility = if (it) View.GONE else View.VISIBLE
                 }
             }
 
