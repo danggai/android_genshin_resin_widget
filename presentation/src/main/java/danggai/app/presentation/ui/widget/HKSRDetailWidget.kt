@@ -172,6 +172,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
             R.id.iv_daily_training,
             R.id.iv_echo_of_war,
             R.id.iv_simulated_universe,
+            R.id.iv_grid_fight,
             R.id.iv_credit
         )
         WidgetUtils.setOnClickActivityPendingIntent(
@@ -341,6 +342,21 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                     setVisibility(
                         R.id.rl_simulated_universe_cleared,
                         widgetDesign.simulatedUniverseDataVisibility && widgetDesign.simulatedUniverseClearTimeVisibility
+                    )
+
+                    setText(
+                        R.id.tv_grid_fight_title,
+                        _context.getString(R.string.grid_fight)
+                    )
+                    setText(
+                        R.id.tv_grid_fight,
+                        if (gridFightWeeklyMax == -1) _context.getString(R.string.widget_ui_transformer_not_obtained)
+                        else if (gridFightWeeklyCur == gridFightWeeklyMax) context.getString(R.string.done)
+                        else "$gridFightWeeklyCur/$gridFightWeeklyMax"
+                    )
+                    setVisibility(
+                        R.id.rl_grid_fight,
+                        widgetDesign.gridFightDataVisibility
                     )
 
                     setText(

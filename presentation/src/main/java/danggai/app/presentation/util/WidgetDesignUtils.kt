@@ -152,6 +152,8 @@ object WidgetDesignUtils {
             tvSimulatedUniverseTitle.setTextColor(mainFontColor)
             tvSimulatedUniverseCleared.setTextColor(mainFontColor)
             tvSimulatedUniverseTitleCleared.setTextColor(mainFontColor)
+            tvGridFight.setTextColor(mainFontColor)
+            tvGridFightTitle.setTextColor(mainFontColor)
             tvSynchronicityPoint.setTextColor(mainFontColor)
             tvSynchronicityPointTitle.setTextColor(mainFontColor)
             tvAssignmentTime.setTextColor(mainFontColor)
@@ -178,6 +180,8 @@ object WidgetDesignUtils {
                 tvSimulatedUniverseTitle.textSize = it
                 tvSimulatedUniverseCleared.textSize = it
                 tvSimulatedUniverseTitleCleared.textSize = it
+                tvGridFight.textSize = it
+                tvGridFightTitle.textSize = it
                 tvSynchronicityPoint.textSize = it
                 tvSynchronicityPointTitle.textSize = it
                 tvAssignmentTime.textSize = it
