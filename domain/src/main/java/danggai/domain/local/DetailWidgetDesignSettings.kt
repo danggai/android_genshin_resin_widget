@@ -19,7 +19,7 @@ data class DetailWidgetDesignSettings(
     val echoOfWarDataVisibility: Boolean,
     val simulatedUniverseDataVisibility: Boolean,
     val simulatedUniverseClearTimeVisibility: Boolean,
-    val gridFightDataVisibility: Boolean,
+    val isGridFightInvisible: Boolean,
     val synchronicityPointVisibility: Boolean,
     val assignmentTimeDataVisibility: Boolean,
 
@@ -55,7 +55,7 @@ data class DetailWidgetDesignSettings(
             echoOfWarDataVisibility = true,
             simulatedUniverseDataVisibility = true,
             simulatedUniverseClearTimeVisibility = true,
-            gridFightDataVisibility = true,
+            isGridFightInvisible = false,
             synchronicityPointVisibility = true,
             assignmentTimeDataVisibility = true,
 

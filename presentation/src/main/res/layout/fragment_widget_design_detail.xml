@@ -392,7 +392,7 @@
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_grid_fight"
                         style="@style/Checkbox"
-                        android:checked="@={vm.sfGridFightDataVisibility}"
+                        android:checked="@={!vm.sfIsGridFightDataInvisible}"
                         android:text="@string/grid_fight" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox

@@ -358,6 +358,8 @@ object WidgetDesignUtils {
             R.id.tv_simulated_universe_title,
             R.id.tv_simulated_universe_cleared,
             R.id.tv_simulated_universe_title_cleared,
+            R.id.tv_grid_fight,
+            R.id.tv_grid_fight_title,
             R.id.tv_synchronicity_point,
             R.id.tv_synchronicity_point_title,
             R.id.tv_assignment_time,

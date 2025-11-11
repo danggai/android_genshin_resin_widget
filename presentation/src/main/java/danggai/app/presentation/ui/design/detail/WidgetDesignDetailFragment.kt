@@ -463,10 +463,10 @@ class WidgetDesignDetailFragment :
             }
 
             launch {
-                mVM.sfGridFightDataVisibility.collect {
+                mVM.sfIsGridFightDataInvisible.collect {
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.STARRAIL
-                    binding.widgetHksr.rlGridFight.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widgetHksr.rlGridFight.visibility = if (it) View.GONE else View.VISIBLE
                 }
             }
 

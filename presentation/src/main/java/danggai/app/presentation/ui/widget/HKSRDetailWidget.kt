@@ -356,7 +356,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                     )
                     setVisibility(
                         R.id.rl_grid_fight,
-                        widgetDesign.gridFightDataVisibility
+                        !widgetDesign.isGridFightInvisible
                     )
 
                     setText(
