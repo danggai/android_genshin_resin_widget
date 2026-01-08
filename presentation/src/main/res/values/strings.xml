@@ -446,5 +446,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Add 6.2 and Nod-Krai related data\n- Fixed an issue where widget settings were obscured by the system area\n- Fixed a refresh error in the talent widget</string>
+    <string name="dialog_msg_patch_note">- Add 6.2 and Nod-Krai related data\n- Fixed an issue where widget settings were obscured by the system area\n- Fixed a refresh error in the talent widget\n-</string>
 </resources>

@@ -438,5 +438,5 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 6.2 및 노드크라이 관련 데이터 추가\n- 위젯 설정 시 시스템 영역에 의해 가려지던 문제 수정\n- 특성 소재 위젯 새로고침 오류 수정</string>
+    <string name="dialog_msg_patch_note">- 6.2 및 노드크라이 관련 데이터 추가\n- 위젯 설정 시 시스템 영역에 의해 가려지던 문제 수정\n- 특성 소재 위젯 새로고침 오류 수정\n- 스타레일 상세 위젯에 화폐 전쟁 추가</string>
 </resources>
