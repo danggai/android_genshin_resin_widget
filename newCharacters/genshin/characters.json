@@ -1,16 +1,6 @@
 {
   "characters": [
     {
-      "id": 10000116,
-      "name_ko": "이네파",
-      "name_en": "Ineffa",
-      "rarity": 5,
-      "element": "ELECTRO",
-      "talentArea": "NATLAN",
-      "talentDay": "WED_SAT",
-      "icon": "icon_ineffa.png"
-    },
-    {
       "id": 10000119,
       "name_ko": "라우마",
       "name_en": "Lauma",
@@ -69,6 +59,36 @@
       "talentArea": "NODKRAI",
       "talentDay": "WED_SAT",
       "icon": "icon_jahoda.png"
+    },
+    {
+      "id": 10000125,
+      "name_ko": "콜롬비나",
+      "name_en": "Columbina",
+      "rarity": 5,
+      "element": "HYDRO",
+      "talentArea": "NODKRAI",
+      "talentDay": "MON_THU",
+      "icon": "icon_columbina.png"
+    },
+    {
+      "id": 10000126,
+      "name_ko": "자백",
+      "name_en": "Zibai",
+      "rarity": 5,
+      "element": "GEO",
+      "talentArea": "LIYUE",
+      "talentDay": "WED_SAT",
+      "icon": "icon_zibai.png"
+    },
+    {
+      "id": 10000127,
+      "name_ko": "일루가",
+      "name_en": "Illuga",
+      "rarity": 4,
+      "element": "GEO",
+      "talentArea": "NODKRAI",
+      "talentDay": "TUE_FRI",
+      "icon": "icon_illuga.png"
     }
   ]
 }
