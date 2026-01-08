@@ -5,6 +5,6 @@ object Versions {
     const val compileSdk = 35
     const val compileSdkString = "android-35"
 
-    const val versionCode = 88
-    const val versionName = "6.2.1"
+    const val versionCode = 89
+    const val versionName = "6.3.0"
 }
