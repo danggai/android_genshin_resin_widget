@@ -1,66 +1,6 @@
 {
   "characters": [
     {
-      "id": 10000119,
-      "name_ko": "라우마",
-      "name_en": "Lauma",
-      "rarity": 5,
-      "element": "DENDRO",
-      "talentArea": "NODKRAI",
-      "talentDay": "MON_THU",
-      "icon": "icon_lauma.png"
-    },
-    {
-      "id": 10000120,
-      "name_ko": "플린스",
-      "name_en": "Flins",
-      "rarity": 5,
-      "element": "HYDRO",
-      "talentArea": "NODKRAI",
-      "talentDay": "WED_SAT",
-      "icon": "icon_flins.png"
-    },
-    {
-      "id": 10000121,
-      "name_ko": "아이노",
-      "name_en": "Aino",
-      "rarity": 4,
-      "element": "ELECTRO",
-      "talentArea": "NODKRAI",
-      "talentDay": "TUE_FRI",
-      "icon": "icon_aino.png"
-    },
-    {
-      "id": 10000122,
-      "name_ko": "네페르",
-      "name_en": "Nefer",
-      "rarity": 5,
-      "element": "DENDRO",
-      "talentArea": "NODKRAI",
-      "talentDay": "TUE_FRI",
-      "icon": "icon_nefer.png"
-    },
-    {
-      "id": 10000123,
-      "name_ko": "두린",
-      "name_en": "Durin",
-      "rarity": 5,
-      "element": "PYRO",
-      "talentArea": "MONDSTADT",
-      "talentDay": "WED_SAT",
-      "icon": "icon_durin.png"
-    },
-    {
-      "id": 10000124,
-      "name_ko": "야호다",
-      "name_en": "Jahoda",
-      "rarity": 4,
-      "element": "ANEMO",
-      "talentArea": "NODKRAI",
-      "talentDay": "WED_SAT",
-      "icon": "icon_jahoda.png"
-    },
-    {
       "id": 10000125,
       "name_ko": "콜롬비나",
       "name_en": "Columbina",
@@ -89,6 +29,26 @@
       "talentArea": "NODKRAI",
       "talentDay": "TUE_FRI",
       "icon": "icon_illuga.png"
+    },
+    {
+      "id": 10000128,
+      "name_ko": "바르카",
+      "name_en": "Varka",
+      "rarity": 5,
+      "element": "ANEMO",
+      "talentArea": "MONDSTADT",
+      "talentDay": "MON_THU",
+      "icon": "icon_varka.png"
+    },
+    {
+      "id": 10000130,
+      "name_ko": "린네아",
+      "name_en": "Linnea",
+      "rarity": 5,
+      "element": "GEO",
+      "talentArea": "NODKRAI",
+      "talentDay": "WED_SAT",
+      "icon": "icon_linnea.png"
     }
   ]
 }
