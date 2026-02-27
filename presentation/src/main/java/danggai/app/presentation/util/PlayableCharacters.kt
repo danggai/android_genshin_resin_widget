@@ -1283,4 +1283,26 @@ val PlayableCharacters: List<LocalCharacter> = listOf(
         TalentDate.TUE_FRI,
         R.drawable.icon_illuga
     ),
+
+    LocalCharacter(
+        Constant.ID_VARKA,
+        "바르카",
+        "Varka",
+        5,
+        Elements.ANEMO,
+        TalentArea.MONDSTADT,
+        TalentDate.MON_THU,
+        R.drawable.icon_varka
+    ),
+
+    LocalCharacter(
+        Constant.ID_LINNEA,
+        "린네아",
+        "Linnea",
+        5,
+        Elements.GEO,
+        TalentArea.NODKRAI,
+        TalentDate.WED_SAT,
+        R.drawable.icon_linnea
+    ),
 )
