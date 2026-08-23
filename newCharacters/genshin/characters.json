@@ -1,54 +1,84 @@
 {
   "characters": [
     {
-      "id": 10000125,
-      "name_ko": "콜롬비나",
-      "name_en": "Columbina",
-      "rarity": 5,
-      "element": "HYDRO",
-      "talentArea": "NODKRAI",
-      "talentDay": "MON_THU",
-      "icon": "icon_columbina.png"
-    },
-    {
-      "id": 10000126,
-      "name_ko": "자백",
-      "name_en": "Zibai",
-      "rarity": 5,
-      "element": "GEO",
-      "talentArea": "LIYUE",
-      "talentDay": "WED_SAT",
-      "icon": "icon_zibai.png"
-    },
-    {
-      "id": 10000127,
-      "name_ko": "일루가",
-      "name_en": "Illuga",
+      "id": 10000132,
+      "name_ko": "프루네",
+      "name_en": "Prune",
       "rarity": 4,
-      "element": "GEO",
-      "talentArea": "NODKRAI",
-      "talentDay": "TUE_FRI",
-      "icon": "icon_illuga.png"
-    },
-    {
-      "id": 10000128,
-      "name_ko": "바르카",
-      "name_en": "Varka",
-      "rarity": 5,
       "element": "ANEMO",
       "talentArea": "MONDSTADT",
-      "talentDay": "MON_THU",
-      "icon": "icon_varka.png"
+      "talentDay": "TUE_FRI",
+      "icon": "icon_prune.png"
     },
     {
-      "id": 10000130,
-      "name_ko": "린네아",
-      "name_en": "Linnea",
+      "id": 10000131,
+      "name_ko": "니콜",
+      "name_en": "Nicole",
       "rarity": 5,
-      "element": "GEO",
+      "element": "PYRO",
+      "talentArea": "NODKRAI",
+      "talentDay": "TUE_FRI",
+      "icon": "icon_nicole.png"
+    },
+    {
+      "id": 10000129,
+      "name_ko": "로엔",
+      "name_en": "Lohen",
+      "rarity": 5,
+      "element": "CRYO",
+      "talentArea": "MONDSTADT",
+      "talentDay": "TUE_FRI",
+      "icon": "icon_lohen.png"
+    },
+    {
+      "id": 10000133,
+      "name_ko": "산드로네",
+      "name_en": "Sandrone",
+      "rarity": 5,
+      "element": "CRYO",
       "talentArea": "NODKRAI",
       "talentDay": "WED_SAT",
-      "icon": "icon_linnea.png"
+      "icon": "icon_sandrone.png"
+    },
+    {
+      "id": 10000150,
+      "name_ko": "오데트",
+      "name_en": "Odette",
+      "rarity": 5,
+      "element": "CRYO",
+      "talentArea": "SNEZHNAYA",
+      "talentDay": "MON_THU",
+      "icon": "icon_odette.png"
+    },  
+    {
+      "id": 10000148,
+      "name_ko": "알료샤",
+      "name_en": "Alyosha",
+      "rarity": 4,
+      "element": "ELECTRO",
+      "talentArea": "SNEZHNAYA",
+      "talentDay": "TUE_FRI",
+      "icon": "icon_alyosha.png"
+    },
+    {
+      "id": 10000143,
+      "name_ko": "베스나",
+      "name_en": "Vesna",
+      "rarity": 5,
+      "element": "ANEMO",
+      "talentArea": "SNEZHNAYA",
+      "talentDay": "WED_SAT",
+      "icon": "icon_vesna.png"
+    },
+    {
+      "id": 10000140,
+      "name_ko": "보댜니차",
+      "name_en": "Vodyanitsa",
+      "rarity": 5,
+      "element": "HYDRO",
+      "talentArea": "SNEZHNAYA",
+      "talentDay": "TUE_FRI",
+      "icon": "icon_vodyanitsa.png"
     }
   ]
 }
