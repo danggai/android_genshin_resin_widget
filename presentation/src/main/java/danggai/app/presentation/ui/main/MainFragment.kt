@@ -1,6 +1,9 @@
 package danggai.app.presentation.ui.main
 
 import android.app.NotificationManager
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -29,6 +32,15 @@ import danggai.app.presentation.extension.repeatOnLifeCycleStarted
 import danggai.app.presentation.ui.cookie.CookieWebViewActivity
 import danggai.app.presentation.ui.design.WidgetDesignActivity
 import danggai.app.presentation.ui.newaccount.NewHoyolabAccountActivity
+import danggai.app.presentation.ui.widget.BatteryWidget
+import danggai.app.presentation.ui.widget.DetailWidget
+import danggai.app.presentation.ui.widget.HKSRDetailWidget
+import danggai.app.presentation.ui.widget.MiniWidget
+import danggai.app.presentation.ui.widget.ResinWidget
+import danggai.app.presentation.ui.widget.ResinWidgetResizable
+import danggai.app.presentation.ui.widget.TalentWidget
+import danggai.app.presentation.ui.widget.TrailPowerWidget
+import danggai.app.presentation.ui.widget.ZZZDetailWidget
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.DayTimeMapper
 import danggai.app.presentation.util.Event
@@ -439,6 +451,57 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         mAdView.loadAd(adRequest)
     }
 
+    override fun onPause() {
+        super.onPause()
+        mVM.saveIfChanged()
+    }
+
+    private fun showAddWidgetDialog() {
+        val context = requireContext()
+        val dialogView = layoutInflater.inflate(R.layout.dialog_add_widget, null)
+
+        val dialog = AlertDialog.Builder(context)
+            .setTitle(R.string.add_widget)
+            .setView(dialogView)
+            .setNegativeButton(R.string.cancel, null)
+            .create()
+
+        val widgets = listOf(
+            R.id.ll_add_resin_fixed to ResinWidget::class.java,
+            R.id.ll_add_resin_resizable to ResinWidgetResizable::class.java,
+            R.id.ll_add_mini to MiniWidget::class.java,
+            R.id.ll_add_detail to DetailWidget::class.java,
+            R.id.ll_add_talent to TalentWidget::class.java,
+            R.id.ll_add_trailblaze_power to TrailPowerWidget::class.java,
+            R.id.ll_add_hksr_detail to HKSRDetailWidget::class.java,
+            R.id.ll_add_battery to BatteryWidget::class.java,
+            R.id.ll_add_zzz_detail to ZZZDetailWidget::class.java
+        )
+
+        for ((viewId, widgetClass) in widgets) {
+            dialogView.findViewById<View>(viewId).setOnClickListener {
+                requestPinWidget(context, widgetClass)
+                dialog.dismiss()
+            }
+        }
+
+        dialog.show()
+    }
+
+    private fun requestPinWidget(context: Context, widgetClass: Class<out AppWidgetProvider>) {
+        val appWidgetManager = context.getSystemService(AppWidgetManager::class.java)
+        val widgetProvider = ComponentName(context, widgetClass)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (appWidgetManager.isRequestPinAppWidgetSupported) {
+                appWidgetManager.requestPinAppWidget(widgetProvider, null, null)
+            } else {
+                makeToast(context, getString(R.string.msg_toast_widget_pin_not_supported))
+            }
+        } else {
+            makeToast(context, getString(R.string.msg_toast_widget_pin_supports_android_8))
+        }
+    }
     override fun handleEvents(event: Event) {
         super.handleEvents(event)
 
@@ -565,6 +628,8 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                     builder.show()
                 }
             }
+
+            is Event.ShowAddWidgetDialog -> showAddWidgetDialog()
 
             is Event.StartShutRefreshWorker -> {
                 log.e()

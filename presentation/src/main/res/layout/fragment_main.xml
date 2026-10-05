@@ -567,8 +567,8 @@
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/MaterialButton"
-                    android:onClick="@{()->vm.onClickSave()}"
-                    android:text="@string/save_setting" />
+                    android:onClick="@{()->vm.onClickAddWidget()}"
+                    android:text="@string/add_widget" />
 
                 <android.widget.Space
                     android:layout_width="wrap_content"

@@ -44,6 +44,7 @@
     <string name="hoyolab_checkin_desc_2">Automatic check-in is performed based on the account under My Info &gt; My Characters in HoYoLAB.</string>
 
     <string name="save_setting">Save Setting</string>
+    <string name="add_widget">Add Widget</string>
     <string name="save">Save</string>
     <string name="ok">OK</string>
     <string name="reset">Reset</string>
