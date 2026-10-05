@@ -59,6 +59,11 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
         initSf()
     }
 
+    override fun onPause() {
+        super.onPause()
+        mVM.saveIfChanged()
+    }
+
     private fun initTabLayout() {
         val pagerAdapter = WidgetDesignAdapter(requireActivity()).apply {
             DesignTabType.values()
@@ -81,25 +86,6 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
         }.attach()
     }
 
-    private fun <T : AppWidgetProvider> requestPinWidget(context: Context, widgetClass: Class<T>) {
-        val appWidgetManager = context.getSystemService(AppWidgetManager::class.java)
-        val widgetProvider = ComponentName(context, widgetClass)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            if (appWidgetManager.isRequestPinAppWidgetSupported) {
-                appWidgetManager.requestPinAppWidget(
-                    widgetProvider,
-                    null,
-                    null
-                )
-            } else {
-                makeToast(context, context.getString(R.string.msg_toast_widget_pin_not_supported))
-            }
-        else {
-            makeToast(context, context.getString(R.string.msg_toast_widget_pin_supports_android_8))
-        }
-    }
-
     private fun initSf() {
         viewLifecycleOwner.repeatOnLifeCycleStarted {
             launch {
@@ -109,33 +95,6 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
                         CommonFunction.sendBroadcastAllWidgetRefreshUI(_context)
                         _context.sendBroadcast(WidgetUtils.getTalentRefreshIntent(_context))
                     }
-                }
-            }
-
-            launch {
-                mVM.sfAddWidget.collect { preview ->
-                    val context = requireContext()
-                    val designTab = DesignTabType.fromPosition(binding.vpMain.currentItem)
-
-                    // 위젯 매핑 테이블 (디자인 탭 + 프리뷰에 따른 위젯 매핑)
-                    val widgetMap = mapOf(
-                        DesignTabType.STAMINA to mapOf(
-                            Preview.GENSHIN to ResinWidget::class.java,
-                            Preview.STARRAIL to TrailPowerWidget::class.java,
-                            Preview.ZZZ to BatteryWidget::class.java
-                        ),
-                        DesignTabType.DETAIL to mapOf(
-                            Preview.GENSHIN to DetailWidget::class.java,
-                            Preview.STARRAIL to HKSRDetailWidget::class.java,
-                            Preview.ZZZ to ZZZDetailWidget::class.java
-                        )
-                    )
-
-                    val widgetClass = widgetMap[designTab]?.get(preview)
-
-
-                    if (widgetClass !== null)
-                        requestPinWidget(context, widgetClass)
                 }
             }
 
