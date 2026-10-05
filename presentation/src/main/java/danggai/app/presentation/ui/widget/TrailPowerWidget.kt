@@ -80,12 +80,12 @@ class TrailPowerWidget() : AppWidgetProvider() {
 
         if (widgetId != -1 && uid.isNotEmpty()) {
             context.let {
-                PreferenceManager.setString(context, Constant.PREF_UID + "_$widgetId", uid)
+                PreferenceManager.setWidgetUid(context, widgetId, uid)
             }
         }
         if (widgetId != -1 && name.isNotEmpty()) {
             context.let {
-                PreferenceManager.setString(context, Constant.PREF_NAME + "_$widgetId", name)
+                PreferenceManager.setWidgetName(context, widgetId, name)
             }
         }
         when (action) {
@@ -185,10 +185,10 @@ class TrailPowerWidget() : AppWidgetProvider() {
             WidgetDesignUtils.applyWidgetTheme(widgetDesign, _context, view)
 
             if (CommonFunction.isUidValidate(widgetId, context)) {
-                val uid = PreferenceManager.getString(context, Constant.PREF_UID + "_$widgetId")
-                val name = PreferenceManager.getString(context, Constant.PREF_NAME + "_$widgetId")
+                val uid = PreferenceManager.getWidgetUid(context, widgetId)
+                val name = PreferenceManager.getWidgetName(context, widgetId)
                 val recentSyncTimeString =
-                    PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid")
+                    PreferenceManager.getRecentSyncTime(context, uid)
                         .ifEmpty {
                             TimeFunction.getSyncDateTimeString()
                         }

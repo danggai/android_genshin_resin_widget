@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
+import danggai.domain.util.Constant
 import org.json.JSONArray
 import org.json.JSONException
 
@@ -245,4 +246,30 @@ object PreferenceManager {
         edit.clear()
         edit.apply()
     }
+    fun getWidgetUid(context: Context, widgetId: Int): String =
+        getString(context, Constant.PREF_UID + "_$widgetId")
+
+    fun setWidgetUid(context: Context, widgetId: Int, uid: String) =
+        setString(context, Constant.PREF_UID + "_$widgetId", uid)
+
+    fun getWidgetName(context: Context, widgetId: Int): String =
+        getString(context, Constant.PREF_NAME + "_$widgetId")
+
+    fun setWidgetName(context: Context, widgetId: Int, name: String) =
+        setString(context, Constant.PREF_NAME + "_$widgetId", name)
+
+    fun getMiniWidgetType(context: Context, widgetId: Int): String =
+        getString(context, Constant.PREF_MINI_WIDGET_TYPE + "_$widgetId")
+
+    fun setMiniWidgetType(context: Context, widgetId: Int, type: String) =
+        setString(context, Constant.PREF_MINI_WIDGET_TYPE + "_$widgetId", type)
+
+    fun getTalentWidgetType(context: Context, widgetId: Int): String =
+        getString(context, Constant.PREF_TELENT_WIDGET_TYPE + "_$widgetId")
+
+    fun setTalentWidgetType(context: Context, widgetId: Int, type: String) =
+        setString(context, Constant.PREF_TELENT_WIDGET_TYPE + "_$widgetId", type)
+
+    fun getRecentSyncTime(context: Context, uid: String): String =
+        getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid")
 }

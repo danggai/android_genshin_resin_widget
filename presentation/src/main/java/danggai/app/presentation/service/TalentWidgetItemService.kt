@@ -59,10 +59,7 @@ class TalentWidgetItemFactory(
     }
 
     private suspend fun setData() {
-        val paramType = PreferenceManager.getString(
-            context,
-            Constant.PREF_TELENT_WIDGET_TYPE + "_$appWidgetId"
-        )
+        val paramType = PreferenceManager.getTalentWidgetType(context, appWidgetId)
 
         log.e("paramType : $paramType")
         when (paramType) {

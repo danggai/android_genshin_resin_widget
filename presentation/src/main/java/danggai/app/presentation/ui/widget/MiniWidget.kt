@@ -57,21 +57,17 @@ class MiniWidget() : AppWidgetProvider() {
 
         if (widgetId != -1 && uid.isNotEmpty()) {
             context.let {
-                PreferenceManager.setString(context, Constant.PREF_UID + "_$widgetId", uid)
+                PreferenceManager.setWidgetUid(context, widgetId, uid)
             }
         }
         if (widgetId != -1 && name.isNotEmpty()) {
             context.let {
-                PreferenceManager.setString(context, Constant.PREF_NAME + "_$widgetId", name)
+                PreferenceManager.setWidgetName(context, widgetId, name)
             }
         }
         if (widgetId != -1 && paramType.isNotEmpty()) {
             context.let {
-                PreferenceManager.setString(
-                    context,
-                    Constant.PREF_MINI_WIDGET_TYPE + "_$widgetId",
-                    paramType
-                )
+                PreferenceManager.setMiniWidgetType(context, widgetId, paramType)
             }
         }
 
@@ -150,10 +146,10 @@ class MiniWidget() : AppWidgetProvider() {
             WidgetDesignUtils.applyWidgetTheme(widgetDesign, context, view)
 
             if (CommonFunction.isUidValidate(widgetId, context)) {
-                val uid = PreferenceManager.getString(context, Constant.PREF_UID + "_$widgetId")
-                val name = PreferenceManager.getString(context, Constant.PREF_NAME + "_$widgetId")
+                val uid = PreferenceManager.getWidgetUid(context, widgetId)
+                val name = PreferenceManager.getWidgetName(context, widgetId)
                 val recentSyncTimeString =
-                    PreferenceManager.getString(context, Constant.PREF_RECENT_SYNC_TIME + "_$uid")
+                    PreferenceManager.getRecentSyncTime(context, uid)
                         .ifEmpty {
                             TimeFunction.getSyncDateTimeString()
                         }.split(" ")[1]
@@ -169,10 +165,7 @@ class MiniWidget() : AppWidgetProvider() {
                 view.setViewVisibility(R.id.ll_realm_currency, View.GONE)
                 view.setViewVisibility(R.id.ll_transformer, View.GONE)
 
-                when (PreferenceManager.getString(
-                    context,
-                    Constant.PREF_MINI_WIDGET_TYPE + "_$widgetId"
-                )) {
+                when (PreferenceManager.getMiniWidgetType(context, widgetId)) {
                     Constant.PREF_MINI_WIDGET_RESIN -> {
                         view.setViewVisibility(R.id.ll_resin, View.VISIBLE)
                         view.setTextViewText(R.id.tv_resin, dailyNote.currentResin.toString())

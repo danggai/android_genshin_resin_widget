@@ -264,7 +264,7 @@ object CommonFunction {
     }
 
     fun isUidValidate(widgetId: Int, context: Context): Boolean {
-        val uid = PreferenceManager.getString(context, Constant.PREF_UID + "_$widgetId")
+        val uid = PreferenceManager.getWidgetUid(context, widgetId)
 
         return if (uid == "") { // uid 없이 처음 인입되는 경우
             if (PreferenceManager.getString(context, Constant.PREF_UID) == "") {
@@ -272,11 +272,7 @@ object CommonFunction {
                 false
             } else {    // 마이그레이션용
                 log.e("uid -> $uid")
-                PreferenceManager.setString(
-                    context,
-                    Constant.PREF_UID + "_$widgetId",
-                    PreferenceManager.getString(context, Constant.PREF_UID)
-                )
+                PreferenceManager.setWidgetUid(context, widgetId, PreferenceManager.getString(context, Constant.PREF_UID))
                 true
             }
         } else { // 정상
