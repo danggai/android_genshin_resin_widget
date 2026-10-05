@@ -169,7 +169,16 @@
                 <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> vm.onClickToggleGenshin()}"
+                    app:collapsible="true"
+                    app:expanded="@{vm.sfExpandGenshin}"
                     app:titleText="@string/genshin" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="@{vm.sfExpandGenshin ? View.VISIBLE : View.GONE}">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -330,11 +339,22 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <!--   StarRail   -->
                 <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> vm.onClickToggleHonkaiSr()}"
+                    app:collapsible="true"
+                    app:expanded="@{vm.sfExpandHonkaiSr}"
                     app:titleText="@string/honkai_sr" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="@{vm.sfExpandHonkaiSr ? View.VISIBLE : View.GONE}">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -404,6 +424,8 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <!--   ZZZ   -->
                 <android.widget.Space
                     android:layout_width="wrap_content"
@@ -412,7 +434,16 @@
                 <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> vm.onClickToggleZZZ()}"
+                    app:collapsible="true"
+                    app:expanded="@{vm.sfExpandZZZ}"
                     app:titleText="@string/zzz" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="@{vm.sfExpandZZZ ? View.VISIBLE : View.GONE}">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -481,6 +512,7 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <android.widget.Space
                     android:layout_width="wrap_content"
@@ -489,7 +521,16 @@
                 <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> vm.onClickToggleCheckIn()}"
+                    app:collapsible="true"
+                    app:expanded="@{vm.sfExpandCheckIn}"
                     app:titleText="@string/check_in" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="@{vm.sfExpandCheckIn ? View.VISIBLE : View.GONE}">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -507,6 +548,8 @@
                         style="@style/Checkbox"
                         android:checked="@={vm.sfEnableNotiCheckinFailed}"
                         android:text="@string/btn_check_in_failed" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

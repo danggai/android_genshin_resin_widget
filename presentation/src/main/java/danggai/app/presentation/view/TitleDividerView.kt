@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import danggai.app.presentation.R
 
@@ -14,11 +15,13 @@ class TitleDividerView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     private var titleTextView: TextView
+    private var arrowImageView: ImageView
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_title_divider, this, true)
 
         titleTextView = findViewById(R.id.tv_title)
+        arrowImageView = findViewById(R.id.iv_arrow)
 
         context.theme.obtainStyledAttributes(attrs, R.styleable.TitleDividerView, 0, 0).apply {
             try {
@@ -31,10 +34,18 @@ class TitleDividerView @JvmOverloads constructor(
                 if (marginTop != DEFALUT_MARGIN_TOP) {
                     setMarignTop(marginTop)
                 }
+
+                if (getBoolean(R.styleable.TitleDividerView_collapsible, false)) {
+                    arrowImageView.visibility = VISIBLE
+                }
             } finally {
                 recycle()
             }
         }
+    }
+
+    fun setExpanded(expanded: Boolean) {
+        arrowImageView.rotation = if (expanded) 180f else 0f
     }
 
     private fun setTitle(title: String) {
