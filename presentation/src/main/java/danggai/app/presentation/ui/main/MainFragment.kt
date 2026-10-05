@@ -477,7 +477,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             filters = arrayOf(InputFilter.LengthFilter(4))
             hint = type.max.toString()
             setText(mVM.getCustomNotiValue(type))
-            setSelection(text?.length ?: 0)
+            selectAll()
             setPadding(60, 30, 60, 30)
         }
 

@@ -203,7 +203,7 @@
                             style="@style/NotiChip.Custom"
                             android:checked="@={vm.sfEnableNotiCustomResin}"
                             android:onClick="@{() -> vm.onClickCustomNoti(CustomNotiType.RESIN)}"
-                            android:text="@{(vm.sfCustomNotiResin.isEmpty() ? `200` : vm.sfCustomNotiResin) + ' ' + @string/resin}"
+                            android:text="@{vm.sfEnableNotiCustomResin ? vm.sfCustomNotiResin + ' ' + @string/resin : @string/btn_custom}"
                             app:chipIcon="@drawable/resin" />
                         <com.google.android.material.chip.Chip
                             style="@style/NotiChip"
@@ -303,7 +303,7 @@
                             style="@style/NotiChip.Custom"
                             android:checked="@={vm.sfEnableNotiCustomTrailPower}"
                             android:onClick="@{() -> vm.onClickCustomNoti(CustomNotiType.TRAIL_POWER)}"
-                            android:text="@{(vm.sfCustomNotiTrailPower.isEmpty() ? `280` : vm.sfCustomNotiTrailPower) + ' ' + @string/trailblaze_power}"
+                            android:text="@{vm.sfEnableNotiCustomTrailPower ? vm.sfCustomNotiTrailPower + ' ' + @string/trailblaze_power : @string/btn_custom}"
                             app:chipIcon="@drawable/trailblaze_power" />
                         <com.google.android.material.chip.Chip
                             style="@style/NotiChip"
@@ -356,7 +356,7 @@
                             style="@style/NotiChip.Custom"
                             android:checked="@={vm.sfEnableNotiCustomBattery}"
                             android:onClick="@{() -> vm.onClickCustomNoti(CustomNotiType.BATTERY)}"
-                            android:text="@{(vm.sfCustomNotiBattery.isEmpty() ? `220` : vm.sfCustomNotiBattery) + ' ' + @string/battery}"
+                            android:text="@{vm.sfEnableNotiCustomBattery ? vm.sfCustomNotiBattery + ' ' + @string/battery : @string/btn_custom}"
                             app:chipIcon="@drawable/battery" />
 
                     </com.google.android.material.chip.ChipGroup>
