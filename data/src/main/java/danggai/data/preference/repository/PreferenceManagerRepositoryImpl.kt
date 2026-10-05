@@ -3,6 +3,7 @@ package danggai.data.preference.repository
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonSyntaxException
 import danggai.data.BuildConfig
 import danggai.domain.local.CheckInSettings
 import danggai.domain.local.DailyNoteSettings
@@ -139,7 +140,7 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         return prefs.getInt(key, DEFAULT_VALUE_INT)
     }
 
-    fun getIntDefault(context: Context, default: Int, key: String?): Int {
+    fun getInt(context: Context, key: String?, default: Int): Int {
         val prefs = getPreferences(context)
         return prefs.getInt(key, default)
     }
@@ -198,7 +199,12 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         //JSON String was found which means object can be read.
         //We convert this JSON String to model object. Parameter "c" (of
         //type Class < T >" is used to cast.
-        return GsonBuilder().create().fromJson(value, T::class.java)
+        return try {
+            GsonBuilder().create().fromJson(value, T::class.java)
+        } catch (e: JsonSyntaxException) {
+            e.printStackTrace()
+            null
+        }
     }
 
     private fun setIntArray(context: Context, key: String, values: List<Int>) {
