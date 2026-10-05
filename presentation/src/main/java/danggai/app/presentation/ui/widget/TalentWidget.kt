@@ -151,18 +151,6 @@ class TalentWidget() : AppWidgetProvider() {
             WidgetUtils.getTalentRefreshIntent(context)
         )
 
-        val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
-        val awId = manager.getAppWidgetIds(
-            ComponentName(
-                context.applicationContext,
-                TalentWidget::class.java
-            )
-        )
-
-        awId.forEach { appWidgetId ->
-            log.e(appWidgetId)
-            manager.updateAppWidget(appWidgetId, remoteViews)
-        }
 
         return remoteViews
     }

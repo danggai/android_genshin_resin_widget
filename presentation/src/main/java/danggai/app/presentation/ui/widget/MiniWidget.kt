@@ -135,15 +135,6 @@ class MiniWidget() : AppWidgetProvider() {
             WidgetUtils.getWidgetConfigActivityIntent(context, appWidgetId)
         )
 
-        val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
-        val awId = manager.getAppWidgetIds(
-            ComponentName(
-                context.applicationContext,
-                className
-            )
-        )
-
-        manager.updateAppWidget(awId, views)
 
         return views
     }
