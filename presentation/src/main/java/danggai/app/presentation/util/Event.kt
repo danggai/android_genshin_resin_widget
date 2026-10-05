@@ -14,6 +14,7 @@ sealed class Event {
     data class StartWidgetDesignActivity(val unit: Unit = Unit): Event()
     data class StartNewHoyolabAccountActivity(val unit: Unit = Unit): Event()
     data class StartManageAccount(val account: Account): Event()
+    data class ShowAddWidgetDialog(val unit: Unit = Unit): Event()
 
     data class ChangeLanguage(val unit: Unit = Unit): Event()
 

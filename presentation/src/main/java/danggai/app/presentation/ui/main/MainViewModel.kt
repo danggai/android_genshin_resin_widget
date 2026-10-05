@@ -14,6 +14,7 @@ import danggai.domain.local.DailyNoteSettings
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.resource.repository.ResourceProviderRepository
 import danggai.domain.util.Constant
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
@@ -121,6 +122,10 @@ class MainViewModel @Inject constructor(
     fun onClickToggleCheckIn() {
         sfExpandCheckIn.value = !sfExpandCheckIn.value
     }
+    init {
+        observeAutoSave()
+    }
+
     fun initUI() {
         preference.getDailyNoteSettings().let {
             sfAutoRefreshPeriod.value = it.autoRefreshPeriod
@@ -165,68 +170,119 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun onClickSave() {
-        log.e()
-
-        /* 커스텀 알림에 사용 할 스테미나를 Int화 및 핸들링하는 함수 */
-        fun stringToIntCustomStamina(targetStringFlow: MutableStateFlow<String>, maxStamina: Int): Int {
-            return try {
-                val stamina = targetStringFlow.value.toIntOrNull()
-
-                when {
-                    stamina == null || stamina < 0 -> 0
-                    stamina > maxStamina -> {
-                        targetStringFlow.value = maxStamina.toString()
-                        maxStamina
-                    }
-                    else -> stamina
-                }
-            } catch (e: Exception) { 0 }
+    @OptIn(FlowPreview::class)
+    private fun observeAutoSave() {
+        viewModelScope.launch {
+            merge(
+                sfCustomNotiResin,
+                sfCustomNotiTrailPower,
+                sfCustomNotiBattery,
+                sfAutoRefreshPeriod,
+                sfEnableNotiEach40Resin,
+                sfEnableNoti140Resin,
+                sfEnableNotiCustomResin,
+                sfEnableNotiExpeditionDone,
+                sfEnableNotiHomeCoinFull,
+                sfEnableNotiParamReach,
+                sfEnableNotiDailyYet,
+                sfNotiDailyYetTime,
+                sfEnableNotiWeeklyYet,
+                sfNotiWeeklyYetDay,
+                sfNotiWeeklyYetTime,
+                sfEnableNotiEach40TrailPower,
+                sfEnableNoti230TrailPower,
+                sfEnableNotiCustomTrailPower,
+                sfEnableNotiHonkaiSrExpeditionDone,
+                sfEnableNotiEach40Battery,
+                sfEnableNotiEach60Battery,
+                sfEnableNoti230Battery,
+                sfEnableNotiCustomBattery,
+                sfEnableNotiCheckinSuccess,
+                sfEnableNotiCheckinFailed,
+            )
+                .debounce(500L)
+                .collect { saveIfChanged() }
         }
+    }
 
+    /* 커스텀 알림에 사용 할 스테미나를 Int화 및 핸들링하는 함수 */
+    private fun stringToIntCustomStamina(targetStringFlow: MutableStateFlow<String>, maxStamina: Int): Int {
+        return try {
+            val stamina = targetStringFlow.value.toIntOrNull()
+
+            when {
+                stamina == null || stamina < 0 -> 0
+                stamina > maxStamina -> {
+                    targetStringFlow.value = maxStamina.toString()
+                    maxStamina
+                }
+                else -> stamina
+            }
+        } catch (e: Exception) { 0 }
+    }
+
+    private fun makeDailyNoteSettings(): DailyNoteSettings {
         val customNotiResin: Int = stringToIntCustomStamina(sfCustomNotiResin, Constant.MAX_RESIN)
         val customNotiTrailPower: Int = stringToIntCustomStamina(sfCustomNotiTrailPower, Constant.MAX_TRAILBLAZE_POWER)
         val customNotiBattery: Int = stringToIntCustomStamina(sfCustomNotiBattery, Constant.MAX_BATTERY)
 
-        preference.setDailyNoteSettings(
-            DailyNoteSettings(
-                sfAutoRefreshPeriod.value,
+        return DailyNoteSettings(
+            sfAutoRefreshPeriod.value,
 
-                sfEnableNotiEach40Resin.value,
-                sfEnableNoti140Resin.value,
-                sfEnableNotiCustomResin.value,
-                customNotiResin,
-                sfEnableNotiExpeditionDone.value,
-                sfEnableNotiHomeCoinFull.value,
-                sfEnableNotiParamReach.value,
-                sfEnableNotiDailyYet.value,
-                sfNotiDailyYetTime.value,
-                sfEnableNotiWeeklyYet.value,
-                sfNotiWeeklyYetDay.value,
-                sfNotiWeeklyYetTime.value,
+            sfEnableNotiEach40Resin.value,
+            sfEnableNoti140Resin.value,
+            sfEnableNotiCustomResin.value,
+            customNotiResin,
+            sfEnableNotiExpeditionDone.value,
+            sfEnableNotiHomeCoinFull.value,
+            sfEnableNotiParamReach.value,
+            sfEnableNotiDailyYet.value,
+            sfNotiDailyYetTime.value,
+            sfEnableNotiWeeklyYet.value,
+            sfNotiWeeklyYetDay.value,
+            sfNotiWeeklyYetTime.value,
 
-                sfEnableNotiEach40TrailPower.value,
-                sfEnableNoti230TrailPower.value,
-                sfEnableNotiCustomTrailPower.value,
-                customNotiTrailPower,
-                sfEnableNotiHonkaiSrExpeditionDone.value,
+            sfEnableNotiEach40TrailPower.value,
+            sfEnableNoti230TrailPower.value,
+            sfEnableNotiCustomTrailPower.value,
+            customNotiTrailPower,
+            sfEnableNotiHonkaiSrExpeditionDone.value,
 
-                sfEnableNotiEach40Battery.value,
-                sfEnableNotiEach60Battery.value,
-                sfEnableNoti230Battery.value,
-                sfEnableNotiCustomBattery.value,
-                customNotiBattery,
-            )
+            sfEnableNotiEach40Battery.value,
+            sfEnableNotiEach60Battery.value,
+            sfEnableNoti230Battery.value,
+            sfEnableNotiCustomBattery.value,
+            customNotiBattery,
+        )
+    }
+
+    private fun makeCheckInSettings() =
+        CheckInSettings(
+            sfEnableNotiCheckinSuccess.value,
+            sfEnableNotiCheckinFailed.value
         )
 
-        preference.setCheckInSettings(
-            CheckInSettings(
-                sfEnableNotiCheckinSuccess.value,
-                sfEnableNotiCheckinFailed.value
-            )
-        )
+    fun saveIfChanged() {
+        val dailyNoteSettings = makeDailyNoteSettings()
+        val checkInSettings = makeCheckInSettings()
+        val savedDailyNoteSettings = preference.getDailyNoteSettings()
 
-        makeToast(resource.getString(R.string.msg_toast_save_done))
+        if (dailyNoteSettings == savedDailyNoteSettings &&
+            checkInSettings == preference.getCheckInSettings()
+        ) return
+
+        log.e()
+        preference.setDailyNoteSettings(dailyNoteSettings)
+        preference.setCheckInSettings(checkInSettings)
+
+        if (dailyNoteSettings.autoRefreshPeriod != savedDailyNoteSettings.autoRefreshPeriod) {
+            sendEvent(Event.StartShutRefreshWorker(true))
+        }
+    }
+
+    fun onClickAddWidget() {
+        log.e()
+        sendEvent(Event.ShowAddWidgetDialog())
     }
 
     fun onClickCheckIn() {

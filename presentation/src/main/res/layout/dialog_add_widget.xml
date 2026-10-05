@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp">
+
+        <danggai.app.presentation.view.TitleDividerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleText="@string/genshin" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_add_resin_fixed"
+            style="@style/AddWidgetRow">
+
+            <ImageView
+                style="@style/AddWidgetPreview"
+                android:contentDescription="@string/widget_label_resin_fixed"
+                android:src="@drawable/preview_resin_widget" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/AddWidgetLabel"
+                android:text="@string/widget_label_resin_fixed" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_add_resin_resizable"
+            style="@style/AddWidgetRow">
+
+            <ImageView
+                style="@style/AddWidgetPreview"
+                android:contentDescription="@string/widget_label_resin_resizable"
+                android:src="@drawable/preview_resin_widget" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/AddWidgetLabel"
+                android:text="@string/widget_label_resin_resizable" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_add_mini"
+            style="@style/AddWidgetRow">
+
+            <ImageView
+                style="@style/AddWidgetPreview"
+                android:contentDescription="@string/widget_label_mini"
+                android:src="@drawable/preview_mini_widget" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/AddWidgetLabel"
+                android:text="@string/widget_label_mini" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_add_detail"
+            style="@style/AddWidgetRow">
+
+            <ImageView
+                style="@style/AddWidgetPreview"
+                android:contentDescription="@string/widget_label_genshin_detail"
+                android:src="@drawable/preview_detail_widget" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/AddWidgetLabel"
+                android:text="@string/widget_label_genshin_detail" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_add_talent"
+            style="@style/AddWidgetRow">
+
+            <ImageView
+                style="@style/AddWidgetPreview"
+                android:contentDescription="@string/widget_label_talent"
+                android:src="@drawable/preview_talent_widget" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/AddWidgetLabel"
+                android:text="@string/widget_label_talent" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <danggai.app.presentation.view.TitleDividerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleText="@string/honkai_sr" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_add_trailblaze_power"
+            style="@style/AddWidgetRow">
+
+            <ImageView
+                style="@style/AddWidgetPreview"
+                android:contentDescription="@string/widget_label_trailblaze_power"
+                android:src="@drawable/preview_trailblaze_power_widget" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/AddWidgetLabel"
+                android:text="@string/widget_label_trailblaze_power" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_add_hksr_detail"
+            style="@style/AddWidgetRow">
+
+            <ImageView
+                style="@style/AddWidgetPreview"
+                android:contentDescription="@string/widget_label_hksr_detail"
+                android:src="@drawable/preview_hksr_detail_widget" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/AddWidgetLabel"
+                android:text="@string/widget_label_hksr_detail" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <danggai.app.presentation.view.TitleDividerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleText="@string/zzz" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_add_battery"
+            style="@style/AddWidgetRow">
+
+            <ImageView
+                style="@style/AddWidgetPreview"
+                android:contentDescription="@string/widget_label_battery"
+                android:src="@drawable/preview_battery_widget" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/AddWidgetLabel"
+                android:text="@string/widget_label_battery" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_add_zzz_detail"
+            style="@style/AddWidgetRow">
+
+            <ImageView
+                style="@style/AddWidgetPreview"
+                android:contentDescription="@string/widget_label_zzz_detail"
+                android:src="@drawable/preview_zzz_detail_widget" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/AddWidgetLabel"
+                android:text="@string/widget_label_zzz_detail" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</ScrollView>
