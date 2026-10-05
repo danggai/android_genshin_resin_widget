@@ -159,6 +159,16 @@
         <item name="ensureMinTouchTargetSize">false</item>
     </style>
 
+    <style name="NotiChipCustomText" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textColor">@color/noti_chip_custom_text</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold|italic</item>
+    </style>
+
+    <style name="NotiChip.Custom">
+        <item name="android:textAppearance">@style/NotiChipCustomText</item>
+        <item name="android:textColor">@color/noti_chip_custom_text</item>
+    </style>
     <style name="NotiRow">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
