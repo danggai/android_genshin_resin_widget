@@ -7,5 +7,6 @@
     <declare-styleable name="TitleDividerView">
         <attr name="titleText" format="string" />
         <attr name="marginTop" format="dimension" />
+        <attr name="collapsible" format="boolean" />
     </declare-styleable>
 </resources>

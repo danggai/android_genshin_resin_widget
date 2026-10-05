@@ -69,6 +69,58 @@ class MainViewModel @Inject constructor(
     val sfDeleteAccount = MutableSharedFlow<Account>()
     val sfShowDialogDailyWeeklyYet = MutableSharedFlow<Boolean>()
 
+    val sfExpandGenshin = MutableStateFlow(true)
+    val sfExpandHonkaiSr = MutableStateFlow(true)
+    val sfExpandZZZ = MutableStateFlow(true)
+    val sfExpandCheckIn = MutableStateFlow(true)
+
+    private data class GameUsage(
+        val genshin: Boolean,
+        val honkaiSr: Boolean,
+        val zzz: Boolean,
+        val checkIn: Boolean
+    )
+
+    init {
+        viewModelScope.launch {
+            accountDao.selectAllAccountFlow()
+                .map { getGameUsage(it) }
+                .distinctUntilChanged()
+                .collect {
+                    sfExpandGenshin.value = it.genshin
+                    sfExpandHonkaiSr.value = it.honkaiSr
+                    sfExpandZZZ.value = it.zzz
+                    sfExpandCheckIn.value = it.checkIn
+                }
+        }
+    }
+
+    private fun getGameUsage(accountList: List<Account>): GameUsage =
+        GameUsage(
+            genshin = accountList.any { !it.genshin_uid.contains("-") },
+            honkaiSr = accountList.any { it.honkai_sr_uid.isNotEmpty() },
+            zzz = accountList.any { it.zzz_uid.isNotEmpty() },
+            checkIn = accountList.any {
+                it.enable_genshin_checkin || it.enable_honkai3rd_checkin ||
+                        it.enable_honkai_sr_checkin || it.enable_zzz_checkin
+            }
+        )
+
+    fun onClickToggleGenshin() {
+        sfExpandGenshin.value = !sfExpandGenshin.value
+    }
+
+    fun onClickToggleHonkaiSr() {
+        sfExpandHonkaiSr.value = !sfExpandHonkaiSr.value
+    }
+
+    fun onClickToggleZZZ() {
+        sfExpandZZZ.value = !sfExpandZZZ.value
+    }
+
+    fun onClickToggleCheckIn() {
+        sfExpandCheckIn.value = !sfExpandCheckIn.value
+    }
     fun initUI() {
         preference.getDailyNoteSettings().let {
             sfAutoRefreshPeriod.value = it.autoRefreshPeriod
