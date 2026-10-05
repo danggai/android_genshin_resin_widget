@@ -12,6 +12,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
+import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.ForegroundInfo
 import androidx.work.OneTimeWorkRequestBuilder
@@ -54,11 +55,15 @@ class CheckInWorker @AssistedInject constructor(
     private val checkIn: CheckInUseCase
 ) : CoroutineWorker(context, workerParams) {
 
-    companion object {
+    @Volatile
+    private var needRetry = false
 
-        fun startWorkerOneTimeImmediately(context: Context) {
+    companion object {
+        private const val INPUT_KEY_FORCE = "force"
+
+        fun startWorkerOneTimeImmediately(context: Context, force: Boolean = false) {
             log.e()
-            startWorkerOneTime(context, 0L)
+            startWorkerOneTime(context, 0L, force)
         }
 
         fun startWorkerOneTimeAtChinaMidnight(context: Context) {
@@ -74,7 +79,7 @@ class CheckInWorker @AssistedInject constructor(
             startWorkerOneTime(context, 30L)
         }
 
-        private fun startWorkerOneTime(context: Context, delay: Long) {
+        private fun startWorkerOneTime(context: Context, delay: Long, force: Boolean = false) {
             log.e()
 
             log.e("delay -> $delay")
@@ -82,6 +87,7 @@ class CheckInWorker @AssistedInject constructor(
             val workManager = WorkManager.getInstance(context)
             val workRequest = OneTimeWorkRequestBuilder<CheckInWorker>()
                 .setInitialDelay(delay, TimeUnit.MINUTES)
+                .setInputData(Data.Builder().putBoolean(INPUT_KEY_FORCE, force).build())
 //                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_CHECK_IN)
                 .build()
@@ -123,6 +129,7 @@ class CheckInWorker @AssistedInject constructor(
                         Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
                         Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
                         -> {
+                            if (it.data.data?.gt_result?.is_risk != true) setCheckInDone(account, CHECKIN_TYPE_GENSHIN)
                             log.e()
                             if (settings.notiCheckInSuccess) {
                                 log.e()
@@ -188,7 +195,7 @@ class CheckInWorker @AssistedInject constructor(
                                 log.e()
                                 sendNoti(account, NotiType.CheckIn._Genshin.Failed)
                             }
-                            startWorkerOneTimeRetry(applicationContext)
+                            needRetry = true
                             CommonFunction.sendCrashlyticsApiLog(
                                 Constant.API_NAME_CHECK_IN,
                                 it.code,
@@ -210,7 +217,7 @@ class CheckInWorker @AssistedInject constructor(
                             it.code,
                             null
                         )
-                        startWorkerOneTimeRetry(applicationContext)
+                        needRetry = true
                     }
                 }
 
@@ -223,7 +230,7 @@ class CheckInWorker @AssistedInject constructor(
                         sendNoti(account, NotiType.CheckIn._Genshin.Failed)
                     }
                     CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, null, null)
-                    startWorkerOneTimeRetry(applicationContext)
+                    needRetry = true
                 }
             }
             it
@@ -254,6 +261,7 @@ class CheckInWorker @AssistedInject constructor(
                         Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
                         Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
                         -> {
+                            if (it.data.data?.gt_result?.is_risk != true) setCheckInDone(account, CHECKIN_TYPE_GENSHIN)
                             log.e()
                             if (settings.notiCheckInSuccess) {
                                 log.e()
@@ -308,7 +316,7 @@ class CheckInWorker @AssistedInject constructor(
                                 log.e()
                                 sendNoti(account, NotiType.CheckIn._Genshin.Failed)
                             }
-                            startWorkerOneTimeRetry(applicationContext)
+                            needRetry = true
                             CommonFunction.sendCrashlyticsApiLog(
                                 Constant.API_NAME_CHECK_IN,
                                 it.code,
@@ -330,7 +338,7 @@ class CheckInWorker @AssistedInject constructor(
                             it.code,
                             null
                         )
-                        startWorkerOneTimeRetry(applicationContext)
+                        needRetry = true
                     }
                 }
 
@@ -343,7 +351,7 @@ class CheckInWorker @AssistedInject constructor(
                         sendNoti(account, NotiType.CheckIn._Genshin.Failed)
                     }
                     CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, null, null)
-                    startWorkerOneTimeRetry(applicationContext)
+                    needRetry = true
                 }
             }
             it
@@ -372,6 +380,7 @@ class CheckInWorker @AssistedInject constructor(
                         Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
                         Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
                         -> {
+                            setCheckInDone(account, CHECKIN_TYPE_HONKAI_3RD)
                             log.e()
                             if (settings.notiCheckInSuccess) {
                                 log.e()
@@ -422,7 +431,7 @@ class CheckInWorker @AssistedInject constructor(
                                 it.code,
                                 it.data.retcode
                             )
-                            startWorkerOneTimeRetry(applicationContext)
+                            needRetry = true
                         }
                     }
                 }
@@ -439,7 +448,7 @@ class CheckInWorker @AssistedInject constructor(
                             it.code,
                             null
                         )
-                        startWorkerOneTimeRetry(applicationContext)
+                        needRetry = true
                     }
                 }
 
@@ -452,7 +461,7 @@ class CheckInWorker @AssistedInject constructor(
                         sendNoti(account, NotiType.CheckIn._Honkai3rd.Failed)
                     }
                     CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, null, null)
-                    startWorkerOneTimeRetry(applicationContext)
+                    needRetry = true
                 }
             }
             it
@@ -481,6 +490,7 @@ class CheckInWorker @AssistedInject constructor(
                         Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
                         Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
                         -> {
+                            setCheckInDone(account, CHECKIN_TYPE_HONKAI_SR)
                             log.e()
                             if (settings.notiCheckInSuccess) {
                                 log.e()
@@ -531,7 +541,7 @@ class CheckInWorker @AssistedInject constructor(
                                 it.code,
                                 it.data.retcode
                             )
-                            startWorkerOneTimeRetry(applicationContext)
+                            needRetry = true
                         }
                     }
                 }
@@ -548,7 +558,7 @@ class CheckInWorker @AssistedInject constructor(
                             it.code,
                             null
                         )
-                        startWorkerOneTimeRetry(applicationContext)
+                        needRetry = true
                     }
                 }
 
@@ -561,7 +571,7 @@ class CheckInWorker @AssistedInject constructor(
                         sendNoti(account, NotiType.CheckIn._StarRail.Failed)
                     }
                     CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, null, null)
-                    startWorkerOneTimeRetry(applicationContext)
+                    needRetry = true
                 }
             }
             it
@@ -590,6 +600,7 @@ class CheckInWorker @AssistedInject constructor(
                         Constant.RETCODE_ERROR_CLAIMED_DAILY_REWARD,
                         Constant.RETCODE_ERROR_CHECKED_INTO_HOYOLAB,
                         -> {
+                            setCheckInDone(account, CHECKIN_TYPE_ZZZ)
                             log.e()
                             if (settings.notiCheckInSuccess) {
                                 log.e()
@@ -640,7 +651,7 @@ class CheckInWorker @AssistedInject constructor(
                                 it.code,
                                 it.data.retcode
                             )
-                            startWorkerOneTimeRetry(applicationContext)
+                            needRetry = true
                         }
                     }
                 }
@@ -657,7 +668,7 @@ class CheckInWorker @AssistedInject constructor(
                             it.code,
                             null
                         )
-                        startWorkerOneTimeRetry(applicationContext)
+                        needRetry = true
                     }
                 }
 
@@ -670,7 +681,7 @@ class CheckInWorker @AssistedInject constructor(
                         sendNoti(account, NotiType.CheckIn._ZZZ.Failed)
                     }
                     CommonFunction.sendCrashlyticsApiLog(Constant.API_NAME_CHECK_IN, null, null)
-                    startWorkerOneTimeRetry(applicationContext)
+                    needRetry = true
                 }
             }
             it
@@ -749,6 +760,25 @@ class CheckInWorker @AssistedInject constructor(
     val CHECKIN_TYPE_HONKAI_3RD = "HONKAI_3RD"
     val CHECKIN_TYPE_HONKAI_SR = "HONKAI_SR"
     val CHECKIN_TYPE_ZZZ = "ZZZ"
+
+    private fun getCheckInUid(account: Account, gameType: String): String =
+        when (gameType) {
+            CHECKIN_TYPE_HONKAI_SR -> account.honkai_sr_uid
+            CHECKIN_TYPE_ZZZ -> account.zzz_uid
+            else -> account.genshin_uid
+        }
+
+    private fun isCheckInDoneToday(account: Account, gameType: String): Boolean =
+        preference.getStringRecentCheckInDate(gameType, getCheckInUid(account, gameType)) ==
+                CommonFunction.getChinaDate()
+
+    private fun setCheckInDone(account: Account, gameType: String) {
+        preference.setStringRecentCheckInDate(
+            gameType,
+            getCheckInUid(account, gameType),
+            CommonFunction.getChinaDate()
+        )
+    }
     private fun disableCheckIn(account: Account, gameType: String) {
         log.e()
         val _account =
@@ -788,30 +818,32 @@ class CheckInWorker @AssistedInject constructor(
                 else -> Constant.Locale.ENGLISH.locale
             }
 
+            val force = inputData.getBoolean(INPUT_KEY_FORCE, false)
+
             accountDao.selectAllAccount().collect { accountList ->
                 accountList.forEach { account ->
-                    if (account.enable_genshin_checkin)
+                    if (account.enable_genshin_checkin && (force || !isCheckInDoneToday(account, CHECKIN_TYPE_GENSHIN)))
                         checkInGenshin(
                             account = account,
                             lang = lang,
                             actId = Constant.OS_GENSHIN_ACT_ID,
                             cookie = account.cookie,
                         )
-                    if (account.enable_honkai3rd_checkin)
+                    if (account.enable_honkai3rd_checkin && (force || !isCheckInDoneToday(account, CHECKIN_TYPE_HONKAI_3RD)))
                         checkInHonkai3rd(
                             account = account,
                             lang = lang,
                             actId = Constant.OS_HONKAI_3RD_ACT_ID,
                             cookie = account.cookie
                         )
-                    if (account.enable_honkai_sr_checkin)
+                    if (account.enable_honkai_sr_checkin && (force || !isCheckInDoneToday(account, CHECKIN_TYPE_HONKAI_SR)))
                         checkInHonkaiSR(
                             account = account,
                             lang = lang,
                             actId = Constant.OS_HONKAI_SR_ACT_ID,
                             cookie = account.cookie
                         )
-                    if (account.enable_zzz_checkin)
+                    if (account.enable_zzz_checkin && (force || !isCheckInDoneToday(account, CHECKIN_TYPE_ZZZ)))
                         checkInZZZ(
                             account = account,
                             lang = lang,
@@ -821,7 +853,8 @@ class CheckInWorker @AssistedInject constructor(
                 }
 
                 delay(2500L)
-                startWorkerOneTimeAtChinaMidnight(applicationContext)
+                if (needRetry) startWorkerOneTimeRetry(applicationContext)
+                else startWorkerOneTimeAtChinaMidnight(applicationContext)
             }
 
             Result.success()

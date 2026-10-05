@@ -73,6 +73,9 @@ interface PreferenceManagerRepository {
     fun getStringRecentWeeklyBossNotiDate(uid: String): String
     fun setStringRecentWeeklyBossNotiDate(uid: String, value: String)
 
+    fun getStringRecentCheckInDate(gameType: String, uid: String): String
+    fun setStringRecentCheckInDate(gameType: String, uid: String, value: String)
+
 
     fun getStringLocale(): String
     fun setStringLocale(value: String)

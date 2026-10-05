@@ -185,6 +185,7 @@ object Constant {
     /*daily/weekly noti date*/
     const val PREF_RECENT_DAILY_COMMISSION_NOTI_DATE = "PREF_RECENT_DAILY_COMMISSION_NOTI_DATE"
     const val PREF_RECENT_WEEKLY_BOSS_NOTI_DATE = "PREF_RECENT_WEEKLY_BOSS_NOTI_DATE"
+    const val PREF_RECENT_CHECK_IN_DATE = "PREF_RECENT_CHECK_IN_DATE"
 
     /*resin widget settings*/
     const val PREF_SERVER = "PREF_SERVER"
