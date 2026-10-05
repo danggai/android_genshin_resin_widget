@@ -20,6 +20,7 @@ import danggai.app.presentation.util.log
 import danggai.domain.core.ApiResult
 import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
+import danggai.domain.local.DailyNoteSettings
 import danggai.domain.local.NotiType
 import danggai.domain.local.Server
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
@@ -69,11 +70,8 @@ class RefreshWorker @AssistedInject constructor(
 
         fun startWorkerPeriodic(context: Context) {
             log.e()
-            val period = PreferenceManager.getLong(
-                context,
-                Constant.PREF_AUTO_REFRESH_PERIOD,
-                Constant.PREF_DEFAULT_REFRESH_PERIOD
-            )
+            val settings = PreferenceManager.getT<DailyNoteSettings>(context, Constant.PREF_WIDGET_SETTINGS)
+            val period = settings?.autoRefreshPeriod ?: Constant.PREF_DEFAULT_REFRESH_PERIOD
 
             val rx: PublishSubject<Boolean> = PublishSubject.create()
 
