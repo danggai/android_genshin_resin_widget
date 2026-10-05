@@ -3,6 +3,7 @@ package danggai.app.presentation.util
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonSyntaxException
 import org.json.JSONArray
 import org.json.JSONException
 
@@ -181,7 +182,13 @@ object PreferenceManager {
         //JSON String was found which means object can be read.
         //We convert this JSON String to model object. Parameter "c" (of
         //type Class < T >" is used to cast.
-        return GsonBuilder().create().fromJson(value, T::class.java)
+        // JSON이 깨진 경우 크래시 대신 null을 반환해서 호출부가 기본값을 쓰도록 함
+        return try {
+            GsonBuilder().create().fromJson(value, T::class.java)
+        } catch (e: JsonSyntaxException) {
+            log.e("getT parse error key -> $key")
+            null
+        }
     }
 
     fun setIntArray(context: Context, key: String, values: ArrayList<Int>) {
