@@ -179,6 +179,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:paddingBottom="15dp"
                     android:visibility="@{vm.sfExpandGenshin ? View.VISIBLE : View.GONE}">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -355,6 +356,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:paddingBottom="15dp"
                     android:visibility="@{vm.sfExpandHonkaiSr ? View.VISIBLE : View.GONE}">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -428,10 +430,6 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <!--   ZZZ   -->
-                <android.widget.Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp" />
-
                 <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -444,6 +442,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:paddingBottom="15dp"
                     android:visibility="@{vm.sfExpandZZZ ? View.VISIBLE : View.GONE}">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -514,10 +513,6 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <android.widget.Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp" />
 
                 <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
