@@ -237,18 +237,19 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                         widgetDesign.engagementTodayDataVisibility
                     )
 
-                    // TODO(커피 관련 데이터추가 시 해제)
-                    setVisibility(R.id.rl_coffee, false)
-//                setText(
-//                    R.id.tv_coffee_title,
-//                    _context.getString(R.string.coffee)
-//                )
-//                setText(
-//                    R.id.tv_coffee,
-//                    if (vitality.current == vitality.max) _context.getString(R.string.done)
-//                    else "${vitality.current}/${vitality.max}"
-//                )
-//                setVisibility(R.id.rl_coffee, widgetDesign.coffeeDataVisibility)
+                    setText(R.id.tv_coffee_title, _context.getString(R.string.coffee))
+                    setText(
+                        R.id.tv_coffee,
+                        when (cafeState) {
+                            "CafeStateDone" -> _context.getString(R.string.done)
+                            "CafeStateNo" -> _context.getString(R.string.coffee_no)
+                            else -> "-"
+                        }
+                    )
+                    setVisibility(
+                        R.id.rl_coffee,
+                        widgetDesign.coffeeDataVisibility && cafeState != null
+                    )
 
                     setText(
                         R.id.tv_ridu_weekly_title,
