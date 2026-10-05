@@ -77,6 +77,32 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
     }
 
     /**
+     * long 값 저장
+     * @param context
+     * @param key
+     * @param value
+     */
+    fun setLong(context: Context, key: String?, value: Long) {
+        val prefs = getPreferences(context)
+        val editor = prefs.edit()
+        editor.putLong(key, value)
+        editor.apply()
+    }
+
+    /**
+     * float 값 저장
+     * @param context
+     * @param key
+     * @param value
+     */
+    fun setFloat(context: Context, key: String?, value: Float) {
+        val prefs = getPreferences(context)
+        val editor = prefs.edit()
+        editor.putFloat(key, value)
+        editor.apply()
+    }
+
+    /**
      * String 값 로드
      * @param context
      * @param key
@@ -112,6 +138,11 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
     fun getInt(context: Context, key: String?): Int {
         val prefs = getPreferences(context)
         return prefs.getInt(key, DEFAULT_VALUE_INT)
+    }
+
+    fun getInt(context: Context, key: String?, default: Int): Int {
+        val prefs = getPreferences(context)
+        return prefs.getInt(key, default)
     }
 
     /**
@@ -199,6 +230,18 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
         }
     }
 
+
+    /**
+     * 키 값 삭제
+     * @param context
+     * @param key
+     */
+    fun removeKey(context: Context, key: String?) {
+        val prefs = getPreferences(context)
+        val edit = prefs.edit()
+        edit.remove(key)
+        edit.apply()
+    }
 
     /**
      * 모든 저장 데이터 삭제
