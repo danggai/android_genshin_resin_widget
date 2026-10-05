@@ -265,11 +265,10 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                     )
                     setText(
                         R.id.tv_ridu_weekly,
-                        if ((weeklyTask?.curPoint == weeklyTask?.maxPoint) && weeklyTask !== null) {
-                            _context.getString(R.string.done)
-                        } else {
-                            "${weeklyTask?.curPoint ?: "?"}/${weeklyTask?.maxPoint ?: "?"}"
-                        }
+                        weeklyTask?.let {
+                            if (it.curPoint == it.maxPoint) _context.getString(R.string.done)
+                            else "${it.curPoint}/${it.maxPoint}"
+                        } ?: "-"
                     )
                     setVisibility(R.id.rl_ridu_weekly, widgetDesign.riduWeeklyDataVisibility)
 
@@ -318,11 +317,10 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                     )
                     setText(
                         R.id.tv_investigation_point,
-                        if ((surveyPoints?.num == surveyPoints?.total) && surveyPoints !== null) {
-                            _context.getString(R.string.done)
-                        } else {
-                            "${surveyPoints?.num ?: "?"}/${surveyPoints?.total ?: "?"}"
-                        }
+                        surveyPoints?.let {
+                            if (it.num == it.total) _context.getString(R.string.done)
+                            else "${it.num}/${it.total}"
+                        } ?: "-"
                     )
                     setVisibility(
                         R.id.rl_investigation_point,
