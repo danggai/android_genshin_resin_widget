@@ -121,38 +121,44 @@
                     android:textSize="28sp"
                     android:textStyle="bold|italic" />
 
-                <RadioGroup
-                    style="@style/RadioGroup"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent">
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:chipSpacingHorizontal="8dp"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
 
-                    <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/rb_disable"
-                        style="@style/RadioButton"
+                    <com.google.android.material.chip.Chip
+                        style="@style/NotiChip"
+                        android:checked="@{vm.sfAutoRefreshPeriod != 15L &amp;&amp; vm.sfAutoRefreshPeriod != 30L &amp;&amp; vm.sfAutoRefreshPeriod != 60L &amp;&amp; vm.sfAutoRefreshPeriod != 120L}"
                         android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(-1L)}"
-                        android:text="@string/disable" />
-
-                    <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/rb_15m"
-                        style="@style/RadioButton"
+                        android:text="@string/disable"
+                        app:chipIcon="@drawable/baseline_close_24"
+                        app:chipIconTint="@color/black" />
+                    <com.google.android.material.chip.Chip
+                        style="@style/NotiChip"
+                        android:checked="@{vm.sfAutoRefreshPeriod == 15L}"
                         android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(15L)}"
-                        android:text="@string/time_15m" />
-
-                    <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/rb_30m"
-                        style="@style/RadioButton"
+                        android:text="@string/time_15m"
+                        app:chipIcon="@drawable/baseline_sync_24"
+                        app:chipIconTint="@color/black" />
+                    <com.google.android.material.chip.Chip
+                        style="@style/NotiChip"
+                        android:checked="@{vm.sfAutoRefreshPeriod == 30L}"
                         android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(30L)}"
-                        android:text="@string/time_30m" />
-
-                    <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/rb_1h"
-                        style="@style/RadioButton"
+                        android:text="@string/time_30m"
+                        app:chipIcon="@drawable/baseline_sync_24"
+                        app:chipIconTint="@color/black" />
+                    <com.google.android.material.chip.Chip
+                        style="@style/NotiChip"
+                        android:checked="@{vm.sfAutoRefreshPeriod == 60L || vm.sfAutoRefreshPeriod == 120L}"
                         android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(60L)}"
-                        android:text="@string/time_1h" />
+                        android:text="@string/time_1h"
+                        app:chipIcon="@drawable/baseline_sync_24"
+                        app:chipIconTint="@color/black" />
 
-                </RadioGroup>
+                </com.google.android.material.chip.ChipGroup>
 
                 <android.widget.Space
                     android:layout_width="wrap_content"

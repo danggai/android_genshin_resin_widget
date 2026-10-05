@@ -207,13 +207,6 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                     log.e("talent worker ${it.id} state -> ${it.state}")
             }
 
-        when (mVM.sfAutoRefreshPeriod.value) {
-            15L -> binding.rb15m.isChecked = true
-            30L -> binding.rb30m.isChecked = true
-            60L, 120L -> binding.rb1h.isChecked = true
-            else -> binding.rbDisable.isChecked = true
-        }
-
         // Adapter, Selection 순으로 적용해야 초기 값이 적용 됨
         binding.spWeeklyYetNotiDay.adapter = weeklyDaySpinnerAdapter
         binding.spWeeklyYetNotiDay.setSelection(
