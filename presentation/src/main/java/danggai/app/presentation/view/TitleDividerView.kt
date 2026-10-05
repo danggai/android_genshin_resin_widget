@@ -16,6 +16,7 @@ class TitleDividerView @JvmOverloads constructor(
 
     private var titleTextView: TextView
     private var arrowImageView: ImageView
+    private var isFirstExpanded = true
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_title_divider, this, true)
@@ -45,7 +46,13 @@ class TitleDividerView @JvmOverloads constructor(
     }
 
     fun setExpanded(expanded: Boolean) {
-        arrowImageView.rotation = if (expanded) 180f else 0f
+        val rotation = if (expanded) 180f else 0f
+        if (isFirstExpanded) {
+            arrowImageView.rotation = rotation
+            isFirstExpanded = false
+        } else {
+            arrowImageView.animate().rotation(rotation).setDuration(200L).start()
+        }
     }
 
     private fun setTitle(title: String) {
