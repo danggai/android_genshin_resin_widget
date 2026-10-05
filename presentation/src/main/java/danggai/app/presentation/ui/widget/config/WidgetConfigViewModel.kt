@@ -106,12 +106,21 @@ class WidgetConfigViewModel @Inject constructor(
         )
     }
 
-    private fun confirmEnable(): Boolean {
-        fun isRequiresTypeWidget(className: String): Boolean {
-            return className in listOf(MiniWidget::class.java.name, TalentWidget::class.java.name)
-        }
+    private fun isRequiresTypeWidget(): Boolean {
+        return widgetClassName in listOf(MiniWidget::class.java.name, TalentWidget::class.java.name)
+    }
 
-        if (isRequiresTypeWidget(widgetClassName))
+    fun autoConfirmIfSingleAccount(validAccountList: List<Account>) {
+        if (validAccountList.size != 1) return
+        if (isRequiresTypeWidget()) return
+        if (sfSelectedAccount.value != Account.EMPTY) return
+
+        sfSelectedAccount.value = validAccountList[0]
+        onClickConfirm()
+    }
+
+    private fun confirmEnable(): Boolean {
+        if (isRequiresTypeWidget())
             if (this._widgetType == "") {
                 makeToast(resource.getString(R.string.msg_toast_miniwidget_no_type))
                 return false
