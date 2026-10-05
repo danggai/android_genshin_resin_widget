@@ -68,6 +68,10 @@
     <string name="btn_param_reached">매개 변수 변환기</string>
     <string name="btn_daily_commission_yet">일일임무 미완료</string>
     <string name="btn_weekly_boss_yet">주간보스 할인 잔여</string>
+    <string name="btn_daily_training_yet">일일 훈련 미완료</string>
+    <string name="btn_echo_of_war_yet">전쟁의 여운 할인 잔여</string>
+    <string name="btn_engagement_yet">활약도 미완료</string>
+    <string name="btn_bounty_commission_yet">현상금 의뢰 미완료</string>
 
     <string name="trailblaze_power">개척력</string>
     <string name="btn_each_60_trailblaze_power">60개척력 마다</string>
@@ -295,8 +299,16 @@
     <string name="push_msg_daily_commission_yet">%s! 모험가 길드의 오늘의 의뢰는 완료 했어? 아니면 한 번 확인해봐!</string>
 
     <string name="push_weekly_boss_title">주간 보스 토벌 알림</string>
+    <string name="push_daily_training_title">일일 훈련 알림</string>
+    <string name="push_echo_of_war_title">전쟁의 여운 알림</string>
+    <string name="push_engagement_title">활약도 알림</string>
+    <string name="push_bounty_commission_title">현상금 의뢰 알림</string>
     <string name="push_weekly_boss_description">설정한 날짜까지 주간 보스 레진 할인 횟수를 사용하지 않았을 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
     <string name="push_msg_weekly_boss_yet">%s! 이번 주 주간 보스 레진 할인 횟수는 소모 했어? 아니면 한 번 확인해봐!</string>
+    <string name="push_msg_daily_training_yet">%s! 오늘의 일일 훈련은 다 했어? 아니면 한 번 확인해봐!</string>
+    <string name="push_msg_echo_of_war_yet">%s! 이번 주 전쟁의 여운 할인 횟수는 다 썼어? 아니면 한 번 확인해봐!</string>
+    <string name="push_msg_engagement_yet">%s! 오늘의 활약도는 다 채웠어? 아니면 한 번 확인해봐!</string>
+    <string name="push_msg_bounty_commission_yet">%s! 이번 주 현상금 의뢰 진도는 다 채웠어? 아니면 한 번 확인해봐!</string>
 
 
     <string name="hint_cookie">HoYoLAB의 쿠키를 입력해 줘!</string>

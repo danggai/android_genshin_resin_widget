@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.fragment.app.activityViewModels
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
@@ -53,6 +54,7 @@ import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.CheckInWorker
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.util.Constant
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -235,8 +237,68 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                 DayTimeMapper.timeIntToString(requireContext(), mVM.sfNotiDailyYetTime.value)
             )
         )
+
+        setUpTimeSpinner(binding.spDailyYetNotiHonkaiSr, mVM.sfNotiDailyYetTimeHonkaiSr)
+        setUpDaySpinner(binding.spWeeklyYetNotiDayHonkaiSr, mVM.sfNotiWeeklyYetDayHonkaiSr)
+        setUpTimeSpinner(binding.spWeeklyYetNotiTimeHonkaiSr, mVM.sfNotiWeeklyYetTimeHonkaiSr)
+
+        setUpTimeSpinner(binding.spDailyYetNotiZzz, mVM.sfNotiDailyYetTimeZZZ)
+        setUpDaySpinner(binding.spWeeklyYetNotiDayZzz, mVM.sfNotiWeeklyYetDayZZZ)
+        setUpTimeSpinner(binding.spWeeklyYetNotiTimeZzz, mVM.sfNotiWeeklyYetTimeZZZ)
     }
 
+    private fun setUpTimeSpinner(spinner: AppCompatSpinner, timeFlow: MutableStateFlow<Int>) {
+        val adapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.time_oclock,
+            R.layout.text_spinner
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        // Adapter, Selection 순으로 적용해야 초기 값이 적용 됨
+        spinner.adapter = adapter
+        spinner.setSelection(
+            adapter.getPosition(DayTimeMapper.timeIntToString(requireContext(), timeFlow.value))
+        )
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long,
+            ) {
+                timeFlow.value = mVM.timeStringToInt(spinner.getItemAtPosition(position) as String)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    private fun setUpDaySpinner(spinner: AppCompatSpinner, dayFlow: MutableStateFlow<Int>) {
+        val adapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.week,
+            R.layout.text_spinner
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        spinner.adapter = adapter
+        spinner.setSelection(
+            adapter.getPosition(DayTimeMapper.weekOfDayIntToString(requireContext(), dayFlow.value))
+        )
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long,
+            ) {
+                dayFlow.value = mVM.weekOfDayStringToInt(spinner.getItemAtPosition(position) as String)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
     private fun initSf() {
         viewLifecycleOwner.repeatOnLifeCycleStarted {
             launch {

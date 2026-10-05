@@ -17,6 +17,8 @@ sealed class NotiType {
         object Stamina290 : StarRail()
         object StaminaCustom : StarRail()
         object ExpeditionDone : StarRail()
+        object DailyTrainingNotDone : StarRail()
+        object EchoOfWarNotDone : StarRail()
     }
 
     sealed class ZZZ : NotiType() {
@@ -24,6 +26,8 @@ sealed class NotiType {
         object StaminaEach60 : ZZZ()
         object Stamina230 : ZZZ()
         object StaminaCustom : ZZZ()
+        object EngagementNotDone : ZZZ()
+        object BountyCommissionNotDone : ZZZ()
     }
 
     sealed class CheckIn : NotiType() {

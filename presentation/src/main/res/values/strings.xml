@@ -76,6 +76,10 @@
     <string name="btn_param_reached">Parametric Transformer</string>
     <string name="btn_daily_commission_yet">Daily commissions left</string>
     <string name="btn_weekly_boss_yet">Weekly boss discount left</string>
+    <string name="btn_daily_training_yet">Daily training left</string>
+    <string name="btn_echo_of_war_yet">Echo of War discount left</string>
+    <string name="btn_engagement_yet">Engagement left</string>
+    <string name="btn_bounty_commission_yet">Bounty commission left</string>
 
     <string name="trailblaze_power">Trailblaze Power</string>
     <string name="btn_each_60_trailblaze_power">Every 60 Trailblaze Power</string>
@@ -304,8 +308,16 @@
     <string name="push_msg_daily_commission_yet">%s! Have you completed today\'s Adventurers\' Guild commissions? If not, go check!</string>
 
     <string name="push_weekly_boss_title">Weekly Boss Notification</string>
+    <string name="push_daily_training_title">Daily Training Notification</string>
+    <string name="push_echo_of_war_title">Echo of War Notification</string>
+    <string name="push_engagement_title">Engagement Notification</string>
+    <string name="push_bounty_commission_title">Bounty Commission Notification</string>
     <string name="push_weekly_boss_description">This is a notification sent to travelers when they do not use the weekly boss resin discount until the set date!</string>
     <string name="push_msg_weekly_boss_yet">%s! Have you used up this week\'s weekly boss resin discounts? If not, go check!</string>
+    <string name="push_msg_daily_training_yet">%s! Have you finished today\'s Daily Training? If not, go check!</string>
+    <string name="push_msg_echo_of_war_yet">%s! Have you used up this week\'s Echo of War discounts? If not, go check!</string>
+    <string name="push_msg_engagement_yet">%s! Have you filled today\'s Engagement? If not, go check!</string>
+    <string name="push_msg_bounty_commission_yet">%s! Have you finished this week\'s Bounty Commission progress? If not, go check!</string>
 
 
     <string name="hint_cookie">Enter HoYoLAB\'s cookie!</string>
