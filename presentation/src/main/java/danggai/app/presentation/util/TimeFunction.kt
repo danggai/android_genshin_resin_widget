@@ -134,7 +134,11 @@ object TimeFunction {
                 if (transformer != null && transformer.recoveryTime.day > 0)
                     String.format(
                         context.getString(R.string.widget_ui_expect_date),
-                        getExpectDate(context, transformer.recoveryTime.day)
+                        getExpectDate(
+                            context,
+                            recentSyneTime,
+                            transformerTimeToSecond(transformer.recoveryTime).toLong()
+                        )
                     )
 
                 // 1일 이내로 남음
@@ -152,9 +156,9 @@ object TimeFunction {
             }
 
             TimeNotation.DEFAULT -> {
-                if (transformer != null && transformer.recoveryTime == TransformerTime.REACHED)
+                if (transformer != null && transformer.recoveryTime.reached)
                     context.getString(R.string.widget_ui_transformer_reached)
-                else if (transformer != null && transformer.recoveryTime != TransformerTime.REACHED)
+                else if (transformer != null)
                     context.getString(R.string.widget_ui_transformer_not_reached)
 
                 // transformer == null
@@ -170,7 +174,7 @@ object TimeFunction {
         second: String,
         timeType: Int = Constant.TIME_TYPE_MAX
     ): String {
-        return if (second.isBlank()) "" else secondToRemainTime(context, second.toInt(), timeType)
+        return if (second.isBlank()) "" else secondToRemainTime(context, second.toIntOrNull() ?: 0, timeType)
     }
 
     fun secondToRemainTime(
@@ -208,7 +212,7 @@ object TimeFunction {
         second: String,
         timeType: Int = Constant.TIME_TYPE_MAX
     ): String {
-        return getSecondsLaterTime(context, recentSyneTime, second.toInt(), timeType)
+        return getSecondsLaterTime(context, recentSyneTime, second.toIntOrNull() ?: 0, timeType)
     }
 
     fun getSecondsLaterTime(
@@ -281,7 +285,7 @@ object TimeFunction {
 
             val minute = target.get(Calendar.MINUTE)
 
-            return if (includeDate || now.get(Calendar.DATE) != target.get(Calendar.DATE)) {
+            return if (includeDate || !CommonFunction.isSameDay(now.timeInMillis, target.timeInMillis)) {
                 String.format(
                     context.getString(R.string.widget_ui_date),
                     getDayWithMonthSuffix(context, target.get(Calendar.DATE)),
@@ -317,10 +321,11 @@ object TimeFunction {
                 time.second).toString()
     }
 
-    private fun getExpectDate(context: Context, days: Int): String {
+    /* 동기화 시각 + 남은 총 시간(초)으로 예정 일자를 계산. 일 수만 더하면 시/분이 날짜를 넘길 때 하루 빠르게 나옴 */
+    private fun getExpectDate(context: Context, recentSyneTime: Date, remainSeconds: Long): String {
         val target = Calendar.getInstance().apply {
-            this.time = Date()
-            this.add(Calendar.DAY_OF_MONTH, days)
+            this.time = recentSyneTime
+            this.add(Calendar.SECOND, remainSeconds.toInt())
         }
 
         return getDayWithMonthSuffix(context, target.get(Calendar.DAY_OF_MONTH))

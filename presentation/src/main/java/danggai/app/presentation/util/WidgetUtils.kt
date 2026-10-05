@@ -10,15 +10,28 @@ import danggai.app.presentation.ui.main.MainActivity
 import danggai.app.presentation.ui.widget.TalentWidget
 import danggai.app.presentation.ui.widget.config.WidgetConfigActivity
 import danggai.domain.util.Constant
+import java.util.Objects
 
 object WidgetUtils {
+
+    /**
+     * 같은 인텐트(액션/컴포넌트/extras)와 뷰는 항상 같은 코드가 나오도록 만든다.
+     * 갱신할 때마다 새 PendingIntent가 쌓이지 않고, extras(위젯 id 등)가 다른 인텐트끼리는 구분된다.
+     */
+    @Suppress("DEPRECATION")
+    private fun getRequestCode(intent: Intent, viewId: Int): Int {
+        val extras = intent.extras
+        val extraList = extras?.keySet()?.sorted()?.map { it to extras.get(it) } ?: emptyList()
+        return Objects.hash(intent.action, intent.component, intent.data, extraList, viewId)
+    }
+
     fun setOnClickBroadcastPendingIntent(
         context: Context,
         view: RemoteViews,
         viewId: Int,
         intent: Intent
     ) {
-        val requestCode = System.currentTimeMillis().toInt()
+        val requestCode = getRequestCode(intent, viewId)
 
         view.setOnClickPendingIntent(
             viewId,
@@ -37,7 +50,7 @@ object WidgetUtils {
         viewId: Int,
         intent: Intent
     ) {
-        val requestCode = System.currentTimeMillis().toInt()
+        val requestCode = getRequestCode(intent, viewId)
 
         view.setOnClickPendingIntent(
             viewId,
@@ -57,7 +70,7 @@ object WidgetUtils {
         intent: Intent
     ) {
         viewIds.forEach { viewId ->
-            val requestCode = (System.currentTimeMillis() + viewId).toInt()
+            val requestCode = getRequestCode(intent, viewId)
 
             view.setOnClickPendingIntent(
                 viewId,

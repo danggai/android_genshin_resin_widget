@@ -234,24 +234,24 @@
                     android:textSize="28sp"
                     android:textStyle="bold|italic" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
+                    android:columnCount="2">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_uid"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfDetailUidVisibility}"
                         android:text="@string/uid" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_name"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfDetailNameVisibility}"
                         android:text="@string/nickname_" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                </GridLayout>
 
                 <!--                원신 -->
                 <danggai.app.presentation.view.TitleDividerView
@@ -259,62 +259,48 @@
                     android:layout_height="wrap_content"
                     app:titleText="@string/genshin" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
+                    android:columnCount="2">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_resin"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfResinDataVisibility}"
                         android:text="@string/resin" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_daily_commission"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfDailyCommissionDataVisibility}"
                         android:text="@string/daily_commissions" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_enemies_of_note"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfWeeklyBossDataVisibility}"
                         android:text="@string/enemies_of_note" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_realm_currency"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfRealmCurrencyDataVisibility}"
                         android:text="@string/realm_currency" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_number_of_expedition"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfExpeditionDataVisibility}"
                         android:text="@string/expedition_time" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_parametric_transformer"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfTransformerDataVisibility}"
                         android:text="@string/parametric_transformer" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                </GridLayout>
 
                 <Space
                     android:layout_width="0dp"
@@ -326,95 +312,67 @@
                     android:layout_height="wrap_content"
                     app:titleText="@string/honkai_sr" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
+                    android:columnCount="2">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_trailblaze_power"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfTrailBlazepowerDataVisibility}"
                         android:text="@string/trailblaze_power" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_reserve_trailblaze_power"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfReserveTrailBlazepowerDataVisibility}"
                         android:text="@string/reserve_trailblaze_power" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_daily_training"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfDailyTrainingDataVisibility}"
                         android:text="@string/daily_training" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_echo_of_war"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfEchoOfWarDataVisibility}"
                         android:text="@string/echo_of_war" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_simulated_universe"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.GridParent"
                         android:checked="@={vm.sfSimulatedUniverseDataVisibility}"
                         android:text="@string/simulated_universe" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_simulated_universe_clear_count"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.GridChild"
                         android:checked="@={vm.sfSimulatedUniverseClearTimeVisibility}"
                         android:enabled="@{vm.sfSimulatedUniverseDataVisibility}"
                         android:text="@string/clear_count" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_grid_fight"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={!vm.sfIsGridFightDataInvisible}"
                         android:text="@string/grid_fight" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_divergent_universe"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfDivergentUniverseDataVisibility}"
                         android:text="@string/divergent_universe" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_assignment"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfAssignmentTimeDataVisibility}"
                         android:text="@string/assignment_time" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                </GridLayout>
 
                 <!--                젠레스 존 제로 -->
                 <danggai.app.presentation.view.TitleDividerView
@@ -422,24 +380,24 @@
                     android:layout_height="wrap_content"
                     app:titleText="@string/zzz" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
+                    android:columnCount="2">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_battery"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfBatteryDataVisibility}"
                         android:text="@string/battery" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_engagemnent_today"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfEngagementTodayDataVisibility}"
                         android:text="@string/engagement_today" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                </GridLayout>
 
                 <!--                <androidx.appcompat.widget.LinearLayoutCompat-->
                 <!--                    android:layout_width="match_parent"-->
@@ -454,77 +412,49 @@
 
                 <!--                </androidx.appcompat.widget.LinearLayoutCompat>-->
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
+                    android:columnCount="2">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_ridu_weekly"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfRiduWeeklyDataVisibility}"
                         android:text="@string/ridu_weekly" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_member_card"
+                        style="@style/Checkbox.GridParent"
                         android:checked="@={vm.sfMemberCardDataVisibility}"
                         android:text="@string/zzz_member_card_claim" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_member_card_period"
+                        style="@style/Checkbox.GridChild"
                         android:checked="@={!vm.sfIsMemberCardPeriodInvisible}"
                         android:enabled="@{vm.sfMemberCardDataVisibility}"
                         android:text="@string/zzz_member_card_period" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
                     <com.google.android.material.checkbox.MaterialCheckBox
-                        style="@style/Checkbox"
                         android:id="@+id/cb_investigation_point"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfInvestigationPointDataVisibility}"
                         android:text="@string/investigation_point" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_scratch_card"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfScratchCardDataVisibility}"
                         android:text="@string/scratch_card" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_video_store_management"
-                        style="@style/Checkbox"
+                        style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfVideoStoreManagementDataVisibility}"
                         android:text="@string/video_store_management" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_empty"
-                        android:visibility="invisible"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfVideoStoreManagementDataVisibility}"
-                        android:text="@string/video_store_management" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                </GridLayout>
 
                 <android.widget.Space
                     android:layout_width="wrap_content"

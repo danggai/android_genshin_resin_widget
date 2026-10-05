@@ -59,7 +59,7 @@ object NotificationUtils {
             notificationManager.createNotificationChannel(
                 NotificationChannel(
                     notificationParams.channelId,
-                    title,
+                    notificationParams.channelName,
                     NotificationManager.IMPORTANCE_DEFAULT
                 ).apply {
                     description = notificationParams.channelDesc

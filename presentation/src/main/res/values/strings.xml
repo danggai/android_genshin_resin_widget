@@ -218,6 +218,17 @@
 
     <string name="push_default_noti_title">Notification</string>
     <string name="push_default_noti_description">Description</string>
+    <string name="push_channel_name_resin">Resin</string>
+    <string name="push_channel_name_expedition">Expedition</string>
+    <string name="push_channel_name_realm_currency">Realm Currency</string>
+    <string name="push_channel_name_param_trans">Parametric Transformer</string>
+    <string name="push_channel_name_daily_commission">Daily Commission</string>
+    <string name="push_channel_name_weekly_boss">Weekly Boss</string>
+    <string name="push_channel_name_trail_power">Trailblaze Power</string>
+    <string name="push_channel_name_zzz">Zenless Zone Zero</string>
+    <string name="push_channel_name_genshin_checkin">Genshin Check-in</string>
+    <string name="push_channel_name_honkai_3rd_checkin">Honkai Impact 3rd Check-in</string>
+    <string name="push_channel_name_honkai_sr_checkin">Honkai: Star Rail Check-in</string>
 
     <string name="push_resin_noti_title">Pure Resin Notification</string>
     <string name="push_resin_noti_description">This is a notification sent to inform travelers of each pure resin!</string>
