@@ -70,10 +70,10 @@
     <string name="btn_each_40_resin">Every 40 Resin</string>
     <string name="btn_180_resin">180 Resins</string>
     <string name="resin">Resin</string>
-    <string name="btn_expedition_done">Expedition Done</string>
-    <string name="btn_assignment_done">Assignment Done</string>
-    <string name="btn_home_coin_full">Realm Currency Full</string>
-    <string name="btn_param_reached">Parametric Transformer Ready</string>
+    <string name="btn_expedition_done">Expedition</string>
+    <string name="btn_assignment_done">Assignment</string>
+    <string name="btn_home_coin_full">Realm Currency</string>
+    <string name="btn_param_reached">Parametric Transformer</string>
     <string name="btn_daily_commission_yet">Daily commissions left</string>
     <string name="btn_weekly_boss_yet">Weekly boss discount left</string>
 
