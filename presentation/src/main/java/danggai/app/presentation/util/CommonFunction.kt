@@ -161,7 +161,6 @@ object CommonFunction {
         return targetCalendar.get(Calendar.DAY_OF_WEEK)     // 1일 2월 3화 4수 5목 6금 7토
     }
 
-    /* 상세 위젯에서 테마 글자색/크기 적용을 제외할 TextView. 목록에 없는 TextView 는 모두 적용 대상 */
     val DETAIL_WIDGET_FIXED_TEXT_IDS = listOf(
         R.id.tv_sync_time,
         R.id.tv_disable,
