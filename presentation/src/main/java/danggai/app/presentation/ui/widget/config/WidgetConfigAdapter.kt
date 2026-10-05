@@ -33,6 +33,7 @@ class WidgetConfigAdapter(
 
         if (validAccountList.isNotEmpty()) {
             items.addAll(validAccountList)
+            vm.autoConfirmIfSingleAccount(validAccountList)
         } else {
             CoroutineScope(Dispatchers.IO).launch {
                 vm.sfNoAccount.emit(true)
