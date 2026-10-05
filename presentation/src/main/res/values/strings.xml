@@ -403,6 +403,7 @@
     <string name="scratch_card">Scratch Card</string>
     <string name="scratch_card_done">Complete</string>
     <string name="scratch_card_no">Incomplete</string>
+    <string name="coffee_no">Incomplete</string>
 
 
     <!--    Widget 공통 -->
