@@ -309,7 +309,7 @@
                             style="@style/NotiChip"
                             android:checked="@={vm.sfEnableNotiHonkaiSrExpeditionDone}"
                             android:text="@string/btn_assignment_done"
-                            app:chipIcon="@drawable/icon_activity" />
+                            app:chipIcon="@drawable/icon_activity_chip" />
 
                     </com.google.android.material.chip.ChipGroup>
 
