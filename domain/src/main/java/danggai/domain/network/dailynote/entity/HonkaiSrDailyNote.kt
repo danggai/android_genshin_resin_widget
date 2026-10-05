@@ -18,7 +18,7 @@ data class HonkaiSrDailyNote(
 }
 
 data class HonkaiSrDailyNoteData(
-    @SerializedName("accepted_expedition_num") val acceptedExpeditionNum: Int,  // 탐사 파견
+    @SerializedName("accepted_epedition_num") val acceptedExpeditionNum: Int,   // 탐사 파견 (서버 키 오타 그대로)
     @SerializedName("total_expedition_num") val totalExpeditionNum: Int,
     @SerializedName("expeditions") val expeditions: List<HonkaiSrExpedition>,
 
