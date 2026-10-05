@@ -37,7 +37,7 @@ data class GenshinDailyNoteData(
     @SerializedName("expeditions") val expeditions: List<GenshinExpedition> = listOf(),
     @SerializedName("transformer") val transformer: Transformer? = Transformer.EMPTY,
 
-    @SerializedName("calendar_url") val calendarUrl: String = "",                           // 이벤트 일정(전적 페이지) 링크
+    @SerializedName("calendar_url") val calendarUrl: String? = null,                           // 이벤트 일정(전적 페이지) 링크
     @SerializedName("daily_task") val dailyTask: GenshinDailyTask? = null,                  // 일일 의뢰 상세 (인게임 실시간 노트 항목)
     @SerializedName("archon_quest_progress") val archonQuestProgress: GenshinArchonQuestProgress? = null, // 마신 임무 진행도
     @SerializedName("week_active_progress") val weekActiveProgress: GenshinWeekActiveProgress? = null     // 주간 활약도 (전적 페이지 미표시)
@@ -88,7 +88,7 @@ data class GenshinArchonQuestProgress(
     @SerializedName("is_open_archon_quest") val isOpenArchonQuest: Boolean,
     @SerializedName("is_finish_all_mainline") val isFinishAllMainline: Boolean,
     @SerializedName("is_finish_all_interchapter") val isFinishAllInterchapter: Boolean,
-    @SerializedName("wiki_url") val wikiUrl: String = ""
+    @SerializedName("wiki_url") val wikiUrl: String? = null
 )
 
 data class GenshinArchonQuest(
