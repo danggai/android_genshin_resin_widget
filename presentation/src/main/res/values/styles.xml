@@ -143,4 +143,27 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">15sp</item>
     </style>
+
+    <style name="NotiChip" parent="Widget.Material3.Chip.Filter">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">13sp</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="chipBackgroundColor">@color/noti_chip_bg</item>
+        <item name="chipIconSize">22dp</item>
+        <item name="chipIconTint">@null</item>
+        <item name="chipIconVisible">true</item>
+        <item name="chipStrokeColor">@color/noti_chip_stroke</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="ensureMinTouchTargetSize">false</item>
+    </style>
+
+    <style name="NotiRow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
 </resources>

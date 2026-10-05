@@ -72,8 +72,8 @@
     <string name="btn_assignment_done">Assignment Done</string>
     <string name="btn_home_coin_full">Realm Currency Full</string>
     <string name="btn_param_reached">Parametric Transformer Ready</string>
-    <string name="btn_daily_commission_yet">Daily Commission Incomplete Notification</string>
-    <string name="btn_weekly_boss_yet">Weekly Boss Incomplete Notification</string>
+    <string name="btn_daily_commission_yet">Daily commissions left</string>
+    <string name="btn_weekly_boss_yet">Weekly boss discount left</string>
 
     <string name="trailblaze_power">Trailblaze Power</string>
     <string name="btn_each_60_trailblaze_power">Every 60 Trailblaze Power</string>

@@ -182,36 +182,49 @@
                     android:paddingBottom="15dp"
                     android:visibility="@{vm.sfExpandGenshin ? View.VISIBLE : View.GONE}">
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:chipSpacingHorizontal="8dp"
+                        app:chipSpacingVertical="4dp">
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_each_40resin"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiEach40Resin}"
-                        android:text="@string/btn_each_40_resin" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNotiEach40Resin}"
+                            android:text="@string/btn_each_40_resin"
+                            app:chipIcon="@drawable/resin" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNoti140Resin}"
+                            android:text="@string/btn_180_resin"
+                            app:chipIcon="@drawable/resin" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNotiExpeditionDone}"
+                            android:text="@string/btn_expedition_done"
+                            app:chipIcon="@drawable/icon_warp_point" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNotiHomeCoinFull}"
+                            android:text="@string/btn_home_coin_full"
+                            app:chipIcon="@drawable/icon_serenitea_pot" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNotiParamReach}"
+                            android:text="@string/btn_param_reached"
+                            app:chipIcon="@drawable/icon_parametric_transformer" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_140resin"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNoti140Resin}"
-                        android:text="@string/btn_180_resin" />
+                    </com.google.android.material.chip.ChipGroup>
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
+                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="6dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_marginStart="10dp"
+                            android:contentDescription="@string/resin"
+                            android:src="@drawable/resin" />
 
                         <com.google.android.material.checkbox.MaterialCheckBox
                             android:id="@+id/cb_custom_resin"
@@ -242,104 +255,47 @@
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_expedition_done"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiExpeditionDone}"
-                        android:text="@string/btn_expedition_done" />
+                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNotiDailyYet}"
+                            android:onClick="@{() -> vm.onClickDailyCommissionYetNoti()}"
+                            android:text="@string/btn_daily_commission_yet"
+                            app:chipIcon="@drawable/icon_daily_commission" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/sp_daily_yet_noti"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_spinner" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_home_coin_full"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiHomeCoinFull}"
-                        android:text="@string/btn_home_coin_full" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_param_reached"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiParamReach}"
-                        android:text="@string/btn_param_reached" />
+                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNotiWeeklyYet}"
+                            android:onClick="@{() -> vm.onClickWeeklyBossYetNoti()}"
+                            android:text="@string/btn_weekly_boss_yet"
+                            app:chipIcon="@drawable/icon_domain" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="6dp"
-                    android:gravity="center_vertical">
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/sp_weekly_yet_noti_day"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_spinner" />
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/sp_weekly_yet_noti_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_spinner" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_daily_yet_noti"
-                        style="@style/Checkbox"
-                        android:layout_width="32dp"
-                        android:layout_marginEnd="0dp"
-                        android:checked="@={vm.sfEnableNotiDailyYet}"
-                        android:onClick="@{() -> vm.onClickDailyCommissionYetNoti()}" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextView"
-                        android:maxLines="2"
-                        android:text="@string/btn_daily_commission_yet"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/sp_daily_yet_noti"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:background="@drawable/bg_spinner"
-                        android:imeOptions="actionDone" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="6dp"
-                    android:gravity="center_vertical">
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_weekly_yet_noti"
-                        style="@style/Checkbox.BoxOnly"
-                        android:layout_width="32dp"
-                        android:layout_marginEnd="0dp"
-                        android:checked="@={vm.sfEnableNotiWeeklyYet}"
-                        android:onClick="@{() -> vm.onClickWeeklyBossYetNoti()}" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextView"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:maxLines="2"
-                        android:text="@string/btn_weekly_boss_yet"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/sp_weekly_yet_noti_day"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:background="@drawable/bg_spinner"
-                        android:imeOptions="actionDone" />
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/sp_weekly_yet_noti_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:background="@drawable/bg_spinner"
-                        android:imeOptions="actionDone" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -359,36 +315,39 @@
                     android:paddingBottom="15dp"
                     android:visibility="@{vm.sfExpandHonkaiSr ? View.VISIBLE : View.GONE}">
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:chipSpacingHorizontal="8dp"
+                        app:chipSpacingVertical="4dp">
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_each_40_trail_power"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiEach40TrailPower}"
-                        android:text="@string/btn_each_60_trailblaze_power" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNotiEach40TrailPower}"
+                            android:text="@string/btn_each_60_trailblaze_power"
+                            app:chipIcon="@drawable/trailblaze_power" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNoti230TrailPower}"
+                            android:text="@string/btn_290_trailblaze_power"
+                            app:chipIcon="@drawable/trailblaze_power" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNotiHonkaiSrExpeditionDone}"
+                            android:text="@string/btn_assignment_done"
+                            app:chipIcon="@drawable/icon_activity" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_230_trail_power"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNoti230TrailPower}"
-                        android:text="@string/btn_290_trailblaze_power" />
+                    </com.google.android.material.chip.ChipGroup>
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
+                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="6dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_marginStart="10dp"
+                            android:contentDescription="@string/trailblaze_power"
+                            android:src="@drawable/trailblaze_power" />
 
                         <com.google.android.material.checkbox.MaterialCheckBox
                             android:id="@+id/cb_custom_trail_power"
@@ -419,14 +378,6 @@
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_honkai_sr_expedition_done"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiHonkaiSrExpeditionDone}"
-                        android:text="@string/btn_assignment_done" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <!--   ZZZ   -->
@@ -445,42 +396,39 @@
                     android:paddingBottom="15dp"
                     android:visibility="@{vm.sfExpandZZZ ? View.VISIBLE : View.GONE}">
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:chipSpacingHorizontal="8dp"
+                        app:chipSpacingVertical="4dp">
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_each_40_battery"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiEach40Battery}"
-                        android:text="@string/btn_each_40_battery" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNotiEach40Battery}"
+                            android:text="@string/btn_each_40_battery"
+                            app:chipIcon="@drawable/battery" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNotiEach60Battery}"
+                            android:text="@string/btn_each_60_battery"
+                            app:chipIcon="@drawable/battery" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNoti230Battery}"
+                            android:text="@string/btn_230_battery"
+                            app:chipIcon="@drawable/battery" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_each_60_battery"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiEach60Battery}"
-                        android:text="@string/btn_each_60_battery" />
+                    </com.google.android.material.chip.ChipGroup>
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
+                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_230_battery"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNoti230Battery}"
-                        android:text="@string/btn_230_battery" />
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="6dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_marginStart="10dp"
+                            android:contentDescription="@string/battery"
+                            android:src="@drawable/battery" />
 
                         <com.google.android.material.checkbox.MaterialCheckBox
                             android:id="@+id/cb_custom_battery"
@@ -512,7 +460,6 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
-                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
@@ -528,24 +475,27 @@
                     android:orientation="vertical"
                     android:visibility="@{vm.sfExpandCheckIn ? View.VISIBLE : View.GONE}">
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:chipSpacingHorizontal="8dp"
+                        app:chipSpacingVertical="4dp">
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_check_in_success"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiCheckinSuccess}"
-                        android:text="@string/btn_check_in_success" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNotiCheckinSuccess}"
+                            android:text="@string/btn_check_in_success"
+                            app:chipIconTint="@color/black"
+                            app:chipIcon="@drawable/baseline_check_24" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNotiCheckinFailed}"
+                            android:text="@string/btn_check_in_failed"
+                            app:chipIconTint="@color/black"
+                            app:chipIcon="@drawable/baseline_close_24" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_check_in_fail"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiCheckinFailed}"
-                        android:text="@string/btn_check_in_failed" />
+                    </com.google.android.material.chip.ChipGroup>
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

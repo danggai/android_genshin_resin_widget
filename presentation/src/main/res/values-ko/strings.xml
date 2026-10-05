@@ -64,8 +64,8 @@
     <string name="btn_assignment_done">의뢰 완료</string>
     <string name="btn_home_coin_full">선계 주화 가득 참</string>
     <string name="btn_param_reached">매개 변수 변환기 준비 됨</string>
-    <string name="btn_daily_commission_yet">일일임무 미완료 시 알림</string>
-    <string name="btn_weekly_boss_yet">주간보스 할인 잔여 시 알림</string>
+    <string name="btn_daily_commission_yet">일일임무 미완료</string>
+    <string name="btn_weekly_boss_yet">주간보스 할인 잔여</string>
 
     <string name="trailblaze_power">개척력</string>
     <string name="btn_each_60_trailblaze_power">60개척력 마다</string>
