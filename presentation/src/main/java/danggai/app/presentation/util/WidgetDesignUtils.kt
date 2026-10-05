@@ -2,16 +2,17 @@ package danggai.app.presentation.util
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.ImageView
 import android.widget.RemoteViews
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import danggai.app.presentation.R
 import danggai.app.presentation.databinding.WidgetBatteryBinding
-import danggai.app.presentation.databinding.WidgetDetailFixedBinding
-import danggai.app.presentation.databinding.WidgetHksrDetailFixedBinding
 import danggai.app.presentation.databinding.WidgetResinFixedBinding
 import danggai.app.presentation.databinding.WidgetTrailblazePowerBinding
-import danggai.app.presentation.databinding.WidgetZzzDetailBinding
 import danggai.app.presentation.util.CommonFunction.isDarkMode
 import danggai.domain.local.DetailWidgetDesignSettings
 import danggai.domain.local.ResinWidgetDesignSettings
@@ -32,7 +33,7 @@ object WidgetDesignUtils {
         binding.tvResin.setTextColor(mainFontColor)
         binding.tvResinMax.setTextColor(mainFontColor)
         binding.tvRemainTime.setTextColor(mainFontColor)
-        binding.ivRefersh.setColorFilter(subFontColor)
+        binding.ivRefresh.setColorFilter(subFontColor)
         binding.tvSyncTime.setTextColor(subFontColor)
     }
 
@@ -56,100 +57,44 @@ object WidgetDesignUtils {
         binding.tvBattery.setTextColor(mainFontColor)
         binding.tvBatteryMax.setTextColor(mainFontColor)
         binding.tvRemainTime.setTextColor(mainFontColor)
-        binding.ivRefersh.setColorFilter(subFontColor)
+        binding.ivRefresh.setColorFilter(subFontColor)
         binding.tvSyncTime.setTextColor(subFontColor)
     }
 
+    /**
+     * 미리보기 상세 위젯(원신/스타레일/젠레스 공통)의 배경, 아이콘, 글자색을 적용한다.
+     * 글자색은 고정 목록(동기화 시각 등)을 뺀 모든 TextView 에 같은 색을 적용한다.
+     */
     fun applyDetailWidgetColors(
-        widget: WidgetDetailFixedBinding,
+        root: View,
         bgColor: Int,
         mainFontColor: Int,
         subFontColor: Int,
         wrappedDrawable: Drawable
     ) {
-        widget.llRoot.setBackgroundColor(bgColor)
+        val llRoot = root.findViewById<View>(R.id.ll_root)
+        llRoot.setBackgroundColor(bgColor)
 
-        widget.ivRefersh.setColorFilter(subFontColor)
-        widget.tvSyncTime.setTextColor(subFontColor)
-        widget.tvDisable.setTextColor(subFontColor)
+        // 스타레일 위젯에만 있는 에러 아이콘
+        val ivError = root.findViewById<ImageView>(R.id.iv_error)
+        if (ivError != null) {
+            ivError.setColorFilter(ContextCompat.getColor(root.context, R.color.red))
+        }
 
-        CommonFunction.setTextColorByIds(
-            widget.root,
-            CommonFunction.DETAIL_WIDGET_TEXT_IDS,
-            mainFontColor
-        )
+        root.findViewById<ImageView>(R.id.iv_refresh).setColorFilter(subFontColor)
+        root.findViewById<TextView>(R.id.tv_sync_time).setTextColor(subFontColor)
+        root.findViewById<TextView>(R.id.tv_disable).setTextColor(subFontColor)
 
-        widget.llRoot.background = wrappedDrawable
+        val textIds = CommonFunction.getDetailWidgetTextIds(root)
+        CommonFunction.setTextColorByIds(root, textIds, mainFontColor)
+
+        llRoot.background = wrappedDrawable
     }
 
-    fun setDetailWidgetFontSize(widget: WidgetDetailFixedBinding, fontSize: Int) {
-        CommonFunction.setTextSizeByIds(
-            widget.root,
-            CommonFunction.DETAIL_WIDGET_TEXT_IDS,
-            fontSize.toFloat()
-        )
-    }
-
-    fun applyDetailWidgetColors(
-        widget: WidgetHksrDetailFixedBinding,
-        bgColor: Int,
-        mainFontColor: Int,
-        subFontColor: Int,
-        wrappedDrawable: Drawable
-    ) {
-        widget.llRoot.setBackgroundColor(bgColor)
-
-        widget.ivError.setColorFilter(ContextCompat.getColor(widget.root.context, R.color.red))
-
-        widget.ivRefresh.setColorFilter(subFontColor)
-        widget.tvSyncTime.setTextColor(subFontColor)
-        widget.tvDisable.setTextColor(subFontColor)
-
-        CommonFunction.setTextColorByIds(
-            widget.root,
-            CommonFunction.DETAIL_WIDGET_TEXT_IDS,
-            mainFontColor
-        )
-
-        widget.llRoot.background = wrappedDrawable
-    }
-
-    fun setDetailWidgetFontSize(widget: WidgetHksrDetailFixedBinding, fontSize: Int) {
-        CommonFunction.setTextSizeByIds(
-            widget.root,
-            CommonFunction.DETAIL_WIDGET_TEXT_IDS,
-            fontSize.toFloat()
-        )
-    }
-
-    fun applyDetailWidgetColors(
-        widget: WidgetZzzDetailBinding,
-        bgColor: Int,
-        mainFontColor: Int,
-        subFontColor: Int,
-        wrappedDrawable: Drawable
-    ) {
-        widget.llRoot.setBackgroundColor(bgColor)
-
-        widget.ivRefersh.setColorFilter(subFontColor)
-        widget.tvSyncTime.setTextColor(subFontColor)
-        widget.tvDisable.setTextColor(subFontColor)
-
-        CommonFunction.setTextColorByIds(
-            widget.root,
-            CommonFunction.DETAIL_WIDGET_TEXT_IDS,
-            mainFontColor
-        )
-
-        widget.llRoot.background = wrappedDrawable
-    }
-
-    fun setDetailWidgetFontSize(widget: WidgetZzzDetailBinding, fontSize: Int) {
-        CommonFunction.setTextSizeByIds(
-            widget.root,
-            CommonFunction.DETAIL_WIDGET_TEXT_IDS,
-            fontSize.toFloat()
-        )
+    /* 미리보기 상세 위젯(원신/스타레일/젠레스 공통)의 글자 크기를 적용한다. */
+    fun setDetailWidgetFontSize(root: View, fontSize: Int) {
+        val textIds = CommonFunction.getDetailWidgetTextIds(root)
+        CommonFunction.setTextSizeByIds(root, textIds, fontSize.toFloat())
     }
 
     fun applyWidgetTheme(
@@ -179,7 +124,6 @@ object WidgetDesignUtils {
             else ContextCompat.getColor(context, R.color.widget_font_sub_light)
 
         view.setInt(R.id.ll_root, "setBackgroundColor", bgColor)
-        view.setInt(R.id.iv_refersh, "setColorFilter", subFontColor)
         view.setInt(R.id.iv_refresh, "setColorFilter", subFontColor)
         view.setTextColor(R.id.tv_sync_time, subFontColor)
         view.setTextColor(R.id.tv_disable, mainFontColor)
@@ -235,15 +179,18 @@ object WidgetDesignUtils {
             else ContextCompat.getColor(context, R.color.widget_font_sub_light)
 
         view.setInt(R.id.ll_root, "setBackgroundColor", bgColor)
-        view.setInt(R.id.iv_refersh, "setColorFilter", subFontColor)
         view.setInt(R.id.iv_refresh, "setColorFilter", subFontColor)
         view.setTextColor(R.id.tv_sync_time, subFontColor)
 
         val fontSize = widgetDesign.fontSize.toFloat()
 
-        // 행 TextView 는 미리보기와 같은 공용 목록을 사용. 안내 문구 2개는 실제 위젯에만 있어 따로 처리.
-        val textIds = CommonFunction.DETAIL_WIDGET_TEXT_IDS +
-                listOf(R.id.tv_disable, R.id.tv_no_selected_characters)
+        // RemoteViews 는 자식 뷰를 탐색할 수 없어서, 같은 레이아웃을 한 번 불러와 TextView id 를 찾는다.
+        // (미리보기와 같은 규칙: 고정 목록을 뺀 모든 TextView 에 적용)
+        val layout = LayoutInflater.from(context).inflate(view.layoutId, null)
+        val rowTextIds = CommonFunction.getDetailWidgetTextIds(layout)
+
+        // 안내 문구는 실제 위젯에서만 본문색으로 표시하므로 따로 추가
+        val textIds = rowTextIds + listOf(R.id.tv_disable, R.id.tv_no_selected_characters)
 
         for (id in textIds) {
             view.setTextColor(id, mainFontColor)

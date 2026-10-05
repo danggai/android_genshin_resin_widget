@@ -117,21 +117,21 @@ class WidgetDesignDetailFragment :
                         )
 
                         WidgetDesignUtils.applyDetailWidgetColors(
-                            binding.widget,
+                            binding.widget.root,
                             bgColor,
                             mainFontColor,
                             subFontColor,
                             wrappedDrawable
                         )
                         WidgetDesignUtils.applyDetailWidgetColors(
-                            binding.widgetHksr,
+                            binding.widgetHksr.root,
                             bgColor,
                             mainFontColor,
                             subFontColor,
                             wrappedDrawable
                         )
                         WidgetDesignUtils.applyDetailWidgetColors(
-                            binding.widgetZzz,
+                            binding.widgetZzz.root,
                             bgColor,
                             mainFontColor,
                             subFontColor,
@@ -184,9 +184,9 @@ class WidgetDesignDetailFragment :
 
             launch {
                 mVM.sfFontSizeDetail.collect {
-                    WidgetDesignUtils.setDetailWidgetFontSize(binding.widget, it)
-                    WidgetDesignUtils.setDetailWidgetFontSize(binding.widgetHksr, it)
-                    WidgetDesignUtils.setDetailWidgetFontSize(binding.widgetZzz, it)
+                    WidgetDesignUtils.setDetailWidgetFontSize(binding.widget.root, it)
+                    WidgetDesignUtils.setDetailWidgetFontSize(binding.widgetHksr.root, it)
+                    WidgetDesignUtils.setDetailWidgetFontSize(binding.widgetZzz.root, it)
                 }
             }
 
