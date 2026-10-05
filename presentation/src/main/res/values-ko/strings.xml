@@ -208,6 +208,17 @@
 
     <string name="push_default_noti_title">알림</string>
     <string name="push_default_noti_description">설명</string>
+    <string name="push_channel_name_resin">레진 알림</string>
+    <string name="push_channel_name_expedition">탐험·파견 알림</string>
+    <string name="push_channel_name_realm_currency">선계 화폐 알림</string>
+    <string name="push_channel_name_param_trans">매개 변수 변환기 알림</string>
+    <string name="push_channel_name_daily_commission">일일 임무 미완료 알림</string>
+    <string name="push_channel_name_weekly_boss">주간 보스 할인 알림</string>
+    <string name="push_channel_name_trail_power">개척력 알림</string>
+    <string name="push_channel_name_zzz">젠레스 존 제로 알림</string>
+    <string name="push_channel_name_genshin_checkin">원신 출석 알림</string>
+    <string name="push_channel_name_honkai_3rd_checkin">붕괴3rd 출석 알림</string>
+    <string name="push_channel_name_honkai_sr_checkin">붕괴: 스타레일 출석 알림</string>
 
     <string name="push_resin_noti_title">퓨어 레진 알림</string>
     <string name="push_resin_noti_description">일정 레진마다 여행자에게 알려주기 위해 발송하는 알림이야!</string>
