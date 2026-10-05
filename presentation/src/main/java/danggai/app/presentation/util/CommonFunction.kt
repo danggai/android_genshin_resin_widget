@@ -37,7 +37,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.math.BigInteger
 import java.security.MessageDigest
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 import java.util.Random
 import java.util.TimeZone
@@ -150,6 +152,12 @@ object CommonFunction {
         log.e("delayed -> ${delay / 60}h ${delay % 60}m")
 
         return delay
+    }
+
+    fun getChinaDate(): String {
+        val format = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE)
+        format.timeZone = TimeZone.getTimeZone(Constant.CHINA_TIMEZONE)
+        return format.format(Date())
     }
 
     /* 중국 기준, 실제 시간보다 4시간 전 요일을 반환 함. */

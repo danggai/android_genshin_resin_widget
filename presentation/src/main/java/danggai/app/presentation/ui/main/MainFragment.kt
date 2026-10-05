@@ -577,7 +577,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             is Event.StartShutCheckInWorker -> {
                 log.e()
                 context?.let { context ->
-                    if (event.isValid) CheckInWorker.startWorkerOneTimeImmediately(context)
+                    if (event.isValid) CheckInWorker.startWorkerOneTimeImmediately(context, force = true)
                     else CheckInWorker.shutdownWorker(context)
                 }
             }
