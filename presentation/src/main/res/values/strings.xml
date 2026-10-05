@@ -6,7 +6,7 @@
     <string name="genshin">Genshin\u00A0</string>
     <string name="honkai_sr">Honkai: Star Rail\u00A0</string>
     <string name="zzz">Zenless Zone Zero\u00A0</string>
-    <string name="check_in">Check In\u00A0</string>
+    <string name="check_in">Check-in\u00A0</string>
 
     <string name="genshin_uid">Genshin UID</string>
     <string name="nickname">Nickname</string>
@@ -14,7 +14,7 @@
     <string name="server">Server</string>
     <string name="refresh_cycle">Data Update Cycle</string>
     <string name="notification">Notification</string>
-    <string name="auto_check_in">Auto Check In</string>
+    <string name="auto_check_in">Auto Check-in</string>
     <string name="time_notation">Time Notation</string>
     <string name="preview">Preview</string>
     <string name="widget_theme">Widget Theme</string>
@@ -24,7 +24,7 @@
     <string name="identifier">Identifier</string>
 
     <string name="select_character">Select Character</string>
-    <string name="select_character_title">Characters display in widget</string>
+    <string name="select_character_title">Characters to display in the widget</string>
 
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
@@ -34,22 +34,22 @@
 
     <string name="uid" translatable="false">UID</string>
     <string name="nickname_">Nickname</string>
-    <string name="new_hoyolab_account">New HoYoLab Account</string>
-    <string name="hoyolab_checkin">HoYoLab Check In</string>
+    <string name="new_hoyolab_account">New HoYoLAB Account</string>
+    <string name="hoyolab_checkin">HoYoLAB Check-in</string>
     <string name="widget_customizing">Widget Design Customizing</string>
-    <string name="btn_no_genshin_account">Don\'t use genshin widget.</string>
-    <string name="btn_no_honkai_sr_account">Don\'t use Honkai: Star Rail widget.</string>
-    <string name="btn_no_zzz_account">Don\'t use Zenless Zone Zero Rail widget.</string>
-    <string name="hoyolab_checkin_desc">For the first time, you must press the \'HoYoLab Check In\' button manually to proceed with automatic attendance.</string>
-    <string name="hoyolab_checkin_desc_2">Automatic attendance is performed based on Within HoYoLab, My Information > My Character.</string>
+    <string name="btn_no_genshin_account">Don\'t use the Genshin Impact widget.</string>
+    <string name="btn_no_honkai_sr_account">Don\'t use the Honkai: Star Rail widget.</string>
+    <string name="btn_no_zzz_account">Don\'t use the Zenless Zone Zero widget.</string>
+    <string name="hoyolab_checkin_desc">For the first time, press the \'HoYoLAB Check-in\' button to check in manually so that automatic check-in works properly.</string>
+    <string name="hoyolab_checkin_desc_2">Automatic check-in is performed based on the account under My Info &gt; My Characters in HoYoLAB.</string>
 
     <string name="save_setting">Save Setting</string>
     <string name="save">Save</string>
     <string name="ok">OK</string>
-    <string name="reset">RESET</string>
+    <string name="reset">Reset</string>
     <string name="save_add">Save and add widgets</string>
 
-    <string name="no_hoyolab_accounts">No HoYoLab account registered.</string>
+    <string name="no_hoyolab_accounts">No HoYoLAB account registered.</string>
     <string name="get_cookie">Click here after Login!</string>
     <string name="get_cookie_btn">Log in to get cookies</string>
     <string name="get_uid_btn">Automatically get In-game data</string>
@@ -59,50 +59,50 @@
     <string name="europe" translatable="false">Europe</string>
     <string name="cht" translatable="false">TK, HT, MO</string>
 
-    <string name="disable">Disable</string>
+    <string name="disable">Manual</string>
     <string name="time_15m">15m</string>
     <string name="time_30m">30m</string>
     <string name="time_1h">1h</string>
 
-    <string name="btn_each_40_resin">Each 40 Resins</string>
+    <string name="btn_each_40_resin">Every 40 Resin</string>
     <string name="btn_180_resin">180 Resins</string>
     <string name="resin">Resin</string>
     <string name="btn_expedition_done">Expedition Done</string>
     <string name="btn_assignment_done">Assignment Done</string>
     <string name="btn_home_coin_full">Realm Currency Full</string>
-    <string name="btn_param_reached">Parametric Transformer Reached</string>
+    <string name="btn_param_reached">Parametric Transformer Ready</string>
     <string name="btn_daily_commission_yet">Daily Commission Incomplete Notification</string>
     <string name="btn_weekly_boss_yet">Weekly Boss Incomplete Notification</string>
 
     <string name="trailblaze_power">Trailblaze Power</string>
-    <string name="btn_each_60_trailblaze_power">Each 60 Trailblaze Power</string>
+    <string name="btn_each_60_trailblaze_power">Every 60 Trailblaze Power</string>
     <string name="btn_290_trailblaze_power">290 Trailblaze Power</string>
 
     <string name="battery">Battery</string>
-    <string name="btn_each_40_battery">Each 40 Battery</string>
-    <string name="btn_each_60_battery">Each 60 Battery</string>
+    <string name="btn_each_40_battery">Every 40 Battery</string>
+    <string name="btn_each_60_battery">Every 60 Battery</string>
     <string name="btn_230_battery">230 Battery</string>
 
     <string name="btn_remain_time">Remaining time</string>
-    <string name="btn_full_charge_time">When fully charge</string>
-    <string name="btn_disable">Disable</string>
+    <string name="btn_full_charge_time">Fully charged at</string>
+    <string name="btn_disable">Hide</string>
 
     <string name="btn_dark">Dark</string>
     <string name="btn_light">Light</string>
     <string name="btn_automatic">Automatic</string>
 
-    <string name="btn_visible">Visible</string>
-    <string name="btn_invisible">Invisible</string>
+    <string name="btn_visible">Show</string>
+    <string name="btn_invisible">Hide</string>
 
     <string name="btn_auto_check_in_enable">Genshin Impact</string>
     <string name="btn_auto_check_in_enable_honkai_3rd">Honkai Impact 3rd</string>
     <string name="btn_auto_check_in_enable_honkai_sr">Honkai: Star Rail</string>
     <string name="btn_auto_check_in_enable_zzz">Zenless Zone Zero</string>
 
-    <string name="btn_start_check_in">Start Check In now</string>
+    <string name="btn_start_check_in">Start check-in now</string>
 
-    <string name="btn_check_in_success">Check In Succeed</string>
-    <string name="btn_check_in_failed">Check In Failed</string>
+    <string name="btn_check_in_success">On Check-in Success</string>
+    <string name="btn_check_in_failed">On Check-in Failure</string>
 
 
     <string name="done">Done</string>
@@ -112,61 +112,61 @@
     <string name="date_rd">rd</string>
     <string name="date_th">th</string>
 
-    <string name="permission_accept">Permission Accept</string>
-    <string name="data_save_mode_disable">Data Save Mode Disable</string>
+    <string name="permission_accept">Grant Permission</string>
+    <string name="data_save_mode_disable">Turn off Data Saver</string>
 
     <string name="native_hoyolab_account">HoYoLAB Account</string>
     <string name="sns_account">SNS Account</string>
 
-    <string name="data_save_mode_not_supported">Data saving mode is not supported under Android 7.</string>
+    <string name="data_save_mode_not_supported">Data Saver is not supported below Android 7.</string>
 
     <string name="msg_toast_widget_pin_not_supported">The launcher does not support widget pinning.</string>
     <string name="msg_toast_widget_pin_supports_android_8">This feature is supported on Android 8.0 and above.</string>
 
     <string name="dialog_title_permission">Allowing permission</string>
-    <string name="dialog_msg_permission_storage">When customizing widget, storage permission is required to proceed with the design by substituting it into the wallpaper you actually use.\n\nYou can use the app even if you reject the permission.</string>
+    <string name="dialog_msg_permission_storage">To preview the design on your actual wallpaper while customizing the widget, storage permission is required.\n\nYou can use the app even if you reject the permission.</string>
     <string name="dialog_msg_permission_antidoze">Power saving exclusion is required to prevent problems with widget refresh/auto check in due to issues such as low battery/sleep mode.\n\nYou can use the app even if you deny the permission.</string>
 
     <string name="msg_toast_widget_no_account">You can\'t use widgets without a linked HoYoLAB account!</string>
     <string name="msg_toast_widget_no_account_select">Select the HoYoLAB account to display in the widget!</string>
     <string name="msg_toast_miniwidget_no_type">Select 1 data type to display in the widget!</string>
     <string name="dialog_widget_refresh_not_work">Refresh doesn\'t work on the Widget?</string>
-    <string name="dialog_msg_widget_refresh_not_work">If device using <b>power saving mode or data saving mode.</b>, widget doesn\'t refresh.\n\You can disable data saving mode in setting, or detour to allow access to the Genshin StarRail Widget on the next screen.\n\nThis permission allows the app to access the notifications the device receives, but the Genshin StarRail Widget does not use the notification reception service other than for HoYoLAB data reception purposes, and <b>never</b> accesses the user\'s personal information.\n\nGenshin StarRail Widget recommends data saving mode deactivation.</string>
+    <string name="dialog_msg_widget_refresh_not_work">If your device is in power saving mode or Data Saver mode, the widget may not refresh.\n\nYou can turn off Data Saver in Settings, or work around it by allowing access for the Genshin &amp; Star Rail widget on the next screen.\n\nThis permission lets the app access notifications received by the device. However, the Genshin &amp; Star Rail widget uses the notification listener only to receive HoYoLAB data and never accesses your personal information.\n\nWe recommend turning off Data Saver.</string>
 
 
     <string name="dialog_native_hoyolab_account">Check Your Account</string>
-    <string name="dialog_msg_native_hoyolab_account">When using the HoYoLab, Google, Apple account, Press <b>HoYoLab Account</b> button.\nWhen using the FaceBook, Twitter account, Press <b>SNS Account</b> button to manually obtain cookies.</string>
+    <string name="dialog_msg_native_hoyolab_account">When using the HoYoLAB, Google, Apple account, Press <b>HoYoLAB Account</b> button.\nWhen using the Facebook, Twitter account, Press <b>SNS Account</b> button to manually obtain cookies.</string>
 
     <string name="dialog_restart">Restart Application</string>
     <string name="dialog_msg_restart">Restart the app to apply the changes.</string>
 
-    <string name="dialog_msg_dailynote_not_public_error_repeat">If Battle Chronicle error occur repeatedly, Please check if you have entered the correct "uid".</string>
+    <string name="dialog_msg_dailynote_not_public_error_repeat">If the Battle Chronicle private error occurs repeatedly, please check that you entered the correct UID.</string>
 
     <string name="dialog_realtime_note_private">Realtime Notes is Private</string>
     <string name="dialog_msg_realtime_note_private">Your Real-Time Note is private and data cannot be imported. Do you want to change it to public?</string>
 
-    <string name="character_list_all">all characters</string>
-    <string name="character_list_possession">possession characters</string>
+    <string name="character_list_all">All Characters</string>
+    <string name="character_list_possession">Owned Characters</string>
     <string name="character_list_empty">Selected characters are displayed in the talent widget\nwhen you can obtain required Talent Level-Up Materials.</string>
 
-    <string name="msg_toast_back_button">If you press it one more time, you can shut down the app!</string>
-    <string name="msg_toast_save_done">Saved It Successfully!</string>
-    <string name="msg_toast_save_done_check_in">Saved It Successfully! Check attendance result at the top bar!</string>
+    <string name="msg_toast_back_button">Press once more to exit the app!</string>
+    <string name="msg_toast_save_done">Saved!</string>
+    <string name="msg_toast_save_done_check_in">Saved! Check the check-in result at the top bar!</string>
 
     <string name="msg_toast_common_network_error">Failed to connect to HoYoLAB server. Check the network status of the device!</string>
     <string name="msg_toast_common_body_null_error">HoYoLAB did not provide the necessary information. It might be a server error, so please try again later!</string>
 
-    <string name="msg_toast_dailynote_success">Successfully get Real-Time Note!</string>
-    <string name="msg_toast_dailynote_error_charactor_info">Can\'t read character information. Please check again uid, cookies, and server!</string>
+    <string name="msg_toast_dailynote_success">Real-Time Note retrieved!</string>
+    <string name="msg_toast_dailynote_error_charactor_info">Can\'t read character information. Please check again UID, cookies, and server!</string>
     <string name="msg_toast_dailynote_error_internal_database_error">Error occurred in HoYoLAB\'s database, so can\'t get Real-Time Note !</string>
-    <string name="msg_toast_dailynote_error_too_many_requests">Tried too much today.. Try it again later!</string>
+    <string name="msg_toast_dailynote_error_too_many_requests">Too many attempts today. Please try again later.</string>
     <string name="msg_toast_dailynote_error_not_logged_in">Can\'t get data because it\'s a wrong cookie. Check the cookie again!</string>
     <string name="msg_toast_dailynote_error_not_logged_in_3">It\'s the right cookie, but can\'t get a Real-Time Note because no HoYoLAB account linked to this cookie!</string>
-    <string name="msg_toast_dailynote_error_wrong_account">Can\'t get data from other user\'s uid! Please check if the HoYoLAB account with cookies is linked to the this uid\'s Genshin account!</string>
-    <string name="msg_toast_dailynote_error_data_not_public">Can\'t receive data because Battle Chronicle is private. In HoYoLAB Settings, Please make public your Battle Chronicle!</string>
+    <string name="msg_toast_dailynote_error_wrong_account">Can\'t get data from another user\'s UID! Check that the HoYoLAB account the cookie came from is linked to this UID\'s Genshin account!</string>
+    <string name="msg_toast_dailynote_error_data_not_public">Can\'t receive data because your Battle Chronicle is private. In HoYoLAB Settings, please set your Battle Chronicle to public!</string>
     <string name="msg_toast_dailynote_error_account_not_found">Can\'t get Real-Time Note because no Genshin account linked with this HoYoLAB account!</string>
     <string name="msg_toast_dailynote_error_invalid_language">HoYoLAB\'s language is not correct. Check the server or language!</string>
-    <string name="msg_toast_dailynote_error_invalid_input">Typed incorrect uid or cookie! uid should be made up only numbers!</string>
+    <string name="msg_toast_dailynote_error_invalid_input">Invalid UID or cookie. The UID must contain only digits.</string>
     <string name="msg_toast_dailynote_error_include_error_code">I failed to get a Real-Time Note. It\'s an unexpected error, so I can\'t give you detailed information, Error code is %s! Please share it with the developer!</string>
     <string name="msg_toast_dailynote_error">Failed to get a Real-Time Note. It\'s an unexpected error, so I can\'t give you detailed information. sorry!</string>
 
@@ -175,19 +175,19 @@
     <string name="msg_toast_change_data_switch_error">Failed to change the Real-Time Note to public.. It\'s an unexpected error, so I can\'t give you detailed information. sorry!</string>
 
     <string name="msg_toast_get_uid_no_cookie">Need cookies to get in-game information! Please enter the cookie first!</string>
-    <string name="msg_toast_get_uid_error_no_ltuid">If no ltuid in your cookie, I can\'t automatically get a uid! Please check the cookies again and try!</string>
-    <string name="msg_toast_get_uid_success">Successfully get in-game uid!</string>
-    <string name="msg_toast_get_uid_error_invalid_cookie">The cookie is invalid, so failed to get in-game uid.</string>
-    <string name="msg_toast_get_uid_error_genshin_data_not_exists">Got data successfully, but genshin account data does not exist! It may be a wrong account or HoYoLab may be maintenance, so please check it!</string>
-    <string name="msg_toast_get_uid_error_card_list_empty">Got data successfully, but can\'t get in-game uid because in-game user data doesn\'t exist!</string>
-    <string name="msg_toast_get_uid_error_include_error_code">Failed to get in-game uid.. It\'s an unexpected error, so I can\'t give you detailed information, Error code is %s! Please share it with the developer!</string>
-    <string name="msg_toast_get_uid_error">Failed to get in-game uid.. It\'s an unexpected error, so I can\'t give you detailed information. sorry!</string>
+    <string name="msg_toast_get_uid_error_no_ltuid">If no ltuid in your cookie, I can\'t automatically get a UID! Please check the cookies again and try!</string>
+    <string name="msg_toast_get_uid_success">In-game UID retrieved!</string>
+    <string name="msg_toast_get_uid_error_invalid_cookie">The cookie is invalid, so failed to get in-game UID.</string>
+    <string name="msg_toast_get_uid_error_genshin_data_not_exists">Got data successfully, but genshin account data does not exist! It may be a wrong account or HoYoLAB may be maintenance, so please check it!</string>
+    <string name="msg_toast_get_uid_error_card_list_empty">Got data successfully, but can\'t get in-game UID because in-game user data doesn\'t exist!</string>
+    <string name="msg_toast_get_uid_error_include_error_code">Failed to get in-game UID.. It\'s an unexpected error, so I can\'t give you detailed information, Error code is %s! Please share it with the developer!</string>
+    <string name="msg_toast_get_uid_error">Failed to get in-game UID.. It\'s an unexpected error, so I can\'t give you detailed information. sorry!</string>
 
     <string name="msg_toast_get_characters_no_cookie">I can\'t get a list of characters without cookies! If you did, press the Save button on the main screen and try again!</string>
-    <string name="msg_toast_get_characters_no_uid">I can\'t get a list of characters without uid! If you did, press the Save button on the main screen and try again!</string>
+    <string name="msg_toast_get_characters_no_uid">I can\'t get a list of characters without UID! If you did, press the Save button on the main screen and try again!</string>
     <string name="msg_toast_get_characters_error">Failed to get in-game character list.. It\'s an unexpected error, so I can\'t give you detailed information. sorry!</string>
 
-    <string name="msg_toast_uid_empty_error">You can\'t link without uid! Please type in "uid"!</string>
+    <string name="msg_toast_uid_empty_error">You can\'t link without UID! Please type in "UID"!</string>
     <string name="msg_toast_cookie_empty_error">You can\'t link without cookie! Please enter "cookie"!</string>
 
     <string name="msg_toast_data_save_mode">It can be modified in the "Mobile data" and "Data saver" menu, and the name of the menu may vary from device to device.</string>
@@ -203,13 +203,13 @@
     <string name="msg_toast_storage_permission_denied">App is not allowed to get wallpaper image because storage access permission are not allowed.</string>
 
     <string name="dialog_hoyolab_account_delete">Confirm account deletion</string>
-    <string name="dialog_msg_hoyolab_account_delete">Are you really going disconnect with %s account?</string>
+    <string name="dialog_msg_hoyolab_account_delete">Are you sure you want to disconnect the %s account?</string>
     <string name="msg_toast_hoyolab_account_deleted">account has been disconnected successfully!</string>
 
     <string name="msg_toast_widget_refresh_error">Tap the time to retry, or resolve the CAPTCHA in HoYoLAB\'s battle record.</string>
 
     <string name="dialog_daily_weekly_yet_noti">Caution when setting up notifications</string>
-    <string name="dialog_msg_daily_weekly_yet_noti">When using this feature, if HoYoLAB provides an incorrect daily request/weekly boss progress, the user may receive an incorrect notification.\nPlease note that we recommend you to use this feature.</string>
+    <string name="dialog_msg_daily_weekly_yet_noti">When using this feature, if HoYoLAB provides incorrect daily commission/weekly boss progress, you may receive incorrect notifications.\nPlease keep this in mind when using this feature.</string>
 
     <string name="dialog_no_noti_permission">No notification permission!</string>
     <string name="dialog_msg_no_noti_permission">If you don\'t have notification permission, the app\'s notification features might not work properly.\nWould you like to enable notification permission?</string>
@@ -241,10 +241,10 @@
 
     <string name="push_trail_power_noti_title">Trailblaze Power Notification</string>
     <string name="push_trail_power_noti_description">This is a notification sent to inform trailblazers of each trailblaze power!</string>
-    <string name="push_msg_trail_power_noti_over_60">Hello, %s! Your Trainblaze Power is over %d!</string>
-    <string name="push_msg_trail_power_noti_over_290">Hello, %s! Your Trainblaze Power is over %d!</string>
-    <string name="push_msg_trail_power_noti_over_300">Hello, %s! Your Trainblaze Power is over %d!</string>
-    <string name="push_msg_trail_power_noti_custom">Hello, %s! Your Trainblaze Power is over %d!</string>
+    <string name="push_msg_trail_power_noti_over_60">Hello, %s! Your Trailblaze Power is over %d!</string>
+    <string name="push_msg_trail_power_noti_over_290">Hello, %s! Your Trailblaze Power is over %d!</string>
+    <string name="push_msg_trail_power_noti_over_300">Hello, %s! Your Trailblaze Power is over %d!</string>
+    <string name="push_msg_trail_power_noti_custom">Hello, %s! Your Trailblaze Power is over %d!</string>
 
     <string name="push_battery_noti_title">Battery Notification</string>
     <string name="push_battery_noti_description">This is a notification sent to inform proxies of each battery!</string>
@@ -255,58 +255,58 @@
 
     <string name="push_genshin_checkin_title">Genshin Impact Check-in Notification</string>
     <string name="push_genshin_checkin_description">This is a notification to inform travelers of the daily check-in result of Genshin Impact!</string>
-    <string name="push_msg_checkin_success_genshin">%s! checked attendance today!</string>
+    <string name="push_msg_checkin_success_genshin">%s! Today\'s check-in is done!</string>
     <string name="push_msg_checkin_already_genshin">%s, you\'ve already checked in today! I\'ll do it again at 1am tomorrow!</string>
-    <string name="push_msg_checkin_failed_genshin">%s, I failed the attendance check.. I\'ll try again in half an hour!</string>
+    <string name="push_msg_checkin_failed_genshin">%s, I failed the check-in.. I\'ll try again in half an hour!</string>
 
     <string name="push_honkai_3rd_checkin_title">Honkai Impact 3rd Check-in Notification</string>
     <string name="push_honkai_3rd_checkin_description">This is a notification to inform captains of the daily check-in result of Honkai Impact 3rd!</string>
-    <string name="push_msg_checkin_success_honkai">I completed today\'s check in, %s~</string>
-    <string name="push_msg_checkin_already_honkai">You have already signed in, %s~ I\'ll do it again at 1am tomorrow~</string>
-    <string name="push_msg_checkin_failed_honkai">%s, I failed the attendance check, but I\'ll try again in 30 minutes~</string>
+    <string name="push_msg_checkin_success_honkai">I completed today\'s check-in, %s~</string>
+    <string name="push_msg_checkin_already_honkai">%s, you\'ve already checked in today~ I\'ll do it again at 1am tomorrow~</string>
+    <string name="push_msg_checkin_failed_honkai">%s, I failed the check-in, but I\'ll try again in 30 minutes~</string>
 
-    <string name="push_honkai_sr_checkin_title">Honkai Impact: Star Rail Check-in Notification</string>
-    <string name="push_honkai_sr_checkin_description">This is a notification to inform trailblazers of the daily check-in result of Honkai Impact: Star Rail!</string>
-    <string name="push_msg_checkin_success_honkai_sr">I completed today\'s check in, %s~</string>
-    <string name="push_msg_checkin_already_honkai_sr">You have already signed in, %s~ I\'ll do it again at 1am tomorrow~</string>
-    <string name="push_msg_checkin_failed_honkai_sr">%s, I failed the attendance check, but I\'ll try again in 30 minutes~</string>
+    <string name="push_honkai_sr_checkin_title">Honkai: Star Rail Check-in Notification</string>
+    <string name="push_honkai_sr_checkin_description">This is a notification to inform trailblazers of the daily check-in result of Honkai: Star Rail!</string>
+    <string name="push_msg_checkin_success_honkai_sr">I completed today\'s check-in, %s~</string>
+    <string name="push_msg_checkin_already_honkai_sr">%s, you\'ve already checked in today~ I\'ll do it again at 1am tomorrow~</string>
+    <string name="push_msg_checkin_failed_honkai_sr">%s, I failed the check-in, but I\'ll try again in 30 minutes~</string>
 
     <string name="push_zzz_checkin_title">Zenless Zone Zero Check-in Notification</string>
     <string name="push_zzz_checkin_description">This is a notification to inform proxies of the daily check-in result of Zenless Zone Zero!</string>
-    <string name="push_msg_checkin_success_zzz">%s! checked attendance today!</string>
+    <string name="push_msg_checkin_success_zzz">%s! Today\'s check-in is done!</string>
     <string name="push_msg_checkin_already_zzz">%s, you\'ve already checked in today! I\'ll do it again at 1am tomorrow!</string>
-    <string name="push_msg_checkin_failed_zzz">%s, I failed the attendance check.. I\'ll try again in half an hour!</string>
+    <string name="push_msg_checkin_failed_zzz">%s, I failed the check-in.. I\'ll try again in half an hour!</string>
 
-    <string name="push_msg_checkin_account_not_found">Attendance check cannot be performed because there is no in-game account linked to this %s account.</string>
-    <string name="push_msg_checkin_success_genshin_captcha">%s! I can\'t check-in automatically because of the verification process!\nPlease manually attend at HoYoLab today! (press to start)</string>
+    <string name="push_msg_checkin_account_not_found">Check-in can\'t be performed because no in-game account is linked to this %s account. Auto check-in has been disabled.</string>
+    <string name="push_msg_checkin_success_genshin_captcha">%s! I can\'t check in automatically because of the verification step!\nPlease check in manually on HoYoLAB today! (Tap to open the check-in page)</string>
 
     <string name="push_expedition_title">Expedition Done Notification</string>
     <string name="push_expedition_description">This is a notification sent to travelers when the expedition is complete!</string>
-    <string name="push_msg_expedition_done">%s! All the expedition is complete!</string>
+    <string name="push_msg_expedition_done">%s! All expeditions are complete!</string>
 
     <string name="push_assignment_title">Assignment Done Notification</string>
     <string name="push_assignment_description">This is a notification sent to trailblazers when the assignment is complete!</string>
-    <string name="push_msg_assignment_done">%s! All the assignment is complete!</string>
+    <string name="push_msg_assignment_done">%s! All assignments are complete!</string>
 
     <string name="push_realm_currency_title">Realm Currency Notification</string>
     <string name="push_realm_currency_description">This is a notification sent to travelers when the realm currency is full!</string>
-    <string name="push_msg_realm_currency_full">%s! Now full of realm currency!</string>
+    <string name="push_msg_realm_currency_full">%s! Your Realm Currency is full!</string>
 
     <string name="push_param_trans_title">Parametric Transformer Notification</string>
-    <string name="push_param_trans_description">This is a notification sent to travelers when the parametric transformer reached!</string>
-    <string name="push_msg_param_trans_full">%s! Now parametric transformer is reached!</string>
+    <string name="push_param_trans_description">This is a notification sent to travelers when the parametric transformer is ready!</string>
+    <string name="push_msg_param_trans_full">%s! Your Parametric Transformer is ready!</string>
 
     <string name="push_daily_commission_title">Daily Commission Notification</string>
-    <string name="push_daily_commission_description">This is a notification sent to travelers when today\'s daily mission is not completed by the set time!</string>
-    <string name="push_msg_daily_commission_yet">%s! Have you completed today\'s request for the Adventurer\'s Guild? Or check it out!</string>
+    <string name="push_daily_commission_description">This is a notification sent to travelers when today\'s daily commissions are not completed by the set time!</string>
+    <string name="push_msg_daily_commission_yet">%s! Have you completed today\'s Adventurers\' Guild commissions? If not, go check!</string>
 
     <string name="push_weekly_boss_title">Weekly Boss Notification</string>
     <string name="push_weekly_boss_description">This is a notification sent to travelers when they do not use the weekly boss resin discount until the set date!</string>
-    <string name="push_msg_weekly_boss_yet">%s! Have you used up the weekly boss resin discount this week? Or check it out!</string>
+    <string name="push_msg_weekly_boss_yet">%s! Have you used up this week\'s weekly boss resin discounts? If not, go check!</string>
 
 
     <string name="hint_cookie">Enter HoYoLAB\'s cookie!</string>
-    <string name="hint_uid">Enter uid!</string>
+    <string name="hint_uid">Enter UID!</string>
     <string name="hint_nickname_genshin">Enter name of traveler!</string>
     <string name="hint_nickname_honkai_sr">Enter name of trailblazer!</string>
     <string name="hint_nickname_zzz">Enter name of proxy!</string>
@@ -321,11 +321,11 @@
     <!-- Widget UI -->
     <string name="widget_label_genshin_detail">Genshin Detail Widget</string>
     <string name="widget_label_resin_resizable">Resizable Resin Widget</string>
-    <string name="widget_label_resin_fixed">Fixed Sized Resin Widget</string>
+    <string name="widget_label_resin_fixed">Fixed-size Resin Widget</string>
     <string name="widget_label_talent">Talent Materials Widget</string>
     <string name="widget_label_mini">Genshin Mini Widget</string>
     <string name="widget_label_trailblaze_power">Trailblaze Power Widget</string>
-    <string name="widget_label_hksr_detail">Honkai: Starrail Detail Widget</string>
+    <string name="widget_label_hksr_detail">Honkai: Star Rail Detail Widget</string>
     <string name="widget_label_battery">Battery Widget</string>
     <string name="widget_label_zzz_detail">ZZZ Detail Widget</string>
 
@@ -334,7 +334,7 @@
     <string name="widget_format_max_time">Full at %02d:%02d</string>
     <string name="widget_format_done_time">Done at %02d:%02d</string>
     <string name="widget_format_under_expedition">Under Expedition</string>
-    <string name="widget_ui_today">today, %02d:%02d</string>
+    <string name="widget_ui_today">Today, %02d:%02d</string>
     <string name="widget_ui_date">%s, %02d:%02d</string>
     <string name="widget_ui_expect_date">Scheduled on %s</string>
     <string name="widget_ui_remain_days">%s day(s) left</string>
@@ -343,15 +343,15 @@
     <string name="widget_ui_transformer_not_obtained">Not Obtained</string>
     <string name="widget_ui_transformer_not_reached">In Cooldown</string>
     <string name="widget_ui_transformer_reached">Ready</string>
-    <string name="widget_ui_locked">Unlocked</string>
+    <string name="widget_ui_locked">Locked</string>
     <string name="widget_ui_unknown">Unknown</string>
     <string name="widget_ui_no_talent_ingredient">Can\'t get Talent Level-Up Materials that selected character needs today.</string>
     <string name="widget_ui_no_selected_characters">Select target characters at Widget Design > Characters.</string>
 
 
     <!--    Genshin Widget -->
-    <string name="daily_commissions">Daily Commissions</string>
-    <string name="enemies_of_note">Enemies Of Note</string>
+    <string name="daily_commissions">Daily Commissions Left</string>
+    <string name="enemies_of_note">Enemies of Note</string>
     <string name="parametric_transformer">Parametric Transformer</string>
     <string name="realm_currency">Realm Currency</string>
 
@@ -365,10 +365,10 @@
     <!--    Star Rail Widget -->
     <string name="daily_training">Daily Training</string>
     <string name="echo_of_war">Echo of War</string>
-    <string name="reserve_trailblaze_power">Reserved Stamina</string>
+    <string name="reserve_trailblaze_power">Reserved Trailblaze Power</string>
     <string name="simulated_universe">Simulated Universe</string>
     <string name="divergent_universe">Divergent Universe</string>
-    <string name="grid_fight">Grid Fight</string>
+    <string name="grid_fight">Currency Wars</string>
     <string name="clear_count">Clear Count</string>
 
     <string name="assignment_time">Assignment Time</string>
@@ -378,7 +378,7 @@
 
     <!--    ZZZ Widget -->
     <string name="engagement_today">Engagement Today</string>
-    <string name="coffee">COFF Coffee</string>
+    <string name="coffee">COFF Café</string>
 
     <string name="ridu_weekly">Ridu Weekly</string>
     <string name="investigation_point">Investigation Point</string>
@@ -395,7 +395,7 @@
         <item quantity="other">%d days</item>
     </plurals>
 
-    <string name="video_store_management">Video Store Manage</string>
+    <string name="video_store_management">Video Store Management</string>
     <string name="video_store_management_no">Waiting to Open</string>
     <string name="video_store_management_doing">Currently Open</string>
     <string name="video_store_management_done">Revenue Available</string>
@@ -407,13 +407,13 @@
 
     <!--    Widget 공통 -->
     <string name="until_fully_replenished">Until Replenished</string>
-    <string name="estimated_replenishment_time">ETC</string>
+    <string name="estimated_replenishment_time">Full at</string>
     <string name="until_all_completed">Until All Completed</string>
     <string name="estimated_completion_time">ETA</string>
     <string name="until_reusable">Until Reusable</string>
-    <string name="estimated_reusable_time">ETC</string>
+    <string name="estimated_reusable_time">Ready at</string>
 
-    <string name="foreground_check_in_inprogress">HoYoLAB Check-in in-progressing</string>
+    <string name="foreground_check_in_inprogress">HoYoLAB Check-in in progress</string>
 
     <!-- 시간 및 요일 -->
     <string name="mon">Mon</string>

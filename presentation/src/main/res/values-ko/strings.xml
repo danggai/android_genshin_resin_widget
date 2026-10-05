@@ -279,7 +279,7 @@
     <string name="push_assignment_description">의뢰가 완료되었을 때 개척자에게 알려주기 위해 발송하는 알림이야!</string>
     <string name="push_msg_assignment_done">%s! 모든 의뢰가 완료됐어! 핸드폰의 의뢰 탭에서 확인해 줘!</string>
 
-    <string name="push_realm_currency_title">선계 화페 알림</string>
+    <string name="push_realm_currency_title">선계 화폐 알림</string>
     <string name="push_realm_currency_description">선계 화폐가 충전 될 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
     <string name="push_msg_realm_currency_full">%s! 선계 주화가 가득 찼어! 포롱이에게 가보자!</string>
 
@@ -348,7 +348,7 @@
 
     <string name="expedition_time">탐험 시간</string>
     <string name="until_expeditions_done">모든 탐험 완료까지</string>
-    <string name="expeditions_done_at">모든 탐사 완료 시각</string>
+    <string name="expeditions_done_at">모든 탐험 완료 시각</string>
 
     <string name="selected_characters">선택한 캐릭터</string>
     <string name="recent_characters">최근 캐릭터 (자동)</string>
