@@ -53,6 +53,18 @@ class MainViewModel @Inject constructor(
     var sfNotiWeeklyYetDay = MutableStateFlow(Calendar.SUNDAY)
     var sfNotiWeeklyYetTime = MutableStateFlow(21)
 
+    val sfEnableNotiDailyYetHonkaiSr = MutableStateFlow(false)
+    val sfNotiDailyYetTimeHonkaiSr = MutableStateFlow(21)
+    val sfEnableNotiWeeklyYetHonkaiSr = MutableStateFlow(false)
+    val sfNotiWeeklyYetDayHonkaiSr = MutableStateFlow(Calendar.SUNDAY)
+    val sfNotiWeeklyYetTimeHonkaiSr = MutableStateFlow(21)
+
+    val sfEnableNotiDailyYetZZZ = MutableStateFlow(false)
+    val sfNotiDailyYetTimeZZZ = MutableStateFlow(21)
+    val sfEnableNotiWeeklyYetZZZ = MutableStateFlow(false)
+    val sfNotiWeeklyYetDayZZZ = MutableStateFlow(Calendar.SUNDAY)
+    val sfNotiWeeklyYetTimeZZZ = MutableStateFlow(21)
+
     val sfEnableNotiEach40TrailPower = MutableStateFlow(false)
     val sfEnableNoti230TrailPower = MutableStateFlow(false)
     val sfEnableNotiCustomTrailPower = MutableStateFlow(false)
@@ -127,6 +139,11 @@ class MainViewModel @Inject constructor(
         observeAutoSave()
     }
 
+    /* 이전 버전에서 저장된 설정에는 새 항목이 없어 0으로 읽히므로 기본값으로 대체 */
+    private fun timeOrDefault(time: Int): Int = if (time == 0) 21 else time
+
+    private fun dayOrDefault(day: Int): Int = if (day == 0) Calendar.SUNDAY else day
+
     fun initUI() {
         preference.getDailyNoteSettings().let {
             sfAutoRefreshPeriod.value = it.autoRefreshPeriod
@@ -154,6 +171,18 @@ class MainViewModel @Inject constructor(
             sfEnableNoti230Battery.value = it.noti230Battery
             sfEnableNotiCustomBattery.value = it.notiCustomBattery
             sfCustomNotiBattery.value = if (it.customBattery != 0) it.customBattery.toString() else ""
+
+            sfEnableNotiDailyYetHonkaiSr.value = it.notiDailyYetHonkaiSr
+            sfNotiDailyYetTimeHonkaiSr.value = timeOrDefault(it.notiDailyYetTimeHonkaiSr)
+            sfEnableNotiWeeklyYetHonkaiSr.value = it.notiWeeklyYetHonkaiSr
+            sfNotiWeeklyYetDayHonkaiSr.value = dayOrDefault(it.notiWeeklyYetDayHonkaiSr)
+            sfNotiWeeklyYetTimeHonkaiSr.value = timeOrDefault(it.notiWeeklyYetTimeHonkaiSr)
+
+            sfEnableNotiDailyYetZZZ.value = it.notiDailyYetZZZ
+            sfNotiDailyYetTimeZZZ.value = timeOrDefault(it.notiDailyYetTimeZZZ)
+            sfEnableNotiWeeklyYetZZZ.value = it.notiWeeklyYetZZZ
+            sfNotiWeeklyYetDayZZZ.value = dayOrDefault(it.notiWeeklyYetDayZZZ)
+            sfNotiWeeklyYetTimeZZZ.value = timeOrDefault(it.notiWeeklyYetTimeZZZ)
         }
 
         preference.getCheckInSettings().let {
@@ -178,6 +207,16 @@ class MainViewModel @Inject constructor(
                 sfCustomNotiResin,
                 sfCustomNotiTrailPower,
                 sfCustomNotiBattery,
+                sfEnableNotiDailyYetHonkaiSr,
+                sfNotiDailyYetTimeHonkaiSr,
+                sfEnableNotiWeeklyYetHonkaiSr,
+                sfNotiWeeklyYetDayHonkaiSr,
+                sfNotiWeeklyYetTimeHonkaiSr,
+                sfEnableNotiDailyYetZZZ,
+                sfNotiDailyYetTimeZZZ,
+                sfEnableNotiWeeklyYetZZZ,
+                sfNotiWeeklyYetDayZZZ,
+                sfNotiWeeklyYetTimeZZZ,
                 sfAutoRefreshPeriod,
                 sfEnableNotiEach40Resin,
                 sfEnableNoti140Resin,
@@ -254,6 +293,18 @@ class MainViewModel @Inject constructor(
             sfEnableNoti230Battery.value,
             sfEnableNotiCustomBattery.value,
             customNotiBattery,
+
+            sfEnableNotiDailyYetHonkaiSr.value,
+            sfNotiDailyYetTimeHonkaiSr.value,
+            sfEnableNotiWeeklyYetHonkaiSr.value,
+            sfNotiWeeklyYetDayHonkaiSr.value,
+            sfNotiWeeklyYetTimeHonkaiSr.value,
+
+            sfEnableNotiDailyYetZZZ.value,
+            sfNotiDailyYetTimeZZZ.value,
+            sfEnableNotiWeeklyYetZZZ.value,
+            sfNotiWeeklyYetDayZZZ.value,
+            sfNotiWeeklyYetTimeZZZ.value,
         )
     }
 
@@ -363,6 +414,10 @@ class MainViewModel @Inject constructor(
         log.e()
         sendEvent(Event.ChangeLanguage())
     }
+
+    fun timeStringToInt(time: String): Int = DayTimeMapper.timeStringToInt(resource, time)
+
+    fun weekOfDayStringToInt(day: String): Int = DayTimeMapper.weekOfDayStringToInt(resource, day)
 
     fun setDailyCommissionNotiTime(time: String) {
         log.e(time)

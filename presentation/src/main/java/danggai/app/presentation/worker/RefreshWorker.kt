@@ -550,6 +550,33 @@ class RefreshWorker @AssistedInject constructor(
                     sendNoti(account, NotiType.StarRail.ExpeditionDone, null)
                 }
             }
+
+            val calendar = Calendar.getInstance()
+            val yymmdd = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE).format(Date())
+            val dailyNote = data.dailyNote
+
+            if (notiSettings.notiDailyYetHonkaiSr &&
+                !isErrorOccurred(data) &&
+                yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.honkai_sr_uid) &&
+                calendar.get(Calendar.HOUR_OF_DAY) >= notiSettings.notiDailyYetTimeHonkaiSr &&
+                dailyNote.currentTrainScore < dailyNote.maxTrainScore
+            ) {
+                log.e()
+                preference.setStringRecentDailyCommissionNotiDate(account.honkai_sr_uid, yymmdd)
+                sendNoti(account, NotiType.StarRail.DailyTrainingNotDone, null)
+            }
+
+            if (notiSettings.notiWeeklyYetHonkaiSr &&
+                !isErrorOccurred(data) &&
+                yymmdd != preference.getStringRecentWeeklyBossNotiDate(account.honkai_sr_uid) &&
+                calendar.get(Calendar.HOUR_OF_DAY) >= notiSettings.notiWeeklyYetTimeHonkaiSr &&
+                calendar.get(Calendar.DAY_OF_WEEK) == notiSettings.notiWeeklyYetDayHonkaiSr &&
+                dailyNote.weeklyCocoonCnt > 0
+            ) {
+                log.e()
+                preference.setStringRecentWeeklyBossNotiDate(account.honkai_sr_uid, yymmdd)
+                sendNoti(account, NotiType.StarRail.EchoOfWarNotDone, null)
+            }
         }
 
         try {
@@ -632,20 +659,34 @@ class RefreshWorker @AssistedInject constructor(
                 }
             }
 
-            // 일퀘알림
-//        val calendar = Calendar.getInstance()
-//        val yymmdd = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE).format(Date())
+            val calendar = Calendar.getInstance()
+            val yymmdd = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE).format(Date())
 
-//        if (settings.notiDailyYet &&
-//            yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.zzz_uid) &&
-//            calendar.get(Calendar.HOUR) >= settings.notiDailyYetTime &&
-//            !dailyNote.is_extra_task_reward_received
-//        ) {
-//            log.e()
-//            preference.setStringRecentDailyCommissionNotiDate(account.zzz_uid, yymmdd)
-//            sendNoti(account, Constant.NotiType.DAILY_COMMISSION_YET, 0)
-//        }
-        }
+            if (settings.notiDailyYetZZZ &&
+                yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.zzz_uid) &&
+                calendar.get(Calendar.HOUR_OF_DAY) >= settings.notiDailyYetTimeZZZ &&
+                dailyNote.vitality.max > 0 &&
+                dailyNote.vitality.current < dailyNote.vitality.max
+            ) {
+                log.e()
+                preference.setStringRecentDailyCommissionNotiDate(account.zzz_uid, yymmdd)
+                sendNoti(account, NotiType.ZZZ.EngagementNotDone, null)
+            }
+
+            val isBountyNotDone = dailyNote.bountyCommission?.let {
+                it.unlock && it.total > 0 && it.num < it.total
+            } == true
+
+            if (settings.notiWeeklyYetZZZ &&
+                yymmdd != preference.getStringRecentWeeklyBossNotiDate(account.zzz_uid) &&
+                calendar.get(Calendar.HOUR_OF_DAY) >= settings.notiWeeklyYetTimeZZZ &&
+                calendar.get(Calendar.DAY_OF_WEEK) == settings.notiWeeklyYetDayZZZ &&
+                isBountyNotDone
+            ) {
+                log.e()
+                preference.setStringRecentWeeklyBossNotiDate(account.zzz_uid, yymmdd)
+                sendNoti(account, NotiType.ZZZ.BountyCommissionNotDone, null)
+            }        }
 
         try {
             sendNotiActions()

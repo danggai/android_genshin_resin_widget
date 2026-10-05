@@ -30,6 +30,18 @@ data class DailyNoteSettings(
     val noti230Battery: Boolean,
     val notiCustomBattery: Boolean,
     val customBattery: Int,
+
+    val notiDailyYetHonkaiSr: Boolean,
+    val notiDailyYetTimeHonkaiSr: Int,
+    val notiWeeklyYetHonkaiSr: Boolean,
+    val notiWeeklyYetDayHonkaiSr: Int,
+    val notiWeeklyYetTimeHonkaiSr: Int,
+
+    val notiDailyYetZZZ: Boolean,
+    val notiDailyYetTimeZZZ: Int,
+    val notiWeeklyYetZZZ: Boolean,
+    val notiWeeklyYetDayZZZ: Int,
+    val notiWeeklyYetTimeZZZ: Int,
 ) {
     companion object {
         val EMPTY = DailyNoteSettings (
@@ -58,6 +70,18 @@ data class DailyNoteSettings(
             noti230Battery = false,
             notiCustomBattery = false,
             customBattery = 0,
+
+            notiDailyYetHonkaiSr = false,
+            notiDailyYetTimeHonkaiSr = 21,
+            notiWeeklyYetHonkaiSr = false,
+            notiWeeklyYetDayHonkaiSr = Calendar.SUNDAY,
+            notiWeeklyYetTimeHonkaiSr = 21,
+
+            notiDailyYetZZZ = false,
+            notiDailyYetTimeZZZ = 21,
+            notiWeeklyYetZZZ = false,
+            notiWeeklyYetDayZZZ = Calendar.SUNDAY,
+            notiWeeklyYetTimeZZZ = 21,
         )
     }
 }
