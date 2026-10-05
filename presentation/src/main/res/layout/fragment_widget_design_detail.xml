@@ -465,11 +465,25 @@
                         android:checked="@={vm.sfRiduWeeklyDataVisibility}"
                         android:text="@string/ridu_weekly" />
 
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
                         android:id="@+id/cb_member_card"
                         android:checked="@={vm.sfMemberCardDataVisibility}"
                         android:text="@string/zzz_member_card" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        style="@style/Checkbox"
+                        android:id="@+id/cb_member_card_claim"
+                        android:checked="@={!vm.sfIsMemberCardClaimInvisible}"
+                        android:enabled="@{vm.sfMemberCardDataVisibility}"
+                        android:text="@string/zzz_member_card_claim" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

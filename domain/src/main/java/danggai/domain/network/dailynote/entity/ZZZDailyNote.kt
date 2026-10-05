@@ -114,13 +114,13 @@ data class ZZZWeeklyTask(
 data class ZZZMemberCard(
     @SerializedName("is_open") val isOpen: Boolean,
     @SerializedName("member_card_state") val memberCardState: String,
-    @SerializedName("exp_time") val expTime: Int
+    @SerializedName("exp_time") val expTime: String
 ) {
     companion object {
         val EMPTY = ZZZMemberCard(
             isOpen = false,
             memberCardState = "",
-            expTime = 0
+            expTime = "0"
         )
     }
 }
