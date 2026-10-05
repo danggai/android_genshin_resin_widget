@@ -262,52 +262,52 @@ class WidgetDesignViewModel @Inject constructor(
 
         preference.setResinWidgetDesignSettings(
             ResinWidgetDesignSettings(
-                sfWidgetTheme.value,
-                sfWidgetTimeNotation.value.value,
-                sfResinImageVisibility.value,
-                sfResinUidVisibility.value,
-                sfResinNameVisibility.value,
-                sfResinFontSize.value,
-                sfTransparency.value
+                widgetTheme = sfWidgetTheme.value,
+                timeNotation = sfWidgetTimeNotation.value.value,
+                resinImageVisibility = sfResinImageVisibility.value,
+                uidVisibility = sfResinUidVisibility.value,
+                nameVisibility = sfResinNameVisibility.value,
+                fontSize = sfResinFontSize.value,
+                backgroundTransparency = sfTransparency.value
             )
         )
 
         preference.setDetailWidgetDesignSettings(
             DetailWidgetDesignSettings(
-                sfWidgetTheme.value,
-                sfWidgetTimeNotation.value.value,
+                widgetTheme = sfWidgetTheme.value,
+                timeNotation = sfWidgetTimeNotation.value.value,
 
-                sfResinDataVisibility.value,
-                sfDailyCommissionDataVisibility.value,
-                sfWeeklyBossDataVisibility.value,
-                sfRealmCurrencyDataVisibility.value,
-                sfExpeditionDataVisibility.value,
-                sfTransformerDataVisibility.value,
+                resinDataVisibility = sfResinDataVisibility.value,
+                dailyCommissinDataVisibility = sfDailyCommissionDataVisibility.value,
+                weeklyBossDataVisibility = sfWeeklyBossDataVisibility.value,
+                realmCurrencyDataVisibility = sfRealmCurrencyDataVisibility.value,
+                expeditionDataVisibility = sfExpeditionDataVisibility.value,
+                transformerDataVisibility = sfTransformerDataVisibility.value,
 
-                sfTrailBlazepowerDataVisibility.value,
-                sfReserveTrailBlazepowerDataVisibility.value,
-                sfDailyTrainingDataVisibility.value,
-                sfEchoOfWarDataVisibility.value,
-                sfSimulatedUniverseDataVisibility.value,
-                sfSimulatedUniverseClearTimeVisibility.value,
-                sfIsGridFightDataInvisible.value,
-                sfDivergentUniverseDataVisibility.value,
-                sfAssignmentTimeDataVisibility.value,
+                trailBlazepowerDataVisibility = sfTrailBlazepowerDataVisibility.value,
+                reserveTrailBlazepowerDataVisibility = sfReserveTrailBlazepowerDataVisibility.value,
+                dailyTrainingDataVisibility = sfDailyTrainingDataVisibility.value,
+                echoOfWarDataVisibility = sfEchoOfWarDataVisibility.value,
+                simulatedUniverseDataVisibility = sfSimulatedUniverseDataVisibility.value,
+                simulatedUniverseClearTimeVisibility = sfSimulatedUniverseClearTimeVisibility.value,
+                isGridFightInvisible = sfIsGridFightDataInvisible.value,
+                synchronicityPointVisibility = sfDivergentUniverseDataVisibility.value,
+                assignmentTimeDataVisibility = sfAssignmentTimeDataVisibility.value,
 
-                sfBatteryDataVisibility.value,
-                sfEngagementTodayDataVisibility.value,
-                sfScratchCardDataVisibility.value,
-                sfVideoStoreManagementDataVisibility.value,
-                sfCoffeeDataVisibility.value,
-                sfRiduWeeklyDataVisibility.value,
-                sfMemberCardDataVisibility.value,
-                sfIsMemberCardPeriodInvisible.value,
-                sfInvestigationPointDataVisibility.value,
+                batteryDataVisibility = sfBatteryDataVisibility.value,
+                engagementTodayDataVisibility = sfEngagementTodayDataVisibility.value,
+                scratchCardDataVisibility = sfScratchCardDataVisibility.value,
+                videoStoreManagementDataVisibility = sfVideoStoreManagementDataVisibility.value,
+                coffeeDataVisibility = sfCoffeeDataVisibility.value,
+                riduWeeklyDataVisibility = sfRiduWeeklyDataVisibility.value,
+                memberCardDataVisibility = sfMemberCardDataVisibility.value,
+                isMemberCardPeriodInvisible = sfIsMemberCardPeriodInvisible.value,
+                investigationPointDataVisibility = sfInvestigationPointDataVisibility.value,
 
-                sfDetailUidVisibility.value,
-                sfDetailNameVisibility.value,
-                sfFontSizeDetail.value,
-                sfTransparency.value
+                uidVisibility = sfDetailUidVisibility.value,
+                nameVisibility = sfDetailNameVisibility.value,
+                fontSize = sfFontSizeDetail.value,
+                backgroundTransparency = sfTransparency.value
             )
         )
 

@@ -11,6 +11,9 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
 import android.util.DisplayMetrics
 import android.view.Display
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.hardware.display.DisplayManagerCompat
 import com.google.firebase.crashlytics.CustomKeysAndValues
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -156,6 +159,54 @@ object CommonFunction {
         targetCalendar.add(Calendar.HOUR, -4)
 
         return targetCalendar.get(Calendar.DAY_OF_WEEK)     // 1일 2월 3화 4수 5목 6금 7토
+    }
+
+    val DETAIL_WIDGET_FIXED_TEXT_IDS = listOf(
+        R.id.tv_sync_time,
+        R.id.tv_disable,
+        R.id.tv_name,
+        R.id.tv_uid,
+    )
+
+    fun getDetailWidgetTextIds(root: View): List<Int> {
+        val textIds = mutableListOf<Int>()
+        collectDetailWidgetTextIds(root, textIds)
+        return textIds
+    }
+
+    private fun collectDetailWidgetTextIds(view: View, textIds: MutableList<Int>) {
+        if (view is TextView) {
+            val isFixed = view.id in DETAIL_WIDGET_FIXED_TEXT_IDS
+            if (view.id != View.NO_ID && !isFixed) {
+                textIds.add(view.id)
+            }
+        } else if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                collectDetailWidgetTextIds(view.getChildAt(i), textIds)
+            }
+        }
+    }
+
+    fun setTextColorByIds(root: View, ids: List<Int>, color: Int) {
+        for (id in ids) {
+            val textView = root.findViewById<TextView>(id)
+            if (textView != null) {
+                textView.setTextColor(color)
+            }
+        }
+    }
+
+    fun setTextSizeByIds(root: View, ids: List<Int>, size: Float) {
+        for (id in ids) {
+            val textView = root.findViewById<TextView>(id)
+            if (textView != null) {
+                textView.textSize = size
+            }
+        }
+    }
+
+    fun getVisibility(isVisible: Boolean): Int {
+        return if (isVisible) View.VISIBLE else View.GONE
     }
 
     fun Context.isDarkMode(): Boolean {
