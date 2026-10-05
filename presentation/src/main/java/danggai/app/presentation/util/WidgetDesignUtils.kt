@@ -212,6 +212,8 @@ object WidgetDesignUtils {
             tvScratchCardTitle.setTextColor(mainFontColor)
             tvVideoStoreManagement.setTextColor(mainFontColor)
             tvVideoStoreManagementTitle.setTextColor(mainFontColor)
+            tvMemberCardPeriod.setTextColor(mainFontColor)
+            tvMemberCardPeriodTitle.setTextColor(mainFontColor)
             tvEngagementToday.setTextColor(mainFontColor)
             tvEngagementTodayTitle.setTextColor(mainFontColor)
 
@@ -226,6 +228,8 @@ object WidgetDesignUtils {
                 tvBatteryTitle.textSize = it
                 tvBatteryTime.textSize = it
                 tvBatteryTimeTitle.textSize = it
+                tvMemberCardPeriod.textSize = it
+                tvMemberCardPeriodTitle.textSize = it
                 tvEngagementToday.textSize = it
                 tvEngagementTodayTitle.textSize = it
                 tvScratchCard.textSize = it
@@ -379,6 +383,8 @@ object WidgetDesignUtils {
             R.id.tv_scratch_card_title,
             R.id.tv_video_store_management,
             R.id.tv_video_store_management_title,
+            R.id.tv_member_card_period,
+            R.id.tv_member_card_period_title,
         )
 
         fun setFontColorAndSize(view: RemoteViews, id: Int, color: Int, size: Float) {

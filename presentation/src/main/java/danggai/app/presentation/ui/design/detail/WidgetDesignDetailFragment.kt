@@ -557,15 +557,17 @@ class WidgetDesignDetailFragment :
                     mVM.sfSelectedPreview.value = Preview.ZZZ
                     binding.widgetZzz.rlMemberCard.visibility =
                         if (it) View.VISIBLE else View.GONE
+                    binding.widgetZzz.rlMemberCardPeriod.visibility =
+                        if (it && !mVM.sfIsMemberCardPeriodInvisible.value) View.VISIBLE else View.GONE
                 }
             }
 
             launch {
-                mVM.sfIsMemberCardClaimInvisible.collect {
+                mVM.sfIsMemberCardPeriodInvisible.collect {
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.ZZZ
-                    binding.widgetZzz.tvMemberCard.visibility =
-                        if (it) View.GONE else View.VISIBLE
+                    binding.widgetZzz.rlMemberCardPeriod.visibility =
+                        if (mVM.sfMemberCardDataVisibility.value && !it) View.VISIBLE else View.GONE
                 }
             }
 

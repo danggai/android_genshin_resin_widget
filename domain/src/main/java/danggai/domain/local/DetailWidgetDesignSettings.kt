@@ -30,7 +30,7 @@ data class DetailWidgetDesignSettings(
     val coffeeDataVisibility: Boolean,
     val riduWeeklyDataVisibility: Boolean,
     val memberCardDataVisibility: Boolean,
-    val isMemberCardClaimInvisible: Boolean,
+    val isMemberCardPeriodInvisible: Boolean,
     val investigationPointDataVisibility: Boolean,
 
     val uidVisibility: Boolean,
@@ -67,7 +67,7 @@ data class DetailWidgetDesignSettings(
             coffeeDataVisibility = true,
             riduWeeklyDataVisibility = true,
             memberCardDataVisibility = true,
-            isMemberCardClaimInvisible = false,
+            isMemberCardPeriodInvisible = false,
             investigationPointDataVisibility = true,
 
             uidVisibility = false,

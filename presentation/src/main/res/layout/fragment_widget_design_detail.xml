@@ -476,14 +476,14 @@
                         style="@style/Checkbox"
                         android:id="@+id/cb_member_card"
                         android:checked="@={vm.sfMemberCardDataVisibility}"
-                        android:text="@string/zzz_member_card" />
+                        android:text="@string/zzz_member_card_claim" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         style="@style/Checkbox"
-                        android:id="@+id/cb_member_card_claim"
-                        android:checked="@={!vm.sfIsMemberCardClaimInvisible}"
+                        android:id="@+id/cb_member_card_period"
+                        android:checked="@={!vm.sfIsMemberCardPeriodInvisible}"
                         android:enabled="@{vm.sfMemberCardDataVisibility}"
-                        android:text="@string/zzz_member_card_claim" />
+                        android:text="@string/zzz_member_card_period" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

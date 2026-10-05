@@ -280,12 +280,10 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                         else _context.resources.getQuantityString(
                             R.plurals.zzz_member_card_days, expDays, expDays
                         )
-                    log.e(expDaysString)
-                    val dayText = if (memberCard?.isOpen == true) " ($expDaysString)" else ""
 
                     setText(
                         R.id.tv_member_card_title,
-                        _context.getString(R.string.zzz_member_card) + dayText
+                        _context.getString(R.string.zzz_member_card)
                     )
                     setText(
                         R.id.tv_member_card,
@@ -300,9 +298,18 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                         }
                     )
                     setVisibility(R.id.rl_member_card, widgetDesign.memberCardDataVisibility)
+
+                    /* 남은 기간은 회원일 때만, 수령 여부 바로 아래 줄에 표시 */
+                    setText(
+                        R.id.tv_member_card_period_title,
+                        _context.getString(R.string.zzz_member_card_period)
+                    )
+                    setText(R.id.tv_member_card_period, expDaysString)
                     setVisibility(
-                        R.id.tv_member_card,
-                        memberCard?.isOpen == false || !widgetDesign.isMemberCardClaimInvisible
+                        R.id.rl_member_card_period,
+                        widgetDesign.memberCardDataVisibility
+                                && !widgetDesign.isMemberCardPeriodInvisible
+                                && memberCard?.isOpen == true
                     )
 
                     setText(
