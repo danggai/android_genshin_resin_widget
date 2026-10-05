@@ -108,8 +108,8 @@
 
     <string name="btn_start_check_in">Start check-in now</string>
 
-    <string name="btn_check_in_success">On Check-in Success</string>
-    <string name="btn_check_in_failed">On Check-in Failure</string>
+    <string name="btn_check_in_success">Success</string>
+    <string name="btn_check_in_failed">Failure</string>
 
 
     <string name="done">Done</string>
