@@ -10,13 +10,17 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.InputType
 import android.os.PowerManager
 import android.provider.Settings
 import android.view.View
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.activityViewModels
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
@@ -284,6 +288,9 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             }
 
             launch {
+                mVM.sfShowDialogCustomNoti.collect { showCustomNotiDialog(it) }
+            }
+            launch {
                 mVM.sfNotiWeeklyYetDay.collect {
                     binding.spWeeklyYetNotiDay.setSelection(
                         weeklyDaySpinnerAdapter.getPosition(
@@ -456,6 +463,38 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         mVM.saveIfChanged()
     }
 
+    private fun showCustomNotiDialog(type: CustomNotiType) {
+        val context = requireContext()
+
+        val unitRes = when (type) {
+            CustomNotiType.RESIN -> R.string.resin
+            CustomNotiType.TRAIL_POWER -> R.string.trailblaze_power
+            CustomNotiType.BATTERY -> R.string.battery
+        }
+
+        val editText = AppCompatEditText(context).apply {
+            inputType = InputType.TYPE_CLASS_NUMBER
+            filters = arrayOf(InputFilter.LengthFilter(4))
+            hint = type.max.toString()
+            setText(mVM.getCustomNotiValue(type))
+            setSelection(text?.length ?: 0)
+            setPadding(60, 30, 60, 30)
+        }
+
+        val dialog = AlertDialog.Builder(context)
+            .setTitle(getString(R.string.dialog_title_custom_noti, getString(unitRes)))
+            .setView(editText)
+            .setPositiveButton(R.string.ok) { _, _ ->
+                mVM.confirmCustomNoti(type, editText.text.toString())
+            }
+            .setNegativeButton(R.string.cancel) { _, _ -> mVM.cancelCustomNoti(type) }
+            .setOnCancelListener { mVM.cancelCustomNoti(type) }
+            .create()
+
+        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        dialog.show()
+        editText.requestFocus()
+    }
     private fun showAddWidgetDialog() {
         val context = requireContext()
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_widget, null)

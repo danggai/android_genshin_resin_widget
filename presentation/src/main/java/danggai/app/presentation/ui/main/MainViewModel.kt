@@ -69,6 +69,7 @@ class MainViewModel @Inject constructor(
 
     val sfDeleteAccount = MutableSharedFlow<Account>()
     val sfShowDialogDailyWeeklyYet = MutableSharedFlow<Boolean>()
+    val sfShowDialogCustomNoti = MutableSharedFlow<CustomNotiType>()
 
     val sfExpandGenshin = MutableStateFlow(true)
     val sfExpandHonkaiSr = MutableStateFlow(true)
@@ -280,6 +281,41 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    private fun getCustomNotiEnableFlow(type: CustomNotiType): MutableStateFlow<Boolean> =
+        when (type) {
+            CustomNotiType.RESIN -> sfEnableNotiCustomResin
+            CustomNotiType.TRAIL_POWER -> sfEnableNotiCustomTrailPower
+            CustomNotiType.BATTERY -> sfEnableNotiCustomBattery
+        }
+
+    private fun getCustomNotiValueFlow(type: CustomNotiType): MutableStateFlow<String> =
+        when (type) {
+            CustomNotiType.RESIN -> sfCustomNotiResin
+            CustomNotiType.TRAIL_POWER -> sfCustomNotiTrailPower
+            CustomNotiType.BATTERY -> sfCustomNotiBattery
+        }
+
+    fun getCustomNotiValue(type: CustomNotiType): String = getCustomNotiValueFlow(type).value
+
+    fun onClickCustomNoti(type: CustomNotiType) {
+        if (getCustomNotiEnableFlow(type).value) sfShowDialogCustomNoti.emitInVmScope(type)
+    }
+
+    fun confirmCustomNoti(type: CustomNotiType, input: String) {
+        val value = input.toIntOrNull()?.coerceAtMost(type.max)
+
+        if (value == null || value <= 0) {
+            cancelCustomNoti(type)
+            return
+        }
+
+        getCustomNotiValueFlow(type).value = value.toString()
+        getCustomNotiEnableFlow(type).value = true
+    }
+
+    fun cancelCustomNoti(type: CustomNotiType) {
+        getCustomNotiEnableFlow(type).value = false
+    }
     fun onClickAddWidget() {
         log.e()
         sendEvent(Event.ShowAddWidgetDialog())

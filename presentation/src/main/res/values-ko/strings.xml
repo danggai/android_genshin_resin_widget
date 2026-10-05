@@ -42,6 +42,8 @@
 
     <string name="save_setting">설정 저장</string>
     <string name="add_widget">위젯 추가</string>
+    <string name="btn_custom">직접 입력</string>
+    <string name="dialog_title_custom_noti">%1$s 알림 수치</string>
     <string name="save">저장</string>
     <string name="ok">확인</string>
     <string name="reset">초기화</string>

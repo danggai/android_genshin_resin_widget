@@ -6,6 +6,7 @@
     <data>
 
         <import type="android.view.View" />
+        <import type="danggai.app.presentation.ui.main.CustomNotiType" />
 
         <variable
             name="vm"
@@ -200,6 +201,12 @@
                             app:chipIcon="@drawable/resin" />
                         <com.google.android.material.chip.Chip
                             style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNotiCustomResin}"
+                            android:onClick="@{() -> vm.onClickCustomNoti(CustomNotiType.RESIN)}"
+                            android:text="@{vm.sfCustomNotiResin.isEmpty() ? @string/btn_custom : vm.sfCustomNotiResin + ' ' + @string/resin}"
+                            app:chipIcon="@drawable/resin" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
                             android:checked="@={vm.sfEnableNotiExpeditionDone}"
                             android:text="@string/btn_expedition_done"
                             app:chipIcon="@drawable/icon_warp_point" />
@@ -215,45 +222,6 @@
                             app:chipIcon="@drawable/icon_parametric_transformer" />
 
                     </com.google.android.material.chip.ChipGroup>
-
-
-                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
-
-                        <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
-                            android:layout_marginStart="10dp"
-                            android:contentDescription="@string/resin"
-                            android:src="@drawable/resin" />
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/cb_custom_resin"
-                            style="@style/Checkbox.BoxOnly"
-                            android:layout_width="32dp"
-                            android:layout_marginEnd="0dp"
-                            android:checked="@={vm.sfEnableNotiCustomResin}" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/et_custom_resin"
-                            style="@style/EditTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:hint="200"
-                            android:imeOptions="actionDone"
-                            android:inputType="number"
-                            android:maxLength="4"
-                            android:paddingHorizontal="8dp"
-                            android:singleLine="true"
-                            android:text="@={vm.sfCustomNotiResin}"
-                            android:textSize="14sp" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/TextView"
-                            android:text="@string/resin"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
 
@@ -333,50 +301,17 @@
                             app:chipIcon="@drawable/trailblaze_power" />
                         <com.google.android.material.chip.Chip
                             style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNotiCustomTrailPower}"
+                            android:onClick="@{() -> vm.onClickCustomNoti(CustomNotiType.TRAIL_POWER)}"
+                            android:text="@{vm.sfCustomNotiTrailPower.isEmpty() ? @string/btn_custom : vm.sfCustomNotiTrailPower + ' ' + @string/trailblaze_power}"
+                            app:chipIcon="@drawable/trailblaze_power" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
                             android:checked="@={vm.sfEnableNotiHonkaiSrExpeditionDone}"
                             android:text="@string/btn_assignment_done"
                             app:chipIcon="@drawable/icon_activity" />
 
                     </com.google.android.material.chip.ChipGroup>
-
-
-                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
-
-                        <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
-                            android:layout_marginStart="10dp"
-                            android:contentDescription="@string/trailblaze_power"
-                            android:src="@drawable/trailblaze_power" />
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/cb_custom_trail_power"
-                            style="@style/Checkbox.BoxOnly"
-                            android:layout_width="32dp"
-                            android:layout_marginEnd="0dp"
-                            android:checked="@={vm.sfEnableNotiCustomTrailPower}" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/et_custom_trail_power"
-                            style="@style/EditTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:hint="280"
-                            android:imeOptions="actionDone"
-                            android:inputType="number"
-                            android:maxLength="4"
-                            android:paddingHorizontal="8dp"
-                            android:singleLine="true"
-                            android:text="@={vm.sfCustomNotiTrailPower}"
-                            android:textSize="14sp" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/TextView"
-                            android:text="@string/trailblaze_power"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -417,47 +352,14 @@
                             android:checked="@={vm.sfEnableNoti230Battery}"
                             android:text="@string/btn_230_battery"
                             app:chipIcon="@drawable/battery" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNotiCustomBattery}"
+                            android:onClick="@{() -> vm.onClickCustomNoti(CustomNotiType.BATTERY)}"
+                            android:text="@{vm.sfCustomNotiBattery.isEmpty() ? @string/btn_custom : vm.sfCustomNotiBattery + ' ' + @string/battery}"
+                            app:chipIcon="@drawable/battery" />
 
                     </com.google.android.material.chip.ChipGroup>
-
-
-                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
-
-                        <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
-                            android:layout_marginStart="10dp"
-                            android:contentDescription="@string/battery"
-                            android:src="@drawable/battery" />
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/cb_custom_battery"
-                            style="@style/Checkbox.BoxOnly"
-                            android:layout_width="32dp"
-                            android:layout_marginEnd="0dp"
-                            android:checked="@={vm.sfEnableNotiCustomBattery}" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/et_custom_battery"
-                            style="@style/EditTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:hint="220"
-                            android:imeOptions="actionDone"
-                            android:inputType="number"
-                            android:maxLength="4"
-                            android:paddingHorizontal="8dp"
-                            android:singleLine="true"
-                            android:text="@={vm.sfCustomNotiBattery}"
-                            android:textSize="14sp" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/TextView"
-                            android:text="@string/battery"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
