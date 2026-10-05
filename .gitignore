@@ -17,3 +17,4 @@ app/release/
 .idea/misc.xml
 .idea/
 buildSrc/build/
+tools/
