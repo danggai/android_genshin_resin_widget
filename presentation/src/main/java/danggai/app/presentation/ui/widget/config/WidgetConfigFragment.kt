@@ -66,7 +66,7 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
 
         // appwidgetid 없는 widget 삭제 지연을 위해
         context?.let {
-            PreferenceManager.setString(it, Constant.PREF_UID + "_$appWidgetId", "")
+            PreferenceManager.setWidgetUid(it, appWidgetId, "")
         }
 
         views = RemoteViews(context?.packageName, R.layout.widget_detail_fixed)

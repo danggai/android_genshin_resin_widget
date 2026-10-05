@@ -39,10 +39,7 @@ class TalentWidget() : AppWidgetProvider() {
         appWidgetIds.forEach { appWidgetId ->
             log.e(appWidgetId)
 
-            val paramType = PreferenceManager.getString(
-                context,
-                Constant.PREF_TELENT_WIDGET_TYPE + "_$appWidgetId"
-            )
+            val paramType = PreferenceManager.getTalentWidgetType(context, appWidgetId)
 
             log.e("paramType: $paramType")
             val serviceIntent = Intent(context, TalentWidgetItemService::class.java).apply {
@@ -79,11 +76,7 @@ class TalentWidget() : AppWidgetProvider() {
 
         if (widgetId != -1 && paramType.isNotEmpty()) {
             context.let {
-                PreferenceManager.setString(
-                    context,
-                    Constant.PREF_TELENT_WIDGET_TYPE + "_$widgetId",
-                    paramType
-                )
+                PreferenceManager.setTalentWidgetType(context, widgetId, paramType)
             }
         }
 
@@ -185,10 +178,7 @@ class TalentWidget() : AppWidgetProvider() {
 
             WidgetDesignUtils.applyWidgetTheme(widgetDesign, _context, view)
 
-            val widgetType = PreferenceManager.getString(
-                context,
-                Constant.PREF_TELENT_WIDGET_TYPE + "_$widgetId"
-            )
+            val widgetType = PreferenceManager.getTalentWidgetType(context, widgetId)
 
             initViews()
 
