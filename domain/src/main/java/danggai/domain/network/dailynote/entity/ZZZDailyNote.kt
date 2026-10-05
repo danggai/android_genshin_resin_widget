@@ -41,7 +41,7 @@ data class ZZZDailyNoteData(
     @SerializedName("is_sub") val isSub: Boolean = false,                   // 구독 여부
     @SerializedName("is_other_sub") val isOtherSub: Boolean = false,
     @SerializedName("temple_running") val templeRunning: ZZZTempleRunning? = null, // 백통보 (전적 페이지 "백통보 0/5000" = current_currency/weekly_currency_max)
-    @SerializedName("cafe_state") val cafeState: String = ""                // 카페 상태
+    @SerializedName("cafe_state") val cafeState: String? = null                // 카페 상태
 ) {
     companion object {
         val EMPTY = ZZZDailyNoteData(
