@@ -273,7 +273,7 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                     )
                     setVisibility(R.id.rl_ridu_weekly, widgetDesign.riduWeeklyDataVisibility)
 
-                    val expDays: Int = (memberCard?.expTime ?: 0) / (60 * 60 * 24)
+                    val expDays: Int = (memberCard?.expTime?.toIntOrNull() ?: 0) / (60 * 60 * 24)
                     val expDaysString =
                         if (expDays < 1)
                             _context.getString(R.string.zzz_member_card_less_1day)
