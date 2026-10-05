@@ -132,7 +132,7 @@ object WidgetDesignUtils {
         widget.apply {
             llRoot.setBackgroundColor(bgColor)
 
-            ivError.setColorFilter(R.color.red)
+            ivError.setColorFilter(ContextCompat.getColor(root.context, R.color.red))
 
             ivRefresh.setColorFilter(subFontColor)
             tvSyncTime.setTextColor(subFontColor)
@@ -214,6 +214,12 @@ object WidgetDesignUtils {
             tvVideoStoreManagementTitle.setTextColor(mainFontColor)
             tvEngagementToday.setTextColor(mainFontColor)
             tvEngagementTodayTitle.setTextColor(mainFontColor)
+            tvRiduWeekly.setTextColor(mainFontColor)
+            tvRiduWeeklyTitle.setTextColor(mainFontColor)
+            tvMemberCard.setTextColor(mainFontColor)
+            tvMemberCardTitle.setTextColor(mainFontColor)
+            tvInvestigationPoint.setTextColor(mainFontColor)
+            tvInvestigationPointTitle.setTextColor(mainFontColor)
 
             llRoot.background = wrappedDrawable
         }
@@ -232,6 +238,12 @@ object WidgetDesignUtils {
                 tvScratchCardTitle.textSize = it
                 tvVideoStoreManagement.textSize = it
                 tvVideoStoreManagementTitle.textSize = it
+                tvRiduWeekly.textSize = it
+                tvRiduWeeklyTitle.textSize = it
+                tvMemberCard.textSize = it
+                tvMemberCardTitle.textSize = it
+                tvInvestigationPoint.textSize = it
+                tvInvestigationPointTitle.textSize = it
             }
         }
     }
@@ -373,6 +385,8 @@ object WidgetDesignUtils {
             R.id.tv_engagement_today_title,
             R.id.tv_ridu_weekly,
             R.id.tv_ridu_weekly_title,
+            R.id.tv_member_card,
+            R.id.tv_member_card_title,
             R.id.tv_investigation_point,
             R.id.tv_investigation_point_title,
             R.id.tv_scratch_card,
