@@ -265,11 +265,10 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                     )
                     setText(
                         R.id.tv_ridu_weekly,
-                        if ((weeklyTask?.curPoint == weeklyTask?.maxPoint) && weeklyTask !== null) {
-                            _context.getString(R.string.done)
-                        } else {
-                            "${weeklyTask?.curPoint ?: "?"}/${weeklyTask?.maxPoint ?: "?"}"
-                        }
+                        weeklyTask?.let {
+                            if (it.curPoint == it.maxPoint) _context.getString(R.string.done)
+                            else "${it.curPoint}/${it.maxPoint}"
+                        } ?: "-"
                     )
                     setVisibility(R.id.rl_ridu_weekly, widgetDesign.riduWeeklyDataVisibility)
 
@@ -280,12 +279,10 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                         else _context.resources.getQuantityString(
                             R.plurals.zzz_member_card_days, expDays, expDays
                         )
-                    log.e(expDaysString)
-                    val dayText = if (memberCard?.isOpen == true) " ($expDaysString)" else ""
 
                     setText(
                         R.id.tv_member_card_title,
-                        _context.getString(R.string.zzz_member_card) + dayText
+                        _context.getString(R.string.zzz_member_card)
                     )
                     setText(
                         R.id.tv_member_card,
@@ -300,9 +297,18 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                         }
                     )
                     setVisibility(R.id.rl_member_card, widgetDesign.memberCardDataVisibility)
+
+                    /* 남은 기간은 회원일 때만, 수령 여부 바로 아래 줄에 표시 */
+                    setText(
+                        R.id.tv_member_card_period_title,
+                        _context.getString(R.string.zzz_member_card_period)
+                    )
+                    setText(R.id.tv_member_card_period, expDaysString)
                     setVisibility(
-                        R.id.tv_member_card,
-                        memberCard?.isOpen == false || !widgetDesign.isMemberCardClaimInvisible
+                        R.id.rl_member_card_period,
+                        widgetDesign.memberCardDataVisibility
+                                && !widgetDesign.isMemberCardPeriodInvisible
+                                && memberCard?.isOpen == true
                     )
 
                     setText(
@@ -311,11 +317,10 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                     )
                     setText(
                         R.id.tv_investigation_point,
-                        if ((surveyPoints?.num == surveyPoints?.total) && surveyPoints !== null) {
-                            _context.getString(R.string.done)
-                        } else {
-                            "${surveyPoints?.num ?: "?"}/${surveyPoints?.total ?: "?"}"
-                        }
+                        surveyPoints?.let {
+                            if (it.num == it.total) _context.getString(R.string.done)
+                            else "${it.num}/${it.total}"
+                        } ?: "-"
                     )
                     setVisibility(
                         R.id.rl_investigation_point,

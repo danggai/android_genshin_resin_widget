@@ -278,6 +278,46 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_member_card_period"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_member_card_period"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="2dp"
+                    android:alpha="0"
+                    android:padding="1dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_polychrome" />
+
+                <TextView
+                    android:id="@+id/tv_member_card_period_title"
+                    style="@style/TextView"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_member_card_period"
+                    android:layout_toRightOf="@id/iv_member_card_period"
+                    android:singleLine="true"
+                    android:text="@string/zzz_member_card_period"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_member_card_period"
+                    style="@style/TextView"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
+                    android:text="@string/zzz_member_card_less_1day"
+                    android:textColor="@color/widget_font_main"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/rl_investigation_point"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

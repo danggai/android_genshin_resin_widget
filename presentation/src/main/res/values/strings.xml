@@ -386,6 +386,7 @@
     <string name="zzz_member_card">Membership</string>
     <string name="zzz_member_card_not_opened">Non-member</string>
     <string name="zzz_member_card_claim">Claim Status</string>
+    <string name="zzz_member_card_period">Remaining Period</string>
     <string name="zzz_member_card_no">Not Claimed</string>
     <string name="zzz_member_card_ack">Claimed</string>
     <string name="zzz_member_card_less_1day">&lt;1d</string>
