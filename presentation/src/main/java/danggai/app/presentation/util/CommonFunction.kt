@@ -126,30 +126,27 @@ object CommonFunction {
         FirebaseCrashlytics.getInstance().setCustomKeys(keysAndValues)
     }
 
+    /* 중국 시간 기준 다음 hour시 01분까지 남은 시간(분)을 반환. 이미 지났으면 다음 날로 계산 */
     fun getTimeLeftUntilChinaTime(isAM: Boolean, hour: Int, startCalendar: Calendar): Long {
-        val targetCalendar = Calendar.getInstance()
-        targetCalendar.timeZone = TimeZone.getTimeZone(Constant.CHINA_TIMEZONE)
-        targetCalendar.set(Calendar.MINUTE, 1)
-        targetCalendar.set(Calendar.HOUR, hour)
-        targetCalendar.set(Calendar.AM_PM, if (isAM) Calendar.AM else Calendar.PM)
+        val targetCalendar = Calendar.getInstance(TimeZone.getTimeZone(Constant.CHINA_TIMEZONE)).apply {
+            timeInMillis = startCalendar.timeInMillis
+            set(Calendar.HOUR, hour)
+            set(Calendar.AM_PM, if (isAM) Calendar.AM else Calendar.PM)
+            set(Calendar.MINUTE, 1)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
 
-        if (startCalendar.get(Calendar.HOUR_OF_DAY) >= 1) targetCalendar.add(
-            Calendar.DAY_OF_YEAR,
-            1
-        )
+        if (targetCalendar.timeInMillis <= startCalendar.timeInMillis)
+            targetCalendar.add(Calendar.DAY_OF_YEAR, 1)
 
-        val delay = (targetCalendar.time.time - startCalendar.time.time) / 60000
+        val delay = (targetCalendar.timeInMillis - startCalendar.timeInMillis) / 60000
 
         log.e("now time -> ${startCalendar.time}")
         log.e("target time -> ${targetCalendar.time}")
         log.e("delayed -> ${delay / 60}h ${delay % 60}m")
 
-        return if (delay < 0) {
-            targetCalendar.add(Calendar.DAY_OF_YEAR, 1)
-            (targetCalendar.time.time - startCalendar.time.time) / 60000
-        } else {
-            delay
-        }
+        return delay
     }
 
     /* 중국 기준, 실제 시간보다 4시간 전 요일을 반환 함. */
@@ -165,22 +162,17 @@ object CommonFunction {
         return resources.configuration.uiMode and UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
     }
 
+    /* 문자열 그대로 비교하면 "7200" > "28800" 처럼 사전순이 되므로 숫자로 변환해서 최댓값을 구함 */
     fun getExpeditionTime(dailyNote: GenshinDailyNoteData): String {
-        return try {
-            if (dailyNote.expeditions.isEmpty()) "0"
-            else dailyNote.expeditions.maxOf { it.remainedTime }
-        } catch (e: java.lang.Exception) {
-            "0"
-        }
+        return dailyNote.expeditions
+            .maxOfOrNull { it.remainedTime.toIntOrNull() ?: 0 }
+            ?.toString() ?: "0"
     }
 
     fun getExpeditionTime(data: HonkaiSrDataLocal): String {
-        return try {
-            if (data.dailyNote.expeditions.isEmpty()) "0"
-            else data.dailyNote.expeditions.maxOf { it.remainingTime.toString() }
-        } catch (e: java.lang.Exception) {
-            "0"
-        }
+        return data.dailyNote.expeditions
+            .maxOfOrNull { it.remainingTime }
+            ?.toString() ?: "0"
     }
 
     fun getDisplayMetrics(activity: Activity): DisplayMetrics { // Get the metrics
