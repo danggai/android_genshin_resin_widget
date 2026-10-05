@@ -161,11 +161,7 @@ object CommonFunction {
         return targetCalendar.get(Calendar.DAY_OF_WEEK)     // 1일 2월 3화 4수 5목 6금 7토
     }
 
-    /**
-     * 상세(Detail) 위젯 3종(원신/스타레일/젠레스)에서 테마 글자색/크기를 적용하지 않는 TextView.
-     * 세 위젯 공통 요소이고 거의 변하지 않는다. 이 목록에 없는 TextView 는 전부 자동으로 적용 대상이다.
-     * (새 행을 추가해도 이 목록은 수정할 필요가 없다)
-     */
+    /* 상세 위젯에서 테마 글자색/크기 적용을 제외할 TextView. 목록에 없는 TextView 는 모두 적용 대상 */
     val DETAIL_WIDGET_FIXED_TEXT_IDS = listOf(
         R.id.tv_sync_time,
         R.id.tv_disable,
@@ -173,7 +169,6 @@ object CommonFunction {
         R.id.tv_uid,
     )
 
-    /* root 아래의 모든 자식 뷰를 끝까지 탐색해서, 고정 목록에 없는 TextView 의 id 를 반환 */
     fun getDetailWidgetTextIds(root: View): List<Int> {
         val textIds = mutableListOf<Int>()
         collectDetailWidgetTextIds(root, textIds)
@@ -193,7 +188,6 @@ object CommonFunction {
         }
     }
 
-    /* root 안에서 ids 에 해당하는 TextView 의 글자색을 변경 */
     fun setTextColorByIds(root: View, ids: List<Int>, color: Int) {
         for (id in ids) {
             val textView = root.findViewById<TextView>(id)
@@ -203,7 +197,6 @@ object CommonFunction {
         }
     }
 
-    /* root 안에서 ids 에 해당하는 TextView 의 글자 크기를 변경 */
     fun setTextSizeByIds(root: View, ids: List<Int>, size: Float) {
         for (id in ids) {
             val textView = root.findViewById<TextView>(id)
@@ -213,7 +206,6 @@ object CommonFunction {
         }
     }
 
-    /* true 면 보이게(VISIBLE), false 면 숨김(GONE) 값을 반환 */
     fun getVisibility(isVisible: Boolean): Int {
         return if (isVisible) View.VISIBLE else View.GONE
     }

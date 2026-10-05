@@ -61,10 +61,6 @@ object WidgetDesignUtils {
         binding.tvSyncTime.setTextColor(subFontColor)
     }
 
-    /**
-     * 미리보기 상세 위젯(원신/스타레일/젠레스 공통)의 배경, 아이콘, 글자색을 적용한다.
-     * 글자색은 고정 목록(동기화 시각 등)을 뺀 모든 TextView 에 같은 색을 적용한다.
-     */
     fun applyDetailWidgetColors(
         root: View,
         bgColor: Int,
@@ -91,7 +87,6 @@ object WidgetDesignUtils {
         llRoot.background = wrappedDrawable
     }
 
-    /* 미리보기 상세 위젯(원신/스타레일/젠레스 공통)의 글자 크기를 적용한다. */
     fun setDetailWidgetFontSize(root: View, fontSize: Int) {
         val textIds = CommonFunction.getDetailWidgetTextIds(root)
         CommonFunction.setTextSizeByIds(root, textIds, fontSize.toFloat())
@@ -184,12 +179,10 @@ object WidgetDesignUtils {
 
         val fontSize = widgetDesign.fontSize.toFloat()
 
-        // RemoteViews 는 자식 뷰를 탐색할 수 없어서, 같은 레이아웃을 한 번 불러와 TextView id 를 찾는다.
-        // (미리보기와 같은 규칙: 고정 목록을 뺀 모든 TextView 에 적용)
+        // RemoteViews 는 자식 뷰를 탐색할 수 없어서, 같은 레이아웃을 inflate 해 TextView id 를 찾는다.
         val layout = LayoutInflater.from(context).inflate(view.layoutId, null)
         val rowTextIds = CommonFunction.getDetailWidgetTextIds(layout)
 
-        // 안내 문구는 실제 위젯에서만 본문색으로 표시하므로 따로 추가
         val textIds = rowTextIds + listOf(R.id.tv_disable, R.id.tv_no_selected_characters)
 
         for (id in textIds) {
