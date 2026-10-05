@@ -206,9 +206,9 @@ class WidgetDesignDetailFragment :
                                 TimeNotation.REMAIN_TIME,
                                     -> {
                                     rlResinTime.visibility =
-                                        if (mVM.sfResinDataVisibility.value) View.VISIBLE else View.GONE
+                                        CommonFunction.getVisibility(mVM.sfResinDataVisibility.value)
                                     rlRealmCurrencyTime.visibility =
-                                        if (mVM.sfRealmCurrencyDataVisibility.value) View.VISIBLE else View.GONE
+                                        CommonFunction.getVisibility(mVM.sfRealmCurrencyDataVisibility.value)
 
                                     tvResinTimeTitle.text =
                                         _context.getString(R.string.until_fully_replenished)
@@ -220,9 +220,9 @@ class WidgetDesignDetailFragment :
 
                                 TimeNotation.FULL_CHARGE_TIME -> {
                                     rlResinTime.visibility =
-                                        if (mVM.sfResinDataVisibility.value) View.VISIBLE else View.GONE
+                                        CommonFunction.getVisibility(mVM.sfResinDataVisibility.value)
                                     rlRealmCurrencyTime.visibility =
-                                        if (mVM.sfRealmCurrencyDataVisibility.value) View.VISIBLE else View.GONE
+                                        CommonFunction.getVisibility(mVM.sfRealmCurrencyDataVisibility.value)
 
                                     tvResinTimeTitle.text =
                                         _context.getString(R.string.estimated_replenishment_time)
@@ -270,7 +270,7 @@ class WidgetDesignDetailFragment :
                                 TimeNotation.REMAIN_TIME,
                                     -> {
                                     rlTrailblazePowerTime.visibility =
-                                        if (mVM.sfTrailBlazepowerDataVisibility.value) View.VISIBLE else View.GONE
+                                        CommonFunction.getVisibility(mVM.sfTrailBlazepowerDataVisibility.value)
 
                                     tvTrailblazePowerTimeTitle.text =
                                         _context.getString(R.string.until_fully_replenished)
@@ -280,7 +280,7 @@ class WidgetDesignDetailFragment :
 
                                 TimeNotation.FULL_CHARGE_TIME -> {
                                     rlTrailblazePowerTime.visibility =
-                                        if (mVM.sfTrailBlazepowerDataVisibility.value) View.VISIBLE else View.GONE
+                                        CommonFunction.getVisibility(mVM.sfTrailBlazepowerDataVisibility.value)
 
                                     tvTrailblazePowerTimeTitle.text =
                                         _context.getString(R.string.estimated_replenishment_time)
@@ -313,7 +313,7 @@ class WidgetDesignDetailFragment :
                                 TimeNotation.REMAIN_TIME,
                                     -> {
                                     rlBatteryTime.visibility =
-                                        if (mVM.sfBatteryDataVisibility.value) View.VISIBLE else View.GONE
+                                        CommonFunction.getVisibility(mVM.sfBatteryDataVisibility.value)
 
                                     tvBatteryTimeTitle.text =
                                         _context.getString(R.string.until_fully_replenished)
@@ -321,7 +321,7 @@ class WidgetDesignDetailFragment :
 
                                 TimeNotation.FULL_CHARGE_TIME -> {
                                     rlBatteryTime.visibility =
-                                        if (mVM.sfBatteryDataVisibility.value) View.VISIBLE else View.GONE
+                                        CommonFunction.getVisibility(mVM.sfBatteryDataVisibility.value)
 
                                     tvBatteryTimeTitle.text =
                                         _context.getString(R.string.estimated_replenishment_time)
@@ -346,16 +346,16 @@ class WidgetDesignDetailFragment :
             launch {
                 mVM.sfDetailUidVisibility.collect {
                     log.e()
-                    binding.widget.tvUid.visibility = if (it) View.VISIBLE else View.GONE
-                    binding.widgetHksr.tvUid.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widget.tvUid.visibility = CommonFunction.getVisibility(it)
+                    binding.widgetHksr.tvUid.visibility = CommonFunction.getVisibility(it)
                 }
             }
 
             launch {
                 mVM.sfDetailNameVisibility.collect {
                     log.e()
-                    binding.widget.tvName.visibility = if (it) View.VISIBLE else View.GONE
-                    binding.widgetHksr.tvName.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widget.tvName.visibility = CommonFunction.getVisibility(it)
+                    binding.widgetHksr.tvName.visibility = CommonFunction.getVisibility(it)
                 }
             }
 
@@ -364,9 +364,9 @@ class WidgetDesignDetailFragment :
                 mVM.sfResinDataVisibility.collect {
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.GENSHIN
-                    binding.widget.rlResin.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widget.rlResin.visibility = CommonFunction.getVisibility(it)
                     binding.widget.rlResinTime.visibility =
-                        if (it && mVM.sfWidgetTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it && mVM.sfWidgetTimeNotation.value != TimeNotation.DISABLE_TIME)
                 }
             }
 
@@ -375,7 +375,7 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.GENSHIN
                     binding.widget.rlDailyCommission.visibility =
-                        if (it) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it)
                 }
             }
 
@@ -383,7 +383,7 @@ class WidgetDesignDetailFragment :
                 mVM.sfWeeklyBossDataVisibility.collect {
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.GENSHIN
-                    binding.widget.rlWeeklyBoss.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widget.rlWeeklyBoss.visibility = CommonFunction.getVisibility(it)
                 }
             }
 
@@ -391,9 +391,9 @@ class WidgetDesignDetailFragment :
                 mVM.sfRealmCurrencyDataVisibility.collect {
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.GENSHIN
-                    binding.widget.rlRealmCurrency.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widget.rlRealmCurrency.visibility = CommonFunction.getVisibility(it)
                     binding.widget.rlRealmCurrencyTime.visibility =
-                        if (it && mVM.sfWidgetTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it && mVM.sfWidgetTimeNotation.value != TimeNotation.DISABLE_TIME)
                 }
             }
 
@@ -401,7 +401,7 @@ class WidgetDesignDetailFragment :
                 mVM.sfExpeditionDataVisibility.collect {
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.GENSHIN
-                    binding.widget.rlExpedition.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widget.rlExpedition.visibility = CommonFunction.getVisibility(it)
                 }
             }
 
@@ -409,7 +409,7 @@ class WidgetDesignDetailFragment :
                 mVM.sfTransformerDataVisibility.collect {
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.GENSHIN
-                    binding.widget.rlTransformer.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widget.rlTransformer.visibility = CommonFunction.getVisibility(it)
                 }
             }
 
@@ -419,9 +419,9 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlTrailblazePower.visibility =
-                        if (it) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it)
                     binding.widgetHksr.rlTrailblazePowerTime.visibility =
-                        if (it && mVM.sfWidgetTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it && mVM.sfWidgetTimeNotation.value != TimeNotation.DISABLE_TIME)
                 }
             }
 
@@ -430,7 +430,7 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlReserveTrailblazePower.visibility =
-                        if (it) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it)
                 }
             }
 
@@ -439,7 +439,7 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlDailyTraining.visibility =
-                        if (it) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it)
                 }
             }
 
@@ -447,7 +447,7 @@ class WidgetDesignDetailFragment :
                 mVM.sfEchoOfWarDataVisibility.collect {
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.STARRAIL
-                    binding.widgetHksr.rlEchoOfWar.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widgetHksr.rlEchoOfWar.visibility = CommonFunction.getVisibility(it)
                 }
             }
 
@@ -456,9 +456,9 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlSimulatedUniverse.visibility =
-                        if (it) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it)
                     binding.widgetHksr.rlSimulatedUniverseCleared.visibility =
-                        if (it && mVM.sfSimulatedUniverseClearTimeVisibility.value) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it && mVM.sfSimulatedUniverseClearTimeVisibility.value)
                 }
             }
 
@@ -466,7 +466,7 @@ class WidgetDesignDetailFragment :
                 mVM.sfIsGridFightDataInvisible.collect {
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.STARRAIL
-                    binding.widgetHksr.rlGridFight.visibility = if (it) View.GONE else View.VISIBLE
+                    binding.widgetHksr.rlGridFight.visibility = CommonFunction.getVisibility(!it)
                 }
             }
 
@@ -475,7 +475,7 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlSimulatedUniverseCleared.visibility =
-                        if (mVM.sfSimulatedUniverseDataVisibility.value && it) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(mVM.sfSimulatedUniverseDataVisibility.value && it)
                 }
             }
 
@@ -484,7 +484,7 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlSynchronicityPoint.visibility =
-                        if (mVM.sfDivergentUniverseDataVisibility.value && it) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(mVM.sfDivergentUniverseDataVisibility.value && it)
                 }
             }
 
@@ -492,7 +492,7 @@ class WidgetDesignDetailFragment :
                 mVM.sfAssignmentTimeDataVisibility.collect {
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.STARRAIL
-                    binding.widgetHksr.rlAssignment.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widgetHksr.rlAssignment.visibility = CommonFunction.getVisibility(it)
                 }
             }
 
@@ -501,9 +501,9 @@ class WidgetDesignDetailFragment :
                 mVM.sfBatteryDataVisibility.collect {
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.ZZZ
-                    binding.widgetZzz.rlBattery.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widgetZzz.rlBattery.visibility = CommonFunction.getVisibility(it)
                     binding.widgetZzz.rlBatteryTime.visibility =
-                        if (it && mVM.sfWidgetTimeNotation.value != TimeNotation.DISABLE_TIME) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it && mVM.sfWidgetTimeNotation.value != TimeNotation.DISABLE_TIME)
                 }
             }
 
@@ -512,7 +512,7 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.ZZZ
                     binding.widgetZzz.rlEngagementToday.visibility =
-                        if (it) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it)
                 }
             }
 
@@ -520,7 +520,7 @@ class WidgetDesignDetailFragment :
                 mVM.sfScratchCardDataVisibility.collect {
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.ZZZ
-                    binding.widgetZzz.rlScratchCard.visibility = if (it) View.VISIBLE else View.GONE
+                    binding.widgetZzz.rlScratchCard.visibility = CommonFunction.getVisibility(it)
                 }
             }
 
@@ -529,7 +529,7 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.ZZZ
                     binding.widgetZzz.rlVideoStoreManagement.visibility =
-                        if (it) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it)
                 }
             }
 
@@ -538,7 +538,7 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.ZZZ
                     binding.widgetZzz.rlCoffee.visibility =
-                        if (it) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it)
                 }
             }
 
@@ -547,7 +547,7 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.ZZZ
                     binding.widgetZzz.rlRiduWeekly.visibility =
-                        if (it) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it)
                 }
             }
 
@@ -556,9 +556,9 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.ZZZ
                     binding.widgetZzz.rlMemberCard.visibility =
-                        if (it) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it)
                     binding.widgetZzz.rlMemberCardPeriod.visibility =
-                        if (it && !mVM.sfIsMemberCardPeriodInvisible.value) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it && !mVM.sfIsMemberCardPeriodInvisible.value)
                 }
             }
 
@@ -567,7 +567,7 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.ZZZ
                     binding.widgetZzz.rlMemberCardPeriod.visibility =
-                        if (mVM.sfMemberCardDataVisibility.value && !it) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(mVM.sfMemberCardDataVisibility.value && !it)
                 }
             }
 
@@ -576,7 +576,7 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.ZZZ
                     binding.widgetZzz.rlInvestigationPoint.visibility =
-                        if (it) View.VISIBLE else View.GONE
+                        CommonFunction.getVisibility(it)
                 }
             }
         }

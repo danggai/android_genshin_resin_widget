@@ -11,6 +11,8 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
 import android.util.DisplayMetrics
 import android.view.Display
+import android.view.View
+import android.widget.TextView
 import androidx.core.hardware.display.DisplayManagerCompat
 import com.google.firebase.crashlytics.CustomKeysAndValues
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -156,6 +158,98 @@ object CommonFunction {
         targetCalendar.add(Calendar.HOUR, -4)
 
         return targetCalendar.get(Calendar.DAY_OF_WEEK)     // 1일 2월 3화 4수 5목 6금 7토
+    }
+
+    /**
+     * 상세(Detail) 위젯 3종(원신/스타레일/젠레스)의 행 TextView ID 목록.
+     * 테마 색, 글자 크기를 적용하는 대상이며 미리보기와 실제 위젯이 같은 목록을 사용한다.
+     * 새 행을 추가하면 이 목록에만 추가하면 된다.
+     */
+    val DETAIL_WIDGET_TEXT_IDS = listOf(
+        // 원신
+        R.id.tv_resin,
+        R.id.tv_resin_title,
+        R.id.tv_resin_time,
+        R.id.tv_resin_time_title,
+        R.id.tv_daily_commission,
+        R.id.tv_daily_commission_title,
+        R.id.tv_weekly_boss,
+        R.id.tv_weekly_boss_title,
+        R.id.tv_expedition_title,
+        R.id.tv_expedition_time,
+        R.id.tv_transformer_title,
+        R.id.tv_transformer,
+        R.id.tv_realm_currency,
+        R.id.tv_realm_currency_title,
+        R.id.tv_realm_currency_time,
+        R.id.tv_realm_currency_time_title,
+
+        // 붕괴: 스타레일
+        R.id.tv_trailblaze_power,
+        R.id.tv_trailblaze_power_title,
+        R.id.tv_trailblaze_power_time,
+        R.id.tv_trailblaze_power_time_title,
+        R.id.tv_reserve_trailblaze_power,
+        R.id.tv_reserve_trailblaze_power_title,
+        R.id.tv_daily_training,
+        R.id.tv_daily_training_title,
+        R.id.tv_echo_of_war,
+        R.id.tv_echo_of_war_title,
+        R.id.tv_simulated_universe,
+        R.id.tv_simulated_universe_title,
+        R.id.tv_simulated_universe_cleared,
+        R.id.tv_simulated_universe_title_cleared,
+        R.id.tv_grid_fight,
+        R.id.tv_grid_fight_title,
+        R.id.tv_synchronicity_point,
+        R.id.tv_synchronicity_point_title,
+        R.id.tv_assignment_time,
+        R.id.tv_assignment_title,
+
+        // 젠레스 존 제로
+        R.id.tv_battery,
+        R.id.tv_battery_title,
+        R.id.tv_battery_time,
+        R.id.tv_battery_time_title,
+        R.id.tv_engagement_today,
+        R.id.tv_engagement_today_title,
+        R.id.tv_ridu_weekly,
+        R.id.tv_ridu_weekly_title,
+        R.id.tv_member_card,
+        R.id.tv_member_card_title,
+        R.id.tv_member_card_period,
+        R.id.tv_member_card_period_title,
+        R.id.tv_investigation_point,
+        R.id.tv_investigation_point_title,
+        R.id.tv_scratch_card,
+        R.id.tv_scratch_card_title,
+        R.id.tv_video_store_management,
+        R.id.tv_video_store_management_title,
+    )
+
+    /* root 안에서 ids 에 해당하는 TextView 의 글자색을 변경. 이 레이아웃에 없는 id 는 건너뜀 */
+    fun setTextColorByIds(root: View, ids: List<Int>, color: Int) {
+        for (id in ids) {
+            val textView = root.findViewById<TextView>(id)
+            if (textView != null) {
+                textView.setTextColor(color)
+            }
+        }
+    }
+
+    /* root 안에서 ids 에 해당하는 TextView 의 글자 크기를 변경. 이 레이아웃에 없는 id 는 건너뜀 */
+    fun setTextSizeByIds(root: View, ids: List<Int>, size: Float) {
+        for (id in ids) {
+            val textView = root.findViewById<TextView>(id)
+            if (textView != null) {
+                textView.textSize = size
+            }
+        }
+    }
+
+    /* true 면 보이게(VISIBLE), false 면 숨김(GONE) 값을 반환 */
+    fun getVisibility(isVisible: Boolean): Int {
+        return if (isVisible) View.VISIBLE else View.GONE
     }
 
     fun Context.isDarkMode(): Boolean {

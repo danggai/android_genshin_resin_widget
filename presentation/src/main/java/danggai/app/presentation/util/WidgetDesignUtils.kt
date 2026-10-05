@@ -67,59 +67,27 @@ object WidgetDesignUtils {
         subFontColor: Int,
         wrappedDrawable: Drawable
     ) {
-        widget.apply {
-            llRoot.setBackgroundColor(bgColor)
+        widget.llRoot.setBackgroundColor(bgColor)
 
-            ivRefersh.setColorFilter(subFontColor)
-            tvSyncTime.setTextColor(subFontColor)
-            tvDisable.setTextColor(subFontColor)
+        widget.ivRefersh.setColorFilter(subFontColor)
+        widget.tvSyncTime.setTextColor(subFontColor)
+        widget.tvDisable.setTextColor(subFontColor)
 
-            tvResin.setTextColor(mainFontColor)
-            tvResinTitle.setTextColor(mainFontColor)
-            tvResinTime.setTextColor(mainFontColor)
-            tvResinTimeTitle.setTextColor(mainFontColor)
-            tvDailyCommission.setTextColor(mainFontColor)
-            tvDailyCommissionTitle.setTextColor(mainFontColor)
-            tvWeeklyBoss.setTextColor(mainFontColor)
-            tvWeeklyBossTitle.setTextColor(mainFontColor)
-            tvExpeditionTitle.setTextColor(mainFontColor)
-            tvExpeditionTime.setTextColor(mainFontColor)
-            tvRealmCurrency.setTextColor(mainFontColor)
-            tvRealmCurrencyTitle.setTextColor(mainFontColor)
-            tvRealmCurrencyTime.setTextColor(mainFontColor)
-            tvRealmCurrencyTimeTitle.setTextColor(mainFontColor)
-            tvTransformer.setTextColor(mainFontColor)
-            tvTransformerTitle.setTextColor(mainFontColor)
+        CommonFunction.setTextColorByIds(
+            widget.root,
+            CommonFunction.DETAIL_WIDGET_TEXT_IDS,
+            mainFontColor
+        )
 
-            llRoot.background = wrappedDrawable
-        }
+        widget.llRoot.background = wrappedDrawable
     }
 
     fun setDetailWidgetFontSize(widget: WidgetDetailFixedBinding, fontSize: Int) {
-        widget.apply {
-            fontSize.toFloat().let {
-                tvResin.textSize = it
-                tvResinTitle.textSize = it
-                tvResinTime.textSize = it
-                tvResinTimeTitle.textSize = it
-                tvResinTime.textSize = it
-                tvResinTimeTitle.textSize = it
-                tvDailyCommission.textSize = it
-                tvDailyCommissionTitle.textSize = it
-                tvWeeklyBoss.textSize = it
-                tvWeeklyBossTitle.textSize = it
-                tvRealmCurrency.textSize = it
-                tvRealmCurrencyTitle.textSize = it
-                tvRealmCurrencyTime.textSize = it
-                tvRealmCurrencyTimeTitle.textSize = it
-                tvExpeditionTitle.textSize = it
-                tvExpeditionTitle.textSize = it
-                tvExpeditionTime.textSize = it
-                tvExpeditionTime.textSize = it
-                tvTransformer.textSize = it
-                tvTransformerTitle.textSize = it
-            }
-        }
+        CommonFunction.setTextSizeByIds(
+            widget.root,
+            CommonFunction.DETAIL_WIDGET_TEXT_IDS,
+            fontSize.toFloat()
+        )
     }
 
     fun applyDetailWidgetColors(
@@ -129,65 +97,29 @@ object WidgetDesignUtils {
         subFontColor: Int,
         wrappedDrawable: Drawable
     ) {
-        widget.apply {
-            llRoot.setBackgroundColor(bgColor)
+        widget.llRoot.setBackgroundColor(bgColor)
 
-            ivError.setColorFilter(ContextCompat.getColor(root.context, R.color.red))
+        widget.ivError.setColorFilter(ContextCompat.getColor(widget.root.context, R.color.red))
 
-            ivRefresh.setColorFilter(subFontColor)
-            tvSyncTime.setTextColor(subFontColor)
-            tvDisable.setTextColor(subFontColor)
+        widget.ivRefresh.setColorFilter(subFontColor)
+        widget.tvSyncTime.setTextColor(subFontColor)
+        widget.tvDisable.setTextColor(subFontColor)
 
-            tvTrailblazePower.setTextColor(mainFontColor)
-            tvTrailblazePowerTitle.setTextColor(mainFontColor)
-            tvTrailblazePowerTime.setTextColor(mainFontColor)
-            tvTrailblazePowerTimeTitle.setTextColor(mainFontColor)
-            tvReserveTrailblazePower.setTextColor(mainFontColor)
-            tvReserveTrailblazePowerTitle.setTextColor(mainFontColor)
-            tvDailyTraining.setTextColor(mainFontColor)
-            tvDailyTrainingTitle.setTextColor(mainFontColor)
-            tvEchoOfWar.setTextColor(mainFontColor)
-            tvEchoOfWarTitle.setTextColor(mainFontColor)
-            tvSimulatedUniverse.setTextColor(mainFontColor)
-            tvSimulatedUniverseTitle.setTextColor(mainFontColor)
-            tvSimulatedUniverseCleared.setTextColor(mainFontColor)
-            tvSimulatedUniverseTitleCleared.setTextColor(mainFontColor)
-            tvGridFight.setTextColor(mainFontColor)
-            tvGridFightTitle.setTextColor(mainFontColor)
-            tvSynchronicityPoint.setTextColor(mainFontColor)
-            tvSynchronicityPointTitle.setTextColor(mainFontColor)
-            tvAssignmentTime.setTextColor(mainFontColor)
-            tvAssignmentTitle.setTextColor(mainFontColor)
+        CommonFunction.setTextColorByIds(
+            widget.root,
+            CommonFunction.DETAIL_WIDGET_TEXT_IDS,
+            mainFontColor
+        )
 
-            llRoot.background = wrappedDrawable
-        }
+        widget.llRoot.background = wrappedDrawable
     }
 
     fun setDetailWidgetFontSize(widget: WidgetHksrDetailFixedBinding, fontSize: Int) {
-        widget.apply {
-            fontSize.toFloat().let {
-                tvTrailblazePower.textSize = it
-                tvTrailblazePowerTitle.textSize = it
-                tvTrailblazePowerTime.textSize = it
-                tvTrailblazePowerTimeTitle.textSize = it
-                tvReserveTrailblazePower.textSize = it
-                tvReserveTrailblazePowerTitle.textSize = it
-                tvDailyTraining.textSize = it
-                tvDailyTrainingTitle.textSize = it
-                tvEchoOfWar.textSize = it
-                tvEchoOfWarTitle.textSize = it
-                tvSimulatedUniverse.textSize = it
-                tvSimulatedUniverseTitle.textSize = it
-                tvSimulatedUniverseCleared.textSize = it
-                tvSimulatedUniverseTitleCleared.textSize = it
-                tvGridFight.textSize = it
-                tvGridFightTitle.textSize = it
-                tvSynchronicityPoint.textSize = it
-                tvSynchronicityPointTitle.textSize = it
-                tvAssignmentTime.textSize = it
-                tvAssignmentTitle.textSize = it
-            }
-        }
+        CommonFunction.setTextSizeByIds(
+            widget.root,
+            CommonFunction.DETAIL_WIDGET_TEXT_IDS,
+            fontSize.toFloat()
+        )
     }
 
     fun applyDetailWidgetColors(
@@ -197,59 +129,27 @@ object WidgetDesignUtils {
         subFontColor: Int,
         wrappedDrawable: Drawable
     ) {
-        widget.apply {
-            llRoot.setBackgroundColor(bgColor)
+        widget.llRoot.setBackgroundColor(bgColor)
 
-            ivRefersh.setColorFilter(subFontColor)
-            tvSyncTime.setTextColor(subFontColor)
-            tvDisable.setTextColor(subFontColor)
+        widget.ivRefersh.setColorFilter(subFontColor)
+        widget.tvSyncTime.setTextColor(subFontColor)
+        widget.tvDisable.setTextColor(subFontColor)
 
-            tvBattery.setTextColor(mainFontColor)
-            tvBatteryTime.setTextColor(mainFontColor)
-            tvBatteryTitle.setTextColor(mainFontColor)
-            tvBatteryTimeTitle.setTextColor(mainFontColor)
-            tvScratchCard.setTextColor(mainFontColor)
-            tvScratchCardTitle.setTextColor(mainFontColor)
-            tvVideoStoreManagement.setTextColor(mainFontColor)
-            tvVideoStoreManagementTitle.setTextColor(mainFontColor)
-            tvMemberCardPeriod.setTextColor(mainFontColor)
-            tvMemberCardPeriodTitle.setTextColor(mainFontColor)
-            tvEngagementToday.setTextColor(mainFontColor)
-            tvEngagementTodayTitle.setTextColor(mainFontColor)
-            tvRiduWeekly.setTextColor(mainFontColor)
-            tvRiduWeeklyTitle.setTextColor(mainFontColor)
-            tvMemberCard.setTextColor(mainFontColor)
-            tvMemberCardTitle.setTextColor(mainFontColor)
-            tvInvestigationPoint.setTextColor(mainFontColor)
-            tvInvestigationPointTitle.setTextColor(mainFontColor)
+        CommonFunction.setTextColorByIds(
+            widget.root,
+            CommonFunction.DETAIL_WIDGET_TEXT_IDS,
+            mainFontColor
+        )
 
-            llRoot.background = wrappedDrawable
-        }
+        widget.llRoot.background = wrappedDrawable
     }
 
     fun setDetailWidgetFontSize(widget: WidgetZzzDetailBinding, fontSize: Int) {
-        widget.apply {
-            fontSize.toFloat().let {
-                tvBattery.textSize = it
-                tvBatteryTitle.textSize = it
-                tvBatteryTime.textSize = it
-                tvBatteryTimeTitle.textSize = it
-                tvMemberCardPeriod.textSize = it
-                tvMemberCardPeriodTitle.textSize = it
-                tvEngagementToday.textSize = it
-                tvEngagementTodayTitle.textSize = it
-                tvScratchCard.textSize = it
-                tvScratchCardTitle.textSize = it
-                tvVideoStoreManagement.textSize = it
-                tvVideoStoreManagementTitle.textSize = it
-                tvRiduWeekly.textSize = it
-                tvRiduWeeklyTitle.textSize = it
-                tvMemberCard.textSize = it
-                tvMemberCardTitle.textSize = it
-                tvInvestigationPoint.textSize = it
-                tvInvestigationPointTitle.textSize = it
-            }
-        }
+        CommonFunction.setTextSizeByIds(
+            widget.root,
+            CommonFunction.DETAIL_WIDGET_TEXT_IDS,
+            fontSize.toFloat()
+        )
     }
 
     fun applyWidgetTheme(
@@ -339,77 +239,15 @@ object WidgetDesignUtils {
         view.setInt(R.id.iv_refresh, "setColorFilter", subFontColor)
         view.setTextColor(R.id.tv_sync_time, subFontColor)
 
-        val mainFontViews = listOf(
-            R.id.tv_disable,
-            R.id.tv_no_selected_characters,
-
-            R.id.tv_resin,
-            R.id.tv_resin_title,
-            R.id.tv_resin_time,
-            R.id.tv_resin_time_title,
-            R.id.tv_daily_commission,
-            R.id.tv_daily_commission_title,
-            R.id.tv_weekly_boss,
-            R.id.tv_weekly_boss_title,
-            R.id.tv_expedition_title,
-            R.id.tv_expedition_time,
-            R.id.tv_transformer_title,
-            R.id.tv_transformer,
-            R.id.tv_realm_currency,
-            R.id.tv_realm_currency_title,
-            R.id.tv_realm_currency_time,
-            R.id.tv_realm_currency_time_title,
-
-            R.id.tv_trailblaze_power,
-            R.id.tv_trailblaze_power_title,
-            R.id.tv_trailblaze_power_time,
-            R.id.tv_trailblaze_power_time_title,
-            R.id.tv_reserve_trailblaze_power,
-            R.id.tv_reserve_trailblaze_power_title,
-            R.id.tv_daily_training,
-            R.id.tv_daily_training_title,
-            R.id.tv_echo_of_war,
-            R.id.tv_echo_of_war_title,
-            R.id.tv_simulated_universe,
-            R.id.tv_simulated_universe_title,
-            R.id.tv_simulated_universe_cleared,
-            R.id.tv_simulated_universe_title_cleared,
-            R.id.tv_grid_fight,
-            R.id.tv_grid_fight_title,
-            R.id.tv_synchronicity_point,
-            R.id.tv_synchronicity_point_title,
-            R.id.tv_assignment_time,
-            R.id.tv_assignment_title,
-
-            R.id.tv_battery,
-            R.id.tv_battery_title,
-            R.id.tv_battery_time,
-            R.id.tv_battery_time_title,
-            R.id.tv_engagement_today,
-            R.id.tv_engagement_today_title,
-            R.id.tv_ridu_weekly,
-            R.id.tv_ridu_weekly_title,
-            R.id.tv_member_card,
-            R.id.tv_member_card_title,
-            R.id.tv_investigation_point,
-            R.id.tv_investigation_point_title,
-            R.id.tv_scratch_card,
-            R.id.tv_scratch_card_title,
-            R.id.tv_video_store_management,
-            R.id.tv_video_store_management_title,
-            R.id.tv_member_card_period,
-            R.id.tv_member_card_period_title,
-        )
-
-        fun setFontColorAndSize(view: RemoteViews, id: Int, color: Int, size: Float) {
-            view.setTextColor(id, color)
-            view.setFloat(id, "setTextSize", size)
-        }
-
         val fontSize = widgetDesign.fontSize.toFloat()
 
-        mainFontViews.forEach { id ->
-            setFontColorAndSize(view, id, mainFontColor, fontSize)
+        // 행 TextView 는 미리보기와 같은 공용 목록을 사용. 안내 문구 2개는 실제 위젯에만 있어 따로 처리.
+        val textIds = CommonFunction.DETAIL_WIDGET_TEXT_IDS +
+                listOf(R.id.tv_disable, R.id.tv_no_selected_characters)
+
+        for (id in textIds) {
+            view.setTextColor(id, mainFontColor)
+            view.setFloat(id, "setTextSize", fontSize)
         }
     }
 }
