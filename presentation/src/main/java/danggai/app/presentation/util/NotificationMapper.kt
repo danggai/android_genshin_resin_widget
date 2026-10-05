@@ -314,6 +314,7 @@ object NotificationMapper {
     fun getNotiParams(context: Context, notiType: NotiType, account: Account): NotificationParams {
         val notificationId: Int
         val channelId: String
+        val channelName: String
         val channelDesc: String
         val priority: Int
 
@@ -332,6 +333,7 @@ object NotificationMapper {
             -> {
                 notificationId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_STAMINA
                 channelId = Constant.PUSH_CHANNEL_RESIN_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_resin)
                 channelDesc = context.getString(R.string.push_resin_noti_description)
                 priority = priorityDefault
             }
@@ -339,6 +341,7 @@ object NotificationMapper {
             NotiType.Genshin.ExpeditionDone -> {
                 notificationId = System.currentTimeMillis().toInt()
                 channelId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_expedition)
                 channelDesc = context.getString(R.string.push_expedition_description)
                 priority = priorityLow
             }
@@ -346,6 +349,7 @@ object NotificationMapper {
             NotiType.Genshin.RealmCurrencyFull -> {
                 notificationId = System.currentTimeMillis().toInt()
                 channelId = Constant.PUSH_CHANNEL_REALM_CURRENCY_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_realm_currency)
                 channelDesc = context.getString(R.string.push_realm_currency_description)
                 priority = priorityDefault
             }
@@ -353,6 +357,7 @@ object NotificationMapper {
             NotiType.Genshin.ParametricTransformerReached -> {
                 notificationId = System.currentTimeMillis().toInt()
                 channelId = Constant.PUSH_CHANNEL_PARAMETRIC_TRANSFORMER_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_param_trans)
                 channelDesc = context.getString(R.string.push_param_trans_description)
                 priority = priorityDefault
             }
@@ -360,6 +365,7 @@ object NotificationMapper {
             NotiType.Genshin.DailyCommissionNotDone -> {
                 notificationId = System.currentTimeMillis().toInt()
                 channelId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_daily_commission)
                 channelDesc = context.getString(R.string.push_daily_commission_description)
                 priority = priorityDefault
             }
@@ -367,6 +373,7 @@ object NotificationMapper {
             NotiType.Genshin.WeeklyBossNotDone -> {
                 notificationId = System.currentTimeMillis().toInt()
                 channelId = Constant.PUSH_CHANNEL_WEEKLY_BOSS_YET_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_weekly_boss)
                 channelDesc = context.getString(R.string.push_weekly_boss_description)
                 priority = priorityDefault
             }
@@ -378,6 +385,7 @@ object NotificationMapper {
                 notificationId =
                     abs(account.honkai_sr_uid.toInt()) + Constant.PREFIX_NOTI_ID_STAMINA
                 channelId = Constant.PUSH_CHANNEL_TRAIL_POWER_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_trail_power)
                 channelDesc = context.getString(R.string.push_trail_power_noti_description)
                 priority = priorityDefault
             }
@@ -385,6 +393,7 @@ object NotificationMapper {
             NotiType.StarRail.ExpeditionDone -> {
                 notificationId = System.currentTimeMillis().toInt()
                 channelId = Constant.PUSH_CHANNEL_EXPEDITION_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_expedition)
                 channelDesc = context.getString(R.string.push_assignment_description)
                 priority = priorityLow
             }
@@ -396,6 +405,7 @@ object NotificationMapper {
             -> {
                 notificationId = abs(account.zzz_uid.toInt()) + Constant.PREFIX_NOTI_ID_STAMINA
                 channelId = Constant.PUSH_CHANNEL_ZZZ_CHECK_IN_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_zzz)
                 channelDesc = context.getString(R.string.push_battery_noti_description)
                 priority = priorityDefault
             }
@@ -405,6 +415,7 @@ object NotificationMapper {
             -> {
                 notificationId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN
                 channelId = Constant.PUSH_CHANNEL_GENSHIN_CHECK_IN_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_genshin_checkin)
                 channelDesc = context.getString(R.string.push_genshin_checkin_description)
                 priority = priorityLow
             }
@@ -415,6 +426,7 @@ object NotificationMapper {
                 notificationId =
                     abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN_HK3RD
                 channelId = Constant.PUSH_CHANNEL_HONKAI_3RD_CHECK_IN_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_honkai_3rd_checkin)
                 channelDesc = context.getString(R.string.push_honkai_3rd_checkin_description)
                 priority = priorityLow
             }
@@ -425,6 +437,7 @@ object NotificationMapper {
                 notificationId =
                     abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN_HKSR
                 channelId = Constant.PUSH_CHANNEL_HONKAI_SR_CHECK_IN_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_honkai_sr_checkin)
                 channelDesc = context.getString(R.string.push_honkai_sr_checkin_description)
                 priority = priorityLow
             }
@@ -435,6 +448,7 @@ object NotificationMapper {
                 notificationId =
                     abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_CHECKIN_ZZZ
                 channelId = Constant.PUSH_CHANNEL_ZZZ_CHECK_IN_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_zzz)
                 channelDesc = context.getString(R.string.push_zzz_checkin_description)
                 priority = priorityLow
             }
@@ -447,6 +461,6 @@ object NotificationMapper {
 //            }
         }
 
-        return NotificationParams(notificationId, channelId, channelDesc, priority)
+        return NotificationParams(notificationId, channelId, channelName, channelDesc, priority)
     }
 }
