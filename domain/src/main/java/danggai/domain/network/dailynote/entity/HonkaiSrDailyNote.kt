@@ -44,6 +44,12 @@ data class HonkaiSrDailyNoteData(
 
     @SerializedName("weekly_cocoon_cnt") val weeklyCocoonCnt: Int,             // 전쟁의 여운
     @SerializedName("weekly_cocoon_limit") val weeklyCocoonLimit: Int,
+
+    @SerializedName("stamina_full_ts") val staminaFullTs: Long = 0,            // 개척력 회복 완료 시각 (전적 페이지 "실시간 메모" 300/300)
+    @SerializedName("current_ts") val currentTs: Long = 0,                     // 서버 현재 시각
+    @SerializedName("rogue_tourn_exp_is_full") val rogueTournExpIsFull: Boolean = false,  // 차분화 우주 경험치 가득 참
+    @SerializedName("period_score") val periodScore: Int = 0,                  // 주기 점수 (실시간 메모 "주기 점수 0/18000")
+    @SerializedName("period_max_score") val periodMaxScore: Int = 0,
 ) {
     companion object {
         val EMPTY = HonkaiSrDailyNoteData(

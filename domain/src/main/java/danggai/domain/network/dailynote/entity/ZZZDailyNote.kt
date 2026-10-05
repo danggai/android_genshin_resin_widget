@@ -36,7 +36,12 @@ data class ZZZDailyNoteData(
     @SerializedName("bounty_commission") val bountyCommission: ZZZNumTotal?,
     @SerializedName("survey_points") val surveyPoints: ZZZNumTotal?,
     @SerializedName("weekly_task") val weeklyTask: ZZZWeeklyTask?,
-    @SerializedName("member_card") val memberCard: ZZZMemberCard?
+    @SerializedName("member_card") val memberCard: ZZZMemberCard?,
+    @SerializedName("abyss_refresh") val abyssRefresh: Int = 0,             // 주기 임무 갱신까지 남은 초 (전적 페이지 "06일 18시간 후 업데이트")
+    @SerializedName("is_sub") val isSub: Boolean = false,                   // 구독 여부
+    @SerializedName("is_other_sub") val isOtherSub: Boolean = false,
+    @SerializedName("temple_running") val templeRunning: ZZZTempleRunning? = null, // 백통보 (전적 페이지 "백통보 0/5000" = current_currency/weekly_currency_max)
+    @SerializedName("cafe_state") val cafeState: String = ""                // 카페 상태
 ) {
     companion object {
         val EMPTY = ZZZDailyNoteData(
@@ -55,7 +60,10 @@ data class ZZZDailyNoteData(
 
 data class ZZZEnergy(
     @SerializedName("progress") val progress: ZZZProgress,
-    @SerializedName("restore") val restore: Int
+    @SerializedName("restore") val restore: Int,
+    @SerializedName("day_type") val dayType: Int = 0,                       // 1 = 오늘 (전적 페이지 "오늘 17:36 회복 완료"), 그 외 값 미확인
+    @SerializedName("hour") val hour: Int = 0,                              // 회복 완료 시
+    @SerializedName("minute") val minute: Int = 0                           // 회복 완료 분
 ) {
     companion object {
         val EMPTY = ZZZEnergy(
@@ -89,7 +97,10 @@ data class ZZZVhsSale(
 
 data class ZZZNumTotal(
     @SerializedName("num") val num: Int,
-    @SerializedName("total") val total: Int
+    @SerializedName("total") val total: Int,
+    @SerializedName("refresh_time") val refreshTime: Int = 0,               // 현상금 의뢰 진도 갱신까지 남은 초 (전적 페이지 "06일 18시간 후 업데이트")
+    @SerializedName("unlock") val unlock: Boolean = false,
+    @SerializedName("hide") val hide: Boolean = false
 ) {
     companion object {
         val EMPTY = ZZZNumTotal(
@@ -111,10 +122,27 @@ data class ZZZWeeklyTask(
     }
 }
 
+data class ZZZTempleRunning(
+    @SerializedName("expedition_state") val expeditionState: String,
+    @SerializedName("bench_state") val benchState: String,
+    @SerializedName("shelve_state") val shelveState: String,
+    @SerializedName("level") val level: Int,
+    @SerializedName("weekly_currency_max") val weeklyCurrencyMax: String,
+    @SerializedName("currency_next_refresh_ts") val currencyNextRefreshTs: String,
+    @SerializedName("current_currency") val currentCurrency: String,
+    @SerializedName("auto_work") val autoWork: ZZZAutoWork? = null
+)
+
+data class ZZZAutoWork(
+    @SerializedName("is_auto_work_running") val isAutoWorkRunning: Boolean,
+    @SerializedName("auto_work_ended") val autoWorkEnded: Boolean,
+    @SerializedName("left_ts") val leftTs: Int
+)
+
 data class ZZZMemberCard(
     @SerializedName("is_open") val isOpen: Boolean,
     @SerializedName("member_card_state") val memberCardState: String,
-    @SerializedName("exp_time") val expTime: String
+    @SerializedName("exp_time") val expTime: String     // 남은 시간(초) (전적 페이지 "남은 일수: 4일")
 ) {
     companion object {
         val EMPTY = ZZZMemberCard(

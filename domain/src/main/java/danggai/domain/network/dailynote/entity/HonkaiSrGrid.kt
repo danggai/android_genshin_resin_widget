@@ -18,7 +18,9 @@ data class HonkaiSrGrid(
 
 data class HonkaiSrGridData(
     @SerializedName("grid_fight_brief")
-    val gridFightBrief: GridFightBrief
+    val gridFightBrief: GridFightBrief,
+    @SerializedName("grid_fight_archive_list")
+    val gridFightArchiveList: List<Any> = listOf()  // 화폐 전쟁 최신 클리어 전적 (전적 페이지 "최신 클리어 전적")
 ) {
     companion object {
         val EMPTY = HonkaiSrGridData(GridFightBrief.EMPTY)
