@@ -300,6 +300,10 @@ class ZZZDetailWidget() : AppWidgetProvider() {
                         }
                     )
                     setVisibility(R.id.rl_member_card, widgetDesign.memberCardDataVisibility)
+                    setVisibility(
+                        R.id.tv_member_card,
+                        memberCard?.isOpen == false || !widgetDesign.isMemberCardClaimInvisible
+                    )
 
                     setText(
                         R.id.tv_investigation_point_title,
