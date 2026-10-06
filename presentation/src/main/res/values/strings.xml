@@ -46,6 +46,7 @@
     <string name="save_setting">Save Setting</string>
     <string name="add_widget">Add Widget</string>
     <string name="btn_custom">Custom</string>
+    <string name="noti_at_value">At %1$s</string>
     <string name="dialog_title_custom_noti">%1$s alert value</string>
     <string name="save">Save</string>
     <string name="ok">OK</string>

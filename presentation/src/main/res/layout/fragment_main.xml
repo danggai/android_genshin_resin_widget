@@ -211,8 +211,8 @@
                             style="@style/NotiChip.Custom"
                             android:checked="@={vm.sfEnableNotiCustomResin}"
                             android:onClick="@{() -> vm.onClickCustomNoti(CustomNotiType.RESIN)}"
-                            android:text="@{vm.sfEnableNotiCustomResin ? vm.sfCustomNotiResin : @string/btn_custom}"
-                        android:contentDescription="@{(vm.sfEnableNotiCustomResin ? vm.sfCustomNotiResin : @string/btn_custom) + ' ' + @string/resin}"
+                            android:text="@{vm.sfEnableNotiCustomResin ? @string/noti_at_value(vm.sfCustomNotiResin) : @string/btn_custom}"
+                        android:contentDescription="@{(vm.sfEnableNotiCustomResin ? @string/noti_at_value(vm.sfCustomNotiResin) : @string/btn_custom) + ' ' + @string/resin}"
                             app:chipIcon="@drawable/resin" />
                         <com.google.android.material.chip.Chip
                             style="@style/NotiChip"
@@ -314,8 +314,8 @@
                             style="@style/NotiChip.Custom"
                             android:checked="@={vm.sfEnableNotiCustomTrailPower}"
                             android:onClick="@{() -> vm.onClickCustomNoti(CustomNotiType.TRAIL_POWER)}"
-                            android:text="@{vm.sfEnableNotiCustomTrailPower ? vm.sfCustomNotiTrailPower : @string/btn_custom}"
-                        android:contentDescription="@{(vm.sfEnableNotiCustomTrailPower ? vm.sfCustomNotiTrailPower : @string/btn_custom) + ' ' + @string/trailblaze_power}"
+                            android:text="@{vm.sfEnableNotiCustomTrailPower ? @string/noti_at_value(vm.sfCustomNotiTrailPower) : @string/btn_custom}"
+                        android:contentDescription="@{(vm.sfEnableNotiCustomTrailPower ? @string/noti_at_value(vm.sfCustomNotiTrailPower) : @string/btn_custom) + ' ' + @string/trailblaze_power}"
                             app:chipIcon="@drawable/trailblaze_power" />
                         <com.google.android.material.chip.Chip
                             style="@style/NotiChip"
@@ -411,8 +411,8 @@
                             style="@style/NotiChip.Custom"
                             android:checked="@={vm.sfEnableNotiCustomBattery}"
                             android:onClick="@{() -> vm.onClickCustomNoti(CustomNotiType.BATTERY)}"
-                            android:text="@{vm.sfEnableNotiCustomBattery ? vm.sfCustomNotiBattery : @string/btn_custom}"
-                        android:contentDescription="@{(vm.sfEnableNotiCustomBattery ? vm.sfCustomNotiBattery : @string/btn_custom) + ' ' + @string/battery}"
+                            android:text="@{vm.sfEnableNotiCustomBattery ? @string/noti_at_value(vm.sfCustomNotiBattery) : @string/btn_custom}"
+                        android:contentDescription="@{(vm.sfEnableNotiCustomBattery ? @string/noti_at_value(vm.sfCustomNotiBattery) : @string/btn_custom) + ' ' + @string/battery}"
                             app:chipIcon="@drawable/battery" />
 
                     </com.google.android.material.chip.ChipGroup>
