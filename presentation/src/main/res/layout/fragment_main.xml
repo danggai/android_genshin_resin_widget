@@ -376,7 +376,8 @@
                             style="@style/NotiChip"
                             android:checked="@={vm.sfEnableNotiPeriodScoreHonkaiSr}"
                             android:text="@string/btn_period_score_yet"
-                            app:chipIcon="@drawable/icon_simulated_universe" />
+                            app:chipIcon="@drawable/icon_simulated_universe"
+                            app:chipIconTint="@color/black" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
                             android:id="@+id/sp_period_score_day_honkai_sr"
