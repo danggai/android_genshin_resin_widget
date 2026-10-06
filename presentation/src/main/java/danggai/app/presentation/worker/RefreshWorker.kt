@@ -558,7 +558,7 @@ class RefreshWorker @AssistedInject constructor(
             if (notiSettings.notiDailyYetHonkaiSr &&
                 !isErrorOccurred(data) &&
                 yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.honkai_sr_uid) &&
-                calendar.get(Calendar.HOUR_OF_DAY) >= notiSettings.notiDailyYetTimeHonkaiSr &&
+                calendar.get(Calendar.HOUR_OF_DAY) >= notiSettings.notiDailyYetTime &&
                 dailyNote.currentTrainScore < dailyNote.maxTrainScore
             ) {
                 log.e()
@@ -569,8 +569,8 @@ class RefreshWorker @AssistedInject constructor(
             if (notiSettings.notiWeeklyYetHonkaiSr &&
                 !isErrorOccurred(data) &&
                 yymmdd != preference.getStringRecentWeeklyBossNotiDate(account.honkai_sr_uid) &&
-                calendar.get(Calendar.HOUR_OF_DAY) >= notiSettings.notiWeeklyYetTimeHonkaiSr &&
-                calendar.get(Calendar.DAY_OF_WEEK) == notiSettings.notiWeeklyYetDayHonkaiSr &&
+                calendar.get(Calendar.HOUR_OF_DAY) >= notiSettings.notiWeeklyYetTime &&
+                calendar.get(Calendar.DAY_OF_WEEK) == notiSettings.notiWeeklyYetDay &&
                 dailyNote.weeklyCocoonCnt > 0
             ) {
                 log.e()
@@ -594,8 +594,8 @@ class RefreshWorker @AssistedInject constructor(
             if (notiSettings.notiPeriodScoreHonkaiSr &&
                 !isErrorOccurred(data) &&
                 yymmdd != preference.getStringRecentNotiDate(Constant.NOTI_KEY_PERIOD_SCORE, account.honkai_sr_uid) &&
-                calendar.get(Calendar.HOUR_OF_DAY) >= notiSettings.notiPeriodScoreTimeHonkaiSr &&
-                calendar.get(Calendar.DAY_OF_WEEK) == notiSettings.notiPeriodScoreDayHonkaiSr &&
+                calendar.get(Calendar.HOUR_OF_DAY) >= notiSettings.notiWeeklyYetTime &&
+                calendar.get(Calendar.DAY_OF_WEEK) == notiSettings.notiWeeklyYetDay &&
                 periodMaxScore > 0 &&
                 periodScore < periodMaxScore
             ) {
@@ -689,7 +689,7 @@ class RefreshWorker @AssistedInject constructor(
 
             if (settings.notiDailyYetZZZ &&
                 yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.zzz_uid) &&
-                calendar.get(Calendar.HOUR_OF_DAY) >= settings.notiDailyYetTimeZZZ &&
+                calendar.get(Calendar.HOUR_OF_DAY) >= settings.notiDailyYetTime &&
                 dailyNote.vitality.max > 0 &&
                 dailyNote.vitality.current < dailyNote.vitality.max
             ) {
@@ -704,8 +704,8 @@ class RefreshWorker @AssistedInject constructor(
 
             if (settings.notiWeeklyYetZZZ &&
                 yymmdd != preference.getStringRecentWeeklyBossNotiDate(account.zzz_uid) &&
-                calendar.get(Calendar.HOUR_OF_DAY) >= settings.notiWeeklyYetTimeZZZ &&
-                calendar.get(Calendar.DAY_OF_WEEK) == settings.notiWeeklyYetDayZZZ &&
+                calendar.get(Calendar.HOUR_OF_DAY) >= settings.notiWeeklyYetTime &&
+                calendar.get(Calendar.DAY_OF_WEEK) == settings.notiWeeklyYetDay &&
                 isBountyNotDone
             ) {
                 log.e()
@@ -721,7 +721,7 @@ class RefreshWorker @AssistedInject constructor(
                 isMemberOpen &&
                 memberCard?.memberCardState == Constant.ZZZMemberCardState.NO.value &&
                 yymmdd != preference.getStringRecentNotiDate(Constant.NOTI_KEY_MEMBER_CLAIM, account.zzz_uid) &&
-                hour >= settings.notiMemberClaimTimeZZZ
+                hour >= settings.notiDailyYetTime
             ) {
                 log.e()
                 preference.setStringRecentNotiDate(Constant.NOTI_KEY_MEMBER_CLAIM, account.zzz_uid, yymmdd)
@@ -746,7 +746,7 @@ class RefreshWorker @AssistedInject constructor(
             if (settings.notiCafeZZZ &&
                 dailyNote.cafeState == "CafeStateNo" &&
                 yymmdd != preference.getStringRecentNotiDate(Constant.NOTI_KEY_CAFE, account.zzz_uid) &&
-                hour >= settings.notiCafeTimeZZZ
+                hour >= settings.notiDailyYetTime
             ) {
                 log.e()
                 preference.setStringRecentNotiDate(Constant.NOTI_KEY_CAFE, account.zzz_uid, yymmdd)

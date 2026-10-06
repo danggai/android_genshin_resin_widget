@@ -172,6 +172,49 @@
                     android:textSize="28sp"
                     android:textStyle="bold|italic" />
 
+                <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextView"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/noti_time_daily"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/sp_daily_yet_noti"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_spinner" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextView"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/noti_time_weekly"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/sp_weekly_yet_noti_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_spinner" />
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/sp_weekly_yet_noti_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_spinner" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
                 <!--   Genshin   -->
 
                 <danggai.app.presentation.view.TitleDividerView
@@ -230,49 +273,19 @@
                             android:text="@string/btn_param_reached"
                             app:chipIcon="@drawable/icon_parametric_transformer" />
 
-                    </com.google.android.material.chip.ChipGroup>
-
-                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
-
                         <com.google.android.material.chip.Chip
                             style="@style/NotiChip"
                             android:checked="@={vm.sfEnableNotiDailyYet}"
                             android:onClick="@{() -> vm.onClickDailyCommissionYetNoti()}"
                             android:text="@string/btn_daily_commission_yet"
                             app:chipIcon="@drawable/icon_daily_commission" />
-
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/sp_daily_yet_noti"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_spinner" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
-
                         <com.google.android.material.chip.Chip
                             style="@style/NotiChip"
                             android:checked="@={vm.sfEnableNotiWeeklyYet}"
                             android:onClick="@{() -> vm.onClickWeeklyBossYetNoti()}"
                             android:text="@string/btn_weekly_boss_yet"
                             app:chipIcon="@drawable/icon_domain" />
-
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/sp_weekly_yet_noti_day"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_spinner" />
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/sp_weekly_yet_noti_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_spinner" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
+                    </com.google.android.material.chip.ChipGroup>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -328,71 +341,23 @@
                             android:text="@string/btn_reserve_full"
                             app:chipIcon="@drawable/icon_reserved_trailblaze_power" />
 
-                    </com.google.android.material.chip.ChipGroup>
-
-                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
-
                         <com.google.android.material.chip.Chip
                             style="@style/NotiChip"
                             android:checked="@={vm.sfEnableNotiDailyYetHonkaiSr}"
                             android:text="@string/btn_daily_training_yet"
                             app:chipIcon="@drawable/icon_activity_chip" />
-
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/sp_daily_yet_noti_honkai_sr"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_spinner" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
-
                         <com.google.android.material.chip.Chip
                             style="@style/NotiChip"
                             android:checked="@={vm.sfEnableNotiWeeklyYetHonkaiSr}"
                             android:text="@string/btn_echo_of_war_yet"
                             app:chipIcon="@drawable/icon_echo_of_war" />
-
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/sp_weekly_yet_noti_day_honkai_sr"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_spinner" />
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/sp_weekly_yet_noti_time_honkai_sr"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_spinner" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
-
                         <com.google.android.material.chip.Chip
                             style="@style/NotiChip"
                             android:checked="@={vm.sfEnableNotiPeriodScoreHonkaiSr}"
                             android:text="@string/btn_period_score_yet"
                             app:chipIcon="@drawable/icon_simulated_universe"
                             app:chipIconTint="@color/black" />
-
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/sp_period_score_day_honkai_sr"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_spinner" />
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/sp_period_score_time_honkai_sr"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_spinner" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
+                    </com.google.android.material.chip.ChipGroup>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -444,64 +409,27 @@
                         android:contentDescription="@{(vm.sfEnableNotiCustomBattery ? @string/noti_at_value(vm.sfCustomNotiBattery) : @string/btn_custom) + ' ' + @string/battery}"
                             app:chipIcon="@drawable/battery" />
 
-                    </com.google.android.material.chip.ChipGroup>
-
-                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
-
                         <com.google.android.material.chip.Chip
                             style="@style/NotiChip"
                             android:checked="@={vm.sfEnableNotiDailyYetZZZ}"
                             android:text="@string/btn_engagement_yet"
                             app:chipIcon="@drawable/icon_fire" />
-
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/sp_daily_yet_noti_zzz"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_spinner" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
-
                         <com.google.android.material.chip.Chip
                             style="@style/NotiChip"
                             android:checked="@={vm.sfEnableNotiWeeklyYetZZZ}"
                             android:text="@string/btn_bounty_commission_yet"
                             app:chipIcon="@drawable/icon_investigation_point" />
-
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/sp_weekly_yet_noti_day_zzz"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_spinner" />
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/sp_weekly_yet_noti_time_zzz"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_spinner" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
-
                         <com.google.android.material.chip.Chip
                             style="@style/NotiChip"
                             android:checked="@={vm.sfEnableNotiMemberClaimZZZ}"
                             android:text="@string/btn_member_claim_yet"
                             app:chipIcon="@drawable/icon_polychrome" />
-
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/sp_member_claim_noti_time_zzz"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_spinner" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
+                            android:checked="@={vm.sfEnableNotiCafeZZZ}"
+                            android:text="@string/btn_cafe_yet"
+                            app:chipIcon="@drawable/icon_coffee" />
+                    </com.google.android.material.chip.ChipGroup>
 
                     <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
 
@@ -513,23 +441,6 @@
 
                         <androidx.appcompat.widget.AppCompatSpinner
                             android:id="@+id/sp_member_expire_noti_days_zzz"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_spinner" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
-
-                        <com.google.android.material.chip.Chip
-                            style="@style/NotiChip"
-                            android:checked="@={vm.sfEnableNotiCafeZZZ}"
-                            android:text="@string/btn_cafe_yet"
-                            app:chipIcon="@drawable/icon_coffee" />
-
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/sp_cafe_noti_time_zzz"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"

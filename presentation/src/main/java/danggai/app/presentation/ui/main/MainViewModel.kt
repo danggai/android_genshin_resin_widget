@@ -54,27 +54,17 @@ class MainViewModel @Inject constructor(
     var sfNotiWeeklyYetTime = MutableStateFlow(21)
 
     val sfEnableNotiDailyYetHonkaiSr = MutableStateFlow(false)
-    val sfNotiDailyYetTimeHonkaiSr = MutableStateFlow(21)
     val sfEnableNotiWeeklyYetHonkaiSr = MutableStateFlow(false)
-    val sfNotiWeeklyYetDayHonkaiSr = MutableStateFlow(Calendar.SUNDAY)
-    val sfNotiWeeklyYetTimeHonkaiSr = MutableStateFlow(21)
 
     val sfEnableNotiDailyYetZZZ = MutableStateFlow(false)
-    val sfNotiDailyYetTimeZZZ = MutableStateFlow(21)
     val sfEnableNotiWeeklyYetZZZ = MutableStateFlow(false)
-    val sfNotiWeeklyYetDayZZZ = MutableStateFlow(Calendar.SUNDAY)
-    val sfNotiWeeklyYetTimeZZZ = MutableStateFlow(21)
 
     val sfEnableNotiReserveFullHonkaiSr = MutableStateFlow(false)
     val sfEnableNotiPeriodScoreHonkaiSr = MutableStateFlow(false)
-    val sfNotiPeriodScoreDayHonkaiSr = MutableStateFlow(Calendar.SUNDAY)
-    val sfNotiPeriodScoreTimeHonkaiSr = MutableStateFlow(21)
     val sfEnableNotiMemberClaimZZZ = MutableStateFlow(false)
-    val sfNotiMemberClaimTimeZZZ = MutableStateFlow(21)
     val sfEnableNotiMemberExpireZZZ = MutableStateFlow(false)
     val sfNotiMemberExpireDaysZZZ = MutableStateFlow(3)
     val sfEnableNotiCafeZZZ = MutableStateFlow(false)
-    val sfNotiCafeTimeZZZ = MutableStateFlow(21)
 
     val sfEnableNotiEach40TrailPower = MutableStateFlow(false)
     val sfEnableNoti230TrailPower = MutableStateFlow(false)
@@ -151,9 +141,7 @@ class MainViewModel @Inject constructor(
     }
 
     /* 이전 버전에서 저장된 설정에는 새 항목이 없어 0으로 읽히므로 기본값으로 대체 */
-    private fun timeOrDefault(time: Int): Int = if (time == 0) 21 else time
 
-    private fun dayOrDefault(day: Int): Int = if (day == 0) Calendar.SUNDAY else day
 
     private fun daysOrDefault(days: Int): Int = if (days == 0) 3 else days
 
@@ -186,28 +174,18 @@ class MainViewModel @Inject constructor(
             sfCustomNotiBattery.value = if (it.customBattery != 0) it.customBattery.toString() else ""
 
             sfEnableNotiDailyYetHonkaiSr.value = it.notiDailyYetHonkaiSr
-            sfNotiDailyYetTimeHonkaiSr.value = timeOrDefault(it.notiDailyYetTimeHonkaiSr)
             sfEnableNotiWeeklyYetHonkaiSr.value = it.notiWeeklyYetHonkaiSr
-            sfNotiWeeklyYetDayHonkaiSr.value = dayOrDefault(it.notiWeeklyYetDayHonkaiSr)
-            sfNotiWeeklyYetTimeHonkaiSr.value = timeOrDefault(it.notiWeeklyYetTimeHonkaiSr)
 
             sfEnableNotiDailyYetZZZ.value = it.notiDailyYetZZZ
-            sfNotiDailyYetTimeZZZ.value = timeOrDefault(it.notiDailyYetTimeZZZ)
             sfEnableNotiWeeklyYetZZZ.value = it.notiWeeklyYetZZZ
-            sfNotiWeeklyYetDayZZZ.value = dayOrDefault(it.notiWeeklyYetDayZZZ)
-            sfNotiWeeklyYetTimeZZZ.value = timeOrDefault(it.notiWeeklyYetTimeZZZ)
 
             sfEnableNotiReserveFullHonkaiSr.value = it.notiReserveFullHonkaiSr
             sfEnableNotiPeriodScoreHonkaiSr.value = it.notiPeriodScoreHonkaiSr
-            sfNotiPeriodScoreDayHonkaiSr.value = dayOrDefault(it.notiPeriodScoreDayHonkaiSr)
-            sfNotiPeriodScoreTimeHonkaiSr.value = timeOrDefault(it.notiPeriodScoreTimeHonkaiSr)
 
             sfEnableNotiMemberClaimZZZ.value = it.notiMemberClaimZZZ
-            sfNotiMemberClaimTimeZZZ.value = timeOrDefault(it.notiMemberClaimTimeZZZ)
             sfEnableNotiMemberExpireZZZ.value = it.notiMemberExpireZZZ
             sfNotiMemberExpireDaysZZZ.value = daysOrDefault(it.notiMemberExpireDaysZZZ)
             sfEnableNotiCafeZZZ.value = it.notiCafeZZZ
-            sfNotiCafeTimeZZZ.value = timeOrDefault(it.notiCafeTimeZZZ)
         }
 
         preference.getCheckInSettings().let {
@@ -233,25 +211,15 @@ class MainViewModel @Inject constructor(
                 sfCustomNotiTrailPower,
                 sfCustomNotiBattery,
                 sfEnableNotiDailyYetHonkaiSr,
-                sfNotiDailyYetTimeHonkaiSr,
                 sfEnableNotiWeeklyYetHonkaiSr,
-                sfNotiWeeklyYetDayHonkaiSr,
-                sfNotiWeeklyYetTimeHonkaiSr,
                 sfEnableNotiDailyYetZZZ,
-                sfNotiDailyYetTimeZZZ,
                 sfEnableNotiWeeklyYetZZZ,
-                sfNotiWeeklyYetDayZZZ,
-                sfNotiWeeklyYetTimeZZZ,
                 sfEnableNotiReserveFullHonkaiSr,
                 sfEnableNotiPeriodScoreHonkaiSr,
-                sfNotiPeriodScoreDayHonkaiSr,
-                sfNotiPeriodScoreTimeHonkaiSr,
                 sfEnableNotiMemberClaimZZZ,
-                sfNotiMemberClaimTimeZZZ,
                 sfEnableNotiMemberExpireZZZ,
                 sfNotiMemberExpireDaysZZZ,
                 sfEnableNotiCafeZZZ,
-                sfNotiCafeTimeZZZ,
                 sfAutoRefreshPeriod,
                 sfEnableNotiEach40Resin,
                 sfEnableNoti140Resin,
@@ -330,27 +298,17 @@ class MainViewModel @Inject constructor(
             customNotiBattery,
 
             sfEnableNotiDailyYetHonkaiSr.value,
-            sfNotiDailyYetTimeHonkaiSr.value,
             sfEnableNotiWeeklyYetHonkaiSr.value,
-            sfNotiWeeklyYetDayHonkaiSr.value,
-            sfNotiWeeklyYetTimeHonkaiSr.value,
 
             sfEnableNotiDailyYetZZZ.value,
-            sfNotiDailyYetTimeZZZ.value,
             sfEnableNotiWeeklyYetZZZ.value,
-            sfNotiWeeklyYetDayZZZ.value,
-            sfNotiWeeklyYetTimeZZZ.value,
 
             sfEnableNotiReserveFullHonkaiSr.value,
             sfEnableNotiPeriodScoreHonkaiSr.value,
-            sfNotiPeriodScoreDayHonkaiSr.value,
-            sfNotiPeriodScoreTimeHonkaiSr.value,
             sfEnableNotiMemberClaimZZZ.value,
-            sfNotiMemberClaimTimeZZZ.value,
             sfEnableNotiMemberExpireZZZ.value,
             sfNotiMemberExpireDaysZZZ.value,
             sfEnableNotiCafeZZZ.value,
-            sfNotiCafeTimeZZZ.value,
         )
     }
 
