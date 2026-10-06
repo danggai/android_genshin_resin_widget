@@ -59,8 +59,8 @@
     <string name="time_30m">30분</string>
     <string name="time_1h">1시간</string>
 
-    <string name="btn_each_40_resin">40레진 마다</string>
-    <string name="btn_180_resin">180레진</string>
+    <string name="btn_each_40_resin">40마다</string>
+    <string name="btn_180_resin">180 도달</string>
     <string name="resin">레진</string>
     <string name="btn_expedition_done">탐험 완료</string>
     <string name="btn_assignment_done">의뢰 완료</string>
@@ -74,13 +74,13 @@
     <string name="btn_bounty_commission_yet">현상금 의뢰 미완료</string>
 
     <string name="trailblaze_power">개척력</string>
-    <string name="btn_each_60_trailblaze_power">60개척력 마다</string>
-    <string name="btn_290_trailblaze_power">290개척력</string>
+    <string name="btn_each_60_trailblaze_power">60마다</string>
+    <string name="btn_290_trailblaze_power">290 도달</string>
 
     <string name="battery">배터리</string>
-    <string name="btn_each_40_battery">40배터리 마다</string>
-    <string name="btn_each_60_battery">60배터리 마다</string>
-    <string name="btn_230_battery">230배터리</string>
+    <string name="btn_each_40_battery">40마다</string>
+    <string name="btn_each_60_battery">60마다</string>
+    <string name="btn_230_battery">230 도달</string>
 
     <string name="btn_remain_time">남은 시간</string>
     <string name="btn_full_charge_time">완충 시각</string>
