@@ -84,7 +84,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="@{() -> vm.onClickManageAccount(item)}"
                 android:src="@drawable/baseline_manage_accounts_24"
-                app:tint="@color/light_blue_600" />
+                app:tint="@color/icon_muted" />
 
             <android.widget.Space
                 android:layout_width="7dp"
@@ -96,7 +96,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="@{() -> vm.onClickDeleteAccount(item)}"
                 android:src="@drawable/baseline_person_remove_24"
-                app:tint="@color/light_blue_600" />
+                app:tint="@color/icon_muted" />
 
         </LinearLayout>
 

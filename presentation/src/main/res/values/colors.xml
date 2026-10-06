@@ -57,4 +57,7 @@
     <color name="chip_zzz_unchecked">#38342A</color>
     <color name="title_zzz">#F5DE8A</color>
     <color name="logo_zzz_tint">#2F2B1F</color>
+    <color name="point_muted">#2E6A8C</color>
+    <color name="on_point_muted">#EAF6FC</color>
+    <color name="icon_muted">#6F9DB8</color>
 </resources>

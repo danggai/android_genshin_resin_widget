@@ -105,6 +105,8 @@
     </style>
 
     <style name="MaterialButton">
+        <item name="backgroundTint">@color/point_muted</item>
+        <item name="android:textColor">@color/on_point_muted</item>
         <item name="cornerRadius">12dp</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:letterSpacing">-0.04</item>
