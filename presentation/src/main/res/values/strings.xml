@@ -37,14 +37,14 @@
     <string name="new_hoyolab_account">New HoYoLAB Account</string>
     <string name="hoyolab_checkin">HoYoLAB Check-in</string>
     <string name="widget_customizing">Widget Design Customizing</string>
-    <string name="btn_no_genshin_account">Don\'t use the Genshin Impact widget.</string>
-    <string name="btn_no_honkai_sr_account">Don\'t use the Honkai: Star Rail widget.</string>
-    <string name="btn_no_zzz_account">Don\'t use the Zenless Zone Zero widget.</string>
     <string name="hoyolab_checkin_desc">For the first time, press the \'HoYoLAB Check-in\' button to check in manually so that automatic check-in works properly.</string>
     <string name="hoyolab_checkin_desc_2">Automatic check-in is performed based on the account under My Info &gt; My Characters in HoYoLAB.</string>
 
     <string name="save_setting">Save Setting</string>
     <string name="add_widget">Add Widget</string>
+    <string name="btn_custom">Custom</string>
+    <string name="noti_at_value">At %1$s</string>
+    <string name="dialog_title_custom_noti">%1$s alert value</string>
     <string name="save">Save</string>
     <string name="ok">OK</string>
     <string name="reset">Reset</string>
@@ -53,7 +53,7 @@
     <string name="no_hoyolab_accounts">No HoYoLAB account registered.</string>
     <string name="get_cookie">Click here after Login!</string>
     <string name="get_cookie_btn">Log in to get cookies</string>
-    <string name="get_uid_btn">Automatically get In-game data</string>
+    <string name="get_uid_btn">Get In-game data using Cookie</string>
 
     <string name="asia" translatable="false">Asia</string>
     <string name="america" translatable="false">America</string>
@@ -65,24 +65,33 @@
     <string name="time_30m">30m</string>
     <string name="time_1h">1h</string>
 
-    <string name="btn_each_40_resin">Every 40 Resin</string>
-    <string name="btn_180_resin">180 Resins</string>
+    <string name="btn_each_40_resin">Every 40</string>
+    <string name="btn_180_resin">At 180</string>
     <string name="resin">Resin</string>
     <string name="btn_expedition_done">Expedition Done</string>
     <string name="btn_assignment_done">Assignment Done</string>
-    <string name="btn_home_coin_full">Realm Currency Full</string>
-    <string name="btn_param_reached">Parametric Transformer Ready</string>
-    <string name="btn_daily_commission_yet">Daily Commission Incomplete Notification</string>
-    <string name="btn_weekly_boss_yet">Weekly Boss Incomplete Notification</string>
+    <string name="btn_home_coin_full">Realm Currency</string>
+    <string name="btn_param_reached">Parametric Transformer</string>
+    <string name="btn_daily_commission_yet">Daily commissions left</string>
+    <string name="btn_weekly_boss_yet">Weekly boss left</string>
+    <string name="btn_daily_training_yet">Daily training left</string>
+    <string name="btn_echo_of_war_yet">Echo of War left</string>
+    <string name="btn_engagement_yet">Engagement left</string>
+    <string name="btn_bounty_commission_yet">Bounty commission left</string>
+    <string name="btn_reserve_full">Reserve full</string>
+    <string name="btn_period_score_yet">Cycle score left</string>
+    <string name="btn_member_claim_yet">Membership unclaimed</string>
+    <string name="btn_member_expire_soon">Membership expiring</string>
+    <string name="btn_cafe_yet">COFF Café not visited</string>
 
     <string name="trailblaze_power">Trailblaze Power</string>
-    <string name="btn_each_60_trailblaze_power">Every 60 Trailblaze Power</string>
-    <string name="btn_290_trailblaze_power">290 Trailblaze Power</string>
+    <string name="btn_each_60_trailblaze_power">Every 60</string>
+    <string name="btn_290_trailblaze_power">At 290</string>
 
     <string name="battery">Battery</string>
-    <string name="btn_each_40_battery">Every 40 Battery</string>
-    <string name="btn_each_60_battery">Every 60 Battery</string>
-    <string name="btn_230_battery">230 Battery</string>
+    <string name="btn_each_40_battery">Every 40</string>
+    <string name="btn_each_60_battery">Every 60</string>
+    <string name="btn_230_battery">At 230</string>
 
     <string name="btn_remain_time">Remaining time</string>
     <string name="btn_full_charge_time">Fully charged at</string>
@@ -100,10 +109,10 @@
     <string name="btn_auto_check_in_enable_honkai_sr">Honkai: Star Rail</string>
     <string name="btn_auto_check_in_enable_zzz">Zenless Zone Zero</string>
 
-    <string name="btn_start_check_in">Start check-in now</string>
+    <string name="btn_start_check_in">Check-in on Save</string>
 
-    <string name="btn_check_in_success">On Check-in Success</string>
-    <string name="btn_check_in_failed">On Check-in Failure</string>
+    <string name="btn_check_in_success">Success</string>
+    <string name="btn_check_in_failed">Failure</string>
 
 
     <string name="done">Done</string>
@@ -302,8 +311,25 @@
     <string name="push_msg_daily_commission_yet">%s! Have you completed today\'s Adventurers\' Guild commissions? If not, go check!</string>
 
     <string name="push_weekly_boss_title">Weekly Boss Notification</string>
+    <string name="push_daily_training_title">Daily Training Notification</string>
+    <string name="push_echo_of_war_title">Echo of War Notification</string>
+    <string name="push_engagement_title">Engagement Notification</string>
+    <string name="push_bounty_commission_title">Bounty Commission Notification</string>
+    <string name="push_reserve_full_title">Reserve Trailblaze Power Notification</string>
+    <string name="push_period_score_title">Cycle Score Notification</string>
+    <string name="push_member_card_title">Membership Notification</string>
+    <string name="push_cafe_title">COFF Café Notification</string>
     <string name="push_weekly_boss_description">This is a notification sent to travelers when they do not use the weekly boss resin discount until the set date!</string>
     <string name="push_msg_weekly_boss_yet">%s! Have you used up this week\'s weekly boss resin discounts? If not, go check!</string>
+    <string name="push_msg_daily_training_yet">%s! Have you finished today\'s Daily Training? If not, go check!</string>
+    <string name="push_msg_echo_of_war_yet">%s! Have you used up this week\'s Echo of War discounts? If not, go check!</string>
+    <string name="push_msg_engagement_yet">%s! Have you filled today\'s Engagement? If not, go check!</string>
+    <string name="push_msg_bounty_commission_yet">%s! Have you finished this week\'s Bounty Commission progress? If not, go check!</string>
+    <string name="push_msg_reserve_full">%s! Your reserve Trailblaze Power is full!</string>
+    <string name="push_msg_period_score_yet">%s! Have you filled this cycle\'s score? If not, go check!</string>
+    <string name="push_msg_member_claim_yet">%s! You haven\'t claimed today\'s Membership reward yet!</string>
+    <string name="push_msg_member_expire_soon">%1$s! Your Membership expires in %2$d day(s)!</string>
+    <string name="push_msg_cafe_yet">%s! You haven\'t visited COFF Café today!</string>
 
 
     <string name="hint_cookie">Enter HoYoLAB\'s cookie!</string>
@@ -382,7 +408,7 @@
     <string name="coffee">COFF Café</string>
 
     <string name="ridu_weekly">Ridu Weekly</string>
-    <string name="investigation_point">Investigation Point</string>
+    <string name="bounty_commission_progress">Bounty Commission Progress</string>
 
     <string name="zzz_member_card">Membership</string>
     <string name="zzz_member_card_not_opened">Non-member</string>
@@ -462,4 +488,14 @@
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
     <string name="dialog_msg_patch_note">- Added data for Version 7.1 and Snezhnaya-related content.</string>
+    <string-array name="expire_days">
+        <item>1 day</item>
+        <item>3 days</item>
+        <item>7 days</item>
+    </string-array>
+
+    <string name="noti_time_daily">Daily reminder time</string>
+    <string name="noti_time_weekly">Weekly reminder day &amp; time</string>
+    <string name="btn_use_game">Use this game</string>
+    <string name="change_language">Language</string>
 </resources>

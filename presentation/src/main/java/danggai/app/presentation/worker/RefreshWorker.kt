@@ -550,7 +550,59 @@ class RefreshWorker @AssistedInject constructor(
                     sendNoti(account, NotiType.StarRail.ExpeditionDone, null)
                 }
             }
-        }
+
+            val calendar = Calendar.getInstance()
+            val yymmdd = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE).format(Date())
+            val dailyNote = data.dailyNote
+
+            if (notiSettings.notiDailyYetHonkaiSr &&
+                !isErrorOccurred(data) &&
+                yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.honkai_sr_uid) &&
+                calendar.get(Calendar.HOUR_OF_DAY) >= notiSettings.notiDailyYetTime &&
+                dailyNote.currentTrainScore < dailyNote.maxTrainScore
+            ) {
+                log.e()
+                preference.setStringRecentDailyCommissionNotiDate(account.honkai_sr_uid, yymmdd)
+                sendNoti(account, NotiType.StarRail.DailyTrainingNotDone, null)
+            }
+
+            if (notiSettings.notiWeeklyYetHonkaiSr &&
+                !isErrorOccurred(data) &&
+                yymmdd != preference.getStringRecentWeeklyBossNotiDate(account.honkai_sr_uid) &&
+                calendar.get(Calendar.HOUR_OF_DAY) >= notiSettings.notiWeeklyYetTime &&
+                calendar.get(Calendar.DAY_OF_WEEK) == notiSettings.notiWeeklyYetDay &&
+                dailyNote.weeklyCocoonCnt > 0
+            ) {
+                log.e()
+                preference.setStringRecentWeeklyBossNotiDate(account.honkai_sr_uid, yymmdd)
+                sendNoti(account, NotiType.StarRail.EchoOfWarNotDone, null)
+            }
+
+            if (notiSettings.notiReserveFullHonkaiSr &&
+                !isErrorOccurred(data) &&
+                !prefData.dailyNote.isReserveStaminaFull &&
+                dailyNote.isReserveStaminaFull
+            ) {
+                log.e()
+                sendNoti(account, NotiType.StarRail.ReserveStaminaFull, null)
+            }
+
+            val hasPeriodScore = dailyNote.periodMaxScore > 0
+            val periodScore = if (hasPeriodScore) dailyNote.periodScore else dailyNote.currentRogueScore
+            val periodMaxScore = if (hasPeriodScore) dailyNote.periodMaxScore else dailyNote.maxRogueScore
+
+            if (notiSettings.notiPeriodScoreHonkaiSr &&
+                !isErrorOccurred(data) &&
+                yymmdd != preference.getStringRecentNotiDate(Constant.NOTI_KEY_PERIOD_SCORE, account.honkai_sr_uid) &&
+                calendar.get(Calendar.HOUR_OF_DAY) >= notiSettings.notiWeeklyYetTime &&
+                calendar.get(Calendar.DAY_OF_WEEK) == notiSettings.notiWeeklyYetDay &&
+                periodMaxScore > 0 &&
+                periodScore < periodMaxScore
+            ) {
+                log.e()
+                preference.setStringRecentNotiDate(Constant.NOTI_KEY_PERIOD_SCORE, account.honkai_sr_uid, yymmdd)
+                sendNoti(account, NotiType.StarRail.PeriodScoreNotDone, null)
+            }        }
 
         try {
             sendNotiActions()
@@ -632,20 +684,74 @@ class RefreshWorker @AssistedInject constructor(
                 }
             }
 
-            // 일퀘알림
-//        val calendar = Calendar.getInstance()
-//        val yymmdd = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE).format(Date())
+            val calendar = Calendar.getInstance()
+            val yymmdd = SimpleDateFormat(Constant.DATE_FORMAT_YEAR_MONTH_DATE).format(Date())
 
-//        if (settings.notiDailyYet &&
-//            yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.zzz_uid) &&
-//            calendar.get(Calendar.HOUR) >= settings.notiDailyYetTime &&
-//            !dailyNote.is_extra_task_reward_received
-//        ) {
-//            log.e()
-//            preference.setStringRecentDailyCommissionNotiDate(account.zzz_uid, yymmdd)
-//            sendNoti(account, Constant.NotiType.DAILY_COMMISSION_YET, 0)
-//        }
-        }
+            if (settings.notiDailyYetZZZ &&
+                yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.zzz_uid) &&
+                calendar.get(Calendar.HOUR_OF_DAY) >= settings.notiDailyYetTime &&
+                dailyNote.vitality.max > 0 &&
+                dailyNote.vitality.current < dailyNote.vitality.max
+            ) {
+                log.e()
+                preference.setStringRecentDailyCommissionNotiDate(account.zzz_uid, yymmdd)
+                sendNoti(account, NotiType.ZZZ.EngagementNotDone, null)
+            }
+
+            val isBountyNotDone = dailyNote.bountyCommission?.let {
+                it.unlock && it.total > 0 && it.num < it.total
+            } == true
+
+            if (settings.notiWeeklyYetZZZ &&
+                yymmdd != preference.getStringRecentWeeklyBossNotiDate(account.zzz_uid) &&
+                calendar.get(Calendar.HOUR_OF_DAY) >= settings.notiWeeklyYetTime &&
+                calendar.get(Calendar.DAY_OF_WEEK) == settings.notiWeeklyYetDay &&
+                isBountyNotDone
+            ) {
+                log.e()
+                preference.setStringRecentWeeklyBossNotiDate(account.zzz_uid, yymmdd)
+                sendNoti(account, NotiType.ZZZ.BountyCommissionNotDone, null)
+            }
+
+            val memberCard = dailyNote.memberCard
+            val isMemberOpen = memberCard?.isOpen == true
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+
+            if (settings.notiMemberClaimZZZ &&
+                isMemberOpen &&
+                memberCard?.memberCardState == Constant.ZZZMemberCardState.NO.value &&
+                yymmdd != preference.getStringRecentNotiDate(Constant.NOTI_KEY_MEMBER_CLAIM, account.zzz_uid) &&
+                hour >= settings.notiDailyYetTime
+            ) {
+                log.e()
+                preference.setStringRecentNotiDate(Constant.NOTI_KEY_MEMBER_CLAIM, account.zzz_uid, yymmdd)
+                sendNoti(account, NotiType.ZZZ.MemberCardNotClaimed, null)
+            }
+
+            val memberRemainSeconds = memberCard?.expTime?.toLongOrNull() ?: 0L
+            val secondsPerDay = 24 * 60 * 60L
+
+            if (settings.notiMemberExpireZZZ &&
+                isMemberOpen &&
+                memberRemainSeconds in 1..(settings.notiMemberExpireDaysZZZ * secondsPerDay) &&
+                yymmdd != preference.getStringRecentNotiDate(Constant.NOTI_KEY_MEMBER_EXPIRE, account.zzz_uid) &&
+                hour >= Constant.ZZZ_MEMBER_EXPIRE_NOTI_HOUR
+            ) {
+                log.e()
+                preference.setStringRecentNotiDate(Constant.NOTI_KEY_MEMBER_EXPIRE, account.zzz_uid, yymmdd)
+                val remainDays = ((memberRemainSeconds + secondsPerDay - 1) / secondsPerDay).toInt()
+                sendNoti(account, NotiType.ZZZ.MemberCardExpiring, remainDays)
+            }
+
+            if (settings.notiCafeZZZ &&
+                dailyNote.cafeState == "CafeStateNo" &&
+                yymmdd != preference.getStringRecentNotiDate(Constant.NOTI_KEY_CAFE, account.zzz_uid) &&
+                hour >= settings.notiDailyYetTime
+            ) {
+                log.e()
+                preference.setStringRecentNotiDate(Constant.NOTI_KEY_CAFE, account.zzz_uid, yymmdd)
+                sendNoti(account, NotiType.ZZZ.CafeNotVisited, null)
+            }        }
 
         try {
             sendNotiActions()

@@ -28,4 +28,37 @@
 
     <color name="widget_font_main_dark">#eeeeee</color>
     <color name="widget_font_sub_dark">#999999</color>
+
+    <color name="page_bg">#12161C</color>
+    <color name="surface">#1B2027</color>
+    <color name="on_surface">#E8EAED</color>
+    <color name="on_surface_variant">#9AA4AF</color>
+    <color name="on_point">#06202E</color>
+    <color name="point_text">#7CCBF0</color>
+    <color name="accent_blue">#33A9E0</color>
+    <color name="chip_blue_checked">#1F4C66</color>
+    <color name="chip_blue_unchecked">#2A313A</color>
+    <color name="chip_blue_text">#A9DCF5</color>
+    <color name="card_genshin_bg">#1A2230</color>
+    <color name="accent_genshin">#86B2F0</color>
+    <color name="chip_genshin_checked">#28395C</color>
+    <color name="chip_genshin_unchecked">#2A3447</color>
+    <color name="title_genshin">#B5D0F8</color>
+    <color name="logo_genshin_tint">#212B3D</color>
+    <color name="card_honkai_sr_bg">#211D31</color>
+    <color name="accent_honkai_sr">#B39DF0</color>
+    <color name="chip_honkai_sr_checked">#3A3162</color>
+    <color name="chip_honkai_sr_unchecked">#322D47</color>
+    <color name="title_honkai_sr">#D2C6F8</color>
+    <color name="logo_honkai_sr_tint">#292440</color>
+    <color name="card_zzz_bg">#26231A</color>
+    <color name="accent_zzz">#F0CC4A</color>
+    <color name="chip_zzz_checked">#4A4018</color>
+    <color name="chip_zzz_unchecked">#38342A</color>
+    <color name="title_zzz">#F5DE8A</color>
+    <color name="logo_zzz_tint">#2F2B1F</color>
+    <color name="point_muted">#2E6A8C</color>
+    <color name="on_point_muted">#EAF6FC</color>
+    <color name="icon_muted">#6F9DB8</color>
+    <color name="outline_soft">#38424F</color>
 </resources>

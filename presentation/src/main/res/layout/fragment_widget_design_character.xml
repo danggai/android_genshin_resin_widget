@@ -18,13 +18,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@color/page_bg">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/ns_body"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
+            android:background="@color/page_bg"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -98,38 +98,42 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/widget_theme"
-                        android:textColor="@color/black"
-                        android:textSize="28sp"
-                        android:textStyle="bold|italic" />
+                        android:textColor="@color/on_surface"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
-                    <RadioGroup
-                        style="@style/RadioGroup"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:chipSpacingHorizontal="8dp"
+                        app:selectionRequired="true"
+                        app:singleSelection="true">
 
-                        <com.google.android.material.radiobutton.MaterialRadioButton
+                        <com.google.android.material.chip.Chip
                             android:id="@+id/rb_theme_automatic"
-                            style="@style/RadioButton"
+                            style="@style/NotiChipBlue"
                             android:checked="@{vm.sfWidgetTheme == WidgetTheme.AUTOMATIC.value}"
                             android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.AUTOMATIC)}"
-                            android:text="@string/btn_automatic" />
+                            android:text="@string/btn_automatic"
+                            app:chipIconVisible="false" />
 
-                        <com.google.android.material.radiobutton.MaterialRadioButton
+                        <com.google.android.material.chip.Chip
                             android:id="@+id/rb_theme_light"
-                            style="@style/RadioButton"
+                            style="@style/NotiChipBlue"
                             android:checked="@{vm.sfWidgetTheme == WidgetTheme.LIGHT.value}"
                             android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.LIGHT)}"
-                            android:text="@string/btn_light" />
+                            android:text="@string/btn_light"
+                            app:chipIconVisible="false" />
 
-                        <com.google.android.material.radiobutton.MaterialRadioButton
+                        <com.google.android.material.chip.Chip
                             android:id="@+id/rb_theme_dark"
-                            style="@style/RadioButton"
+                            style="@style/NotiChipBlue"
                             android:checked="@{vm.sfWidgetTheme == WidgetTheme.DARK.value}"
                             android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.DARK)}"
-                            android:text="@string/btn_dark" />
+                            android:text="@string/btn_dark"
+                            app:chipIconVisible="false" />
 
-                    </RadioGroup>
+                    </com.google.android.material.chip.ChipGroup>
 
                     <android.widget.Space
                         android:layout_width="wrap_content"
@@ -139,9 +143,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/background_transparency"
-                        android:textColor="@color/black"
-                        android:textSize="28sp"
-                        android:textStyle="bold|italic" />
+                        android:textColor="@color/on_surface"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
@@ -154,8 +158,8 @@
                             android:text="@{vm.sfTransparency.toString()}"
                             android:hint="100"
                             android:textSize="20sp"
-                            android:textColor="@color/black"
-                            android:textStyle="bold|italic"
+                            android:textColor="@color/on_surface"
+                            android:textStyle="bold"
                             android:gravity="center" />
 
                         <androidx.appcompat.widget.AppCompatSeekBar

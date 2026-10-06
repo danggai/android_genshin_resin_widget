@@ -34,14 +34,14 @@
     <string name="new_hoyolab_account">새 호요랩 계정</string>
     <string name="hoyolab_checkin">호요랩 출석체크</string>
     <string name="widget_customizing">위젯 디자인 설정</string>
-    <string name="btn_no_genshin_account">원신 위젯 기능 사용 안함</string>
-    <string name="btn_no_honkai_sr_account">붕괴: 스타레일 위젯 기능 사용 안함</string>
-    <string name="btn_no_zzz_account">젠레스 존 제로 위젯 기능 사용 안함</string>
     <string name="hoyolab_checkin_desc">최초 1회는 <b>\'호요랩 출석체크\'</b> 버튼을 눌러 수동으로 진행해야\n자동 출석이 정상적으로 진행됩니다.</string>
     <string name="hoyolab_checkin_desc_2">호요랩 내의 내 정보 > 나의 캐릭터 탭에 있는 계정을\n기준으로 자동 출석체크를 진행합니다.</string>
 
     <string name="save_setting">설정 저장</string>
     <string name="add_widget">위젯 추가</string>
+    <string name="btn_custom">직접 입력</string>
+    <string name="noti_at_value">%1$s 도달</string>
+    <string name="dialog_title_custom_noti">%1$s 알림 수치</string>
     <string name="save">저장</string>
     <string name="ok">확인</string>
     <string name="reset">초기화</string>
@@ -50,31 +50,40 @@
     <string name="no_hoyolab_accounts">등록 된 호요랩 계정이 없습니다.</string>
     <string name="get_cookie">로그인 후 여기를 눌러주세요!</string>
     <string name="get_cookie_btn">호요랩에 로그인 해 쿠키 가져오기</string>
-    <string name="get_uid_btn">자동으로 인게임 정보 가져오기</string>
+    <string name="get_uid_btn">쿠키로 인게임 정보 가져오기</string>
 
     <string name="disable">수동</string>
     <string name="time_15m">15분</string>
     <string name="time_30m">30분</string>
     <string name="time_1h">1시간</string>
 
-    <string name="btn_each_40_resin">40레진 마다</string>
-    <string name="btn_180_resin">180레진</string>
+    <string name="btn_each_40_resin">40마다</string>
+    <string name="btn_180_resin">180 도달</string>
     <string name="resin">레진</string>
     <string name="btn_expedition_done">탐험 완료</string>
     <string name="btn_assignment_done">의뢰 완료</string>
-    <string name="btn_home_coin_full">선계 주화 가득 참</string>
-    <string name="btn_param_reached">매개 변수 변환기 준비 됨</string>
-    <string name="btn_daily_commission_yet">일일임무 미완료 시 알림</string>
-    <string name="btn_weekly_boss_yet">주간보스 할인 잔여 시 알림</string>
+    <string name="btn_home_coin_full">선계 주화</string>
+    <string name="btn_param_reached">매개 변수 변환기</string>
+    <string name="btn_daily_commission_yet">일일임무 미완료</string>
+    <string name="btn_weekly_boss_yet">주간보스 잔여</string>
+    <string name="btn_daily_training_yet">일일 훈련 미완료</string>
+    <string name="btn_echo_of_war_yet">전쟁의 여운 잔여</string>
+    <string name="btn_engagement_yet">활약도 미완료</string>
+    <string name="btn_bounty_commission_yet">현상금 의뢰 미완료</string>
+    <string name="btn_reserve_full">예비 개척력 가득 참</string>
+    <string name="btn_period_score_yet">주기 점수 미완료</string>
+    <string name="btn_member_claim_yet">월정액 미수령</string>
+    <string name="btn_member_expire_soon">월정액 만료 임박</string>
+    <string name="btn_cafe_yet">COFF 카페 미방문</string>
 
     <string name="trailblaze_power">개척력</string>
-    <string name="btn_each_60_trailblaze_power">60개척력 마다</string>
-    <string name="btn_290_trailblaze_power">290개척력</string>
+    <string name="btn_each_60_trailblaze_power">60마다</string>
+    <string name="btn_290_trailblaze_power">290 도달</string>
 
     <string name="battery">배터리</string>
-    <string name="btn_each_40_battery">40배터리 마다</string>
-    <string name="btn_each_60_battery">60배터리 마다</string>
-    <string name="btn_230_battery">230배터리</string>
+    <string name="btn_each_40_battery">40마다</string>
+    <string name="btn_each_60_battery">60마다</string>
+    <string name="btn_230_battery">230 도달</string>
 
     <string name="btn_remain_time">남은 시간</string>
     <string name="btn_full_charge_time">완충 시각</string>
@@ -92,10 +101,10 @@
     <string name="btn_auto_check_in_enable_honkai_sr">붕괴: 스타레일</string>
     <string name="btn_auto_check_in_enable_zzz">젠레스 존 제로</string>
 
-    <string name="btn_start_check_in">바로 출석체크 진행하기</string>
+    <string name="btn_start_check_in">저장 시 출석</string>
 
-    <string name="btn_check_in_success">출석 성공 시</string>
-    <string name="btn_check_in_failed">출석 실패 시</string>
+    <string name="btn_check_in_success">성공</string>
+    <string name="btn_check_in_failed">실패</string>
 
     <string name="done">완료</string>
 
@@ -293,8 +302,25 @@
     <string name="push_msg_daily_commission_yet">%s! 모험가 길드의 오늘의 의뢰는 완료 했어? 아니면 한 번 확인해봐!</string>
 
     <string name="push_weekly_boss_title">주간 보스 토벌 알림</string>
+    <string name="push_daily_training_title">일일 훈련 알림</string>
+    <string name="push_echo_of_war_title">전쟁의 여운 알림</string>
+    <string name="push_engagement_title">활약도 알림</string>
+    <string name="push_bounty_commission_title">현상금 의뢰 알림</string>
+    <string name="push_reserve_full_title">예비 개척력 알림</string>
+    <string name="push_period_score_title">주기 점수 알림</string>
+    <string name="push_member_card_title">월정액 알림</string>
+    <string name="push_cafe_title">COFF 카페 알림</string>
     <string name="push_weekly_boss_description">설정한 날짜까지 주간 보스 레진 할인 횟수를 사용하지 않았을 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
     <string name="push_msg_weekly_boss_yet">%s! 이번 주 주간 보스 레진 할인 횟수는 소모 했어? 아니면 한 번 확인해봐!</string>
+    <string name="push_msg_daily_training_yet">%s! 오늘의 일일 훈련은 다 했어? 아니면 한 번 확인해봐!</string>
+    <string name="push_msg_echo_of_war_yet">%s! 이번 주 전쟁의 여운 할인 횟수는 다 썼어? 아니면 한 번 확인해봐!</string>
+    <string name="push_msg_engagement_yet">%s! 오늘의 활약도는 다 채웠어? 아니면 한 번 확인해봐!</string>
+    <string name="push_msg_bounty_commission_yet">%s! 이번 주 현상금 의뢰 진도는 다 채웠어? 아니면 한 번 확인해봐!</string>
+    <string name="push_msg_reserve_full">%s! 예비 개척력이 가득 찼어!</string>
+    <string name="push_msg_period_score_yet">%s! 이번 주기 점수는 다 채웠어? 아니면 한 번 확인해봐!</string>
+    <string name="push_msg_member_claim_yet">%s! 오늘 월정액을 아직 안 받았어!</string>
+    <string name="push_msg_member_expire_soon">%1$s! 월정액이 %2$d일 남았어!</string>
+    <string name="push_msg_cafe_yet">%s! 오늘 COFF 카페에 아직 안 갔어!</string>
 
 
     <string name="hint_cookie">HoYoLAB의 쿠키를 입력해 줘!</string>
@@ -343,7 +369,7 @@
 
     <!--    원신 위젯 -->
     <string name="daily_commissions">남은 일일 의뢰</string>
-    <string name="enemies_of_note">주간 보스 할인</string>
+    <string name="enemies_of_note">주간 보스</string>
     <string name="parametric_transformer">매개변수 변환기</string>
     <string name="realm_currency">선계 주화</string>
 
@@ -374,7 +400,7 @@
     <string name="coffee">COFF 카페</string>
 
     <string name="ridu_weekly">주간 리두</string>
-    <string name="investigation_point">제로 공동 조사 포인트</string>
+    <string name="bounty_commission_progress">현상금 의뢰 진도</string>
 
     <string name="zzz_member_card">로프넷 회원</string>
     <string name="zzz_member_card_not_opened">비회원</string>
@@ -454,4 +480,14 @@
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
     <string name="dialog_msg_patch_note">- 7.1 및 스네즈나야 관련 데이터 추가</string>
+    <string-array name="expire_days">
+        <item>1일</item>
+        <item>3일</item>
+        <item>7일</item>
+    </string-array>
+
+    <string name="noti_time_daily">일일 미완료 알림 시각</string>
+    <string name="noti_time_weekly">주간 미완료 알림 요일·시각</string>
+    <string name="btn_use_game">이 게임 사용</string>
+    <string name="change_language">언어 변경</string>
 </resources>

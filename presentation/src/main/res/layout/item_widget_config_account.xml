@@ -31,7 +31,7 @@
                 android:id="@+id/tv_nickname"
                 style="@style/TextView"
                 android:text="nickname"
-                android:textColor="@color/black"
+                android:textColor="@color/on_surface"
                 android:textSize="18sp"
                 />
 
@@ -44,7 +44,7 @@
                 android:id="@+id/tv_uid"
                 style="@style/TextView"
                 android:text="uid"
-                android:textColor="@color/black"
+                android:textColor="@color/on_surface"
                 android:layout_gravity="bottom"
                 />
 

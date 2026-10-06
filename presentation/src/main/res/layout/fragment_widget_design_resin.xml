@@ -25,71 +25,52 @@
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
         android:orientation="vertical">
-
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="20dp" />
-
-        <include
-            android:id="@+id/widget"
-            layout="@layout/widget_resin_fixed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp" />
-
-        <include
-            android:id="@+id/widget_honkai_sr"
-            layout="@layout/widget_trailblaze_power"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp" />
-
-        <include
-            android:id="@+id/widget_zzz"
-            layout="@layout/widget_battery"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp" />
-
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="15dp" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginVertical="12dp"
+            android:orientation="horizontal">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="10dp"
-                    android:text="@string/preview"
-                    android:textColor="@color/black"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic" />
+                <include
+                    android:id="@+id/widget"
+                    layout="@layout/widget_resin_fixed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
+                <include
+                    android:id="@+id/widget_honkai_sr"
+                    layout="@layout/widget_trailblaze_power"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    android:id="@+id/widget_zzz"
+                    layout="@layout/widget_battery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center">
+                android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="72dp"
-                    android:layout_height="52dp"
-                    android:layout_marginHorizontal="6dp"
+                    android:layout_width="56dp"
+                    android:layout_height="48dp"
+                    android:layout_marginVertical="4dp"
                     android:alpha="@{vm.sfSelectedPreview == Preview.GENSHIN ? 1f : 0.7f}"
                     android:background="@drawable/bg_preview_picker"
                     android:contentDescription="@string/genshin"
@@ -97,11 +78,10 @@
                     android:padding="8dp"
                     android:selected="@{vm.sfSelectedPreview == Preview.GENSHIN}"
                     android:src="@drawable/resin" />
-
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="72dp"
-                    android:layout_height="52dp"
-                    android:layout_marginHorizontal="6dp"
+                    android:layout_width="56dp"
+                    android:layout_height="48dp"
+                    android:layout_marginVertical="4dp"
                     android:alpha="@{vm.sfSelectedPreview == Preview.STARRAIL ? 1f : 0.7f}"
                     android:background="@drawable/bg_preview_picker"
                     android:contentDescription="@string/honkai_sr"
@@ -109,11 +89,10 @@
                     android:padding="8dp"
                     android:selected="@{vm.sfSelectedPreview == Preview.STARRAIL}"
                     android:src="@drawable/trailblaze_power" />
-
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="72dp"
-                    android:layout_height="52dp"
-                    android:layout_marginHorizontal="6dp"
+                    android:layout_width="56dp"
+                    android:layout_height="48dp"
+                    android:layout_marginVertical="4dp"
                     android:alpha="@{vm.sfSelectedPreview == Preview.ZZZ ? 1f : 0.7f}"
                     android:background="@drawable/bg_preview_picker"
                     android:contentDescription="@string/zzz"
@@ -121,26 +100,21 @@
                     android:padding="8dp"
                     android:selected="@{vm.sfSelectedPreview == Preview.ZZZ}"
                     android:src="@drawable/battery" />
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <android.widget.Space
-                android:layout_width="wrap_content"
-                android:layout_height="10dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginHorizontal="5dp"
-                android:background="#999999" />
-
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="5dp"
+            android:background="@color/outline_soft" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@color/white">
+            android:background="@color/page_bg">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -156,38 +130,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/widget_theme"
-                    android:textColor="@color/black"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic" />
+                    android:textColor="@color/on_surface"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-                <RadioGroup
-                    style="@style/RadioGroup"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:chipSpacingHorizontal="8dp"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
 
-                    <com.google.android.material.radiobutton.MaterialRadioButton
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/rb_theme_automatic"
-                        style="@style/RadioButton"
+                        style="@style/NotiChipBlue"
                         android:checked="@{vm.sfWidgetTheme == WidgetTheme.AUTOMATIC.value}"
                         android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.AUTOMATIC)}"
-                        android:text="@string/btn_automatic" />
+                        android:text="@string/btn_automatic"
+                        app:chipIconVisible="false" />
 
-                    <com.google.android.material.radiobutton.MaterialRadioButton
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/rb_theme_light"
-                        style="@style/RadioButton"
+                        style="@style/NotiChipBlue"
                         android:checked="@{vm.sfWidgetTheme == WidgetTheme.LIGHT.value}"
                         android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.LIGHT)}"
-                        android:text="@string/btn_light" />
+                        android:text="@string/btn_light"
+                        app:chipIconVisible="false" />
 
-                    <com.google.android.material.radiobutton.MaterialRadioButton
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/rb_theme_dark"
-                        style="@style/RadioButton"
+                        style="@style/NotiChipBlue"
                         android:checked="@{vm.sfWidgetTheme == WidgetTheme.DARK.value}"
                         android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.DARK)}"
-                        android:text="@string/btn_dark" />
+                        android:text="@string/btn_dark"
+                        app:chipIconVisible="false" />
 
-                </RadioGroup>
+                </com.google.android.material.chip.ChipGroup>
 
 
                 <android.widget.Space
@@ -198,38 +176,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/time_notation"
-                    android:textColor="@color/black"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic" />
+                    android:textColor="@color/on_surface"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-                <RadioGroup
-                    style="@style/RadioGroup"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:chipSpacingHorizontal="8dp"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
 
-                    <com.google.android.material.radiobutton.MaterialRadioButton
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/rb_remain_time"
-                        style="@style/RadioButton"
+                        style="@style/NotiChipBlue"
                         android:checked="@{vm.sfWidgetTimeNotation == TimeNotation.REMAIN_TIME}"
                         android:onClick="@{() -> vm.onClickSetResinTimeNotation(TimeNotation.REMAIN_TIME)}"
-                        android:text="@string/btn_remain_time" />
+                        android:text="@string/btn_remain_time"
+                        app:chipIconVisible="false" />
 
-                    <com.google.android.material.radiobutton.MaterialRadioButton
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/rb_full_charge_time"
-                        style="@style/RadioButton"
+                        style="@style/NotiChipBlue"
                         android:checked="@{vm.sfWidgetTimeNotation == TimeNotation.FULL_CHARGE_TIME}"
                         android:onClick="@{() -> vm.onClickSetResinTimeNotation(TimeNotation.FULL_CHARGE_TIME)}"
-                        android:text="@string/btn_full_charge_time" />
+                        android:text="@string/btn_full_charge_time"
+                        app:chipIconVisible="false" />
 
-                    <com.google.android.material.radiobutton.MaterialRadioButton
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/rb_disable_time"
-                        style="@style/RadioButton"
+                        style="@style/NotiChipBlue"
                         android:checked="@{vm.sfWidgetTimeNotation == TimeNotation.DISABLE_TIME}"
                         android:onClick="@{() -> vm.onClickSetResinTimeNotation(TimeNotation.DISABLE_TIME)}"
-                        android:text="@string/btn_disable" />
+                        android:text="@string/btn_disable"
+                        app:chipIconVisible="false" />
 
-                </RadioGroup>
+                </com.google.android.material.chip.ChipGroup>
 
                 <android.widget.Space
                     android:layout_width="wrap_content"
@@ -239,30 +221,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/image"
-                    android:textColor="@color/black"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic" />
+                    android:textColor="@color/on_surface"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-                <RadioGroup
-                    style="@style/RadioGroup"
-                    android:weightSum="3"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:chipSpacingHorizontal="8dp"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
 
-                    <com.google.android.material.radiobutton.MaterialRadioButton
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/rb_resin_image_visible"
-                        style="@style/RadioButton"
+                        style="@style/NotiChipBlue"
                         android:onClick="@{() -> vm.onClickResinImageVisible(ResinImageVisibility.VISIBLE)}"
-                        android:text="@string/btn_visible" />
+                        android:text="@string/btn_visible"
+                        app:chipIconVisible="false" />
 
-                    <com.google.android.material.radiobutton.MaterialRadioButton
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/rb_resin_image_invisible"
-                        style="@style/RadioButton"
+                        style="@style/NotiChipBlue"
                         android:onClick="@{() -> vm.onClickResinImageVisible(ResinImageVisibility.INVISIBLE)}"
-                        android:text="@string/btn_invisible" />
+                        android:text="@string/btn_invisible"
+                        app:chipIconVisible="false" />
 
-                </RadioGroup>
+                </com.google.android.material.chip.ChipGroup>
 
                 <android.widget.Space
                     android:layout_width="wrap_content"
@@ -272,28 +256,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/identifier"
-                    android:textColor="@color/black"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic" />
+                    android:textColor="@color/on_surface"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <com.google.android.material.chip.ChipGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="3">
+                    app:chipSpacingHorizontal="8dp">
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_uid"
-                        style="@style/Checkbox"
+                        style="@style/NotiChipBlue"
                         android:checked="@={vm.sfResinUidVisibility}"
-                        android:text="@string/uid" />
+                        android:text="@string/uid"
+                        app:chipIconVisible="false" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_name"
-                        style="@style/Checkbox"
+                        style="@style/NotiChipBlue"
                         android:checked="@={vm.sfResinNameVisibility}"
-                        android:text="@string/nickname_" />
+                        android:text="@string/nickname_"
+                        app:chipIconVisible="false" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                </com.google.android.material.chip.ChipGroup>
 
                 <android.widget.Space
                     android:layout_width="wrap_content"
@@ -303,9 +289,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/font_size"
-                    android:textColor="@color/black"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic" />
+                    android:textColor="@color/on_surface"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -318,9 +304,9 @@
                         android:gravity="center"
                         android:hint="030"
                         android:text="@{vm.sfResinFontSize.toString()}"
-                        android:textColor="@color/black"
+                        android:textColor="@color/on_surface"
                         android:textSize="20sp"
-                        android:textStyle="bold|italic" />
+                        android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatSeekBar
                         android:id="@+id/sb_fontsize"
@@ -346,9 +332,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/background_transparency"
-                    android:textColor="@color/black"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic" />
+                    android:textColor="@color/on_surface"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -361,9 +347,9 @@
                         android:gravity="center"
                         android:hint="170"
                         android:text="@{vm.sfTransparency.toString()}"
-                        android:textColor="@color/black"
+                        android:textColor="@color/on_surface"
                         android:textSize="20sp"
-                        android:textStyle="bold|italic" />
+                        android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatSeekBar
                         android:id="@+id/sb_transparent"

@@ -21,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:background="@color/light_blue_600"
+            android:background="@color/surface"
             android:gravity="center_vertical|right"
             >
 
@@ -36,7 +36,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:textSize="16sp"
                 android:textStyle="bold|italic"
-                android:textColor="@color/white"
+                android:textColor="@color/on_surface"
                 android:onClick="@{() -> vm.onClickGetCookie()}"
                 />
 
@@ -49,7 +49,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:onClick="@{() -> vm.onClickRefresh()}"
                 android:src="@drawable/baseline_refresh_24"
-                app:tint="@color/white"
+                app:tint="@color/on_surface"
                 />
 
             <ImageView
@@ -61,7 +61,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:onClick="@{() -> vm.onClickFinish()}"
                 android:src="@drawable/baseline_close_24"
-                app:tint="@color/white"
+                app:tint="@color/on_surface"
                 />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

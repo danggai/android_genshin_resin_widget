@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
@@ -43,6 +44,7 @@ object NotificationUtils {
 
         val builder = NotificationCompat.Builder(context, notificationParams.channelId).apply {
             setSmallIcon(icon)
+            BitmapFactory.decodeResource(context.resources, icon)?.let { setLargeIcon(it) }
             setContentTitle(title)
             setContentText(msg)
             setAutoCancel(true)

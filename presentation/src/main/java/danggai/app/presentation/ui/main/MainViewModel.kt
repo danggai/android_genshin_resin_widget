@@ -53,6 +53,19 @@ class MainViewModel @Inject constructor(
     var sfNotiWeeklyYetDay = MutableStateFlow(Calendar.SUNDAY)
     var sfNotiWeeklyYetTime = MutableStateFlow(21)
 
+    val sfEnableNotiDailyYetHonkaiSr = MutableStateFlow(false)
+    val sfEnableNotiWeeklyYetHonkaiSr = MutableStateFlow(false)
+
+    val sfEnableNotiDailyYetZZZ = MutableStateFlow(false)
+    val sfEnableNotiWeeklyYetZZZ = MutableStateFlow(false)
+
+    val sfEnableNotiReserveFullHonkaiSr = MutableStateFlow(false)
+    val sfEnableNotiPeriodScoreHonkaiSr = MutableStateFlow(false)
+    val sfEnableNotiMemberClaimZZZ = MutableStateFlow(false)
+    val sfEnableNotiMemberExpireZZZ = MutableStateFlow(false)
+    val sfNotiMemberExpireDaysZZZ = MutableStateFlow(3)
+    val sfEnableNotiCafeZZZ = MutableStateFlow(false)
+
     val sfEnableNotiEach40TrailPower = MutableStateFlow(false)
     val sfEnableNoti230TrailPower = MutableStateFlow(false)
     val sfEnableNotiCustomTrailPower = MutableStateFlow(false)
@@ -69,6 +82,7 @@ class MainViewModel @Inject constructor(
 
     val sfDeleteAccount = MutableSharedFlow<Account>()
     val sfShowDialogDailyWeeklyYet = MutableSharedFlow<Boolean>()
+    val sfShowDialogCustomNoti = MutableSharedFlow<CustomNotiType>()
 
     val sfExpandGenshin = MutableStateFlow(true)
     val sfExpandHonkaiSr = MutableStateFlow(true)
@@ -126,6 +140,11 @@ class MainViewModel @Inject constructor(
         observeAutoSave()
     }
 
+    /* 이전 버전에서 저장된 설정에는 새 항목이 없어 0으로 읽히므로 기본값으로 대체 */
+
+
+    private fun daysOrDefault(days: Int): Int = if (days == 0) 3 else days
+
     fun initUI() {
         preference.getDailyNoteSettings().let {
             sfAutoRefreshPeriod.value = it.autoRefreshPeriod
@@ -153,6 +172,20 @@ class MainViewModel @Inject constructor(
             sfEnableNoti230Battery.value = it.noti230Battery
             sfEnableNotiCustomBattery.value = it.notiCustomBattery
             sfCustomNotiBattery.value = if (it.customBattery != 0) it.customBattery.toString() else ""
+
+            sfEnableNotiDailyYetHonkaiSr.value = it.notiDailyYetHonkaiSr
+            sfEnableNotiWeeklyYetHonkaiSr.value = it.notiWeeklyYetHonkaiSr
+
+            sfEnableNotiDailyYetZZZ.value = it.notiDailyYetZZZ
+            sfEnableNotiWeeklyYetZZZ.value = it.notiWeeklyYetZZZ
+
+            sfEnableNotiReserveFullHonkaiSr.value = it.notiReserveFullHonkaiSr
+            sfEnableNotiPeriodScoreHonkaiSr.value = it.notiPeriodScoreHonkaiSr
+
+            sfEnableNotiMemberClaimZZZ.value = it.notiMemberClaimZZZ
+            sfEnableNotiMemberExpireZZZ.value = it.notiMemberExpireZZZ
+            sfNotiMemberExpireDaysZZZ.value = daysOrDefault(it.notiMemberExpireDaysZZZ)
+            sfEnableNotiCafeZZZ.value = it.notiCafeZZZ
         }
 
         preference.getCheckInSettings().let {
@@ -177,6 +210,16 @@ class MainViewModel @Inject constructor(
                 sfCustomNotiResin,
                 sfCustomNotiTrailPower,
                 sfCustomNotiBattery,
+                sfEnableNotiDailyYetHonkaiSr,
+                sfEnableNotiWeeklyYetHonkaiSr,
+                sfEnableNotiDailyYetZZZ,
+                sfEnableNotiWeeklyYetZZZ,
+                sfEnableNotiReserveFullHonkaiSr,
+                sfEnableNotiPeriodScoreHonkaiSr,
+                sfEnableNotiMemberClaimZZZ,
+                sfEnableNotiMemberExpireZZZ,
+                sfNotiMemberExpireDaysZZZ,
+                sfEnableNotiCafeZZZ,
                 sfAutoRefreshPeriod,
                 sfEnableNotiEach40Resin,
                 sfEnableNoti140Resin,
@@ -253,6 +296,19 @@ class MainViewModel @Inject constructor(
             sfEnableNoti230Battery.value,
             sfEnableNotiCustomBattery.value,
             customNotiBattery,
+
+            sfEnableNotiDailyYetHonkaiSr.value,
+            sfEnableNotiWeeklyYetHonkaiSr.value,
+
+            sfEnableNotiDailyYetZZZ.value,
+            sfEnableNotiWeeklyYetZZZ.value,
+
+            sfEnableNotiReserveFullHonkaiSr.value,
+            sfEnableNotiPeriodScoreHonkaiSr.value,
+            sfEnableNotiMemberClaimZZZ.value,
+            sfEnableNotiMemberExpireZZZ.value,
+            sfNotiMemberExpireDaysZZZ.value,
+            sfEnableNotiCafeZZZ.value,
         )
     }
 
@@ -280,6 +336,41 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    private fun getCustomNotiEnableFlow(type: CustomNotiType): MutableStateFlow<Boolean> =
+        when (type) {
+            CustomNotiType.RESIN -> sfEnableNotiCustomResin
+            CustomNotiType.TRAIL_POWER -> sfEnableNotiCustomTrailPower
+            CustomNotiType.BATTERY -> sfEnableNotiCustomBattery
+        }
+
+    private fun getCustomNotiValueFlow(type: CustomNotiType): MutableStateFlow<String> =
+        when (type) {
+            CustomNotiType.RESIN -> sfCustomNotiResin
+            CustomNotiType.TRAIL_POWER -> sfCustomNotiTrailPower
+            CustomNotiType.BATTERY -> sfCustomNotiBattery
+        }
+
+    fun getCustomNotiValue(type: CustomNotiType): String = getCustomNotiValueFlow(type).value
+
+    fun onClickCustomNoti(type: CustomNotiType) {
+        if (getCustomNotiEnableFlow(type).value) sfShowDialogCustomNoti.emitInVmScope(type)
+    }
+
+    fun confirmCustomNoti(type: CustomNotiType, input: String) {
+        val value = input.toIntOrNull()?.coerceAtMost(type.max)
+
+        if (value == null || value <= 0) {
+            cancelCustomNoti(type)
+            return
+        }
+
+        getCustomNotiValueFlow(type).value = value.toString()
+        getCustomNotiEnableFlow(type).value = true
+    }
+
+    fun cancelCustomNoti(type: CustomNotiType) {
+        getCustomNotiEnableFlow(type).value = false
+    }
     fun onClickAddWidget() {
         log.e()
         sendEvent(Event.ShowAddWidgetDialog())
@@ -327,6 +418,10 @@ class MainViewModel @Inject constructor(
         log.e()
         sendEvent(Event.ChangeLanguage())
     }
+
+    fun timeStringToInt(time: String): Int = DayTimeMapper.timeStringToInt(resource, time)
+
+    fun weekOfDayStringToInt(day: String): Int = DayTimeMapper.weekOfDayStringToInt(resource, day)
 
     fun setDailyCommissionNotiTime(time: String) {
         log.e(time)

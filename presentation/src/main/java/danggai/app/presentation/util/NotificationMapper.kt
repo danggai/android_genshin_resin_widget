@@ -73,12 +73,22 @@ object NotificationMapper {
             -> context.getString(R.string.push_trail_power_noti_title)
 
             NotiType.StarRail.ExpeditionDone -> context.getString(R.string.push_assignment_title)
+            NotiType.StarRail.DailyTrainingNotDone -> context.getString(R.string.push_daily_training_title)
+            NotiType.StarRail.EchoOfWarNotDone -> context.getString(R.string.push_echo_of_war_title)
+            NotiType.StarRail.ReserveStaminaFull -> context.getString(R.string.push_reserve_full_title)
+            NotiType.StarRail.PeriodScoreNotDone -> context.getString(R.string.push_period_score_title)
 
             NotiType.ZZZ.StaminaEach40,
             NotiType.ZZZ.StaminaEach60,
             NotiType.ZZZ.Stamina230,
             NotiType.ZZZ.StaminaCustom,
             -> context.getString(R.string.push_battery_noti_title)
+            NotiType.ZZZ.EngagementNotDone -> context.getString(R.string.push_engagement_title)
+            NotiType.ZZZ.BountyCommissionNotDone -> context.getString(R.string.push_bounty_commission_title)
+            NotiType.ZZZ.MemberCardNotClaimed,
+            NotiType.ZZZ.MemberCardExpiring,
+            -> context.getString(R.string.push_member_card_title)
+            NotiType.ZZZ.CafeNotVisited -> context.getString(R.string.push_cafe_title)
 
             is NotiType.CheckIn._Genshin,
             NotiType.CheckIn.NotFound.AccountGenshin -> context.getString(R.string.push_genshin_checkin_title)
@@ -221,6 +231,52 @@ object NotificationMapper {
                 context.getString(R.string.push_msg_battery_noti_custom),
                 nickname,
                 target
+            )
+
+            NotiType.StarRail.DailyTrainingNotDone -> String.format(
+                context.getString(R.string.push_msg_daily_training_yet),
+                nickname
+            )
+
+            NotiType.StarRail.EchoOfWarNotDone -> String.format(
+                context.getString(R.string.push_msg_echo_of_war_yet),
+                nickname
+            )
+
+            NotiType.ZZZ.EngagementNotDone -> String.format(
+                context.getString(R.string.push_msg_engagement_yet),
+                nickname
+            )
+
+            NotiType.ZZZ.BountyCommissionNotDone -> String.format(
+                context.getString(R.string.push_msg_bounty_commission_yet),
+                nickname
+            )
+
+            NotiType.StarRail.ReserveStaminaFull -> String.format(
+                context.getString(R.string.push_msg_reserve_full),
+                nickname
+            )
+
+            NotiType.StarRail.PeriodScoreNotDone -> String.format(
+                context.getString(R.string.push_msg_period_score_yet),
+                nickname
+            )
+
+            NotiType.ZZZ.MemberCardNotClaimed -> String.format(
+                context.getString(R.string.push_msg_member_claim_yet),
+                nickname
+            )
+
+            NotiType.ZZZ.MemberCardExpiring -> String.format(
+                context.getString(R.string.push_msg_member_expire_soon),
+                nickname,
+                target
+            )
+
+            NotiType.ZZZ.CafeNotVisited -> String.format(
+                context.getString(R.string.push_msg_cafe_yet),
+                nickname
             )
 
             NotiType.CheckIn._Genshin.Success -> String.format(
@@ -407,6 +463,79 @@ object NotificationMapper {
                 channelId = Constant.PUSH_CHANNEL_ZZZ_CHECK_IN_NOTI_ID
                 channelName = context.getString(R.string.push_channel_name_zzz)
                 channelDesc = context.getString(R.string.push_battery_noti_description)
+                priority = priorityDefault
+            }
+
+            NotiType.StarRail.DailyTrainingNotDone -> {
+                notificationId = System.currentTimeMillis().toInt()
+                channelId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_daily_commission)
+                channelDesc = context.getString(R.string.push_daily_commission_description)
+                priority = priorityDefault
+            }
+
+            NotiType.StarRail.EchoOfWarNotDone -> {
+                notificationId = System.currentTimeMillis().toInt()
+                channelId = Constant.PUSH_CHANNEL_WEEKLY_BOSS_YET_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_weekly_boss)
+                channelDesc = context.getString(R.string.push_weekly_boss_description)
+                priority = priorityDefault
+            }
+
+            NotiType.ZZZ.EngagementNotDone -> {
+                notificationId = System.currentTimeMillis().toInt()
+                channelId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_daily_commission)
+                channelDesc = context.getString(R.string.push_daily_commission_description)
+                priority = priorityDefault
+            }
+
+            NotiType.ZZZ.BountyCommissionNotDone -> {
+                notificationId = System.currentTimeMillis().toInt()
+                channelId = Constant.PUSH_CHANNEL_WEEKLY_BOSS_YET_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_weekly_boss)
+                channelDesc = context.getString(R.string.push_weekly_boss_description)
+                priority = priorityDefault
+            }
+
+            NotiType.StarRail.ReserveStaminaFull -> {
+                notificationId =
+                    abs(account.honkai_sr_uid.toInt()) + Constant.PREFIX_NOTI_ID_STAMINA
+                channelId = Constant.PUSH_CHANNEL_TRAIL_POWER_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_trail_power)
+                channelDesc = context.getString(R.string.push_trail_power_noti_description)
+                priority = priorityDefault
+            }
+
+            NotiType.StarRail.PeriodScoreNotDone -> {
+                notificationId = System.currentTimeMillis().toInt()
+                channelId = Constant.PUSH_CHANNEL_WEEKLY_BOSS_YET_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_weekly_boss)
+                channelDesc = context.getString(R.string.push_weekly_boss_description)
+                priority = priorityDefault
+            }
+
+            NotiType.ZZZ.MemberCardNotClaimed -> {
+                notificationId = System.currentTimeMillis().toInt()
+                channelId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_daily_commission)
+                channelDesc = context.getString(R.string.push_daily_commission_description)
+                priority = priorityDefault
+            }
+
+            NotiType.ZZZ.MemberCardExpiring -> {
+                notificationId = System.currentTimeMillis().toInt()
+                channelId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_daily_commission)
+                channelDesc = context.getString(R.string.push_daily_commission_description)
+                priority = priorityDefault
+            }
+
+            NotiType.ZZZ.CafeNotVisited -> {
+                notificationId = System.currentTimeMillis().toInt()
+                channelId = Constant.PUSH_CHANNEL_DAILY_COMMISSION_YET_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_daily_commission)
+                channelDesc = context.getString(R.string.push_daily_commission_description)
                 priority = priorityDefault
             }
 

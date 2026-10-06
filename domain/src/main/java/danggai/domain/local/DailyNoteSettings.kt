@@ -30,6 +30,20 @@ data class DailyNoteSettings(
     val noti230Battery: Boolean,
     val notiCustomBattery: Boolean,
     val customBattery: Int,
+
+    val notiDailyYetHonkaiSr: Boolean,
+    val notiWeeklyYetHonkaiSr: Boolean,
+
+    val notiDailyYetZZZ: Boolean,
+    val notiWeeklyYetZZZ: Boolean,
+
+    val notiReserveFullHonkaiSr: Boolean,
+    val notiPeriodScoreHonkaiSr: Boolean,
+
+    val notiMemberClaimZZZ: Boolean,
+    val notiMemberExpireZZZ: Boolean,
+    val notiMemberExpireDaysZZZ: Int,
+    val notiCafeZZZ: Boolean,
 ) {
     companion object {
         val EMPTY = DailyNoteSettings (
@@ -58,6 +72,20 @@ data class DailyNoteSettings(
             noti230Battery = false,
             notiCustomBattery = false,
             customBattery = 0,
+
+            notiDailyYetHonkaiSr = false,
+            notiWeeklyYetHonkaiSr = false,
+
+            notiDailyYetZZZ = false,
+            notiWeeklyYetZZZ = false,
+
+            notiReserveFullHonkaiSr = false,
+            notiPeriodScoreHonkaiSr = false,
+
+            notiMemberClaimZZZ = false,
+            notiMemberExpireZZZ = false,
+            notiMemberExpireDaysZZZ = 3,
+            notiCafeZZZ = false,
         )
     }
 }

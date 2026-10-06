@@ -305,12 +305,12 @@ class ZZZDetailWidget() : AppWidgetProvider() {
 
                     setText(
                         R.id.tv_investigation_point_title,
-                        _context.getString(R.string.investigation_point)
+                        _context.getString(R.string.bounty_commission_progress)
                     )
                     setText(
                         R.id.tv_investigation_point,
-                        surveyPoints?.let {
-                            if (it.num == it.total) _context.getString(R.string.done)
+                        bountyCommission?.let {
+                            if (it.num >= it.total) _context.getString(R.string.done)
                             else "${it.num}/${it.total}"
                         } ?: "-"
                     )

@@ -61,8 +61,6 @@ class WidgetDesignDetailFragment :
         binding.widget.tvWeeklyBoss.text = context?.let { CommonFunction.convertIntToTimes(3, it) }
         binding.widgetHksr.tvEchoOfWar.text =
             context?.let { CommonFunction.convertIntToTimes(3, it) }
-        binding.widgetHksr.tvSimulatedUniverseCleared.text =
-            context?.let { CommonFunction.convertIntToTimes(0, it) }
 
         when (mVM.sfWidgetTimeNotation.value) {
             TimeNotation.DEFAULT,
@@ -153,6 +151,7 @@ class WidgetDesignDetailFragment :
                         Preview.STARRAIL -> binding.widgetHksr.root.visibility = View.VISIBLE
                         Preview.ZZZ -> binding.widgetZzz.root.visibility = View.VISIBLE
                     }
+                    binding.llRoot.requestLayout()
                 }
             }
 
@@ -348,6 +347,7 @@ class WidgetDesignDetailFragment :
                     log.e()
                     binding.widget.tvUid.visibility = CommonFunction.getVisibility(it)
                     binding.widgetHksr.tvUid.visibility = CommonFunction.getVisibility(it)
+                    binding.widgetZzz.tvUid.visibility = CommonFunction.getVisibility(it)
                 }
             }
 
@@ -356,6 +356,7 @@ class WidgetDesignDetailFragment :
                     log.e()
                     binding.widget.tvName.visibility = CommonFunction.getVisibility(it)
                     binding.widgetHksr.tvName.visibility = CommonFunction.getVisibility(it)
+                    binding.widgetZzz.tvName.visibility = CommonFunction.getVisibility(it)
                 }
             }
 
@@ -457,8 +458,6 @@ class WidgetDesignDetailFragment :
                     mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlSimulatedUniverse.visibility =
                         CommonFunction.getVisibility(it)
-                    binding.widgetHksr.rlSimulatedUniverseCleared.visibility =
-                        CommonFunction.getVisibility(it && mVM.sfSimulatedUniverseClearTimeVisibility.value)
                 }
             }
 
@@ -467,15 +466,6 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlGridFight.visibility = CommonFunction.getVisibility(!it)
-                }
-            }
-
-            launch {
-                mVM.sfSimulatedUniverseClearTimeVisibility.collect {
-                    log.e()
-                    mVM.sfSelectedPreview.value = Preview.STARRAIL
-                    binding.widgetHksr.rlSimulatedUniverseCleared.visibility =
-                        CommonFunction.getVisibility(mVM.sfSimulatedUniverseDataVisibility.value && it)
                 }
             }
 

@@ -76,6 +76,9 @@ interface PreferenceManagerRepository {
     fun getStringRecentCheckInDate(gameType: String, uid: String): String
     fun setStringRecentCheckInDate(gameType: String, uid: String, value: String)
 
+    fun getStringRecentNotiDate(notiKey: String, uid: String): String
+    fun setStringRecentNotiDate(notiKey: String, uid: String, value: String)
+
 
     fun getStringLocale(): String
     fun setStringLocale(value: String)

@@ -1,28 +1,35 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Genshin_resin_widget" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Theme.Genshin_resin_widget" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="materialButtonStyle">@style/Widget.App.Button</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/light_blue_600</item>
         <item name="colorPrimaryVariant">@color/light_blue_600</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorOnSurface">@color/gray</item>
+        <item name="colorOnPrimary">@color/on_point</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="android:colorBackground">@color/page_bg</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/light_blue_600</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/page_bg</item>
         <!-- Customize your theme here. -->
         <item name="android:letterSpacing">-0.04</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/page_bg</item>
     </style>
 
     <style name="ThemeOverlay.Genshin_resin_widget.AppWidgetContainer" parent="">
         <item name="appWidgetBackgroundColor">@color/transparent</item>
     </style>
 
-    <style name="Theme.WidgetConfigure" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Theme.WidgetConfigure" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="materialButtonStyle">@style/Widget.App.Button</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/light_blue_600</item>
         <item name="colorPrimaryVariant">@color/light_blue_600</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorOnSurface">@color/gray</item>
+        <item name="colorOnPrimary">@color/on_point</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="android:colorBackground">@color/page_bg</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/transparent</item>
 

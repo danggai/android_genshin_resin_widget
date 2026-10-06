@@ -8,5 +8,5 @@
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
     android:text="@+id/tv"
-    android:textColor="@color/black"
+    android:textColor="@color/on_surface"
     android:textSize="14sp" />

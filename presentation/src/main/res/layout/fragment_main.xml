@@ -7,6 +7,8 @@
 
         <import type="android.view.View" />
 
+        <import type="danggai.app.presentation.ui.main.CustomNotiType" />
+
         <variable
             name="vm"
             type="danggai.app.presentation.ui.main.MainViewModel" />
@@ -15,55 +17,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
-
-        <LinearLayout
-            android:id="@+id/ll_top"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/light_blue_600"
-            app:layout_constraintBottom_toTopOf="@id/ns_body"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/iv_language"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:onClick="@{()-> vm.onClickChangeLanguage()}"
-                android:src="@drawable/baseline_translate_24"
-                app:tint="@color/white" />
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tl_top"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/light_blue_600"
-                app:layout_constraintBottom_toTopOf="@id/vp_main"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tabIndicatorColor="@color/white"
-                app:tabIndicatorHeight="5dp"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextAppearance="@style/TabText"
-                app:tabTextColor="@color/light_gray" />
-
-        </LinearLayout>
+        android:background="@color/page_bg">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/ns_body"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
+            android:background="@color/page_bg"
             app:layout_constraintBottom_toTopOf="@id/ad_view"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_top"
+            app:layout_constraintTop_toTopOf="parent"
             tools:context=".ui.main.MainFragment">
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -72,7 +36,7 @@
                 android:animateLayoutChanges="true"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingHorizontal="20dp">
+                android:paddingHorizontal="12dp">
 
                 <android.widget.Space
                     android:layout_width="wrap_content"
@@ -95,503 +59,633 @@
                     android:gravity="center"
                     android:paddingVertical="20dp"
                     android:text="@string/no_hoyolab_accounts"
-                    android:textColor="@color/black"
+                    android:textColor="@color/on_surface"
                     android:visibility="@{vm.sfAccountList.empty ?View.VISIBLE :View.GONE}" />
 
                 <com.google.android.material.button.MaterialButton
-                    style="@style/MaterialButton"
-                    android:layout_gravity="right"
+                    style="@style/MaterialButton.Secondary"
+                    android:layout_width="match_parent"
                     android:onClick="@{()->vm.onClickNewHoyolabAccount()}"
                     android:text="@string/new_hoyolab_account"
-                    android:textStyle="italic"
                     app:icon="@drawable/baseline_person_add_24"
-                    app:iconSize="24dp"
-                    app:iconTint="@color/white" />
+                    app:iconGravity="textStart"
+                    app:iconSize="22dp"
+                    app:iconTint="@color/point_text" />
 
-                <android.widget.Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextView"
-                    android:layout_width="match_parent"
-                    android:text="@string/refresh_cycle"
-                    android:textColor="@color/black"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic" />
-
-                <RadioGroup
-                    style="@style/RadioGroup"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent">
-
-                    <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/rb_disable"
-                        style="@style/RadioButton"
-                        android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(-1L)}"
-                        android:text="@string/disable" />
-
-                    <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/rb_15m"
-                        style="@style/RadioButton"
-                        android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(15L)}"
-                        android:text="@string/time_15m" />
-
-                    <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/rb_30m"
-                        style="@style/RadioButton"
-                        android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(30L)}"
-                        android:text="@string/time_30m" />
-
-                    <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/rb_1h"
-                        style="@style/RadioButton"
-                        android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(60L)}"
-                        android:text="@string/time_1h" />
-
-                </RadioGroup>
-
-                <android.widget.Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextView"
-                    android:layout_width="match_parent"
-                    android:text="@string/notification"
-                    android:textColor="@color/black"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic" />
-
-                <!--   Genshin   -->
-
-                <danggai.app.presentation.view.TitleDividerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> vm.onClickToggleGenshin()}"
-                    app:collapsible="true"
-                    app:expanded="@{vm.sfExpandGenshin}"
-                    app:titleText="@string/genshin" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="15dp"
-                    android:visibility="@{vm.sfExpandGenshin ? View.VISIBLE : View.GONE}">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_each_40resin"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiEach40Resin}"
-                        android:text="@string/btn_each_40_resin" />
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_140resin"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNoti140Resin}"
-                        android:text="@string/btn_180_resin" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/SoftCard">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="6dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/cb_custom_resin"
-                            style="@style/Checkbox.BoxOnly"
-                            android:layout_width="32dp"
-                            android:layout_marginEnd="0dp"
-                            android:checked="@={vm.sfEnableNotiCustomResin}" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/et_custom_resin"
-                            style="@style/EditTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:hint="200"
-                            android:imeOptions="actionDone"
-                            android:inputType="number"
-                            android:maxLength="4"
-                            android:paddingHorizontal="8dp"
-                            android:singleLine="true"
-                            android:text="@={vm.sfCustomNotiResin}"
-                            android:textSize="14sp" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:animateLayoutChanges="true"
+                        android:padding="14dp">
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/TextView"
-                            android:text="@string/resin"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
+                            android:layout_width="match_parent"
+                            android:text="@string/refresh_cycle"
+                            android:textColor="@color/on_surface"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            app:chipSpacingHorizontal="8dp"
+                            app:selectionRequired="true"
+                            app:singleSelection="true">
+
+                            <com.google.android.material.chip.Chip
+                                style="@style/NotiChipBlue"
+                                android:checked="@{vm.sfAutoRefreshPeriod != 15L &amp;&amp; vm.sfAutoRefreshPeriod != 30L &amp;&amp; vm.sfAutoRefreshPeriod != 60L &amp;&amp; vm.sfAutoRefreshPeriod != 120L}"
+                                android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(-1L)}"
+                                android:text="@string/disable"
+                                app:chipIcon="@drawable/baseline_close_24"
+                                app:chipIconTint="@color/noti_chip_icon_tint" />
+
+                            <com.google.android.material.chip.Chip
+                                style="@style/NotiChipBlue"
+                                android:checked="@{vm.sfAutoRefreshPeriod == 15L}"
+                                android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(15L)}"
+                                android:text="@string/time_15m"
+                                app:chipIcon="@drawable/baseline_sync_24"
+                                app:chipIconTint="@color/noti_chip_icon_tint" />
+
+                            <com.google.android.material.chip.Chip
+                                style="@style/NotiChipBlue"
+                                android:checked="@{vm.sfAutoRefreshPeriod == 30L}"
+                                android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(30L)}"
+                                android:text="@string/time_30m"
+                                app:chipIcon="@drawable/baseline_sync_24"
+                                app:chipIconTint="@color/noti_chip_icon_tint" />
+
+                            <com.google.android.material.chip.Chip
+                                style="@style/NotiChipBlue"
+                                android:checked="@{vm.sfAutoRefreshPeriod == 60L || vm.sfAutoRefreshPeriod == 120L}"
+                                android:onClick="@{() -> vm.onClickSetAutoRefreshPeriod(60L)}"
+                                android:text="@string/time_1h"
+                                app:chipIcon="@drawable/baseline_sync_24"
+                                app:chipIconTint="@color/noti_chip_icon_tint" />
+
+                        </com.google.android.material.chip.ChipGroup>
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_expedition_done"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiExpeditionDone}"
-                        android:text="@string/btn_expedition_done" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_home_coin_full"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiHomeCoinFull}"
-                        android:text="@string/btn_home_coin_full" />
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_param_reached"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiParamReach}"
-                        android:text="@string/btn_param_reached" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="6dp"
-                    android:gravity="center_vertical">
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_daily_yet_noti"
-                        style="@style/Checkbox"
-                        android:layout_width="32dp"
-                        android:layout_marginEnd="0dp"
-                        android:checked="@={vm.sfEnableNotiDailyYet}"
-                        android:onClick="@{() -> vm.onClickDailyCommissionYetNoti()}" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextView"
-                        android:maxLines="2"
-                        android:text="@string/btn_daily_commission_yet"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/sp_daily_yet_noti"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:background="@drawable/bg_spinner"
-                        android:imeOptions="actionDone" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="6dp"
-                    android:gravity="center_vertical">
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_weekly_yet_noti"
-                        style="@style/Checkbox.BoxOnly"
-                        android:layout_width="32dp"
-                        android:layout_marginEnd="0dp"
-                        android:checked="@={vm.sfEnableNotiWeeklyYet}"
-                        android:onClick="@{() -> vm.onClickWeeklyBossYetNoti()}" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextView"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:maxLines="2"
-                        android:text="@string/btn_weekly_boss_yet"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/sp_weekly_yet_noti_day"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:background="@drawable/bg_spinner"
-                        android:imeOptions="actionDone" />
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/sp_weekly_yet_noti_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:background="@drawable/bg_spinner"
-                        android:imeOptions="actionDone" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <!--   StarRail   -->
-                <danggai.app.presentation.view.TitleDividerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> vm.onClickToggleHonkaiSr()}"
-                    app:collapsible="true"
-                    app:expanded="@{vm.sfExpandHonkaiSr}"
-                    app:titleText="@string/honkai_sr" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="15dp"
-                    android:visibility="@{vm.sfExpandHonkaiSr ? View.VISIBLE : View.GONE}">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_each_40_trail_power"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiEach40TrailPower}"
-                        android:text="@string/btn_each_60_trailblaze_power" />
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_230_trail_power"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNoti230TrailPower}"
-                        android:text="@string/btn_290_trailblaze_power" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="6dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/cb_custom_trail_power"
-                            style="@style/Checkbox.BoxOnly"
-                            android:layout_width="32dp"
-                            android:layout_marginEnd="0dp"
-                            android:checked="@={vm.sfEnableNotiCustomTrailPower}" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/et_custom_trail_power"
-                            style="@style/EditTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:hint="280"
-                            android:imeOptions="actionDone"
-                            android:inputType="number"
-                            android:maxLength="4"
-                            android:paddingHorizontal="8dp"
-                            android:singleLine="true"
-                            android:text="@={vm.sfCustomNotiTrailPower}"
-                            android:textSize="14sp" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/TextView"
-                            android:text="@string/trailblaze_power"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_honkai_sr_expedition_done"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiHonkaiSrExpeditionDone}"
-                        android:text="@string/btn_assignment_done" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <!--   ZZZ   -->
-                <danggai.app.presentation.view.TitleDividerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> vm.onClickToggleZZZ()}"
-                    app:collapsible="true"
-                    app:expanded="@{vm.sfExpandZZZ}"
-                    app:titleText="@string/zzz" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="15dp"
-                    android:visibility="@{vm.sfExpandZZZ ? View.VISIBLE : View.GONE}">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_each_40_battery"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiEach40Battery}"
-                        android:text="@string/btn_each_40_battery" />
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_each_60_battery"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiEach60Battery}"
-                        android:text="@string/btn_each_60_battery" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_230_battery"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNoti230Battery}"
-                        android:text="@string/btn_230_battery" />
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="6dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/cb_custom_battery"
-                            style="@style/Checkbox.BoxOnly"
-                            android:layout_width="32dp"
-                            android:layout_marginEnd="0dp"
-                            android:checked="@={vm.sfEnableNotiCustomBattery}" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/et_custom_battery"
-                            style="@style/EditTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:hint="220"
-                            android:imeOptions="actionDone"
-                            android:inputType="number"
-                            android:maxLength="4"
-                            android:paddingHorizontal="8dp"
-                            android:singleLine="true"
-                            android:text="@={vm.sfCustomNotiBattery}"
-                            android:textSize="14sp" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/TextView"
-                            android:text="@string/battery"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <danggai.app.presentation.view.TitleDividerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> vm.onClickToggleCheckIn()}"
-                    app:collapsible="true"
-                    app:expanded="@{vm.sfExpandCheckIn}"
-                    app:titleText="@string/check_in" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="@{vm.sfExpandCheckIn ? View.VISIBLE : View.GONE}">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_check_in_success"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiCheckinSuccess}"
-                        android:text="@string/btn_check_in_success" />
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_check_in_fail"
-                        style="@style/Checkbox"
-                        android:checked="@={vm.sfEnableNotiCheckinFailed}"
-                        android:text="@string/btn_check_in_failed" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <android.widget.Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp" />
+                </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/MaterialButton"
-                    android:onClick="@{()->vm.onClickWidgetDesign()}"
-                    android:text="@string/widget_customizing"
-                    android:textSize="22sp"
-                    android:textStyle="italic"
-                    app:iconSize="26dp" />
-
-                <android.widget.Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    style="@style/MaterialButton"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
                     android:onClick="@{()->vm.onClickAddWidget()}"
                     android:text="@string/add_widget" />
 
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/MaterialButton.Secondary"
+                        android:layout_width="0dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:onClick="@{()->vm.onClickWidgetDesign()}"
+                        android:text="@string/widget_customizing" />
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/MaterialButton.Secondary"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:onClick="@{()->vm.onClickCheckIn()}"
+                        android:text="@string/hoyolab_checkin" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextView"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="26dp"
+                    android:text="@string/notification"
+                    android:textColor="@color/on_surface"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/SoftCard">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="8dp">
+
+
+                        <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/TextView"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:text="@string/noti_time_daily"
+                                android:textColor="@color/on_surface"
+                                android:textSize="16sp" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/sp_daily_yet_noti"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:background="@drawable/bg_spinner" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/TextView"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:text="@string/noti_time_weekly"
+                                android:textColor="@color/on_surface"
+                                android:textSize="16sp" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/sp_weekly_yet_noti_day"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:background="@drawable/bg_spinner" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/sp_weekly_yet_noti_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:background="@drawable/bg_spinner" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/SoftCard"
+                    app:cardBackgroundColor="@color/card_genshin_bg">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:animateLayoutChanges="true"
+                            android:paddingHorizontal="14dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="12dp">
+
+                            <danggai.app.presentation.view.TitleDividerView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:onClick="@{() -> vm.onClickToggleGenshin()}"
+                                app:collapsible="true"
+                                app:expanded="@{vm.sfExpandGenshin}"
+                                app:dividerVisible="false"
+                                app:titleColor="@color/title_genshin"
+                                app:titleIcon="@drawable/resin"
+                                app:titleItalic="false"
+                                app:titleText="@string/genshin" />
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="@{vm.sfExpandGenshin ? View.VISIBLE : View.GONE}">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:adjustViewBounds="true"
+                                    android:importantForAccessibility="no"
+                                    android:maxHeight="0dp"
+                                    android:scaleType="centerInside"
+                                    android:src="@drawable/logo_genshin"
+                                    android:tint="@color/logo_genshin_tint" />
+
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="4dp">
+
+                                    <com.google.android.material.chip.ChipGroup
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:chipSpacingHorizontal="8dp"
+                                        app:chipSpacingVertical="4dp">
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipGenshin"
+                                            android:checked="@={vm.sfEnableNotiEach40Resin}"
+                                            android:text="@string/btn_each_40_resin"
+                                            android:contentDescription="@{@string/resin + ' ' + @string/btn_each_40_resin}"
+                                            app:chipIcon="@drawable/resin" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipGenshin"
+                                            android:checked="@={vm.sfEnableNoti140Resin}"
+                                            android:text="@string/btn_180_resin"
+                                            android:contentDescription="@{@string/resin + ' ' + @string/btn_180_resin}"
+                                            app:chipIcon="@drawable/resin" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipGenshin.Custom"
+                                            android:checked="@={vm.sfEnableNotiCustomResin}"
+                                            android:onClick="@{() -> vm.onClickCustomNoti(CustomNotiType.RESIN)}"
+                                            android:text="@{vm.sfEnableNotiCustomResin ? @string/noti_at_value(vm.sfCustomNotiResin) : @string/btn_custom}"
+                                            android:contentDescription="@{(vm.sfEnableNotiCustomResin ? @string/noti_at_value(vm.sfCustomNotiResin) : @string/btn_custom) + ' ' + @string/resin}"
+                                            app:chipIcon="@drawable/resin" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipGenshin"
+                                            android:checked="@={vm.sfEnableNotiExpeditionDone}"
+                                            android:text="@string/btn_expedition_done"
+                                            app:chipIcon="@drawable/icon_warp_point" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipGenshin"
+                                            android:checked="@={vm.sfEnableNotiHomeCoinFull}"
+                                            android:text="@string/btn_home_coin_full"
+                                            app:chipIcon="@drawable/icon_serenitea_pot" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipGenshin"
+                                            android:checked="@={vm.sfEnableNotiParamReach}"
+                                            android:text="@string/btn_param_reached"
+                                            app:chipIcon="@drawable/icon_parametric_transformer" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipGenshin"
+                                            android:checked="@={vm.sfEnableNotiDailyYet}"
+                                            android:onClick="@{() -> vm.onClickDailyCommissionYetNoti()}"
+                                            android:text="@string/btn_daily_commission_yet"
+                                            app:chipIcon="@drawable/icon_daily_commission" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipGenshin"
+                                            android:checked="@={vm.sfEnableNotiWeeklyYet}"
+                                            android:onClick="@{() -> vm.onClickWeeklyBossYetNoti()}"
+                                            android:text="@string/btn_weekly_boss_yet"
+                                            app:chipIcon="@drawable/icon_domain" />
+                                    </com.google.android.material.chip.ChipGroup>
+
+                                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            </FrameLayout>
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </FrameLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/SoftCard"
+                    app:cardBackgroundColor="@color/card_honkai_sr_bg">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:animateLayoutChanges="true"
+                            android:paddingHorizontal="14dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="12dp">
+
+                            <danggai.app.presentation.view.TitleDividerView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:onClick="@{() -> vm.onClickToggleHonkaiSr()}"
+                                app:collapsible="true"
+                                app:expanded="@{vm.sfExpandHonkaiSr}"
+                                app:dividerVisible="false"
+                                app:titleColor="@color/title_honkai_sr"
+                                app:titleIcon="@drawable/trailblaze_power"
+                                app:titleItalic="false"
+                                app:titleText="@string/honkai_sr" />
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="@{vm.sfExpandHonkaiSr ? View.VISIBLE : View.GONE}">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:adjustViewBounds="true"
+                                    android:importantForAccessibility="no"
+                                    android:maxHeight="0dp"
+                                    android:scaleType="centerInside"
+                                    android:src="@drawable/logo_honkai_sr"
+                                    android:tint="@color/logo_honkai_sr_tint" />
+
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="4dp">
+
+                                    <com.google.android.material.chip.ChipGroup
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:chipSpacingHorizontal="8dp"
+                                        app:chipSpacingVertical="4dp">
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipHonkaiSr"
+                                            android:checked="@={vm.sfEnableNotiEach40TrailPower}"
+                                            android:text="@string/btn_each_60_trailblaze_power"
+                                            android:contentDescription="@{@string/trailblaze_power + ' ' + @string/btn_each_60_trailblaze_power}"
+                                            app:chipIcon="@drawable/trailblaze_power" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipHonkaiSr"
+                                            android:checked="@={vm.sfEnableNoti230TrailPower}"
+                                            android:text="@string/btn_290_trailblaze_power"
+                                            android:contentDescription="@{@string/trailblaze_power + ' ' + @string/btn_290_trailblaze_power}"
+                                            app:chipIcon="@drawable/trailblaze_power" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipHonkaiSr.Custom"
+                                            android:checked="@={vm.sfEnableNotiCustomTrailPower}"
+                                            android:onClick="@{() -> vm.onClickCustomNoti(CustomNotiType.TRAIL_POWER)}"
+                                            android:text="@{vm.sfEnableNotiCustomTrailPower ? @string/noti_at_value(vm.sfCustomNotiTrailPower) : @string/btn_custom}"
+                                            android:contentDescription="@{(vm.sfEnableNotiCustomTrailPower ? @string/noti_at_value(vm.sfCustomNotiTrailPower) : @string/btn_custom) + ' ' + @string/trailblaze_power}"
+                                            app:chipIcon="@drawable/trailblaze_power" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipHonkaiSr"
+                                            android:checked="@={vm.sfEnableNotiHonkaiSrExpeditionDone}"
+                                            android:text="@string/btn_assignment_done"
+                                            app:chipIcon="@drawable/icon_warp_point" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipHonkaiSr"
+                                            android:checked="@={vm.sfEnableNotiReserveFullHonkaiSr}"
+                                            android:text="@string/btn_reserve_full"
+                                            app:chipIcon="@drawable/icon_reserved_trailblaze_power" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipHonkaiSr"
+                                            android:checked="@={vm.sfEnableNotiDailyYetHonkaiSr}"
+                                            android:text="@string/btn_daily_training_yet"
+                                            app:chipIcon="@drawable/icon_activity_chip" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipHonkaiSr"
+                                            android:checked="@={vm.sfEnableNotiWeeklyYetHonkaiSr}"
+                                            android:text="@string/btn_echo_of_war_yet"
+                                            app:chipIcon="@drawable/icon_echo_of_war" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipHonkaiSr"
+                                            android:checked="@={vm.sfEnableNotiPeriodScoreHonkaiSr}"
+                                            android:text="@string/btn_period_score_yet"
+                                            app:chipIcon="@drawable/icon_simulated_universe"
+                                            app:chipIconTint="@color/on_surface" />
+                                    </com.google.android.material.chip.ChipGroup>
+
+                                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            </FrameLayout>
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </FrameLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/SoftCard"
+                    app:cardBackgroundColor="@color/card_zzz_bg">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:animateLayoutChanges="true"
+                            android:paddingHorizontal="14dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="12dp">
+
+                            <danggai.app.presentation.view.TitleDividerView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:onClick="@{() -> vm.onClickToggleZZZ()}"
+                                app:collapsible="true"
+                                app:expanded="@{vm.sfExpandZZZ}"
+                                app:dividerVisible="false"
+                                app:titleColor="@color/title_zzz"
+                                app:titleIcon="@drawable/battery"
+                                app:titleItalic="false"
+                                app:titleText="@string/zzz" />
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="@{vm.sfExpandZZZ ? View.VISIBLE : View.GONE}">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:adjustViewBounds="true"
+                                    android:importantForAccessibility="no"
+                                    android:maxHeight="0dp"
+                                    android:scaleType="centerInside"
+                                    android:src="@drawable/logo_zzz"
+                                    android:tint="@color/logo_zzz_tint" />
+
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="4dp">
+
+                                    <com.google.android.material.chip.ChipGroup
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:chipSpacingHorizontal="8dp"
+                                        app:chipSpacingVertical="4dp">
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipZzz"
+                                            android:checked="@={vm.sfEnableNotiEach40Battery}"
+                                            android:text="@string/btn_each_40_battery"
+                                            android:contentDescription="@{@string/battery + ' ' + @string/btn_each_40_battery}"
+                                            app:chipIcon="@drawable/battery" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipZzz"
+                                            android:checked="@={vm.sfEnableNotiEach60Battery}"
+                                            android:text="@string/btn_each_60_battery"
+                                            android:contentDescription="@{@string/battery + ' ' + @string/btn_each_60_battery}"
+                                            app:chipIcon="@drawable/battery" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipZzz"
+                                            android:checked="@={vm.sfEnableNoti230Battery}"
+                                            android:text="@string/btn_230_battery"
+                                            android:contentDescription="@{@string/battery + ' ' + @string/btn_230_battery}"
+                                            app:chipIcon="@drawable/battery" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipZzz.Custom"
+                                            android:checked="@={vm.sfEnableNotiCustomBattery}"
+                                            android:onClick="@{() -> vm.onClickCustomNoti(CustomNotiType.BATTERY)}"
+                                            android:text="@{vm.sfEnableNotiCustomBattery ? @string/noti_at_value(vm.sfCustomNotiBattery) : @string/btn_custom}"
+                                            android:contentDescription="@{(vm.sfEnableNotiCustomBattery ? @string/noti_at_value(vm.sfCustomNotiBattery) : @string/btn_custom) + ' ' + @string/battery}"
+                                            app:chipIcon="@drawable/battery" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipZzz"
+                                            android:checked="@={vm.sfEnableNotiDailyYetZZZ}"
+                                            android:text="@string/btn_engagement_yet"
+                                            app:chipIcon="@drawable/icon_fire" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipZzz"
+                                            android:checked="@={vm.sfEnableNotiWeeklyYetZZZ}"
+                                            android:text="@string/btn_bounty_commission_yet"
+                                            app:chipIcon="@drawable/icon_investigation_point" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipZzz"
+                                            android:checked="@={vm.sfEnableNotiMemberClaimZZZ}"
+                                            android:text="@string/btn_member_claim_yet"
+                                            app:chipIcon="@drawable/icon_polychrome" />
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipZzz"
+                                            android:checked="@={vm.sfEnableNotiCafeZZZ}"
+                                            android:text="@string/btn_cafe_yet"
+                                            app:chipIcon="@drawable/icon_coffee" />
+                                    </com.google.android.material.chip.ChipGroup>
+
+                                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
+
+                                        <com.google.android.material.chip.Chip
+                                            style="@style/NotiChipZzz"
+                                            android:checked="@={vm.sfEnableNotiMemberExpireZZZ}"
+                                            android:text="@string/btn_member_expire_soon"
+                                            app:chipIcon="@drawable/icon_polychrome" />
+
+                                        <androidx.appcompat.widget.AppCompatSpinner
+                                            android:id="@+id/sp_member_expire_noti_days_zzz"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="8dp"
+                                            android:background="@drawable/bg_spinner" />
+
+                                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            </FrameLayout>
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </FrameLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/SoftCard">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="10dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextView"
+                            android:layout_width="0dp"
+                            android:layout_marginEnd="14dp"
+                            android:layout_weight="1"
+                            android:text="@string/check_in"
+                            android:textColor="@color/on_surface"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:chipSpacingHorizontal="8dp"
+                            app:chipSpacingVertical="4dp">
+
+                            <com.google.android.material.chip.Chip
+                                style="@style/NotiChipBlue"
+                                android:checked="@={vm.sfEnableNotiCheckinSuccess}"
+                                android:text="@string/btn_check_in_success"
+                                app:chipIcon="@drawable/baseline_check_24"
+                                app:chipIconTint="@color/noti_chip_icon_tint" />
+
+                            <com.google.android.material.chip.Chip
+                                style="@style/NotiChipBlue"
+                                android:checked="@={vm.sfEnableNotiCheckinFailed}"
+                                android:text="@string/btn_check_in_failed"
+                                app:chipIcon="@drawable/baseline_close_24"
+                                app:chipIconTint="@color/noti_chip_icon_tint" />
+
+                        </com.google.android.material.chip.ChipGroup>
+
+                        <android.widget.Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="15dp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </com.google.android.material.card.MaterialCardView>
+
                 <android.widget.Space
                     android:layout_width="wrap_content"
-                    android:layout_height="5dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    style="@style/MaterialButton"
-                    android:onClick="@{()->vm.onClickCheckIn()}"
-                    android:text="@string/hoyolab_checkin" />
-
-                <android.widget.Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="5dp" />
+                    android:layout_height="20dp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextView"
                     android:layout_gravity="center_horizontal"
+                    android:drawablePadding="6dp"
+                    android:drawableStart="@drawable/baseline_translate_24"
+                    android:drawableTint="@color/on_surface_variant"
                     android:foreground="?attr/selectableItemBackground"
-                    android:onClick="@{()->vm.onClickWidgetRefreshNotWork()}"
-                    android:text="@string/dialog_widget_refresh_not_work"
-                    android:textColor="@color/light_blue_600"
-                    android:textSize="15sp"
-                    android:textStyle="bold|italic" />
+                    android:gravity="center_vertical"
+                    android:onClick="@{()->vm.onClickChangeLanguage()}"
+                    android:padding="6dp"
+                    android:text="@string/change_language"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="14sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

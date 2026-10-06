@@ -1,5 +1,6 @@
 package danggai.app.presentation.ui.main
 
+import android.animation.LayoutTransition
 import android.app.NotificationManager
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -10,13 +11,18 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.InputType
 import android.os.PowerManager
 import android.provider.Settings
 import android.view.View
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.fragment.app.activityViewModels
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
@@ -49,6 +55,7 @@ import danggai.app.presentation.util.log
 import danggai.app.presentation.worker.CheckInWorker
 import danggai.app.presentation.worker.RefreshWorker
 import danggai.domain.util.Constant
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -159,6 +166,8 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             initAd()
 
         initSf()
+        binding.main.layoutTransition?.enableTransitionType(LayoutTransition.CHANGING)
+
         initUi()
 
         notificationPermisisonCheck()
@@ -203,13 +212,6 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                     log.e("talent worker ${it.id} state -> ${it.state}")
             }
 
-        when (mVM.sfAutoRefreshPeriod.value) {
-            15L -> binding.rb15m.isChecked = true
-            30L -> binding.rb30m.isChecked = true
-            60L, 120L -> binding.rb1h.isChecked = true
-            else -> binding.rbDisable.isChecked = true
-        }
-
         // Adapter, Selection 순으로 적용해야 초기 값이 적용 됨
         binding.spWeeklyYetNotiDay.adapter = weeklyDaySpinnerAdapter
         binding.spWeeklyYetNotiDay.setSelection(
@@ -231,8 +233,36 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                 DayTimeMapper.timeIntToString(requireContext(), mVM.sfNotiDailyYetTime.value)
             )
         )
+
+
+
+        setUpExpireDaysSpinner(binding.spMemberExpireNotiDaysZzz, mVM.sfNotiMemberExpireDaysZZZ)
     }
 
+    private fun setUpExpireDaysSpinner(spinner: AppCompatSpinner, daysFlow: MutableStateFlow<Int>) {
+        val adapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.expire_days,
+            R.layout.text_spinner
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        val daysOptions = listOf(1, 3, 7)
+        spinner.adapter = adapter
+        spinner.setSelection(daysOptions.indexOf(daysFlow.value).coerceAtLeast(0))
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long,
+            ) {
+                daysFlow.value = daysOptions[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
     private fun initSf() {
         viewLifecycleOwner.repeatOnLifeCycleStarted {
             launch {
@@ -283,6 +313,9 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                 }
             }
 
+            launch {
+                mVM.sfShowDialogCustomNoti.collect { showCustomNotiDialog(it) }
+            }
             launch {
                 mVM.sfNotiWeeklyYetDay.collect {
                     binding.spWeeklyYetNotiDay.setSelection(
@@ -456,6 +489,38 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         mVM.saveIfChanged()
     }
 
+    private fun showCustomNotiDialog(type: CustomNotiType) {
+        val context = requireContext()
+
+        val unitRes = when (type) {
+            CustomNotiType.RESIN -> R.string.resin
+            CustomNotiType.TRAIL_POWER -> R.string.trailblaze_power
+            CustomNotiType.BATTERY -> R.string.battery
+        }
+
+        val editText = AppCompatEditText(context).apply {
+            inputType = InputType.TYPE_CLASS_NUMBER
+            filters = arrayOf(InputFilter.LengthFilter(4))
+            hint = type.max.toString()
+            setText(mVM.getCustomNotiValue(type))
+            selectAll()
+            setPadding(60, 30, 60, 30)
+        }
+
+        val dialog = AlertDialog.Builder(context)
+            .setTitle(getString(R.string.dialog_title_custom_noti, getString(unitRes)))
+            .setView(editText)
+            .setPositiveButton(R.string.ok) { _, _ ->
+                mVM.confirmCustomNoti(type, editText.text.toString())
+            }
+            .setNegativeButton(R.string.cancel) { _, _ -> mVM.cancelCustomNoti(type) }
+            .setOnCancelListener { mVM.cancelCustomNoti(type) }
+            .create()
+
+        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        dialog.show()
+        editText.requestFocus()
+    }
     private fun showAddWidgetDialog() {
         val context = requireContext()
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_widget, null)
