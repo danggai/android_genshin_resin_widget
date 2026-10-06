@@ -26,70 +26,51 @@
         android:animateLayoutChanges="true"
         android:orientation="vertical">
 
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="20dp" />
-
-        <include
-            android:id="@+id/widget"
-            layout="@layout/widget_detail_fixed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp" />
-
-        <include
-            android:id="@+id/widget_hksr"
-            layout="@layout/widget_hksr_detail_fixed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp"
-            android:visibility="gone" />
-
-        <include
-            android:id="@+id/widget_zzz"
-            layout="@layout/widget_zzz_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp"
-            android:visibility="gone" />
-
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="15dp" />
-
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginVertical="12dp"
+            android:orientation="horizontal">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="0dp"
+                <include
+                    android:id="@+id/widget"
+                    layout="@layout/widget_detail_fixed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    android:id="@+id/widget_hksr"
+                    layout="@layout/widget_hksr_detail_fixed"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="10dp"
-                    android:text="@string/preview"
-                    android:textColor="@color/black"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic" />
+                    android:visibility="gone" />
 
+                <include
+                    android:id="@+id/widget_zzz"
+                    layout="@layout/widget_zzz_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center">
+                android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="72dp"
-                    android:layout_height="52dp"
-                    android:layout_marginHorizontal="6dp"
+                    android:layout_width="56dp"
+                    android:layout_height="48dp"
+                    android:layout_marginVertical="4dp"
                     android:alpha="@{vm.sfSelectedPreview == Preview.GENSHIN ? 1f : 0.7f}"
                     android:background="@drawable/bg_preview_picker"
                     android:contentDescription="@string/genshin"
@@ -97,11 +78,10 @@
                     android:padding="8dp"
                     android:selected="@{vm.sfSelectedPreview == Preview.GENSHIN}"
                     android:src="@drawable/resin" />
-
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="72dp"
-                    android:layout_height="52dp"
-                    android:layout_marginHorizontal="6dp"
+                    android:layout_width="56dp"
+                    android:layout_height="48dp"
+                    android:layout_marginVertical="4dp"
                     android:alpha="@{vm.sfSelectedPreview == Preview.STARRAIL ? 1f : 0.7f}"
                     android:background="@drawable/bg_preview_picker"
                     android:contentDescription="@string/honkai_sr"
@@ -109,11 +89,10 @@
                     android:padding="8dp"
                     android:selected="@{vm.sfSelectedPreview == Preview.STARRAIL}"
                     android:src="@drawable/trailblaze_power" />
-
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="72dp"
-                    android:layout_height="52dp"
-                    android:layout_marginHorizontal="6dp"
+                    android:layout_width="56dp"
+                    android:layout_height="48dp"
+                    android:layout_marginVertical="4dp"
                     android:alpha="@{vm.sfSelectedPreview == Preview.ZZZ ? 1f : 0.7f}"
                     android:background="@drawable/bg_preview_picker"
                     android:contentDescription="@string/zzz"
@@ -121,20 +100,15 @@
                     android:padding="8dp"
                     android:selected="@{vm.sfSelectedPreview == Preview.ZZZ}"
                     android:src="@drawable/battery" />
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <android.widget.Space
-                android:layout_width="wrap_content"
-                android:layout_height="10dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginHorizontal="5dp"
-                android:background="#999999" />
-
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="5dp"
+            android:background="#999999" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -246,24 +220,27 @@
                     android:textSize="28sp"
                     android:textStyle="bold|italic" />
 
-                <GridLayout
+                <com.google.android.material.chip.ChipGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:columnCount="2">
+                    app:chipSpacingHorizontal="8dp"
+                    app:chipSpacingVertical="4dp">
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_uid"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfDetailUidVisibility}"
-                        android:text="@string/uid" />
+                        android:text="@string/uid"
+                        app:chipIconVisible="false" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_name"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfDetailNameVisibility}"
-                        android:text="@string/nickname_" />
+                        android:text="@string/nickname_"
+                        app:chipIconVisible="false" />
 
-                </GridLayout>
+                </com.google.android.material.chip.ChipGroup>
 
                 <!--                원신 -->
                 <danggai.app.presentation.view.TitleDividerView
@@ -271,48 +248,55 @@
                     android:layout_height="wrap_content"
                     app:titleText="@string/genshin" />
 
-                <GridLayout
+                <com.google.android.material.chip.ChipGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:columnCount="2">
+                    app:chipSpacingHorizontal="8dp"
+                    app:chipSpacingVertical="4dp">
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_resin"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfResinDataVisibility}"
-                        android:text="@string/resin" />
+                        android:text="@string/resin"
+                        app:chipIcon="@drawable/resin" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_daily_commission"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfDailyCommissionDataVisibility}"
-                        android:text="@string/daily_commissions" />
+                        android:text="@string/daily_commissions"
+                        app:chipIcon="@drawable/icon_daily_commission" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_enemies_of_note"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfWeeklyBossDataVisibility}"
-                        android:text="@string/enemies_of_note" />
+                        android:text="@string/enemies_of_note"
+                        app:chipIcon="@drawable/icon_domain" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_realm_currency"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfRealmCurrencyDataVisibility}"
-                        android:text="@string/realm_currency" />
+                        android:text="@string/realm_currency"
+                        app:chipIcon="@drawable/icon_serenitea_pot" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_number_of_expedition"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfExpeditionDataVisibility}"
-                        android:text="@string/expedition_time" />
+                        android:text="@string/expedition_time"
+                        app:chipIcon="@drawable/icon_warp_point" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_parametric_transformer"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfTransformerDataVisibility}"
-                        android:text="@string/parametric_transformer" />
+                        android:text="@string/parametric_transformer"
+                        app:chipIcon="@drawable/icon_parametric_transformer" />
 
-                </GridLayout>
+                </com.google.android.material.chip.ChipGroup>
 
                 <Space
                     android:layout_width="0dp"
@@ -324,60 +308,70 @@
                     android:layout_height="wrap_content"
                     app:titleText="@string/honkai_sr" />
 
-                <GridLayout
+                <com.google.android.material.chip.ChipGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:columnCount="2">
+                    app:chipSpacingHorizontal="8dp"
+                    app:chipSpacingVertical="4dp">
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_trailblaze_power"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfTrailBlazepowerDataVisibility}"
-                        android:text="@string/trailblaze_power" />
+                        android:text="@string/trailblaze_power"
+                        app:chipIcon="@drawable/trailblaze_power" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_reserve_trailblaze_power"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfReserveTrailBlazepowerDataVisibility}"
-                        android:text="@string/reserve_trailblaze_power" />
+                        android:text="@string/reserve_trailblaze_power"
+                        app:chipIcon="@drawable/icon_reserved_trailblaze_power" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_daily_training"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfDailyTrainingDataVisibility}"
-                        android:text="@string/daily_training" />
+                        android:text="@string/daily_training"
+                        app:chipIcon="@drawable/icon_activity_chip" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_echo_of_war"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfEchoOfWarDataVisibility}"
-                        android:text="@string/echo_of_war" />
+                        android:text="@string/echo_of_war"
+                        app:chipIcon="@drawable/icon_echo_of_war" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_simulated_universe"
-                        style="@style/Checkbox.GridParent"
-                        android:checked="@={vm.sfSimulatedUniverseDataVisibility}"
-                        android:text="@string/simulated_universe" />
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_grid_fight"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={!vm.sfIsGridFightDataInvisible}"
-                        android:text="@string/grid_fight" />
+                        android:text="@string/grid_fight"
+                        app:chipIcon="@drawable/icon_grid_fight" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_divergent_universe"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfDivergentUniverseDataVisibility}"
-                        android:text="@string/divergent_universe" />
+                        android:text="@string/divergent_universe"
+                        app:chipIcon="@drawable/icon_synchronicity_points" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_assignment"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfAssignmentTimeDataVisibility}"
-                        android:text="@string/assignment_time" />
+                        android:text="@string/assignment_time"
+                        app:chipIcon="@drawable/icon_warp_point" />
 
-                </GridLayout>
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/cb_simulated_universe"
+                        style="@style/NotiChip"
+                        android:checked="@={vm.sfSimulatedUniverseDataVisibility}"
+                        android:text="@string/simulated_universe"
+                        app:chipIcon="@drawable/icon_simulated_universe"
+                        app:chipIconTint="@color/black" />
+
+                </com.google.android.material.chip.ChipGroup>
 
                 <!--                젠레스 존 제로 -->
                 <danggai.app.presentation.view.TitleDividerView
@@ -385,24 +379,27 @@
                     android:layout_height="wrap_content"
                     app:titleText="@string/zzz" />
 
-                <GridLayout
+                <com.google.android.material.chip.ChipGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:columnCount="2">
+                    app:chipSpacingHorizontal="8dp"
+                    app:chipSpacingVertical="4dp">
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_battery"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfBatteryDataVisibility}"
-                        android:text="@string/battery" />
+                        android:text="@string/battery"
+                        app:chipIcon="@drawable/battery" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_engagemnent_today"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfEngagementTodayDataVisibility}"
-                        android:text="@string/engagement_today" />
+                        android:text="@string/engagement_today"
+                        app:chipIcon="@drawable/icon_fire" />
 
-                </GridLayout>
+                </com.google.android.material.chip.ChipGroup>
 
                 <!--                <androidx.appcompat.widget.LinearLayoutCompat-->
                 <!--                    android:layout_width="match_parent"-->
@@ -417,49 +414,56 @@
 
                 <!--                </androidx.appcompat.widget.LinearLayoutCompat>-->
 
-                <GridLayout
+                <com.google.android.material.chip.ChipGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:columnCount="2">
+                    app:chipSpacingHorizontal="8dp"
+                    app:chipSpacingVertical="4dp">
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_ridu_weekly"
-                        style="@style/Checkbox.Grid"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfRiduWeeklyDataVisibility}"
-                        android:text="@string/ridu_weekly" />
+                        android:text="@string/ridu_weekly"
+                        app:chipIcon="@drawable/icon_ridu_weekly" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/cb_investigation_point"
+                        style="@style/NotiChip"
+                        android:checked="@={vm.sfInvestigationPointDataVisibility}"
+                        android:text="@string/bounty_commission_progress"
+                        app:chipIcon="@drawable/icon_investigation_point" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/cb_scratch_card"
+                        style="@style/NotiChip"
+                        android:checked="@={vm.sfScratchCardDataVisibility}"
+                        android:text="@string/scratch_card"
+                        app:chipIcon="@drawable/icon_scratch_card" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/cb_video_store_management"
+                        style="@style/NotiChip"
+                        android:checked="@={vm.sfVideoStoreManagementDataVisibility}"
+                        android:text="@string/video_store_management"
+                        app:chipIcon="@drawable/icon_denny" />
+                    
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_member_card"
-                        style="@style/Checkbox.GridParent"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfMemberCardDataVisibility}"
-                        android:text="@string/zzz_member_card_claim" />
+                        android:text="@string/zzz_member_card_claim"
+                        app:chipIcon="@drawable/icon_polychrome" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_member_card_period"
-                        style="@style/Checkbox.GridChild"
+                        style="@style/NotiChip"
                         android:checked="@={!vm.sfIsMemberCardPeriodInvisible}"
                         android:enabled="@{vm.sfMemberCardDataVisibility}"
-                        android:text="@string/zzz_member_card_period" />
+                        android:text="@string/zzz_member_card_period"
+                        app:chipIcon="@drawable/icon_polychrome" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_investigation_point"
-                        style="@style/Checkbox.Grid"
-                        android:checked="@={vm.sfInvestigationPointDataVisibility}"
-                        android:text="@string/bounty_commission_progress" />
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_scratch_card"
-                        style="@style/Checkbox.Grid"
-                        android:checked="@={vm.sfScratchCardDataVisibility}"
-                        android:text="@string/scratch_card" />
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cb_video_store_management"
-                        style="@style/Checkbox.Grid"
-                        android:checked="@={vm.sfVideoStoreManagementDataVisibility}"
-                        android:text="@string/video_store_management" />
-
-                </GridLayout>
+                </com.google.android.material.chip.ChipGroup>
 
                 <android.widget.Space
                     android:layout_width="wrap_content"
