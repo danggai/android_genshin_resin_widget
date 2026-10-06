@@ -53,7 +53,7 @@
     <string name="no_hoyolab_accounts">등록 된 호요랩 계정이 없습니다.</string>
     <string name="get_cookie">로그인 후 여기를 눌러주세요!</string>
     <string name="get_cookie_btn">호요랩에 로그인 해 쿠키 가져오기</string>
-    <string name="get_uid_btn">자동으로 인게임 정보 가져오기</string>
+    <string name="get_uid_btn">쿠키로 인게임 정보 가져오기</string>
 
     <string name="disable">수동</string>
     <string name="time_15m">15분</string>

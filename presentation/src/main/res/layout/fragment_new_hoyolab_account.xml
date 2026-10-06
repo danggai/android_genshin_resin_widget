@@ -72,11 +72,35 @@
                         android:text="@string/get_cookie_btn"
                         android:onClick="@{()->vm.onClickGetCookie()}" />
 
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/get_uid_btn"
+                        android:onClick="@{()->vm.onClickGetUid()}" />
+
                     <android.widget.Space
                         android:layout_width="wrap_content"
                         android:layout_height="8dp" />
 
                 </LinearLayout>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="10dp"
+                    android:visibility="@{vm.sfHoyolabCookie.empty ?View.GONE :View.VISIBLE}">
+
+                    <android.widget.Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp" />
+
+                    <android.widget.Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="8dp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <FrameLayout
                     android:id="@+id/ll_genshin_ingame_data"
@@ -593,29 +617,6 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </FrameLayout>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="10dp"
-                    android:visibility="@{vm.sfHoyolabCookie.empty ?View.GONE :View.VISIBLE}">
-
-                    <android.widget.Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="15dp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/get_uid_btn"
-                        android:onClick="@{()->vm.onClickGetUid()}" />
-
-                    <android.widget.Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="8dp" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <LinearLayout
                     android:id="@+id/ll_checkin"

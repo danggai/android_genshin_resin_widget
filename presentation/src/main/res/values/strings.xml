@@ -56,7 +56,7 @@
     <string name="no_hoyolab_accounts">No HoYoLAB account registered.</string>
     <string name="get_cookie">Click here after Login!</string>
     <string name="get_cookie_btn">Log in to get cookies</string>
-    <string name="get_uid_btn">Automatically get In-game data</string>
+    <string name="get_uid_btn">Get In-game data using Cookie</string>
 
     <string name="asia" translatable="false">Asia</string>
     <string name="america" translatable="false">America</string>
