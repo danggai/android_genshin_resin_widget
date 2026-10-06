@@ -22,7 +22,6 @@ import danggai.domain.local.Preview
 import danggai.domain.local.TimeNotation
 import danggai.domain.network.dailynote.entity.Transformer
 import danggai.domain.network.dailynote.entity.TransformerTime
-import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -61,24 +60,6 @@ class WidgetDesignDetailFragment :
         binding.widget.tvWeeklyBoss.text = context?.let { CommonFunction.convertIntToTimes(3, it) }
         binding.widgetHksr.tvEchoOfWar.text =
             context?.let { CommonFunction.convertIntToTimes(3, it) }
-
-        when (mVM.sfWidgetTimeNotation.value) {
-            TimeNotation.DEFAULT,
-            TimeNotation.REMAIN_TIME -> binding.rbRemainTime.isChecked = true
-
-            TimeNotation.FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked =
-                true
-
-            TimeNotation.DISABLE_TIME -> binding.rbDisableTime.isChecked = true
-            else -> binding.rbRemainTime.isChecked = true
-        }
-
-        when (mVM.sfWidgetTheme.value) {
-            Constant.PREF_WIDGET_THEME_AUTOMATIC -> binding.rbThemeAutomatic.isChecked = true
-            Constant.PREF_WIDGET_THEME_LIGHT -> binding.rbThemeLight.isChecked = true
-            Constant.PREF_WIDGET_THEME_DARK -> binding.rbThemeDark.isChecked = true
-            else -> binding.rbThemeAutomatic.isChecked = true
-        }
     }
 
     private fun initLv() {
@@ -343,7 +324,7 @@ class WidgetDesignDetailFragment :
             }
 
             launch {
-                mVM.sfDetailUidVisibility.collect {
+                mVM.sfResinUidVisibility.collect {
                     log.e()
                     binding.widget.tvUid.visibility = CommonFunction.getVisibility(it)
                     binding.widgetHksr.tvUid.visibility = CommonFunction.getVisibility(it)
@@ -352,7 +333,7 @@ class WidgetDesignDetailFragment :
             }
 
             launch {
-                mVM.sfDetailNameVisibility.collect {
+                mVM.sfResinNameVisibility.collect {
                     log.e()
                     binding.widget.tvName.visibility = CommonFunction.getVisibility(it)
                     binding.widgetHksr.tvName.visibility = CommonFunction.getVisibility(it)
