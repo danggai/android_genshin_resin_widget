@@ -380,10 +380,12 @@
                                     android:text="@string/engagement_today"
                                     app:chipIcon="@drawable/icon_fire" />
 
-                            </com.google.android.material.chip.ChipGroup>                <!--                    android:layout_width="match_parent"-->                <!--                    android:gravity="center_vertical">-->                <!--                        style="@style/Checkbox"-->                <!--                        android:checked="@={vm.sfCoffeeDataVisibility}"-->
+                            </com.google.android.material.chip.ChipGroup>
+
                             <com.google.android.material.chip.ChipGroup
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
                                 app:chipSpacingHorizontal="8dp"
                                 app:chipSpacingVertical="4dp">
 
