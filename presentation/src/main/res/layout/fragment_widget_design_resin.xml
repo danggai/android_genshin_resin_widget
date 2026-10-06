@@ -276,24 +276,26 @@
                     android:textSize="28sp"
                     android:textStyle="bold|italic" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <com.google.android.material.chip.ChipGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="3">
+                    app:chipSpacingHorizontal="8dp">
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_uid"
-                        style="@style/Checkbox"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfResinUidVisibility}"
-                        android:text="@string/uid" />
+                        android:text="@string/uid"
+                        app:chipIconVisible="false" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/cb_name"
-                        style="@style/Checkbox"
+                        style="@style/NotiChip"
                         android:checked="@={vm.sfResinNameVisibility}"
-                        android:text="@string/nickname_" />
+                        android:text="@string/nickname_"
+                        app:chipIconVisible="false" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                </com.google.android.material.chip.ChipGroup>
 
                 <android.widget.Space
                     android:layout_width="wrap_content"

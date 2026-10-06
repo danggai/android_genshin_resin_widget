@@ -32,22 +32,6 @@
     </style>
 
     <!-- GridLayout(2열) 안의 체크박스: 열을 균등 분할 -->
-    <style name="Checkbox.Grid" parent="Checkbox">
-        <item name="android:layout_columnWeight">1</item>
-        <item name="android:layout_gravity">fill_horizontal</item>
-    </style>
-
-    <!-- 종속 옵션이 있는 부모: 한 줄 전체 사용 -->
-    <style name="Checkbox.GridParent" parent="Checkbox.Grid">
-        <item name="android:layout_columnSpan">2</item>
-    </style>
-
-    <!-- 부모에 종속된 옵션: 부모 바로 아래 줄에 들여쓰기 -->
-    <style name="Checkbox.GridChild" parent="Checkbox.Grid">
-        <item name="android:layout_columnSpan">2</item>
-        <item name="android:layout_marginStart">32dp</item>
-    </style>
-
     <style name="Checkbox.BoxOnly" parent="Checkbox">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_weight">0</item>
