@@ -76,9 +76,9 @@
     <string name="btn_home_coin_full">Realm Currency</string>
     <string name="btn_param_reached">Parametric Transformer</string>
     <string name="btn_daily_commission_yet">Daily commissions left</string>
-    <string name="btn_weekly_boss_yet">Weekly boss discount left</string>
+    <string name="btn_weekly_boss_yet">Weekly boss left</string>
     <string name="btn_daily_training_yet">Daily training left</string>
-    <string name="btn_echo_of_war_yet">Echo of War discount left</string>
+    <string name="btn_echo_of_war_yet">Echo of War left</string>
     <string name="btn_engagement_yet">Engagement left</string>
     <string name="btn_bounty_commission_yet">Bounty commission left</string>
 

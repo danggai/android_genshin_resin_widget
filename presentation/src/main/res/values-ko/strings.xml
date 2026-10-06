@@ -68,9 +68,9 @@
     <string name="btn_home_coin_full">선계 주화</string>
     <string name="btn_param_reached">매개 변수 변환기</string>
     <string name="btn_daily_commission_yet">일일임무 미완료</string>
-    <string name="btn_weekly_boss_yet">주간보스 할인 잔여</string>
+    <string name="btn_weekly_boss_yet">주간보스 잔여</string>
     <string name="btn_daily_training_yet">일일 훈련 미완료</string>
-    <string name="btn_echo_of_war_yet">전쟁의 여운 할인 잔여</string>
+    <string name="btn_echo_of_war_yet">전쟁의 여운 잔여</string>
     <string name="btn_engagement_yet">활약도 미완료</string>
     <string name="btn_bounty_commission_yet">현상금 의뢰 미완료</string>
 
@@ -358,7 +358,7 @@
 
     <!--    원신 위젯 -->
     <string name="daily_commissions">남은 일일 의뢰</string>
-    <string name="enemies_of_note">주간 보스 할인</string>
+    <string name="enemies_of_note">주간 보스</string>
     <string name="parametric_transformer">매개변수 변환기</string>
     <string name="realm_currency">선계 주화</string>
 
