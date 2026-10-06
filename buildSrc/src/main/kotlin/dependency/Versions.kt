@@ -1,7 +1,7 @@
 package dependency
 
 object Versions {
-    const val minSdk = 23
+    const val minSdk = 24
     const val compileSdk = 36
     const val compileSdkString = "android-36"
 

@@ -82,7 +82,7 @@ Additionally, you can set up and view in-game currency information provided by H
 
 ## Application Version
 
-- minSdkVersion : 23
+- minSdkVersion : 24
 - targetSdkVersion : 34
 
 
