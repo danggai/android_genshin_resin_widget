@@ -216,6 +216,20 @@
                     app:cardCornerRadius="12dp"
                     app:cardElevation="0dp">
 
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true"
+                            android:importantForAccessibility="no"
+                            android:maxHeight="0dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/logo_genshin"
+                            android:tint="#eeeeee" />
+
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -295,6 +309,8 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
+                    </FrameLayout>
+
                 </com.google.android.material.card.MaterialCardView>
                 <!--   StarRail   -->
                 <com.google.android.material.card.MaterialCardView
@@ -305,6 +321,20 @@
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="0dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true"
+                            android:importantForAccessibility="no"
+                            android:maxHeight="0dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/logo_honkai_sr"
+                            android:tint="#eeeeee" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
@@ -384,6 +414,8 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
+                    </FrameLayout>
+
                 </com.google.android.material.card.MaterialCardView>
                 <!--   ZZZ   -->
                 <com.google.android.material.card.MaterialCardView
@@ -394,6 +426,20 @@
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="0dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true"
+                            android:importantForAccessibility="no"
+                            android:maxHeight="0dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/logo_zzz"
+                            android:tint="#eeeeee" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
@@ -490,6 +536,8 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
+                    </FrameLayout>
+
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
                     style="@style/Widget.Material3.CardView.Outlined"
@@ -503,46 +551,43 @@
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:animateLayoutChanges="true"
-                        android:padding="14dp">
-                <danggai.app.presentation.view.TitleDividerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> vm.onClickToggleCheckIn()}"
-                    app:collapsible="true"
-                    app:expanded="@{vm.sfExpandCheckIn}"
-                    app:titleText="@string/check_in" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="10dp">
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="@{vm.sfExpandCheckIn ? View.VISIBLE : View.GONE}">
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextView"
+                            android:layout_width="wrap_content"
+                            android:layout_marginEnd="14dp"
+                            android:text="@string/check_in"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            android:textStyle="bold|italic" />
 
-                    <com.google.android.material.chip.ChipGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:chipSpacingHorizontal="8dp"
-                        app:chipSpacingVertical="4dp">
+                        <com.google.android.material.chip.ChipGroup
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:chipSpacingHorizontal="8dp"
+                            app:chipSpacingVertical="4dp">
 
-                        <com.google.android.material.chip.Chip
-                            style="@style/NotiChip"
-                            android:checked="@={vm.sfEnableNotiCheckinSuccess}"
-                            android:text="@string/btn_check_in_success"
-                            app:chipIconTint="@color/black"
-                            app:chipIcon="@drawable/baseline_check_24" />
-                        <com.google.android.material.chip.Chip
-                            style="@style/NotiChip"
-                            android:checked="@={vm.sfEnableNotiCheckinFailed}"
-                            android:text="@string/btn_check_in_failed"
-                            app:chipIconTint="@color/black"
-                            app:chipIcon="@drawable/baseline_close_24" />
+                            <com.google.android.material.chip.Chip
+                                style="@style/NotiChip"
+                                android:checked="@={vm.sfEnableNotiCheckinSuccess}"
+                                android:text="@string/btn_check_in_success"
+                                app:chipIcon="@drawable/baseline_check_24"
+                                app:chipIconTint="@color/black" />
 
-                    </com.google.android.material.chip.ChipGroup>
+                            <com.google.android.material.chip.Chip
+                                style="@style/NotiChip"
+                                android:checked="@={vm.sfEnableNotiCheckinFailed}"
+                                android:text="@string/btn_check_in_failed"
+                                app:chipIcon="@drawable/baseline_close_24"
+                                app:chipIconTint="@color/black" />
 
+                        </com.google.android.material.chip.ChipGroup>
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </com.google.android.material.card.MaterialCardView>
