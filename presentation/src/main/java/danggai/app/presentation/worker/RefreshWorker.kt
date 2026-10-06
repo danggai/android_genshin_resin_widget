@@ -448,7 +448,7 @@ class RefreshWorker @AssistedInject constructor(
 
             if (settings.notiDailyYet &&
                 yymmdd != preference.getStringRecentDailyCommissionNotiDate(account.genshin_uid) &&
-                calendar.get(Calendar.HOUR) >= settings.notiDailyYetTime &&
+                calendar.get(Calendar.HOUR_OF_DAY) >= settings.notiDailyYetTime &&
                 !dailyNote.isExtraTaskRewardReceived
             ) {
                 log.e()
@@ -458,7 +458,7 @@ class RefreshWorker @AssistedInject constructor(
 
             if (settings.notiWeeklyYet &&
                 yymmdd != preference.getStringRecentWeeklyBossNotiDate(account.genshin_uid) &&
-                calendar.get(Calendar.HOUR) >= settings.notiWeeklyYetTime &&
+                calendar.get(Calendar.HOUR_OF_DAY) >= settings.notiWeeklyYetTime &&
                 calendar.get(Calendar.DAY_OF_WEEK) == settings.notiWeeklyYetDay &&
                 dailyNote.remainResinDiscountNum != 0
             ) {

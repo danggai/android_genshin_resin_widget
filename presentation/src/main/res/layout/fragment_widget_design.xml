@@ -43,21 +43,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_save_24"
-            android:tint="@color/white"
-            android:contentDescription="save"
-            android:onClick="@{()->vm.onClickSave()}"
-            android:layout_margin="25dp"
-            android:backgroundTint="@color/light_blue_200"
-            app:rippleColor="@color/light_blue_600"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            />
-
 <!--        <com.google.android.material.button.MaterialButton-->
 <!--            style="@style/MaterialButton"-->
 <!--            android:id="@+id/tv_save"-->

@@ -20,10 +20,13 @@ import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.resource.repository.ResourceProviderRepository
 import danggai.domain.util.Constant
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,7 +37,6 @@ class WidgetDesignViewModel @Inject constructor(
     private val characters: CharacterUseCase
 ) : BaseViewModel() {
     val sfApplySavedData = MutableSharedFlow<Boolean>()
-    val sfAddWidget = MutableSharedFlow<Preview>()
     val sfStartSelectFragment = MutableSharedFlow<Boolean>()
     val sfFinishSelectFragment = MutableSharedFlow<Boolean>()
 
@@ -100,6 +102,10 @@ class WidgetDesignViewModel @Inject constructor(
     private var _selectedCharacterIdList: MutableList<Int> = mutableListOf()
     val selectedCharacterIdList: MutableList<Int>
         get() = _selectedCharacterIdList
+
+    init {
+        observeAutoSave()
+    }
 
     fun initUi() {
         preference.getResinWidgetDesignSettings().let {
@@ -257,85 +263,114 @@ class WidgetDesignViewModel @Inject constructor(
         }
     }
 
-    private fun saveData() {
+    @OptIn(FlowPreview::class)
+    private fun observeAutoSave() {
+        viewModelScope.launch {
+            merge(
+                sfWidgetTheme,
+                sfWidgetTimeNotation,
+                sfResinImageVisibility,
+                sfResinUidVisibility,
+                sfResinNameVisibility,
+                sfResinFontSize,
+                sfTransparency,
+                sfResinDataVisibility,
+                sfDailyCommissionDataVisibility,
+                sfWeeklyBossDataVisibility,
+                sfRealmCurrencyDataVisibility,
+                sfExpeditionDataVisibility,
+                sfTransformerDataVisibility,
+                sfTrailBlazepowerDataVisibility,
+                sfReserveTrailBlazepowerDataVisibility,
+                sfDailyTrainingDataVisibility,
+                sfEchoOfWarDataVisibility,
+                sfSimulatedUniverseDataVisibility,
+                sfSimulatedUniverseClearTimeVisibility,
+                sfIsGridFightDataInvisible,
+                sfDivergentUniverseDataVisibility,
+                sfAssignmentTimeDataVisibility,
+                sfBatteryDataVisibility,
+                sfEngagementTodayDataVisibility,
+                sfScratchCardDataVisibility,
+                sfVideoStoreManagementDataVisibility,
+                sfCoffeeDataVisibility,
+                sfRiduWeeklyDataVisibility,
+                sfMemberCardDataVisibility,
+                sfIsMemberCardPeriodInvisible,
+                sfInvestigationPointDataVisibility,
+                sfDetailUidVisibility,
+                sfDetailNameVisibility,
+                sfFontSizeDetail,
+                sfSelectedPreview,
+            )
+                .debounce(500L)
+                .collect { saveIfChanged() }
+        }
+    }
+
+    private fun makeResinSettings() =
+        ResinWidgetDesignSettings(
+            widgetTheme = sfWidgetTheme.value,
+            timeNotation = sfWidgetTimeNotation.value.value,
+            resinImageVisibility = sfResinImageVisibility.value,
+            uidVisibility = sfResinUidVisibility.value,
+            nameVisibility = sfResinNameVisibility.value,
+            fontSize = sfResinFontSize.value,
+            backgroundTransparency = sfTransparency.value
+        )
+
+    private fun makeDetailSettings() =
+        DetailWidgetDesignSettings(
+            widgetTheme = sfWidgetTheme.value,
+            timeNotation = sfWidgetTimeNotation.value.value,
+
+            resinDataVisibility = sfResinDataVisibility.value,
+            dailyCommissinDataVisibility = sfDailyCommissionDataVisibility.value,
+            weeklyBossDataVisibility = sfWeeklyBossDataVisibility.value,
+            realmCurrencyDataVisibility = sfRealmCurrencyDataVisibility.value,
+            expeditionDataVisibility = sfExpeditionDataVisibility.value,
+            transformerDataVisibility = sfTransformerDataVisibility.value,
+
+            trailBlazepowerDataVisibility = sfTrailBlazepowerDataVisibility.value,
+            reserveTrailBlazepowerDataVisibility = sfReserveTrailBlazepowerDataVisibility.value,
+            dailyTrainingDataVisibility = sfDailyTrainingDataVisibility.value,
+            echoOfWarDataVisibility = sfEchoOfWarDataVisibility.value,
+            simulatedUniverseDataVisibility = sfSimulatedUniverseDataVisibility.value,
+            simulatedUniverseClearTimeVisibility = sfSimulatedUniverseClearTimeVisibility.value,
+            isGridFightInvisible = sfIsGridFightDataInvisible.value,
+            synchronicityPointVisibility = sfDivergentUniverseDataVisibility.value,
+            assignmentTimeDataVisibility = sfAssignmentTimeDataVisibility.value,
+
+            batteryDataVisibility = sfBatteryDataVisibility.value,
+            engagementTodayDataVisibility = sfEngagementTodayDataVisibility.value,
+            scratchCardDataVisibility = sfScratchCardDataVisibility.value,
+            videoStoreManagementDataVisibility = sfVideoStoreManagementDataVisibility.value,
+            coffeeDataVisibility = sfCoffeeDataVisibility.value,
+            riduWeeklyDataVisibility = sfRiduWeeklyDataVisibility.value,
+            memberCardDataVisibility = sfMemberCardDataVisibility.value,
+            isMemberCardPeriodInvisible = sfIsMemberCardPeriodInvisible.value,
+            investigationPointDataVisibility = sfInvestigationPointDataVisibility.value,
+
+            uidVisibility = sfDetailUidVisibility.value,
+            nameVisibility = sfDetailNameVisibility.value,
+            fontSize = sfFontSizeDetail.value,
+            backgroundTransparency = sfTransparency.value
+        )
+
+    fun saveIfChanged() {
+        val resinSettings = makeResinSettings()
+        val detailSettings = makeDetailSettings()
+
+        if (resinSettings == preference.getResinWidgetDesignSettings() &&
+            detailSettings == preference.getDetailWidgetDesignSettings()
+        ) return
+
         log.e()
-
-        preference.setResinWidgetDesignSettings(
-            ResinWidgetDesignSettings(
-                widgetTheme = sfWidgetTheme.value,
-                timeNotation = sfWidgetTimeNotation.value.value,
-                resinImageVisibility = sfResinImageVisibility.value,
-                uidVisibility = sfResinUidVisibility.value,
-                nameVisibility = sfResinNameVisibility.value,
-                fontSize = sfResinFontSize.value,
-                backgroundTransparency = sfTransparency.value
-            )
-        )
-
-        preference.setDetailWidgetDesignSettings(
-            DetailWidgetDesignSettings(
-                widgetTheme = sfWidgetTheme.value,
-                timeNotation = sfWidgetTimeNotation.value.value,
-
-                resinDataVisibility = sfResinDataVisibility.value,
-                dailyCommissinDataVisibility = sfDailyCommissionDataVisibility.value,
-                weeklyBossDataVisibility = sfWeeklyBossDataVisibility.value,
-                realmCurrencyDataVisibility = sfRealmCurrencyDataVisibility.value,
-                expeditionDataVisibility = sfExpeditionDataVisibility.value,
-                transformerDataVisibility = sfTransformerDataVisibility.value,
-
-                trailBlazepowerDataVisibility = sfTrailBlazepowerDataVisibility.value,
-                reserveTrailBlazepowerDataVisibility = sfReserveTrailBlazepowerDataVisibility.value,
-                dailyTrainingDataVisibility = sfDailyTrainingDataVisibility.value,
-                echoOfWarDataVisibility = sfEchoOfWarDataVisibility.value,
-                simulatedUniverseDataVisibility = sfSimulatedUniverseDataVisibility.value,
-                simulatedUniverseClearTimeVisibility = sfSimulatedUniverseClearTimeVisibility.value,
-                isGridFightInvisible = sfIsGridFightDataInvisible.value,
-                synchronicityPointVisibility = sfDivergentUniverseDataVisibility.value,
-                assignmentTimeDataVisibility = sfAssignmentTimeDataVisibility.value,
-
-                batteryDataVisibility = sfBatteryDataVisibility.value,
-                engagementTodayDataVisibility = sfEngagementTodayDataVisibility.value,
-                scratchCardDataVisibility = sfScratchCardDataVisibility.value,
-                videoStoreManagementDataVisibility = sfVideoStoreManagementDataVisibility.value,
-                coffeeDataVisibility = sfCoffeeDataVisibility.value,
-                riduWeeklyDataVisibility = sfRiduWeeklyDataVisibility.value,
-                memberCardDataVisibility = sfMemberCardDataVisibility.value,
-                isMemberCardPeriodInvisible = sfIsMemberCardPeriodInvisible.value,
-                investigationPointDataVisibility = sfInvestigationPointDataVisibility.value,
-
-                uidVisibility = sfDetailUidVisibility.value,
-                nameVisibility = sfDetailNameVisibility.value,
-                fontSize = sfFontSizeDetail.value,
-                backgroundTransparency = sfTransparency.value
-            )
-        )
+        preference.setResinWidgetDesignSettings(resinSettings)
+        preference.setDetailWidgetDesignSettings(detailSettings)
 
         sfApplySavedData.emitInVmScope(true)
-
-        makeToast(resource.getString(R.string.msg_toast_save_done))
     }
-
-    fun onClickSave() {
-        log.e()
-        saveData()
-
-        viewModelScope.launch {
-            delay(100L)
-            sendEvent(Event.FinishThisActivity())
-        }
-    }
-
-    fun onClickSaveAndAddWidget() {
-        log.e()
-        saveData()
-
-        viewModelScope.launch {
-            delay(100L)
-            sfAddWidget.emitInVmScope(sfSelectedPreview.value)
-        }
-    }
-
     fun onClickPreiew(preview: Preview) {
         log.e("index -> $preview")
         sfSelectedPreview.value = preview
