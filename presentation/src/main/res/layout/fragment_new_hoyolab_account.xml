@@ -87,6 +87,7 @@
                         style="@style/MaterialButton.Secondary"
                         android:layout_width="match_parent"
                         android:layout_marginTop="8dp"
+                        android:enabled="@{!vm.sfHoyolabCookie.empty}"
                         android:onClick="@{()->vm.onClickGetUid()}"
                         android:text="@string/get_uid_btn" />
 
