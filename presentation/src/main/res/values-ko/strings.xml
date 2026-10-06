@@ -486,7 +486,8 @@
         <item>7일</item>
     </string-array>
 
-    <string name="noti_time_daily">일일 알림 시각</string>
-    <string name="noti_time_weekly">주간 알림 요일·시각</string>
+    <string name="noti_time_daily">일일 미완료 알림 시각</string>
+    <string name="noti_time_weekly">주간 미완료 알림 요일·시각</string>
     <string name="btn_use_game">이 게임 사용</string>
+    <string name="change_language">언어 변경</string>
 </resources>

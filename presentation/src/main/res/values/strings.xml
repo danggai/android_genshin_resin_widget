@@ -494,7 +494,8 @@
         <item>7 days</item>
     </string-array>
 
-    <string name="noti_time_daily">Daily alert time</string>
-    <string name="noti_time_weekly">Weekly alert day &amp; time</string>
+    <string name="noti_time_daily">Daily reminder time</string>
+    <string name="noti_time_weekly">Weekly reminder day &amp; time</string>
     <string name="btn_use_game">Use this game</string>
+    <string name="change_language">Language</string>
 </resources>

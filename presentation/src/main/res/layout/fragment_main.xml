@@ -16,55 +16,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
-
-        <LinearLayout
-            android:id="@+id/ll_top"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/light_blue_600"
-            app:layout_constraintBottom_toTopOf="@id/ns_body"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/iv_language"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:onClick="@{()-> vm.onClickChangeLanguage()}"
-                android:src="@drawable/baseline_translate_24"
-                app:tint="@color/white" />
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tl_top"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/light_blue_600"
-                app:layout_constraintBottom_toTopOf="@id/vp_main"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tabIndicatorColor="@color/white"
-                app:tabIndicatorHeight="5dp"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextAppearance="@style/TabText"
-                app:tabTextColor="@color/light_gray" />
-
-        </LinearLayout>
+        android:background="#f5f5f5">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/ns_body"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
+            android:background="#f5f5f5"
             app:layout_constraintBottom_toTopOf="@id/ad_view"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_top"
+            app:layout_constraintTop_toTopOf="parent"
             tools:context=".ui.main.MainFragment">
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -73,7 +35,7 @@
                 android:animateLayoutChanges="true"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingHorizontal="20dp">
+                android:paddingHorizontal="12dp">
 
                 <android.widget.Space
                     android:layout_width="wrap_content"
@@ -100,25 +62,36 @@
                     android:visibility="@{vm.sfAccountList.empty ?View.VISIBLE :View.GONE}" />
 
                 <com.google.android.material.button.MaterialButton
-                    style="@style/MaterialButton"
-                    android:layout_gravity="right"
+                    style="@style/MaterialButton.Secondary"
+                    android:layout_width="match_parent"
                     android:onClick="@{()->vm.onClickNewHoyolabAccount()}"
                     android:text="@string/new_hoyolab_account"
-                    android:textStyle="italic"
                     app:icon="@drawable/baseline_person_add_24"
-                    app:iconSize="24dp"
-                    app:iconTint="@color/white" />
+                    app:iconGravity="textStart"
+                    app:iconSize="22dp" />
 
-                <android.widget.Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp" />
 
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.Material3.CardView.Outlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:animateLayoutChanges="true"
+                        android:padding="14dp">
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextView"
                     android:layout_width="match_parent"
                     android:text="@string/refresh_cycle"
                     android:textColor="@color/black"
-                    android:textSize="28sp"
+                    android:textSize="20sp"
                     android:textStyle="bold|italic" />
 
                 <com.google.android.material.chip.ChipGroup
@@ -160,16 +133,30 @@
 
                 </com.google.android.material.chip.ChipGroup>
 
-                <android.widget.Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.Material3.CardView.Outlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:animateLayoutChanges="true"
+                        android:padding="14dp">
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextView"
                     android:layout_width="match_parent"
                     android:text="@string/notification"
                     android:textColor="@color/black"
-                    android:textSize="28sp"
+                    android:textSize="20sp"
                     android:textStyle="bold|italic" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
@@ -215,8 +202,26 @@
                         android:background="@drawable/bg_spinner" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </com.google.android.material.card.MaterialCardView>
                 <!--   Genshin   -->
 
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.Material3.CardView.Outlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:animateLayoutChanges="true"
+                        android:padding="14dp">
                 <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -229,7 +234,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingBottom="15dp"
+                    android:paddingBottom="4dp"
                     android:visibility="@{vm.sfExpandGenshin ? View.VISIBLE : View.GONE}">
 
                     <com.google.android.material.chip.ChipGroup
@@ -288,8 +293,25 @@
                     </com.google.android.material.chip.ChipGroup>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
+                </com.google.android.material.card.MaterialCardView>
                 <!--   StarRail   -->
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.Material3.CardView.Outlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:animateLayoutChanges="true"
+                        android:padding="14dp">
                 <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -302,7 +324,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingBottom="15dp"
+                    android:paddingBottom="4dp"
                     android:visibility="@{vm.sfExpandHonkaiSr ? View.VISIBLE : View.GONE}">
 
                     <com.google.android.material.chip.ChipGroup
@@ -360,8 +382,25 @@
                     </com.google.android.material.chip.ChipGroup>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
+                </com.google.android.material.card.MaterialCardView>
                 <!--   ZZZ   -->
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.Material3.CardView.Outlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:animateLayoutChanges="true"
+                        android:padding="14dp">
                 <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -374,7 +413,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingBottom="15dp"
+                    android:paddingBottom="4dp"
                     android:visibility="@{vm.sfExpandZZZ ? View.VISIBLE : View.GONE}">
 
                     <com.google.android.material.chip.ChipGroup
@@ -449,7 +488,24 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.Material3.CardView.Outlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:animateLayoutChanges="true"
+                        android:padding="14dp">
                 <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -487,6 +543,9 @@
 
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </com.google.android.material.card.MaterialCardView>
 
                 <android.widget.Space
                     android:layout_width="wrap_content"
@@ -535,6 +594,21 @@
                     android:textColor="@color/light_blue_600"
                     android:textSize="15sp"
                     android:textStyle="bold|italic" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextView"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="12dp"
+                    android:drawablePadding="6dp"
+                    android:drawableStart="@drawable/baseline_translate_24"
+                    android:drawableTint="@color/gray"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:onClick="@{()->vm.onClickChangeLanguage()}"
+                    android:padding="6dp"
+                    android:text="@string/change_language"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

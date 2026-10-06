@@ -1,5 +1,6 @@
 package danggai.app.presentation.ui.main
 
+import android.animation.LayoutTransition
 import android.app.NotificationManager
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -165,6 +166,8 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
             initAd()
 
         initSf()
+        binding.main.layoutTransition?.enableTransitionType(LayoutTransition.CHANGING)
+
         initUi()
 
         notificationPermisisonCheck()
