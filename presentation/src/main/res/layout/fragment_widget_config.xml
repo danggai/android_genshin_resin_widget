@@ -67,41 +67,33 @@
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <RadioGroup
-                        style="@style/RadioGroup"
+                    <com.google.android.material.chip.ChipGroup
                         android:id="@+id/rg_mini_widget_type"
-                        android:layout_height="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:foregroundGravity="center">
+                        app:chipSpacingHorizontal="8dp"
+                        app:singleSelection="true">
 
-                        <RadioButton
+                        <com.google.android.material.chip.Chip
                             android:id="@+id/rb_resin"
-                            style="@style/RadioButton"
-                            android:layout_height="match_parent"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            style="@style/NotiChipBlue"
                             android:text="@string/resin"
-                            android:layout_marginEnd="0dp" />
+                            app:chipIconVisible="false" />
 
-                        <RadioButton
+                        <com.google.android.material.chip.Chip
                             android:id="@+id/rb_realm_currency"
-                            style="@style/RadioButton"
-                            android:layout_height="match_parent"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            style="@style/NotiChipBlue"
                             android:text="@string/realm_currency"
-                            android:layout_marginEnd="0dp" />
+                            app:chipIconVisible="false" />
 
-                        <RadioButton
+                        <com.google.android.material.chip.Chip
                             android:id="@+id/rb_parametric_transformer"
-                            style="@style/RadioButton"
-                            android:layout_height="match_parent"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            style="@style/NotiChipBlue"
                             android:text="@string/parametric_transformer"
-                            android:layout_marginEnd="0dp" />
+                            app:chipIconVisible="false" />
 
-                    </RadioGroup>
+                    </com.google.android.material.chip.ChipGroup>
 
                     <View
                         android:layout_width="match_parent"
@@ -120,32 +112,27 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <RadioGroup
-                        style="@style/RadioGroup"
+                    <com.google.android.material.chip.ChipGroup
                         android:id="@+id/rg_selected_chara"
-                        android:layout_height="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:foregroundGravity="center">
+                        app:chipSpacingHorizontal="8dp"
+                        app:singleSelection="true">
 
-                        <RadioButton
+                        <com.google.android.material.chip.Chip
                             android:id="@+id/rb_selected_chara"
-                            style="@style/RadioButton"
-                            android:layout_height="match_parent"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            style="@style/NotiChipBlue"
                             android:text="@string/selected_characters"
-                            android:layout_marginEnd="0dp" />
+                            app:chipIconVisible="false" />
 
-                        <RadioButton
+                        <com.google.android.material.chip.Chip
                             android:id="@+id/rb_recent_chara"
-                            style="@style/RadioButton"
-                            android:layout_height="match_parent"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            style="@style/NotiChipBlue"
                             android:text="@string/recent_characters"
-                            android:layout_marginEnd="0dp" />
+                            app:chipIconVisible="false" />
 
-                    </RadioGroup>
+                    </com.google.android.material.chip.ChipGroup>
 
                     <View
                         android:layout_width="match_parent"

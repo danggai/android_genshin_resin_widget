@@ -5,9 +5,9 @@ import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.RadioGroup
 import android.widget.RemoteViews
 import androidx.annotation.LayoutRes
+import com.google.android.material.chip.ChipGroup
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
@@ -72,11 +72,11 @@ class WidgetConfigFragment : BindingFragment<FragmentWidgetConfigBinding, Widget
         views = RemoteViews(context?.packageName, R.layout.widget_detail_fixed)
         appWidgetManager.updateAppWidget(appWidgetId, views)
 
-        val listener = RadioGroup.OnCheckedChangeListener { _, checkedId ->
-            mVM.onClickRoundButton(checkedId)
+        val listener = ChipGroup.OnCheckedStateChangeListener { _, checkedIds ->
+            mVM.onClickRoundButton(checkedIds.firstOrNull() ?: View.NO_ID)
         }
-        binding.rgMiniWidgetType.setOnCheckedChangeListener(listener)
-        binding.rgSelectedChara.setOnCheckedChangeListener(listener)
+        binding.rgMiniWidgetType.setOnCheckedStateChangeListener(listener)
+        binding.rgSelectedChara.setOnCheckedStateChangeListener(listener)
 
         initUi()
         initSf()
