@@ -63,7 +63,7 @@
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="MaterialButton.Secondary" parent="Widget.Material3.Button.OutlinedButton">
+    <style name="MaterialButton.Secondary" parent="Widget.Material3.Button.TonalButton">
         <item name="cornerRadius">12dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -73,6 +73,8 @@
         <item name="android:paddingHorizontal">12dp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">15sp</item>
+        <item name="backgroundTint">@color/surface</item>
+        <item name="android:textColor">@color/point_text</item>
     </style>
 
     <style name="TextViewDisabled" parent="TextView">
@@ -143,6 +145,8 @@
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">15sp</item>
+        <item name="backgroundTint">@color/surface</item>
+        <item name="android:textColor">@color/point_text</item>
     </style>
 
     <style name="NotiChip" parent="Widget.Material3.Chip.Filter">
@@ -176,5 +180,64 @@
         <item name="android:layout_marginTop">6dp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.NotiChip" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="NotiChip.Soft">
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.NotiChip</item>
+    </style>
+
+    <style name="NotiChipBlue" parent="NotiChip.Soft">
+        <item name="chipBackgroundColor">@color/noti_chip_soft_bg_blue</item>
+        <item name="chipStrokeColor">@color/noti_chip_soft_stroke_blue</item>
+        <item name="android:textColor">@color/noti_chip_soft_text_blue</item>
+    </style>
+    <style name="NotiChipBlue.Custom">
+        <item name="android:textAppearance">@style/NotiChipCustomText</item>
+        <item name="android:textColor">@color/noti_chip_soft_custom_text</item>
+    </style>
+
+    <style name="NotiChipGenshin" parent="NotiChip.Soft">
+        <item name="chipBackgroundColor">@color/noti_chip_soft_bg_genshin</item>
+        <item name="chipStrokeColor">@color/noti_chip_soft_stroke_genshin</item>
+        <item name="android:textColor">@color/noti_chip_soft_text_genshin</item>
+    </style>
+    <style name="NotiChipGenshin.Custom">
+        <item name="android:textAppearance">@style/NotiChipCustomText</item>
+        <item name="android:textColor">@color/noti_chip_soft_custom_text</item>
+    </style>
+
+    <style name="NotiChipHonkaiSr" parent="NotiChip.Soft">
+        <item name="chipBackgroundColor">@color/noti_chip_soft_bg_honkai_sr</item>
+        <item name="chipStrokeColor">@color/noti_chip_soft_stroke_honkai_sr</item>
+        <item name="android:textColor">@color/noti_chip_soft_text_honkai_sr</item>
+    </style>
+    <style name="NotiChipHonkaiSr.Custom">
+        <item name="android:textAppearance">@style/NotiChipCustomText</item>
+        <item name="android:textColor">@color/noti_chip_soft_custom_text</item>
+    </style>
+
+    <style name="NotiChipZzz" parent="NotiChip.Soft">
+        <item name="chipBackgroundColor">@color/noti_chip_soft_bg_zzz</item>
+        <item name="chipStrokeColor">@color/noti_chip_soft_stroke_zzz</item>
+        <item name="android:textColor">@color/noti_chip_soft_text_zzz</item>
+    </style>
+    <style name="NotiChipZzz.Custom">
+        <item name="android:textAppearance">@style/NotiChipCustomText</item>
+        <item name="android:textColor">@color/noti_chip_soft_custom_text</item>
+    </style>
+
+    <style name="SoftCard" parent="Widget.Material3.CardView.Filled">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="cardBackgroundColor">@color/surface</item>
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">0dp</item>
     </style>
 </resources>

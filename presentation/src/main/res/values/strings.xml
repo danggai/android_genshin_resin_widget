@@ -109,7 +109,7 @@
     <string name="btn_auto_check_in_enable_honkai_sr">Honkai: Star Rail</string>
     <string name="btn_auto_check_in_enable_zzz">Zenless Zone Zero</string>
 
-    <string name="btn_start_check_in">Start check-in now</string>
+    <string name="btn_start_check_in">Check-in on Save</string>
 
     <string name="btn_check_in_success">Success</string>
     <string name="btn_check_in_failed">Failure</string>

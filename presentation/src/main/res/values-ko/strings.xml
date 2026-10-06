@@ -101,7 +101,7 @@
     <string name="btn_auto_check_in_enable_honkai_sr">붕괴: 스타레일</string>
     <string name="btn_auto_check_in_enable_zzz">젠레스 존 제로</string>
 
-    <string name="btn_start_check_in">바로 출석체크 진행하기</string>
+    <string name="btn_start_check_in">저장 시 출석</string>
 
     <string name="btn_check_in_success">성공</string>
     <string name="btn_check_in_failed">실패</string>

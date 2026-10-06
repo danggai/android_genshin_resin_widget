@@ -5,7 +5,7 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/light_blue_600</item>
         <item name="colorPrimaryVariant">@color/light_blue_600</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/on_point</item>
         <item name="colorOnSurface">@color/gray</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/light_blue_600</item>
@@ -23,7 +23,7 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/light_blue_600</item>
         <item name="colorPrimaryVariant">@color/light_blue_600</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/on_point</item>
         <item name="colorOnSurface">@color/gray</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/transparent</item>

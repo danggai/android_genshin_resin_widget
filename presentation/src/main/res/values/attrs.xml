@@ -8,5 +8,9 @@
         <attr name="titleText" format="string" />
         <attr name="marginTop" format="dimension" />
         <attr name="collapsible" format="boolean" />
+        <attr name="titleColor" format="color" />
+        <attr name="titleIcon" format="reference" />
+        <attr name="dividerVisible" format="boolean" />
+        <attr name="titleItalic" format="boolean" />
     </declare-styleable>
 </resources>

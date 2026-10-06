@@ -1,6 +1,10 @@
 package danggai.app.presentation.view
 
 import android.content.Context
+import android.graphics.Typeface
+import android.content.res.ColorStateList
+import android.view.View
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
@@ -36,10 +40,33 @@ class TitleDividerView @JvmOverloads constructor(
                     setMarignTop(marginTop)
                 }
 
-                if (getBoolean(R.styleable.TitleDividerView_collapsible, false)) {
-                    arrowImageView.visibility = VISIBLE
+                if (getBoolean(R.styleable.TitleDividerView_collapsible, false)) {
+                    arrowImageView.visibility = VISIBLE
+                }
+
+                if (hasValue(R.styleable.TitleDividerView_titleColor)) {
+                    val color = getColor(R.styleable.TitleDividerView_titleColor, 0)
+                    titleTextView.setTextColor(color)
+                    arrowImageView.imageTintList = ColorStateList.valueOf(color)
                 }
-            } finally {
+
+                if (!getBoolean(R.styleable.TitleDividerView_dividerVisible, true)) {
+                    findViewById<View>(R.id.v_divider).visibility = INVISIBLE
+                }
+
+                if (!getBoolean(R.styleable.TitleDividerView_titleItalic, true)) {
+                    titleTextView.setTypeface(titleTextView.typeface, Typeface.BOLD)
+                }
+
+                getResourceId(R.styleable.TitleDividerView_titleIcon, 0).let { iconId ->
+                    if (iconId != 0) {
+                        val size = (24 * resources.displayMetrics.density).toInt()
+                        val icon = ContextCompat.getDrawable(context, iconId)
+                        icon?.setBounds(0, 0, size, size)
+                        titleTextView.setCompoundDrawables(icon, null, null, null)
+                        titleTextView.compoundDrawablePadding = (8 * resources.displayMetrics.density).toInt()
+                    }
+                }            } finally {
                 recycle()
             }
         }

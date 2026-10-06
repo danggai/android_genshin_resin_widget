@@ -14,13 +14,9 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        style="@style/Widget.Material3.CardView.Outlined"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="0dp">
+        style="@style/SoftCard"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="10dp">
 
         <LinearLayout
             android:id="@+id/ll_root"
@@ -42,7 +38,7 @@
                     android:id="@+id/tv_nickname"
                     style="@style/TextView"
                     android:text="nickname"
-                    android:textColor="@color/black"
+                    android:textColor="@color/on_surface"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -50,7 +46,7 @@
                     android:id="@+id/tv_uid"
                     style="@style/TextView"
                     android:text="uid"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/on_surface_variant"
                     android:textSize="13sp" />
 
             </LinearLayout>
