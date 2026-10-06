@@ -494,29 +494,33 @@
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/MaterialButton"
-                    android:onClick="@{()->vm.onClickWidgetDesign()}"
-                    android:text="@string/widget_customizing"
-                    android:textSize="22sp"
-                    android:textStyle="italic"
-                    app:iconSize="26dp" />
-
-                <android.widget.Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    style="@style/MaterialButton"
+                    android:layout_width="match_parent"
                     android:onClick="@{()->vm.onClickAddWidget()}"
                     android:text="@string/add_widget" />
 
-                <android.widget.Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="5dp" />
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
 
-                <com.google.android.material.button.MaterialButton
-                    style="@style/MaterialButton"
-                    android:onClick="@{()->vm.onClickCheckIn()}"
-                    android:text="@string/hoyolab_checkin" />
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/MaterialButton.Secondary"
+                        android:layout_width="0dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:onClick="@{()->vm.onClickWidgetDesign()}"
+                        android:text="@string/widget_customizing" />
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/MaterialButton.Secondary"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:onClick="@{()->vm.onClickCheckIn()}"
+                        android:text="@string/hoyolab_checkin" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <android.widget.Space
                     android:layout_width="wrap_content"
