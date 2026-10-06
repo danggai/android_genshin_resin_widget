@@ -32,6 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:animateLayoutChanges="true"
                 android:padding="12dp">
 
             <com.google.android.material.card.MaterialCardView
@@ -103,9 +104,24 @@
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp">
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:importantForAccessibility="no"
+                        android:maxHeight="0dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/logo_genshin"
+                        android:tint="#eeeeee" />
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
                     android:orientation="vertical"
                     android:padding="14dp">
 
@@ -245,6 +261,8 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+                </FrameLayout>
+
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/ll_honkai_sr_ingame_data"
@@ -257,9 +275,24 @@
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp">
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:importantForAccessibility="no"
+                        android:maxHeight="0dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/logo_honkai_sr"
+                        android:tint="#eeeeee" />
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
                     android:orientation="vertical"
                     android:padding="14dp">
 
@@ -401,6 +434,8 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+                </FrameLayout>
+
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/ll_zzz_ingame_data"
@@ -413,9 +448,24 @@
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp">
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:importantForAccessibility="no"
+                        android:maxHeight="0dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/logo_zzz"
+                        android:tint="#eeeeee" />
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
                     android:orientation="vertical"
                     android:padding="14dp">
 
@@ -556,6 +606,8 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </FrameLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
