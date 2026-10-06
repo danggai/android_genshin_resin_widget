@@ -146,6 +146,7 @@
         android:layout_alignRight="@id/ll_root"
         android:layout_alignBottom="@id/ll_root"
         android:layout_marginRight="2dp"
+        android:layout_marginBottom="3dp"
         android:gravity="right">
 
         <TextView
