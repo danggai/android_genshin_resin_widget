@@ -8,7 +8,7 @@
         <item name="colorOnPrimary">@color/on_point</item>
         <item name="colorOnSurface">@color/gray</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/light_blue_600</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/page_bg</item>
         <!-- Customize your theme here. -->
         <item name="android:letterSpacing">-0.04</item>
         <item name="windowNoTitle">true</item>

@@ -168,15 +168,7 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextView"
-                    android:layout_width="match_parent"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/notification"
-                    android:textColor="@color/on_surface"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+
 
                 <com.google.android.material.card.MaterialCardView
                     style="@style/SoftCard">
@@ -187,6 +179,15 @@
                         android:orientation="vertical"
                         android:paddingHorizontal="14dp"
                         android:paddingVertical="8dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextView"
+                            android:layout_width="match_parent"
+                            android:layout_marginBottom="2dp"
+                            android:text="@string/notification"
+                            android:textColor="@color/on_surface"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
                         <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
 
@@ -463,7 +464,7 @@
                                             android:checked="@={vm.sfEnableNotiPeriodScoreHonkaiSr}"
                                             android:text="@string/btn_period_score_yet"
                                             app:chipIcon="@drawable/icon_simulated_universe"
-                                            app:chipIconTint="@color/noti_chip_icon_tint" />
+                                            app:chipIconTint="@color/on_surface" />
                                     </com.google.android.material.chip.ChipGroup>
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>

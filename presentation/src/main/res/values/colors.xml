@@ -60,4 +60,5 @@
     <color name="point_muted">#2E6A8C</color>
     <color name="on_point_muted">#EAF6FC</color>
     <color name="icon_muted">#6F9DB8</color>
+    <color name="outline_soft">#38424F</color>
 </resources>

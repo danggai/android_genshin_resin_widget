@@ -53,23 +53,26 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_resin"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="4dp"
                 android:padding="2dp"
                 android:src="@drawable/resin"
                 android:tintMode="multiply" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_trail_power"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="4dp"
                 android:src="@drawable/trailblaze_power"
                 android:tintMode="multiply" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_battery"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="4dp"
                 android:padding="3dp"
                 android:src="@drawable/battery"
                 android:tintMode="multiply" />
