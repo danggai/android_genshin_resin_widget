@@ -142,6 +142,37 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
+                <com.google.android.material.button.MaterialButton
+                    style="@style/MaterialButton"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:onClick="@{()->vm.onClickAddWidget()}"
+                    android:text="@string/add_widget" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/MaterialButton.Secondary"
+                        android:layout_width="0dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:onClick="@{()->vm.onClickWidgetDesign()}"
+                        android:text="@string/widget_customizing" />
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/MaterialButton.Secondary"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:onClick="@{()->vm.onClickCheckIn()}"
+                        android:text="@string/hoyolab_checkin" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <com.google.android.material.card.MaterialCardView
                     style="@style/Widget.Material3.CardView.Outlined"
                     android:layout_width="match_parent"
@@ -163,7 +194,7 @@
                             android:animateLayoutChanges="true"
                             android:paddingHorizontal="14dp"
                             android:paddingTop="14dp"
-                            android:paddingBottom="6dp">
+                            android:paddingBottom="0dp">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 style="@style/TextView"
@@ -172,6 +203,60 @@
                                 android:textColor="@color/black"
                                 android:textSize="24sp"
                                 android:textStyle="bold|italic" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="14dp"
+                            android:paddingBottom="6dp">
+
+                            <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/TextView"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="@string/noti_time_daily"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+
+                                <androidx.appcompat.widget.AppCompatSpinner
+                                    android:id="@+id/sp_daily_yet_noti"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:background="@drawable/bg_spinner" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/TextView"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="@string/noti_time_weekly"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+
+                                <androidx.appcompat.widget.AppCompatSpinner
+                                    android:id="@+id/sp_weekly_yet_noti_day"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:background="@drawable/bg_spinner" />
+
+                                <androidx.appcompat.widget.AppCompatSpinner
+                                    android:id="@+id/sp_weekly_yet_noti_time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:background="@drawable/bg_spinner" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -565,61 +650,9 @@
 
                             </com.google.android.material.chip.ChipGroup>
 
-                        </androidx.appcompat.widget.LinearLayoutCompat>
-
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:animateLayoutChanges="true"
-                            android:paddingHorizontal="14dp"
-                            android:paddingTop="14dp"
-                            android:paddingBottom="6dp">
-
-                            <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/TextView"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:text="@string/noti_time_daily"
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp" />
-
-                                <androidx.appcompat.widget.AppCompatSpinner
-                                    android:id="@+id/sp_daily_yet_noti"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:background="@drawable/bg_spinner" />
-
-                            </androidx.appcompat.widget.LinearLayoutCompat>
-
-                            <androidx.appcompat.widget.LinearLayoutCompat style="@style/NotiRow">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/TextView"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:text="@string/noti_time_weekly"
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp" />
-
-                                <androidx.appcompat.widget.AppCompatSpinner
-                                    android:id="@+id/sp_weekly_yet_noti_day"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:background="@drawable/bg_spinner" />
-
-                                <androidx.appcompat.widget.AppCompatSpinner
-                                    android:id="@+id/sp_weekly_yet_noti_time"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:background="@drawable/bg_spinner" />
-
-                            </androidx.appcompat.widget.LinearLayoutCompat>
+                            <android.widget.Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="10dp" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -629,51 +662,7 @@
 
                 <android.widget.Space
                     android:layout_width="wrap_content"
-                    android:layout_height="15dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    style="@style/MaterialButton"
-                    android:layout_width="match_parent"
-                    android:onClick="@{()->vm.onClickAddWidget()}"
-                    android:text="@string/add_widget" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.button.MaterialButton
-                        style="@style/MaterialButton.Secondary"
-                        android:layout_width="0dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_weight="1"
-                        android:onClick="@{()->vm.onClickWidgetDesign()}"
-                        android:text="@string/widget_customizing" />
-
-                    <com.google.android.material.button.MaterialButton
-                        style="@style/MaterialButton.Secondary"
-                        android:layout_width="0dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_weight="1"
-                        android:onClick="@{()->vm.onClickCheckIn()}"
-                        android:text="@string/hoyolab_checkin" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <android.widget.Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="5dp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextView"
-                    android:layout_gravity="center_horizontal"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:onClick="@{()->vm.onClickWidgetRefreshNotWork()}"
-                    android:text="@string/dialog_widget_refresh_not_work"
-                    android:textColor="@color/light_blue_600"
-                    android:textSize="15sp"
-                    android:textStyle="bold|italic" />
+                    android:layout_height="10dp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextView"
