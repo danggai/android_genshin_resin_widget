@@ -33,16 +33,7 @@ class WidgetDesignCharacterFragment : BindingFragment<FragmentWidgetDesignCharac
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = mVM
 
-        initUi()
-        initSf()    }
-
-    private fun initUi() {
-        when(mVM.sfWidgetTheme.value) {
-            Constant.PREF_WIDGET_THEME_AUTOMATIC -> binding.rbThemeAutomatic.isChecked = true
-            Constant.PREF_WIDGET_THEME_LIGHT -> binding.rbThemeLight.isChecked = true
-            Constant.PREF_WIDGET_THEME_DARK -> binding.rbThemeDark.isChecked = true
-            else -> binding.rbThemeAutomatic.isChecked = true
-        }
+        initSf()
     }
 
     private fun initSf() {

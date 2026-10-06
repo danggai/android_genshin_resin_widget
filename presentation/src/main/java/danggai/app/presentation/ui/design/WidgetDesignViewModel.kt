@@ -84,8 +84,6 @@ class WidgetDesignViewModel @Inject constructor(
     val sfInvestigationPointDataVisibility = MutableStateFlow(true)
 
     val sfFontSizeDetail = MutableStateFlow(Constant.PREF_DEFAULT_WIDGET_DETAIL_FONT_SIZE)
-    val sfDetailUidVisibility = MutableStateFlow(false)
-    val sfDetailNameVisibility = MutableStateFlow(false)
 
     val sfCharacterListRefreshSwitch = MutableStateFlow(false)
 
@@ -147,9 +145,6 @@ class WidgetDesignViewModel @Inject constructor(
             sfMemberCardDataVisibility.value = it.memberCardDataVisibility
             sfIsMemberCardPeriodInvisible.value = it.isMemberCardPeriodInvisible
             sfInvestigationPointDataVisibility.value = it.investigationPointDataVisibility
-
-            sfDetailUidVisibility.value = it.uidVisibility
-            sfDetailNameVisibility.value = it.nameVisibility
 
         }
 
@@ -298,8 +293,6 @@ class WidgetDesignViewModel @Inject constructor(
                 sfMemberCardDataVisibility,
                 sfIsMemberCardPeriodInvisible,
                 sfInvestigationPointDataVisibility,
-                sfDetailUidVisibility,
-                sfDetailNameVisibility,
                 sfFontSizeDetail,
                 sfSelectedPreview,
             )
@@ -351,8 +344,8 @@ class WidgetDesignViewModel @Inject constructor(
             isMemberCardPeriodInvisible = sfIsMemberCardPeriodInvisible.value,
             investigationPointDataVisibility = sfInvestigationPointDataVisibility.value,
 
-            uidVisibility = sfDetailUidVisibility.value,
-            nameVisibility = sfDetailNameVisibility.value,
+            uidVisibility = sfResinUidVisibility.value,
+            nameVisibility = sfResinNameVisibility.value,
             fontSize = sfFontSizeDetail.value,
             backgroundTransparency = sfTransparency.value
         )
@@ -387,11 +380,6 @@ class WidgetDesignViewModel @Inject constructor(
     }
 
     fun onClickSetResinTimeNotation(timeNotation: TimeNotation) {
-        log.e("timeNotation -> $timeNotation")
-        sfWidgetTimeNotation.value = timeNotation
-    }
-
-    fun onClickSetDetailTimeNotation(timeNotation: TimeNotation) {
         log.e("timeNotation -> $timeNotation")
         sfWidgetTimeNotation.value = timeNotation
     }

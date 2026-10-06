@@ -71,21 +71,6 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
             Constant.PREF_WIDGET_RESIN_IMAGE_INVISIBLE -> binding.rbResinImageInvisible.isChecked = true
             else -> binding.rbResinImageVisible.isChecked = true
         }
-
-        when(mVM.sfWidgetTimeNotation.value) {
-            TimeNotation.DEFAULT,
-            TimeNotation.REMAIN_TIME -> binding.rbRemainTime.isChecked = true
-            TimeNotation.FULL_CHARGE_TIME -> binding.rbFullChargeTime.isChecked = true
-            TimeNotation.DISABLE_TIME -> binding.rbDisableTime.isChecked = true
-            else -> binding.rbRemainTime.isChecked = true
-        }
-
-        when(mVM.sfWidgetTheme.value) {
-            Constant.PREF_WIDGET_THEME_AUTOMATIC -> binding.rbThemeAutomatic.isChecked = true
-            Constant.PREF_WIDGET_THEME_LIGHT -> binding.rbThemeLight.isChecked = true
-            Constant.PREF_WIDGET_THEME_DARK -> binding.rbThemeDark.isChecked = true
-            else -> binding.rbThemeAutomatic.isChecked = true
-        }
     }
 
     private fun initLv() {

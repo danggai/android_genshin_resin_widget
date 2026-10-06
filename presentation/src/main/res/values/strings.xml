@@ -498,4 +498,5 @@
     <string name="noti_time_weekly">Weekly reminder day &amp; time</string>
     <string name="btn_use_game">Use this game</string>
     <string name="change_language">Language</string>
+    <string name="common">Common</string>
 </resources>

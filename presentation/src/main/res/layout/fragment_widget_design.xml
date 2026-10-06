@@ -3,55 +3,274 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="danggai.domain.local.WidgetTheme" />
+        <import type="danggai.domain.local.TimeNotation" />
         <variable
             name="vm"
             type="danggai.app.presentation.ui.design.WidgetDesignViewModel"
             />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/page_bg"
-        >
+        android:layout_height="match_parent">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tl_top"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:backgroundTint="@color/surface"
-            app:tabTextAppearance="@style/TabText"
-            app:tabTextColor="@color/on_surface_variant"
-            app:tabSelectedTextColor="@color/on_surface"
-            app:tabIndicatorColor="@color/accent_blue"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/vp_main"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            />
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp_main"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:background="@color/page_bg"
-            app:layout_constraintTop_toBottomOf="@id/tl_top"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            >
 
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            style="@style/MaterialButton"-->
-<!--            android:id="@+id/tv_save"-->
-<!--            android:text="@string/save"-->
-<!--            android:onClick="@{()->vm.onClickSave()}"-->
-<!--            android:layout_marginTop="15dp"-->
-<!--            android:layout_marginBottom="15dp"-->
-<!--            />-->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tl_top"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/surface"
+                app:tabTextAppearance="@style/TabText"
+                app:tabTextColor="@color/on_surface_variant"
+                app:tabSelectedTextColor="@color/on_surface"
+                app:tabIndicatorColor="@color/accent_blue"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/vp_main"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_main"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/page_bg"
+                app:layout_constraintTop_toBottomOf="@id/tl_top"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+    <!--        <com.google.android.material.button.MaterialButton-->
+    <!--            style="@style/MaterialButton"-->
+    <!--            android:id="@+id/tv_save"-->
+    <!--            android:text="@string/save"-->
+    <!--            android:onClick="@{()->vm.onClickSave()}"-->
+    <!--            android:layout_marginTop="15dp"-->
+    <!--            android:layout_marginBottom="15dp"-->
+    <!--            />-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/sheet_common"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bottom_sheet"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="64dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingBottom="24dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ll_sheet_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="40dp"
+                        android:layout_height="4dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_sheet_handle" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="14dp"
+                        android:text="@string/common"
+                        android:textColor="@color/on_surface"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="@string/widget_theme"
+                            android:textColor="@color/on_surface"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:chipSpacingHorizontal="8dp"
+                            app:selectionRequired="true"
+                            app:singleSelection="true">
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/rb_theme_automatic"
+                                style="@style/NotiChipBlue"
+                                android:checked="@{vm.sfWidgetTheme == WidgetTheme.AUTOMATIC.value}"
+                                android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.AUTOMATIC)}"
+                                android:text="@string/btn_automatic"
+                                app:chipIconVisible="false" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/rb_theme_light"
+                                style="@style/NotiChipBlue"
+                                android:checked="@{vm.sfWidgetTheme == WidgetTheme.LIGHT.value}"
+                                android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.LIGHT)}"
+                                android:text="@string/btn_light"
+                                app:chipIconVisible="false" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/rb_theme_dark"
+                                style="@style/NotiChipBlue"
+                                android:checked="@{vm.sfWidgetTheme == WidgetTheme.DARK.value}"
+                                android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.DARK)}"
+                                android:text="@string/btn_dark"
+                                app:chipIconVisible="false" />
+
+                        </com.google.android.material.chip.ChipGroup>
+
+                        <android.widget.Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="14dp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="@string/time_notation"
+                            android:textColor="@color/on_surface"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:chipSpacingHorizontal="8dp"
+                            app:selectionRequired="true"
+                            app:singleSelection="true">
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/rb_remain_time"
+                                style="@style/NotiChipBlue"
+                                android:checked="@{vm.sfWidgetTimeNotation == TimeNotation.REMAIN_TIME}"
+                                android:onClick="@{() -> vm.onClickSetResinTimeNotation(TimeNotation.REMAIN_TIME)}"
+                                android:text="@string/btn_remain_time"
+                                app:chipIconVisible="false" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/rb_full_charge_time"
+                                style="@style/NotiChipBlue"
+                                android:checked="@{vm.sfWidgetTimeNotation == TimeNotation.FULL_CHARGE_TIME}"
+                                android:onClick="@{() -> vm.onClickSetResinTimeNotation(TimeNotation.FULL_CHARGE_TIME)}"
+                                android:text="@string/btn_full_charge_time"
+                                app:chipIconVisible="false" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/rb_disable_time"
+                                style="@style/NotiChipBlue"
+                                android:checked="@{vm.sfWidgetTimeNotation == TimeNotation.DISABLE_TIME}"
+                                android:onClick="@{() -> vm.onClickSetResinTimeNotation(TimeNotation.DISABLE_TIME)}"
+                                android:text="@string/btn_disable"
+                                app:chipIconVisible="false" />
+
+                        </com.google.android.material.chip.ChipGroup>
+
+                        <android.widget.Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="14dp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="@string/identifier"
+                            android:textColor="@color/on_surface"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:chipSpacingHorizontal="8dp">
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/cb_uid"
+                                style="@style/NotiChipBlue"
+                                android:checked="@={vm.sfResinUidVisibility}"
+                                android:text="@string/uid"
+                                app:chipIconVisible="false" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/cb_name"
+                                style="@style/NotiChipBlue"
+                                android:checked="@={vm.sfResinNameVisibility}"
+                                android:text="@string/nickname_"
+                                app:chipIconVisible="false" />
+
+                        </com.google.android.material.chip.ChipGroup>
+
+                        <android.widget.Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="14dp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="@string/background_transparency"
+                            android:textColor="@color/on_surface"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="5dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:hint="170"
+                                android:text="@{vm.sfTransparency.toString()}"
+                                android:textColor="@color/on_surface"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatSeekBar
+                                android:id="@+id/sb_transparent"
+                                style="@style/SeekBar"
+                                android:layout_gravity="center_vertical"
+                                android:max="255"
+                                android:progress="@={vm.sfTransparency}" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/mb_reset_bg_trans"
+                                style="@style/SmallMaterialButton"
+                                android:onClick="@{()->vm.onClickBackgroundTransparent()}"
+                                android:text="@string/reset" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

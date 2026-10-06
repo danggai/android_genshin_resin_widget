@@ -490,4 +490,5 @@
     <string name="noti_time_weekly">주간 미완료 알림 요일·시각</string>
     <string name="btn_use_game">이 게임 사용</string>
     <string name="change_language">언어 변경</string>
+    <string name="common">공통</string>
 </resources>
