@@ -138,6 +138,7 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                         Preview.STARRAIL -> binding.widgetHonkaiSr.root.visibility = View.VISIBLE
                         Preview.ZZZ -> binding.widgetZzz.root.visibility = View.VISIBLE
                     }
+                    binding.llRoot.requestLayout()
                 }
             }
 

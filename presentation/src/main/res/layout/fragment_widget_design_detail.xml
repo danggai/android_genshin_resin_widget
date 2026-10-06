@@ -271,7 +271,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="14dp">
+                            android:paddingHorizontal="14dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="16dp">
 
                 <!--                원신 -->
                 <danggai.app.presentation.view.TitleDividerView
@@ -362,7 +364,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="14dp">
+                            android:paddingHorizontal="14dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="16dp">
 
                 <!--                붕괴: 스타레일 -->
                 <danggai.app.presentation.view.TitleDividerView
@@ -468,7 +472,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="14dp">
+                            android:paddingHorizontal="14dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="16dp">
 
                 <!--                젠레스 존 제로 -->
                 <danggai.app.presentation.view.TitleDividerView

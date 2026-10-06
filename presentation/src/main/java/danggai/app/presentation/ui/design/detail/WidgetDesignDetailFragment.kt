@@ -151,6 +151,7 @@ class WidgetDesignDetailFragment :
                         Preview.STARRAIL -> binding.widgetHksr.root.visibility = View.VISIBLE
                         Preview.ZZZ -> binding.widgetZzz.root.visibility = View.VISIBLE
                     }
+                    binding.llRoot.requestLayout()
                 }
             }
 

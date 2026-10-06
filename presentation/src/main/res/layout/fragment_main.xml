@@ -254,7 +254,8 @@
                             android:orientation="vertical"
                             android:animateLayoutChanges="true"
                             android:paddingHorizontal="14dp"
-                            android:paddingVertical="10dp">
+                            android:paddingTop="6dp"
+                            android:paddingBottom="12dp">
 
                             <danggai.app.presentation.view.TitleDividerView
                                 android:layout_width="match_parent"
@@ -374,7 +375,8 @@
                             android:orientation="vertical"
                             android:animateLayoutChanges="true"
                             android:paddingHorizontal="14dp"
-                            android:paddingVertical="10dp">
+                            android:paddingTop="6dp"
+                            android:paddingBottom="12dp">
 
                             <danggai.app.presentation.view.TitleDividerView
                                 android:layout_width="match_parent"
@@ -493,7 +495,8 @@
                             android:orientation="vertical"
                             android:animateLayoutChanges="true"
                             android:paddingHorizontal="14dp"
-                            android:paddingVertical="10dp">
+                            android:paddingTop="6dp"
+                            android:paddingBottom="12dp">
 
                             <danggai.app.presentation.view.TitleDividerView
                                 android:layout_width="match_parent"
