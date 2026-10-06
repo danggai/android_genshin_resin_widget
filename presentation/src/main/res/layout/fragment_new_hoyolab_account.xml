@@ -234,26 +234,48 @@
                             <android.widget.Space
                                 android:layout_width="8dp"
                                 android:layout_height="1dp" />
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="@string/uid"
-                        app:placeholderText="@string/hint_uid">
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/uid"
+                                    android:visibility="@{vm.sfNoGenshinAccount ? View.GONE : View.VISIBLE}"
+                                    app:placeholderText="@string/hint_uid">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_genshin_uid"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:singleLine="true"
-                            android:text="@={vm.sfGenshinUid}"
-                            android:enabled="@{vm.sfNoGenshinAccount ? false : true}"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/et_genshin_uid"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:singleLine="true"
+                                        android:text="@={vm.sfGenshinUid}"
+                                        android:textColor="@color/black"
+                                        android:textSize="16sp" />
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="false"
+                                    android:hint="@string/uid"
+                                    android:visibility="@{vm.sfNoGenshinAccount ? View.VISIBLE : View.GONE}">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:enabled="false"
+                                        android:singleLine="true"
+                                        android:textSize="16sp" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                            </FrameLayout>
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 

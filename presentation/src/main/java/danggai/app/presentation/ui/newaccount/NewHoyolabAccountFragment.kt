@@ -1,5 +1,6 @@
 package danggai.app.presentation.ui.newaccount
 
+import android.animation.LayoutTransition
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -43,6 +44,8 @@ class NewHoyolabAccountFragment :
         activity?.intent?.getStringExtra(NewHoyolabAccountActivity.ARG_PARAM_UID)?.let { uid ->
             mVM.selectAccountByUid(uid)
         }
+
+        binding.llMain.layoutTransition?.enableTransitionType(LayoutTransition.CHANGING)
 
         initSf()
     }
