@@ -124,94 +124,85 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp">
 
-                <com.google.android.material.card.MaterialCardView
-                    style="@style/SoftCard">
+                <android.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/image"
+                    android:textColor="@color/on_surface"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/image"
-                            android:textColor="@color/on_surface"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:chipSpacingHorizontal="8dp"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
 
-                        <com.google.android.material.chip.ChipGroup
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:chipSpacingHorizontal="8dp"
-                            app:selectionRequired="true"
-                            app:singleSelection="true">
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/rb_resin_image_visible"
+                        style="@style/NotiChipBlue"
+                        android:onClick="@{() -> vm.onClickResinImageVisible(ResinImageVisibility.VISIBLE)}"
+                        android:text="@string/btn_visible"
+                        app:chipIconVisible="false" />
 
-                            <com.google.android.material.chip.Chip
-                                android:id="@+id/rb_resin_image_visible"
-                                style="@style/NotiChipBlue"
-                                android:onClick="@{() -> vm.onClickResinImageVisible(ResinImageVisibility.VISIBLE)}"
-                                android:text="@string/btn_visible"
-                                app:chipIconVisible="false" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/rb_resin_image_invisible"
+                        style="@style/NotiChipBlue"
+                        android:onClick="@{() -> vm.onClickResinImageVisible(ResinImageVisibility.INVISIBLE)}"
+                        android:text="@string/btn_invisible"
+                        app:chipIconVisible="false" />
 
-                            <com.google.android.material.chip.Chip
-                                android:id="@+id/rb_resin_image_invisible"
-                                style="@style/NotiChipBlue"
-                                android:onClick="@{() -> vm.onClickResinImageVisible(ResinImageVisibility.INVISIBLE)}"
-                                android:text="@string/btn_invisible"
-                                app:chipIconVisible="false" />
+                </com.google.android.material.chip.ChipGroup>
 
-                        </com.google.android.material.chip.ChipGroup>
+                <android.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="14dp" />
 
-                        <android.widget.Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="14dp" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/font_size"
+                    android:textColor="@color/on_surface"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/font_size"
-                            android:textColor="@color/on_surface"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="5dp">
 
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingHorizontal="5dp">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:hint="030"
+                        android:text="@{vm.sfResinFontSize.toString()}"
+                        android:textColor="@color/on_surface"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:hint="030"
-                                android:text="@{vm.sfResinFontSize.toString()}"
-                                android:textColor="@color/on_surface"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
+                    <androidx.appcompat.widget.AppCompatSeekBar
+                        android:id="@+id/sb_fontsize"
+                        style="@style/SeekBar"
+                        android:layout_gravity="center_vertical"
+                        android:max="100"
+                        android:min="20"
+                        android:progress="@={vm.sfResinFontSize}" />
 
-                            <androidx.appcompat.widget.AppCompatSeekBar
-                                android:id="@+id/sb_fontsize"
-                                style="@style/SeekBar"
-                                android:layout_gravity="center_vertical"
-                                android:max="100"
-                                android:min="20"
-                                android:progress="@={vm.sfResinFontSize}" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/mb_reset_resin_fontsize"
+                        style="@style/SmallMaterialButton"
+                        android:onClick="@{()->vm.onClickResinFontSize()}"
+                        android:text="@string/reset" />
 
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/mb_reset_resin_fontsize"
-                                style="@style/SmallMaterialButton"
-                                android:onClick="@{()->vm.onClickResinFontSize()}"
-                                android:text="@string/reset" />
-
-                        </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                </com.google.android.material.card.MaterialCardView>
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
 
                 <android.widget.Space

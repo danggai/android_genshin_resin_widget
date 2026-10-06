@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
@@ -55,6 +56,7 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
         }
 
         initTabLayout()
+        initCommonSheet()
 
         initSf()
     }
@@ -62,6 +64,15 @@ class WidgetDesignFragment : BindingFragment<FragmentWidgetDesignBinding, Widget
     override fun onPause() {
         super.onPause()
         mVM.saveIfChanged()
+    }
+
+    private fun initCommonSheet() {
+        val behavior = BottomSheetBehavior.from(binding.sheetCommon)
+        binding.llSheetHeader.setOnClickListener {
+            behavior.state =
+                if (behavior.state == BottomSheetBehavior.STATE_EXPANDED) BottomSheetBehavior.STATE_COLLAPSED
+                else BottomSheetBehavior.STATE_EXPANDED
+        }
     }
 
     private fun initTabLayout() {
