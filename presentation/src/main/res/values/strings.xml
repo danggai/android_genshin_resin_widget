@@ -37,9 +37,6 @@
     <string name="new_hoyolab_account">New HoYoLAB Account</string>
     <string name="hoyolab_checkin">HoYoLAB Check-in</string>
     <string name="widget_customizing">Widget Design Customizing</string>
-    <string name="btn_no_genshin_account">Don\'t use the Genshin Impact widget.</string>
-    <string name="btn_no_honkai_sr_account">Don\'t use the Honkai: Star Rail widget.</string>
-    <string name="btn_no_zzz_account">Don\'t use the Zenless Zone Zero widget.</string>
     <string name="hoyolab_checkin_desc">For the first time, press the \'HoYoLAB Check-in\' button to check in manually so that automatic check-in works properly.</string>
     <string name="hoyolab_checkin_desc_2">Automatic check-in is performed based on the account under My Info &gt; My Characters in HoYoLAB.</string>
 
@@ -499,4 +496,5 @@
 
     <string name="noti_time_daily">Daily alert time</string>
     <string name="noti_time_weekly">Weekly alert day &amp; time</string>
+    <string name="btn_use_game">Use this game</string>
 </resources>

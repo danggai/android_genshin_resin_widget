@@ -139,48 +139,53 @@
                             android:textSize="28sp"
                             android:textStyle="bold|italic" />
 
-                        <RadioGroup
-                            style="@style/RadioGroup"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+                        <com.google.android.material.chip.ChipGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:chipSpacingHorizontal="8dp"
+                            app:selectionRequired="true"
+                            app:singleSelection="true">
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
+                            <com.google.android.material.chip.Chip
                                 android:id="@+id/rb_genshin_asia"
-                                style="@style/RadioButton"
+                                style="@style/NotiChip"
                                 android:layout_marginEnd="5dp"
                                 android:checked="@{vm.sfGenshinServer == Server.ASIA}"
                                 android:onClick="@{() -> vm.onClickSetGenshinServer(Server.ASIA)}"
                                 android:text="@string/asia"
-                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}" />
+                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
+                                app:chipIconVisible="false" />
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
+                            <com.google.android.material.chip.Chip
                                 android:id="@+id/rb_genshin_usa"
-                                style="@style/RadioButton"
+                                style="@style/NotiChip"
                                 android:layout_marginEnd="5dp"
                                 android:checked="@{vm.sfGenshinServer == Server.USA}"
                                 android:onClick="@{() -> vm.onClickSetGenshinServer(Server.USA)}"
                                 android:text="@string/america"
-                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}" />
+                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
+                                app:chipIconVisible="false" />
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
+                            <com.google.android.material.chip.Chip
                                 android:id="@+id/rb_genshin_euro"
-                                style="@style/RadioButton"
+                                style="@style/NotiChip"
                                 android:layout_marginEnd="5dp"
                                 android:checked="@{vm.sfGenshinServer == Server.EUROPE}"
                                 android:onClick="@{() -> vm.onClickSetGenshinServer(Server.EUROPE)}"
                                 android:text="@string/europe"
-                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}" />
+                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
+                                app:chipIconVisible="false" />
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
+                            <com.google.android.material.chip.Chip
                                 android:id="@+id/rb_genshin_cht"
-                                style="@style/RadioButton"
+                                style="@style/NotiChip"
                                 android:checked="@{vm.sfGenshinServer == Server.CHT}"
                                 android:onClick="@{() -> vm.onClickSetGenshinServer(Server.CHT)}"
                                 android:text="@string/cht"
-                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}" />
+                                android:enabled="@{vm.sfNoGenshinAccount ?false :true}"
+                                app:chipIconVisible="false" />
 
-                        </RadioGroup>
+                        </com.google.android.material.chip.ChipGroup>
 
                         <android.widget.Space
                             android:layout_width="wrap_content"
@@ -253,12 +258,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="15dp" />
 
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            style="@style/Checkbox.BoxOnly"
+                        <com.google.android.material.chip.Chip
                             android:id="@+id/cb_no_genshin_account"
-                            android:checked="@={vm.sfNoGenshinAccount}"
-                            android:text="@string/btn_no_genshin_account"
-                            android:onClick="@{() -> vm.initGenshinDataInputField()}" />
+                            style="@style/NotiChip"
+                            android:checked="@={!vm.sfNoGenshinAccount}"
+                            android:text="@string/btn_use_game"
+                            android:onClick="@{() -> vm.initGenshinDataInputField()}"
+                            app:chipIconVisible="false" />
 
                         <android.widget.Space
                             android:layout_width="wrap_content"
@@ -310,48 +316,53 @@
                                 android:textSize="28sp"
                                 android:textStyle="bold|italic" />
 
-                            <RadioGroup
-                                style="@style/RadioGroup"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
+                            <com.google.android.material.chip.ChipGroup
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:chipSpacingHorizontal="8dp"
+                                app:selectionRequired="true"
+                                app:singleSelection="true">
 
-                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                <com.google.android.material.chip.Chip
                                     android:id="@+id/rb_honkai_sr_asia"
-                                    style="@style/RadioButton"
+                                    style="@style/NotiChip"
                                     android:layout_marginEnd="5dp"
                                     android:checked="@{vm.sfHonkaiSrServer == Server.ASIA}"
                                     android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.ASIA)}"
                                     android:text="@string/asia"
-                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}" />
+                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}"
+                                    app:chipIconVisible="false" />
 
-                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                <com.google.android.material.chip.Chip
                                     android:id="@+id/rb_honkai_sr_usa"
-                                    style="@style/RadioButton"
+                                    style="@style/NotiChip"
                                     android:layout_marginEnd="5dp"
                                     android:checked="@{vm.sfHonkaiSrServer == Server.USA}"
                                     android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.USA)}"
                                     android:text="@string/america"
-                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}" />
+                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}"
+                                    app:chipIconVisible="false" />
 
-                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                <com.google.android.material.chip.Chip
                                     android:id="@+id/rb_honkai_sr_euro"
-                                    style="@style/RadioButton"
+                                    style="@style/NotiChip"
                                     android:layout_marginEnd="5dp"
                                     android:checked="@{vm.sfHonkaiSrServer == Server.EUROPE}"
                                     android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.EUROPE)}"
                                     android:text="@string/europe"
-                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}" />
+                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}"
+                                    app:chipIconVisible="false" />
 
-                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                <com.google.android.material.chip.Chip
                                     android:id="@+id/rb_honkai_sr_cht"
-                                    style="@style/RadioButton"
+                                    style="@style/NotiChip"
                                     android:checked="@{vm.sfHonkaiSrServer == Server.CHT}"
                                     android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.CHT)}"
                                     android:text="@string/cht"
-                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}" />
+                                    android:enabled="@{vm.sfNoHonkaiSrAccount ?false :true}"
+                                    app:chipIconVisible="false" />
 
-                            </RadioGroup>
+                            </com.google.android.material.chip.ChipGroup>
 
                             <android.widget.Space
                                 android:layout_width="wrap_content"
@@ -427,12 +438,13 @@
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            style="@style/Checkbox.BoxOnly"
+                        <com.google.android.material.chip.Chip
                             android:id="@+id/cb_no_honkai_sr_account"
-                            android:checked="@={vm.sfNoHonkaiSrAccount}"
-                            android:text="@string/btn_no_honkai_sr_account"
-                            android:onClick="@{() -> vm.initHonkaiSrDataInputField()}" />
+                            style="@style/NotiChip"
+                            android:checked="@={!vm.sfNoHonkaiSrAccount}"
+                            android:text="@string/btn_use_game"
+                            android:onClick="@{() -> vm.initHonkaiSrDataInputField()}"
+                            app:chipIconVisible="false" />
 
                         <android.widget.Space
                             android:layout_width="wrap_content"
@@ -486,48 +498,53 @@
                                 android:textSize="28sp"
                                 android:textStyle="bold|italic" />
 
-                            <RadioGroup
-                                style="@style/RadioGroup"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
+                            <com.google.android.material.chip.ChipGroup
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:chipSpacingHorizontal="8dp"
+                                app:selectionRequired="true"
+                                app:singleSelection="true">
 
-                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                <com.google.android.material.chip.Chip
                                     android:id="@+id/rb_zzz_asia"
-                                    style="@style/RadioButton"
+                                    style="@style/NotiChip"
                                     android:layout_marginEnd="5dp"
                                     android:checked="@{vm.sfZZZServer == Server.ASIA}"
                                     android:onClick="@{() -> vm.onClickSetZZZServer(Server.ASIA)}"
                                     android:text="@string/asia"
-                                    android:enabled="@{vm.sfNoZZZAccount ?false :true}" />
+                                    android:enabled="@{vm.sfNoZZZAccount ?false :true}"
+                                    app:chipIconVisible="false" />
 
-                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                <com.google.android.material.chip.Chip
                                     android:id="@+id/rb_zzz_usa"
-                                    style="@style/RadioButton"
+                                    style="@style/NotiChip"
                                     android:layout_marginEnd="5dp"
                                     android:checked="@{vm.sfZZZServer == Server.USA}"
                                     android:onClick="@{() -> vm.onClickSetZZZServer(Server.USA)}"
                                     android:text="@string/america"
-                                    android:enabled="@{vm.sfNoZZZAccount ?false :true}" />
+                                    android:enabled="@{vm.sfNoZZZAccount ?false :true}"
+                                    app:chipIconVisible="false" />
 
-                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                <com.google.android.material.chip.Chip
                                     android:id="@+id/rb_zzz_euro"
-                                    style="@style/RadioButton"
+                                    style="@style/NotiChip"
                                     android:layout_marginEnd="5dp"
                                     android:checked="@{vm.sfZZZServer == Server.EUROPE}"
                                     android:onClick="@{() -> vm.onClickSetZZZServer(Server.EUROPE)}"
                                     android:text="@string/europe"
-                                    android:enabled="@{vm.sfNoZZZAccount ?false :true}" />
+                                    android:enabled="@{vm.sfNoZZZAccount ?false :true}"
+                                    app:chipIconVisible="false" />
 
-                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                <com.google.android.material.chip.Chip
                                     android:id="@+id/rb_zzz_cht"
-                                    style="@style/RadioButton"
+                                    style="@style/NotiChip"
                                     android:checked="@{vm.sfZZZServer == Server.CHT}"
                                     android:onClick="@{() -> vm.onClickSetZZZServer(Server.CHT)}"
                                     android:text="@string/cht"
-                                    android:enabled="@{vm.sfNoZZZAccount ?false :true}" />
+                                    android:enabled="@{vm.sfNoZZZAccount ?false :true}"
+                                    app:chipIconVisible="false" />
 
-                            </RadioGroup>
+                            </com.google.android.material.chip.ChipGroup>
 
                             <android.widget.Space
                                 android:layout_width="wrap_content"
@@ -603,12 +620,13 @@
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            style="@style/Checkbox.BoxOnly"
+                        <com.google.android.material.chip.Chip
                             android:id="@+id/cb_no_zzz_account"
-                            android:checked="@={vm.sfNoZZZAccount}"
-                            android:text="@string/btn_no_zzz_account"
-                            android:onClick="@{() -> vm.initZZZDataInputField()}" />
+                            style="@style/NotiChip"
+                            android:checked="@={!vm.sfNoZZZAccount}"
+                            android:text="@string/btn_use_game"
+                            android:onClick="@{() -> vm.initZZZDataInputField()}"
+                            app:chipIconVisible="false" />
 
                         <android.widget.Space
                             android:layout_width="wrap_content"
@@ -669,41 +687,37 @@
                         android:layout_height="5dp"
                         android:visibility="gone" />
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
+                    <com.google.android.material.chip.ChipGroup
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        app:chipSpacingHorizontal="8dp">
 
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            style="@style/Checkbox"
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
                             android:id="@+id/cb_enable_genshin_auto_check_in"
                             android:checked="@={vm.sfEnableGenshinAutoCheckIn}"
-                            android:text="@string/btn_auto_check_in_enable" />
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            style="@style/Checkbox"
+                            android:text="@string/btn_auto_check_in_enable"
+                            app:chipIconVisible="false" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
                             android:id="@+id/cb_enable_honkai_3rd_auto_check_in"
                             android:checked="@={vm.sfEnableHonkai3rdAutoCheckIn}"
-                            android:text="@string/btn_auto_check_in_enable_honkai_3rd" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            style="@style/Checkbox"
+                            android:text="@string/btn_auto_check_in_enable_honkai_3rd"
+                            app:chipIconVisible="false" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
                             android:id="@+id/cb_enable_honkai_sr_auto_check_in"
                             android:checked="@={vm.sfEnableHonkaiSrAutoCheckIn}"
-                            android:text="@string/btn_auto_check_in_enable_honkai_sr" />
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            style="@style/Checkbox"
+                            android:text="@string/btn_auto_check_in_enable_honkai_sr"
+                            app:chipIconVisible="false" />
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
                             android:id="@+id/cb_enable_zzz_auto_check_in"
                             android:checked="@={vm.sfEnableZZZAutoCheckIn}"
-                            android:text="@string/btn_auto_check_in_enable_zzz" />
+                            android:text="@string/btn_auto_check_in_enable_zzz"
+                            app:chipIconVisible="false" />
 
-                    </androidx.appcompat.widget.LinearLayoutCompat>
+                    </com.google.android.material.chip.ChipGroup>
 
                     <android.widget.Space
                         android:layout_width="wrap_content"
@@ -721,12 +735,14 @@
                             android:text="@string/save"
                             android:onClick="@{()->vm.onClickSave()}" />
 
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            style="@style/Checkbox"
+                        <com.google.android.material.chip.Chip
+                            style="@style/NotiChip"
                             android:layout_width="wrap_content"
                             android:id="@+id/cb_enable_auto_checkin_start"
                             android:checked="@={vm.sfEnableStartCheckIn}"
-                            android:text="@string/btn_start_check_in" />
+                            android:text="@string/btn_start_check_in"
+                            android:layout_marginStart="12dp"
+                            app:chipIconVisible="false" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
