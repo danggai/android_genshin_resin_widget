@@ -36,6 +36,7 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -130,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/widget_theme"
                     android:textColor="@color/black"
-                    android:textSize="28sp"
+                    android:textSize="24sp"
                     android:textStyle="bold|italic" />
 
                 <com.google.android.material.chip.ChipGroup
@@ -176,7 +177,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/time_notation"
                     android:textColor="@color/black"
-                    android:textSize="28sp"
+                    android:textSize="24sp"
                     android:textStyle="bold|italic" />
 
                 <com.google.android.material.chip.ChipGroup
@@ -221,7 +222,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/image"
                     android:textColor="@color/black"
-                    android:textSize="28sp"
+                    android:textSize="24sp"
                     android:textStyle="bold|italic" />
 
                 <com.google.android.material.chip.ChipGroup
@@ -256,7 +257,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/identifier"
                     android:textColor="@color/black"
-                    android:textSize="28sp"
+                    android:textSize="24sp"
                     android:textStyle="bold|italic" />
 
                 <com.google.android.material.chip.ChipGroup
@@ -289,7 +290,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/font_size"
                     android:textColor="@color/black"
-                    android:textSize="28sp"
+                    android:textSize="24sp"
                     android:textStyle="bold|italic" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -332,7 +333,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/background_transparency"
                     android:textColor="@color/black"
-                    android:textSize="28sp"
+                    android:textSize="24sp"
                     android:textStyle="bold|italic" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat

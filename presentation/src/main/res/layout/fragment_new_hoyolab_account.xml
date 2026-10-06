@@ -136,7 +136,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/server"
                             android:textColor="@color/black"
-                            android:textSize="28sp"
+                            android:textSize="18sp"
                             android:textStyle="bold|italic" />
 
                         <com.google.android.material.chip.ChipGroup
@@ -206,7 +206,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/nickname"
                                     android:textColor="@color/black"
-                                    android:textSize="28sp"
+                                    android:textSize="18sp"
                                     android:textStyle="bold|italic" />
 
                                 <androidx.appcompat.widget.AppCompatEditText
@@ -235,7 +235,7 @@
                                     android:singleLine="true"
                                     android:text="@string/uid"
                                     android:textColor="@color/black"
-                                    android:textSize="28sp"
+                                    android:textSize="18sp"
                                     android:textStyle="bold|italic" />
 
                                 <androidx.appcompat.widget.AppCompatEditText
@@ -313,7 +313,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/server"
                                 android:textColor="@color/black"
-                                android:textSize="28sp"
+                                android:textSize="18sp"
                                 android:textStyle="bold|italic" />
 
                             <com.google.android.material.chip.ChipGroup
@@ -383,7 +383,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="@string/nickname"
                                         android:textColor="@color/black"
-                                        android:textSize="28sp"
+                                        android:textSize="18sp"
                                         android:textStyle="bold|italic" />
 
                                     <androidx.appcompat.widget.AppCompatEditText
@@ -413,7 +413,7 @@
                                         android:singleLine="true"
                                         android:text="@string/uid"
                                         android:textColor="@color/black"
-                                        android:textSize="28sp"
+                                        android:textSize="18sp"
                                         android:textStyle="bold|italic" />
 
                                     <androidx.appcompat.widget.AppCompatEditText
@@ -495,7 +495,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/server"
                                 android:textColor="@color/black"
-                                android:textSize="28sp"
+                                android:textSize="18sp"
                                 android:textStyle="bold|italic" />
 
                             <com.google.android.material.chip.ChipGroup
@@ -565,7 +565,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="@string/nickname"
                                         android:textColor="@color/black"
-                                        android:textSize="28sp"
+                                        android:textSize="18sp"
                                         android:textStyle="bold|italic" />
 
                                     <androidx.appcompat.widget.AppCompatEditText
@@ -595,7 +595,7 @@
                                         android:singleLine="true"
                                         android:text="@string/uid"
                                         android:textColor="@color/black"
-                                        android:textSize="28sp"
+                                        android:textSize="18sp"
                                         android:textStyle="bold|italic" />
 
                                     <androidx.appcompat.widget.AppCompatEditText
