@@ -26,8 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:paddingBottom="3dp"
-            android:animateLayoutChanges="true">
+            android:paddingBottom="3dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
