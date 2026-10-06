@@ -479,7 +479,7 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
-    <string name="dialog_msg_patch_note">- 7.1 및 스네즈나야 관련 데이터 추가</string>
+    <string name="dialog_msg_patch_note">- 앱 전체 디자인을 다크 테마로 개편\n- 스타레일/젠레스 알림 추가 (예비 개척력, 주기 점수, 월정액, 카페 등)\n- 알림 시각을 일일/주간 공통 설정으로 통합\n- 위젯 디자인 설정 자동 저장, 메인에서 위젯 바로 추가</string>
     <string-array name="expire_days">
         <item>1일</item>
         <item>3일</item>

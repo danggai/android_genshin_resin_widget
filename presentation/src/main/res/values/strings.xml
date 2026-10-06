@@ -487,7 +487,7 @@
 
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
-    <string name="dialog_msg_patch_note">- Added data for Version 7.1 and Snezhnaya-related content.</string>
+    <string name="dialog_msg_patch_note">- Redesigned the whole app with a dark theme\n- Added Star Rail/ZZZ notifications (reserve power, cycle score, membership, café, etc.)\n- Daily/weekly reminder time is now a single shared setting\n- Widget design settings auto-save; add widgets right from the main screen</string>
     <string-array name="expire_days">
         <item>1 day</item>
         <item>3 days</item>
