@@ -17,7 +17,7 @@
         android:id="@+id/cl_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f5f5f5">
+        android:background="@color/page_bg">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -37,12 +37,8 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/ll_cookie"
-                style="@style/Widget.Material3.CardView.Outlined"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp">
+                style="@style/SoftCard"
+                app:cardBackgroundColor="@color/surface">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -54,9 +50,9 @@
                         style="@style/TextView"
                         android:layout_width="match_parent"
                         android:text="@string/cookie"
-                        android:textColor="@color/black"
+                        android:textColor="@color/on_surface"
                         android:textSize="20sp"
-                        android:textStyle="bold|italic" />
+                        android:textStyle="bold" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
@@ -71,7 +67,7 @@
                             android:layout_height="wrap_content"
                             android:singleLine="true"
                             android:text="@={vm.sfHoyolabCookie}"
-                            android:textColor="@color/black"
+                            android:textColor="@color/on_surface"
                             android:textSize="16sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -96,14 +92,9 @@
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/ll_genshin_ingame_data"
-                style="@style/Widget.Material3.CardView.Outlined"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                style="@style/SoftCard"
                 android:visibility="@{vm.sfHoyolabCookie.empty ? View.GONE : View.VISIBLE}"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp">
+                app:cardBackgroundColor="@color/card_genshin_bg">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -117,7 +108,7 @@
                         android:maxHeight="0dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/logo_genshin"
-                        android:tint="#eeeeee" />
+                        android:tint="@color/logo_genshin_tint" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -137,9 +128,9 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:text="@string/genshin"
-                            android:textColor="@color/black"
+                            android:textColor="@color/title_genshin"
                             android:textSize="20sp"
-                            android:textStyle="bold|italic" />
+                            android:textStyle="bold" />
 
                         <com.google.android.material.materialswitch.MaterialSwitch
                             android:id="@+id/cb_no_genshin_account"
@@ -161,7 +152,7 @@
                             android:layout_width="match_parent"
                             android:layout_marginTop="10dp"
                             android:text="@string/server"
-                            android:textColor="@color/gray"
+                            android:textColor="@color/on_surface_variant"
                             android:textSize="13sp" />
 
                         <com.google.android.material.chip.ChipGroup
@@ -173,7 +164,7 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/rb_genshin_asia"
-                        style="@style/NotiChip"
+                        style="@style/NotiChipGenshin"
                         android:checked="@{vm.sfGenshinServer == Server.ASIA}"
                         android:enabled="@{vm.sfNoGenshinAccount ? false : true}"
                         android:onClick="@{() -> vm.onClickSetGenshinServer(Server.ASIA)}"
@@ -181,7 +172,7 @@
                         app:chipIconVisible="false" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/rb_genshin_usa"
-                        style="@style/NotiChip"
+                        style="@style/NotiChipGenshin"
                         android:checked="@{vm.sfGenshinServer == Server.USA}"
                         android:enabled="@{vm.sfNoGenshinAccount ? false : true}"
                         android:onClick="@{() -> vm.onClickSetGenshinServer(Server.USA)}"
@@ -189,7 +180,7 @@
                         app:chipIconVisible="false" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/rb_genshin_euro"
-                        style="@style/NotiChip"
+                        style="@style/NotiChipGenshin"
                         android:checked="@{vm.sfGenshinServer == Server.EUROPE}"
                         android:enabled="@{vm.sfNoGenshinAccount ? false : true}"
                         android:onClick="@{() -> vm.onClickSetGenshinServer(Server.EUROPE)}"
@@ -197,7 +188,7 @@
                         app:chipIconVisible="false" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/rb_genshin_cht"
-                        style="@style/NotiChip"
+                        style="@style/NotiChipGenshin"
                         android:checked="@{vm.sfGenshinServer == Server.CHT}"
                         android:enabled="@{vm.sfNoGenshinAccount ? false : true}"
                         android:onClick="@{() -> vm.onClickSetGenshinServer(Server.CHT)}"
@@ -227,7 +218,7 @@
                             android:layout_height="wrap_content"
                             android:singleLine="true"
                             android:text="@={vm.sfGenshinNickname}"
-                            android:textColor="@color/black"
+                            android:textColor="@color/on_surface"
                             android:textSize="16sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -254,7 +245,7 @@
                                         android:layout_height="wrap_content"
                                         android:singleLine="true"
                                         android:text="@={vm.sfGenshinUid}"
-                                        android:textColor="@color/black"
+                                        android:textColor="@color/on_surface"
                                         android:textSize="16sp" />
 
                                 </com.google.android.material.textfield.TextInputLayout>
@@ -289,14 +280,9 @@
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/ll_honkai_sr_ingame_data"
-                style="@style/Widget.Material3.CardView.Outlined"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                style="@style/SoftCard"
                 android:visibility="@{vm.sfHoyolabCookie.empty ? View.GONE : View.VISIBLE}"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp">
+                app:cardBackgroundColor="@color/card_honkai_sr_bg">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -310,7 +296,7 @@
                         android:maxHeight="0dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/logo_honkai_sr"
-                        android:tint="#eeeeee" />
+                        android:tint="@color/logo_honkai_sr_tint" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -330,9 +316,9 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:text="@string/honkai_sr"
-                            android:textColor="@color/black"
+                            android:textColor="@color/title_honkai_sr"
                             android:textSize="20sp"
-                            android:textStyle="bold|italic" />
+                            android:textStyle="bold" />
 
                         <com.google.android.material.materialswitch.MaterialSwitch
                             android:id="@+id/cb_no_honkai_sr_account"
@@ -355,7 +341,7 @@
                             android:layout_width="match_parent"
                             android:layout_marginTop="10dp"
                             android:text="@string/server"
-                            android:textColor="@color/gray"
+                            android:textColor="@color/on_surface_variant"
                             android:textSize="13sp" />
 
                         <com.google.android.material.chip.ChipGroup
@@ -367,7 +353,7 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/rb_honkai_sr_asia"
-                        style="@style/NotiChip"
+                        style="@style/NotiChipHonkaiSr"
                         android:checked="@{vm.sfHonkaiSrServer == Server.ASIA}"
                         android:enabled="@{vm.sfNoHonkaiSrAccount ? false : true}"
                         android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.ASIA)}"
@@ -375,7 +361,7 @@
                         app:chipIconVisible="false" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/rb_honkai_sr_usa"
-                        style="@style/NotiChip"
+                        style="@style/NotiChipHonkaiSr"
                         android:checked="@{vm.sfHonkaiSrServer == Server.USA}"
                         android:enabled="@{vm.sfNoHonkaiSrAccount ? false : true}"
                         android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.USA)}"
@@ -383,7 +369,7 @@
                         app:chipIconVisible="false" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/rb_honkai_sr_euro"
-                        style="@style/NotiChip"
+                        style="@style/NotiChipHonkaiSr"
                         android:checked="@{vm.sfHonkaiSrServer == Server.EUROPE}"
                         android:enabled="@{vm.sfNoHonkaiSrAccount ? false : true}"
                         android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.EUROPE)}"
@@ -391,7 +377,7 @@
                         app:chipIconVisible="false" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/rb_honkai_sr_cht"
-                        style="@style/NotiChip"
+                        style="@style/NotiChipHonkaiSr"
                         android:checked="@{vm.sfHonkaiSrServer == Server.CHT}"
                         android:enabled="@{vm.sfNoHonkaiSrAccount ? false : true}"
                         android:onClick="@{() -> vm.onClickSetHonkaiSrServer(Server.CHT)}"
@@ -422,7 +408,7 @@
                             android:singleLine="true"
                             android:text="@={vm.sfHonkaiSrNickname}"
                             android:enabled="@{vm.sfNoHonkaiSrAccount ? false : true}"
-                            android:textColor="@color/black"
+                            android:textColor="@color/on_surface"
                             android:textSize="16sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -446,7 +432,7 @@
                             android:singleLine="true"
                             android:text="@={vm.sfHonkaiSrUid}"
                             android:enabled="@{vm.sfNoHonkaiSrAccount ? false : true}"
-                            android:textColor="@color/black"
+                            android:textColor="@color/on_surface"
                             android:textSize="16sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -462,14 +448,9 @@
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/ll_zzz_ingame_data"
-                style="@style/Widget.Material3.CardView.Outlined"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                style="@style/SoftCard"
                 android:visibility="@{vm.sfHoyolabCookie.empty ? View.GONE : View.VISIBLE}"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp">
+                app:cardBackgroundColor="@color/card_zzz_bg">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -483,7 +464,7 @@
                         android:maxHeight="0dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/logo_zzz"
-                        android:tint="#eeeeee" />
+                        android:tint="@color/logo_zzz_tint" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -503,9 +484,9 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:text="@string/zzz"
-                            android:textColor="@color/black"
+                            android:textColor="@color/title_zzz"
                             android:textSize="20sp"
-                            android:textStyle="bold|italic" />
+                            android:textStyle="bold" />
 
                         <com.google.android.material.materialswitch.MaterialSwitch
                             android:id="@+id/cb_no_zzz_account"
@@ -528,7 +509,7 @@
                             android:layout_width="match_parent"
                             android:layout_marginTop="10dp"
                             android:text="@string/server"
-                            android:textColor="@color/gray"
+                            android:textColor="@color/on_surface_variant"
                             android:textSize="13sp" />
 
                         <com.google.android.material.chip.ChipGroup
@@ -540,7 +521,7 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/rb_zzz_asia"
-                        style="@style/NotiChip"
+                        style="@style/NotiChipZzz"
                         android:checked="@{vm.sfZZZServer == Server.ASIA}"
                         android:enabled="@{vm.sfNoZZZAccount ? false : true}"
                         android:onClick="@{() -> vm.onClickSetZZZServer(Server.ASIA)}"
@@ -548,7 +529,7 @@
                         app:chipIconVisible="false" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/rb_zzz_usa"
-                        style="@style/NotiChip"
+                        style="@style/NotiChipZzz"
                         android:checked="@{vm.sfZZZServer == Server.USA}"
                         android:enabled="@{vm.sfNoZZZAccount ? false : true}"
                         android:onClick="@{() -> vm.onClickSetZZZServer(Server.USA)}"
@@ -556,7 +537,7 @@
                         app:chipIconVisible="false" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/rb_zzz_euro"
-                        style="@style/NotiChip"
+                        style="@style/NotiChipZzz"
                         android:checked="@{vm.sfZZZServer == Server.EUROPE}"
                         android:enabled="@{vm.sfNoZZZAccount ? false : true}"
                         android:onClick="@{() -> vm.onClickSetZZZServer(Server.EUROPE)}"
@@ -564,7 +545,7 @@
                         app:chipIconVisible="false" />
                     <com.google.android.material.chip.Chip
                         android:id="@+id/rb_zzz_cht"
-                        style="@style/NotiChip"
+                        style="@style/NotiChipZzz"
                         android:checked="@{vm.sfZZZServer == Server.CHT}"
                         android:enabled="@{vm.sfNoZZZAccount ? false : true}"
                         android:onClick="@{() -> vm.onClickSetZZZServer(Server.CHT)}"
@@ -595,7 +576,7 @@
                             android:singleLine="true"
                             android:text="@={vm.sfZZZNickname}"
                             android:enabled="@{vm.sfNoZZZAccount ? false : true}"
-                            android:textColor="@color/black"
+                            android:textColor="@color/on_surface"
                             android:textSize="16sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -619,7 +600,7 @@
                             android:singleLine="true"
                             android:text="@={vm.sfZZZUid}"
                             android:enabled="@{vm.sfNoZZZAccount ? false : true}"
-                            android:textColor="@color/black"
+                            android:textColor="@color/on_surface"
                             android:textSize="16sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -636,14 +617,9 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/ll_checkin"
-                style="@style/Widget.Material3.CardView.Outlined"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                style="@style/SoftCard"
                 android:visibility="@{vm.sfHoyolabCookie.empty || vm.sfGenshinUid.empty ? View.GONE : View.VISIBLE}"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp">
+                app:cardBackgroundColor="@color/surface">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -655,9 +631,9 @@
                         style="@style/TextView"
                         android:layout_width="match_parent"
                         android:text="@string/auto_check_in"
-                        android:textColor="@color/black"
+                        android:textColor="@color/on_surface"
                         android:textSize="20sp"
-                        android:textStyle="bold|italic" />
+                        android:textStyle="bold" />
 
                     <TextView
                         style="@style/TextView"
@@ -666,7 +642,7 @@
                         android:layout_marginTop="4dp"
                         android:maxLines="3"
                         android:text="@string/hoyolab_checkin_desc"
-                        android:textColor="@color/gray"
+                        android:textColor="@color/on_surface_variant"
                         android:textSize="14sp" />
 
                     <com.google.android.material.chip.ChipGroup
@@ -677,28 +653,28 @@
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/cb_enable_genshin_auto_check_in"
-                            style="@style/NotiChip"
+                            style="@style/NotiChipBlue"
                             android:checked="@={vm.sfEnableGenshinAutoCheckIn}"
                             android:text="@string/btn_auto_check_in_enable"
                             app:chipIconVisible="false" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/cb_enable_honkai_3rd_auto_check_in"
-                            style="@style/NotiChip"
+                            style="@style/NotiChipBlue"
                             android:checked="@={vm.sfEnableHonkai3rdAutoCheckIn}"
                             android:text="@string/btn_auto_check_in_enable_honkai_3rd"
                             app:chipIconVisible="false" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/cb_enable_honkai_sr_auto_check_in"
-                            style="@style/NotiChip"
+                            style="@style/NotiChipBlue"
                             android:checked="@={vm.sfEnableHonkaiSrAutoCheckIn}"
                             android:text="@string/btn_auto_check_in_enable_honkai_sr"
                             app:chipIconVisible="false" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/cb_enable_zzz_auto_check_in"
-                            style="@style/NotiChip"
+                            style="@style/NotiChipBlue"
                             android:checked="@={vm.sfEnableZZZAutoCheckIn}"
                             android:text="@string/btn_auto_check_in_enable_zzz"
                             app:chipIconVisible="false" />
@@ -717,7 +693,7 @@
             android:id="@+id/ll_bottom_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/surface"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="12dp"
@@ -728,7 +704,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/cb_enable_auto_checkin_start"
-                style="@style/NotiChip"
+                style="@style/NotiChipBlue"
                 android:checked="@={vm.sfEnableStartCheckIn}"
                 android:text="@string/btn_start_check_in"
                 app:chipIconVisible="false" />

@@ -106,7 +106,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/gray" />
+                        android:background="@color/outline_soft" />
 
                     <Space
                         android:layout_width="0dp"
@@ -150,7 +150,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/gray" />
+                        android:background="@color/outline_soft" />
 
                     <Space
                         android:layout_width="0dp"

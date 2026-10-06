@@ -13,9 +13,9 @@
         android:layout_width="wrap_content"
         android:gravity="right"
         android:text="Some Title"
-        android:textColor="@color/black"
+        android:textColor="@color/on_surface"
         android:textSize="20sp"
-        android:textStyle="bold|italic" />
+        android:textStyle="bold" />
 
     <Space
         android:layout_width="5dp"
@@ -26,7 +26,7 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_weight="1"
-        android:background="#444444" />
+        android:background="@color/outline_soft" />
 
     <Space
         android:layout_width="10dp"
@@ -37,7 +37,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/baseline_expand_more_24"
-        android:tint="@color/black"
+        android:tint="@color/on_surface"
         android:visibility="gone" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

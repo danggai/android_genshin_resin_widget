@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@color/page_bg">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ll_toolbar"
@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:background="@color/light_blue_600"
+            android:background="@color/surface"
             android:gravity="center_vertical|right">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -35,9 +35,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/select_character_title"
-                android:textColor="@color/white"
+                android:textColor="@color/on_surface"
                 android:textSize="20sp"
-                android:textStyle="bold|italic"
+                android:textStyle="bold"
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -53,7 +53,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:onClick="@{() -> vm.onClickFinishSelectChara()}"
                 android:src="@drawable/baseline_close_24"
-                app:tint="@color/white"
+                app:tint="@color/on_surface"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />

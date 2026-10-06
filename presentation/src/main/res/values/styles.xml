@@ -104,6 +104,8 @@
 
     <style name="Widget.App.Button" parent="Widget.Material3.Button">
         <item name="cornerRadius">12dp</item>
+        <item name="backgroundTint">@color/point_muted</item>
+        <item name="android:textColor">@color/on_point_muted</item>
     </style>
 
     <style name="MaterialButton">
@@ -147,7 +149,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">14dp</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/on_surface</item>
         <item name="android:textSize">15sp</item>
         <item name="backgroundTint">@color/surface</item>
         <item name="strokeWidth">1dp</item>
@@ -158,7 +160,7 @@
     <style name="NotiChip" parent="Widget.Material3.Chip.Filter">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/on_surface</item>
         <item name="android:textSize">13sp</item>
         <item name="checkedIconVisible">false</item>
         <item name="chipBackgroundColor">@color/noti_chip_bg</item>
