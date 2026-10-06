@@ -61,8 +61,6 @@ class WidgetDesignDetailFragment :
         binding.widget.tvWeeklyBoss.text = context?.let { CommonFunction.convertIntToTimes(3, it) }
         binding.widgetHksr.tvEchoOfWar.text =
             context?.let { CommonFunction.convertIntToTimes(3, it) }
-        binding.widgetHksr.tvSimulatedUniverseCleared.text =
-            context?.let { CommonFunction.convertIntToTimes(0, it) }
 
         when (mVM.sfWidgetTimeNotation.value) {
             TimeNotation.DEFAULT,
@@ -457,8 +455,6 @@ class WidgetDesignDetailFragment :
                     mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlSimulatedUniverse.visibility =
                         CommonFunction.getVisibility(it)
-                    binding.widgetHksr.rlSimulatedUniverseCleared.visibility =
-                        CommonFunction.getVisibility(it && mVM.sfSimulatedUniverseClearTimeVisibility.value)
                 }
             }
 
@@ -467,15 +463,6 @@ class WidgetDesignDetailFragment :
                     log.e()
                     mVM.sfSelectedPreview.value = Preview.STARRAIL
                     binding.widgetHksr.rlGridFight.visibility = CommonFunction.getVisibility(!it)
-                }
-            }
-
-            launch {
-                mVM.sfSimulatedUniverseClearTimeVisibility.collect {
-                    log.e()
-                    mVM.sfSelectedPreview.value = Preview.STARRAIL
-                    binding.widgetHksr.rlSimulatedUniverseCleared.visibility =
-                        CommonFunction.getVisibility(mVM.sfSimulatedUniverseDataVisibility.value && it)
                 }
             }
 

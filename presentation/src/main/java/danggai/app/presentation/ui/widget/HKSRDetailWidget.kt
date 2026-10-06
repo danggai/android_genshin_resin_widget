@@ -323,19 +323,6 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                     )
 
                     setText(
-                        R.id.tv_simulated_universe_title_cleared,
-                        _context.getString(R.string.clear_count)
-                    )
-                    setText(
-                        R.id.tv_simulated_universe_cleared,
-                        CommonFunction.convertIntToTimes(data.rogueClearCount, _context)
-                    )
-                    setVisibility(
-                        R.id.rl_simulated_universe_cleared,
-                        widgetDesign.simulatedUniverseDataVisibility && widgetDesign.simulatedUniverseClearTimeVisibility
-                    )
-
-                    setText(
                         R.id.tv_grid_fight_title,
                         _context.getString(R.string.grid_fight)
                     )
