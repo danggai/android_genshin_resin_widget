@@ -215,17 +215,6 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:adjustViewBounds="true"
-                            android:importantForAccessibility="no"
-                            android:maxHeight="0dp"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/logo_genshin"
-                            android:tint="#eeeeee" />
-
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -241,12 +230,26 @@
                     app:expanded="@{vm.sfExpandGenshin}"
                     app:titleText="@string/genshin" />
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{vm.sfExpandGenshin ? View.VISIBLE : View.GONE}">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:importantForAccessibility="no"
+                        android:maxHeight="0dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/logo_genshin"
+                        android:tint="#eeeeee" />
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingBottom="4dp"
-                    android:visibility="@{vm.sfExpandGenshin ? View.VISIBLE : View.GONE}">
+                    android:paddingBottom="4dp">
 
                     <com.google.android.material.chip.ChipGroup
                         android:layout_width="match_parent"
@@ -304,6 +307,8 @@
                     </com.google.android.material.chip.ChipGroup>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </FrameLayout>
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                     </FrameLayout>
@@ -313,17 +318,6 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:adjustViewBounds="true"
-                            android:importantForAccessibility="no"
-                            android:maxHeight="0dp"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/logo_honkai_sr"
-                            android:tint="#eeeeee" />
-
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -339,12 +333,26 @@
                     app:expanded="@{vm.sfExpandHonkaiSr}"
                     app:titleText="@string/honkai_sr" />
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{vm.sfExpandHonkaiSr ? View.VISIBLE : View.GONE}">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:importantForAccessibility="no"
+                        android:maxHeight="0dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/logo_honkai_sr"
+                        android:tint="#eeeeee" />
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingBottom="4dp"
-                    android:visibility="@{vm.sfExpandHonkaiSr ? View.VISIBLE : View.GONE}">
+                    android:paddingBottom="4dp">
 
                     <com.google.android.material.chip.ChipGroup
                         android:layout_width="match_parent"
@@ -401,6 +409,8 @@
                     </com.google.android.material.chip.ChipGroup>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </FrameLayout>
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                     </FrameLayout>
@@ -410,17 +420,6 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:adjustViewBounds="true"
-                            android:importantForAccessibility="no"
-                            android:maxHeight="0dp"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/logo_zzz"
-                            android:tint="#eeeeee" />
-
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -436,12 +435,26 @@
                     app:expanded="@{vm.sfExpandZZZ}"
                     app:titleText="@string/zzz" />
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{vm.sfExpandZZZ ? View.VISIBLE : View.GONE}">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:importantForAccessibility="no"
+                        android:maxHeight="0dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/logo_zzz"
+                        android:tint="#eeeeee" />
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingBottom="4dp"
-                    android:visibility="@{vm.sfExpandZZZ ? View.VISIBLE : View.GONE}">
+                    android:paddingBottom="4dp">
 
                     <com.google.android.material.chip.ChipGroup
                         android:layout_width="match_parent"
@@ -515,6 +528,8 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </FrameLayout>
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                     </FrameLayout>
