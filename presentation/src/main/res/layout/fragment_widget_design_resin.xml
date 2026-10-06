@@ -25,71 +25,51 @@
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
         android:orientation="vertical">
-
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="20dp" />
-
-        <include
-            android:id="@+id/widget"
-            layout="@layout/widget_resin_fixed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp" />
-
-        <include
-            android:id="@+id/widget_honkai_sr"
-            layout="@layout/widget_trailblaze_power"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp" />
-
-        <include
-            android:id="@+id/widget_zzz"
-            layout="@layout/widget_battery"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp" />
-
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="15dp" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginVertical="12dp"
+            android:orientation="horizontal">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="10dp"
-                    android:text="@string/preview"
-                    android:textColor="@color/black"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic" />
+                <include
+                    android:id="@+id/widget"
+                    layout="@layout/widget_resin_fixed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
+                <include
+                    android:id="@+id/widget_honkai_sr"
+                    layout="@layout/widget_trailblaze_power"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    android:id="@+id/widget_zzz"
+                    layout="@layout/widget_battery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center">
+                android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="72dp"
-                    android:layout_height="52dp"
-                    android:layout_marginHorizontal="6dp"
+                    android:layout_width="56dp"
+                    android:layout_height="48dp"
+                    android:layout_marginVertical="4dp"
                     android:alpha="@{vm.sfSelectedPreview == Preview.GENSHIN ? 1f : 0.7f}"
                     android:background="@drawable/bg_preview_picker"
                     android:contentDescription="@string/genshin"
@@ -97,11 +77,10 @@
                     android:padding="8dp"
                     android:selected="@{vm.sfSelectedPreview == Preview.GENSHIN}"
                     android:src="@drawable/resin" />
-
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="72dp"
-                    android:layout_height="52dp"
-                    android:layout_marginHorizontal="6dp"
+                    android:layout_width="56dp"
+                    android:layout_height="48dp"
+                    android:layout_marginVertical="4dp"
                     android:alpha="@{vm.sfSelectedPreview == Preview.STARRAIL ? 1f : 0.7f}"
                     android:background="@drawable/bg_preview_picker"
                     android:contentDescription="@string/honkai_sr"
@@ -109,11 +88,10 @@
                     android:padding="8dp"
                     android:selected="@{vm.sfSelectedPreview == Preview.STARRAIL}"
                     android:src="@drawable/trailblaze_power" />
-
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="72dp"
-                    android:layout_height="52dp"
-                    android:layout_marginHorizontal="6dp"
+                    android:layout_width="56dp"
+                    android:layout_height="48dp"
+                    android:layout_marginVertical="4dp"
                     android:alpha="@{vm.sfSelectedPreview == Preview.ZZZ ? 1f : 0.7f}"
                     android:background="@drawable/bg_preview_picker"
                     android:contentDescription="@string/zzz"
@@ -121,20 +99,15 @@
                     android:padding="8dp"
                     android:selected="@{vm.sfSelectedPreview == Preview.ZZZ}"
                     android:src="@drawable/battery" />
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <android.widget.Space
-                android:layout_width="wrap_content"
-                android:layout_height="10dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginHorizontal="5dp"
-                android:background="#999999" />
-
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="5dp"
+            android:background="#999999" />
 
         <ScrollView
             android:layout_width="match_parent"
