@@ -249,11 +249,39 @@
 
                 </com.google.android.material.chip.ChipGroup>
 
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/SoftCard"
+                    app:cardBackgroundColor="@color/card_genshin_bg">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true"
+                            android:importantForAccessibility="no"
+                            android:maxHeight="0dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/logo_genshin"
+                            android:tint="@color/logo_genshin_tint" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="14dp">
+
                 <!--                원신 -->
                 <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:titleText="@string/genshin" />
+                    app:dividerVisible="false"
+                        app:titleColor="@color/title_genshin"
+                        app:titleIcon="@drawable/resin"
+                        app:titleItalic="false"
+                        app:titleText="@string/genshin" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:layout_width="match_parent"
@@ -263,57 +291,88 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_resin"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipGenshin"
                         android:checked="@={vm.sfResinDataVisibility}"
                         android:text="@string/resin"
                         app:chipIcon="@drawable/resin" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_daily_commission"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipGenshin"
                         android:checked="@={vm.sfDailyCommissionDataVisibility}"
                         android:text="@string/daily_commissions"
                         app:chipIcon="@drawable/icon_daily_commission" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_enemies_of_note"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipGenshin"
                         android:checked="@={vm.sfWeeklyBossDataVisibility}"
                         android:text="@string/enemies_of_note"
                         app:chipIcon="@drawable/icon_domain" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_realm_currency"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipGenshin"
                         android:checked="@={vm.sfRealmCurrencyDataVisibility}"
                         android:text="@string/realm_currency"
                         app:chipIcon="@drawable/icon_serenitea_pot" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_number_of_expedition"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipGenshin"
                         android:checked="@={vm.sfExpeditionDataVisibility}"
                         android:text="@string/expedition_time"
                         app:chipIcon="@drawable/icon_warp_point" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_parametric_transformer"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipGenshin"
                         android:checked="@={vm.sfTransformerDataVisibility}"
                         android:text="@string/parametric_transformer"
                         app:chipIcon="@drawable/icon_parametric_transformer" />
 
                 </com.google.android.material.chip.ChipGroup>
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="10dp" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </FrameLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/SoftCard"
+                    app:cardBackgroundColor="@color/card_honkai_sr_bg">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true"
+                            android:importantForAccessibility="no"
+                            android:maxHeight="0dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/logo_honkai_sr"
+                            android:tint="@color/logo_honkai_sr_tint" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="14dp">
 
                 <!--                붕괴: 스타레일 -->
                 <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:titleText="@string/honkai_sr" />
+                    app:dividerVisible="false"
+                        app:titleColor="@color/title_honkai_sr"
+                        app:titleIcon="@drawable/trailblaze_power"
+                        app:titleItalic="false"
+                        app:titleText="@string/honkai_sr" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:layout_width="match_parent"
@@ -323,56 +382,56 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_trailblaze_power"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipHonkaiSr"
                         android:checked="@={vm.sfTrailBlazepowerDataVisibility}"
                         android:text="@string/trailblaze_power"
                         app:chipIcon="@drawable/trailblaze_power" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_reserve_trailblaze_power"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipHonkaiSr"
                         android:checked="@={vm.sfReserveTrailBlazepowerDataVisibility}"
                         android:text="@string/reserve_trailblaze_power"
                         app:chipIcon="@drawable/icon_reserved_trailblaze_power" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_daily_training"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipHonkaiSr"
                         android:checked="@={vm.sfDailyTrainingDataVisibility}"
                         android:text="@string/daily_training"
                         app:chipIcon="@drawable/icon_activity_chip" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_echo_of_war"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipHonkaiSr"
                         android:checked="@={vm.sfEchoOfWarDataVisibility}"
                         android:text="@string/echo_of_war"
                         app:chipIcon="@drawable/icon_echo_of_war" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_grid_fight"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipHonkaiSr"
                         android:checked="@={!vm.sfIsGridFightDataInvisible}"
                         android:text="@string/grid_fight"
                         app:chipIcon="@drawable/icon_grid_fight" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_divergent_universe"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipHonkaiSr"
                         android:checked="@={vm.sfDivergentUniverseDataVisibility}"
                         android:text="@string/divergent_universe"
                         app:chipIcon="@drawable/icon_synchronicity_points" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_assignment"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipHonkaiSr"
                         android:checked="@={vm.sfAssignmentTimeDataVisibility}"
                         android:text="@string/assignment_time"
                         app:chipIcon="@drawable/icon_warp_point" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_simulated_universe"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipHonkaiSr"
                         android:checked="@={vm.sfSimulatedUniverseDataVisibility}"
                         android:text="@string/simulated_universe"
                         app:chipIcon="@drawable/icon_simulated_universe"
@@ -380,11 +439,46 @@
 
                 </com.google.android.material.chip.ChipGroup>
 
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </FrameLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/SoftCard"
+                    app:cardBackgroundColor="@color/card_zzz_bg">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true"
+                            android:importantForAccessibility="no"
+                            android:maxHeight="0dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/logo_zzz"
+                            android:tint="@color/logo_zzz_tint" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="14dp">
+
                 <!--                젠레스 존 제로 -->
                 <danggai.app.presentation.view.TitleDividerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:titleText="@string/zzz" />
+                    app:dividerVisible="false"
+                        app:titleColor="@color/title_zzz"
+                        app:titleIcon="@drawable/battery"
+                        app:titleItalic="false"
+                        app:titleText="@string/zzz" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:layout_width="match_parent"
@@ -394,33 +488,19 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_battery"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipZzz"
                         android:checked="@={vm.sfBatteryDataVisibility}"
                         android:text="@string/battery"
                         app:chipIcon="@drawable/battery" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_engagemnent_today"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipZzz"
                         android:checked="@={vm.sfEngagementTodayDataVisibility}"
                         android:text="@string/engagement_today"
                         app:chipIcon="@drawable/icon_fire" />
 
-                </com.google.android.material.chip.ChipGroup>
-
-                <!--                <androidx.appcompat.widget.LinearLayoutCompat-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:gravity="center_vertical">-->
-
-                <!--                    <com.google.android.material.checkbox.MaterialCheckBox-->
-                <!--                        style="@style/Checkbox"-->
-                <!--                        android:id="@+id/cb_coffee"-->
-                <!--                        android:checked="@={vm.sfCoffeeDataVisibility}"-->
-                <!--                        android:text="@string/coffee" />-->
-
-                <!--                </androidx.appcompat.widget.LinearLayoutCompat>-->
-
+                </com.google.android.material.chip.ChipGroup>                <!--                    android:layout_width="match_parent"-->                <!--                    android:gravity="center_vertical">-->                <!--                        style="@style/Checkbox"-->                <!--                        android:checked="@={vm.sfCoffeeDataVisibility}"-->
                 <com.google.android.material.chip.ChipGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -429,48 +509,55 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_ridu_weekly"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipZzz"
                         android:checked="@={vm.sfRiduWeeklyDataVisibility}"
                         android:text="@string/ridu_weekly"
                         app:chipIcon="@drawable/icon_ridu_weekly" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_investigation_point"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipZzz"
                         android:checked="@={vm.sfInvestigationPointDataVisibility}"
                         android:text="@string/bounty_commission_progress"
                         app:chipIcon="@drawable/icon_investigation_point" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_scratch_card"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipZzz"
                         android:checked="@={vm.sfScratchCardDataVisibility}"
                         android:text="@string/scratch_card"
                         app:chipIcon="@drawable/icon_scratch_card" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_video_store_management"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipZzz"
                         android:checked="@={vm.sfVideoStoreManagementDataVisibility}"
                         android:text="@string/video_store_management"
                         app:chipIcon="@drawable/icon_denny" />
                     
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_member_card"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipZzz"
                         android:checked="@={vm.sfMemberCardDataVisibility}"
                         android:text="@string/zzz_member_card_claim"
                         app:chipIcon="@drawable/icon_polychrome" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/cb_member_card_period"
-                        style="@style/NotiChipBlue"
+                        style="@style/NotiChipZzz"
                         android:checked="@={!vm.sfIsMemberCardPeriodInvisible}"
                         android:enabled="@{vm.sfMemberCardDataVisibility}"
                         android:text="@string/zzz_member_card_period"
                         app:chipIcon="@drawable/icon_polychrome" />
 
                 </com.google.android.material.chip.ChipGroup>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </FrameLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
 
                 <android.widget.Space
                     android:layout_width="wrap_content"
