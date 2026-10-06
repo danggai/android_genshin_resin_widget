@@ -346,6 +346,7 @@ class WidgetDesignDetailFragment :
                     log.e()
                     binding.widget.tvUid.visibility = CommonFunction.getVisibility(it)
                     binding.widgetHksr.tvUid.visibility = CommonFunction.getVisibility(it)
+                    binding.widgetZzz.tvUid.visibility = CommonFunction.getVisibility(it)
                 }
             }
 
@@ -354,6 +355,7 @@ class WidgetDesignDetailFragment :
                     log.e()
                     binding.widget.tvName.visibility = CommonFunction.getVisibility(it)
                     binding.widgetHksr.tvName.visibility = CommonFunction.getVisibility(it)
+                    binding.widgetZzz.tvName.visibility = CommonFunction.getVisibility(it)
                 }
             }
 
