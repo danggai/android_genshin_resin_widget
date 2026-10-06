@@ -102,34 +102,38 @@
                         android:textSize="28sp"
                         android:textStyle="bold|italic" />
 
-                    <RadioGroup
-                        style="@style/RadioGroup"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:chipSpacingHorizontal="8dp"
+                        app:selectionRequired="true"
+                        app:singleSelection="true">
 
-                        <com.google.android.material.radiobutton.MaterialRadioButton
+                        <com.google.android.material.chip.Chip
                             android:id="@+id/rb_theme_automatic"
-                            style="@style/RadioButton"
+                            style="@style/NotiChip"
                             android:checked="@{vm.sfWidgetTheme == WidgetTheme.AUTOMATIC.value}"
                             android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.AUTOMATIC)}"
-                            android:text="@string/btn_automatic" />
+                            android:text="@string/btn_automatic"
+                            app:chipIconVisible="false" />
 
-                        <com.google.android.material.radiobutton.MaterialRadioButton
+                        <com.google.android.material.chip.Chip
                             android:id="@+id/rb_theme_light"
-                            style="@style/RadioButton"
+                            style="@style/NotiChip"
                             android:checked="@{vm.sfWidgetTheme == WidgetTheme.LIGHT.value}"
                             android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.LIGHT)}"
-                            android:text="@string/btn_light" />
+                            android:text="@string/btn_light"
+                            app:chipIconVisible="false" />
 
-                        <com.google.android.material.radiobutton.MaterialRadioButton
+                        <com.google.android.material.chip.Chip
                             android:id="@+id/rb_theme_dark"
-                            style="@style/RadioButton"
+                            style="@style/NotiChip"
                             android:checked="@{vm.sfWidgetTheme == WidgetTheme.DARK.value}"
                             android:onClick="@{() -> vm.onClickWidgetTheme(WidgetTheme.DARK)}"
-                            android:text="@string/btn_dark" />
+                            android:text="@string/btn_dark"
+                            app:chipIconVisible="false" />
 
-                    </RadioGroup>
+                    </com.google.android.material.chip.ChipGroup>
 
                     <android.widget.Space
                         android:layout_width="wrap_content"
