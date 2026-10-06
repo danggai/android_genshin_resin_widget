@@ -445,7 +445,7 @@
                         android:id="@+id/cb_investigation_point"
                         style="@style/Checkbox.Grid"
                         android:checked="@={vm.sfInvestigationPointDataVisibility}"
-                        android:text="@string/investigation_point" />
+                        android:text="@string/bounty_commission_progress" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cb_scratch_card"

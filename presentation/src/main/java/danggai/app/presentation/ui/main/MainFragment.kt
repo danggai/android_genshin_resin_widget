@@ -238,6 +238,37 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         setUpTimeSpinner(binding.spDailyYetNotiZzz, mVM.sfNotiDailyYetTimeZZZ)
         setUpDaySpinner(binding.spWeeklyYetNotiDayZzz, mVM.sfNotiWeeklyYetDayZZZ)
         setUpTimeSpinner(binding.spWeeklyYetNotiTimeZzz, mVM.sfNotiWeeklyYetTimeZZZ)
+
+        setUpDaySpinner(binding.spPeriodScoreDayHonkaiSr, mVM.sfNotiPeriodScoreDayHonkaiSr)
+        setUpTimeSpinner(binding.spPeriodScoreTimeHonkaiSr, mVM.sfNotiPeriodScoreTimeHonkaiSr)
+        setUpTimeSpinner(binding.spMemberClaimNotiTimeZzz, mVM.sfNotiMemberClaimTimeZZZ)
+        setUpExpireDaysSpinner(binding.spMemberExpireNotiDaysZzz, mVM.sfNotiMemberExpireDaysZZZ)
+        setUpTimeSpinner(binding.spCafeNotiTimeZzz, mVM.sfNotiCafeTimeZZZ)
+    }
+
+    private fun setUpExpireDaysSpinner(spinner: AppCompatSpinner, daysFlow: MutableStateFlow<Int>) {
+        val adapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.expire_days,
+            R.layout.text_spinner
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        val daysOptions = listOf(1, 3, 7)
+        spinner.adapter = adapter
+        spinner.setSelection(daysOptions.indexOf(daysFlow.value).coerceAtLeast(0))
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long,
+            ) {
+                daysFlow.value = daysOptions[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
     }
 
     private fun setUpTimeSpinner(spinner: AppCompatSpinner, timeFlow: MutableStateFlow<Int>) {

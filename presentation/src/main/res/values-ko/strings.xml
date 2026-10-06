@@ -73,6 +73,11 @@
     <string name="btn_echo_of_war_yet">전쟁의 여운 잔여</string>
     <string name="btn_engagement_yet">활약도 미완료</string>
     <string name="btn_bounty_commission_yet">현상금 의뢰 미완료</string>
+    <string name="btn_reserve_full">예비 개척력 가득 참</string>
+    <string name="btn_period_score_yet">주기 점수 미완료</string>
+    <string name="btn_member_claim_yet">월정액 미수령</string>
+    <string name="btn_member_expire_soon">월정액 만료 임박</string>
+    <string name="btn_cafe_yet">COFF 카페 미방문</string>
 
     <string name="trailblaze_power">개척력</string>
     <string name="btn_each_60_trailblaze_power">60마다</string>
@@ -304,12 +309,21 @@
     <string name="push_echo_of_war_title">전쟁의 여운 알림</string>
     <string name="push_engagement_title">활약도 알림</string>
     <string name="push_bounty_commission_title">현상금 의뢰 알림</string>
+    <string name="push_reserve_full_title">예비 개척력 알림</string>
+    <string name="push_period_score_title">주기 점수 알림</string>
+    <string name="push_member_card_title">월정액 알림</string>
+    <string name="push_cafe_title">COFF 카페 알림</string>
     <string name="push_weekly_boss_description">설정한 날짜까지 주간 보스 레진 할인 횟수를 사용하지 않았을 때 여행자에게 알려주기 위해 발송하는 알림이야!</string>
     <string name="push_msg_weekly_boss_yet">%s! 이번 주 주간 보스 레진 할인 횟수는 소모 했어? 아니면 한 번 확인해봐!</string>
     <string name="push_msg_daily_training_yet">%s! 오늘의 일일 훈련은 다 했어? 아니면 한 번 확인해봐!</string>
     <string name="push_msg_echo_of_war_yet">%s! 이번 주 전쟁의 여운 할인 횟수는 다 썼어? 아니면 한 번 확인해봐!</string>
     <string name="push_msg_engagement_yet">%s! 오늘의 활약도는 다 채웠어? 아니면 한 번 확인해봐!</string>
     <string name="push_msg_bounty_commission_yet">%s! 이번 주 현상금 의뢰 진도는 다 채웠어? 아니면 한 번 확인해봐!</string>
+    <string name="push_msg_reserve_full">%s! 예비 개척력이 가득 찼어!</string>
+    <string name="push_msg_period_score_yet">%s! 이번 주기 점수는 다 채웠어? 아니면 한 번 확인해봐!</string>
+    <string name="push_msg_member_claim_yet">%s! 오늘 월정액을 아직 안 받았어!</string>
+    <string name="push_msg_member_expire_soon">%1$s! 월정액이 %2$d일 남았어!</string>
+    <string name="push_msg_cafe_yet">%s! 오늘 COFF 카페에 아직 안 갔어!</string>
 
 
     <string name="hint_cookie">HoYoLAB의 쿠키를 입력해 줘!</string>
@@ -389,7 +403,7 @@
     <string name="coffee">COFF 카페</string>
 
     <string name="ridu_weekly">주간 리두</string>
-    <string name="investigation_point">제로 공동 조사 포인트</string>
+    <string name="bounty_commission_progress">현상금 의뢰 진도</string>
 
     <string name="zzz_member_card">로프넷 회원</string>
     <string name="zzz_member_card_not_opened">비회원</string>
@@ -469,4 +483,10 @@
     <!-- 패치노트 -->
     <string name="dialog_patch_note">%s 패치 노트</string>
     <string name="dialog_msg_patch_note">- 7.1 및 스네즈나야 관련 데이터 추가</string>
+    <string-array name="expire_days">
+        <item>1일</item>
+        <item>3일</item>
+        <item>7일</item>
+    </string-array>
+
 </resources>

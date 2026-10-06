@@ -81,6 +81,11 @@
     <string name="btn_echo_of_war_yet">Echo of War left</string>
     <string name="btn_engagement_yet">Engagement left</string>
     <string name="btn_bounty_commission_yet">Bounty commission left</string>
+    <string name="btn_reserve_full">Reserve full</string>
+    <string name="btn_period_score_yet">Cycle score left</string>
+    <string name="btn_member_claim_yet">Membership unclaimed</string>
+    <string name="btn_member_expire_soon">Membership expiring</string>
+    <string name="btn_cafe_yet">COFF Café not visited</string>
 
     <string name="trailblaze_power">Trailblaze Power</string>
     <string name="btn_each_60_trailblaze_power">Every 60</string>
@@ -313,12 +318,21 @@
     <string name="push_echo_of_war_title">Echo of War Notification</string>
     <string name="push_engagement_title">Engagement Notification</string>
     <string name="push_bounty_commission_title">Bounty Commission Notification</string>
+    <string name="push_reserve_full_title">Reserve Trailblaze Power Notification</string>
+    <string name="push_period_score_title">Cycle Score Notification</string>
+    <string name="push_member_card_title">Membership Notification</string>
+    <string name="push_cafe_title">COFF Café Notification</string>
     <string name="push_weekly_boss_description">This is a notification sent to travelers when they do not use the weekly boss resin discount until the set date!</string>
     <string name="push_msg_weekly_boss_yet">%s! Have you used up this week\'s weekly boss resin discounts? If not, go check!</string>
     <string name="push_msg_daily_training_yet">%s! Have you finished today\'s Daily Training? If not, go check!</string>
     <string name="push_msg_echo_of_war_yet">%s! Have you used up this week\'s Echo of War discounts? If not, go check!</string>
     <string name="push_msg_engagement_yet">%s! Have you filled today\'s Engagement? If not, go check!</string>
     <string name="push_msg_bounty_commission_yet">%s! Have you finished this week\'s Bounty Commission progress? If not, go check!</string>
+    <string name="push_msg_reserve_full">%s! Your reserve Trailblaze Power is full!</string>
+    <string name="push_msg_period_score_yet">%s! Have you filled this cycle\'s score? If not, go check!</string>
+    <string name="push_msg_member_claim_yet">%s! You haven\'t claimed today\'s Membership reward yet!</string>
+    <string name="push_msg_member_expire_soon">%1$s! Your Membership expires in %2$d day(s)!</string>
+    <string name="push_msg_cafe_yet">%s! You haven\'t visited COFF Café today!</string>
 
 
     <string name="hint_cookie">Enter HoYoLAB\'s cookie!</string>
@@ -397,7 +411,7 @@
     <string name="coffee">COFF Café</string>
 
     <string name="ridu_weekly">Ridu Weekly</string>
-    <string name="investigation_point">Investigation Point</string>
+    <string name="bounty_commission_progress">Bounty Commission Progress</string>
 
     <string name="zzz_member_card">Membership</string>
     <string name="zzz_member_card_not_opened">Non-member</string>
@@ -477,4 +491,10 @@
     <!-- 패치노트 -->
     <string name="dialog_patch_note">What\'s new in %s</string>
     <string name="dialog_msg_patch_note">- Added data for Version 7.1 and Snezhnaya-related content.</string>
+    <string-array name="expire_days">
+        <item>1 day</item>
+        <item>3 days</item>
+        <item>7 days</item>
+    </string-array>
+
 </resources>

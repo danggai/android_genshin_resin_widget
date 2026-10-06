@@ -355,6 +355,12 @@ class PreferenceManagerRepositoryImpl @Inject constructor(
     override fun setStringRecentCheckInDate(gameType: String, uid: String, value: String) =
         setString(context, Constant.PREF_RECENT_CHECK_IN_DATE + "_${gameType}_$uid", value)
 
+    override fun getStringRecentNotiDate(notiKey: String, uid: String): String =
+        getString(context, Constant.PREF_RECENT_NOTI_DATE + "_${notiKey}_$uid")
+
+    override fun setStringRecentNotiDate(notiKey: String, uid: String, value: String) =
+        setString(context, Constant.PREF_RECENT_NOTI_DATE + "_${notiKey}_$uid", value)
+
 
     override fun getStringLocale(): String =
         getString(context, Constant.PREF_LOCALE, Locale.getDefault().language)

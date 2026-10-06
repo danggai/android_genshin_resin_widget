@@ -19,6 +19,8 @@ sealed class NotiType {
         object ExpeditionDone : StarRail()
         object DailyTrainingNotDone : StarRail()
         object EchoOfWarNotDone : StarRail()
+        object ReserveStaminaFull : StarRail()
+        object PeriodScoreNotDone : StarRail()
     }
 
     sealed class ZZZ : NotiType() {
@@ -28,6 +30,9 @@ sealed class NotiType {
         object StaminaCustom : ZZZ()
         object EngagementNotDone : ZZZ()
         object BountyCommissionNotDone : ZZZ()
+        object MemberCardNotClaimed : ZZZ()
+        object MemberCardExpiring : ZZZ()
+        object CafeNotVisited : ZZZ()
     }
 
     sealed class CheckIn : NotiType() {

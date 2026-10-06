@@ -65,6 +65,17 @@ class MainViewModel @Inject constructor(
     val sfNotiWeeklyYetDayZZZ = MutableStateFlow(Calendar.SUNDAY)
     val sfNotiWeeklyYetTimeZZZ = MutableStateFlow(21)
 
+    val sfEnableNotiReserveFullHonkaiSr = MutableStateFlow(false)
+    val sfEnableNotiPeriodScoreHonkaiSr = MutableStateFlow(false)
+    val sfNotiPeriodScoreDayHonkaiSr = MutableStateFlow(Calendar.SUNDAY)
+    val sfNotiPeriodScoreTimeHonkaiSr = MutableStateFlow(21)
+    val sfEnableNotiMemberClaimZZZ = MutableStateFlow(false)
+    val sfNotiMemberClaimTimeZZZ = MutableStateFlow(21)
+    val sfEnableNotiMemberExpireZZZ = MutableStateFlow(false)
+    val sfNotiMemberExpireDaysZZZ = MutableStateFlow(3)
+    val sfEnableNotiCafeZZZ = MutableStateFlow(false)
+    val sfNotiCafeTimeZZZ = MutableStateFlow(21)
+
     val sfEnableNotiEach40TrailPower = MutableStateFlow(false)
     val sfEnableNoti230TrailPower = MutableStateFlow(false)
     val sfEnableNotiCustomTrailPower = MutableStateFlow(false)
@@ -144,6 +155,8 @@ class MainViewModel @Inject constructor(
 
     private fun dayOrDefault(day: Int): Int = if (day == 0) Calendar.SUNDAY else day
 
+    private fun daysOrDefault(days: Int): Int = if (days == 0) 3 else days
+
     fun initUI() {
         preference.getDailyNoteSettings().let {
             sfAutoRefreshPeriod.value = it.autoRefreshPeriod
@@ -183,6 +196,18 @@ class MainViewModel @Inject constructor(
             sfEnableNotiWeeklyYetZZZ.value = it.notiWeeklyYetZZZ
             sfNotiWeeklyYetDayZZZ.value = dayOrDefault(it.notiWeeklyYetDayZZZ)
             sfNotiWeeklyYetTimeZZZ.value = timeOrDefault(it.notiWeeklyYetTimeZZZ)
+
+            sfEnableNotiReserveFullHonkaiSr.value = it.notiReserveFullHonkaiSr
+            sfEnableNotiPeriodScoreHonkaiSr.value = it.notiPeriodScoreHonkaiSr
+            sfNotiPeriodScoreDayHonkaiSr.value = dayOrDefault(it.notiPeriodScoreDayHonkaiSr)
+            sfNotiPeriodScoreTimeHonkaiSr.value = timeOrDefault(it.notiPeriodScoreTimeHonkaiSr)
+
+            sfEnableNotiMemberClaimZZZ.value = it.notiMemberClaimZZZ
+            sfNotiMemberClaimTimeZZZ.value = timeOrDefault(it.notiMemberClaimTimeZZZ)
+            sfEnableNotiMemberExpireZZZ.value = it.notiMemberExpireZZZ
+            sfNotiMemberExpireDaysZZZ.value = daysOrDefault(it.notiMemberExpireDaysZZZ)
+            sfEnableNotiCafeZZZ.value = it.notiCafeZZZ
+            sfNotiCafeTimeZZZ.value = timeOrDefault(it.notiCafeTimeZZZ)
         }
 
         preference.getCheckInSettings().let {
@@ -217,6 +242,16 @@ class MainViewModel @Inject constructor(
                 sfEnableNotiWeeklyYetZZZ,
                 sfNotiWeeklyYetDayZZZ,
                 sfNotiWeeklyYetTimeZZZ,
+                sfEnableNotiReserveFullHonkaiSr,
+                sfEnableNotiPeriodScoreHonkaiSr,
+                sfNotiPeriodScoreDayHonkaiSr,
+                sfNotiPeriodScoreTimeHonkaiSr,
+                sfEnableNotiMemberClaimZZZ,
+                sfNotiMemberClaimTimeZZZ,
+                sfEnableNotiMemberExpireZZZ,
+                sfNotiMemberExpireDaysZZZ,
+                sfEnableNotiCafeZZZ,
+                sfNotiCafeTimeZZZ,
                 sfAutoRefreshPeriod,
                 sfEnableNotiEach40Resin,
                 sfEnableNoti140Resin,
@@ -305,6 +340,17 @@ class MainViewModel @Inject constructor(
             sfEnableNotiWeeklyYetZZZ.value,
             sfNotiWeeklyYetDayZZZ.value,
             sfNotiWeeklyYetTimeZZZ.value,
+
+            sfEnableNotiReserveFullHonkaiSr.value,
+            sfEnableNotiPeriodScoreHonkaiSr.value,
+            sfNotiPeriodScoreDayHonkaiSr.value,
+            sfNotiPeriodScoreTimeHonkaiSr.value,
+            sfEnableNotiMemberClaimZZZ.value,
+            sfNotiMemberClaimTimeZZZ.value,
+            sfEnableNotiMemberExpireZZZ.value,
+            sfNotiMemberExpireDaysZZZ.value,
+            sfEnableNotiCafeZZZ.value,
+            sfNotiCafeTimeZZZ.value,
         )
     }
 
