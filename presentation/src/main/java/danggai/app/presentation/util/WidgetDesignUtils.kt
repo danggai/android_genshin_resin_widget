@@ -63,7 +63,6 @@ object WidgetDesignUtils {
         binding.tvSyncTime.setTextColor(subFontColor)
     }
 
-    // 미리보기 위젯끼리 Drawable을 공유하면 크기(bounds)가 서로 덮어써져 배경 박스가 어긋난다
     fun makeWidgetBackground(context: Context, color: Int): Drawable {
         val drawable = AppCompatResources.getDrawable(context, R.drawable.rounded_square_5dp)!!.mutate()
         DrawableCompat.setTint(drawable, color)
