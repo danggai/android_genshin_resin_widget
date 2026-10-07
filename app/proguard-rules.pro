@@ -9,7 +9,7 @@
 -keep class danggai.domain.** { *; }
 -keep class danggai.data.** { *; }
 
-# Gson 2.8.6은 자체 규칙이 없다
+# Gson 2.10.1은 자체 규칙이 없다
 -keep class com.google.gson.reflect.TypeToken { *; }
 -keep class * extends com.google.gson.reflect.TypeToken
 -keepclassmembers,allowobfuscation class * {
@@ -20,3 +20,6 @@
 -dontwarn org.bouncycastle.**
 -dontwarn org.conscrypt.**
 -dontwarn org.openjsse.**
+
+# Sandwich 1.2.3은 자체 규칙이 없고, 응답 어댑터가 ApiResponse의 제네릭 타입을 읽는다
+-keep class com.skydoves.sandwich.** { *; }
