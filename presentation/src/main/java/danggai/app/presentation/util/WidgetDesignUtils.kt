@@ -7,8 +7,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.RemoteViews
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.drawable.DrawableCompat
 import danggai.app.presentation.R
 import danggai.app.presentation.databinding.WidgetBatteryBinding
 import danggai.app.presentation.databinding.WidgetResinFixedBinding
@@ -61,12 +63,17 @@ object WidgetDesignUtils {
         binding.tvSyncTime.setTextColor(subFontColor)
     }
 
+    fun makeWidgetBackground(context: Context, color: Int): Drawable {
+        val drawable = AppCompatResources.getDrawable(context, R.drawable.rounded_square_5dp)!!.mutate()
+        DrawableCompat.setTint(drawable, color)
+        return drawable
+    }
+
     fun applyDetailWidgetColors(
         root: View,
         bgColor: Int,
         mainFontColor: Int,
-        subFontColor: Int,
-        wrappedDrawable: Drawable
+        subFontColor: Int
     ) {
         val llRoot = root.findViewById<View>(R.id.ll_root)
         llRoot.setBackgroundColor(bgColor)
@@ -84,7 +91,7 @@ object WidgetDesignUtils {
         val textIds = CommonFunction.getDetailWidgetTextIds(root)
         CommonFunction.setTextColorByIds(root, textIds, mainFontColor)
 
-        llRoot.background = wrappedDrawable
+        llRoot.background = makeWidgetBackground(root.context, bgColor)
     }
 
     fun setDetailWidgetFontSize(root: View, fontSize: Int) {
