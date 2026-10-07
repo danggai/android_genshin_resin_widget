@@ -4,7 +4,7 @@ buildGradle = "8.4.2"
 kotlinGradle = "1.9.21"
 googleService = "4.3.14"
 crashlyticsGradle = "2.9.2"
-gson = "2.8.6"
+gson = "2.10.1"
 guava = "33.5.0-android"
 
 # AndroidX Versions
@@ -30,8 +30,8 @@ hilt = "1.2.0"
 javapoet = "1.13.0"
 
 # Network Libraries
-okhttp = "4.9.0"
-retrofit = "2.6.0"
+okhttp = "4.12.0"
+retrofit = "2.11.0"
 sandwich = "1.2.3"
 glide = "4.14.2"
 
