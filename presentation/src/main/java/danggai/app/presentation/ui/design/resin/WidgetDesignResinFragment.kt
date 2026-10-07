@@ -3,10 +3,8 @@ package danggai.app.presentation.ui.design.resin
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.graphics.ColorUtils
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import danggai.app.presentation.R
@@ -79,9 +77,6 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                 mVM.sfWidgetTheme.collect {
                     context?.let { _context ->
                         log.e()
-                        val unwrappedDrawable = AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
-                        val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
-
                         val isDarkTheme = WidgetDesignUtils.isDarkTheme(_context, mVM.sfWidgetTheme.value)
 
                         val mainFontColor: Int
@@ -98,15 +93,15 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                             drawableColor = getColor(_context, R.color.white)
                         }
 
-                        DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(drawableColor, mVM.sfTransparency.value))
+                        val bgColor = ColorUtils.setAlphaComponent(drawableColor, mVM.sfTransparency.value)
 
                         WidgetDesignUtils.setStaminaWidgetTextColor(binding.widget, mainFontColor, subFontColor)
                         WidgetDesignUtils.setStaminaWidgetTextColor(binding.widgetHonkaiSr, mainFontColor, subFontColor)
                         WidgetDesignUtils.setStaminaWidgetTextColor(binding.widgetZzz, mainFontColor, subFontColor)
 
-                        binding.widget.llRoot.background = wrappedDrawable
-                        binding.widgetHonkaiSr.llRoot.background = wrappedDrawable
-                        binding.widgetZzz.llRoot.background = wrappedDrawable
+                        binding.widget.llRoot.background = WidgetDesignUtils.makeWidgetBackground(_context, bgColor)
+                        binding.widgetHonkaiSr.llRoot.background = WidgetDesignUtils.makeWidgetBackground(_context, bgColor)
+                        binding.widgetZzz.llRoot.background = WidgetDesignUtils.makeWidgetBackground(_context, bgColor)
                     }
                 }
             }
@@ -123,7 +118,6 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                         Preview.STARRAIL -> binding.widgetHonkaiSr.root.visibility = View.VISIBLE
                         Preview.ZZZ -> binding.widgetZzz.root.visibility = View.VISIBLE
                     }
-                    binding.llRoot.requestLayout()
                 }
             }
 
@@ -131,20 +125,16 @@ class WidgetDesignResinFragment : BindingFragment<FragmentWidgetDesignResinBindi
                 mVM.sfTransparency.collect {
                     context?.let { _context ->
                         log.e()
-                        val unwrappedDrawable = AppCompatResources.getDrawable(_context, R.drawable.rounded_square_5dp)
-                        val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
-
                         val isDarkTheme = WidgetDesignUtils.isDarkTheme(_context, mVM.sfWidgetTheme.value)
 
                         val color: Int =
                             if (isDarkTheme) getColor(_context, R.color.black)
                             else getColor(_context, R.color.white)
+                        val bgColor = ColorUtils.setAlphaComponent(color, mVM.sfTransparency.value)
 
-                        DrawableCompat.setTint(wrappedDrawable, ColorUtils.setAlphaComponent(color, mVM.sfTransparency.value))
-
-                        binding.widget.llRoot.background = wrappedDrawable
-                        binding.widgetHonkaiSr.llRoot.background = wrappedDrawable
-                        binding.widgetZzz.llRoot.background = wrappedDrawable
+                        binding.widget.llRoot.background = WidgetDesignUtils.makeWidgetBackground(_context, bgColor)
+                        binding.widgetHonkaiSr.llRoot.background = WidgetDesignUtils.makeWidgetBackground(_context, bgColor)
+                        binding.widgetZzz.llRoot.background = WidgetDesignUtils.makeWidgetBackground(_context, bgColor)
                     }
                 }
             }
