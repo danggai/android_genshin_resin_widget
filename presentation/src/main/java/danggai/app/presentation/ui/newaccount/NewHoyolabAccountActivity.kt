@@ -50,7 +50,7 @@ class NewHoyolabAccountActivity : BindingActivity<ActivityNewHoyolabAccountBindi
         binding.lifecycleOwner = this
         binding.vm = mVM
 
-        initFragment()
+        if (savedInstanceState == null) initFragment()
     }
 
     override fun onNewIntent(intent: Intent) {

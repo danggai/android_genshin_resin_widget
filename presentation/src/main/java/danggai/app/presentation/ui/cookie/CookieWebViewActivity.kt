@@ -31,7 +31,7 @@ class CookieWebViewActivity : BindingActivity<ActivityCookieWebviewBinding, Cook
         binding.lifecycleOwner = this
         binding.vm = mVM
 
-        initFragment()
+        if (savedInstanceState == null) initFragment()
     }
 
     private fun initFragment() {
