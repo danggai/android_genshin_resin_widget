@@ -34,7 +34,7 @@ class WidgetDesignActivity : BindingActivity<ActivityWidgetDesignBinding, Widget
         binding.lifecycleOwner = this
         binding.vm = mVM
 
-        initFragment()
+        if (savedInstanceState == null) initFragment()
     }
 
     private fun initFragment() {

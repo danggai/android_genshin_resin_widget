@@ -31,7 +31,7 @@ class MainActivity : BindingActivity<ActivityMainBinding, MainViewModel>() {
         binding.lifecycleOwner = this
         binding.vm = mVM
 
-        initFragment()
+        if (savedInstanceState == null) initFragment()
         initRx()
         initBackPressed()
     }
