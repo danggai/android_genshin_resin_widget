@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
@@ -54,19 +52,7 @@ class RefreshWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, workerParams) {
 
     companion object {
-        fun startWorkerOneTime(context: Context) {
-            log.e()
-
-            val workManager = WorkManager.getInstance(context)
-            val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
-                .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
-                .build()
-            workManager.enqueueUniqueWork(
-                Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH,
-                ExistingWorkPolicy.REPLACE,
-                workRequest
-            )
-        }
+        private const val MAX_RETRY_COUNT = 3
 
         fun startWorkerPeriodic(context: Context) {
             log.e()
@@ -142,6 +128,7 @@ class RefreshWorker @AssistedInject constructor(
 
                     is ApiResult.Failure -> {
                         log.e(it.message)
+                        isRefreshFailed = true
                         CommonFunction.sendCrashlyticsApiLog(
                             Constant.API_NAME_DAILY_NOTE,
                             it.code,
@@ -153,6 +140,7 @@ class RefreshWorker @AssistedInject constructor(
                     is ApiResult.Error,
                     is ApiResult.Null -> {
                         log.e()
+                        isRefreshFailed = true
                         CommonFunction.sendCrashlyticsApiLog(
                             Constant.API_NAME_DAILY_NOTE,
                             null,
@@ -164,6 +152,8 @@ class RefreshWorker @AssistedInject constructor(
             }
         }.await()
     }
+
+    private var isRefreshFailed = false
 
     var honkaiSrData = HonkaiSrDataLocal.EMPTY
 
@@ -206,6 +196,7 @@ class RefreshWorker @AssistedInject constructor(
 
                     is ApiResult.Failure -> {
                         log.e(it.message)
+                        isRefreshFailed = true
                         CommonFunction.sendCrashlyticsApiLog(
                             Constant.API_NAME_DAILY_NOTE,
                             it.code,
@@ -217,6 +208,7 @@ class RefreshWorker @AssistedInject constructor(
                     is ApiResult.Error,
                     is ApiResult.Null -> {
                         log.e()
+                        isRefreshFailed = true
                         CommonFunction.sendCrashlyticsApiLog(
                             Constant.API_NAME_DAILY_NOTE,
                             null,
@@ -269,6 +261,7 @@ class RefreshWorker @AssistedInject constructor(
 
                     is ApiResult.Failure -> {
                         log.e(it.message)
+                        isRefreshFailed = true
                         CommonFunction.sendCrashlyticsApiLog(
                             Constant.API_NAME_DAILY_NOTE,
                             it.code,
@@ -280,6 +273,7 @@ class RefreshWorker @AssistedInject constructor(
                     is ApiResult.Error,
                     is ApiResult.Null -> {
                         log.e()
+                        isRefreshFailed = true
                         CommonFunction.sendCrashlyticsApiLog(
                             Constant.API_NAME_DAILY_NOTE,
                             null,
@@ -327,6 +321,7 @@ class RefreshWorker @AssistedInject constructor(
 
                     is ApiResult.Failure -> {
                         log.e(it.message)
+                        isRefreshFailed = true
                         CommonFunction.sendCrashlyticsApiLog(
                             Constant.API_NAME_DAILY_NOTE,
                             it.code,
@@ -338,6 +333,7 @@ class RefreshWorker @AssistedInject constructor(
                     is ApiResult.Error,
                     is ApiResult.Null -> {
                         log.e()
+                        isRefreshFailed = true
                         CommonFunction.sendCrashlyticsApiLog(
                             Constant.API_NAME_DAILY_NOTE,
                             null,
@@ -852,7 +848,7 @@ class RefreshWorker @AssistedInject constructor(
             }
 
             log.e()
-            return Result.success()
+            return if (isRefreshFailed) retryOrGiveUp() else Result.success()
         } catch (e: java.lang.Exception) {
             when (e) {
                 is UnknownHostException -> log.e("Unknown host!")
@@ -862,8 +858,13 @@ class RefreshWorker @AssistedInject constructor(
             log.e(e.message.toString())
 
             CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
-            return Result.failure()
+            return retryOrGiveUp()
         }
+    }
+
+    private fun retryOrGiveUp(): Result {
+        log.e("runAttemptCount -> $runAttemptCount")
+        return if (runAttemptCount < MAX_RETRY_COUNT) Result.retry() else Result.failure()
     }
 
 }

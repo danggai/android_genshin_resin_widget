@@ -59,7 +59,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                     throw e
                 }
 
-                RefreshWorker.startWorkerOneTime(context)
+                RefreshWorker.startWorkerPeriodic(context)
                 PreferenceManager.setLong(
                     context,
                     Constant.PREF_LAST_HONKAI_SR_FAIL_TIME,
