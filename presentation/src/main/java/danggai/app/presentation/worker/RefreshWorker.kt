@@ -2,12 +2,12 @@ package danggai.app.presentation.worker
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
+import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import androidx.work.Worker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -36,7 +36,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.text.SimpleDateFormat
@@ -51,7 +51,7 @@ class RefreshWorker @AssistedInject constructor(
     private val preference: PreferenceManagerRepository,
     private val accountDao: AccountDaoUseCase,
     private val dailyNote: DailyNoteUseCase
-) : Worker(context, workerParams) {
+) : CoroutineWorker(context, workerParams) {
 
     companion object {
         fun startWorkerOneTime(context: Context) {
@@ -779,11 +779,11 @@ class RefreshWorker @AssistedInject constructor(
         NotificationUtils.sendNotification(notiType, applicationContext, account, title, msg)
     }
 
-    override fun doWork(): Result {
+    override suspend fun doWork(): Result {
         log.e()
 
         try {
-            CoroutineScope(Dispatchers.IO).launch {
+            withContext(Dispatchers.IO) {
                 delay(300L)     // 마이그레이션 대비용 시간
                 accountDao.selectAllAccount().collect { accountList ->
                     accountList.forEach { account ->

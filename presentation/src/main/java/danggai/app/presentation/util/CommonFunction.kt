@@ -97,6 +97,26 @@ object CommonFunction {
         sendBroadcastAppWidgetUpdate<ZZZDetailWidget>(context)
     }
 
+    fun hasRefreshWidget(context: Context): Boolean {
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+        val widgetClasses = listOf(
+            ResinWidget::class.java,
+            ResinWidgetResizable::class.java,
+            DetailWidget::class.java,
+            MiniWidget::class.java,
+            TrailPowerWidget::class.java,
+            HKSRDetailWidget::class.java,
+            BatteryWidget::class.java,
+            ZZZDetailWidget::class.java,
+        )
+
+        for (widgetClass in widgetClasses) {
+            val ids = appWidgetManager.getAppWidgetIds(ComponentName(context, widgetClass))
+            if (ids.isNotEmpty()) return true
+        }
+        return false
+    }
+
     inline fun <reified T : AppWidgetProvider> sendBroadcastAppWidgetUpdate(context: Context) {
         val ids = AppWidgetManager.getInstance(context)
             .getAppWidgetIds(ComponentName(context, T::class.java))

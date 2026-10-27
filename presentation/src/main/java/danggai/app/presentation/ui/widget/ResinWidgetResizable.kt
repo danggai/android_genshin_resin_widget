@@ -100,7 +100,7 @@ class ResinWidgetResizable() : AppWidgetProvider() {
         super.onDisabled(context)
         log.e()
         context?.let {
-            RefreshWorker.shutdownWorker(context)
+            if (!CommonFunction.hasRefreshWidget(context)) RefreshWorker.shutdownWorker(context)
         }
     }
 
