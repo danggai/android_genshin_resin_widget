@@ -19,14 +19,7 @@ import com.google.firebase.crashlytics.CustomKeysAndValues
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import danggai.app.presentation.BuildConfig
 import danggai.app.presentation.R
-import danggai.app.presentation.ui.widget.BatteryWidget
-import danggai.app.presentation.ui.widget.DetailWidget
-import danggai.app.presentation.ui.widget.HKSRDetailWidget
-import danggai.app.presentation.ui.widget.MiniWidget
-import danggai.app.presentation.ui.widget.ResinWidget
-import danggai.app.presentation.ui.widget.ResinWidgetResizable
-import danggai.app.presentation.ui.widget.TrailPowerWidget
-import danggai.app.presentation.ui.widget.ZZZDetailWidget
+import danggai.app.presentation.ui.widget.WidgetClasses
 import danggai.domain.local.TalentDate
 import danggai.domain.local.TalentDays
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
@@ -87,50 +80,35 @@ object CommonFunction {
     fun sendBroadcastAllWidgetRefreshUI(context: Context) {
         log.e()
 
-        sendBroadcastAppWidgetUpdate<ResinWidget>(context)
-        sendBroadcastAppWidgetUpdate<ResinWidgetResizable>(context)
-        sendBroadcastAppWidgetUpdate<DetailWidget>(context)
-        sendBroadcastAppWidgetUpdate<MiniWidget>(context)
-        sendBroadcastAppWidgetUpdate<TrailPowerWidget>(context)
-        sendBroadcastAppWidgetUpdate<HKSRDetailWidget>(context)
-        sendBroadcastAppWidgetUpdate<BatteryWidget>(context)
-        sendBroadcastAppWidgetUpdate<ZZZDetailWidget>(context)
+        for (widgetClass in WidgetClasses.DAILY_NOTE) {
+            sendBroadcastAppWidgetUpdate(context, widgetClass)
+        }
     }
 
     fun hasRefreshWidget(context: Context): Boolean {
         val appWidgetManager = AppWidgetManager.getInstance(context)
-        val widgetClasses = listOf(
-            ResinWidget::class.java,
-            ResinWidgetResizable::class.java,
-            DetailWidget::class.java,
-            MiniWidget::class.java,
-            TrailPowerWidget::class.java,
-            HKSRDetailWidget::class.java,
-            BatteryWidget::class.java,
-            ZZZDetailWidget::class.java,
-        )
 
-        for (widgetClass in widgetClasses) {
+        for (widgetClass in WidgetClasses.DAILY_NOTE) {
             val ids = appWidgetManager.getAppWidgetIds(ComponentName(context, widgetClass))
             if (ids.isNotEmpty()) return true
         }
         return false
     }
 
-    inline fun <reified T : AppWidgetProvider> sendBroadcastAppWidgetUpdate(context: Context) {
+    fun sendBroadcastAppWidgetUpdate(context: Context, widgetClass: Class<out AppWidgetProvider>) {
         val ids = AppWidgetManager.getInstance(context)
-            .getAppWidgetIds(ComponentName(context, T::class.java))
+            .getAppWidgetIds(ComponentName(context, widgetClass))
 
         CoroutineScope(Dispatchers.Main.immediate).launch {
 //            ids.onEach { id ->
-//                val intent = Intent(context, T::class.java)
+//                val intent = Intent(context, widgetClass)
 //                intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 //
 //                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
 //                context.sendBroadcast(intent)
 //                delay(100L)
 //            }
-            val intent = Intent(context, T::class.java)
+            val intent = Intent(context, widgetClass)
             intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
