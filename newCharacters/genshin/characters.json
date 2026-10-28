@@ -1,36 +1,6 @@
 {
   "characters": [
     {
-      "id": 10000132,
-      "name_ko": "프루네",
-      "name_en": "Prune",
-      "rarity": 4,
-      "element": "ANEMO",
-      "talentArea": "MONDSTADT",
-      "talentDay": "TUE_FRI",
-      "icon": "icon_prune.png"
-    },
-    {
-      "id": 10000131,
-      "name_ko": "니콜",
-      "name_en": "Nicole",
-      "rarity": 5,
-      "element": "PYRO",
-      "talentArea": "NODKRAI",
-      "talentDay": "TUE_FRI",
-      "icon": "icon_nicole.png"
-    },
-    {
-      "id": 10000129,
-      "name_ko": "로엔",
-      "name_en": "Lohen",
-      "rarity": 5,
-      "element": "CRYO",
-      "talentArea": "MONDSTADT",
-      "talentDay": "TUE_FRI",
-      "icon": "icon_lohen.png"
-    },
-    {
       "id": 10000133,
       "name_ko": "산드로네",
       "name_en": "Sandrone",
@@ -49,7 +19,7 @@
       "talentArea": "SNEZHNAYA",
       "talentDay": "MON_THU",
       "icon": "icon_odette.png"
-    },  
+    },
     {
       "id": 10000148,
       "name_ko": "알료샤",
@@ -79,6 +49,26 @@
       "talentArea": "SNEZHNAYA",
       "talentDay": "TUE_FRI",
       "icon": "icon_vodyanitsa.png"
+    },
+    {
+      "id": 10000136,
+      "name_ko": "미탸",
+      "name_en": "Mitya",
+      "rarity": 5,
+      "element": "ELECTRO",
+      "talentArea": "SNEZHNAYA",
+      "talentDay": "MON_THU",
+      "icon": "icon_mitya.png"
+    },
+    {
+      "id": 10000137,
+      "name_ko": "발레리",
+      "name_en": "Valeriy",
+      "rarity": 4,
+      "element": "ELECTRO",
+      "talentArea": "SNEZHNAYA",
+      "talentDay": "WED_SAT",
+      "icon": "icon_valeriy.png"
     }
   ]
 }
