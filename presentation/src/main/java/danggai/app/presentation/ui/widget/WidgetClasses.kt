@@ -13,11 +13,14 @@ object WidgetClasses {
         ZZZDetailWidget::class.java,
     )
 
-    // RefreshWorker 갱신 대상
     val DAILY_NOTE: List<Class<out AppWidgetProvider>> = listOf(
         ResinWidget::class.java,
         ResinWidgetResizable::class.java,
         DetailWidget::class.java,
         MiniWidget::class.java,
-    ) + HONKAI_SR + ZZZ
+        TrailPowerWidget::class.java,
+        HKSRDetailWidget::class.java,
+        BatteryWidget::class.java,
+        ZZZDetailWidget::class.java,
+    )
 }
