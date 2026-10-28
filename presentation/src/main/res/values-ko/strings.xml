@@ -493,6 +493,9 @@
     <string name="common">공통</string>
     <string name="push_channel_name_login_expired">로그인 만료</string>
     <string name="push_login_expired_title">HoYoLAB 로그인 만료</string>
-    <string name="push_msg_login_expired">%s 계정의 HoYoLAB 로그인이 만료되어 데이터를 가져올 수 없습니다. 앱에서 계정을 다시 등록해주세요.</string>
+    <string name="push_msg_login_expired">%s 계정의 HoYoLAB 로그인이 만료되어 데이터를 가져올 수 없습니다. 눌러서 다시 로그인해주세요.</string>
     <string name="push_login_expired_description">HoYoLAB 로그인이 만료되어 데이터 갱신에 실패했을 때 발송하는 알림이야!</string>
+    <string name="msg_toast_how_to_relogin">만료된 계정으로 다시 로그인하면 자동으로 갱신돼요.</string>
+    <string name="msg_toast_relogin_success">다시 로그인 완료! 데이터를 갱신합니다.</string>
+    <string name="msg_toast_relogin_wrong_account">만료된 계정과 다른 HoYoLAB 계정입니다. 기존 계정으로 다시 로그인해주세요.</string>
 </resources>

@@ -7,6 +7,8 @@ sealed class Event {
     data class FinishThisActivity(val unit: Unit = Unit): Event()
 
     data class RefreshWebView(val unit: Unit = Unit): Event()
+    data class ReloginSuccess(val unit: Unit = Unit): Event()
+    data class ReloginWrongAccount(val unit: Unit = Unit): Event()
 
     data class WidgetRefreshNotWork(val unit: Unit = Unit): Event()
     data class GetCookie(val unit: Unit = Unit): Event()

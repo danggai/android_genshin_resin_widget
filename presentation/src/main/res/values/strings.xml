@@ -501,6 +501,9 @@
     <string name="common">Common</string>
     <string name="push_channel_name_login_expired">Login Expired</string>
     <string name="push_login_expired_title">HoYoLAB Login Expired</string>
-    <string name="push_msg_login_expired">HoYoLAB login for %s has expired, so data can\'t be updated. Please register the account again in the app.</string>
+    <string name="push_msg_login_expired">HoYoLAB login for %s has expired, so data can\'t be updated. Tap to log in again.</string>
     <string name="push_login_expired_description">This is a notification sent when data update fails because the HoYoLAB login has expired.</string>
+    <string name="msg_toast_how_to_relogin">Log in again with the expired account and it will be updated automatically.</string>
+    <string name="msg_toast_relogin_success">Logged in again! Updating data.</string>
+    <string name="msg_toast_relogin_wrong_account">This is a different HoYoLAB account. Please log in with the expired account.</string>
 </resources>
