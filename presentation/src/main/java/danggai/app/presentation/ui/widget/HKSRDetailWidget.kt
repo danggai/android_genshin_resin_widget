@@ -59,7 +59,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
                     throw e
                 }
 
-                RefreshWorker.startWorkerOneTime(context)
+                RefreshWorker.startWorkerPeriodic(context)
                 PreferenceManager.setLong(
                     context,
                     Constant.PREF_LAST_HONKAI_SR_FAIL_TIME,
@@ -129,7 +129,7 @@ class HKSRDetailWidget() : AppWidgetProvider() {
         super.onDisabled(context)
         log.e()
         context?.let {
-            RefreshWorker.shutdownWorker(context)
+            if (!CommonFunction.hasRefreshWidget(context)) RefreshWorker.shutdownWorker(context)
         }
     }
 

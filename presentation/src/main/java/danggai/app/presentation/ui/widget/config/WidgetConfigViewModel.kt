@@ -4,12 +4,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BaseViewModel
-import danggai.app.presentation.ui.widget.BatteryWidget
-import danggai.app.presentation.ui.widget.HKSRDetailWidget
 import danggai.app.presentation.ui.widget.MiniWidget
 import danggai.app.presentation.ui.widget.TalentWidget
-import danggai.app.presentation.ui.widget.TrailPowerWidget
-import danggai.app.presentation.ui.widget.ZZZDetailWidget
+import danggai.app.presentation.ui.widget.WidgetClasses
 import danggai.app.presentation.util.log
 import danggai.domain.db.account.entity.Account
 import danggai.domain.db.account.usecase.AccountDaoUseCase
@@ -93,17 +90,11 @@ class WidgetConfigViewModel @Inject constructor(
         }
 
     fun isHonkaiSrWidget(): Boolean {
-        return widgetClassName in listOf(
-            TrailPowerWidget::class.java.name,
-            HKSRDetailWidget::class.java.name
-        )
+        return widgetClassName in WidgetClasses.HONKAI_SR.map { it.name }
     }
 
     fun isZZZWidget(): Boolean {
-        return widgetClassName in listOf(
-            BatteryWidget::class.java.name,
-            ZZZDetailWidget::class.java.name
-        )
+        return widgetClassName in WidgetClasses.ZZZ.map { it.name }
     }
 
     private fun isRequiresTypeWidget(): Boolean {

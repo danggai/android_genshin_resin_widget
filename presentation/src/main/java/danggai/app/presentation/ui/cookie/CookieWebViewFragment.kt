@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.os.Message
 import android.view.View
@@ -21,6 +22,7 @@ import danggai.app.presentation.ui.newaccount.NewHoyolabAccountActivity
 import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.Event
 import danggai.app.presentation.util.log
+import danggai.app.presentation.worker.RefreshWorker
 import kotlinx.coroutines.launch
 
 
@@ -44,6 +46,8 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = mVM
         binding.vm?.setCommonFun()
+
+        mVM.reloginUid = activity?.intent?.getStringExtra(CookieWebViewActivity.EXTRA_RELOGIN_UID) ?: ""
 
         initUi()
         initSf()
@@ -81,6 +85,9 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
         log.e()
 
         binding.wvBody.apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_YES
+
             clearCache(true)
             clearFormData()
             clearHistory()
@@ -145,6 +152,9 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
                 override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {
                     activity?.let { activity ->
                         val popUpWebView = WebView(activity).apply {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                                importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_YES
+
                             settings.apply {
                                 javaScriptEnabled = true
                                 domStorageEnabled = true
@@ -235,7 +245,10 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
 
         binding.wvBody.loadUrl("https://m.hoyolab.com/#/timeline")
 
-        makeToastLong(requireContext(), getString(R.string.msg_toast_how_to_get_cookie))
+        if (mVM.reloginUid.isNotEmpty())
+            makeToastLong(requireContext(), getString(R.string.msg_toast_how_to_relogin))
+        else
+            makeToastLong(requireContext(), getString(R.string.msg_toast_how_to_get_cookie))
     }
 
     override fun handleEvents(event: Event) {
@@ -246,6 +259,20 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
                 log.e()
                 binding.wvBody.reload()
             }
+            is Event.ReloginSuccess -> {
+                log.e()
+                RefreshWorker.startWorkerPeriodic(requireContext())
+                makeToast(requireContext(), getString(R.string.msg_toast_relogin_success))
+                activity?.finish()
+            }
+            is Event.ReloginWrongAccount -> {
+                log.e()
+                makeToastLong(requireContext(), getString(R.string.msg_toast_relogin_wrong_account))
+                CookieManager.getInstance().removeAllCookies(null)
+                CookieManager.getInstance().flush()
+                mVM.sfGetCookieFlow.value = null
+                binding.wvBody.loadUrl("https://m.hoyolab.com/#/timeline")
+            }
             else -> {}
         }
     }
@@ -254,7 +281,11 @@ class CookieWebViewFragment : BindingFragment<FragmentCookieWebviewBinding, Cook
         viewLifecycleOwner.repeatOnLifeCycleStarted {
             launch {
                 mVM.sfGetCookieFlow.collect { cookie ->
-                    cookie?.let {
+                    if (cookie == null) return@collect
+
+                    if (mVM.reloginUid.isNotEmpty()) {
+                        mVM.updateAccountCookie(cookie)
+                    } else {
                         NewHoyolabAccountActivity.startActivityWithCookie(requireActivity(), cookie)
                         makeToast(requireContext(), getString(R.string.msg_toast_get_cookie_success))
                         activity!!.finish()

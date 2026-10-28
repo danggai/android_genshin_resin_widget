@@ -17,6 +17,7 @@ object NotificationMapper {
      */
     fun getNickname(notiType: NotiType, account: Account): String {
         return when (notiType) {
+            NotiType.LoginExpired -> account.nickname
             is NotiType.Genshin -> account.nickname
             is NotiType.StarRail -> account.honkai_sr_nickname
             is NotiType.ZZZ -> account.zzz_nickname
@@ -35,6 +36,7 @@ object NotificationMapper {
      */
     fun getNotiIcon(notiType: NotiType): Int {
         return when (notiType) {
+            NotiType.LoginExpired,
             is NotiType.Genshin,
             is NotiType.CheckIn._Genshin,
             NotiType.CheckIn.NotFound.AccountGenshin -> R.drawable.resin
@@ -57,6 +59,8 @@ object NotificationMapper {
      */
     fun getNotiTitle(context: Context, notiType: NotiType): String {
         return when (notiType) {
+            NotiType.LoginExpired -> context.getString(R.string.push_login_expired_title)
+
             NotiType.Genshin.StaminaEach40,
             NotiType.Genshin.Stamina180,
             NotiType.Genshin.StaminaCustom -> context.getString(R.string.push_resin_noti_title)
@@ -109,6 +113,11 @@ object NotificationMapper {
      */
     fun getNotiMsg(context: Context, notiType: NotiType, nickname: String, target: Int?): String {
         return when (notiType) {
+            NotiType.LoginExpired -> String.format(
+                context.getString(R.string.push_msg_login_expired),
+                nickname
+            )
+
             NotiType.Genshin.StaminaEach40 ->
                 when (target) {
                     Constant.MAX_RESIN + 40 -> String.format(
@@ -383,6 +392,14 @@ object NotificationMapper {
             else NotificationCompat.PRIORITY_DEFAULT
 
         when (notiType) {
+            NotiType.LoginExpired -> {
+                notificationId = abs(account.genshin_uid.toInt()) + Constant.PREFIX_NOTI_ID_LOGIN_EXPIRED
+                channelId = Constant.PUSH_CHANNEL_LOGIN_EXPIRED_NOTI_ID
+                channelName = context.getString(R.string.push_channel_name_login_expired)
+                channelDesc = context.getString(R.string.push_login_expired_description)
+                priority = priorityDefault
+            }
+
             NotiType.Genshin.StaminaEach40,
             NotiType.Genshin.Stamina180,
             NotiType.Genshin.StaminaCustom,

@@ -1,6 +1,8 @@
 package danggai.domain.local
 
 sealed class NotiType {
+    object LoginExpired : NotiType()
+
     sealed class Genshin : NotiType() {
         object StaminaEach40 : Genshin()
         object Stamina180 : Genshin()

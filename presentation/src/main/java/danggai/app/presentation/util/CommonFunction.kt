@@ -19,14 +19,7 @@ import com.google.firebase.crashlytics.CustomKeysAndValues
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import danggai.app.presentation.BuildConfig
 import danggai.app.presentation.R
-import danggai.app.presentation.ui.widget.BatteryWidget
-import danggai.app.presentation.ui.widget.DetailWidget
-import danggai.app.presentation.ui.widget.HKSRDetailWidget
-import danggai.app.presentation.ui.widget.MiniWidget
-import danggai.app.presentation.ui.widget.ResinWidget
-import danggai.app.presentation.ui.widget.ResinWidgetResizable
-import danggai.app.presentation.ui.widget.TrailPowerWidget
-import danggai.app.presentation.ui.widget.ZZZDetailWidget
+import danggai.app.presentation.ui.widget.WidgetClasses
 import danggai.domain.local.TalentDate
 import danggai.domain.local.TalentDays
 import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
@@ -79,6 +72,17 @@ object CommonFunction {
             .lowercase(Locale.getDefault())
     }
 
+    fun getHoyolabUid(cookie: String): String {
+        val cookieData = mutableMapOf<String, String>()
+
+        for (item in cookie.split(";")) {
+            val parsedKeyValue = item.trim().split("=")
+            if (parsedKeyValue.size == 2) cookieData[parsedKeyValue[0]] = parsedKeyValue[1]
+        }
+
+        return cookieData["ltuid"] ?: cookieData["ltuid_v2"] ?: cookieData["account_id_v2"] ?: ""
+    }
+
     fun getRandomNumber(min: Int, max: Int): Int {
         val random = Random()
         return random.nextInt(max) + min
@@ -87,30 +91,35 @@ object CommonFunction {
     fun sendBroadcastAllWidgetRefreshUI(context: Context) {
         log.e()
 
-        sendBroadcastAppWidgetUpdate<ResinWidget>(context)
-        sendBroadcastAppWidgetUpdate<ResinWidgetResizable>(context)
-        sendBroadcastAppWidgetUpdate<DetailWidget>(context)
-        sendBroadcastAppWidgetUpdate<MiniWidget>(context)
-        sendBroadcastAppWidgetUpdate<TrailPowerWidget>(context)
-        sendBroadcastAppWidgetUpdate<HKSRDetailWidget>(context)
-        sendBroadcastAppWidgetUpdate<BatteryWidget>(context)
-        sendBroadcastAppWidgetUpdate<ZZZDetailWidget>(context)
+        for (widgetClass in WidgetClasses.DAILY_NOTE) {
+            sendBroadcastAppWidgetUpdate(context, widgetClass)
+        }
     }
 
-    inline fun <reified T : AppWidgetProvider> sendBroadcastAppWidgetUpdate(context: Context) {
+    fun hasRefreshWidget(context: Context): Boolean {
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+
+        for (widgetClass in WidgetClasses.DAILY_NOTE) {
+            val ids = appWidgetManager.getAppWidgetIds(ComponentName(context, widgetClass))
+            if (ids.isNotEmpty()) return true
+        }
+        return false
+    }
+
+    fun sendBroadcastAppWidgetUpdate(context: Context, widgetClass: Class<out AppWidgetProvider>) {
         val ids = AppWidgetManager.getInstance(context)
-            .getAppWidgetIds(ComponentName(context, T::class.java))
+            .getAppWidgetIds(ComponentName(context, widgetClass))
 
         CoroutineScope(Dispatchers.Main.immediate).launch {
 //            ids.onEach { id ->
-//                val intent = Intent(context, T::class.java)
+//                val intent = Intent(context, widgetClass)
 //                intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 //
 //                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
 //                context.sendBroadcast(intent)
 //                delay(100L)
 //            }
-            val intent = Intent(context, T::class.java)
+            val intent = Intent(context, widgetClass)
             intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)

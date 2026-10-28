@@ -1,21 +1,30 @@
 package danggai.app.presentation.ui.cookie
 
 import android.webkit.CookieManager
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import danggai.app.presentation.R
 import danggai.app.presentation.core.BaseViewModel
+import danggai.app.presentation.util.CommonFunction
 import danggai.app.presentation.util.Event
 import danggai.app.presentation.util.log
+import danggai.domain.db.account.usecase.AccountDaoUseCase
 import danggai.domain.resource.repository.ResourceProviderRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CookieWebViewViewModel @Inject constructor(
-    private val resource: ResourceProviderRepository
+    private val resource: ResourceProviderRepository,
+    private val accountDao: AccountDaoUseCase
 ) : BaseViewModel() {
 
     val sfGetCookieFlow: MutableStateFlow<String?> = MutableStateFlow(null)
+
+    var reloginUid = ""
 
     private fun getCookie() {
         try {
@@ -34,6 +43,21 @@ class CookieWebViewViewModel @Inject constructor(
         } catch (e: Exception) {
             log.e(e.message.toString())
             makeToast(resource.getString(R.string.msg_toast_get_cookie_unknown_fail))
+        }
+    }
+
+    fun updateAccountCookie(cookie: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val account = accountDao.selectAccountByUid(reloginUid).first()
+
+            if (CommonFunction.getHoyolabUid(account.cookie) != CommonFunction.getHoyolabUid(cookie)) {
+                log.e()
+                sendEvent(Event.ReloginWrongAccount())
+                return@launch
+            }
+
+            accountDao.insertAccount(account.copy(cookie = cookie)).first()
+            sendEvent(Event.ReloginSuccess())
         }
     }
 

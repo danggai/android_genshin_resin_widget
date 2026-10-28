@@ -2,12 +2,10 @@ package danggai.app.presentation.worker
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
+import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import androidx.work.Worker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -27,6 +25,7 @@ import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.network.dailynote.entity.ZZZDailyNoteData
 import danggai.domain.network.dailynote.usecase.DailyNoteUseCase
+import danggai.domain.network.getgamerecordcard.usecase.GetGameRecordCardUseCase
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import io.reactivex.schedulers.Schedulers
@@ -36,7 +35,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.text.SimpleDateFormat
@@ -50,23 +49,12 @@ class RefreshWorker @AssistedInject constructor(
     @Assisted workerParams: WorkerParameters,
     private val preference: PreferenceManagerRepository,
     private val accountDao: AccountDaoUseCase,
-    private val dailyNote: DailyNoteUseCase
-) : Worker(context, workerParams) {
+    private val dailyNote: DailyNoteUseCase,
+    private val getGameRecordCard: GetGameRecordCardUseCase
+) : CoroutineWorker(context, workerParams) {
 
     companion object {
-        fun startWorkerOneTime(context: Context) {
-            log.e()
-
-            val workManager = WorkManager.getInstance(context)
-            val workRequest = OneTimeWorkRequestBuilder<RefreshWorker>()
-                .addTag(Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH)
-                .build()
-            workManager.enqueueUniqueWork(
-                Constant.WORKER_UNIQUE_NAME_AUTO_REFRESH,
-                ExistingWorkPolicy.REPLACE,
-                workRequest
-            )
-        }
+        private const val MAX_RETRY_COUNT = 3
 
         fun startWorkerPeriodic(context: Context) {
             log.e()
@@ -131,6 +119,7 @@ class RefreshWorker @AssistedInject constructor(
 
                             else -> {
                                 log.e()
+                                isRetcodeFailed = true
                                 CommonFunction.sendCrashlyticsApiLog(
                                     Constant.API_NAME_DAILY_NOTE,
                                     it.code,
@@ -142,6 +131,7 @@ class RefreshWorker @AssistedInject constructor(
 
                     is ApiResult.Failure -> {
                         log.e(it.message)
+                        isRefreshFailed = true
                         CommonFunction.sendCrashlyticsApiLog(
                             Constant.API_NAME_DAILY_NOTE,
                             it.code,
@@ -153,6 +143,7 @@ class RefreshWorker @AssistedInject constructor(
                     is ApiResult.Error,
                     is ApiResult.Null -> {
                         log.e()
+                        isRefreshFailed = true
                         CommonFunction.sendCrashlyticsApiLog(
                             Constant.API_NAME_DAILY_NOTE,
                             null,
@@ -164,6 +155,9 @@ class RefreshWorker @AssistedInject constructor(
             }
         }.await()
     }
+
+    private var isRefreshFailed = false
+    private var isRetcodeFailed = false
 
     var honkaiSrData = HonkaiSrDataLocal.EMPTY
 
@@ -195,6 +189,7 @@ class RefreshWorker @AssistedInject constructor(
 
                             else -> {
                                 log.e()
+                                isRetcodeFailed = true
                                 CommonFunction.sendCrashlyticsApiLog(
                                     Constant.API_NAME_DAILY_NOTE,
                                     it.code,
@@ -206,6 +201,7 @@ class RefreshWorker @AssistedInject constructor(
 
                     is ApiResult.Failure -> {
                         log.e(it.message)
+                        isRefreshFailed = true
                         CommonFunction.sendCrashlyticsApiLog(
                             Constant.API_NAME_DAILY_NOTE,
                             it.code,
@@ -217,6 +213,7 @@ class RefreshWorker @AssistedInject constructor(
                     is ApiResult.Error,
                     is ApiResult.Null -> {
                         log.e()
+                        isRefreshFailed = true
                         CommonFunction.sendCrashlyticsApiLog(
                             Constant.API_NAME_DAILY_NOTE,
                             null,
@@ -258,6 +255,7 @@ class RefreshWorker @AssistedInject constructor(
 
                             else -> {
                                 log.e()
+                                isRetcodeFailed = true
                                 CommonFunction.sendCrashlyticsApiLog(
                                     Constant.API_NAME_DAILY_NOTE,
                                     it.code,
@@ -269,6 +267,7 @@ class RefreshWorker @AssistedInject constructor(
 
                     is ApiResult.Failure -> {
                         log.e(it.message)
+                        isRefreshFailed = true
                         CommonFunction.sendCrashlyticsApiLog(
                             Constant.API_NAME_DAILY_NOTE,
                             it.code,
@@ -280,6 +279,7 @@ class RefreshWorker @AssistedInject constructor(
                     is ApiResult.Error,
                     is ApiResult.Null -> {
                         log.e()
+                        isRefreshFailed = true
                         CommonFunction.sendCrashlyticsApiLog(
                             Constant.API_NAME_DAILY_NOTE,
                             null,
@@ -316,6 +316,7 @@ class RefreshWorker @AssistedInject constructor(
 
                             else -> {
                                 log.e()
+                                isRetcodeFailed = true
                                 CommonFunction.sendCrashlyticsApiLog(
                                     Constant.API_NAME_DAILY_NOTE,
                                     it.code,
@@ -327,6 +328,7 @@ class RefreshWorker @AssistedInject constructor(
 
                     is ApiResult.Failure -> {
                         log.e(it.message)
+                        isRefreshFailed = true
                         CommonFunction.sendCrashlyticsApiLog(
                             Constant.API_NAME_DAILY_NOTE,
                             it.code,
@@ -338,6 +340,7 @@ class RefreshWorker @AssistedInject constructor(
                     is ApiResult.Error,
                     is ApiResult.Null -> {
                         log.e()
+                        isRefreshFailed = true
                         CommonFunction.sendCrashlyticsApiLog(
                             Constant.API_NAME_DAILY_NOTE,
                             null,
@@ -764,6 +767,31 @@ class RefreshWorker @AssistedInject constructor(
         preference.setZZZDailyNote(account.zzz_uid, dailyNote)
     }
 
+    private suspend fun checkLoginExpired(account: Account) {
+        val notifiedKey = Constant.PREF_LOGIN_EXPIRED_NOTIFIED + account.genshin_uid
+        if (PreferenceManager.getBoolean(applicationContext, notifiedKey, false)) return
+
+        getGameRecordCard(
+            hoyolabUid = CommonFunction.getHoyolabUid(account.cookie),
+            cookie = account.cookie,
+            ds = CommonFunction.getGenshinDS(),
+            onStart = { log.e() },
+            onComplete = { log.e() }
+        ).collect {
+            if (it !is ApiResult.Success) return@collect
+
+            when (it.data.retcode) {
+                Constant.RETCODE_ERROR_NOT_LOGGED_IN,
+                Constant.RETCODE_ERROR_NOT_LOGGED_IN_2,
+                Constant.RETCODE_ERROR_NOT_LOGGED_IN_3 -> {
+                    log.e()
+                    sendNoti(account, NotiType.LoginExpired, null)
+                    PreferenceManager.setBoolean(applicationContext, notifiedKey, true)
+                }
+            }
+        }
+    }
+
     private fun sendNoti(account: Account, notiType: NotiType, target: Int?) {
         log.e()
         val context = applicationContext
@@ -779,14 +807,15 @@ class RefreshWorker @AssistedInject constructor(
         NotificationUtils.sendNotification(notiType, applicationContext, account, title, msg)
     }
 
-    override fun doWork(): Result {
+    override suspend fun doWork(): Result {
         log.e()
 
         try {
-            CoroutineScope(Dispatchers.IO).launch {
+            withContext(Dispatchers.IO) {
                 delay(300L)     // 마이그레이션 대비용 시간
                 accountDao.selectAllAccount().collect { accountList ->
                     accountList.forEach { account ->
+                        isRetcodeFailed = false
 
                         if (!account.genshin_uid.contains("-")) {
                             val server = when (Server.fromValue(account.server)) {
@@ -845,6 +874,16 @@ class RefreshWorker @AssistedInject constructor(
 
                             refreshZZZDailyNote(account, server)
                         }
+
+                        if (isRetcodeFailed) {
+                            checkLoginExpired(account)
+                        } else {
+                            PreferenceManager.setBoolean(
+                                applicationContext,
+                                Constant.PREF_LOGIN_EXPIRED_NOTIFIED + account.genshin_uid,
+                                false
+                            )
+                        }
                     }
                 }
 
@@ -852,7 +891,7 @@ class RefreshWorker @AssistedInject constructor(
             }
 
             log.e()
-            return Result.success()
+            return if (isRefreshFailed) retryOrGiveUp() else Result.success()
         } catch (e: java.lang.Exception) {
             when (e) {
                 is UnknownHostException -> log.e("Unknown host!")
@@ -862,8 +901,13 @@ class RefreshWorker @AssistedInject constructor(
             log.e(e.message.toString())
 
             CommonFunction.sendBroadcastAllWidgetRefreshUI(applicationContext)
-            return Result.failure()
+            return retryOrGiveUp()
         }
+    }
+
+    private fun retryOrGiveUp(): Result {
+        log.e("runAttemptCount -> $runAttemptCount")
+        return if (runAttemptCount < MAX_RETRY_COUNT) Result.retry() else Result.failure()
     }
 
 }

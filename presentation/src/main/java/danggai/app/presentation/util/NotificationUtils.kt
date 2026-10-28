@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import danggai.app.presentation.ui.cookie.CookieWebViewActivity
 import danggai.domain.db.account.entity.Account
 import danggai.domain.local.NotiType
 import danggai.domain.util.Constant
@@ -51,7 +52,7 @@ object NotificationUtils {
             setStyle(NotificationCompat.BigTextStyle().bigText(msg))
             setPriority(notificationParams.priority)
 
-            val pendingIntent = createIntentByNotiType(notiType, context)
+            val pendingIntent = createIntentByNotiType(notiType, context, account)
             pendingIntent?.let {
                 setContentIntent(it)
             }
@@ -72,8 +73,15 @@ object NotificationUtils {
         notificationManager.notify(notificationParams.notificationId, builder.build())
     }
 
-    private fun createIntentByNotiType(notiType: NotiType, context: Context): PendingIntent? {
+    private fun createIntentByNotiType(notiType: NotiType, context: Context, account: Account): PendingIntent? {
         return when (notiType) {
+            NotiType.LoginExpired -> PendingIntent.getActivity(
+                context,
+                account.genshin_uid.hashCode(),
+                CookieWebViewActivity.getReloginIntent(context, account.genshin_uid),
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
+
             NotiType.CheckIn._Genshin.CaptchaOccured -> PendingIntent.getActivity(
                 context,
                 0,
