@@ -72,6 +72,17 @@ object CommonFunction {
             .lowercase(Locale.getDefault())
     }
 
+    fun getHoyolabUid(cookie: String): String {
+        val cookieData = mutableMapOf<String, String>()
+
+        for (item in cookie.split(";")) {
+            val parsedKeyValue = item.trim().split("=")
+            if (parsedKeyValue.size == 2) cookieData[parsedKeyValue[0]] = parsedKeyValue[1]
+        }
+
+        return cookieData["ltuid"] ?: cookieData["ltuid_v2"] ?: cookieData["account_id_v2"] ?: ""
+    }
+
     fun getRandomNumber(min: Int, max: Int): Int {
         val random = Random()
         return random.nextInt(max) + min

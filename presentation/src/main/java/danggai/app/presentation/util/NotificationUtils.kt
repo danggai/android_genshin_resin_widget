@@ -74,6 +74,8 @@ object NotificationUtils {
 
     private fun createIntentByNotiType(notiType: NotiType, context: Context): PendingIntent? {
         return when (notiType) {
+            NotiType.LoginExpired -> createPendingIntent(context, listOf(context.packageName))
+
             NotiType.CheckIn._Genshin.CaptchaOccured -> PendingIntent.getActivity(
                 context,
                 0,

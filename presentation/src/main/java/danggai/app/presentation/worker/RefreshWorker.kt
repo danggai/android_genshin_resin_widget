@@ -25,6 +25,7 @@ import danggai.domain.network.dailynote.entity.GenshinDailyNoteData
 import danggai.domain.network.dailynote.entity.HonkaiSrDataLocal
 import danggai.domain.network.dailynote.entity.ZZZDailyNoteData
 import danggai.domain.network.dailynote.usecase.DailyNoteUseCase
+import danggai.domain.network.getgamerecordcard.usecase.GetGameRecordCardUseCase
 import danggai.domain.preference.repository.PreferenceManagerRepository
 import danggai.domain.util.Constant
 import io.reactivex.schedulers.Schedulers
@@ -48,7 +49,8 @@ class RefreshWorker @AssistedInject constructor(
     @Assisted workerParams: WorkerParameters,
     private val preference: PreferenceManagerRepository,
     private val accountDao: AccountDaoUseCase,
-    private val dailyNote: DailyNoteUseCase
+    private val dailyNote: DailyNoteUseCase,
+    private val getGameRecordCard: GetGameRecordCardUseCase
 ) : CoroutineWorker(context, workerParams) {
 
     companion object {
@@ -117,6 +119,7 @@ class RefreshWorker @AssistedInject constructor(
 
                             else -> {
                                 log.e()
+                                isRetcodeFailed = true
                                 CommonFunction.sendCrashlyticsApiLog(
                                     Constant.API_NAME_DAILY_NOTE,
                                     it.code,
@@ -154,6 +157,7 @@ class RefreshWorker @AssistedInject constructor(
     }
 
     private var isRefreshFailed = false
+    private var isRetcodeFailed = false
 
     var honkaiSrData = HonkaiSrDataLocal.EMPTY
 
@@ -185,6 +189,7 @@ class RefreshWorker @AssistedInject constructor(
 
                             else -> {
                                 log.e()
+                                isRetcodeFailed = true
                                 CommonFunction.sendCrashlyticsApiLog(
                                     Constant.API_NAME_DAILY_NOTE,
                                     it.code,
@@ -250,6 +255,7 @@ class RefreshWorker @AssistedInject constructor(
 
                             else -> {
                                 log.e()
+                                isRetcodeFailed = true
                                 CommonFunction.sendCrashlyticsApiLog(
                                     Constant.API_NAME_DAILY_NOTE,
                                     it.code,
@@ -310,6 +316,7 @@ class RefreshWorker @AssistedInject constructor(
 
                             else -> {
                                 log.e()
+                                isRetcodeFailed = true
                                 CommonFunction.sendCrashlyticsApiLog(
                                     Constant.API_NAME_DAILY_NOTE,
                                     it.code,
@@ -760,6 +767,31 @@ class RefreshWorker @AssistedInject constructor(
         preference.setZZZDailyNote(account.zzz_uid, dailyNote)
     }
 
+    private suspend fun checkLoginExpired(account: Account) {
+        val notifiedKey = Constant.PREF_LOGIN_EXPIRED_NOTIFIED + account.genshin_uid
+        if (PreferenceManager.getBoolean(applicationContext, notifiedKey, false)) return
+
+        getGameRecordCard(
+            hoyolabUid = CommonFunction.getHoyolabUid(account.cookie),
+            cookie = account.cookie,
+            ds = CommonFunction.getGenshinDS(),
+            onStart = { log.e() },
+            onComplete = { log.e() }
+        ).collect {
+            if (it !is ApiResult.Success) return@collect
+
+            when (it.data.retcode) {
+                Constant.RETCODE_ERROR_NOT_LOGGED_IN,
+                Constant.RETCODE_ERROR_NOT_LOGGED_IN_2,
+                Constant.RETCODE_ERROR_NOT_LOGGED_IN_3 -> {
+                    log.e()
+                    sendNoti(account, NotiType.LoginExpired, null)
+                    PreferenceManager.setBoolean(applicationContext, notifiedKey, true)
+                }
+            }
+        }
+    }
+
     private fun sendNoti(account: Account, notiType: NotiType, target: Int?) {
         log.e()
         val context = applicationContext
@@ -783,6 +815,7 @@ class RefreshWorker @AssistedInject constructor(
                 delay(300L)     // 마이그레이션 대비용 시간
                 accountDao.selectAllAccount().collect { accountList ->
                     accountList.forEach { account ->
+                        isRetcodeFailed = false
 
                         if (!account.genshin_uid.contains("-")) {
                             val server = when (Server.fromValue(account.server)) {
@@ -840,6 +873,16 @@ class RefreshWorker @AssistedInject constructor(
                             }
 
                             refreshZZZDailyNote(account, server)
+                        }
+
+                        if (isRetcodeFailed) {
+                            checkLoginExpired(account)
+                        } else {
+                            PreferenceManager.setBoolean(
+                                applicationContext,
+                                Constant.PREF_LOGIN_EXPIRED_NOTIFIED + account.genshin_uid,
+                                false
+                            )
                         }
                     }
                 }
