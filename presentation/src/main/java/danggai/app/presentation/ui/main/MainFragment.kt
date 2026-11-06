@@ -1,5 +1,6 @@
 package danggai.app.presentation.ui.main
 
+import android.Manifest
 import android.animation.LayoutTransition
 import android.app.NotificationManager
 import android.appwidget.AppWidgetManager
@@ -19,6 +20,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
@@ -73,6 +75,11 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
 
     private val mVM: MainViewModel by activityViewModels()
     private lateinit var mAdView: AdView
+
+    private val notiPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (!granted) openNotificationSettings()
+        }
 
     private val weeklyDaySpinnerAdapter by lazy {
         ArrayAdapter.createFromResource(
@@ -390,6 +397,12 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
         else notificationManager.areNotificationsEnabled()
     }
 
+    private fun openNotificationSettings() {
+        val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
+        startActivity(intent)
+    }
+
     private fun notificationPermisisonCheck() {
         log.e()
         val currentTime = System.currentTimeMillis()
@@ -410,13 +423,7 @@ class MainFragment : BindingFragment<FragmentMainBinding, MainViewModel>() {
                             .setCancelable(false)
                             .setPositiveButton(R.string.apply) { dialog, whichButton ->
                                 log.e()
-                                // 알림 권한이 없는 경우 권한 요청
-                                val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
-                                intent.putExtra(
-                                    Settings.EXTRA_APP_PACKAGE,
-                                    requireContext().packageName
-                                )
-                                startActivity(intent)
+                                notiPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                             }
                             .setNegativeButton(R.string.not_show_today) { dialog, whichButton ->
                                 log.e()
