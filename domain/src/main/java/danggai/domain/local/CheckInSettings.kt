@@ -6,8 +6,8 @@ data class CheckInSettings(
 ) {
     companion object {
         val EMPTY = CheckInSettings (
-            notiCheckInSuccess = false,
-            notiCheckInFailed = false
+            notiCheckInSuccess = true,
+            notiCheckInFailed = true
         )
     }
 }
