@@ -69,6 +69,26 @@
       "talentArea": "SNEZHNAYA",
       "talentDay": "WED_SAT",
       "icon": "icon_valeriy.png"
+    },
+    {
+      "id": 10000149,
+      "name_ko": "아나스타샤",
+      "name_en": "Anastasya",
+      "rarity": 5,
+      "element": "CRYO",
+      "talentArea": "SNEZHNAYA",
+      "talentDay": "MON_THU",
+      "icon": "icon_anastasya.png"
+    },
+    {
+      "id": 10000147,
+      "name_ko": "다니카",
+      "name_en": "Danica",
+      "rarity": 5,
+      "element": "ELECTRO",
+      "talentArea": "SNEZHNAYA",
+      "talentDay": "WED_SAT",
+      "icon": "icon_danica.png"
     }
   ]
 }
