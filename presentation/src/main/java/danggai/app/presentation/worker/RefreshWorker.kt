@@ -869,7 +869,7 @@ class RefreshWorker @AssistedInject constructor(
                                 Server.EUROPE -> Constant.SERVER_GF_EURO
                                 Server.USA -> Constant.SERVER_GF_USA
                                 Server.CHT -> Constant.SERVER_GF_CHT
-                                else -> Constant.SERVER_PO_ASIA
+                                else -> Constant.SERVER_GF_ASIA
                             }
 
                             refreshZZZDailyNote(account, server)
